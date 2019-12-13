@@ -1,3 +1,5 @@
+#FIXME: terminator contains minimize / maximize code and measures
+
 #' @title Abstract Terminator Class
 #'
 #' @usage NULL
@@ -29,8 +31,8 @@
 #' * `param_set` :: [paradox::ParamSet]; from construction.
 #'
 #' @section Methods:
-#' * `is_terminated(instance)`\cr
-#'   [TuningInstance] -> `logical(1)`\cr
+#' * `is_terminated(archive)`\cr
+#'   [Archive] -> `logical(1)`\cr
 #'   Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
 #'   Must be implemented in each subclass.
 #'
@@ -53,6 +55,6 @@ Terminator = R6Class("Terminator",
       catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
     },
 
-    is_terminated = function(instance) TRUE # overwrite in subclasses
+    is_terminated = function(archive) TRUE # overwrite in subclasses
   )
 )

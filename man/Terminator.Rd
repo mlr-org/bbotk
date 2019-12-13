@@ -39,8 +39,8 @@ Set of control parameters for terminator.
 \section{Methods}{
 
 \itemize{
-\item \code{is_terminated(instance)}\cr
-\link{TuningInstance} -> \code{logical(1)}\cr
+\item \code{is_terminated(archive)}\cr
+\link{Archive} -> \code{logical(1)}\cr
 Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
 Must be implemented in each subclass.
 }

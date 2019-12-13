@@ -34,8 +34,8 @@ TerminatorEvals = R6Class("TerminatorEvals",
       super$initialize(param_set = ps)
     },
 
-    is_terminated = function(instance) {
-      instance$n_evals >= self$param_set$values$n_evals
+    is_terminated = function(archive) {
+      archive$n_evals >= self$param_set$values$n_evals
     }
   )
 )

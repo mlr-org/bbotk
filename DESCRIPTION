@@ -43,7 +43,6 @@ RoxygenNote: 7.0.2
 Collate: 
     'Archive.R'
     'Objective.R'
-    'ObjectiveSO.R'
     'Terminator.R'
     'TerminatorClockTime.R'
     'TerminatorCombo.R'

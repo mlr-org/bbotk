@@ -1,27 +1,28 @@
-Archive = R6Class("Archive", 
+Archive = R6Class("Archive",
   public = list(
     data = NULL,
-    param_set = NULL,
+    domain = NULL,
+    codomain = NULL,
 
-    initialize = function(param_set) {
-      self$param_set = param_set
+    initialize = function(domain, codomain) {
+      self$domain = domain
+      self$codomain = codomain
       self$data = data.table()
     },
 
-    add = function(dt) {
-      #FIXME: assert von d
+    add_evals = function(dt) {
       self$data = rbindlist(list(self$data, dt), fill = TRUE, use.names = TRUE)
     },
-    
+
     print = function() {
       catf("Archive:")
       print(self$data)
     }
   ),
-  
+
   active = list(
-    n_evals = function() nrow(self$data),
-    idx_unevaled = function() self$data$y
+    n_evals = function() nrow(self$data)
+    # idx_unevaled = function() self$data$y
   ),
 )
 
