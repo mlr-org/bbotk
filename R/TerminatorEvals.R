@@ -1,6 +1,5 @@
 #' @title Terminator that stops after a number of evaluations
 #'
-#' @aliases mlr_terminators_evals
 #' @usage NULL
 #' @format [R6::R6Class] object inheriting from [Terminator].
 #' @include Terminator.R
@@ -41,4 +40,3 @@ TerminatorEvals = R6Class("TerminatorEvals",
   )
 )
 
-mlr_terminators$add("evals", TerminatorEvals)

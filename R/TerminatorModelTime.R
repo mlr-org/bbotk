@@ -1,6 +1,5 @@
 #' @title Terminator that stops after a budget of model evaluation time is depleted
 #'
-#' @aliases mlr_terminators_model_time
 #' @usage NULL
 #' @format [R6::R6Class] object inheriting from [Terminator].
 #' @include Terminator.R
@@ -44,4 +43,3 @@ TerminatorModelTime = R6Class("TerminatorModelTime",
   )
 )
 
-mlr_terminators$add("model_time", TerminatorModelTime)

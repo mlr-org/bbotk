@@ -1,6 +1,5 @@
 #' @title Combine Terminators
 #'
-#' @aliases mlr_terminators_combo
 #' @usage NULL
 #' @format [R6::R6Class] object inheriting from [Terminator].
 #' @include Terminator.R
@@ -47,4 +46,3 @@ TerminatorCombo = R6Class("TerminatorCombo",
   )
 )
 
-mlr_terminators$add("combo", TerminatorCombo)

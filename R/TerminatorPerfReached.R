@@ -1,6 +1,5 @@
 #' @title Terminator that stops when a performance level has been reached
 #'
-#' @aliases mlr_terminators_perf_reached
 #' @usage NULL
 #' @format [R6::R6Class] object inheriting from [Terminator].
 #' @include Terminator.R
@@ -49,4 +48,3 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
   )
 )
 
-mlr_terminators$add("perf_reached", TerminatorPerfReached)

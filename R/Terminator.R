@@ -2,7 +2,6 @@
 #'
 #' @usage NULL
 #' @format [R6::R6Class] object.
-#' @include mlr_terminators.R
 #'
 #' @description
 #' Abstract `Terminator` class that implements the base functionality each terminator must provide.
