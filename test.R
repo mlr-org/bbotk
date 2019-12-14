@@ -16,16 +16,25 @@ fn = function(dt) {
 
 obj = ObjectiveSO$new(fun = fn, domain = ps1)
 print(obj)
-a = Archive$new(ps1, ps2)
+a = Archive$new(obj$domain, obj$codomain)
 print(a)
+print(a$cols_x)
+print(a$cols_y)
 
 term = TerminatorEvals$new()
 term$param_set$values$n_evals = 2
 print(term$is_terminated(a))
 
-dt = data.table(x_rep_1 = c(1,2), x_rep_2 = c(2, 3))
-print(dt)
-y = obj$eval(dt)
-print(y)
+xdt = data.table(x_rep_1 = c(1,2), x_rep_2 = c(2, 3))
+print(xdt)
+ydt = obj$eval(xdt)
+print(ydt)
+xydt = cbind(xdt, ydt)
+a$add_evals(xydt)
 print(term$is_terminated(a))
+print(a)
+
+ev = Evaluator$new(obj, a, term)
+ev$eval_points(xdt)
+print(a)
 

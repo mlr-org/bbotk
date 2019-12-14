@@ -42,6 +42,7 @@ Roxygen: list(markdown = TRUE, r6 = FALSE)
 RoxygenNote: 7.0.2
 Collate: 
     'Archive.R'
+    'Evaluator.R'
     'Objective.R'
     'Terminator.R'
     'TerminatorClockTime.R'
