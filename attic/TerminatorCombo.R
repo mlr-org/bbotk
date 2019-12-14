@@ -39,9 +39,9 @@ TerminatorCombo = R6Class("TerminatorCombo",
       super$initialize(param_set = ps)
     },
 
-    is_terminated = function(instance) {
+    is_terminated = function(archive) {
       g = if (self$param_set$values$any) any else all
-      g(map_lgl(self$terminators, function(t) t$is_terminated(instance)))
+      g(map_lgl(self$terminators, function(t) t$is_terminated(archive)))
     }
   )
 )

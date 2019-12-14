@@ -37,7 +37,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
       super$initialize(param_set = ps)
     },
 
-    is_terminated = function(instance) {
+    is_terminated = function(archive) {
       pv = self$param_set$values
       iters = pv$iters
 
