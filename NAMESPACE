@@ -2,13 +2,7 @@
 
 export(Objective)
 export(Terminator)
-export(TerminatorClockTime)
-export(TerminatorCombo)
 export(TerminatorEvals)
-export(TerminatorModelTime)
-export(TerminatorNone)
-export(TerminatorPerfReached)
-export(TerminatorStagnation)
 import(checkmate)
 import(data.table)
 import(mlr3misc)

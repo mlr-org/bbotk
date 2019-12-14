@@ -5,7 +5,6 @@ load_all()
 ps1 = ParamDbl$new("x")$rep(2)
 # ps2 = ParamDbl$new("y")$rep(1)
 
-# FIXME: this looks super clumsy
 fn = function(dt) {
   y = map_dbl(seq_row(dt), function(i) {
     x = dt[i,]

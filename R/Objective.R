@@ -19,8 +19,6 @@ Objective = R6Class("Objective",
     fun = NULL,
     domain = NULL,
     codomain = NULL,
-    # FIXME: how do we handle constants? we need an example quick
-    # constants = NULL,
 
     initialize = function(fun, domain, codomain, id = "f") {
       assert_function(fun)
