@@ -13,7 +13,7 @@ fn = function(dt) {
   data.table(y = y)
 }
 
-obj = ObjectiveSO$new(fun = fn, domain = ps1)
+obj = ObjectiveSO$new(fun = fn, domain = ps1, minimize = TRUE)
 print(obj)
 a = Archive$new(obj$domain, obj$codomain)
 print(a)
@@ -34,6 +34,6 @@ print(term$is_terminated(a))
 print(a)
 
 ev = Evaluator$new(obj, a, term)
-ev$eval_points(xdt)
+ev$eval(xdt)
 print(a)
 

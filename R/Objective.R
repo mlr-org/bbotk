@@ -19,16 +19,15 @@ Objective = R6Class("Objective",
     fun = NULL,
     domain = NULL,
     codomain = NULL,
+    minimize = NULL,
 
-    initialize = function(fun, domain, codomain, id = "f") {
-      assert_function(fun)
-      assert_param_set(domain)
-      assert_param_set(codomain)
+    initialize = function(fun, domain, codomain, minimize, id = "f") {
       # FIXME: we need to assert the correct signature of f
-      self$fun = fun
-      self$domain = domain
-      self$codomain = codomain
-      self$id = id
+      self$fun = assert_function(fun)
+      self$domain = assert_param_set(domain)
+      self$codomain = assert_param_set(codomain)
+      self$minimize = assert_logical(minimize)
+      self$id = assert_string(id)
     },
 
     # FIXME: how do we ensure that this can happen in parallel?
@@ -55,11 +54,13 @@ Objective = R6Class("Objective",
   )
 )
 
+
+#' @export
 ObjectiveSO = R6Class("ObjectiveSO", inherit = Objective,
   public = list(
-    initialize = function(fun, domain, id = "f") {
+    initialize = function(fun, domain, minimize, id = "f") {
       codomain = ParamSet$new(list(ParamDbl$new("y")))
-      super$initialize(fun, domain, codomain, id)
+      super$initialize(fun, domain, codomain, minimize, id)
     }
   )
 )

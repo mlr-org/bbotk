@@ -14,7 +14,7 @@ Evaluator = R6Class("Archive",
     },
 
     # FIXME: function is somewhat duplicated with Objective$eval...?
-    eval_points = function(xdt) {
+    eval = function(xdt) {
       # FIXME: this asserts, but we need a better helper for this
       Design$new(self$objective$domain, xdt, FALSE)
       ydt = self$objective$fun(xdt)
