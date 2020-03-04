@@ -58,7 +58,7 @@ Terminator = R6Class("Terminator",
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
     #' Must be implemented in each subclass.
     #'
-    #' @param instance ([TuningInstance]).
+    #' @param instance ([Instance]).
     #'
     #' @return `logical(1)`.
     is_terminated = function(instance) TRUE # overwrite in subclasses

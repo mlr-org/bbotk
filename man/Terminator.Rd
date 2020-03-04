@@ -9,7 +9,7 @@ Set of control parameters for terminator.}
 
 \item{...}{(ignored).}
 
-\item{instance}{(\link{TuningInstance}).}
+\item{instance}{(\link{Instance}).}
 }
 \value{
 \code{logical(1)}.

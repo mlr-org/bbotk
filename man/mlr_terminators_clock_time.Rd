@@ -5,7 +5,7 @@
 \alias{TerminatorClockTime}
 \title{Terminator that stops according to the clock time}
 \arguments{
-\item{instance}{(\link{TuningInstance}).}
+\item{instance}{(\link{Instance}).}
 }
 \value{
 \code{logical(1)}.

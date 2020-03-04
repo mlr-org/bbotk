@@ -5,7 +5,7 @@
 \alias{TerminatorNone}
 \title{Terminator that never stops.}
 \arguments{
-\item{instance}{(\link{TuningInstance}).}
+\item{instance}{(\link{Instance}).}
 }
 \value{
 \code{logical(1)}.

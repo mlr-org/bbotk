@@ -5,7 +5,7 @@
 \alias{TerminatorEvals}
 \title{Terminator that stops after a number of evaluations}
 \arguments{
-\item{instance}{(\link{TuningInstance}).}
+\item{instance}{(\link{Instance}).}
 }
 \value{
 \code{logical(1)}.

@@ -8,7 +8,7 @@
 \item{terminators}{(\code{list()})\cr
 List of objects of class \link{Terminator}.}
 
-\item{instance}{(\link{TuningInstance}).}
+\item{instance}{(\link{Instance}).}
 }
 \value{
 \code{logical(1)}.

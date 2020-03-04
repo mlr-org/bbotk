@@ -5,7 +5,7 @@
 \alias{TerminatorStagnation}
 \title{Terminator that stops when optimization does not improve}
 \arguments{
-\item{instance}{(\link{TuningInstance}).}
+\item{instance}{(\link{Instance}).}
 }
 \value{
 \code{logical(1)}.

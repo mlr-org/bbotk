@@ -5,7 +5,7 @@
 \alias{TerminatorPerfReached}
 \title{Terminator that stops when a performance level has been reached}
 \arguments{
-\item{instance}{(\link{TuningInstance}).}
+\item{instance}{(\link{Instance}).}
 }
 \value{
 \code{logical(1)}.

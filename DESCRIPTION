@@ -41,6 +41,7 @@ NeedsCompilation: no
 Roxygen: list(markdown = TRUE, r6 = FALSE)
 RoxygenNote: 7.0.2
 Collate: 
+    'Instance.R'
     'mlr_terminators.R'
     'Terminator.R'
     'TerminatorClockTime.R'
@@ -50,4 +51,5 @@ Collate:
     'TerminatorNone.R'
     'TerminatorPerfReached.R'
     'TerminatorStagnation.R'
+    'sugar.R'
     'zzz.R'

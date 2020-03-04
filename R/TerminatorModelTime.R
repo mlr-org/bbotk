@@ -35,7 +35,7 @@ TerminatorModelTime = R6Class("TerminatorModelTime",
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
     #'
-    #' @param instance ([TuningInstance]).
+    #' @param instance ([Instance]).
     #'
     #' @return `logical(1)`.
     is_terminated = function(instance) {

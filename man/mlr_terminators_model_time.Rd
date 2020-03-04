@@ -5,7 +5,7 @@
 \alias{TerminatorModelTime}
 \title{Terminator that stops after a budget of model evaluation time is depleted}
 \arguments{
-\item{instance}{(\link{TuningInstance}).}
+\item{instance}{(\link{Instance}).}
 }
 \value{
 \code{logical(1)}.
