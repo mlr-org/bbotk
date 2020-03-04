@@ -20,9 +20,6 @@ Instance = R6Class("Instance",
    #' @field measures (list of [mlr3::Measure]).
    measures = NULL,
    
-   #' @field param_set ([paradox::ParamSet]).
-   param_set = NULL,
-   
    #' @field terminator ([Terminator]).
    terminator = NULL,
    
@@ -60,12 +57,11 @@ Instance = R6Class("Instance",
    #'
    #' @param bm_args (named `list()`)\cr
    #'   Further arguments for [mlr3::benchmark()].
-   initialize = function(task, learner, resampling, measures, param_set, terminator, bm_args = list()) {
+   initialize = function(task, learner, resampling, measures, terminator, bm_args = list()) {
      self$task = assert_task(as_task(task, clone = TRUE))
      self$learner = assert_learner(as_learner(learner, clone = TRUE), task = self$task)
      self$resampling = assert_resampling(as_resampling(resampling, clone = TRUE))
      self$measures = assert_measures(as_measures(measures, clone = TRUE), task = self$task, learner = self$learner)
-     self$param_set = assert_param_set(param_set, must_bounded = TRUE, no_untyped = TRUE)
      self$terminator = assert_terminator(terminator)
      self$bm_args = assert_list(bm_args, names = "unique")
      self$bmr = BenchmarkResult$new(data.table())

@@ -42,7 +42,7 @@ Archive.
 Best \link[mlr3:ResampleResult]{mlr3::ResampleResult}.
 
 The optimization algorithm writes the best found list of settings and
-estimated performance values here. For internal use.
+estimated performance values here.
 }
 \section{Fields}{
 
@@ -54,8 +54,6 @@ estimated performance values here. For internal use.
 \item{\code{resampling}}{(\link[mlr3:Resampling]{mlr3::Resampling})\cr}
 
 \item{\code{measures}}{(list of \link[mlr3:Measure]{mlr3::Measure}).}
-
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
 \item{\code{terminator}}{(\link{Terminator}).}
 
