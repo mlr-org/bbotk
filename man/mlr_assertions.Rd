@@ -13,11 +13,11 @@ assert_set(x, empty = TRUE, .var.name = vname(x))
 \arguments{
 \item{terminator}{(\link{Terminator})}
 
-\item{x}{(\link{any})}
+\item{x}{(any)}
 
-\item{empty}{(\link{logical(1)})}
+\item{empty}{(\code{logical(1)})}
 
-\item{.var.name}{(\link{character(1)})}
+\item{.var.name}{(\code{character(1)})}
 }
 \description{
 Most assertion functions ensure the right class attrbiture, and optionally
