@@ -3,51 +3,61 @@
 \name{Terminator}
 \alias{Terminator}
 \title{Abstract Terminator Class}
-\format{\link[R6:R6Class]{R6::R6Class} object.}
+\arguments{
+\item{param_set}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Set of control parameters for terminator.}
+
+\item{...}{(ignored).}
+
+\item{instance}{(\link{TuningInstance}).}
+}
+\value{
+\code{logical(1)}.
+}
 \description{
-Abstract \code{Terminator} class that implements the base functionality each terminator must provide.
-A terminator is an object that determines when to stop the tuning.
+Abstract \code{Terminator} class that implements the base functionality each
+terminator must provide. A terminator is an object that determines when to
+stop the optimization.
 
-Termination of tuning works as follows:
-\itemize{
-\item Evaluations in a tuner are performed in batches.
-\item Before and after each batch evaluation, the \link{Terminator} is checked, and if it is positive, we stop.
-\item The tuning algorithm itself might decide not to produce any more points, or even might decide to do a smaller batch in its last evaluation.
-}
+Termination of optimization works as follows: * Evaluations in a instance are
+performed in batches. * Before each batch evaluation, the \link{Terminator} is
+checked, and if it is positive, we stop. * The optimization algorithm itself
+might decide not to produce any more points, or even might decide to do a
+smaller batch in its last evaluation.
 
-Therefore the following note seems in order:
-While it is definitely possible to execute a fine-grained control for termination, and for many tuners we can specify exactly when to stop,
-it might happen that too few or even too many evaluations are performed, especially if multiple points are evaluated in a single batch (c.f. batch size parameter of many tuners).
-So it is advised to check the size of the returned archive, in particular if you are benchmarking multiple tuners.
-}
-\section{Construction}{
-\preformatted{t = Terminator$new(param_set = ParamSet$new())
-}
-\itemize{
-\item \code{param_set} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
-Set of control parameters for terminator.
-}
-}
+Therefore the following note seems in order: While it is definitely possible
+to execute a fine-grained control for termination, and for many optimization
+algorithms we can specify exactly when to stop, it might happen that too few
+or even too many evaluations are performed, especially if multiple points are
+evaluated in a single batch (c.f. batch size parameter of many optimization
+algorithms). So it is advised to check the size of the returned archive, in
+particular if you are benchmarking multiple optimization algorithms.
 
-\section{Fields}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
 
-\itemize{
-\item \code{param_set} :: \link[paradox:ParamSet]{paradox::ParamSet}; from construction.
-}
-}
+Helper for print outputs.
 
-\section{Methods}{
+Printer.
 
-\itemize{
-\item \code{is_terminated(archive)}\cr
-\link{Archive} -> \code{logical(1)}\cr
 Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
 Must be implemented in each subclass.
 }
-}
+\section{Fields}{
+
+\describe{
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Set of control parameters for terminator.}
+}}
 
 \seealso{
 Other Terminator: 
-\code{\link{TerminatorEvals}}
+\code{\link{mlr_terminators_clock_time}},
+\code{\link{mlr_terminators_combo}},
+\code{\link{mlr_terminators_evals}},
+\code{\link{mlr_terminators_model_time}},
+\code{\link{mlr_terminators_none}},
+\code{\link{mlr_terminators_perf_reached}},
+\code{\link{mlr_terminators_stagnation}},
+\code{\link{mlr_terminators}}
 }
 \concept{Terminator}
