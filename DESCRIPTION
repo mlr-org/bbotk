@@ -51,5 +51,6 @@ Collate:
     'TerminatorNone.R'
     'TerminatorPerfReached.R'
     'TerminatorStagnation.R'
+    'assertions.R'
     'sugar.R'
     'zzz.R'
