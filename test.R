@@ -10,10 +10,10 @@ fn = function(dt) {
     x = dt[i,]
     sum(x^2)
   })
-  data.table(y = y)
+  data.table(y_rep_1 = y)
 }
 
-obj = ObjectiveSO$new(fun = fn, domain = ps1, minimize = TRUE)
+obj = Objective$new(fun = fn, domain = ps1, minimize = TRUE)
 print(obj)
 a = Archive$new(obj$domain, obj$codomain)
 print(a)
