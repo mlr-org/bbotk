@@ -1,5 +1,5 @@
 
-#' @title Map
+#' @title Objective function with domain and co-domain
 #'
 #' @description
 #' Describes a function (domain) -> (codomain)
@@ -19,7 +19,7 @@ Objective = R6Class("Objective",
     fun = NULL,
     domain = NULL,
     codomain = NULL,
-    # FIXME: minization cannot be put here, if we do not even know that the outout is realvalued
+    #FIXME: we need to assert based on ydim
     minimize = NULL,
 
     initialize = function(fun, domain, ydim = 1L, minimize, id = "f") {
@@ -30,18 +30,8 @@ Objective = R6Class("Objective",
       # FIXME: y-id is magic const
       # FIXME: the names of cod are now y_repl_1 a bit ugly, better y1?
       self$codomain = ParamDbl$new("y")$rep(ydim)
-      self$minimize = assert_logical(minimize)
+      self$minimize = assert_logical(minimize, len = ydim)
       self$id = assert_string(id)
-    },
-
-    # FIXME: how do we ensure that this can happen in parallel?
-    # FIXME: shouldnt the evaluator do this?
-    eval = function(dt) {
-      # FIXME: this asserts, but we need a better helper for this
-      Design$new(self$domain, dt, FALSE)
-      ydt = self$fun(dt)
-      Design$new(self$codomain, ydt, FALSE)
-      return(ydt)
     },
 
     format = function() {
@@ -63,29 +53,6 @@ Objective = R6Class("Objective",
   )
 )
 
-#FIXME: arent objectives always realvalued in the domain? and we really need the 2 subclasses?
-
-
-##' @export
-#ObjectiveSO = R6Class("ObjectiveSO", inherit = Objective,
-#  public = list(
-#    initialize = function(fun, domain, minimize, id = "f") {
-#      codomain = ParamSet$new(list(ParamDbl$new("y")))
-#      super$initialize(fun, domain, codomain, minimize, id) # asserts fun, domain, minimize, id
-#    }
-#  )
-#)
-
-##' @export
-#ObjectiveMO = R6Class("ObjectiveMO", inherit = Objective,
-#  public = list(
-#    initialize = function(fun, domain, codomain, minimize, id = "f") {
-#      # FIXME: name of the output var is magic constant?
-#      codomain = ParamSet$new(list(ParamDbl$new("y")))
-#      super$initialize(fun, domain, codomain, minimize, id) # asserts fun, domain, minimize, id
-#    }
-#  )
-#)
 
 #' @export
 assert_objective = function(x, ydim = NULL) {
