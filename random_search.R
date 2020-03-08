@@ -1,4 +1,7 @@
-
+library(roxygen2)
+library(paradox)
+load_all()
+options(warn = 2L)
 
 random_search = function(objective, terminator, batch_size = 10) {
   assert_r6(objective, "Objective")

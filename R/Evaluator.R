@@ -26,19 +26,29 @@ Evaluator = R6Class("Archive",
       # FIXME: this asserts, but we need a better helper for this
       Design$new(self$objective$domain, xdt, FALSE)
       ydt = data.table()
-      # FIXME: for loop ok, but not great, can we turn the design into a list in an easier way?
-      for (i in 1:nrow(xdt)) {
-        xs = as.list(xdt[i,])
-        print(str(xs))
-        y = self$objective$fun(xs)
-        assert_numeric(y, len = self$objective$ydim, any.missing = FALSE, finite = TRUE)
-        ydt = as.data.table(as.list(y))
-        xydt = cbind(xdt, ydt)
+      n = nrow(xdt)
+      if (use_future()) {
+        lg$debug("Running Evaluator::eval() via future with %i iterations", n)
+        res = future.apply::future_lapply(seq_len(n), workhorse, objective = self$objective, xdt = xdt,
+          future.globals = FALSE, future.scheduling = structure(TRUE, ordering = "random"),
+          future.packages = "bbotk")
+      } else {
+        lg$debug("Running Evaluator::eval() sequentially with %i iterations", n)
+        res = lapply(seq_len(n), workhorse, objective = self$objective, xdt = xdt)
       }
+      ydt = rbindlist(res)
+      xydt = cbind(xdt, ydt)
       self$archive$add_evals(xydt)
       return(ydt)
     }
   )
 )
 
-
+workhorse = function(i, objective, xdt) {
+  xs = as.list(xdt[i,])
+  n = nrow(xdt)
+  lg$info("Eval point '%s' (batch %i/%i)", as_short_string(xs), i, n)
+  y = objective$fun(xs)
+  assert_numeric(y, len = objective$ydim, any.missing = FALSE, finite = TRUE)
+  as.list(y)
+}
