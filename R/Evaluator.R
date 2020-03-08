@@ -48,7 +48,17 @@ workhorse = function(i, objective, xdt) {
   xs = as.list(xdt[i,])
   n = nrow(xdt)
   lg$info("Eval point '%s' (batch %i/%i)", as_short_string(xs), i, n)
-  y = objective$fun(xs)
+  res = encapsulate(
+    #FIXME: this needs to become a configurable option. maybe in evalutor?
+    method = "none",
+    .f = objective$fun,
+    .args = list(x = xs),
+    # FIXME: we likely need to allow the user to configure this? or advice to load all paackaes in the user defined objective function?
+    .pkgs = "bbotk",
+    .seed = NA_integer_
+  )
+  # FIXME: encapsulate also returns time and log, we should probably do something with it?
+  y = res$result
   assert_numeric(y, len = objective$ydim, any.missing = FALSE, finite = TRUE)
   as.list(y)
 }
