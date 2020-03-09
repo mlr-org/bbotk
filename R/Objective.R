@@ -1,17 +1,44 @@
+#FIXME: Let marc do R6 rox2 docs, and iterate over docs
 
 #' @title Objective function with domain and co-domain
 #'
+#' @usage NULL
+#' @format [R6::R6Class] object.
+#'
 #' @description
-#' Describes a function (domain) -> (codomain)
+#' Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 #'
-#' domain, codomain: ParamSet
-#' fun: function. takes 1 list argument and returns a list, with positions and names agreeing with
-#' domain, codomain
+#' @section Construction:
+#' ```
+#' obj = Objective$new(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none")
+#' ```
+#' * `fun` :: `function(x, ...)`\cr
+#'   R function that encodes objective. First argument `x` must be a list, where names and positions
+#'   agree with the parameters specified in `domain`. Returns a numeric of length `ydim`.
+#' * `domain` :: [paradox::ParamSet]\cr
+#'   Specifies domain of function, hence its innput parameters, their types and ranges.
+#' * `ydim` :: `integer(1)`\cr
+#'   Dimension of codomain, ydim=1 implies single-objective, ydim>1 implies multi-objective optimization.
+#' * `minimize` :: named `logical`.
+#'   Should objective (component) function be minimized (or maximized)?
+#'   By naming this logical, you can also define the names of the objectives.
+#'   By default, all objectives are minimized and they are named y1 to y<ydim>.
+#' * `id` :: `character(1)`\cr
+#'   Name of function. Not very much currently used.
+#' * `encapsulate` :: `character(1)`.
+#'   Defines how the [Evaluator] encapsulates function calls.
+#'   See [mlr3misc::encapsulate] for behavior and possible values.
 #'
-#'
-#' fun must be given as a function of two arguments. The second is set from
-#' the param_set. $fun will then only have one parameter.
-#'
+#' @section Fields:
+#' * `fun` :: `function(x, ...)`; from construction
+#' * `domain` :: [paradox::ParamSet]; from construction
+#' * `codomain` :: [paradox::ParamSet]; (Realvalued) codomain as ParamSet, auto-constructed.
+#' * `minimize` :: named `logical`; from construction
+#' * `id` :: `character(1)`.; from construction
+#' * `encapsulate` :: `character(1)`; from construction
+#' * `ydim` :: `integer(1)`; from construction
+#' * `xdim` :: `integer(1)`\cr
+#'    Number of input parameters in `domain`.
 #' @export
 Objective = R6Class("Objective",
   public = list(
@@ -19,19 +46,24 @@ Objective = R6Class("Objective",
     fun = NULL,
     domain = NULL,
     codomain = NULL,
-    #FIXME: we need to assert based on ydim
     minimize = NULL,
+    encapsulate = "none",
 
-    initialize = function(fun, domain, ydim = 1L, minimize, id = "f") {
-      # FIXME: we need to assert the correct signature of f
-      self$fun = assert_function(fun)
+    initialize = function(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none") {
+      self$fun = assert_function(fun, args = "x")
       self$domain = assert_param_set(domain)
       ydim = assert_int(ydim, lower = 1L)
-      # FIXME: y-id is magic const
-      # FIXME: the names of cod are now y_repl_1 a bit ugly, better y1?
-      self$codomain = ParamDbl$new("y")$rep(ydim)
-      self$minimize = assert_logical(minimize, len = ydim)
+      assert_logical(minimize, len = ydim, null.ok = TRUE)
+      if (is.null(minimize))
+        minimize = rep(TRUE, ydim)
+      if (is.null(names(minimize)))
+        names(minimize) = paste0("y", 1:ydim)
+      else
+        assert_named(minimize, "unique")
+      self$minimize = minimize
+      self$codomain = ParamSet$new(lapply(names(minimize), function(s) ParamDbl$new(id = s)))
       self$id = assert_string(id)
+      self$encapsulate = assert_choice(encapsulate, c("none", "evaluate", "callr"))
     },
 
     format = function() {
@@ -54,9 +86,10 @@ Objective = R6Class("Objective",
 )
 
 
-#' @export
-assert_objective = function(x, ydim = NULL) {
-  assert_r6(x, "Objective")
-  if (!is.null()) # FIXME: better error message here
-    assert_equal(x$ydim, ydim)
-}
+# @export
+#assert_objective = function(x, ydim = NULL) {
+#  assert_r6(x, "Objective")
+#  if (!is.null(ydim)) # FIXME: better error message here
+#    assert_true(x$ydim == ydim)
+#  invisible(x)
+#}

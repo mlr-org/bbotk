@@ -1,3 +1,6 @@
+#FIXME: we probably need the Terminator dict and construction sugar from mlr3tuning here?
+# or it could actually stay in mlr3tuning as a part of mlr3? maybe more consistent?
+
 #' @title Terminator that stops after a number of evaluations
 #'
 #' @usage NULL
@@ -20,9 +23,6 @@
 #'
 #' @family Terminator
 #' @export
-#' @examples
-#' TerminatorEvals$new()
-#' term("evals", n_evals = 5)
 TerminatorEvals = R6Class("TerminatorEvals",
   inherit = Terminator,
   public = list(

@@ -2,14 +2,42 @@
 % Please edit documentation in R/Objective.R
 \name{Objective}
 \alias{Objective}
-\title{Map}
+\title{Objective function with domain and co-domain}
+\format{\link[R6:R6Class]{R6::R6Class} object.}
 \description{
-Describes a function (domain) -> (codomain)
-
-domain, codomain: ParamSet
-fun: function. takes 1 list argument and returns a list, with positions and names agreeing with
-domain, codomain
-
-fun must be given as a function of two arguments. The second is set from
-the param_set. $fun will then only have one parameter.
+Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }
+\section{Construction}{
+\preformatted{obj = Objective$new(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none")
+}
+\itemize{
+\item \code{fun} :: \verb{function(x, ...)}\cr
+R function that encodes objective. First argument \code{x} must be a list, where names and positions
+agree with the parameters specified in \code{domain}. Returns a numeric of length \code{ydim}.
+\item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
+Specifies domain of function and all
+\item \code{ydim} :: \code{integer(1)}\cr
+Dimension of codomain, 1 implies single-objective, > 1 implies multi-objective optimization.
+\item \code{minimize} :: named \code{logical}.
+Should objective (component) function be minimized (or maximized)?
+\item \code{id} :: \code{character(1)}\cr
+Name of function
+\item \code{encapsulate} :: \code{character(1)}.
+}
+}
+
+\section{Fields}{
+
+\itemize{
+\item \code{fun} :: \verb{function(x, ...)}; from construction
+\item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}; from construction
+\item \code{ydim} :: \link{integer}; from construction
+\item \code{minimize} :: named \code{logical}; from construction
+\item \code{id} :: \code{character(1)}.; from construction
+\item \code{encapsulate} :: \code{character(1)}; from construction
+\item \code{ydim} :: \code{integer(1)}; from construction
+\item \code{xdim} :: \code{integer(1)}\cr
+Number of input parameters in \code{domain}.
+}
+}
+

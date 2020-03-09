@@ -35,15 +35,21 @@ Imports:
     paradox,
     R6
 Suggests:
-    testthat
+    testthat,
+    callr,
+    evaluate,
+    future (>= 1.9.0),
+    future.apply (>= 1.1.0),
+    future.callr
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, r6 = FALSE)
 RoxygenNote: 7.0.2
-Collate: 
+Collate:
     'Archive.R'
     'Evaluator.R'
     'Objective.R'
     'Terminator.R'
     'TerminatorEvals.R'
+    'helper.R'
     'zzz.R'

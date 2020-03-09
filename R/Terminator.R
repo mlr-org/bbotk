@@ -1,4 +1,6 @@
-#FIXME: terminator contains minimize / maximize code and measures
+#FIXME: if the terminator only has access to archive, how does it have access to "minimze"? some tuners
+# need this? maybe the archive should contain the objective?
+
 
 #' @title Abstract Terminator Class
 #'

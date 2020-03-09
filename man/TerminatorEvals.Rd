@@ -22,10 +22,6 @@ Number of allowed evaluations, default is 100L
 }
 }
 
-\examples{
-TerminatorEvals$new()
-term("evals", n_evals = 5)
-}
 \seealso{
 Other Terminator: 
 \code{\link{Terminator}}
