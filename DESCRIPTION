@@ -61,4 +61,5 @@ Collate:
     'TerminatorStagnation.R'
     'assertions.R'
     'helper.R'
+    'sugar.R'
     'zzz.R'
