@@ -39,8 +39,7 @@ Suggests:
     callr,
     evaluate,
     future (>= 1.9.0),
-    future.apply (>= 1.1.0),
-    future.callr
+    future.apply (>= 1.1.0)
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, r6 = FALSE)

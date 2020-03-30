@@ -18,5 +18,3 @@ random_search = function(objective, terminator, batch_size = 10) {
 # term$param_set$values$n_evals = 2
 # a = random_search(obj, term)
 # print(a)
-
-

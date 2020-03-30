@@ -1,4 +1,5 @@
 context("random search")
+
 test_that("random_search", {
   obj = Objective$new(fun = OBJ_2D, domain = PS_2D)
   term = TerminatorEvals$new()
@@ -12,4 +13,3 @@ test_that("random_search", {
   )
   expect_names(colnames(a$data), permutation.of = c("batch_nr", "x1", "x2", "y1", "timestamp"))
 })
-

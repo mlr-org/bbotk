@@ -6,4 +6,3 @@ test_that("Objective", {
   expect_equal(obj$ydim, 1)
   expect_equal(obj$minimize, c(y1 = TRUE))
 })
-

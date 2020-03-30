@@ -11,4 +11,4 @@
 ^attic$
 ^docs$
 ^pkgdown$
-man-roxygen
+^.github$

@@ -1,8 +1,7 @@
 # bbotk - Black-Box Optimization Toolkit
 
-[![Build Status](https://img.shields.io/travis/mlr-org/bbotk/master?label=Linux&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/bbotk)
+![R-CMD-check](https://github.com/mlr-org/bbotk/workflows/R-CMD-check/badge.svg?branch=master)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/bbotk)](https://cran.r-project.org/package=bbotk)
-[![codecov](https://codecov.io/gh/mlr-org/bbotk/branch/master/graph/badge.svg)](https://codecov.io/gh/mlr-org/bbotk)
 
 ## Installation
 
