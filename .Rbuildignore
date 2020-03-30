@@ -11,3 +11,4 @@
 ^attic$
 ^docs$
 ^pkgdown$
+^.github$
