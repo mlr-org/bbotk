@@ -5,14 +5,13 @@
 \alias{TerminatorClockTime}
 \title{Terminator that stops according to the clock time}
 \arguments{
-\item{instance}{(\link{Instance}).}
+\item{archive}{(\link{Archive}).}
 }
 \value{
 \code{logical(1)}.
 }
 \description{
-Class to terminate the optimization either after the complete process took a
-number of seconds on the clock or a fixed time point has been reached (as
+Class to terminate the optimization after a fixed time point has been reached (as
 reported by \code{\link[=Sys.time]{Sys.time()}}).
 
 Creates a new instance of this \link[R6:R6Class]{R6} class.
@@ -31,9 +30,6 @@ term("clock_time")
 \section{Parameters}{
 
 \itemize{
-\item \code{secs} (\code{numeric(1)})\cr
-Maximum allowed time, in seconds, default is 100.
-Mutually exclusive with argument \code{stop_time}.
 \item \code{stop_time} (\code{POSIXct(1)})\cr
 Terminator stops after this point in time.
 Mutually exclusive with argument \code{secs}.
@@ -41,8 +37,6 @@ Mutually exclusive with argument \code{secs}.
 }
 
 \examples{
-term("clock_time", secs = 1800)
-
 stop_time = as.POSIXct("2030-01-01 00:00:00")
 term("clock_time", stop_time = stop_time)
 }
@@ -51,9 +45,9 @@ Other Terminator:
 \code{\link{Terminator}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},
-\code{\link{mlr_terminators_model_time}},
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
+\code{\link{mlr_terminators_run_time}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }

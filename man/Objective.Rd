@@ -3,7 +3,9 @@
 \name{Objective}
 \alias{Objective}
 \title{Objective function with domain and co-domain}
-\format{\link[R6:R6Class]{R6::R6Class} object.}
+\format{
+\link[R6:R6Class]{R6::R6Class} object.
+}
 \description{
 Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }
@@ -15,14 +17,18 @@ Describes a black-box objective function that maps an arbitrary domain to a nume
 R function that encodes objective. First argument \code{x} must be a list, where names and positions
 agree with the parameters specified in \code{domain}. Returns a numeric of length \code{ydim}.
 \item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
-Specifies domain of function and all
+Specifies domain of function, hence its innput parameters, their types and ranges.
 \item \code{ydim} :: \code{integer(1)}\cr
-Dimension of codomain, 1 implies single-objective, > 1 implies multi-objective optimization.
+Dimension of codomain, ydim=1 implies single-objective, ydim>1 implies multi-objective optimization.
 \item \code{minimize} :: named \code{logical}.
 Should objective (component) function be minimized (or maximized)?
+By naming this logical, you can also define the names of the objectives.
+By default, all objectives are minimized and they are named y1 to y<ydim>.
 \item \code{id} :: \code{character(1)}\cr
-Name of function
+Name of function. Not very much currently used.
 \item \code{encapsulate} :: \code{character(1)}.
+Defines how the \link{Evaluator} encapsulates function calls.
+See \link[mlr3misc:encapsulate]{mlr3misc::encapsulate} for behavior and possible values.
 }
 }
 
@@ -31,7 +37,7 @@ Name of function
 \itemize{
 \item \code{fun} :: \verb{function(x, ...)}; from construction
 \item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}; from construction
-\item \code{ydim} :: \link{integer}; from construction
+\item \code{codomain} :: \link[paradox:ParamSet]{paradox::ParamSet}; (Realvalued) codomain as ParamSet, auto-constructed.
 \item \code{minimize} :: named \code{logical}; from construction
 \item \code{id} :: \code{character(1)}.; from construction
 \item \code{encapsulate} :: \code{character(1)}; from construction

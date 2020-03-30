@@ -4,7 +4,9 @@
 \name{mlr_terminators}
 \alias{mlr_terminators}
 \title{Dictionary of Terminators}
-\format{\link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3misc:Dictionary]{mlr3misc::Dictionary}.}
+\format{
+\link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3misc:Dictionary]{mlr3misc::Dictionary}.
+}
 \description{
 A simple \link[mlr3misc:Dictionary]{mlr3misc::Dictionary} storing objects of class \link{Terminator}. Each
 terminator has an associated help page, see \code{mlr_terminators_[id]}.
@@ -31,9 +33,9 @@ Other Terminator:
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},
-\code{\link{mlr_terminators_model_time}},
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
+\code{\link{mlr_terminators_run_time}},
 \code{\link{mlr_terminators_stagnation}}
 }
 \concept{Terminator}

@@ -20,7 +20,7 @@
 #' evaluated in a single batch (c.f. batch size parameter of many optimization
 #' algorithms). So it is advised to check the size of the returned archive, in
 #' particular if you are benchmarking multiple optimization algorithms.
-#' 
+#'
 #'
 #' @family Terminator
 #' @export
@@ -58,9 +58,11 @@ Terminator = R6Class("Terminator",
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
     #' Must be implemented in each subclass.
     #'
-    #' @param instance ([Instance]).
+    #' @param archive ([Archive]).
     #'
     #' @return `logical(1)`.
-    is_terminated = function(instance) TRUE # overwrite in subclasses
+    is_terminated = function(archive) {
+      stop("not implemented")  # overwrite in subclasses
+    }
   )
 )

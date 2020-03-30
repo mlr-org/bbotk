@@ -8,17 +8,20 @@
 #'
 #' @section Construction:
 #' ```
-#' archive = Archive$new(domain, codomain)
+#' archive = Archive$new(domain, codomain, minimize)
 #' ```
 #'
 #' * `domain` :: [paradox::ParamSet]\cr
 #'   Domain of objective function that is logged into archive.
 #' * `codomain` :: [paradox::ParamSet]\cr
 #'   Codomain of objective function that is logged into archive.
+#' * `minimize` :: named `logical`.
+#'   Should objective (component) function be minimized (or maximized)?
 #'
 #' @section Fields:
 #' * `domain` :: [paradox::ParamSet] from construction\cr
 #' * `codomain` :: [paradox::ParamSet] from construction\cr
+#' * `minimize` :: named `logical`; from construction
 #' * `data` :: [data.table::data.table]\cr
 #'   Holds data of the archive.
 #' * `n_evals` :: `integer(1)`\cr
@@ -35,14 +38,11 @@
 Archive = R6Class("Archive",
   public = list(
     data = NULL,
-    domain = NULL,
-    codomain = NULL,
+    objective = NULL,
 
-    initialize = function(domain, codomain) {
-      assert_param_set(domain)
-      assert_param_set(codomain)
-      self$domain = domain
-      self$codomain = codomain
+    initialize = function(objective) {
+      assert_r6(objective, "Objective")
+      self$objective = objective
       self$data = data.table()
     },
 
@@ -52,6 +52,7 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       colnames(ydt) = self$objective$codomain$ids()
       xydt[, ("opt_x") := list(parlist_untrafoed)]
+      xydt[, ("timestamp") := as.integer(Sys.time())]
       batch_nr = self$archive$data$batch_nr
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
       xydt[, ("batch_nr") := batch_nr]
@@ -66,8 +67,9 @@ Archive = R6Class("Archive",
 
   active = list(
     n_evals = function() nrow(self$data),
-    cols_x = function() self$domain$ids(),
-    cols_y = function() self$codomain$ids()
+    cols_x = function() self$objective$domain$ids(),
+    cols_y = function() self$objective$codomain$ids(),
+    start_time = function() min(self$data$timestamp)
     # idx_unevaled = function() self$data$y
   ),
 )

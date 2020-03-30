@@ -33,7 +33,7 @@ TerminatorModelTime = R6Class("TerminatorModelTime",
       super$initialize(param_set = ps)
     },
 
-    is_terminated = function(instance) {
+    is_terminated = function(archive) {
       if (is.null(instance$bmr))
         return(FALSE)
       # extract train and predict timings and sum them up

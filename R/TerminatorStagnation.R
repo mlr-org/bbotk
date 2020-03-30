@@ -25,7 +25,7 @@
 TerminatorStagnation = R6Class("TerminatorStagnation",
   inherit = Terminator,
   public = list(
-   
+
    #' @description
    #' Creates a new instance of this [R6][R6::R6Class] class.
    initialize = function() {
@@ -36,27 +36,27 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
      ps$values = list(iters = 10, threshold = 0)
      super$initialize(param_set = ps)
    },
-   
+
    #' @description
    #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
    #'
-   #' @param instance ([Instance]).
+   #' @param archive ([Archive]).
    #'
    #' @return `logical(1)`.
-   is_terminated = function(instance) {
+   is_terminated = function(archive) {
      pv = self$param_set$values
      iters = pv$iters
-     
+
      aggr = instance$archive(unnest = "no")
      if (nrow(aggr) <= iters) {
        return(FALSE)
      }
-     
+
      m = instance$measures[[1L]]
-     
+
      perf_before = head(aggr[[m$id]], -iters)
      perf_window = tail(aggr[[m$id]],  iters)
-     
+
      if (m$minimize) {
        min(perf_window) >= min(perf_before) - pv$threshold
      } else {

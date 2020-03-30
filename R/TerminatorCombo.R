@@ -23,12 +23,12 @@
 #' )
 TerminatorCombo = R6Class("TerminatorCombo",
   inherit = Terminator,
-  
+
   public = list(
     #' @field terminators (`list()`)\cr
     #'   List of objects of class [Terminator].
     terminators = NULL,
-    
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -40,16 +40,16 @@ TerminatorCombo = R6Class("TerminatorCombo",
       ps$values = list(any = TRUE)
       super$initialize(param_set = ps)
     },
-    
+
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
     #'
-    #' @param instance ([Instance]).
+    #' @param archive ([Archive]).
     #'
     #' @return `logical(1)`.
-    is_terminated = function(instance) {
+    is_terminated = function(archive) {
       g = if (self$param_set$values$any) any else all
-      g(map_lgl(self$terminators, function(t) t$is_terminated(instance)))
+      g(map_lgl(self$terminators, function(t) t$is_terminated(archive)))
     }
   )
 )

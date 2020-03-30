@@ -3,7 +3,9 @@
 \name{Evaluator}
 \alias{Evaluator}
 \title{Evaluator for logged and parralel evaluations}
-\format{\link[R6:R6Class]{R6::R6Class} object.}
+\format{
+\link[R6:R6Class]{R6::R6Class} object.
+}
 \description{
 Wraps an \link{Objective} function with extra services for convenient evaluation.
 \itemize{

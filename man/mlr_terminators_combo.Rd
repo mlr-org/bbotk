@@ -8,7 +8,7 @@
 \item{terminators}{(\code{list()})\cr
 List of objects of class \link{Terminator}.}
 
-\item{instance}{(\link{Instance}).}
+\item{archive}{(\link{Archive}).}
 }
 \value{
 \code{logical(1)}.
@@ -56,9 +56,9 @@ Other Terminator:
 \code{\link{Terminator}},
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_evals}},
-\code{\link{mlr_terminators_model_time}},
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
+\code{\link{mlr_terminators_run_time}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }

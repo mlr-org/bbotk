@@ -5,7 +5,7 @@
 \alias{TerminatorPerfReached}
 \title{Terminator that stops when a performance level has been reached}
 \arguments{
-\item{instance}{(\link{Instance}).}
+\item{archive}{(\link{Archive}).}
 }
 \value{
 \code{logical(1)}.
@@ -33,6 +33,7 @@ term("perf_reached")
 Performance level that needs to be reached, default is 0.
 Terminates if the performance exceeds (respective measure has to be maximized) or
 falls below (respective measure has to be minimized) this value.
+For multi-objective optimization this has to be a vector and all single values have to be exceeded.
 }
 }
 
@@ -46,8 +47,8 @@ Other Terminator:
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},
-\code{\link{mlr_terminators_model_time}},
 \code{\link{mlr_terminators_none}},
+\code{\link{mlr_terminators_run_time}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }

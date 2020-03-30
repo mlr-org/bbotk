@@ -9,7 +9,7 @@ Set of control parameters for terminator.}
 
 \item{...}{(ignored).}
 
-\item{instance}{(\link{Instance}).}
+\item{archive}{(\link{Archive}).}
 }
 \value{
 \code{logical(1)}.
@@ -54,9 +54,9 @@ Other Terminator:
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},
-\code{\link{mlr_terminators_model_time}},
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
+\code{\link{mlr_terminators_run_time}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }
