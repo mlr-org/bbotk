@@ -1,8 +1,7 @@
 context("Evaluator")
 
 test_that("Evaluator", {
-  obj = Objective$new(fun = OBJ_2D, domain = PS_2D, minimize = TRUE)
-  a = Archive$new(obj)
+  a = Archive$new(OBJ_2D)
   term = TerminatorEvals$new()
   term$param_set$values$n_evals = 2
   ev = Evaluator$new(obj, a, term)
