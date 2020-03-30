@@ -60,6 +60,17 @@ Archive = R6Class("Archive",
       xydt[, "batch_nr" := batch_nr]
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
+    
+    best = function() {
+      if (self$n_batch == 0) {
+        stop("No results stored in archive")
+      }
+      
+      tab = self$data
+      order = if (self$objective$minimize) 1 else -1
+      setorderv(tab, self$objective$codomain$ids(), order = order)
+      tab[1,]
+    },
 
     print = function() {
       catf("Archive:")
