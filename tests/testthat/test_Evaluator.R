@@ -4,7 +4,7 @@ test_that("Evaluator", {
   a = Archive$new(OBJ_2D)
   term = TerminatorEvals$new()
   term$param_set$values$n_evals = 2
-  ev = Evaluator$new(obj, a, term)
+  ev = Evaluator$new(OBJ_2D, a, term)
   ev$eval_batch(xdt = data.table(x1 = 0, x2 = 0))
   expect_equal(ev$archive$n_evals, 1L)
   ev$eval_batch(xdt = data.table(x1 = c(1,2), x2 = c(1,2)))
