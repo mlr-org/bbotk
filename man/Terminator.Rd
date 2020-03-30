@@ -3,7 +3,9 @@
 \name{Terminator}
 \alias{Terminator}
 \title{Abstract Terminator Class}
-\format{\link[R6:R6Class]{R6::R6Class} object.}
+\format{
+\link[R6:R6Class]{R6::R6Class} object.
+}
 \description{
 Abstract \code{Terminator} class that implements the base functionality each terminator must provide.
 A terminator is an object that determines when to stop the tuning.

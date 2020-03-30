@@ -3,7 +3,9 @@
 \name{TerminatorEvals}
 \alias{TerminatorEvals}
 \title{Terminator that stops after a number of evaluations}
-\format{\link[R6:R6Class]{R6::R6Class} object inheriting from \link{Terminator}.}
+\format{
+\link[R6:R6Class]{R6::R6Class} object inheriting from \link{Terminator}.
+}
 \description{
 Class to terminate the tuning depending on the number of evaluations.
 An evaluation is defined by one resampling of a parameter value.

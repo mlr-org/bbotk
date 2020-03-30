@@ -3,7 +3,9 @@
 \name{Archive}
 \alias{Archive}
 \title{Container for objective function evaluations}
-\format{\link[R6:R6Class]{R6::R6Class} object.}
+\format{
+\link[R6:R6Class]{R6::R6Class} object.
+}
 \description{
 Container around a data.table which stores all performed \link{Objective} function calls by the \link{Evaluator}.
 }

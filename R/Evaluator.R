@@ -22,9 +22,9 @@
 #' * Automatic checking for termination. Evaluations of design points are performed in batches.
 #'   Before a batch is evaluated, the [Terminator] is queried for the remaining budget.
 #'   If the available budget is exhausted, an exception is raised, and no further evaluations can be performed from this point on.
-#' * Parallel evaluation of a batch via [future.apply::future.lapply].
+#' * Parallel evaluation of a batch via [future.apply::future_lapply()].
 #' * Logging of evaluations on R console
-#' * Encapsulated evaluation via evaluate / callr with function [mlr3misc::encapsulate]
+#' * Encapsulated evaluation via evaluate / callr with function [mlr3misc::encapsulate()]
 #'   to guard against exceptions and even segfaults.
 #'   Note that behavior is define in [Objective] argument `encapsulate`.
 #'
