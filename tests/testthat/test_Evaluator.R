@@ -13,6 +13,3 @@ test_that("Evaluator", {
   expect_error(ev$eval_batch(xdt = data.table(x1 = 1, x2 = 1)),
     class = "terminated_error")
 })
-
-
-

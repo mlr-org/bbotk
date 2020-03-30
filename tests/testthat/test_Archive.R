@@ -9,5 +9,3 @@ test_that("Archive", {
   expect_equal(a$cols_x, c("x1", "x2"))
   expect_equal(a$cols_y, c("y"))
 })
-
-
