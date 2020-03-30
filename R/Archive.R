@@ -54,10 +54,10 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       colnames(ydt) = self$objective$codomain$ids()
       xydt = cbind(xdt, ydt)
-      xydt[, ("timestamp") := as.integer(Sys.time())]
+      xydt[, "timestamp" := as.integer(Sys.time())]
       batch_nr = self$data$batch_nr
       batch_nr = if (length(batch_nr) > 0) max(batch_nr) + 1L else 1L
-      xydt[, ("batch_nr") := batch_nr]
+      xydt[, "batch_nr" := batch_nr]
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 

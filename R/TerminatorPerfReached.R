@@ -52,9 +52,9 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     is_terminated = function(archive) {
       pv = self$param_set$values
       ycols = archive$cols_y
-      ydata = archive[, cols_y]
-      for (yname in archive$cols_y) {
-        if (archive$minimize[yname]) {
+      ydata = archive[, ycols]
+      for (yname in ycols) {
+        if (archive$objective$minimize[yname]) {
           ydata[, yname := yname <= pv$level[i]]
         } else {
           ydata[, yname := yname >= pv$level[i]]

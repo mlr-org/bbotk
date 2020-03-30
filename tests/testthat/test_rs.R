@@ -10,6 +10,6 @@ test_that("random_search", {
     types = c("numeric", "numeric", "numeric", "list"),
     any.missing = FALSE
   )
-  expect_names(colnames(a$data), permutation.of = c("batch_nr", "x1", "x2", "y1", "opt_x"))
+  expect_names(colnames(a$data), permutation.of = c("batch_nr", "x1", "x2", "y1", "timestamp"))
 })
 

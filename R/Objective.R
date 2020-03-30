@@ -22,7 +22,7 @@
 #' * `minimize` :: named `logical`.
 #'   Should objective (component) function be minimized (or maximized)?
 #'   By naming this logical, you can also define the names of the objectives.
-#'   By default, all objectives are minimized and they are named `y1` to `y[ydim]`.
+#'   By default, all objectives are minimized and they are named y1 to y<ydim>.
 #' * `id` :: `character(1)`\cr
 #'   Name of function. Not very much currently used.
 #' * `encapsulate` :: `character(1)`.
