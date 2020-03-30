@@ -46,16 +46,16 @@ Archive = R6Class("Archive",
       self$data = data.table()
     },
 
-    add_evals = function(xs, xdt, ydt) {
+    add_evals = function(xdt, ydt) {
       # FIXME: add checks here for the dts and their domains
       assert_data_table(xdt)
       assert_data_table(ydt)
-      colnames(ydt) = self$objective$codomain$ids()
-      xydt[, ("opt_x") := list(parlist_untrafoed)]
-      batch_nr = self$archive$data$batch_nr
-      batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
+      colnames(ydt) = self$codomain$ids()
+      xydt = cbind(xdt, ydt)
+      batch_nr = self$data$batch_nr
+      batch_nr = if (length(batch_nr) > 0) max(batch_nr) + 1L else 1L
       xydt[, ("batch_nr") := batch_nr]
-      self$data = rbindlist(list(self$data, dt), fill = TRUE, use.names = TRUE)
+      self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
     print = function() {

@@ -97,8 +97,6 @@ Evaluator = R6Class("Archive",
       }
 
       ydt = rbindlist(res)
-      xydt = cbind(xdt, ydt)
-
       # add column "batch_nr"
 
       # add column "tune_x"
