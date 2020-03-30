@@ -18,7 +18,7 @@
 #' @export
 #' @examples
 #' term("combo",
-#'   list(term("model_time", secs = 60), term("evals", n_evals = 10)),
+#'   list(term("clock_time", stop_time = Sys.time() + 60), term("evals", n_evals = 10)),
 #'   any = FALSE
 #' )
 TerminatorCombo = R6Class("TerminatorCombo",
@@ -38,7 +38,8 @@ TerminatorCombo = R6Class("TerminatorCombo",
       self$terminators = assert_list(terminators, types = "Terminator", min.len = 1L)
       ps = ParamSet$new(list(ParamLgl$new("any", default = TRUE, tags = "required")))
       ps$values = list(any = TRUE)
-      super$initialize(param_set = ps)
+      properties = Reduce(intersect, map(terminators, "properties"))
+      super$initialize(param_set = ps, properties = properties)
     },
 
     #' @description

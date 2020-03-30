@@ -29,7 +29,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
       ps = ParamSet$new(list(ParamInt$new("n_evals", lower = 1L, default = 100L, tags = "required")))
       ps$values = list(n_evals = 100L)
 
-      super$initialize(param_set = ps)
+      super$initialize(param_set = ps, properties = "multi-objective")
     },
 
     #' @description

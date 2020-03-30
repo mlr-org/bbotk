@@ -47,7 +47,7 @@ Terminate iff any included terminator is positive? (not all), default is `TRUE.
 
 \examples{
 term("combo",
-  list(term("model_time", secs = 60), term("evals", n_evals = 10)),
+  list(term("clock_time", stop_time = Sys.time() + 60), term("evals", n_evals = 10)),
   any = FALSE
 )
 }

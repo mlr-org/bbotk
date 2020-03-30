@@ -7,6 +7,9 @@
 \item{param_set}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Set of control parameters for terminator.}
 
+\item{properties}{(\code{character()})\cr
+Set of properties.}
+
 \item{...}{(ignored).}
 
 \item{archive}{(\link{Archive}).}
@@ -47,6 +50,9 @@ Must be implemented in each subclass.
 \describe{
 \item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Set of control parameters for terminator.}
+
+\item{\code{properties}}{(\code{character()})\cr
+Set of properties.}
 }}
 
 \seealso{
