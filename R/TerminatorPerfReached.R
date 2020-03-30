@@ -29,12 +29,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       custom_check = function(x) {
-        check_numeric(x, finite = TRUE, any.missing = FALSE, )
-        if (is.numeric(x) && is.named(x)) {
-          return(TRUE)
-        } else {
-          "`level` has to be a numeric vector of the same length as the dimension of the codomain."
-        }
+        check_numeric(x, finite = TRUE, any.missing = FALSE, names = "unique")
       }
       ps = ParamSet$new(list(
         ParamUty$new("level", default = 0, tags = "required", custom_check = custom_check)

@@ -26,9 +26,12 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
+      custom_check = function(x) {
+        check_class(x, "POSIXct")
+      }
       ps = ParamSet$new(list(
-        ParamUty$new("stop_time", tags = "required"))
-      )
+        ParamUty$new("stop_time", tags = "required", custom_check = custom_check)
+      ))
       super$initialize(param_set = ps)
     },
 
