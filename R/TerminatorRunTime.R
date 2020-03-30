@@ -26,8 +26,9 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       ps = ParamSet$new(list(
-        ParamDbl$new("secs", lower = 0),
+        ParamDbl$new("secs", lower = 0, default = 30),
       ))
+      ps$param_set$values$secs = 30
       super$initialize(param_set = ps)
     },
 

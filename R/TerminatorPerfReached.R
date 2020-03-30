@@ -32,9 +32,9 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
         check_numeric(x, finite = TRUE, any.missing = FALSE, names = "unique")
       }
       ps = ParamSet$new(list(
-        ParamUty$new("level", default = 0, tags = "required", custom_check = custom_check)
+        ParamUty$new("level", tags = "required", custom_check = custom_check, default = c(y1 = 0.1))
       ))
-      ps$values = list(level = 0)
+      ps$values = list(level = c(y1 = 0.1))
       super$initialize(param_set = ps)
     },
 
@@ -47,15 +47,18 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     is_terminated = function(archive) {
       pv = self$param_set$values
       ycols = archive$cols_y
-      ydata = archive[, ycols]
-      for (yname in ycols) {
-        if (archive$objective$minimize[yname]) {
-          ydata[, yname := yname <= pv$level[i]]
+      if (archive$n_evals == 0)
+        return(FALSE)
+      ydata = archive$data[, ycols, ,drop = FALSE, with = FALSE]
+      col_success = mapply(function(col, col_min, col_lvl) {
+        if (col_min) {
+          col <= col_lvl
         } else {
-          ydata[, yname := yname >= pv$level[i]]
+          col >= col_lvl
         }
-      }
-      return(any(apply(ydata, 1, all)))
+      }, col = ydata, col_min = archive$objective$minimize, col_lvl = pv$level)
+      col_success = as.matrix(col_success)
+      return(any(apply(col_success, 1, all)))
     }
   )
 )
