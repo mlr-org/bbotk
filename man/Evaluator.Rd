@@ -13,9 +13,9 @@ Wraps an \link{Objective} function with extra services for convenient evaluation
 \item Automatic checking for termination. Evaluations of design points are performed in batches.
 Before a batch is evaluated, the \link{Terminator} is queried for the remaining budget.
 If the available budget is exhausted, an exception is raised, and no further evaluations can be performed from this point on.
-\item Parallel evaluation of a batch via \link[future.apply:future.lapply]{future.apply::future.lapply}.
+\item Parallel evaluation of a batch via \code{\link[future.apply:future_lapply]{future.apply::future_lapply()}}.
 \item Logging of evaluations on R console
-\item Encapsulated evaluation via evaluate / callr with function \link[mlr3misc:encapsulate]{mlr3misc::encapsulate}
+\item Encapsulated evaluation via evaluate / callr with function \code{\link[mlr3misc:encapsulate]{mlr3misc::encapsulate()}}
 to guard against exceptions and even segfaults.
 Note that behavior is define in \link{Objective} argument \code{encapsulate}.
 }

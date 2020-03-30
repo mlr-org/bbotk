@@ -39,24 +39,26 @@ Archive = R6Class("Archive",
   public = list(
     data = NULL,
     objective = NULL,
+    start_time = NULL,
 
     initialize = function(objective) {
       assert_r6(objective, "Objective")
       self$objective = objective
+      self$start_time = Sys.time()
       self$data = data.table()
     },
 
-    add_evals = function(xs, xdt, ydt) {
+    add_evals = function(xdt, ydt) {
       # FIXME: add checks here for the dts and their domains
       assert_data_table(xdt)
       assert_data_table(ydt)
       colnames(ydt) = self$objective$codomain$ids()
-      xydt[, ("opt_x") := list(parlist_untrafoed)]
+      xydt = cbind(xdt, ydt)
       xydt[, ("timestamp") := as.integer(Sys.time())]
-      batch_nr = self$archive$data$batch_nr
-      batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
+      batch_nr = self$data$batch_nr
+      batch_nr = if (length(batch_nr) > 0) max(batch_nr) + 1L else 1L
       xydt[, ("batch_nr") := batch_nr]
-      self$data = rbindlist(list(self$data, dt), fill = TRUE, use.names = TRUE)
+      self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
     print = function() {
@@ -68,8 +70,7 @@ Archive = R6Class("Archive",
   active = list(
     n_evals = function() nrow(self$data),
     cols_x = function() self$objective$domain$ids(),
-    cols_y = function() self$objective$codomain$ids(),
-    start_time = function() min(self$data$timestamp)
+    cols_y = function() self$objective$codomain$ids()
     # idx_unevaled = function() self$data$y
   ),
 )
