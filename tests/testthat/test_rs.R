@@ -1,7 +1,7 @@
 context("random search")
 
 test_that("random_search", {
-  obj = Objective$new(fun = OBJ_2D, domain = PS_2D)
+  obj = OBJ_2D
   term = TerminatorEvals$new()
   term$param_set$values$n_evals = 7L
   a = random_search(obj, term, batch_size = 1L)
