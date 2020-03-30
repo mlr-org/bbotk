@@ -23,7 +23,7 @@ TerminatorNone = R6Class("TerminatorNone",
       super$initialize()
     },
 
-    is_terminated = function(instance) return(FALSE)
+    is_terminated = function(archive) return(FALSE)
   )
 )
 

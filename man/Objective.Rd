@@ -23,7 +23,7 @@ Dimension of codomain, ydim=1 implies single-objective, ydim>1 implies multi-obj
 \item \code{minimize} :: named \code{logical}.
 Should objective (component) function be minimized (or maximized)?
 By naming this logical, you can also define the names of the objectives.
-By default, all objectives are minimized and they are named \code{y1} to \code{y[ydim]}.
+By default, all objectives are minimized and they are named y1 to y<ydim>.
 \item \code{id} :: \code{character(1)}\cr
 Name of function. Not very much currently used.
 \item \code{encapsulate} :: \code{character(1)}.

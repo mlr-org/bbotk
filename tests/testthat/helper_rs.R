@@ -2,7 +2,7 @@ random_search = function(objective, terminator, batch_size = 10) {
   assert_r6(objective, "Objective")
   assert_r6(terminator, "Terminator")
   batch_size = assert_int(batch_size, coerce = TRUE)
-  archive = Archive$new(objective$domain, objective$codomain)
+  archive = Archive$new(objective)
   ev = Evaluator$new(objective, archive, terminator)
   while(!terminator$is_terminated(archive)) {
     des = generate_design_random(objective$domain, batch_size)

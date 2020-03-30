@@ -21,4 +21,3 @@ terminated_error = function(evaluator) {
 
   set_class(list(message = msg, call = NULL), c("terminated_error", "error", "condition"))
 }
-

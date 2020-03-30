@@ -35,7 +35,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
       super$initialize(param_set = ps)
     },
 
-    is_terminated = function(instance) {
+    is_terminated = function(archive) {
       pv = self$param_set$values
       m = instance$measures[[1L]]
       aggr = instance$archive(unnest = "no")
