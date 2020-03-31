@@ -62,11 +62,13 @@ Evaluator = R6Class("Archive",
     objective = NULL,
     archive = NULL,
     terminator = NULL,
+    terminated = FALSE,
 
     initialize = function(objective, archive, terminator) {
       self$objective = assert_r6(objective, "Objective")
       self$archive = assert_r6(archive, "Archive")
       self$terminator = assert_r6(terminator, "Terminator")
+      self$terminated = FALSE
     },
 
     eval_batch = function(xdt) {
@@ -75,7 +77,8 @@ Evaluator = R6Class("Archive",
       # FIXME: this asserts, but we need a better helper for this
       # this checks the validity of xdt lines in the paramset
       design = Design$new(self$objective$domain, xdt, remove_dupl = FALSE)
-      if (self$terminator$is_terminated(self$archive)) {
+      if (self$terminated || self$terminator$is_terminated(self$archive)) {
+        self$terminated = TRUE
         stop(terminated_error(self))
       }
       # convert configs to lists and remove non-satisfied deps

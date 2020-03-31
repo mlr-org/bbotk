@@ -13,6 +13,6 @@ test_that("TerminatorPerfReached works for multi-objective", {
   term = TerminatorPerfReached$new()
   term$param_set$values$level = c(y1 = 0.2, y2 = -0.2)
   a = random_search(obj, term, batch_size = 1L)
-  a$data[, both := y1 < 0.2 & y2 > -0.2]
+  a$data[, both := y1 <= 0.2 & y2 >= -0.2]
   expect_equal(sum(a$data$both), 1)
 })

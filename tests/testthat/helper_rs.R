@@ -4,9 +4,10 @@ random_search = function(objective, terminator, batch_size = 10) {
   batch_size = assert_int(batch_size, coerce = TRUE)
   archive = Archive$new(objective)
   ev = Evaluator$new(objective, archive, terminator)
+  terminated = FALSE
   while(!terminator$is_terminated(archive)) {
     des = generate_design_random(objective$domain, batch_size)
-    ev$eval_batch(des$data)
+    tryCatch(ev$eval_batch(des$data), error = identity)
   }
   return(archive)
 }

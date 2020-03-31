@@ -50,14 +50,14 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
       if (archive$n_evals == 0)
         return(FALSE)
       ydata = archive$data[, ycols, ,drop = FALSE, with = FALSE]
-      col_success = mapply(function(col, col_min, col_lvl) {
+      col_success = Map(function(col, col_min, col_lvl) {
         if (col_min) {
           col <= col_lvl
         } else {
           col >= col_lvl
         }
       }, col = ydata, col_min = archive$objective$minimize, col_lvl = pv$level)
-      col_success = as.matrix(col_success)
+      col_success = array(unlist(col_success), dim = dim(ydata))
       return(any(apply(col_success, 1, all)))
     }
   )
