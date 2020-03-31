@@ -34,7 +34,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
        ParamDbl$new("threshold", lower = 0, default = 0, tags = "required")
       ))
       ps$values = list(iters = 10, threshold = 0)
-      super$initialize(param_set = ps)
+      super$initialize(param_set = ps, properties = "multi-objective")
     },
 
     #' @description
@@ -46,18 +46,20 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
     is_terminated = function(archive) {
       pv = self$param_set$values
       iters = pv$iters
-      ycol = archive$cols_y
-      if (length(ycol) > 1) {
-        stop ("Mulit-objective termination not supported with TerminatorStagnation.")
-      }
-      ydata = archive[[ycol]]
-      perf_before = head(ydata, -iters)
-      perf_window = tail(ydata,  iters)
-      if (archive$objective$minimize) {
-        min(perf_window) >= min(perf_before) - pv$threshold
-      } else {
-        max(perf_window) <= max(perf_before) + pv$threshold
-      }
+      ycols = archive$cols_y
+      if (archive$n_evals <= pv$iters) #we cannot terminate until we have enough observations
+        return(FALSE)
+      ydata = archive$data[, ycols, ,drop = FALSE, with = FALSE]
+      col_success = mapply(function(col, col_min) {
+        perf_before = head(col, -iters)
+        perf_window = tail(col,  iters)
+        if (col_min) {
+          min(perf_window) >= min(perf_before) - pv$threshold
+        } else {
+          max(perf_window) <= max(perf_before) + pv$threshold
+        }
+      }, col = ydata, col_min = archive$objective$minimize)
+      all(col_success)
     }
   )
 )
