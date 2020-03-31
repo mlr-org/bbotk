@@ -62,6 +62,8 @@ Archive = R6Class("Archive",
     },
     
     best = function(m = NULL) {
+      m = assert_integerish(m)
+      
       if (self$n_batch == 0) {
         stop("No results stored in archive")
       }
