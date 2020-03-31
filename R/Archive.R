@@ -61,8 +61,8 @@ Archive = R6Class("Archive",
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
     
-    best = function(m = NULL) {
-      m = assert_integerish(m)
+    get_best = function(m = NULL) {
+      m = assert_integerish(m, null.ok = TRUE)
       
       if (self$n_batch == 0) {
         stop("No results stored in archive")
@@ -86,7 +86,7 @@ Archive = R6Class("Archive",
 
   active = list(
     n_evals = function() nrow(self$data),
-    n_batch = function() max(self$data$batch_nr),
+    n_batch = function() if(is.null(self$data$batch_nr)) 0L else max(self$data$batch_nr),
     cols_x = function() self$objective$domain$ids(),
     cols_y = function() self$objective$codomain$ids()
     # idx_unevaled = function() self$data$y
