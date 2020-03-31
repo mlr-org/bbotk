@@ -13,9 +13,9 @@ Describes a black-box objective function that maps an arbitrary domain to a nume
 \preformatted{obj = Objective$new(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none")
 }
 \itemize{
-\item \code{fun} :: \verb{function(x, ...)}\cr
-R function that encodes objective. First argument \code{x} must be a list, where names and positions
-agree with the parameters specified in \code{domain}. Returns a numeric of length \code{ydim}.
+\item \code{fun} :: \verb{function(xdt, ...)}\cr
+R function that encodes objective. First argument \code{xdt} must be a \code{data.table}, where colnames
+agree with the parameters specified in \code{domain}. Returns a \code{data.table} with columns that contain the \code{xdt} values, the outcomes in columns that agree with the \code{codomain} and additional columns.
 \item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
 Specifies domain of function, hence its innput parameters, their types and ranges.
 \item \code{ydim} :: \code{integer(1)}\cr

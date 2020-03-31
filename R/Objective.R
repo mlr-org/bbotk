@@ -12,9 +12,9 @@
 #' ```
 #' obj = Objective$new(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none")
 #' ```
-#' * `fun` :: `function(x, ...)`\cr
-#'   R function that encodes objective. First argument `x` must be a list, where names and positions
-#'   agree with the parameters specified in `domain`. Returns a numeric of length `ydim`.
+#' * `fun` :: `function(xdt, ...)`\cr
+#'   R function that encodes objective. First argument `xdt` must be a `data.table`, where colnames
+#'   agree with the parameters specified in `domain`. Returns a `data.table` with columns that contain the `xdt` values, the outcomes in columns that agree with the `codomain` and additional columns.
 #' * `domain` :: [paradox::ParamSet]\cr
 #'   Specifies domain of function, hence its innput parameters, their types and ranges.
 #' * `ydim` :: `integer(1)`\cr
@@ -49,8 +49,8 @@ Objective = R6Class("Objective",
     minimize = NULL,
     encapsulate = "none",
 
-    initialize = function(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none") {
-      self$fun = assert_function(fun, args = "x")
+    initialize = function(fun, domain, ydim = 1L, minimize = NULL, id = "f") {
+      self$fun = assert_function(fun, args = "xdt")
       self$domain = assert_param_set(domain)
       ydim = assert_int(ydim, lower = 1L)
       assert_logical(minimize, len = ydim, null.ok = TRUE)
@@ -63,7 +63,6 @@ Objective = R6Class("Objective",
       self$minimize = minimize
       self$codomain = ParamSet$new(lapply(names(minimize), function(s) ParamDbl$new(id = s)))
       self$id = assert_string(id)
-      self$encapsulate = assert_choice(encapsulate, c("none", "evaluate", "callr"))
     },
 
     format = function() {

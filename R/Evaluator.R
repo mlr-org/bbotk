@@ -85,28 +85,13 @@ Evaluator = R6Class("Archive",
       parlist_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
       parlist_untrafoed = design$transpose(trafo = FALSE, filter_na = TRUE)
 
-      #FIXME: run unit tests with encaps + termination and real function error
-      ydt = data.table()
-      n = nrow(xdt)
-      if (use_future()) {
-        lg$debug("Running Evaluator::eval() via future with %i iterations", n)
-        res = future.apply::future_lapply(seq_len(n), workhorse,
-          objective = self$objective, xs = parlist_trafoed,
-          future.globals = FALSE, future.scheduling = structure(TRUE, ordering = "random"),
-          future.packages = "bbotk")
-      } else {
-        lg$debug("Running Evaluator::eval() sequentially with %i iterations", n)
-        res = lapply(seq_len(n), workhorse, objective = self$objective, xs = parlist_trafoed)
-      }
+      lg$debug("Running objective$fun() with %i points", nrow(xdt))
+      res = self$objective$fun(xdt) #res will be checked in add_evals()
 
-      ydt = rbindlist(res)
-      # add column "batch_nr"
+      # merge untrafoed xdt to res
 
-      # add column "tune_x"
-      #FIXME: in mlr3tuning this was call "tune_x"
-      # FIXME: maybe handle "opt_x" and "batch_nr" down in call "add_evals"?
-      self$archive$add_evals(xdt, ydt)
-      return(ydt)
+      self$archive$add_evals(res)
+      return(res)
     }
   )
 )

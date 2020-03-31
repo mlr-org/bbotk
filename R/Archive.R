@@ -48,29 +48,27 @@ Archive = R6Class("Archive",
       self$data = data.table()
     },
 
-    add_evals = function(xdt, ydt) {
+    add_evals = function(xydt) {
       # FIXME: add checks here for the dts and their domains
-      assert_data_table(xdt)
-      assert_data_table(ydt)
-      colnames(ydt) = self$objective$codomain$ids()
-      xydt = cbind(xdt, ydt)
+      assert_data_table(xydt)
+      assert_subset(c(self$cols_x, self$cols_y), colnames(xydt))
       xydt[, "timestamp" := as.integer(Sys.time())]
       batch_nr = self$data$batch_nr
       batch_nr = if (length(batch_nr) > 0) max(batch_nr) + 1L else 1L
       xydt[, "batch_nr" := batch_nr]
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
-    
+
     get_best = function(m = NULL) {
       m = assert_integerish(m, null.ok = TRUE)
-      
+
       if (self$n_batch == 0) {
         stop("No results stored in archive")
       }
       if(is.null(m)) {
         m = 1:self$n_batch
       }
-      
+
       tab = self$data
       tab = tab[batch_nr %in% m,]
       order = if (self$objective$minimize) 1 else -1
