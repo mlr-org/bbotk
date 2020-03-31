@@ -7,5 +7,5 @@ test_that("TerminatorClockTime works", {
   term$param_set$values$stop_time = now + 2L
   a = random_search(obj, term, batch_size = 1L)
   time_needed = as.numeric(difftime(Sys.time(), now), units = "secs")
-  expect_equal(as.numeric(time_needed), 2, tolerance = 0.15)
+  expect_true(time_needed > 2)
 })
