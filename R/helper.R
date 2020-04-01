@@ -12,11 +12,11 @@ use_future = function() {
   return(TRUE)
 }
 
-terminated_error = function(evaluator) {
+terminated_error = function(objective) {
   msg = sprintf(
-    fmt = "Evaluator (obj:%s, term:%s) terminated",
-    evaluator$objective$id,
-    format(evaluator$terminator)
+    fmt = "Objective (obj:%s, term:%s) terminated",
+    objective$id,
+    format(objective$terminator)
   )
 
   set_class(list(message = msg, call = NULL), c("terminated_error", "error", "condition"))

@@ -3,9 +3,7 @@
 \name{Objective}
 \alias{Objective}
 \title{Objective function with domain and co-domain}
-\format{
-\link[R6:R6Class]{R6::R6Class} object.
-}
+\format{\link[R6:R6Class]{R6::R6Class} object.}
 \description{
 Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }

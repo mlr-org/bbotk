@@ -1,15 +1,13 @@
-random_search = function(objective, terminator, batch_size = 10) {
+random_search = function(objective, batch_size = 10) {
   assert_r6(objective, "Objective")
-  assert_r6(terminator, "Terminator")
   batch_size = assert_int(batch_size, coerce = TRUE)
-  archive = Archive$new(objective)
-  ev = Evaluator$new(objective, archive, terminator)
-  terminated = FALSE
-  while(!terminator$is_terminated(archive)) {
-    des = generate_design_random(objective$domain, batch_size)
-    tryCatch(ev$eval_batch(des$data), error = identity)
-  }
-  return(archive)
+  tryCatch({
+    repeat {
+       des = generate_design_random(objective$domain, batch_size)
+       objective$eval_batch(des$data)
+      }
+    }, terminated_error = function(cond) {})
+  return(objective$archive)
 }
 
 # ps1 = ParamDbl$new("x", lower = -1, upper = 1)$rep(2)

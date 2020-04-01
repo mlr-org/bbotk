@@ -1,4 +1,17 @@
 #FIXME: Let marc do R6 rox2 docs, and iterate over docs
+#FIXME: do we want the "unnest" feature as in mlr3tuning
+#FIXME: how do we handle it that we can actually log multiple extra things to the archive from the objective?
+# we need to check in mlr3tuning the case of SOO but with multiple measures
+# FIXME: implement the "tuner_objective" service function which can directly be passed to on optimizer
+# FIXME: do we need the start time in the evaluator
+# FIXME: we could add some basic, simple optimizers from R here. connecting them here would enable them for many
+#  tasks in optimization, not only mlr3tuning. think then how mlr3mbo extends this system then / regiusters itself
+# FIXME: maybe also connect some stuff from ecr2?
+# #FIXME: provide some basic MOO functionality
+# FIXME: write a simple tutorial. this should include how parallezation works. does this go into the mlr3 book?
+# FIXME: implement "best" function from Tuning Instance
+# FIXME: is ist irgendwie komisch wann / wo wie die exception von eval_batch geworfen und gefangen wird
+# das kann man auch in test_rs bei der random search sehen
 
 #' @title Objective function with domain and co-domain
 #'
@@ -47,10 +60,13 @@ Objective = R6Class("Objective",
     domain = NULL,
     codomain = NULL,
     minimize = NULL,
+    terminator = NULL,
     encapsulate = "none",
+    is_terminated = FALSE,
+    archive = NULL,
 
-    initialize = function(fun, domain, ydim = 1L, minimize = NULL, id = "f") {
-      self$fun = assert_function(fun, args = "xdt")
+    initialize = function(fun, domain, ydim = 1L, minimize = NULL, terminator, id = "f") {
+      self$fun = assert_function(fun, args = "xss")
       self$domain = assert_param_set(domain)
       ydim = assert_int(ydim, lower = 1L)
       assert_logical(minimize, len = ydim, null.ok = TRUE)
@@ -62,7 +78,9 @@ Objective = R6Class("Objective",
         assert_named(minimize, "unique")
       self$minimize = minimize
       self$codomain = ParamSet$new(lapply(names(minimize), function(s) ParamDbl$new(id = s)))
+      self$terminator = assert_r6(terminator, "Terminator")
       self$id = assert_string(id)
+      self$archive = Archive$new(self)
     },
 
     format = function() {
@@ -75,6 +93,24 @@ Objective = R6Class("Objective",
       print(self$domain)
       catf("Codomain:")
       print(self$codomain)
+    },
+
+    eval_batch = function(xdt) {
+      # xdt can contain missings because of non-fulfilled dependencies
+      assert_data_table(xdt, any.missing = TRUE, min.rows = 1L, min.cols = 1L)
+      if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
+        self$is_terminated = TRUE
+        stop(terminated_error(self))
+      }
+      # convert configs to lists and remove non-satisfied deps
+      # FIXME: this asserts, but we need a better helper for this
+      # this checks the validity of xdt lines in the paramset
+      design = Design$new(self$domain, xdt, remove_dupl = FALSE)
+      xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
+      lg$debug("Running objective$fun() with %i points", nrow(xdt))
+      ydt = self$fun(xss_trafoed) #res will be checked in add_evals()
+      self$archive$add_evals(xdt, xss_trafoed, ydt)
+      return(invisible(ydt))
     }
   ),
 
@@ -92,3 +128,27 @@ Objective = R6Class("Objective",
 #    assert_true(x$ydim == ydim)
 #  invisible(x)
 #}
+
+
+
+
+
+workhorse = function(i, objective, xs) {
+  x = as.list(xs[[i]])
+  n = length(xs)
+  lg$info("Eval point '%s' (batch %i/%i)", as_short_string(x), i, n)
+  res = encapsulate(
+    method = objective$encapsulate,
+    .f = objective$fun,
+    .args = list(x = x),
+    # FIXME: we likely need to allow the user to configure this? or advice to load all paackaes in the user defined objective function?
+    .pkgs = "bbotk",
+    .seed = NA_integer_
+  )
+  # FIXME: encapsulate also returns time and log, we should probably do something with it?
+  y = res$result
+  assert_numeric(y, len = objective$ydim, any.missing = FALSE, finite = TRUE)
+  lg$info("Result '%s'", as_short_string(y))
+  as.list(y)
+}
+

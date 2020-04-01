@@ -48,10 +48,15 @@ Archive = R6Class("Archive",
       self$data = data.table()
     },
 
-    add_evals = function(xydt) {
+    add_evals = function(xdt, xss_trafoed, ydt) {
       # FIXME: add checks here for the dts and their domains
-      assert_data_table(xydt)
+      # FIXME: make asserts better!
+      assert_data_table(xdt)
+      assert_data_table(ydt)
+      assert_list(xss_trafoed)
+      xydt = cbind(xdt, ydt)
       assert_subset(c(self$cols_x, self$cols_y), colnames(xydt))
+      xydt[, "opt_x"] = xss_trafoed
       xydt[, "timestamp" := as.integer(Sys.time())]
       batch_nr = self$data$batch_nr
       batch_nr = if (length(batch_nr) > 0) max(batch_nr) + 1L else 1L
