@@ -76,7 +76,7 @@ Archive = R6Class("Archive",
 
       tab = self$data
       tab = tab[batch_nr %in% m,]
-      order = if (self$objective$minimize) 1 else -1
+      order = if (self$objective$minimize[1]) 1 else -1
       setorderv(tab, self$objective$codomain$ids(), order = order)
       tab[1,]
     },
