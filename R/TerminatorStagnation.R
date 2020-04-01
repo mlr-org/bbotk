@@ -1,3 +1,8 @@
+#FIXME: it is undocumented what it means that this terminator works in the MOO-case
+# am also unsure that the current way the code works actually makes sense for MOO?
+# i disabled the unit test for that too
+
+
 #' @title Terminator that stops when optimization does not improve
 #'
 #' @name mlr_terminators_stagnation
@@ -44,6 +49,9 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+
+
+
       pv = self$param_set$values
       iters = pv$iters
       ycols = archive$cols_y

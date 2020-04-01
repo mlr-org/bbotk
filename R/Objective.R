@@ -12,6 +12,7 @@
 # FIXME: implement "best" function from Tuning Instance
 # FIXME: is ist irgendwie komisch wann / wo wie die exception von eval_batch geworfen und gefangen wird
 # das kann man auch in test_rs bei der random search sehen
+# FIXME: Objective (or the Archive) should have a reset / clear functiuon to wipe the Archive
 
 #' @title Objective function with domain and co-domain
 #'
@@ -111,6 +112,11 @@ Objective = R6Class("Objective",
       ydt = self$fun(xss_trafoed) #res will be checked in add_evals()
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       return(invisible(ydt))
+    },
+
+    clear = function() {
+      self$archive$clear()
+      self$is_terminated = FALSE
     }
   ),
 

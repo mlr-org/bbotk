@@ -1,3 +1,5 @@
+#FIXME:
+
 #' @title Terminator that stops when a performance level has been reached
 #'
 #' @name mlr_terminators_perf_reached

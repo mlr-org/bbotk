@@ -84,6 +84,10 @@ Archive = R6Class("Archive",
     print = function() {
       catf("Archive:")
       print(self$data)
+    },
+
+    clear = function() {
+      self$data = data.table()
     }
   ),
 
