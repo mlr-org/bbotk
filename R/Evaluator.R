@@ -76,15 +76,17 @@ Evaluator = R6Class("Archive",
       assert_data_table(xdt, any.missing = TRUE, min.rows = 1L, min.cols = 1L)
       # FIXME: this asserts, but we need a better helper for this
       # this checks the validity of xdt lines in the paramset
-      design = Design$new(self$objective$domain, xdt, remove_dupl = FALSE)
       if (self$terminated || self$terminator$is_terminated(self$archive)) {
         self$terminated = TRUE
         stop(terminated_error(self))
       }
       # convert configs to lists and remove non-satisfied deps
-      parlist_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
-      parlist_untrafoed = design$transpose(trafo = FALSE, filter_na = TRUE)
-
+      if (self$objective$domain$has_trafo) {
+        stop("trafos not supported currently")
+        design = Design$new(self$objective$domain, xdt, remove_dupl = FALSE)
+        xdt_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE) #FIXME: MAkes more sense to pass nested lists to objective or one column
+        xdt_trafoed = rbindlist(xdt_trafoed, fill = TRUE)
+      }
       lg$debug("Running objective$fun() with %i points", nrow(xdt))
       res = self$objective$fun(xdt) #res will be checked in add_evals()
 
