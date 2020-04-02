@@ -70,6 +70,6 @@ Optimizer = R6Class("Optimizer",
   ),
   
   private = list(
-    .optimize = function(optinst) stop("abstract"),
+    .optimize = function(optinst) stop("abstract")
   )
 )
