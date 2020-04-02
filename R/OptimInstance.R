@@ -79,7 +79,7 @@ OptimInstance = R6Class("OptimInstance",
   active = list(
     #' @field result
     result = function() {
-      list(feat = private$.result$feat, perf = private$.result$perf)
+      list(x = private$.result$x, y = private$.result$y)
     }
   ),
   
