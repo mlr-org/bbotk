@@ -44,12 +44,10 @@
 #'   See [mlr3misc::encapsulate] for behavior and possible values.
 #'
 #' @section Fields:
-#' * `fun` :: `function(x, ...)`; from construction
+#' * `id` :: `character(1)`.; from construction
+#' * `properties` :: `character()`.; from construction
 #' * `domain` :: [paradox::ParamSet]; from construction
 #' * `codomain` :: [paradox::ParamSet]; (Realvalued) codomain as ParamSet, auto-constructed.
-#' * `minimize` :: named `logical`; from construction
-#' * `id` :: `character(1)`.; from construction
-#' * `encapsulate` :: `character(1)`; from construction
 #' * `ydim` :: `integer(1)`; from construction
 #' * `xdim` :: `integer(1)`\cr
 #'    Number of input parameters in `domain`.
@@ -57,31 +55,27 @@
 Objective = R6Class("Objective",
   public = list(
     id = NULL,
-    fun = NULL,
+    properties = NULL,
     domain = NULL,
     codomain = NULL,
-    minimize = NULL,
-    terminator = NULL,
-    encapsulate = "none",
-    is_terminated = FALSE,
-    archive = NULL,
 
-    initialize = function(fun, domain, ydim = 1L, minimize = NULL, terminator, id = "f") {
-      self$fun = assert_function(fun, args = "xss")
-      self$domain = assert_param_set(domain)
-      ydim = assert_int(ydim, lower = 1L)
-      assert_logical(minimize, len = ydim, null.ok = TRUE)
-      if (is.null(minimize))
-        minimize = rep(TRUE, ydim)
-      if (is.null(names(minimize)))
-        names(minimize) = paste0("y", 1:ydim)
-      else
-        assert_named(minimize, "unique")
-      self$minimize = minimize
-      self$codomain = ParamSet$new(lapply(names(minimize), function(s) ParamDbl$new(id = s)))
-      self$terminator = assert_r6(terminator, "Terminator")
+    initialize = function(id = "f", properties, domain, codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
       self$id = assert_string(id)
-      self$archive = Archive$new(self)
+      self$domain = assert_param_set(domain)
+
+      assert_codomain = function(x) {
+          # check that "codomain" is
+          # (1) all numeric and
+          # (2) every parameter's tags contain at most one of 'minimize' or 'maximize' and
+          # (3) there is at least one parameter with tag 'minimize' / 'maximize'
+          assert_param_set(x)
+          assert_true(all(x$is_number))
+          assert_true(all(sapply(x$tags, function(x) sum(x %in% c("minimize", "maximize"))) <= 1))
+          assert_true(any(c("minimize", "maximize") %in% unlist(x$tags)))
+      }
+
+      self$codomain = assert_codomain(codomain)
+      self$properties = assert_character(properties) #FIXME: assert_subset(properties, blabot_reflections$objective_properties)
     },
 
     format = function() {
@@ -96,27 +90,24 @@ Objective = R6Class("Objective",
       print(self$codomain)
     },
 
-    eval_batch = function(xdt) {
-      # xdt can contain missings because of non-fulfilled dependencies
-      assert_data_table(xdt, any.missing = TRUE, min.rows = 1L, min.cols = 1L)
-      if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
-        self$is_terminated = TRUE
-        stop(terminated_error(self))
-      }
-      # convert configs to lists and remove non-satisfied deps
-      # FIXME: this asserts, but we need a better helper for this
-      # this checks the validity of xdt lines in the paramset
-      design = Design$new(self$domain, xdt, remove_dupl = FALSE)
-      xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
-      lg$debug("Running objective$fun() with %i points", nrow(xdt))
-      ydt = self$fun(xss_trafoed) #res will be checked in add_evals()
-      self$archive$add_evals(xdt, xss_trafoed, ydt)
-      return(invisible(ydt))
+    eval = function(xs) {
+      self$eval_batch(list(xs))[[1]]
     },
 
-    clear = function() {
-      self$archive$clear()
-      self$is_terminated = FALSE
+    eval_many = function(xss) {
+      lapply(x, self$evaluate)
+    },
+
+    eval_checked = function(xs) {
+      self$domain$assert(xs)
+      res = self$eval(xs)
+      self$codomain$assert(res)
+    },
+
+    eval_many_checked = function(xss) {
+      lapply(xss, self$domain$assert)
+      res = self$evaluate_many(xss)
+      lapply(res, self$codomain$assert)
     }
   ),
 
