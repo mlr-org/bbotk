@@ -57,19 +57,34 @@ Optimizer = R6Class("Optimizer",
     
     #' @description 
     #' Performes the optimization.
-    #' @param optinst [OptimInstance]
-    optimize = function(optinst) {
-      assert_r6(optinst, "OptimInstance")
+    #' @param inst [OptimInstance]
+    optimize = function(inst) {
+      assert_r6(inst, "OptimInstance")
       require_namespace(self$packages)
-      require_namespace(optinst$objective$packages)
+      require_namespace(inst$objective$packages)
       # check dependencies
       # check supported parameter class
-      private$.optimize(optinst)
-      private$.best(optinst)
+      private$.optimize(inst)
+      private$.best(inst)
     }
   ),
   
   private = list(
-    .optimize = function(optinst) stop("abstract")
+    .optimize = function(inst) stop("abstract"),
+    
+    .assign_result = function(inst) {
+      optimizer_assign_result_default(inst)
+    }
   )
 )
+
+optimizer_assign_result_default = function(inst) {
+  assert_r6(inst, "FSelectInstance")
+
+  res = inst$archive$get_best()
+  x = as.matrix(res[, inst$objective$domain$ids(), with = FALSE])[1,]
+  y =  as.matrix(res[, inst$objective$codomain$ids(), with=FALSE])[1,]
+  
+  inst$assign_result(x, y)
+  invisible(NULL)
+}
