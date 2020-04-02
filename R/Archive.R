@@ -38,12 +38,15 @@
 Archive = R6Class("Archive",
   public = list(
     data = NULL,
-    objective = NULL,
+    domain = NULL,
+    codomain = NULL,
     start_time = NULL,
 
-    initialize = function(objective) {
-      assert_r6(objective, "Objective")
-      self$objective = objective
+    initialize = function(domain, codomain) {
+      assert_param_set(domain)
+      assert_param_set(codomain)
+      self$domain = domain
+      self$codomain = codomain
       self$start_time = Sys.time()
       self$data = data.table()
     },
@@ -76,6 +79,7 @@ Archive = R6Class("Archive",
 
       tab = self$data
       tab = tab[batch_nr %in% m,]
+      # FIXME: the minimize info needs to be taken from codomain
       order = if (self$objective$minimize[1]) 1 else -1
       setorderv(tab, self$objective$codomain$ids(), order = order)
       tab[1,]

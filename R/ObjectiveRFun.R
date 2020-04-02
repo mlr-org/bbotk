@@ -29,7 +29,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
       super$initialize(id = id, domain = domain, codomain = codomain, properties = properties)
     },
 
-    evaluate = function(x) {
+    eval = function(x) {
       private$.fun(x)
     }
   ),

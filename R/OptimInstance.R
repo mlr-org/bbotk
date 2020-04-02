@@ -39,6 +39,7 @@ OptimInstance = R6Class("OptimInstance",
         self$objective = objective
         self$param_set = param_set
         self$terminator = terminator
+        self$archive = Archive$new(domain = param_set, codomain = objective$codomain)
       },
 
       #' @description
@@ -60,12 +61,12 @@ OptimInstance = R6Class("OptimInstance",
       #' function should be internally called by the tuner.
       #' @param xdt [data.table::data.table]
       eval_batch = function(xdt) {
-        if (self$terminator$is_terminated(self)) {
+        if (self$terminator$is_terminated(self$archive)) {
           return(NULL)
         }
         design = Design$new(self$param_set, xdt, remove_dupl = FALSE)
         xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
-        ydt = self$objective$evaluate_many(xdt)
+        ydt = self$objective$eval_many(xdt)
         # FIXME: also add things like parlist_trafo, parlist_untrafoed to result
         # FIXME: collect the trace in some way
         self$archive$add_evals(xdt, xss_trafoed, ydt)
