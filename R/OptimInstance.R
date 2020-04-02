@@ -44,6 +44,12 @@ OptimInstance = R6Class("OptimInstance",
         self$terminator = assert_terminator(terminator)
         self$archive = Archive$new(domain = param_set, codomain = objective$codomain)
       },
+      
+      #' @description
+      #' Helper for print outputs.
+      format = function() {
+        sprintf("<%s>", class(self)[1L])
+      },
 
       #' @description
       #' Evaluates all hyperparameter configurations in `dt` through
