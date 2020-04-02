@@ -4,9 +4,9 @@ PS_2D = ParamSet$new(list(
   ParamDbl$new("x2", lower = -1, upper = 1)
 ))
 FUN_2D = function(xss) {
-  ys = map_dbl(xss, function(x) sum(as.numeric(x))^2)
-  data.table(y1 = ys)
+  map_dbl(xss, function(x) sum(as.numeric(x))^2)
 }
+
 OBJ_2D = function(n_evals = 2L) {
   term = TerminatorEvals$new()
   term$param_set$values$n_evals = 2L
