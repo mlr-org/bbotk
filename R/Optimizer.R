@@ -71,9 +71,5 @@ Optimizer = R6Class("Optimizer",
   
   private = list(
     .optimize = function(optinst) stop("abstract"),
-    .best = function(optinst) {
-      # default method to get "best" instances; should respect optinst$objective$codomain$tags being "minimize" or "maximize"
-      return(best_result_in_optinst)
-    }
   )
 )
