@@ -1,19 +1,3 @@
-#FIXME: Let marc do R6 rox2 docs, and iterate over docs
-#FIXME: do we want the "unnest" feature as in mlr3tuning
-#FIXME: how do we handle it that we can actually log multiple extra things to the archive from the objective?
-# we need to check in mlr3tuning the case of SOO but with multiple measures
-# FIXME: implement the "tuner_objective" service function which can directly be passed to on optimizer
-# FIXME: do we need the start time in the evaluator
-# FIXME: we could add some basic, simple optimizers from R here. connecting them here would enable them for many
-#  tasks in optimization, not only mlr3tuning. think then how mlr3mbo extends this system then / regiusters itself
-# FIXME: maybe also connect some stuff from ecr2?
-# #FIXME: provide some basic MOO functionality
-# FIXME: write a simple tutorial. this should include how parallezation works. does this go into the mlr3 book?
-# FIXME: implement "best" function from Tuning Instance
-# FIXME: is ist irgendwie komisch wann / wo wie die exception von eval_batch geworfen und gefangen wird
-# das kann man auch in test_rs bei der random search sehen
-# FIXME: Objective (or the Archive) should have a reset / clear functiuon to wipe the Archive
-
 #' @title Objective function with domain and co-domain
 #'
 #' @description
