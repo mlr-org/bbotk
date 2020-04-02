@@ -56,17 +56,18 @@ OptimInstance = R6Class("OptimInstance",
       #' Before each batch-evaluation, the [Terminator] is checked, and if it
       #' is positive, an exception of class `terminated_error` is raised. This
       #' function should be internally called by the tuner.
-      #' @param dt [data.table::data.table]
-      eval_batch = function(dt) {
+      #' @param xdt [data.table::data.table]
+      eval_batch = function(xdt) {
         if (self$terminator$is_terminated(self)) {
           return(NULL)
         }
-        design = Design$new(self$param_set, dt, remove_dupl = FALSE)
-        parlist_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
-        result = self$objective$evaluate_many(dt)
-        # TODO: also add things like parlist_trafo, parlist_untrafoed to result
-        database = if (is.null(database)) result else rbind(database, result)  # collect the trace in some way
-        result
+        design = Design$new(self$param_set, xdt, remove_dupl = FALSE)
+        xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
+        ydt = self$objective$evaluate_many(xdt)
+        # FIXME: also add things like parlist_trafo, parlist_untrafoed to result
+        # FIXME: collect the trace in some way
+        self$archive$add_evals(xdt, xss_trafoed, ydt)
+        return(invisible(ydt))
       },
       
       #' @description
