@@ -19,18 +19,18 @@ Optimizer = R6Class("Optimizer",
     #' @field param_classes `character()`
     param_classes = NULL,
     
-    #' @field properties 
+    #' @field properties `character()`
     properties = NULL,
     
-    #' @field packages
+    #' @field packages `character()`
     packages = NULL,
     
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param param_set [paradox::ParamSet]
     #' @param param_classes `character()`
-    #' @param properties 
-    #' @param packages
+    #' @param properties `character()`
+    #' @param packages `character()`
     initialize = function(param_set, param_classes, properties, packages = character(0)) {
       self$param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
@@ -39,7 +39,7 @@ Optimizer = R6Class("Optimizer",
     },
     
     #' @description 
-    #' Performes the optimization
+    #' Performes the optimization.
     #' @param optinst [OptimInstance]
     optimize = function(optinst) {
       assert_r6(optinst, "OptimInstance")
