@@ -31,6 +31,8 @@ Note that behavior is define in \link{Objective} argument \code{encapsulate}.
 
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 
+Helper for print outputs.
+
 Evaluates all hyperparameter configurations in \code{dt} through
 resampling, where each configuration is a row, and columns are scalar
 parameters. eturns a named list with the following elements:
@@ -63,5 +65,7 @@ and estimated performance values here. For internal use.
 \item{\code{is_terminated}}{\code{logical(1)}}
 
 \item{\code{archive}}{\link{Archive}}
+
+\item{\code{result}}{Get result}
 }}
 
