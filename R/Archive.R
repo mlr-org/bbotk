@@ -80,8 +80,8 @@ Archive = R6Class("Archive",
       tab = self$data
       tab = tab[batch_nr %in% m,]
       # FIXME: the minimize info needs to be taken from codomain
-      order = if (self$objective$minimize[1]) 1 else -1
-      setorderv(tab, self$objective$codomain$ids(), order = order)
+      order = if (self$codomain$tags[1] == "minimize") 1 else -1
+      setorderv(tab, self$codomain$ids(), order = order)
       tab[1,]
     },
 
