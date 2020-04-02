@@ -66,7 +66,7 @@ OptimInstance = R6Class("OptimInstance",
         }
         design = Design$new(self$param_set, xdt, remove_dupl = FALSE)
         xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
-        ydt = self$objective$eval_many(xdt)
+        ydt = self$objective$eval_many(xss_trafoed)
         # FIXME: also add things like parlist_trafo, parlist_untrafoed to result
         # FIXME: collect the trace in some way
         self$archive$add_evals(xdt, xss_trafoed, ydt)
