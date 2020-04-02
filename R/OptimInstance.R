@@ -66,6 +66,24 @@ OptimInstance = R6Class("OptimInstance",
         # TODO: also add things like parlist_trafo, parlist_untrafoed to result
         database = if (is.null(database)) result else rbind(database, result)  # collect the trace in some way
         result
+      },
+      
+      assign_result = function(x, y) {
+        assert_names(x, subset.of = self$objective$domain$ids())
+        assert_numeric(y)
+        assert_names(names(y), permutation.of = self$objective$codomain$ids())
+        private$.result = list(feat = feat, perf = perf)
       }
+  ),
+  
+  active = list(
+    #' @field result
+    result = function() {
+      list(feat = private$.result$feat, perf = private$.result$perf)
+    }
+  ),
+  
+  private = list(
+    .result = NULL
   )
 )
