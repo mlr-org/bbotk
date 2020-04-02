@@ -1,3 +1,5 @@
+#FIXME: ist der paramset-name hier wirklich gut? ist mehr das feasible set?
+
 #' @title Optimization Instance with budget and archive
 #'
 #' @usage NULL
@@ -67,7 +69,7 @@ OptimInstance = R6Class("OptimInstance",
         database = if (is.null(database)) result else rbind(database, result)  # collect the trace in some way
         result
       },
-      
+
       assign_result = function(x, y) {
         assert_names(x, subset.of = self$objective$domain$ids())
         assert_numeric(y)
@@ -75,14 +77,14 @@ OptimInstance = R6Class("OptimInstance",
         private$.result = list(feat = feat, perf = perf)
       }
   ),
-  
+
   active = list(
     #' @field result
     result = function() {
       list(x = private$.result$x, y = private$.result$y)
     }
   ),
-  
+
   private = list(
     .result = NULL
   )
