@@ -12,7 +12,7 @@
 
 \item{packages}{\code{character()}}
 
-\item{optinst}{\link{OptimInstance}}
+\item{inst}{\link{OptimInstance}}
 }
 \value{
 \code{character()}
