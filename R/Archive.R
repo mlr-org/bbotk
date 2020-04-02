@@ -58,7 +58,7 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       assert_list(xss_trafoed)
       xydt = cbind(xdt, ydt)
-      assert_subset(c(self$cols_x, self$cols_y), colnames(xydt))
+      assert_subset(c(self$domain$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "opt_x"] = xss_trafoed
       xydt[, "timestamp" := as.integer(Sys.time())]
       batch_nr = self$data$batch_nr
