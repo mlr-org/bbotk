@@ -17,7 +17,7 @@
 #'
 #' @section Construction:
 #' ```
-#' ev = OptimInstance$new(objective, param_set, terminator)
+#' inst = OptimInstance$new(objective, param_set, terminator)
 #' ```
 #' * `objective` :: [Objective].
 #' * `param_set` :: [ParamSet].
