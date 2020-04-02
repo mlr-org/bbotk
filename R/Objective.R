@@ -94,7 +94,7 @@ Objective = R6Class("Objective",
     # in: list of on x setting
     # out: list
     eval = function(xs) {
-      as.list(self$eval_batch(list(xs)))
+      as.list(self$eval_many(list(xs)))
     },
 
     # in: list n of lists of x settings

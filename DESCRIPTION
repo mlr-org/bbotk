@@ -47,6 +47,9 @@ RoxygenNote: 7.1.0
 Collate:
     'Archive.R'
     'Objective.R'
+    'ObjectiveRFun.R'
+    'OptimInstance.R'
+    'Optimizer.R'
     'mlr_terminators.R'
     'Terminator.R'
     'TerminatorClockTime.R'

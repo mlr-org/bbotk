@@ -3,7 +3,9 @@
 \name{Objective}
 \alias{Objective}
 \title{Objective function with domain and co-domain}
-\format{\link[R6:R6Class]{R6::R6Class} object.}
+\format{
+\link[R6:R6Class]{R6::R6Class} object.
+}
 \description{
 Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }
@@ -33,12 +35,10 @@ See \link[mlr3misc:encapsulate]{mlr3misc::encapsulate} for behavior and possible
 \section{Fields}{
 
 \itemize{
-\item \code{fun} :: \verb{function(x, ...)}; from construction
+\item \code{id} :: \code{character(1)}.; from construction
+\item \code{properties} :: \code{character()}.; from construction
 \item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}; from construction
 \item \code{codomain} :: \link[paradox:ParamSet]{paradox::ParamSet}; (Realvalued) codomain as ParamSet, auto-constructed.
-\item \code{minimize} :: named \code{logical}; from construction
-\item \code{id} :: \code{character(1)}.; from construction
-\item \code{encapsulate} :: \code{character(1)}; from construction
 \item \code{ydim} :: \code{integer(1)}; from construction
 \item \code{xdim} :: \code{integer(1)}\cr
 Number of input parameters in \code{domain}.
