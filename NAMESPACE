@@ -2,6 +2,8 @@
 
 export(Archive)
 export(Objective)
+export(OptimInstance)
+export(Optimizer)
 export(Terminator)
 export(TerminatorClockTime)
 export(TerminatorCombo)
