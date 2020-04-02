@@ -2,9 +2,6 @@
 
 #' @title Optimization Instance with budget and archive
 #'
-#' @usage NULL
-#' @format [R6::R6Class] object.
-#'
 #' @description
 #' Wraps an [Objective] function with extra services for convenient evaluation.
 #'
@@ -17,47 +14,51 @@
 #'   to guard against exceptions and even segfaults.
 #'   Note that behavior is define in [Objective] argument `encapsulate`.
 #'
-#' @section Construction:
-#' ```
-#' inst = OptimInstance$new(objective, param_set, terminator)
-#' ```
-#' * `objective` :: [Objective].
-#' * `param_set` :: [ParamSet].
-#' * `terminator` :: [Terminator].
-#'
-#' @section Fields:
-#' * `objective` :: [Objective]; from construction.
-#' * `param_Set` :: [ParamSet]; from construction.
-#' * `terminator` :: [Terminator]; from construction.
-#'
-#' @section Methods:
-#' * `eval_batch(dt)`\cr
-#'   [data.table::data.table()] -> named `list()`\cr
-#'   Evaluates all hyperparameter configurations in `dt` through resampling, where each configuration is a row, and columns are scalar parameters.
-#'   eturns a named list with the following elements:
-#'   * `"batch_nr"`: Number of the new batch.
-#'     This number is calculated in an auto-increment fashion.
-#'   * `"perf"`: A [data.table::data.table()] of evaluated performances for each row of the `dt`.
-#'     Has the same number of rows as `dt`, and the same number of columns as length of `measures`.
-#'     Columns are named with measure-IDs. A cell entry is the (aggregated) performance of that configuration for that measure.
-#'
-#'   Before each batch-evaluation, the [Terminator] is checked, and if it is positive, an exception of class `terminated_error` is raised.
-#'   This function should be internally called by the tuner.
-#'
-#'
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
+
+      #' @field objective [Objective]
       objective = NULL,
+
+      #' @field param_set [paradox::ParamSet]
       param_set = NULL,
+
+      #' @field terminator [Terminator]
       terminator = NULL,
+
+      #' @field archive [Archive]
       archive = NULL,
+
+      #' @description
+      #' Creates a new instance of this [R6][R6::R6Class] class.
+      #' @param objective [Objective]
+      #' @param param_set [paradox::ParamSet]
+      #' @param terminator [Terminator]
       initialize = function(objective, param_set, terminator) {
         self$objective = objective
         self$param_set = param_set
         self$terminator = terminator
       },
 
+      #' @description
+      #' Evaluates all hyperparameter configurations in `dt` through
+      #' resampling, where each configuration is a row, and columns are scalar
+      #' parameters. eturns a named list with the following elements:
+      #'
+      #' * `"batch_nr"`: Number of the new batch. This number is calculated in an
+      #' auto-increment fashion.
+      #'
+      #' * `"perf"`: A [data.table::data.table()] of
+      #' evaluated performances for each row of the `dt`. Has the same number
+      #' of rows as `dt`, and the same number of columns as length of
+      #' `measures`. Columns are named with measure-IDs. A cell entry is the
+      #' (aggregated) performance of that configuration for that measure.
+      #'
+      #' Before each batch-evaluation, the [Terminator] is checked, and if it
+      #' is positive, an exception of class `terminated_error` is raised. This
+      #' function should be internally called by the tuner.
+      #' @param dt [data.table::data.table]
       eval_batch = function(dt) {
         if (self$terminator$is_terminated(self)) {
           return(NULL)
@@ -70,6 +71,11 @@ OptimInstance = R6Class("OptimInstance",
         result
       },
 
+      #' @description
+      #' The [Optimizer] object writes the best found point
+      #' and estimated performance values here. For internal use.
+      #' @param x `character`
+      #' @param y `numeric`
       assign_result = function(x, y) {
         assert_names(x, subset.of = self$objective$domain$ids())
         assert_numeric(y)

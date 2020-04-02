@@ -16,49 +16,64 @@
 
 #' @title Objective function with domain and co-domain
 #'
-#' @usage NULL
-#' @format [R6::R6Class] object.
-#'
 #' @description
 #' Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 #'
-#' @section Construction:
-#' ```
-#' obj = Objective$new(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none")
-#' ```
-#' * `fun` :: `function(xdt, ...)`\cr
-#'   R function that encodes objective. First argument `xdt` must be a `data.table`, where colnames
-#'   agree with the parameters specified in `domain`. Returns a `data.table` with columns that contain the `xdt` values, the outcomes in columns that agree with the `codomain` and additional columns.
-#' * `domain` :: [paradox::ParamSet]\cr
-#'   Specifies domain of function, hence its innput parameters, their types and ranges.
-#' * `ydim` :: `integer(1)`\cr
-#'   Dimension of codomain, ydim=1 implies single-objective, ydim>1 implies multi-objective optimization.
-#' * `minimize` :: named `logical`.
-#'   Should objective (component) function be minimized (or maximized)?
-#'   By naming this logical, you can also define the names of the objectives.
-#'   By default, all objectives are minimized and they are named `y1` to `y[ydim]`.
-#' * `id` :: `character(1)`\cr
-#'   Name of function. Not very much currently used.
-#' * `encapsulate` :: `character(1)`.
-#'   Defines how the [Evaluator] encapsulates function calls.
-#'   See [mlr3misc::encapsulate] for behavior and possible values.
-#'
-#' @section Fields:
-#' * `id` :: `character(1)`.; from construction
-#' * `properties` :: `character()`.; from construction
-#' * `domain` :: [paradox::ParamSet]; from construction
-#' * `codomain` :: [paradox::ParamSet]; (Realvalued) codomain as ParamSet, auto-constructed.
-#' * `ydim` :: `integer(1)`; from construction
-#' * `xdim` :: `integer(1)`\cr
-#'    Number of input parameters in `domain`.
 #' @export
+
+
+# ' @section Construction:
+# ' ```
+# ' obj = Objective$new(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none")
+# ' ```
+# ' * `fun` :: `function(xdt, ...)`\cr
+# '   R function that encodes objective. First argument `xdt` must be a `data.table`, where colnames
+# '   agree with the parameters specified in `domain`. Returns a `data.table` with columns that contain the `xdt` values, the outcomes in columns that agree with the `codomain` and additional columns.
+# ' * `domain` :: [paradox::ParamSet]\cr
+# '   Specifies domain of function, hence its innput parameters, their types and ranges.
+# ' * `ydim` :: `integer(1)`\cr
+# '   Dimension of codomain, ydim=1 implies single-objective, ydim>1 implies multi-objective optimization.
+# ' * `minimize` :: named `logical`.
+# '   Should objective (component) function be minimized (or maximized)?
+# '   By naming this logical, you can also define the names of the objectives.
+# '   By default, all objectives are minimized and they are named `y1` to `y[ydim]`.
+# ' * `id` :: `character(1)`\cr
+# '   Name of function. Not very much currently used.
+# ' * `encapsulate` :: `character(1)`.
+# '   Defines how the [Evaluator] encapsulates function calls.
+# '   See [mlr3misc::encapsulate] for behavior and possible values.
+# '
+# ' @section Fields:
+# ' * `id` :: `character(1)`.; from construction
+# ' * `properties` :: `character()`.; from construction
+# ' * `domain` :: [paradox::ParamSet]; from construction
+# ' * `codomain` :: [paradox::ParamSet]; (Realvalued) codomain as ParamSet, auto-constructed.
+# ' * `ydim` :: `integer(1)`; from construction
+# ' * `xdim` :: `integer(1)`\cr
+# '    Number of input parameters in `domain`.
+# ' @export
+
 Objective = R6Class("Objective",
   public = list(
+
+    #' @field id `character(1)`
     id = NULL,
+
+    #' @field properties `character()`
     properties = NULL,
+
+    #' @field domain [paradox::ParamSet]
     domain = NULL,
+
+    #' @field codomain [paradox::ParamSet]
     codomain = NULL,
 
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param id `character(1)`
+    #' @param properties `character()`
+    #' @param domain [paradox::ParamSet]
+    #' @param codomain [paradox::ParamSet]
     initialize = function(id = "f", properties = character(), domain, codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
@@ -79,10 +94,16 @@ Objective = R6Class("Objective",
       self$properties = assert_character(properties) #FIXME: assert_subset(properties, blabot_reflections$objective_properties)
     },
 
+    #' @description
+    #' Helper for print outputs.
+    #' @return `character()`
     format = function() {
       sprintf("<%s> '%s'", class(self)[1L], self$id)
     },
 
+    #' @description
+    #' Print method.
+    #' @return `character()`
     print = function() {
       catf(self$format())
       catf("Domain:")
@@ -91,26 +112,38 @@ Objective = R6Class("Objective",
       print(self$codomain)
     },
 
-    # in: list of on x setting
-    # out: list
+    #' @description
+    #' Evaluates a single input value on the objective function
+    #' @param xs `list()` A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
+    #' @return `list()` A list that contains the result of the evaluation, e.g. `list(y = 1)`.
     eval = function(xs) {
       as.list(self$eval_many(list(xs)))
     },
 
-    # in: list n of lists of x settings
-    # out: data.table with n rows
+    #' @description
+    #' Evaluates multiple input values on the objective function
+    #' @param xss `list()` A list of lists that contains multiple x values, e.g. `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
+    #' @return `list()` A list that contains the result of all evaluations, e.g. `list(list(y = 1), list(y=2))`.
     eval_many = function(xss) {
       res = map_dtr(xss, function(xs) as.data.table(self$eval(xs)))
       colnames(res) = self$codomain$ids()
       return(res)
     },
 
+    #' @description
+    #' Evaluates a single input value on the objective function and checks its validity as well as the validity of the result.
+    #' @param xs `list()` A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
+    #' @return `list()` A list that contains the result of the evaluation, e.g. `list(y = 1)`.
     eval_checked = function(xs) {
       self$domain$assert(xs)
       res = self$eval(xs)
       self$codomain$assert(res)
     },
 
+    #' @description
+    #' Evaluates multiple input values on the objective function and checks the validity of the input.
+    #' @param xss `list()` A list of lists that contains multiple x values, e.g. `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
+    #' @return `list()` A list that contains the result of all evaluations, e.g. `list(list(y = 1), list(y=2))`.
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)
       res = self$evaluate_many(xss)
