@@ -38,6 +38,23 @@ Optimizer = R6Class("Optimizer",
       self$packages = assert_set(packages)
     },
     
+    #' @description
+    #' Helper for print outputs.
+    format = function() {
+      sprintf("<%s>", class(self)[1L])
+    },
+    
+    #' @description
+    #' Print method.
+    #' @return `character()`
+    print = function() {
+      catf(format(self))
+      catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
+      catf(str_indent("* Parameter classes:", self$param_classes))
+      catf(str_indent("* Properties:", self$properties))
+      catf(str_indent("* Packages:", self$packages))
+    },
+    
     #' @description 
     #' Performes the optimization.
     #' @param optinst [OptimInstance]
