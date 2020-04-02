@@ -36,9 +36,9 @@ OptimInstance = R6Class("OptimInstance",
       #' @param param_set [paradox::ParamSet]
       #' @param terminator [Terminator]
       initialize = function(objective, param_set, terminator) {
-        self$objective = objective
-        self$param_set = param_set
-        self$terminator = terminator
+        self$objective = assert_r6(objective, "Objective")
+        self$param_set = assert_param_set(param_set) 
+        self$terminator = assert_terminator(terminator)
         self$archive = Archive$new(domain = param_set, codomain = objective$codomain)
       },
 
