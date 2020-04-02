@@ -1,3 +1,8 @@
+# FIXME: do we want to export this? or rather have a subclass in ParamSet?
+make_ps_reals = function(d = 1, id = "y") {
+  ParamSet$new(lapply(1:d, function(i) ParamDbl$new(id = paste0(id, i))))
+}
+
 # determines if execution via future will be running locally or remotely
 use_future = function() {
   if (!isNamespaceLoaded("future") || inherits(future::plan(), "uniprocess")) {

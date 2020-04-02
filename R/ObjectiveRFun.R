@@ -1,3 +1,7 @@
+#FIXME: ist das mit dem evaluate, evaluate_checked so sinnvoll?
+#kann man die checks nur in der instance vielleicht machen? per flag an und aus?
+
+
 #' @title Objective interface where user cass pass R function
 #'
 #' @usage NULL
