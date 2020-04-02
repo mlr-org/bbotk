@@ -4,36 +4,25 @@ PS_2D = ParamSet$new(list(
   ParamDbl$new("x2", lower = -1, upper = 1)
 ))
 FUN_2D = function(xs) {
-  y = sum(as.numeric(x))^2)
-  data.table(y1 = ys)
+  y = sum(as.numeric(xs)^2)
+  list(y1 = y)
 }
 OBJ_2D = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D)
-FUN_2D = function(xss) {
-  map_dbl(xss, function(x) sum(as.numeric(x))^2)
-}
 
-OBJ_2D = function(n_evals = 2L) {
-  term = TerminatorEvals$new()
-  term$param_set$values$n_evals = 2L
-  Objective$new(fun = FUN_2D, domain = PS_2D, terminator = term)
-}
 # Simple 2D Function with trafo
 PS_2D_TRF = PS_2D$clone()
 PS_2D_TRF$trafo = function(x, param_set) {
   x$x2 + 2
   return(x)
 }
-FUN_2D_TRF = function(xss) {
-  ys = map_dbl(xss, function(x) x[[1]]^2 + (x[[2]]-2)^2)
-  data.table(y1 = ys)
+FUN_2D_TRF = function(xs) {
+  list(y1 = xs[[1]]^2 + (xs[[2]]-2)^2)
 }
 OBJ_2D = ObjectiveRFun$new(fun = FUN_2D_TRF, domain = PS_2D_TRF)
+
 # Multi-objecitve 2D->2D function
-FUN_2D_2D = function(xss) {
-  ys = map(xss, function(x) list(x[[1]]^2 , -x[[2]]^2))
-  ys = rbindlist(ys)
-  colnames(ys) = c("y1", "y2")
-  return(ys)
+FUN_2D_2D = function(xs) {
+  list(y1 = xs[[1]]^2, y2 = -xs[[2]]^2)
 }
-OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, ydim = 2)
+OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = make_ps_reals(2))
 
