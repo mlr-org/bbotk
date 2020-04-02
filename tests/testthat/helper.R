@@ -26,3 +26,12 @@ FUN_2D_2D = function(xs) {
 }
 OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = make_ps_reals(2))
 
+
+MAKE_INST_2D = function(term) {
+  if (is.integer(term)) {
+    tt = TerminatorEvals$new()
+    tt$param_set$values$n_evals = term
+    term = tt
+  }
+  OptimInstance$new(OBJ_2D, param_set = PS_2D, terminator = term)
+}

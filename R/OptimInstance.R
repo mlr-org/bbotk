@@ -1,3 +1,5 @@
+#FIXME: ist der paramset-name hier wirklich gut? ist mehr das feasible set?
+
 #' @title Optimization Instance with budget and archive
 #'
 #' @description
@@ -11,23 +13,23 @@
 #' * Encapsulated evaluation via evaluate / callr with function [mlr3misc::encapsulate()]
 #'   to guard against exceptions and even segfaults.
 #'   Note that behavior is define in [Objective] argument `encapsulate`.
-#'   
+#'
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
-    
+
       #' @field objective [Objective]
       objective = NULL,
-      
+
       #' @field param_set [paradox::ParamSet]
       param_set = NULL,
-      
+
       #' @field terminator [Terminator]
       terminator = NULL,
-      
+
       #' @field archive [Archive]
       archive = NULL,
-      
+
       #' @description
       #' Creates a new instance of this [R6][R6::R6Class] class.
       #' @param objective [Objective]
@@ -38,15 +40,15 @@ OptimInstance = R6Class("OptimInstance",
         self$param_set = param_set
         self$terminator = terminator
       },
-      
-      #' @description 
+
+      #' @description
       #' Evaluates all hyperparameter configurations in `dt` through
       #' resampling, where each configuration is a row, and columns are scalar
-      #' parameters. eturns a named list with the following elements: 
-      #'  
+      #' parameters. eturns a named list with the following elements:
+      #'
       #' * `"batch_nr"`: Number of the new batch. This number is calculated in an
-      #' auto-increment fashion. 
-      #'  
+      #' auto-increment fashion.
+      #'
       #' * `"perf"`: A [data.table::data.table()] of
       #' evaluated performances for each row of the `dt`. Has the same number
       #' of rows as `dt`, and the same number of columns as length of
@@ -69,7 +71,7 @@ OptimInstance = R6Class("OptimInstance",
         self$archive$add_evals(xdt, xss_trafoed, ydt)
         return(invisible(ydt))
       },
-      
+
       #' @description
       #' The [Optimizer] object writes the best found point
       #' and estimated performance values here. For internal use.
@@ -82,14 +84,14 @@ OptimInstance = R6Class("OptimInstance",
         private$.result = list(feat = feat, perf = perf)
       }
   ),
-  
+
   active = list(
     #' @field result
     result = function() {
       list(x = private$.result$x, y = private$.result$y)
     }
   ),
-  
+
   private = list(
     .result = NULL
   )

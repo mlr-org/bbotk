@@ -1,7 +1,7 @@
 context("TerminatorPerfReached")
 
 test_that("TerminatorPerfReached works", {
-  obj = OBJ_2D()
+  obj = OBJ_2D
   term = TerminatorPerfReached$new()
   term$param_set$values$level = c(y1 = 0.2)
   obj$terminator = term
