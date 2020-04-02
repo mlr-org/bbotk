@@ -58,7 +58,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
         } else {
           col >= col_lvl
         }
-      }, col = ydata, col_min = archive$objective$minimize, col_lvl = pv$level)
+      }, col = ydata, col_min = map_lgl(archive$codomain$tags, identical, y = "minimize"), col_lvl = pv$level)
       col_success = array(unlist(col_success), dim = dim(ydata))
       return(any(apply(col_success, 1, all)))
     }

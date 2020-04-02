@@ -3,45 +3,58 @@
 \name{Objective}
 \alias{Objective}
 \title{Objective function with domain and co-domain}
-\format{
-\link[R6:R6Class]{R6::R6Class} object.
+\arguments{
+\item{id}{\code{character(1)}}
+
+\item{properties}{\code{character()}}
+
+\item{domain}{\link[paradox:ParamSet]{paradox::ParamSet}}
+
+\item{codomain}{\link[paradox:ParamSet]{paradox::ParamSet}}
+
+\item{xs}{\code{list()} A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
+
+\item{xss}{\code{list()} A list of lists that contains multiple x values, e.g. \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
+}
+\value{
+\code{character()}
+
+\code{character()}
+
+\code{list()} A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
+
+\code{list()} A list that contains the result of all evaluations, e.g. \code{list(list(y = 1), list(y=2))}.
+
+\code{list()} A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
+
+\code{list()} A list that contains the result of all evaluations, e.g. \code{list(list(y = 1), list(y=2))}.
 }
 \description{
 Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
-}
-\section{Construction}{
-\preformatted{obj = Objective$new(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none")
-}
-\itemize{
-\item \code{fun} :: \verb{function(xdt, ...)}\cr
-R function that encodes objective. First argument \code{xdt} must be a \code{data.table}, where colnames
-agree with the parameters specified in \code{domain}. Returns a \code{data.table} with columns that contain the \code{xdt} values, the outcomes in columns that agree with the \code{codomain} and additional columns.
-\item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
-Specifies domain of function, hence its innput parameters, their types and ranges.
-\item \code{ydim} :: \code{integer(1)}\cr
-Dimension of codomain, ydim=1 implies single-objective, ydim>1 implies multi-objective optimization.
-\item \code{minimize} :: named \code{logical}.
-Should objective (component) function be minimized (or maximized)?
-By naming this logical, you can also define the names of the objectives.
-By default, all objectives are minimized and they are named \code{y1} to \code{y[ydim]}.
-\item \code{id} :: \code{character(1)}\cr
-Name of function. Not very much currently used.
-\item \code{encapsulate} :: \code{character(1)}.
-Defines how the \link{Evaluator} encapsulates function calls.
-See \link[mlr3misc:encapsulate]{mlr3misc::encapsulate} for behavior and possible values.
-}
-}
 
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+
+Helper for print outputs.
+
+Print method.
+
+Evaluates a single input value on the objective function
+
+Evaluates multiple input values on the objective function
+
+Evaluates a single input value on the objective function and checks its validity as well as the validity of the result.
+
+Evaluates multiple input values on the objective function and checks the validity of the input.
+}
 \section{Fields}{
 
-\itemize{
-\item \code{id} :: \code{character(1)}.; from construction
-\item \code{properties} :: \code{character()}.; from construction
-\item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}; from construction
-\item \code{codomain} :: \link[paradox:ParamSet]{paradox::ParamSet}; (Realvalued) codomain as ParamSet, auto-constructed.
-\item \code{ydim} :: \code{integer(1)}; from construction
-\item \code{xdim} :: \code{integer(1)}\cr
-Number of input parameters in \code{domain}.
-}
-}
+\describe{
+\item{\code{id}}{\code{character(1)}}
+
+\item{\code{properties}}{\code{character()}}
+
+\item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+
+\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+}}
 

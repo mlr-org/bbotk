@@ -98,8 +98,8 @@ Archive = R6Class("Archive",
   active = list(
     n_evals = function() nrow(self$data),
     n_batch = function() if(is.null(self$data$batch_nr)) 0L else max(self$data$batch_nr),
-    cols_x = function() self$objective$domain$ids(),
-    cols_y = function() self$objective$codomain$ids()
+    cols_x = function() self$domain$ids(),
+    cols_y = function() self$codomain$ids()
     # idx_unevaled = function() self$data$y
   ),
 )

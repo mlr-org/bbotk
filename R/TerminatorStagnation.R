@@ -66,7 +66,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
         } else {
           max(perf_window) <= max(perf_before) + pv$threshold
         }
-      }, col = ydata, col_min = archive$objective$minimize)
+      }, col = ydata, col_min = map_lgl(archive$codomain$tags, identical, y = "minimize"))
       all(col_success)
     }
   )

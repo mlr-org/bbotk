@@ -10,7 +10,7 @@
 
 \item{terminator}{\link{Terminator}}
 
-\item{dt}{\link[data.table:data.table]{data.table::data.table}}
+\item{xdt}{\link[data.table:data.table]{data.table::data.table}}
 
 \item{x}{\code{character}}
 
@@ -59,6 +59,8 @@ and estimated performance values here. For internal use.
 \item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}}
 
 \item{\code{terminator}}{\link{Terminator}}
+
+\item{\code{is_terminated}}{\code{logical(1)}}
 
 \item{\code{archive}}{\link{Archive}}
 }}

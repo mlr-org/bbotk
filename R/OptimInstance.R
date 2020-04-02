@@ -27,6 +27,9 @@ OptimInstance = R6Class("OptimInstance",
       #' @field terminator [Terminator]
       terminator = NULL,
 
+      #' @field is_terminated `logical(1)`
+      is_terminated = FALSE,
+
       #' @field archive [Archive]
       archive = NULL,
 
@@ -37,7 +40,7 @@ OptimInstance = R6Class("OptimInstance",
       #' @param terminator [Terminator]
       initialize = function(objective, param_set, terminator) {
         self$objective = assert_r6(objective, "Objective")
-        self$param_set = assert_param_set(param_set) 
+        self$param_set = assert_param_set(param_set)
         self$terminator = assert_terminator(terminator)
         self$archive = Archive$new(domain = param_set, codomain = objective$codomain)
       },
@@ -61,8 +64,9 @@ OptimInstance = R6Class("OptimInstance",
       #' function should be internally called by the tuner.
       #' @param xdt [data.table::data.table]
       eval_batch = function(xdt) {
-        if (self$terminator$is_terminated(self$archive)) {
-          return(NULL)
+        if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
+          self$is_terminated = TRUE
+          stop(terminated_error(self))
         }
         design = Design$new(self$param_set, xdt, remove_dupl = FALSE)
         xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
