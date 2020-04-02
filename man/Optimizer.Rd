@@ -8,9 +8,14 @@
 
 \item{param_classes}{\code{character()}}
 
-\item{properties}{}
+\item{properties}{\code{character()}}
+
+\item{packages}{\code{character()}}
 
 \item{optinst}{\link{OptimInstance}}
+}
+\value{
+\code{character()}
 }
 \description{
 Abstract \code{Optimizer} class that implements the base functionality each
@@ -23,7 +28,11 @@ estimated performance vector.
 
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 
-Performes the optimization
+Helper for print outputs.
+
+Print method.
+
+Performes the optimization.
 }
 \section{Fields}{
 
@@ -32,6 +41,8 @@ Performes the optimization
 
 \item{\code{param_classes}}{\code{character()}}
 
-\item{\code{properties}}{}
+\item{\code{properties}}{\code{character()}}
+
+\item{\code{packages}}{\code{character()}}
 }}
 

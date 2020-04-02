@@ -8,6 +8,15 @@ FUN_2D = function(xs) {
   data.table(y1 = ys)
 }
 OBJ_2D = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D)
+FUN_2D = function(xss) {
+  map_dbl(xss, function(x) sum(as.numeric(x))^2)
+}
+
+OBJ_2D = function(n_evals = 2L) {
+  term = TerminatorEvals$new()
+  term$param_set$values$n_evals = 2L
+  Objective$new(fun = FUN_2D, domain = PS_2D, terminator = term)
+}
 # Simple 2D Function with trafo
 PS_2D_TRF = PS_2D$clone()
 PS_2D_TRF$trafo = function(x, param_set) {
