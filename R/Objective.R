@@ -59,7 +59,7 @@ Objective = R6Class("Objective",
     domain = NULL,
     codomain = NULL,
 
-    initialize = function(id = "f", properties, domain, codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
+    initialize = function(id = "f", properties = character(), domain, codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
 
@@ -72,6 +72,7 @@ Objective = R6Class("Objective",
           assert_true(all(x$is_number))
           assert_true(all(sapply(x$tags, function(x) sum(x %in% c("minimize", "maximize"))) <= 1))
           assert_true(any(c("minimize", "maximize") %in% unlist(x$tags)))
+          return(x)
       }
 
       self$codomain = assert_codomain(codomain)
@@ -90,12 +91,18 @@ Objective = R6Class("Objective",
       print(self$codomain)
     },
 
+    # in: list of on x setting
+    # out: list
     eval = function(xs) {
-      self$eval_batch(list(xs))[[1]]
+      as.list(self$eval_batch(list(xs)))
     },
 
+    # in: list n of lists of x settings
+    # out: data.table with n rows
     eval_many = function(xss) {
-      lapply(x, self$evaluate)
+      res = map_dtr(xss, function(xs) as.data.table(self$eval(xs)))
+      colnames(res) = self$codomain$ids()
+      return(res)
     },
 
     eval_checked = function(xs) {
@@ -107,7 +114,7 @@ Objective = R6Class("Objective",
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)
       res = self$evaluate_many(xss)
-      lapply(res, self$codomain$assert)
+      # lapply(res, self$codomain$assert) #FIXME: Does not work easily if res is dt
     }
   ),
 
