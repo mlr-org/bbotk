@@ -15,13 +15,12 @@
 #'
 #' @export
 ObjectiveRFun = R6Class("ObjectiveRFun",
-  inherits = Objective,
+  inherit = Objective,
   public = list(
     initialize = function(fun, domain, codomain = NULL, id = "function", properties = character(0)) {
       if (is.null(codomain))
         codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
       private$.fun = assert_function(fun, "xs")
-      private$.fun_is_many_to_many = assert_flag(fun_is_many_to_many)
       # asserts id, domain, codomain, properties
       super$initialize(id = id, domain = domain, codomain = codomain, properties = properties)
     },
