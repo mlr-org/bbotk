@@ -1,13 +1,13 @@
-random_search = function(objective, batch_size = 10) {
-  assert_r6(objective, "Objective")
+random_search = function(inst, batch_size = 10) {
+  assert_r6(inst, "OptimInstance")
   batch_size = assert_int(batch_size, coerce = TRUE)
   tryCatch({
     repeat {
-       des = generate_design_random(objective$domain, batch_size)
-       objective$eval_batch(des$data)
+       des = generate_design_random(inst$param_set, batch_size)
+       inst$eval_batch(des$data)
       }
     }, terminated_error = function(cond) {})
-  return(objective$archive)
+  return(inst$archive)
 }
 
 # ps1 = ParamDbl$new("x", lower = -1, upper = 1)$rep(2)
