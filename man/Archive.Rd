@@ -10,11 +10,11 @@
 Container around a data.table which stores all performed \link{Objective} function calls by the \link{Evaluator}.
 }
 \section{Construction}{
-\preformatted{archive = Archive$new(domain, codomain, minimize)
+\preformatted{archive = Archive$new(search_space, codomain, minimize)
 }
 \itemize{
-\item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
-Domain of objective function that is logged into archive.
+\item \code{search_space} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
+Search space that is logged into archive.
 \item \code{codomain} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
 Codomain of objective function that is logged into archive.
 \item \code{minimize} :: named \code{logical}.
@@ -25,7 +25,7 @@ Should objective (component) function be minimized (or maximized)?
 \section{Fields}{
 
 \itemize{
-\item \code{domain} :: \link[paradox:ParamSet]{paradox::ParamSet} from construction\cr
+\item \code{search_space} :: \link[paradox:ParamSet]{paradox::ParamSet} from construction\cr
 \item \code{codomain} :: \link[paradox:ParamSet]{paradox::ParamSet} from construction\cr
 \item \code{minimize} :: named \code{logical}; from construction
 \item \code{data} :: \link[data.table:data.table]{data.table::data.table}\cr

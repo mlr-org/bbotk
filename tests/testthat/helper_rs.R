@@ -3,7 +3,7 @@ random_search = function(inst, batch_size = 10) {
   batch_size = assert_int(batch_size, coerce = TRUE)
   tryCatch({
     repeat {
-       des = generate_design_random(inst$param_set, batch_size)
+       des = generate_design_random(inst$search_space, batch_size)
        inst$eval_batch(des$data)
       }
     }, terminated_error = function(cond) {})

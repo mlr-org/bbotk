@@ -8,18 +8,18 @@
 #'
 #' @section Construction:
 #' ```
-#' archive = Archive$new(domain, codomain, minimize)
+#' archive = Archive$new(search_space, codomain, minimize)
 #' ```
 #'
-#' * `domain` :: [paradox::ParamSet]\cr
-#'   Domain of objective function that is logged into archive.
+#' * `search_space` :: [paradox::ParamSet]\cr
+#'   Search space that is logged into archive.
 #' * `codomain` :: [paradox::ParamSet]\cr
 #'   Codomain of objective function that is logged into archive.
 #' * `minimize` :: named `logical`.
 #'   Should objective (component) function be minimized (or maximized)?
 #'
 #' @section Fields:
-#' * `domain` :: [paradox::ParamSet] from construction\cr
+#' * `search_space` :: [paradox::ParamSet] from construction\cr
 #' * `codomain` :: [paradox::ParamSet] from construction\cr
 #' * `minimize` :: named `logical`; from construction
 #' * `data` :: [data.table::data.table]\cr
@@ -38,14 +38,14 @@
 Archive = R6Class("Archive",
   public = list(
     data = NULL,
-    domain = NULL,
+    search_space = NULL,
     codomain = NULL,
     start_time = NULL,
 
-    initialize = function(domain, codomain) {
-      assert_param_set(domain)
+    initialize = function(search_space, codomain) {
+      assert_param_set(search_space)
       assert_param_set(codomain)
-      self$domain = domain
+      self$search_space = search_space
       self$codomain = codomain
       self$start_time = Sys.time()
       self$data = data.table()
@@ -58,7 +58,7 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       assert_list(xss_trafoed)
       xydt = cbind(xdt, ydt)
-      assert_subset(c(self$domain$ids(), self$codomain$ids()), colnames(xydt))
+      assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "opt_x"] = xss_trafoed
       xydt[, "timestamp" := as.integer(Sys.time())]
       batch_nr = self$data$batch_nr
@@ -98,7 +98,7 @@ Archive = R6Class("Archive",
   active = list(
     n_evals = function() nrow(self$data),
     n_batch = function() if(is.null(self$data$batch_nr)) 0L else max(self$data$batch_nr),
-    cols_x = function() self$domain$ids(),
+    cols_x = function() self$search_space$ids(),
     cols_y = function() self$codomain$ids()
     # idx_unevaled = function() self$data$y
   ),

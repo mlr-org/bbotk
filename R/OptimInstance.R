@@ -21,8 +21,8 @@ OptimInstance = R6Class("OptimInstance",
       #' @field objective [Objective]
       objective = NULL,
 
-      #' @field param_set [paradox::ParamSet]
-      param_set = NULL,
+      #' @field search_space [paradox::ParamSet]
+      search_space = NULL,
 
       #' @field terminator [Terminator]
       terminator = NULL,
@@ -36,15 +36,15 @@ OptimInstance = R6Class("OptimInstance",
       #' @description
       #' Creates a new instance of this [R6][R6::R6Class] class.
       #' @param objective [Objective]
-      #' @param param_set [paradox::ParamSet]
+      #' @param search_space [paradox::ParamSet]
       #' @param terminator [Terminator]
-      initialize = function(objective, param_set, terminator) {
+      initialize = function(objective, search_space, terminator) {
         self$objective = assert_r6(objective, "Objective")
-        self$param_set = assert_param_set(param_set)
+        self$search_space = assert_param_set(search_space)
         self$terminator = assert_terminator(terminator)
-        self$archive = Archive$new(domain = param_set, codomain = objective$codomain)
+        self$archive = Archive$new(search_space = search_space, codomain = objective$codomain)
       },
-      
+
       #' @description
       #' Helper for print outputs.
       format = function() {
@@ -74,7 +74,7 @@ OptimInstance = R6Class("OptimInstance",
           self$is_terminated = TRUE
           stop(terminated_error(self))
         }
-        design = Design$new(self$param_set, xdt, remove_dupl = FALSE)
+        design = Design$new(self$search_space, xdt, remove_dupl = FALSE)
         xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
         ydt = self$objective$eval_many(xss_trafoed)
         # FIXME: also add things like parlist_trafo, parlist_untrafoed to result

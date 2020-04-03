@@ -6,7 +6,7 @@
 \arguments{
 \item{objective}{\link{Objective}}
 
-\item{param_set}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{search_space}{\link[paradox:ParamSet]{paradox::ParamSet}}
 
 \item{terminator}{\link{Terminator}}
 
@@ -58,7 +58,7 @@ and estimated performance values here. For internal use.
 \describe{
 \item{\code{objective}}{\link{Objective}}
 
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{search_space}}{\link[paradox:ParamSet]{paradox::ParamSet}}
 
 \item{\code{terminator}}{\link{Terminator}}
 

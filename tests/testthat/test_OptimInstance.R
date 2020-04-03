@@ -10,7 +10,7 @@ obj_test_eval = ObjectiveTestEval$new(domain = PS_2D)
 
 test_that("OptimInstance", {
   terminator = term("evals", n_evals = 20)
-  inst = OptimInstance$new(objective = obj_test_eval, param_set = PS_2D, terminator = terminator)
+  inst = OptimInstance$new(objective = obj_test_eval, search_space = PS_2D, terminator = terminator)
   expect_r6(inst$archive, "Archive")
   expect_data_table(inst$archive$data, nrows = 0L)
   expect_identical(inst$archive$n_evals, 0L)
@@ -28,7 +28,7 @@ test_that("OptimInstance", {
 
 test_that("OptimInstance works with trafos", {
   terminator = term("evals", n_evals = 20)
-  inst = OptimInstance$new(objective = obj_test_eval, param_set = PS_2D_TRF, terminator = terminator)
+  inst = OptimInstance$new(objective = obj_test_eval, search_space = PS_2D_TRF, terminator = terminator)
   expect_r6(inst$archive, "Archive")
   xdt = data.table(x1=-1:1, x2=list(1,2,3))
   inst$eval_batch(xdt)

@@ -33,20 +33,20 @@ FUN_2D_2D_CODOMAIN = ParamSet$new(list(
 OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN)
 
 # General Helper
-MAKE_INST = function(objective = OBJ_2D, param_set = PS_2D, terminator = 5L) {
+MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D, terminator = 5L) {
   if (is.integer(terminator)) {
     tt = TerminatorEvals$new()
     tt$param_set$values$n_evals = terminator
     terminator = tt
   }
-  OptimInstance$new(objective = objective, param_set = param_set, terminator = terminator)
+  OptimInstance$new(objective = objective, search_space = search_space, terminator = terminator)
 }
 
 MAKE_INST_2D = function(terminator) {
-  MAKE_INST(objective = OBJ_2D, param_set = PS_2D, terminator = terminator)
+  MAKE_INST(objective = OBJ_2D, search_space = PS_2D, terminator = terminator)
 }
 
 MAKE_INST_2D_2D = function(terminator) {
- MAKE_INST(objective = OBJ_2D_2D, param_set = PS_2D, terminator = terminator)
+ MAKE_INST(objective = OBJ_2D_2D, search_space = PS_2D, terminator = terminator)
 }
 
