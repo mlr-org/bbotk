@@ -1,3 +1,13 @@
+# Simple 1D Function
+PS_1D = ParamSet$new(list(
+  ParamDbl$new("x", lower = -1, upper = 1)
+))
+FUN_1D = function(xs) {
+  list(y = as.numeric(xs)^2)
+}
+FUN_1D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+OBJ_1D = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D)
+
 # Simple 2D Function
 PS_2D = ParamSet$new(list(
   ParamDbl$new("x1", lower = -1, upper = 1),
@@ -40,6 +50,10 @@ MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D, terminator = 5L) 
     terminator = tt
   }
   OptimInstance$new(objective = objective, search_space = search_space, terminator = terminator)
+}
+
+MAKE_INST_1D = function(terminator) {
+  MAKE_INST(objective = OBJ_1D, search_space = PS_1D, terminator = terminator)
 }
 
 MAKE_INST_2D = function(terminator) {
