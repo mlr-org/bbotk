@@ -34,6 +34,8 @@ test_that("Unnest columns", {
   # FIXME: Remove line when https://github.com/mlr-org/mlr3misc/issues/42 is fixed
   a$data[,y:=NULL] 
   a = a$get_data(unnest = "opt_x")
+  expect_true("opt_x_x1" %in% colnames(a))
+  expect_true("opt_x_x2" %in% colnames(a))
   expect_equal(a$opt_x_x1, 1)
   expect_equal(a$opt_x_x2, 2)
 })
