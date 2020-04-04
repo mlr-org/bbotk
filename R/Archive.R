@@ -84,6 +84,21 @@ Archive = R6Class("Archive",
       setorderv(tab, self$codomain$ids(), order = order)
       tab[1,]
     },
+    
+    #' @description 
+    #' Returns data.table which contains all performed [Objective] function
+    #' calls.
+    #' @param unnest `character()`
+    #' Unnested columns are stored in seperate columns instead of list-columns.
+    get_data = function(unnest = NULL) {
+      dt = copy(self$data)
+      assert_choice(unnest, names(dt), null.ok = TRUE)
+      
+      if(!is.null(unnest)) {
+        dt = unnest(dt, unnest, prefix = paste0(unnest, "_"))
+      }
+      dt[]
+    },
 
     print = function() {
       catf("Archive:")

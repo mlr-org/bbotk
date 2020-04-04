@@ -6,8 +6,15 @@
 \format{
 \link[R6:R6Class]{R6::R6Class} object.
 }
+\arguments{
+\item{unnest}{\code{character()}
+Unnested columns are stored in seperate columns instead of list-columns.}
+}
 \description{
 Container around a data.table which stores all performed \link{Objective} function calls by the \link{Evaluator}.
+
+Returns data.table which contains all performed \link{Objective} function
+calls.
 }
 \section{Construction}{
 \preformatted{archive = Archive$new(search_space, codomain, minimize)

@@ -24,3 +24,16 @@ test_that("Archive on 1D problem works", {
   expect_equal(a$n_evals, 1)
   expect_equal(a$data$opt_x, xss_trafoed)
 })
+
+test_that("Unnest columns", {
+  a = Archive$new(PS_2D,FUN_2D_CODOMAIN)
+  xdt = data.table(x1 = 0, x2 = 1)
+  xss_trafoed = list(list(x1 = 1, x2 = 2))
+  ydt = data.table(y = 1)
+  a$add_evals(xdt, xss_trafoed, ydt)
+  # FIXME: Remove line when https://github.com/mlr-org/mlr3misc/issues/42 is fixed
+  a$data[,y:=NULL] 
+  a = a$get_data(unnest = "opt_x")
+  expect_equal(a$opt_x_x1, 1)
+  expect_equal(a$opt_x_x2, 2)
+})
