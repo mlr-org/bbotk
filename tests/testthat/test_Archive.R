@@ -31,8 +31,6 @@ test_that("Unnest columns", {
   xss_trafoed = list(list(x1 = 1, x2 = 2))
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
-  # FIXME: Remove line when https://github.com/mlr-org/mlr3misc/issues/42 is fixed
-  a$data[,y:=NULL] 
   a = a$get_data(unnest = "opt_x")
   expect_true("opt_x_x1" %in% colnames(a))
   expect_true("opt_x_x2" %in% colnames(a))
