@@ -23,6 +23,7 @@ test_that("Archive on 1D problem works", {
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$n_evals, 1)
   expect_equal(a$data$opt_x, xss_trafoed)
+  expect_list(a$data$opt_x[[1]])
 })
 
 test_that("Unnest columns", {
