@@ -12,3 +12,5 @@
 ^docs$
 ^pkgdown$
 ^.github$
+^\.lintr$
+^\.vscode$
