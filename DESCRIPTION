@@ -20,8 +20,14 @@ Authors@R:
       person(given = "Martin",
              family = "Binder",
              role = "aut",
-            email = "martin.binder@mail.com"))
-Description: Implements toolkit functions for black-box optimization.
+             email = "martin.binder@mail.com"),
+      person(given = "Marc",
+             family = "Becker",
+             role = "aut",
+             email = "marcbecker@posteo.de",
+             comment = c(ORCID = "0000-0002-8115-0400")))
+Description: Implements toolkit functions for black-box
+    optimization.
 License: LGPL-3
 URL: https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
@@ -35,14 +41,14 @@ Imports:
     paradox,
     R6
 Suggests:
-    testthat,
     callr,
     evaluate,
     future (>= 1.9.0),
-    future.apply (>= 1.1.0)
+    future.apply (>= 1.1.0),
+    testthat
 Encoding: UTF-8
 NeedsCompilation: no
-Roxygen: list(markdown = TRUE, r6 = FALSE)
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Collate:
     'Archive.R'
