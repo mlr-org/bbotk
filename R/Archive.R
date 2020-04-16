@@ -95,12 +95,17 @@ Archive = R6Class("Archive",
       }
       dt[]
     },
-
+    
+    #' @description
+    #' Printer.
+    #' @param ... (ignored).
     print = function() {
       catf("Archive:")
       print(self$data)
     },
 
+    #' @description 
+    #' Clear all evaluation results from archive.
     clear = function() {
       self$data = data.table()
     }
