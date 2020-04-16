@@ -3,19 +3,106 @@
 \name{ObjectiveRFun}
 \alias{ObjectiveRFun}
 \title{Objective interface where user cass pass R function}
-\format{
-\link[R6:R6Class]{R6::R6Class} object.
-}
 \description{
-
+Objective interface where user cass pass R function.
 }
-\section{Construction}{
-\preformatted{obj = ObjectiveRFun$new(fun, domain, codomain = NULL, id = "function", properties = character(0))
+\section{Super class}{
+\code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFun}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{fun}}{\code{function}\cr
+Objective function.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
 \itemize{
-\item \code{objective} :: \link{Objective}.
-\item \code{param_set} :: \link{ParamSet}.
-\item \code{terminator} :: \link{Terminator}.
+\item \href{#method-new}{\code{ObjectiveRFun$new()}}
+\item \href{#method-eval}{\code{ObjectiveRFun$eval()}}
+\item \href{#method-clone}{\code{ObjectiveRFun$clone()}}
 }
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_checked">}\href{../../bbotk/html/Objective.html#method-eval_checked}{\code{bbotk::Objective$eval_checked()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many">}\href{../../bbotk/html/Objective.html#method-eval_many}{\code{bbotk::Objective$eval_many()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many_checked">}\href{../../bbotk/html/Objective.html#method-eval_many_checked}{\code{bbotk::Objective$eval_many_checked()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format">}\href{../../bbotk/html/Objective.html#method-format}{\code{bbotk::Objective$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print">}\href{../../bbotk/html/Objective.html#method-print}{\code{bbotk::Objective$print()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFun$new(
+  fun,
+  domain,
+  codomain = NULL,
+  id = "function",
+  properties = character(0)
+)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fun}}{\code{function}\cr
+R function that encodes objective.}
+
+\item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Specifies domain of function, hence its innput parameters, their types and ranges.}
+
+\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Specifies codomain of function, hence its feasible values.}
+
+\item{\code{id}}{\code{character(1)}}
+
+\item{\code{properties}}{\code{character()}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-eval}{}}}
+\subsection{Method \code{eval()}}{
+Evaluates input value(s) on the objective function. Calls the R function
+supplied by the user.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFun$eval(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{Input values.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFun$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}
