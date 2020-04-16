@@ -3,20 +3,6 @@
 \name{Terminator}
 \alias{Terminator}
 \title{Abstract Terminator Class}
-\arguments{
-\item{param_set}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Set of control parameters for terminator.}
-
-\item{properties}{(\code{character()})\cr
-Set of properties.}
-
-\item{...}{(ignored).}
-
-\item{archive}{(\link{Archive}).}
-}
-\value{
-\code{logical(1)}.
-}
 \description{
 Abstract \code{Terminator} class that implements the base functionality each
 terminator must provide. A terminator is an object that determines when to
@@ -35,26 +21,7 @@ or even too many evaluations are performed, especially if multiple points are
 evaluated in a single batch (c.f. batch size parameter of many optimization
 algorithms). So it is advised to check the size of the returned archive, in
 particular if you are benchmarking multiple optimization algorithms.
-
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-
-Helper for print outputs.
-
-Printer.
-
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
-Must be implemented in each subclass.
 }
-\section{Fields}{
-
-\describe{
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Set of control parameters for terminator.}
-
-\item{\code{properties}}{(\code{character()})\cr
-Set of properties.}
-}}
-
 \seealso{
 Other Terminator: 
 \code{\link{mlr_terminators_clock_time}},
@@ -67,3 +34,111 @@ Other Terminator:
 \code{\link{mlr_terminators}}
 }
 \concept{Terminator}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Set of control parameters for terminator.}
+
+\item{\code{properties}}{(\code{character()})\cr
+Set of properties.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Terminator$new()}}
+\item \href{#method-format}{\code{Terminator$format()}}
+\item \href{#method-print}{\code{Terminator$print()}}
+\item \href{#method-is_terminated}{\code{Terminator$is_terminated()}}
+\item \href{#method-clone}{\code{Terminator$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$new(param_set = ParamSet$new(), properties = character())}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Set of control parameters for terminator.}
+
+\item{\code{properties}}{(\code{character()})\cr
+Set of properties.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-format"></a>}}
+\if{latex}{\out{\hypertarget{method-format}{}}}
+\subsection{Method \code{format()}}{
+Helper for print outputs.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$format()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Printer.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{(ignored).}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_terminated"></a>}}
+\if{latex}{\out{\hypertarget{method-is_terminated}{}}}
+\subsection{Method \code{is_terminated()}}{
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+Must be implemented in each subclass.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$is_terminated(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{logical(1)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

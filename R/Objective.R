@@ -4,39 +4,6 @@
 #' Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 #'
 #' @export
-
-
-# ' @section Construction:
-# ' ```
-# ' obj = Objective$new(fun, domain, ydim = 1L, minimize = NULL, id = "f", encapsulate = "none")
-# ' ```
-# ' * `fun` :: `function(xdt, ...)`\cr
-# '   R function that encodes objective. First argument `xdt` must be a `data.table`, where colnames
-# '   agree with the parameters specified in `domain`. Returns a `data.table` with columns that contain the `xdt` values, the outcomes in columns that agree with the `codomain` and additional columns.
-# ' * `domain` :: [paradox::ParamSet]\cr
-# '   Specifies domain of function, hence its innput parameters, their types and ranges.
-# ' * `ydim` :: `integer(1)`\cr
-# '   Dimension of codomain, ydim=1 implies single-objective, ydim>1 implies multi-objective optimization.
-# ' * `minimize` :: named `logical`.
-# '   Should objective (component) function be minimized (or maximized)?
-# '   By naming this logical, you can also define the names of the objectives.
-# '   By default, all objectives are minimized and they are named `y1` to `y[ydim]`.
-# ' * `id` :: `character(1)`\cr
-# '   Name of function. Not very much currently used.
-# ' * `encapsulate` :: `character(1)`.
-# '   Defines how the [Evaluator] encapsulates function calls.
-# '   See [mlr3misc::encapsulate] for behavior and possible values.
-# '
-# ' @section Fields:
-# ' * `id` :: `character(1)`.; from construction
-# ' * `properties` :: `character()`.; from construction
-# ' * `domain` :: [paradox::ParamSet]; from construction
-# ' * `codomain` :: [paradox::ParamSet]; (Realvalued) codomain as ParamSet, auto-constructed.
-# ' * `ydim` :: `integer(1)`; from construction
-# ' * `xdim` :: `integer(1)`\cr
-# '    Number of input parameters in `domain`.
-# ' @export
-
 Objective = R6Class("Objective",
   public = list(
 
@@ -46,18 +13,22 @@ Objective = R6Class("Objective",
     #' @field properties `character()`
     properties = NULL,
 
-    #' @field domain [paradox::ParamSet]
+    #' @field domain [paradox::ParamSet]\cr
+    #' Specifies domain of function, hence its innput parameters, their types and ranges.
     domain = NULL,
 
     #' @field codomain [paradox::ParamSet]
+    #' Specifies codomain of function, hence its feasible values.
     codomain = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param id `character(1)`
     #' @param properties `character()`
-    #' @param domain [paradox::ParamSet]
-    #' @param codomain [paradox::ParamSet]
+    #' @param domain [paradox::ParamSet]\cr
+    #' Specifies domain of function, hence its innput parameters, their types and ranges.
+    #' @param codomain [paradox::ParamSet]\cr
+    #' Specifies codomain of function, hence its feasible values.
     initialize = function(id = "f", properties = character(), domain, codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
@@ -136,7 +107,12 @@ Objective = R6Class("Objective",
   ),
 
   active = list(
+    #' @field xdim `ìnteger(1)`\cr
+    #' Dimension of domain.
     xdim = function() self$domain$length,
+    
+    #' @field ydim `ìnteger(1)`\cr
+    #' Dimension of codomain.
     ydim = function() self$codomain$length
   )
 )

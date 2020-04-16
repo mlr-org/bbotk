@@ -3,58 +3,199 @@
 \name{Objective}
 \alias{Objective}
 \title{Objective function with domain and co-domain}
-\arguments{
-\item{id}{\code{character(1)}}
-
-\item{properties}{\code{character()}}
-
-\item{domain}{\link[paradox:ParamSet]{paradox::ParamSet}}
-
-\item{codomain}{\link[paradox:ParamSet]{paradox::ParamSet}}
-
-\item{xs}{\code{list()} A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
-
-\item{xss}{\code{list()} A list of lists that contains multiple x values, e.g. \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
-}
-\value{
-\code{character()}
-
-\code{character()}
-
-\code{list()} A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
-
-\code{list()} A list that contains the result of all evaluations, e.g. \code{list(list(y = 1), list(y=2))}.
-
-\code{list()} A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
-
-\code{list()} A list that contains the result of all evaluations, e.g. \code{list(list(y = 1), list(y=2))}.
-}
 \description{
 Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
-
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-
-Helper for print outputs.
-
-Print method.
-
-Evaluates a single input value on the objective function
-
-Evaluates multiple input values on the objective function
-
-Evaluates a single input value on the objective function and checks its validity as well as the validity of the result.
-
-Evaluates multiple input values on the objective function and checks the validity of the input.
 }
-\section{Fields}{
-
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{id}}{\code{character(1)}}
 
 \item{\code{properties}}{\code{character()}}
 
-\item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Specifies domain of function, hence its innput parameters, their types and ranges.}
 
-\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}}
-}}
+\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}
+Specifies codomain of function, hence its feasible values.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{xdim}}{\code{ìnteger(1)}\cr
+Dimension of domain.}
 
+\item{\code{ydim}}{\code{ìnteger(1)}\cr
+Dimension of codomain.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Objective$new()}}
+\item \href{#method-format}{\code{Objective$format()}}
+\item \href{#method-print}{\code{Objective$print()}}
+\item \href{#method-eval}{\code{Objective$eval()}}
+\item \href{#method-eval_many}{\code{Objective$eval_many()}}
+\item \href{#method-eval_checked}{\code{Objective$eval_checked()}}
+\item \href{#method-eval_many_checked}{\code{Objective$eval_many_checked()}}
+\item \href{#method-clone}{\code{Objective$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$new(
+  id = "f",
+  properties = character(),
+  domain,
+  codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character(1)}}
+
+\item{\code{properties}}{\code{character()}}
+
+\item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Specifies domain of function, hence its innput parameters, their types and ranges.}
+
+\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Specifies codomain of function, hence its feasible values.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-format"></a>}}
+\if{latex}{\out{\hypertarget{method-format}{}}}
+\subsection{Method \code{format()}}{
+Helper for print outputs.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$format()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+\code{character()}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Print method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$print()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+\code{character()}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-eval}{}}}
+\subsection{Method \code{eval()}}{
+Evaluates a single input value on the objective function
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$eval(xs)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xs}}{\code{list()} A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{list()} A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval_many"></a>}}
+\if{latex}{\out{\hypertarget{method-eval_many}{}}}
+\subsection{Method \code{eval_many()}}{
+Evaluates multiple input values on the objective function
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$eval_many(xss)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xss}}{\code{list()} A list of lists that contains multiple x values, e.g. \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{list()} A list that contains the result of all evaluations, e.g. \code{list(list(y = 1), list(y=2))}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval_checked"></a>}}
+\if{latex}{\out{\hypertarget{method-eval_checked}{}}}
+\subsection{Method \code{eval_checked()}}{
+Evaluates a single input value on the objective function and checks its validity as well as the validity of the result.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$eval_checked(xs)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xs}}{\code{list()} A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{list()} A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval_many_checked"></a>}}
+\if{latex}{\out{\hypertarget{method-eval_many_checked}{}}}
+\subsection{Method \code{eval_many_checked()}}{
+Evaluates multiple input values on the objective function and checks the validity of the input.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$eval_many_checked(xss)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xss}}{\code{list()} A list of lists that contains multiple x values, e.g. \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{list()} A list that contains the result of all evaluations, e.g. \code{list(list(y = 1), list(y=2))}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

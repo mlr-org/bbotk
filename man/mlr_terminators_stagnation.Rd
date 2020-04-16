@@ -4,19 +4,9 @@
 \alias{mlr_terminators_stagnation}
 \alias{TerminatorStagnation}
 \title{Terminator that stops when optimization does not improve}
-\arguments{
-\item{archive}{(\link{Archive}).}
-}
-\value{
-\code{logical(1)}.
-}
 \description{
 Class to terminate the optimization after the performance stagnates, i.e.
 does not improve more than \code{threshold} over the last \code{iters} iterations.
-
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
 }
 \section{Dictionary}{
 
@@ -53,3 +43,70 @@ Other Terminator:
 \code{\link{mlr_terminators}}
 }
 \concept{Terminator}
+\section{Super class}{
+\code{\link[bbotk:Terminator]{bbotk::Terminator}} -> \code{TerminatorStagnation}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{TerminatorStagnation$new()}}
+\item \href{#method-is_terminated}{\code{TerminatorStagnation$is_terminated()}}
+\item \href{#method-clone}{\code{TerminatorStagnation$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnation$new()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_terminated"></a>}}
+\if{latex}{\out{\hypertarget{method-is_terminated}{}}}
+\subsection{Method \code{is_terminated()}}{
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnation$is_terminated(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{logical(1)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnation$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

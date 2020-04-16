@@ -3,51 +3,174 @@
 \name{Archive}
 \alias{Archive}
 \title{Container for objective function evaluations}
-\format{
-\link[R6:R6Class]{R6::R6Class} object.
-}
-\arguments{
-\item{unnest}{\code{character()}
-Unnested columns are stored in seperate columns instead of list-columns.}
-}
 \description{
-Container around a data.table which stores all performed \link{Objective} function calls by the \link{Evaluator}.
-
-Returns data.table which contains all performed \link{Objective} function
+Container around a data.table which stores all performed \link{Objective} function
 calls.
 }
-\section{Construction}{
-\preformatted{archive = Archive$new(search_space, codomain, minimize)
-}
-\itemize{
-\item \code{search_space} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
-Search space that is logged into archive.
-\item \code{codomain} :: \link[paradox:ParamSet]{paradox::ParamSet}\cr
-Codomain of objective function that is logged into archive.
-\item \code{minimize} :: named \code{logical}.
-Should objective (component) function be minimized (or maximized)?
-}
-}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{data}}{\link[data.table:data.table]{data.table::data.table}\cr
+Holds data of the archive.}
 
-\section{Fields}{
+\item{\code{search_space}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Search space that is logged into archive.}
 
-\itemize{
-\item \code{search_space} :: \link[paradox:ParamSet]{paradox::ParamSet} from construction\cr
-\item \code{codomain} :: \link[paradox:ParamSet]{paradox::ParamSet} from construction\cr
-\item \code{minimize} :: named \code{logical}; from construction
-\item \code{data} :: \link[data.table:data.table]{data.table::data.table}\cr
-Holds data of the archive.
-\item \code{n_evals} :: \code{integer(1)}\cr
-Number of evaluations stored in the container.
-}
-}
+\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Codomain of objective function that is logged into archive.}
 
+\item{\code{start_time}}{\code{POSIXct}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{n_evals}}{\code{ìnteger(1)}\cr
+Number of evaluations stored in the archive.}
+
+\item{\code{n_batch}}{\code{ìnteger(1)}\cr
+Number of batches stored in the archive.}
+
+\item{\code{cols_x}}{\code{character()}\cr}
+
+\item{\code{cols_y}}{\code{character()}\cr}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
-
+\subsection{Public methods}{
 \itemize{
-\item \code{add_evals(dt)}\cr
-\link[data.table:data.table]{data.table::data.table} -> \code{self}\cr
-Adds function evaluations to the archive table.
+\item \href{#method-new}{\code{Archive$new()}}
+\item \href{#method-add_evals}{\code{Archive$add_evals()}}
+\item \href{#method-get_best}{\code{Archive$get_best()}}
+\item \href{#method-get_data}{\code{Archive$get_data()}}
+\item \href{#method-print}{\code{Archive$print()}}
+\item \href{#method-clear}{\code{Archive$clear()}}
+\item \href{#method-clone}{\code{Archive$clone()}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{search_space}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Search space that is logged into archive.}
+
+\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Codomain of objective function that is logged into archive.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-add_evals"></a>}}
+\if{latex}{\out{\hypertarget{method-add_evals}{}}}
+\subsection{Method \code{add_evals()}}{
+Adds function evaluations to the archive table.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(xdt, xss_trafoed, ydt)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xdt}}{\link[data.table:data.table]{data.table::data.table}}
+
+\item{\code{xss_trafoed}}{\code{list()}}
+
+\item{\code{ydt}}{\link[data.table:data.table]{data.table::data.table}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_best"></a>}}
+\if{latex}{\out{\hypertarget{method-get_best}{}}}
+\subsection{Method \code{get_best()}}{
+Returns best scoring evaluation.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$get_best(m = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{m}}{\code{integer()}\cr
+Take only batches \code{m} into account. Default all batches.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_data"></a>}}
+\if{latex}{\out{\hypertarget{method-get_data}{}}}
+\subsection{Method \code{get_data()}}{
+Returns data.table which contains all performed \link{Objective} function
+calls.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$get_data(unnest = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{unnest}}{\code{character()}
+Unnested columns are stored in seperate columns instead of list-columns.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Printer.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$print()}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{(ignored).}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-clear}{}}}
+\subsection{Method \code{clear()}}{
+Clear all evaluation results from archive.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$clear()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

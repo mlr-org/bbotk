@@ -4,19 +4,9 @@
 \alias{mlr_terminators_evals}
 \alias{TerminatorEvals}
 \title{Terminator that stops after a number of evaluations}
-\arguments{
-\item{archive}{(\link{Archive}).}
-}
-\value{
-\code{logical(1)}.
-}
 \description{
 Class to terminate the optimization depending on the number of evaluations.
 An evaluation is defined by one resampling of a parameter value.
-
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
 }
 \section{Dictionary}{
 
@@ -51,3 +41,70 @@ Other Terminator:
 \code{\link{mlr_terminators}}
 }
 \concept{Terminator}
+\section{Super class}{
+\code{\link[bbotk:Terminator]{bbotk::Terminator}} -> \code{TerminatorEvals}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{TerminatorEvals$new()}}
+\item \href{#method-is_terminated}{\code{TerminatorEvals$is_terminated()}}
+\item \href{#method-clone}{\code{TerminatorEvals$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorEvals$new()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_terminated"></a>}}
+\if{latex}{\out{\hypertarget{method-is_terminated}{}}}
+\subsection{Method \code{is_terminated()}}{
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorEvals$is_terminated(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{logical(1)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorEvals$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

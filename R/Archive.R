@@ -1,47 +1,34 @@
 #' @title Container for objective function evaluations
 #'
-#' @usage NULL
-#' @format [R6::R6Class] object.
-#'
 #' @description
-#' Container around a data.table which stores all performed [Objective] function calls by the [Evaluator].
-#'
-#' @section Construction:
-#' ```
-#' archive = Archive$new(search_space, codomain, minimize)
-#' ```
-#'
-#' * `search_space` :: [paradox::ParamSet]\cr
-#'   Search space that is logged into archive.
-#' * `codomain` :: [paradox::ParamSet]\cr
-#'   Codomain of objective function that is logged into archive.
-#' * `minimize` :: named `logical`.
-#'   Should objective (component) function be minimized (or maximized)?
-#'
-#' @section Fields:
-#' * `search_space` :: [paradox::ParamSet] from construction\cr
-#' * `codomain` :: [paradox::ParamSet] from construction\cr
-#' * `minimize` :: named `logical`; from construction
-#' * `data` :: [data.table::data.table]\cr
-#'   Holds data of the archive.
-#' * `n_evals` :: `integer(1)`\cr
-#'   Number of evaluations stored in the container.
-#'
-#' @section Methods:
-#' * `add_evals(dt)`\cr
-#'   [data.table::data.table] -> `self`\cr
-#'   Adds function evaluations to the archive table.
+#' Container around a data.table which stores all performed [Objective] function
+#' calls.
 #'
 #' @export
-#FIXME: doc cols of "data"
-
 Archive = R6Class("Archive",
   public = list(
+    
+    #' @field data [data.table::data.table]\cr
+    #' Holds data of the archive.
     data = NULL,
+    
+    #' @field search_space [paradox::ParamSet]\cr
+    #' Search space that is logged into archive.
     search_space = NULL,
+    
+    #' @field codomain [paradox::ParamSet]\cr
+    #' Codomain of objective function that is logged into archive.
     codomain = NULL,
+    
+    #' @field start_time `POSIXct`
     start_time = NULL,
 
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param search_space [paradox::ParamSet]\cr
+    #' Search space that is logged into archive.
+    #' @param codomain [paradox::ParamSet]\cr
+    #' Codomain of objective function that is logged into archive.
     initialize = function(search_space, codomain) {
       assert_param_set(search_space)
       assert_param_set(codomain)
@@ -51,6 +38,11 @@ Archive = R6Class("Archive",
       self$data = data.table()
     },
 
+    #' @description 
+    #' Adds function evaluations to the archive table.
+    #' @param xdt [data.table::data.table]
+    #' @param xss_trafoed `list()`
+    #' @param ydt [data.table::data.table]
     add_evals = function(xdt, xss_trafoed, ydt) {
       # FIXME: add checks here for the dts and their domains
       # FIXME: make asserts better!
@@ -67,6 +59,10 @@ Archive = R6Class("Archive",
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
+    #' @description 
+    #' Returns best scoring evaluation.
+    #' @param m `integer()`\cr
+    #' Take only batches `m` into account. Default all batches.
     get_best = function(m = NULL) {
       m = assert_integerish(m, null.ok = TRUE)
 
@@ -99,21 +95,36 @@ Archive = R6Class("Archive",
       }
       dt[]
     },
-
+    
+    #' @description
+    #' Printer.
+    #' @param ... (ignored).
     print = function() {
       catf("Archive:")
       print(self$data)
     },
 
+    #' @description 
+    #' Clear all evaluation results from archive.
     clear = function() {
       self$data = data.table()
     }
   ),
 
   active = list(
+    
+    #' @field n_evals `ìnteger(1)`\cr
+    #' Number of evaluations stored in the archive.
     n_evals = function() nrow(self$data),
+    
+    #' @field n_batch `ìnteger(1)`\cr
+    #' Number of batches stored in the archive.
     n_batch = function() if(is.null(self$data$batch_nr)) 0L else max(self$data$batch_nr),
+    
+    #' @field cols_x `character()`\cr
     cols_x = function() self$search_space$ids(),
+    
+    #' @field cols_y `character()`\cr
     cols_y = function() self$codomain$ids()
     # idx_unevaled = function() self$data$y
   ),
