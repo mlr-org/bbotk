@@ -8,7 +8,7 @@ test_that("Objective works", {
     )
   )
   obj = ObjectiveTestEval$new(domain = PS_2D)
-  xs = list(x1=1, x2=2)
+  xs = list(x1 = 1, x2 = 2)
   xss = replicate(10, xs, simplify = FALSE)
   res1 = obj$eval(xs)
   expect_list(res1)
@@ -32,4 +32,3 @@ test_that("Objective works", {
   expect_equal(res1, res1many)
   expect_equal(res2, res2many)
 })
-

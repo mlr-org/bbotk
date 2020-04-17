@@ -6,7 +6,7 @@ test_that("TerminatorPerfReached works", {
   inst = MAKE_INST_2D(term)
   a = random_search(inst, batch_size = 1L)
   expect_equal(sum(a$data$y < 0.2), 1)
-  expect_true(tail(a$data$y,1) < 0.2)
+  expect_true(tail(a$data$y, 1) < 0.2)
 })
 
 test_that("TerminatorPerfReached works for multi-objective", {
@@ -16,5 +16,5 @@ test_that("TerminatorPerfReached works for multi-objective", {
   a = random_search(inst, batch_size = 1L)
   a$data[, both := y1 <= 0.2 & y2 >= -0.2]
   expect_equal(sum(a$data$both), 1)
-  expect_true(tail(a$data$both,1))
+  expect_true(tail(a$data$both, 1))
 })
