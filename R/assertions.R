@@ -11,18 +11,19 @@
 #' @keywords internal
 NULL
 
-#' @export 
+#' @export
 #' @param terminator ([Terminator])
 #' @rdname mlr_assertions
 assert_terminator = function(terminator) {
   assert_r6(terminator, "Terminator")
 }
 
-#' @export 
+#' @export
 #' @param x (any)
 #' @param empty (`logical(1)`)
 #' @param .var.name (`character(1)`)
 #' @rdname mlr_assertions
 assert_set = function(x, empty = TRUE, .var.name = vname(x)) {
-  assert_character(x, min.len = as.integer(!empty), any.missing = FALSE, min.chars = 1L, unique = TRUE, .var.name = .var.name)
+  assert_character(x, min.len = as.integer(!empty), any.missing = FALSE,
+    min.chars = 1L, unique = TRUE, .var.name = .var.name)
 }

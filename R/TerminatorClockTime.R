@@ -4,14 +4,14 @@
 #' @include Terminator.R
 #'
 #' @description
-#' Class to terminate the optimization after a fixed time point has been reached (as
-#' reported by [Sys.time()]).
+#' Class to terminate the optimization after a fixed time point has been reached
+#' (as reported by [Sys.time()]).
 #'
 #' @templateVar id clock_time
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `stop_time` (`POSIXct(1)`)\cr
+#' * `stop_time` `POSIXct(1)`\cr
 #'   Terminator stops after this point in time.
 #'   Mutually exclusive with argument `secs`.
 #'
@@ -30,15 +30,16 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
         check_class(x, "POSIXct")
       }
       ps = ParamSet$new(list(
-        ParamUty$new("stop_time", tags = "required", custom_check = custom_check)
+        ParamUty$new("stop_time", tags = "required",
+          custom_check = custom_check)
       ))
       super$initialize(param_set = ps, properties = "multi-objective")
     },
 
     #' @description
-    #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
-    #'
-    #' @param archive ([Archive]).
+    #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
+    #' otherwise.
+    #' @param archive [Archive].
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {

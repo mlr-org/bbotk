@@ -37,10 +37,10 @@ Other Terminator:
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Set of control parameters for terminator.}
 
-\item{\code{properties}}{(\code{character()})\cr
+\item{\code{properties}}{\code{character()}\cr
 Set of properties.}
 }
 \if{html}{\out{</div>}}
@@ -67,10 +67,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Set of control parameters for terminator.}
 
-\item{\code{properties}}{(\code{character()})\cr
+\item{\code{properties}}{\code{character()}\cr
 Set of properties.}
 }
 \if{html}{\out{</div>}}
@@ -107,8 +107,8 @@ Printer.
 \if{html}{\out{<a id="method-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
-Must be implemented in each subclass.
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+otherwise. Must be implemented in each subclass.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Terminator$is_terminated(archive)}\if{html}{\out{</div>}}
 }
@@ -116,7 +116,7 @@ Must be implemented in each subclass.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{archive}}{(\link{Archive}).}
+\item{\code{archive}}{\link{Archive}.}
 }
 \if{html}{\out{</div>}}
 }

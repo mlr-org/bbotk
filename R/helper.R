@@ -1,7 +1,9 @@
 # FIXME: do we want to export this? or rather have a subclass in ParamSet?
 # FIXME: also name is bad, as we use this mainly for objectives
 make_ps_reals = function(d = 1, id = "y") {
-  ParamSet$new(lapply(1:d, function(i) ParamDbl$new(id = paste0(id, i), tags = "minimize")))
+  ParamSet$new(lapply(1:d, function(i) {
+    ParamDbl$new(id = paste0(id, i), tags = "minimize")
+  }))
 }
 
 # determines if execution via future will be running locally or remotely
@@ -25,5 +27,6 @@ terminated_error = function(optim_instance) {
     format(optim_instance$terminator)
   )
 
-  set_class(list(message = msg, call = NULL), c("terminated_error", "error", "condition"))
+  set_class(list(message = msg, call = NULL),
+    c("terminated_error", "error", "condition"))
 }

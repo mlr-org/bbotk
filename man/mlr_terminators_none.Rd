@@ -70,7 +70,7 @@ Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} other
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{archive}}{(\link{Archive}).}
+\item{\code{archive}}{\link{Archive}.}
 }
 \if{html}{\out{</div>}}
 }

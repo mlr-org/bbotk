@@ -11,7 +11,7 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `n_evals` (`integer(1)`)\cr
+#' * `n_evals` `integer(1)`\cr
 #'   Number of allowed evaluations, default is 100L
 #'
 #' @family Terminator
@@ -26,17 +26,17 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(ParamInt$new("n_evals", lower = 1L, default = 100L, tags = "required")))
+      ps = ParamSet$new(list(ParamInt$new("n_evals", lower = 1L, default = 100L,
+        tags = "required")))
       ps$values = list(n_evals = 100L)
 
       super$initialize(param_set = ps, properties = "multi-objective")
     },
 
     #' @description
-    #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
-    #'
-    #' @param archive ([Archive]).
-    #'
+    #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
+    #' otherwise.
+    #' @param archive [Archive].
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       archive$n_evals >= self$param_set$values$n_evals

@@ -16,19 +16,19 @@ TerminatorNone = R6Class("TerminatorNone",
   inherit = Terminator,
   public = list(
 
-   #' @description
-   #' Creates a new instance of this [R6][R6::R6Class] class.
-   initialize = function() {
-     super$initialize(properties = "multi-objective")
-   },
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    initialize = function() {
+      super$initialize(properties = "multi-objective")
+    },
 
-   #' @description
-   #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
-   #'
-   #' @param archive ([Archive]).
-   #'
-   #' @return `logical(1)`.
-   is_terminated = function(archive) return(FALSE)
+    #' @description
+    #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
+    #' @param archive [Archive].
+    #' @return `logical(1)`.
+    is_terminated = function(archive) {
+      return(FALSE)
+    }
   )
 )
 

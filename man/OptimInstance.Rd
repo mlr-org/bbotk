@@ -7,12 +7,14 @@
 Wraps an \link{Objective} function with extra services for convenient evaluation.
 \itemize{
 \item Automatic storing of results in an \link{Archive} after evaluation.
-\item Automatic checking for termination. Evaluations of design points are performed in batches.
-Before a batch is evaluated, the \link{Terminator} is queried for the remaining budget.
-If the available budget is exhausted, an exception is raised, and no further evaluations can be performed from this point on.
+\item Automatic checking for termination. Evaluations of design points are
+performed in batches. Before a batch is evaluated, the \link{Terminator} is
+queried for the remaining budget. If the available budget is exhausted, an
+exception is raised, and no further evaluations can be performed from this
+point on.
 \item Logging of evaluations on R console
-\item Encapsulated evaluation via evaluate / callr with function \code{\link[mlr3misc:encapsulate]{mlr3misc::encapsulate()}}
-to guard against exceptions and even segfaults.
+\item Encapsulated evaluation via evaluate / callr with function
+\code{\link[mlr3misc:encapsulate]{mlr3misc::encapsulate()}} to guard against exceptions and even segfaults.
 Note that behavior is define in \link{Objective} argument \code{encapsulate}.
 }
 }
@@ -34,7 +36,8 @@ Note that behavior is define in \link{Objective} argument \code{encapsulate}.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{result}}{Get result}
+\item{\code{result}}{\code{list()}\cr
+Get result}
 }
 \if{html}{\out{</div>}}
 }
@@ -83,22 +86,13 @@ Helper for print outputs.
 \if{html}{\out{<a id="method-eval_batch"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_batch}{}}}
 \subsection{Method \code{eval_batch()}}{
-Evaluates all hyperparameter configurations in \code{dt} through
-resampling, where each configuration is a row, and columns are scalar
-parameters. eturns a named list with the following elements:
-\itemize{
-\item \code{"batch_nr"}: Number of the new batch. This number is calculated in an
-auto-increment fashion.
-\item \code{"perf"}: A \code{\link[data.table:data.table]{data.table::data.table()}} of
-evaluated performances for each row of the \code{dt}. Has the same number
-of rows as \code{dt}, and the same number of columns as length of
-\code{measures}. Columns are named with measure-IDs. A cell entry is the
-(aggregated) performance of that configuration for that measure.
-}
+Evaluates all input values in \code{xdt} by calling
+the \link{Objective}. Applies possible transformations to the input values
+and writes the results to the \link{Archive}-
 
 Before each batch-evaluation, the \link{Terminator} is checked, and if it
 is positive, an exception of class \code{terminated_error} is raised. This
-function should be internally called by the tuner.
+function should be internally called by the \link{Optimizer}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_batch(xdt)}\if{html}{\out{</div>}}
 }

@@ -19,11 +19,11 @@ term("perf_reached")
 \section{Parameters}{
 
 \itemize{
-\item \code{level} (\code{numeric(1)})\cr
-Performance level that needs to be reached, default is 0.
-Terminates if the performance exceeds (respective measure has to be maximized) or
-falls below (respective measure has to be minimized) this value.
-For multi-objective optimization this has to be a vector and all single values have to be exceeded.
+\item \code{level} \code{numeric(1)}\cr Performance level that needs to be reached,
+default is 0. Terminates if the performance exceeds (respective measure has
+to be maximized) or falls below (respective measure has to be minimized)
+this value. For multi-objective optimization this has to be a vector and
+all single values have to be exceeded.
 }
 }
 
@@ -76,7 +76,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<a id="method-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+otherwise.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TerminatorPerfReached$is_terminated(archive)}\if{html}{\out{</div>}}
 }
@@ -84,7 +85,7 @@ Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} other
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{archive}}{(\link{Archive}).}
+\item{\code{archive}}{\link{Archive}.}
 }
 \if{html}{\out{</div>}}
 }

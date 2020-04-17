@@ -58,7 +58,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 R function that encodes objective.}
 
 \item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
-Specifies domain of function, hence its innput parameters, their types and ranges.}
+Specifies domain of function, hence its innput parameters, their types
+and ranges.}
 
 \item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Specifies codomain of function, hence its feasible values.}

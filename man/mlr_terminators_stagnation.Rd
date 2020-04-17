@@ -20,10 +20,12 @@ term("stagnation")
 \section{Parameters}{
 
 \itemize{
-\item \code{iters} (\code{integer(1)})\cr
-Number of iterations to evaluate the performance improvement on, default is 10.
-\item \code{threshold} (\code{numeric(1)})\cr
-If the improvement is less than \code{threshold}, optimization is stopped, default is \code{0}.
+\item \code{iters} \code{integer(1)}\cr
+Number of iterations to evaluate the performance improvement on, default
+is 10.
+\item \code{threshold} \code{numeric(1)}\cr
+If the improvement is less than \code{threshold}, optimization is stopped,
+default is \code{0}.
 }
 }
 
@@ -76,7 +78,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<a id="method-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+otherwise.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnation$is_terminated(archive)}\if{html}{\out{</div>}}
 }
@@ -84,7 +87,7 @@ Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} other
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{archive}}{(\link{Archive}).}
+\item{\code{archive}}{\link{Archive}.}
 }
 \if{html}{\out{</div>}}
 }

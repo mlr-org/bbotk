@@ -4,7 +4,8 @@
 \alias{Objective}
 \title{Objective function with domain and co-domain}
 \description{
-Describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
+Describes a black-box objective function that maps an arbitrary domain to a
+numerical codomain.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -14,7 +15,8 @@ Describes a black-box objective function that maps an arbitrary domain to a nume
 \item{\code{properties}}{\code{character()}}
 
 \item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
-Specifies domain of function, hence its innput parameters, their types and ranges.}
+Specifies domain of function, hence its innput parameters, their types
+and ranges.}
 
 \item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}
 Specifies codomain of function, hence its feasible values.}
@@ -67,7 +69,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \item{\code{properties}}{\code{character()}}
 
 \item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
-Specifies domain of function, hence its innput parameters, their types and ranges.}
+Specifies domain of function, hence its innput parameters, their types
+and ranges.}
 
 \item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Specifies codomain of function, hence its feasible values.}
@@ -113,12 +116,14 @@ Evaluates a single input value on the objective function
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xs}}{\code{list()} A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
+\item{\code{xs}}{\code{list()}\cr
+A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{list()} A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
+\code{list()}\cr
+A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -133,19 +138,24 @@ Evaluates multiple input values on the objective function
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xss}}{\code{list()} A list of lists that contains multiple x values, e.g. \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
+\item{\code{xss}}{\code{list()}\cr
+A list of lists that contains multiple x values, e.g.
+\code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{list()} A list that contains the result of all evaluations, e.g. \code{list(list(y = 1), list(y=2))}.
+\code{list()}\cr
+A list that contains the result of all evaluations, e.g.
+\code{list(list(y = 1), list(y=2))}.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-eval_checked"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_checked}{}}}
 \subsection{Method \code{eval_checked()}}{
-Evaluates a single input value on the objective function and checks its validity as well as the validity of the result.
+Evaluates a single input value on the objective function and checks its
+validity as well as the validity of the result.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Objective$eval_checked(xs)}\if{html}{\out{</div>}}
 }
@@ -153,19 +163,22 @@ Evaluates a single input value on the objective function and checks its validity
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xs}}{\code{list()} A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
+\item{\code{xs}}{\code{list()}\cr
+A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{list()} A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
+\code{list()}\cr
+A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-eval_many_checked"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_many_checked}{}}}
 \subsection{Method \code{eval_many_checked()}}{
-Evaluates multiple input values on the objective function and checks the validity of the input.
+Evaluates multiple input values on the objective function and checks the
+validity of the input.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Objective$eval_many_checked(xss)}\if{html}{\out{</div>}}
 }
@@ -173,12 +186,16 @@ Evaluates multiple input values on the objective function and checks the validit
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xss}}{\code{list()} A list of lists that contains multiple x values, e.g. \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
+\item{\code{xss}}{\code{list()}\cr
+A list of lists that contains multiple x values, e.g.
+\code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{list()} A list that contains the result of all evaluations, e.g. \code{list(list(y = 1), list(y=2))}.
+\code{list()}\cr
+A list that contains the result of all evaluations, e.g.
+\code{list(list(y = 1), list(y=2))}.
 }
 }
 \if{html}{\out{<hr>}}

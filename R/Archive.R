@@ -7,19 +7,19 @@
 #' @export
 Archive = R6Class("Archive",
   public = list(
-    
+
     #' @field data [data.table::data.table]\cr
     #' Holds data of the archive.
     data = NULL,
-    
+
     #' @field search_space [paradox::ParamSet]\cr
     #' Search space that is logged into archive.
     search_space = NULL,
-    
+
     #' @field codomain [paradox::ParamSet]\cr
     #' Codomain of objective function that is logged into archive.
     codomain = NULL,
-    
+
     #' @field start_time `POSIXct`
     start_time = NULL,
 
@@ -38,12 +38,13 @@ Archive = R6Class("Archive",
       self$data = data.table()
     },
 
-    #' @description 
+    #' @description
     #' Adds function evaluations to the archive table.
     #' @param xdt [data.table::data.table]
     #' @param xss_trafoed `list()`
     #' @param ydt [data.table::data.table]
     add_evals = function(xdt, xss_trafoed, ydt) {
+
       # FIXME: add checks here for the dts and their domains
       # FIXME: make asserts better!
       assert_data_table(xdt)
@@ -59,7 +60,7 @@ Archive = R6Class("Archive",
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
-    #' @description 
+    #' @description
     #' Returns best scoring evaluation.
     #' @param m `integer()`\cr
     #' Take only batches `m` into account. Default all batches.
@@ -69,19 +70,19 @@ Archive = R6Class("Archive",
       if (self$n_batch == 0) {
         stop("No results stored in archive")
       }
-      if(is.null(m)) {
+      if (is.null(m)) {
         m = 1:self$n_batch
       }
 
       tab = self$data
-      tab = tab[batch_nr %in% m,]
+      tab = tab[batch_nr %in% m, ]
       # FIXME: the minimize info needs to be taken from codomain
       order = if (self$codomain$tags[1] == "minimize") 1 else -1
       setorderv(tab, self$codomain$ids(), order = order)
-      tab[1,]
+      tab[1, ]
     },
-    
-    #' @description 
+
+    #' @description
     #' Returns data.table which contains all performed [Objective] function
     #' calls.
     #' @param unnest `character()`
@@ -89,13 +90,13 @@ Archive = R6Class("Archive",
     get_data = function(unnest = NULL) {
       dt = copy(self$data)
       assert_choice(unnest, names(dt), null.ok = TRUE)
-      
-      if(!is.null(unnest)) {
+
+      if (!is.null(unnest)) {
         dt = unnest(dt, unnest, prefix = paste0(unnest, "_"))
       }
       dt[]
     },
-    
+
     #' @description
     #' Printer.
     #' @param ... (ignored).
@@ -104,7 +105,7 @@ Archive = R6Class("Archive",
       print(self$data)
     },
 
-    #' @description 
+    #' @description
     #' Clear all evaluation results from archive.
     clear = function() {
       self$data = data.table()
@@ -112,21 +113,27 @@ Archive = R6Class("Archive",
   ),
 
   active = list(
-    
+
     #' @field n_evals `ìnteger(1)`\cr
     #' Number of evaluations stored in the archive.
     n_evals = function() nrow(self$data),
-    
+
     #' @field n_batch `ìnteger(1)`\cr
     #' Number of batches stored in the archive.
-    n_batch = function() if(is.null(self$data$batch_nr)) 0L else max(self$data$batch_nr),
-    
+    n_batch = function() {
+      if (is.null(self$data$batch_nr)) {
+        0L
+      }
+      else {
+        max(self$data$batch_nr)
+      }
+    },
+
     #' @field cols_x `character()`\cr
     cols_x = function() self$search_space$ids(),
-    
+
     #' @field cols_y `character()`\cr
     cols_y = function() self$codomain$ids()
     # idx_unevaled = function() self$data$y
   ),
 )
-

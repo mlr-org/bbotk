@@ -11,7 +11,7 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `secs` (`numeric(1)`)\cr
+#' * `secs` `numeric(1)`\cr
 #'   Maximum allowed time, in seconds, default is 100.
 #'   Mutually exclusive with argument `stop_time`.
 #'
@@ -33,10 +33,9 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     },
 
     #' @description
-    #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
-    #'
-    #' @param archive ([Archive]).
-    #'
+    #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
+    #' otherwise.
+    #' @param archive [Archive].
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")

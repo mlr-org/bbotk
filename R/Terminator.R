@@ -26,20 +26,20 @@
 #' @export
 Terminator = R6Class("Terminator",
   public = list(
-    #' @field param_set ([paradox::ParamSet])\cr
+    #' @field param_set [paradox::ParamSet]\cr
     #'   Set of control parameters for terminator.
     param_set = NULL,
 
-    #' @field properties (`character()`)\cr
+    #' @field properties `character()`\cr
     #'   Set of properties.
     properties = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param param_set ([paradox::ParamSet])\cr
+    #' @param param_set [paradox::ParamSet]\cr
     #'   Set of control parameters for terminator.
-    #' @param properties (`character()`)\cr
+    #' @param properties `character()`\cr
     #'   Set of properties.
     initialize = function(param_set = ParamSet$new(), properties = character()) {
       self$param_set = assert_param_set(param_set)
@@ -62,11 +62,9 @@ Terminator = R6Class("Terminator",
 
 
     #' @description
-    #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
-    #' Must be implemented in each subclass.
-    #'
-    #' @param archive ([Archive]).
-    #'
+    #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
+    #' otherwise. Must be implemented in each subclass.
+    #' @param archive [Archive].
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       stop("not implemented")  # overwrite in subclasses

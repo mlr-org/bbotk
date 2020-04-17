@@ -2,32 +2,35 @@
 #'
 #' @description
 #' Objective interface where user cass pass R function.
-#' 
+#'
 #' @export
 ObjectiveRFun = R6Class("ObjectiveRFun",
   inherit = Objective,
   public = list(
-    
-    
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param fun `function`\cr
     #' R function that encodes objective.
     #' @param domain [paradox::ParamSet]\cr
-    #' Specifies domain of function, hence its innput parameters, their types and ranges.
+    #' Specifies domain of function, hence its innput parameters, their types
+    #' and ranges.
     #' @param codomain [paradox::ParamSet]\cr
     #' Specifies codomain of function, hence its feasible values.
     #' @param id `character(1)`
     #' @param properties `character()`
-    initialize = function(fun, domain, codomain = NULL, id = "function", properties = character(0)) {
-      if (is.null(codomain))
+    initialize = function(fun, domain, codomain = NULL, id = "function",
+      properties = character(0)) {
+      if (is.null(codomain)) {
         codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+      }
       private$.fun = assert_function(fun, "xs")
       # asserts id, domain, codomain, properties
-      super$initialize(id = id, domain = domain, codomain = codomain, properties = properties)
+      super$initialize(id = id, domain = domain, codomain = codomain,
+        properties = properties)
     },
 
-    #' @description 
+    #' @description
     #' Evaluates input value(s) on the objective function. Calls the R function
     #' supplied by the user.
     #' @param x Input values.
@@ -37,7 +40,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
   ),
 
   active = list(
-    
+
     #' @field fun `function`\cr
     #' Objective function.
     fun = function(lhs) {
@@ -51,5 +54,5 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
   )
 )
 
-#FIXME: ist das mit dem evaluate, evaluate_checked so sinnvoll?
-#kann man die checks nur in der instance vielleicht machen? per flag an und aus?
+# FIXME: ist das mit dem evaluate, evaluate_checked so sinnvoll?
+# kann man die checks nur in der instance vielleicht machen? per flag an und aus?
