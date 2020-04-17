@@ -3,19 +3,6 @@
 \name{OptimInstance}
 \alias{OptimInstance}
 \title{Optimization Instance with budget and archive}
-\arguments{
-\item{objective}{\link{Objective}}
-
-\item{search_space}{\link[paradox:ParamSet]{paradox::ParamSet}}
-
-\item{terminator}{\link{Terminator}}
-
-\item{xdt}{\link[data.table:data.table]{data.table::data.table}}
-
-\item{x}{\code{character}}
-
-\item{y}{\code{numeric}}
-}
 \description{
 Wraps an \link{Objective} function with extra services for convenient evaluation.
 \itemize{
@@ -28,11 +15,74 @@ If the available budget is exhausted, an exception is raised, and no further eva
 to guard against exceptions and even segfaults.
 Note that behavior is define in \link{Objective} argument \code{encapsulate}.
 }
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{objective}}{\link{Objective}}
 
+\item{\code{search_space}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+
+\item{\code{terminator}}{\link{Terminator}}
+
+\item{\code{is_terminated}}{\code{logical(1)}}
+
+\item{\code{archive}}{\link{Archive}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{result}}{Get result}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{OptimInstance$new()}}
+\item \href{#method-format}{\code{OptimInstance$format()}}
+\item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
+\item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
+\item \href{#method-clone}{\code{OptimInstance$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$new(objective, search_space, terminator)}\if{html}{\out{</div>}}
+}
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{objective}}{\link{Objective}}
+
+\item{\code{search_space}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+
+\item{\code{terminator}}{\link{Terminator}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-format"></a>}}
+\if{latex}{\out{\hypertarget{method-format}{}}}
+\subsection{Method \code{format()}}{
 Helper for print outputs.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$format()}\if{html}{\out{</div>}}
+}
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval_batch"></a>}}
+\if{latex}{\out{\hypertarget{method-eval_batch}{}}}
+\subsection{Method \code{eval_batch()}}{
 Evaluates all hyperparameter configurations in \code{dt} through
 resampling, where each configuration is a row, and columns are scalar
 parameters. eturns a named list with the following elements:
@@ -49,23 +99,53 @@ of rows as \code{dt}, and the same number of columns as length of
 Before each batch-evaluation, the \link{Terminator} is checked, and if it
 is positive, an exception of class \code{terminated_error} is raised. This
 function should be internally called by the tuner.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_batch(xdt)}\if{html}{\out{</div>}}
+}
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xdt}}{\link[data.table:data.table]{data.table::data.table}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-assign_result"></a>}}
+\if{latex}{\out{\hypertarget{method-assign_result}{}}}
+\subsection{Method \code{assign_result()}}{
 The \link{Optimizer} object writes the best found point
 and estimated performance values here. For internal use.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(x, y)}\if{html}{\out{</div>}}
 }
-\section{Fields}{
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{objective}}{\link{Objective}}
+\item{\code{x}}{\code{character}}
 
-\item{\code{search_space}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{y}}{\code{numeric}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
 
-\item{\code{terminator}}{\link{Terminator}}
-
-\item{\code{is_terminated}}{\code{logical(1)}}
-
-\item{\code{archive}}{\link{Archive}}
-
-\item{\code{result}}{Get result}
-}}
-
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

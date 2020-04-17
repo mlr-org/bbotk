@@ -3,20 +3,6 @@
 \name{Optimizer}
 \alias{Optimizer}
 \title{Optimizer}
-\arguments{
-\item{param_set}{\link[paradox:ParamSet]{paradox::ParamSet}}
-
-\item{param_classes}{\code{character()}}
-
-\item{properties}{\code{character()}}
-
-\item{packages}{\code{character()}}
-
-\item{inst}{\link{OptimInstance}}
-}
-\value{
-\code{character()}
-}
 \description{
 Abstract \code{Optimizer} class that implements the base functionality each
 \code{Optimizer} subclass must provide. A \code{Optimizer} object describes the
@@ -25,17 +11,9 @@ optimization strategy.
 A \code{Optimizer} object must write its result to the \verb{$assign_result()} method
 of the \link{OptimInstance} at the end in order to store the best point  and its
 estimated performance vector.
-
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-
-Helper for print outputs.
-
-Print method.
-
-Performes the optimization.
 }
-\section{Fields}{
-
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}}
 
@@ -44,5 +22,97 @@ Performes the optimization.
 \item{\code{properties}}{\code{character()}}
 
 \item{\code{packages}}{\code{character()}}
-}}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{Optimizer$new()}}
+\item \href{#method-format}{\code{Optimizer$format()}}
+\item \href{#method-print}{\code{Optimizer$print()}}
+\item \href{#method-optimize}{\code{Optimizer$optimize()}}
+\item \href{#method-clone}{\code{Optimizer$clone()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Optimizer$new(param_set, param_classes, properties, packages = character(0))}\if{html}{\out{</div>}}
+}
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+
+\item{\code{param_classes}}{\code{character()}}
+
+\item{\code{properties}}{\code{character()}}
+
+\item{\code{packages}}{\code{character()}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-format"></a>}}
+\if{latex}{\out{\hypertarget{method-format}{}}}
+\subsection{Method \code{format()}}{
+Helper for print outputs.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Optimizer$format()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Print method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Optimizer$print()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+\code{character()}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-optimize"></a>}}
+\if{latex}{\out{\hypertarget{method-optimize}{}}}
+\subsection{Method \code{optimize()}}{
+Performes the optimization.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize(inst)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{inst}}{\link{OptimInstance}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Optimizer$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}
