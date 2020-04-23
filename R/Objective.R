@@ -88,13 +88,25 @@ Objective = R6Class("Objective",
     #' @param xss `list()`\cr
     #' A list of lists that contains multiple x values, e.g.
     #' `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
-    #' @return `list()`\cr
-    #' A list that contains the result of all evaluations, e.g.
-    #' `list(list(y = 1), list(y=2))`.
+    #' @return `data.table()`\cr
+    #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
       res = map_dtr(xss, function(xs) as.data.table(self$eval(xs)))
-      colnames(res) = self$codomain$ids()
+      colnames(res) = self$codomain$ids() #FIXME: what happens with extras?
       return(res)
+    },
+
+    #' @description
+    #' Evaluates multiple input values on the objective function
+    #' @param xdt `data.table()`\cr
+    #' A `data.table` that contains one point to evaluate per row, e.g.
+    #' `data.table(x1 = c(1,3), x2 = c(2,4))`.
+    #' @return `data.table()`\cr
+    #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    eval_dt = function(xdt) {
+      self$eval_many(transpose_list(xdt))
     },
 
     #' @description
@@ -116,9 +128,9 @@ Objective = R6Class("Objective",
     #' @param xss `list()`\cr
     #' A list of lists that contains multiple x values, e.g.
     #' `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
-    #' @return `list()`\cr
-    #' A list that contains the result of all evaluations, e.g.
-    #' `list(list(y = 1), list(y=2))`.
+    #' @return `data.table()`\cr
+    #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)
       res = self$evaluate_many(xss)

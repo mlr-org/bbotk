@@ -32,3 +32,55 @@ test_that("Objective works", {
   expect_equal(res1, res1many)
   expect_equal(res2, res2many)
 })
+
+test_that("Objective specialzations work", {
+
+  FUN_1D_DT = function(xdt) data.table(y = xdt$x^2) # DT version oof FUN_1D in helper.R
+  FUN_2D_DT = function(xdt) data.table(y = rowSums(xdt^2)) # same but FUN_2D
+
+  # Different function pairs, where the R function uses a different signature but they should do the same
+  funs = list(
+    list( # 1d x, 1d y
+      rfun = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D, codomain = FUN_1D_CODOMAIN),
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_1D_DT, domain = PS_1D, codomain = FUN_1D_CODOMAIN)),
+    list( # 2d x, 1d y
+      rfun = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D, codomain = FUN_1D_CODOMAIN),
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DT, domain = PS_2D, codomain = FUN_1D_CODOMAIN))
+  )
+
+  for (fun_pairs in funs) {
+    fun1 = fun_pairs$rfun
+    fun2 = fun_pairs$rfun_dt
+
+    ps = fun1$domain
+    sampler = SamplerUnif$new(param_set = ps)
+
+    # one single x value
+    xdt1 = sampler$sample(1)
+
+    res1 = fun1$eval_dt(xdt1$data)
+    expect_data_table(res1, nrows = 1, ncols = 1, any.missing = FALSE)
+    expect_equal(colnames(res1), "y")
+    expect_equal(res1, fun2$eval_dt(xdt1$data))
+
+    res2 = fun1$eval(xdt1$transpose()[[1]])
+    expect_list(res2)
+    expect_equal(names(res2), "y")
+    expect_equal(res2, fun2$eval(xdt1$transpose()[[1]]))
+
+    res3 = fun1$eval_many(xdt1$transpose())
+    expect_equal(res1, res3)
+    expect_equal(res3, fun2$eval_many(xdt1$transpose()))
+
+    # multiple x values in one call
+    xdt3 = sampler$sample(3)
+    res4 = fun1$eval_dt(xdt3$data)
+    expect_data_table(res4, nrows = 3, ncols = 1, any.missing = FALSE)
+    expect_equal(colnames(res4), "y")
+    expect_equal(res4, fun2$eval_dt(xdt3$data))
+
+    res5 = fun1$eval_many(xdt3$transpose())
+    expect_equal(res4, res5)
+    expect_equal(res5, fun2$eval_many(xdt3$transpose()))
+  }
+})

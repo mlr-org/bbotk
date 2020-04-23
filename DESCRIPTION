@@ -54,6 +54,7 @@ Collate:
     'Archive.R'
     'Objective.R'
     'ObjectiveRFun.R'
+    'ObjectiveRFunDt.R'
     'OptimInstance.R'
     'Optimizer.R'
     'mlr_terminators.R'
