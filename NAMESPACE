@@ -3,6 +3,7 @@
 export(Archive)
 export(Objective)
 export(ObjectiveRFun)
+export(ObjectiveRFunDt)
 export(OptimInstance)
 export(Optimizer)
 export(Terminator)

@@ -42,6 +42,7 @@ Dimension of codomain.}
 \item \href{#method-print}{\code{Objective$print()}}
 \item \href{#method-eval}{\code{Objective$eval()}}
 \item \href{#method-eval_many}{\code{Objective$eval_many()}}
+\item \href{#method-eval_dt}{\code{Objective$eval_dt()}}
 \item \href{#method-eval_checked}{\code{Objective$eval_checked()}}
 \item \href{#method-eval_many_checked}{\code{Objective$eval_many_checked()}}
 \item \href{#method-clone}{\code{Objective$clone()}}
@@ -145,9 +146,33 @@ A list of lists that contains multiple x values, e.g.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{list()}\cr
-A list that contains the result of all evaluations, e.g.
-\code{list(list(y = 1), list(y=2))}.
+\code{data.table()}\cr
+A \code{data.table} that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+\code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval_dt"></a>}}
+\if{latex}{\out{\hypertarget{method-eval_dt}{}}}
+\subsection{Method \code{eval_dt()}}{
+Evaluates multiple input values on the objective function
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$eval_dt(xdt)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xdt}}{\code{data.table()}\cr
+A \code{data.table} that contains one point to evaluate per row, e.g.
+\code{data.table(x1 = c(1,3), x2 = c(2,4))}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{data.table()}\cr
+A \code{data.table} that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+\code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -193,9 +218,9 @@ A list of lists that contains multiple x values, e.g.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{list()}\cr
-A list that contains the result of all evaluations, e.g.
-\code{list(list(y = 1), list(y=2))}.
+\code{data.table()}\cr
+A \code{data.table} that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+\code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
 \if{html}{\out{<hr>}}

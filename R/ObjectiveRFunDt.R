@@ -4,14 +4,14 @@
 #' Objective interface where user cass pass R function.
 #'
 #' @export
-ObjectiveRFun = R6Class("ObjectiveRFun",
+ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
   inherit = Objective,
   public = list(
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #' @param fun `function`\cr
-    #' R function that encodes objective and expects a list with the input for a single point (e.g. `list(x1 = 1, x2 = 2)`) and returns the result either as a numeric vector or a list (e.g. `list(y = 3)`).
+    #' R function that encodes objective and expects an `data.table` as input whereas each point is represented by one row.
     #' @param domain [paradox::ParamSet]\cr
     #' Specifies domain of function, hence its innput parameters, their types
     #' and ranges.
@@ -24,18 +24,34 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
       if (is.null(codomain)) {
         codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
       }
-      private$.fun = assert_function(fun, "xs")
+      private$.fun = assert_function(fun, "xdt")
       # asserts id, domain, codomain, properties
       super$initialize(id = id, domain = domain, codomain = codomain,
         properties = properties)
     },
 
     #' @description
-    #' Evaluates input value(s) on the objective function. Calls the R function
-    #' supplied by the user.
-    #' @param xs Input values.
-    eval = function(xs) {
-      private$.fun(xs)
+    #' Evaluates multiple input values received as a list, converted to a `data.table` on the objective function.
+    #' @param xss `list()`\cr
+    #' A list of lists that contains multiple x values, e.g.
+    #' `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
+    #' @return `data.table()`\cr
+    #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    eval_many = function(xs) {
+      private$.fun(rbindlist(xs))
+    },
+
+    #' @description
+    #' Evaluates multiple input values on the objective function suplied by the user.
+    #' @param xdt `data.table()`\cr
+    #' A `data.table` that contains one point to evaluate per row, e.g.
+    #' `data.table(x1 = c(1,3), x2 = c(2,4))`.
+    #' @return `data.table()`\cr
+    #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    eval_dt = function(xdt) {
+      private$.fun(xdt)
     }
   ),
 
