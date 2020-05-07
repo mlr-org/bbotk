@@ -68,7 +68,11 @@ OptimInstance = R6Class("OptimInstance",
         self$is_terminated = TRUE
         stop(terminated_error(self))
       }
-      design = Design$new(self$search_space, xdt, remove_dupl = FALSE)
+      design = Design$new(
+        self$search_space,
+        xdt[, self$search_space$ids(), with = FALSE],
+        remove_dupl = FALSE
+      )
       xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
       ydt = self$objective$eval_many(xss_trafoed)
       # FIXME: also add things like parlist_trafo, parlist_untrafoed to result

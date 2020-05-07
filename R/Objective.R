@@ -79,6 +79,8 @@ Objective = R6Class("Objective",
     #' A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
     #' @return `list()`\cr
     #' A list that contains the result of the evaluation, e.g. `list(y = 1)`.
+    #' The list can also contain additional *named* entries that will be stored in the archive if called through the `OptimInstance`.
+    #' These extra entries are referred to as *extras*.
     eval = function(xs) {
       as.list(self$eval_many(list(xs)))
     },
@@ -91,9 +93,16 @@ Objective = R6Class("Objective",
     #' @return `data.table()`\cr
     #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    #' It can also contain additional columns that will be stored in the archive if called through the `OptimInstance`.
+    #' These extra columns are referred to as *extras*.
+
     eval_many = function(xss) {
-      res = map_dtr(xss, function(xs) as.data.table(self$eval(xs)))
-      colnames(res) = self$codomain$ids() #FIXME: what happens with extras?
+      res = map_dtr(xss, function(xs) {
+        ys = self$eval(xs)
+        as.data.table(lapply(ys, function(y) if (is.list(y)) list(y) else y))
+      })
+      # to keep it simple we expect the order of the results to be right. extras keep their names
+      colnames(res)[seq_len(self$codomain$length)] = self$codomain$ids()
       return(res)
     },
 
@@ -112,6 +121,7 @@ Objective = R6Class("Objective",
     #' @description
     #' Evaluates a single input value on the objective function and checks its
     #' validity as well as the validity of the result.
+    #' Note: Calling the objective this way will fail if the function returns extras (see above) because the output is checked against the codomain.
     #' @param xs `list()`\cr
     #' A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
     #' @return `list()`\cr
@@ -119,7 +129,8 @@ Objective = R6Class("Objective",
     eval_checked = function(xs) {
       self$domain$assert(xs)
       res = self$eval(xs)
-      self$codomain$assert(res)
+      self$codomain$assert(res) #FIXME: Does not allow extras do be returned
+      return(res)
     },
 
     #' @description
