@@ -26,6 +26,9 @@ OptimInstance = R6Class("OptimInstance",
     #' @field search_space [paradox::ParamSet]
     search_space = NULL,
 
+    #' @field sampler [paradox::Sampler]
+    sampler = NULL,
+
     #' @field terminator [Terminator]
     terminator = NULL,
 
@@ -40,10 +43,12 @@ OptimInstance = R6Class("OptimInstance",
     #' @param objective [Objective]
     #' @param search_space [paradox::ParamSet]
     #' @param terminator [Terminator]
-    initialize = function(objective, search_space, terminator) {
+    #' @param sampler [paradox::Sampler]
+    initialize = function(objective, search_space, terminator, sampler = NULL) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = assert_param_set(search_space)
       self$terminator = assert_terminator(terminator)
+      self$sampler = assert_r6(sampler, "Sampler", null.ok = TRUE) #FIXME: Does sampler fit to param_set?
       self$archive = Archive$new(search_space = search_space,
         codomain = objective$codomain)
     },
