@@ -59,7 +59,7 @@ Objective = R6Class("Objective",
     #' Helper for print outputs.
     #' @return `character()`
     format = function() {
-      sprintf("<%s> '%s'", class(self)[1L], self$id)
+      sprintf("<%s:%s>", class(self)[1L], self$id)
     },
 
     #' @description
