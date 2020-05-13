@@ -55,6 +55,18 @@ OptimInstance = R6Class("OptimInstance",
     },
 
     #' @description
+    #' Printer.
+    #' @param ... (ignored).
+    print = function(...) {
+      catf(format(self))
+      catf(str_indent("* Objective:", format(self$objective)))
+      catf(str_indent("* Search Space:", format(self$search_space)))
+      catf(str_indent("* Terminator:", format(self$terminator)))
+      catf(str_indent("* Terminated:", self$is_terminated))
+      print(self$archive)
+    },
+
+    #' @description
     #' Evaluates all input values in `xdt` by calling
     #' the [Objective]. Applies possible transformations to the input values
     #' and writes the results to the [Archive]-

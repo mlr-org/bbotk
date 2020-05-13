@@ -98,10 +98,16 @@ Archive = R6Class("Archive",
     },
 
     #' @description
+    #' Helper for print outputs.
+    format = function() {
+      sprintf("<%s>", class(self)[1L])
+    },
+
+    #' @description
     #' Printer.
     #' @param ... (ignored).
     print = function() {
-      catf("Archive:")
+      catf(format(self))
       print(self$data)
     },
 

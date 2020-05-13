@@ -125,6 +125,8 @@ A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
 \subsection{Returns}{
 \code{list()}\cr
 A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
+The list can also contain additional \emph{named} entries that will be stored in the archive if called through the \code{OptimInstance}.
+These extra entries are referred to as \emph{extras}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -149,6 +151,8 @@ A list of lists that contains multiple x values, e.g.
 \code{data.table()}\cr
 A \code{data.table} that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
+It can also contain additional columns that will be stored in the archive if called through the \code{OptimInstance}.
+These extra columns are referred to as \emph{extras}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -181,6 +185,7 @@ A \code{data.table} that contains one y-column for single-objective functions an
 \subsection{Method \code{eval_checked()}}{
 Evaluates a single input value on the objective function and checks its
 validity as well as the validity of the result.
+Note: Calling the objective this way will fail if the function returns extras (see above) because the output is checked against the codomain.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Objective$eval_checked(xs)}\if{html}{\out{</div>}}
 }

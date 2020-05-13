@@ -46,6 +46,7 @@ Get result}
 \itemize{
 \item \href{#method-new}{\code{OptimInstance$new()}}
 \item \href{#method-format}{\code{OptimInstance$format()}}
+\item \href{#method-print}{\code{OptimInstance$print()}}
 \item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
 \item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
 \item \href{#method-clone}{\code{OptimInstance$clone()}}
@@ -81,6 +82,23 @@ Helper for print outputs.
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$format()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Printer.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{(ignored).}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-eval_batch"></a>}}
