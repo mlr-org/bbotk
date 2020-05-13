@@ -25,6 +25,7 @@ test_that("OptimInstance works with trafos", {
   expect_data_table(inst$archive$data, nrows = 3L)
   expect_equal(inst$archive$data$y, c(2, 0, 2))
   expect_equal(inst$archive$data$opt_x[[1]], list(x1 = -1, x2 = -1))
+  expect_output(print(inst), "<OptimInstance>")
 })
 
 test_that("OptimInstance works with extras input", {

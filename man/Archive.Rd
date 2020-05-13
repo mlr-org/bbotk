@@ -45,6 +45,7 @@ Number of batches stored in the archive.}
 \item \href{#method-add_evals}{\code{Archive$add_evals()}}
 \item \href{#method-get_best}{\code{Archive$get_best()}}
 \item \href{#method-get_data}{\code{Archive$get_data()}}
+\item \href{#method-format}{\code{Archive$format()}}
 \item \href{#method-print}{\code{Archive$print()}}
 \item \href{#method-clear}{\code{Archive$clear()}}
 \item \href{#method-clone}{\code{Archive$clone()}}
@@ -128,6 +129,16 @@ Unnested columns are stored in seperate columns instead of list-columns.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-format"></a>}}
+\if{latex}{\out{\hypertarget{method-format}{}}}
+\subsection{Method \code{format()}}{
+Helper for print outputs.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$format()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
