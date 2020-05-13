@@ -38,8 +38,8 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' @return `data.table()`\cr
     #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
-    eval_many = function(xs) {
-      private$.fun(rbindlist(xs))
+    eval_many = function(xss) {
+      private$.fun(rbindlist(xss))
     },
 
     #' @description

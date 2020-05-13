@@ -78,7 +78,7 @@ Specifies codomain of function, hence its feasible values.}
 \subsection{Method \code{eval_many()}}{
 Evaluates multiple input values received as a list, converted to a \code{data.table} on the objective function.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFunDt$eval_many(xs)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFunDt$eval_many(xss)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
