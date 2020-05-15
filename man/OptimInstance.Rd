@@ -136,7 +136,7 @@ and estimated performance values here. For internal use.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{x}}{\code{character}}
+\item{\code{x}}{\code{list()}}
 
 \item{\code{y}}{\code{numeric}}
 }

@@ -87,8 +87,6 @@ OptimInstance = R6Class("OptimInstance",
       )
       xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
       ydt = self$objective$eval_many(xss_trafoed)
-      # FIXME: also add things like parlist_trafo, parlist_untrafoed to result
-      # FIXME: collect the trace in some way
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       return(invisible(ydt))
     },
@@ -96,13 +94,19 @@ OptimInstance = R6Class("OptimInstance",
     #' @description
     #' The [Optimizer] object writes the best found point
     #' and estimated performance values here. For internal use.
-    #' @param x `character`
-    #' @param y `numeric`
-    assign_result = function(x, y) {
-      assert_names(x, subset.of = self$objective$domain$ids())
+    #' @param xdt [data.table::data.table] :: set of untransformed points / points from the *search space* that lead to the result of the optimization
+    #' @param y `numeric` ::
+    assign_result = function(xdt, y, x_opt = NULL) {
+      assert_data_table(xdt)
+      assert_names(names(xdt), permutation.of = self$objective$domain$ids())
       assert_numeric(y)
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
-      private$.result = list(feat = feat, perf = perf)
+      if (is.null(x_opt)) {
+        design = Design$new(self$search_space, xdt, remove_dupl = FALSE)
+        x_opt = design$transpose(trafo = TRUE, filter_na = TRUE)
+      }
+      assert_list(x_opt, len = nrow(xdt))
+      private$.result = list(xdt = xdt, y = y, x_opt = x_opt)
     }
   ),
 
@@ -110,7 +114,7 @@ OptimInstance = R6Class("OptimInstance",
     #' @field result `list()`\cr
     #' Get result
     result = function() {
-      list(x = private$.result$x, y = private$.result$y)
+      private$.result
     }
   ),
 

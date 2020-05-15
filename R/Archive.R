@@ -76,10 +76,15 @@ Archive = R6Class("Archive",
 
       tab = self$data
       tab = tab[batch_nr %in% m, ]
-      # FIXME: the minimize info needs to be taken from codomain
-      order = if (self$codomain$tags[1] == "minimize") 1 else -1
-      setorderv(tab, self$codomain$ids(), order = order)
-      tab[1, ]
+      if (self$codomain$length == 1) {
+        order = if (self$codomain$tags[1] == "minimize") 1 else -1
+        setorderv(tab, self$codomain$ids(), order = order)
+        res = tab[1, ]
+      } else {
+        # fixme add pareto calculation here:
+        stop ("not supported for multi-objective yet")
+      }
+      return(res)
     },
 
     #' @description

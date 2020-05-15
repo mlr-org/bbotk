@@ -97,6 +97,9 @@ Performes the optimization.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+\code{list()} optimization result
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

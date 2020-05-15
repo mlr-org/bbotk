@@ -57,6 +57,7 @@ Collate:
     'ObjectiveRFunDt.R'
     'OptimInstance.R'
     'Optimizer.R'
+    'OptimizerRandomSearch.R'
     'mlr_terminators.R'
     'Terminator.R'
     'TerminatorClockTime.R'

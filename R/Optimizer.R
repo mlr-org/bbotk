@@ -60,14 +60,30 @@ Optimizer = R6Class("Optimizer",
     #' @description
     #' Performes the optimization.
     #' @param inst [OptimInstance]
+    #' @return `list()` optimization result
     optimize = function(inst) {
       assert_r6(inst, "OptimInstance")
-      require_namespace(self$packages)
-      require_namespace(inst$objective$packages)
+      require_namespaces(self$packages, "Packages for the Optimization")
       # check dependencies
+      if ("dependencies" %nin% self$properties && inst$search_space$has_deps) {
+        stopf(
+          "Tuner '%s' does not support param sets with dependencies!",
+          self$format())
+      }
       # check supported parameter class
-      private$.optimize(inst)
-      private$.best(inst)
+      not_supported_pclasses = setdiff(
+        unique(inst$search_space$class),
+        self$param_classes)
+      if (length(not_supported_pclasses) > 0L) {
+        stopf(
+          "Tuner '%s' does not support param types: '%s'", class(self)[1L],
+          paste0(not_supported_pclasses, collapse = ","))
+      }
+      tryCatch({
+        private$.optimize(inst)
+      }, terminated_error = function(cond) {})
+      private$.assign_result(inst)
+      inst$result
     }
   ),
 
@@ -75,18 +91,15 @@ Optimizer = R6Class("Optimizer",
     .optimize = function(inst) stop("abstract"),
 
     .assign_result = function(inst) {
-      optimizer_assign_result_default(inst)
+      assert_r6(inst, "OptimInstance")
+      res = inst$archive$get_best()
+
+      x = res[, inst$objective$domain$ids(), with = FALSE]
+      opt_x = res$opt_x
+      y = as.matrix(res[, inst$objective$codomain$ids(), with = FALSE])[1, ]
+
+      inst$assign_result(x, y, opt_x)
+      invisible(NULL)
     }
   )
 )
-
-optimizer_assign_result_default = function(inst) {
-  assert_r6(inst, "FSelectInstance")
-
-  res = inst$archive$get_best()
-  x = as.matrix(res[, inst$objective$domain$ids(), with = FALSE])[1, ]
-  y = as.matrix(res[, inst$objective$codomain$ids(), with = FALSE])[1, ]
-
-  inst$assign_result(x, y)
-  invisible(NULL)
-}
