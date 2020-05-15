@@ -37,7 +37,12 @@ Note that behavior is define in \link{Objective} argument \code{encapsulate}.
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{result}}{\code{list()}\cr
-Get result}
+Get result
+x part of the result in the \emph{search space}.
+(transformed) x part of the result in the \emph{domain space} of the objective.}
+
+\item{\code{result_y}}{\code{numeric(1)}
+Optimal outcome.}
 }
 \if{html}{\out{</div>}}
 }
@@ -130,15 +135,17 @@ function should be internally called by the \link{Optimizer}.
 The \link{Optimizer} object writes the best found point
 and estimated performance values here. For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(x, y)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y, opt_x = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{x}}{\code{list()}}
+\item{\code{xdt}}{\link[data.table:data.table]{data.table::data.table} :: set of untransformed points / points from the \emph{search space} that lead to the result of the optimization}
 
-\item{\code{y}}{\code{numeric}}
+\item{\code{y}}{\code{numeric(1)} :: Optimal outcome.}
+
+\item{\code{opt_x}}{\code{list()} :: Transformed x values / points from the \emph{domain} of the \link{Objective} as a named list.}
 }
 \if{html}{\out{</div>}}
 }

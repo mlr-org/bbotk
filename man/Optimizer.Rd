@@ -85,7 +85,7 @@ Print method.
 \if{html}{\out{<a id="method-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-optimize}{}}}
 \subsection{Method \code{optimize()}}{
-Performes the optimization.
+Performes the optimization and writes optimization result into \link{OptimInstance}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize(inst)}\if{html}{\out{</div>}}
 }
@@ -98,7 +98,7 @@ Performes the optimization.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{list()} optimization result
+NULL
 }
 }
 \if{html}{\out{<hr>}}

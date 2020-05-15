@@ -58,9 +58,9 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @description
-    #' Performes the optimization.
+    #' Performes the optimization and writes optimization result into [OptimInstance].
     #' @param inst [OptimInstance]
-    #' @return `list()` optimization result
+    #' @return NULL
     optimize = function(inst) {
       assert_r6(inst, "OptimInstance")
       require_namespaces(self$packages, "Packages for the Optimization")
@@ -83,7 +83,7 @@ Optimizer = R6Class("Optimizer",
         private$.optimize(inst)
       }, terminated_error = function(cond) {})
       private$.assign_result(inst)
-      inst$result
+      invisible(NULL)
     }
   ),
 
@@ -94,11 +94,11 @@ Optimizer = R6Class("Optimizer",
       assert_r6(inst, "OptimInstance")
       res = inst$archive$get_best()
 
-      x = res[, inst$objective$domain$ids(), with = FALSE]
-      opt_x = res$opt_x
-      y = as.matrix(res[, inst$objective$codomain$ids(), with = FALSE])[1, ]
+      xdt = res[, inst$objective$domain$ids(), with = FALSE]
+      opt_x = res[["opt_x"]][[1]]
+      y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) #unlist keeps name!
 
-      inst$assign_result(x, y, opt_x)
+      inst$assign_result(xdt, y, opt_x)
       invisible(NULL)
     }
   )

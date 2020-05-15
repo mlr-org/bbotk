@@ -9,12 +9,13 @@ test_that("TerminatorPerfReached works", {
   expect_true(tail(a$data$y, 1) < 0.2)
 })
 
-test_that("TerminatorPerfReached works for multi-objective", {
-  term = TerminatorPerfReached$new()
-  term$param_set$values$level = c(y1 = 0.2, y2 = -0.2)
-  inst = MAKE_INST_2D_2D(term)
-  a = random_search(inst, batch_size = 1L)
-  a$data[, both := y1 <= 0.2 & y2 >= -0.2]
-  expect_equal(sum(a$data$both), 1)
-  expect_true(tail(a$data$both, 1))
-})
+# FIXME: Reenable one OptimInstanceMulticrit is implemented
+# test_that("TerminatorPerfReached works for multi-objective", {
+#   term = TerminatorPerfReached$new()
+#   term$param_set$values$level = c(y1 = 0.2, y2 = -0.2)
+#   inst = MAKE_INST_2D_2D(term)
+#   a = random_search(inst, batch_size = 1L)
+#   a$data[, both := y1 <= 0.2 & y2 >= -0.2]
+#   expect_equal(sum(a$data$both), 1)
+#   expect_true(tail(a$data$both, 1))
+# })

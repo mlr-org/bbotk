@@ -7,7 +7,7 @@ test_that("OptimInstance", {
   expect_data_table(inst$archive$data, nrows = 0L)
   expect_identical(inst$archive$n_evals, 0L)
   expect_identical(inst$archive$n_batch, 0L)
-  expect_list(inst$result)
+  expect_null(inst$result)
 
   xdt = data.table(x1 = -1:1, x2 = list(-1, 0, 1))
   inst$eval_batch(xdt)
@@ -15,7 +15,9 @@ test_that("OptimInstance", {
   expect_equal(inst$archive$data$y, c(2, 0, 2))
   expect_identical(inst$archive$n_evals, 3L)
   expect_identical(inst$archive$n_batch, 1L)
-  expect_list(inst$result)
+  expect_null(inst$result)
+  inst$assign_result(xdt = xdt[2,], y = c(y=-10))
+  expect_equal(inst$result, cbind(xdt[2,], opt_x = list(list(x1 = 0, x2 = 0)), y = -10))
 })
 
 test_that("OptimInstance works with trafos", {

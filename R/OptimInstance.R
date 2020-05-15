@@ -95,18 +95,25 @@ OptimInstance = R6Class("OptimInstance",
     #' The [Optimizer] object writes the best found point
     #' and estimated performance values here. For internal use.
     #' @param xdt [data.table::data.table] :: set of untransformed points / points from the *search space* that lead to the result of the optimization
-    #' @param y `numeric` ::
-    assign_result = function(xdt, y, x_opt = NULL) {
-      assert_data_table(xdt)
-      assert_names(names(xdt), permutation.of = self$objective$domain$ids())
-      assert_numeric(y)
+    #' @param y `numeric(1)` :: Optimal outcome.
+    #' @param opt_x `list()` :: Transformed x values / points from the *domain* of the [Objective] as a named list.
+    assign_result = function(xdt, y, opt_x = NULL) {
+      #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
+      assert_data_table(xdt, nrows = 1)
+      assert_names(names(xdt), must.include = self$search_space$ids())
+      assert_number(y)
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
-      if (is.null(x_opt)) {
-        design = Design$new(self$search_space, xdt, remove_dupl = FALSE)
-        x_opt = design$transpose(trafo = TRUE, filter_na = TRUE)
+      if (is.null(opt_x)) {
+        design = Design$new(
+          self$search_space,
+          xdt[, self$search_space$ids(), with = FALSE],
+          remove_dupl = FALSE
+        )
+        opt_x = design$transpose(trafo = TRUE, filter_na = TRUE)[[1]]
       }
-      assert_list(x_opt, len = nrow(xdt))
-      private$.result = list(xdt = xdt, y = y, x_opt = x_opt)
+      assert_list(opt_x)
+      assert_names(names(opt_x), permutation.of = self$objective$domain$ids())
+      private$.result = cbind(xdt, opt_x = list(opt_x), t(y)) #t(y) so the name of y stays
     }
   ),
 
@@ -115,6 +122,24 @@ OptimInstance = R6Class("OptimInstance",
     #' Get result
     result = function() {
       private$.result
+    },
+
+    # @field result_x `data.frame()`\cr
+    #' x part of the result in the *search space*.
+    result_x = function() {
+      private$.result[, self$search_space$ids(), with = FALSE]
+    },
+
+    # @field result_opt_x `list()`\cr
+    #' (transformed) x part of the result in the *domain space* of the objective.
+    result_opt_x = function() {
+      private$.result$opt_x[[1]]
+    },
+
+    #' @field result_y `numeric(1)`
+    #' Optimal outcome.
+    result_y = function() {
+      unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
     }
   ),
 
