@@ -14,3 +14,5 @@
 ^.github$
 ^\.lintr$
 ^\.vscode$
+^\.ccache$
+^\.github$
