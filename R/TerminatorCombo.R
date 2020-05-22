@@ -51,7 +51,16 @@ TerminatorCombo = R6Class("TerminatorCombo",
     is_terminated = function(archive) {
       g = if (self$param_set$values$any) any else all
       g(map_lgl(self$terminators, function(t) t$is_terminated(archive)))
+    },
+
+    #' @description
+    #' Printer.
+    #' @param ... (ignored).
+    print = function(...) {
+      super$print(...)
+      catf(str_indent("* Terminators:", paste(map_chr(self$terminators, format), collapse = ",")))
     }
+
   )
 )
 

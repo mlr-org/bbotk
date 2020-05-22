@@ -5,7 +5,7 @@
 \alias{TerminatorRunTime}
 \title{Terminator that stops according to the run time}
 \description{
-Class to terminate the optimization after the complete process took a
+Class to terminate the optimization after the optimization process took a
 number of seconds on the clock.
 }
 \section{Dictionary}{

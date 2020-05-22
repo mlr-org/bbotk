@@ -3,6 +3,7 @@ context("TerminatorPerfReached")
 test_that("TerminatorPerfReached works", {
   term = TerminatorPerfReached$new()
   term$param_set$values$level = c(y = 0.2)
+  expect_output(print(term), "TerminatorPerfReached")
   inst = MAKE_INST_2D(term)
   a = random_search(inst, batch_size = 1L)
   expect_equal(sum(a$data$y < 0.2), 1)

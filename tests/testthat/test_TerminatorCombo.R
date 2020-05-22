@@ -1,11 +1,11 @@
 context("TerminatorCombo")
 
 test_that("TerminatorCombo works", {
-  term1 = TerminatorEvals$new()
-  term2 = TerminatorEvals$new()
-  term1$param_set$values$n_evals = 3L
-  term2$param_set$values$n_evals = 6L
-  term = TerminatorCombo$new(list(term1, term2))
+  trms = terms(c("evals", "evals"))
+  trms[[1]]$param_set$values$n_evals = 3L
+  trms[[2]]$param_set$values$n_evals = 6L
+  term = TerminatorCombo$new(trms)
+  expect_output(print(term), "TerminatorEvals")
   for (mode in c("any", "all")) {
     term$param_set$values$any = (mode == "any")
     inst = MAKE_INST_2D(term)

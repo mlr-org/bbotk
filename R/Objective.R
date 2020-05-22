@@ -144,7 +144,7 @@ Objective = R6Class("Objective",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)
-      res = self$evaluate_many(xss)
+      res = self$eval_many(xss)
       # lapply(res, self$codomain$assert) #FIXME: Does not work easily if res is dt
     }
   ),
@@ -159,30 +159,3 @@ Objective = R6Class("Objective",
     ydim = function() self$codomain$length
   )
 )
-
-# @export
-# assert_objective = function(x, ydim = NULL) {
-#  assert_r6(x, "Objective")
-#  if (!is.null(ydim)) # FIXME: better error message here
-#    assert_true(x$ydim == ydim)
-#  invisible(x)
-# }
-
-workhorse = function(i, objective, xs) {
-  x = as.list(xs[[i]])
-  n = length(xs)
-  lg$info("Eval point '%s' (batch %i/%i)", as_short_string(x), i, n)
-  res = encapsulate(
-    method = objective$encapsulate,
-    .f = objective$fun,
-    .args = list(x = x),
-    # FIXME: we likely need to allow the user to configure this? or advice to load all paackaes in the user defined objective function?
-    .pkgs = "bbotk",
-    .seed = NA_integer_
-  )
-  # FIXME: encapsulate also returns time and log, we should probably do something with it?
-  y = res$result
-  assert_numeric(y, len = objective$ydim, any.missing = FALSE, finite = TRUE)
-  lg$info("Result '%s'", as_short_string(y))
-  as.list(y)
-}
