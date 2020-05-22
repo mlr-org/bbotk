@@ -1,4 +1,4 @@
-#' @title Container for objective function evaluations
+#' @title Logging object for objective function evaluations
 #'
 #' @description
 #' Container around a data.table which stores all performed [Objective] function
@@ -81,8 +81,10 @@ Archive = R6Class("Archive",
         setorderv(tab, self$codomain$ids(), order = order)
         res = tab[1, ]
       } else {
-        # fixme add pareto calculation here:
-        stop ("not supported for multi-objective yet")
+        ymat = t(as.matrix(tab[,self$cols_y, with = FALSE]))
+        minimize = map_lgl(self$codomain$tags, has_element, "minimize")
+        ymat = ifelse(minimize, 1, -1) * ymat
+        res = tab[!is_dominated(ymat), ]
       }
       return(res)
     },

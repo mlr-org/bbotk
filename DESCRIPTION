@@ -2,16 +2,16 @@ Package: bbotk
 Title: Black-Box Optimization Toolkit
 Version: 0.1.1
 Authors@R:
-    c(person(given = "Michel",
-             family = "Lang",
-             role = c("cre", "aut"),
-             email = "michellang@gmail.com",
-             comment = c(ORCID = "0000-0001-9754-0393")),
-      person(given = "Jakob",
+    c(person(given = "Jakob",
              family = "Richter",
-             role = "aut",
+             role = c("cre", "aut"),
              email = "jakob1richter@gmail.com",
              comment = c(ORCID = "0000-0003-4481-5554")),
+      person(given = "Michel",
+             family = "Lang",
+             role = c("aut"),
+             email = "michellang@gmail.com",
+             comment = c(ORCID = "0000-0001-9754-0393")),
       person(given = "Bernd",
              family = "Bischl",
              role = "aut",
@@ -56,6 +56,7 @@ Collate:
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'
     'OptimInstance.R'
+    'OptimInstanceMulticrit.R'
     'Optimizer.R'
     'OptimizerRandomSearch.R'
     'mlr_terminators.R'

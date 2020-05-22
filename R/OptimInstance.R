@@ -1,5 +1,3 @@
-# FIXME: ist der paramset-name hier wirklich gut? ist mehr das feasible set?
-
 #' @title Optimization Instance with budget and archive
 #'
 #' @description
@@ -11,10 +9,6 @@
 #'   queried for the remaining budget. If the available budget is exhausted, an
 #'   exception is raised, and no further evaluations can be performed from this
 #'   point on.
-#' * Logging of evaluations on R console
-#' * Encapsulated evaluation via evaluate / callr with function
-#'   [mlr3misc::encapsulate()] to guard against exceptions and even segfaults.
-#'   Note that behavior is define in [Objective] argument `encapsulate`.
 #'
 #' @export
 OptimInstance = R6Class("OptimInstance",
@@ -124,13 +118,13 @@ OptimInstance = R6Class("OptimInstance",
       private$.result
     },
 
-    # @field result_x `data.frame()`\cr
+    #' @field result_x `data.frame()`\cr
     #' x part of the result in the *search space*.
     result_x = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
     },
 
-    # @field result_opt_x `list()`\cr
+    #' @field result_opt_x `list()`\cr
     #' (transformed) x part of the result in the *domain space* of the objective.
     result_opt_x = function() {
       private$.result$opt_x[[1]]

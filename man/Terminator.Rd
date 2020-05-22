@@ -51,7 +51,6 @@ Set of properties.}
 \item \href{#method-new}{\code{Terminator$new()}}
 \item \href{#method-format}{\code{Terminator$format()}}
 \item \href{#method-print}{\code{Terminator$print()}}
-\item \href{#method-is_terminated}{\code{Terminator$is_terminated()}}
 \item \href{#method-clone}{\code{Terminator$clone()}}
 }
 }
@@ -101,27 +100,6 @@ Printer.
 \item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_terminated"></a>}}
-\if{latex}{\out{\hypertarget{method-is_terminated}{}}}
-\subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
-otherwise. Must be implemented in each subclass.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$is_terminated(archive)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{\link{Archive}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{logical(1)}.
 }
 }
 \if{html}{\out{<hr>}}

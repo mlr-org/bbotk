@@ -12,10 +12,6 @@ performed in batches. Before a batch is evaluated, the \link{Terminator} is
 queried for the remaining budget. If the available budget is exhausted, an
 exception is raised, and no further evaluations can be performed from this
 point on.
-\item Logging of evaluations on R console
-\item Encapsulated evaluation via evaluate / callr with function
-\code{\link[mlr3misc:encapsulate]{mlr3misc::encapsulate()}} to guard against exceptions and even segfaults.
-Note that behavior is define in \link{Objective} argument \code{encapsulate}.
 }
 }
 \section{Public fields}{
@@ -37,8 +33,12 @@ Note that behavior is define in \link{Objective} argument \code{encapsulate}.
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{result}}{\code{list()}\cr
-Get result
-x part of the result in the \emph{search space}.
+Get result}
+
+\item{\code{result_x}}{\code{data.frame()}\cr
+x part of the result in the \emph{search space}.}
+
+\item{\code{result_opt_x}}{\code{list()}\cr
 (transformed) x part of the result in the \emph{domain space} of the objective.}
 
 \item{\code{result_y}}{\code{numeric(1)}

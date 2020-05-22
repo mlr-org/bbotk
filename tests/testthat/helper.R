@@ -51,8 +51,12 @@ MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D,
     tt$param_set$values$n_evals = terminator
     terminator = tt
   }
-  OptimInstance$new(objective = objective, search_space = search_space,
-    terminator = terminator)
+  if (objective$codomain$length == 1) {
+    OptimInstance$new(objective = objective, search_space = search_space, terminator = terminator)
+  } else {
+    OptimInstanceMulticrit$new(objective = objective, search_space = search_space, terminator = terminator)
+  }
+
 }
 
 MAKE_INST_1D = function(terminator) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Archive.R
 \name{Archive}
 \alias{Archive}
-\title{Container for objective function evaluations}
+\title{Logging object for objective function evaluations}
 \description{
 Container around a data.table which stores all performed \link{Objective} function
 calls.

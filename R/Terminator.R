@@ -58,16 +58,6 @@ Terminator = R6Class("Terminator",
     print = function(...) {
       catf(self$format())
       catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
-    },
-
-
-    #' @description
-    #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
-    #' otherwise. Must be implemented in each subclass.
-    #' @param archive [Archive].
-    #' @return `logical(1)`.
-    is_terminated = function(archive) {
-      stop("not implemented")  # overwrite in subclasses
     }
   )
 )
