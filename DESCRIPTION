@@ -46,6 +46,8 @@ Suggests:
     future (>= 1.9.0),
     future.apply (>= 1.1.0),
     testthat
+Remotes:
+    mlr-org/mlr3misc
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
