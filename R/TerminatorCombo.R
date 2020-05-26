@@ -55,6 +55,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
 
     #' @description
     #' Printer.
+    #'
     #' @param ... (ignored).
     print = function(...) {
       super$print(...)

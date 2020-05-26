@@ -4,34 +4,33 @@
 #' Describes a black-box objective function that maps an arbitrary domain to a
 #' numerical codomain.
 #'
+#' @template param_domain
+#' @template param_codomain
+#' @template param_xdt
 #' @export
 Objective = R6Class("Objective",
   public = list(
 
-    #' @field id `character(1)`
+    #' @field id (`character(1)`)).
     id = NULL,
 
-    #' @field properties `character()`
+    #' @field properties (`character()`).
     properties = NULL,
 
-    #' @field domain [paradox::ParamSet]\cr
-    #' Specifies domain of function, hence its innput parameters, their types
+    #' @field domain ([paradox::ParamSet])\cr
+    #' Specifies domain of function, hence its input parameters, their types
     #' and ranges.
     domain = NULL,
 
-    #' @field codomain [paradox::ParamSet]
+    #' @field codomain ([paradox::ParamSet])\cr
     #' Specifies codomain of function, hence its feasible values.
     codomain = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param id `character(1)`
-    #' @param properties `character()`
-    #' @param domain [paradox::ParamSet]\cr
-    #' Specifies domain of function, hence its innput parameters, their types
-    #' and ranges.
-    #' @param codomain [paradox::ParamSet]\cr
-    #' Specifies codomain of function, hence its feasible values.
+    #'
+    #' @param id (`character(1)`).
+    #' @param properties (`character()`).
     initialize = function(id = "f", properties = character(), domain,
       codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
       self$id = assert_string(id)
@@ -52,7 +51,8 @@ Objective = R6Class("Objective",
       }
 
       self$codomain = assert_codomain(codomain)
-      self$properties = assert_character(properties) # FIXME: assert_subset(properties, blabot_reflections$objective_properties)
+      self$properties = assert_character(properties)
+      # FIXME: assert_subset(properties, blabot_reflections$objective_properties)
     },
 
     #' @description
@@ -75,11 +75,13 @@ Objective = R6Class("Objective",
 
     #' @description
     #' Evaluates a single input value on the objective function
-    #' @param xs `list()`\cr
-    #' A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
-    #' @return `list()`\cr
-    #' A list that contains the result of the evaluation, e.g. `list(y = 1)`.
-    #' The list can also contain additional *named* entries that will be stored in the archive if called through the `OptimInstance`.
+    #'
+    #' @param xs (`list()`)\cr
+    #'   A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
+    #'
+    #' @return `list()` that contains the result of the evaluation, e.g. `list(y = 1)`.
+    #' The list can also contain additional *named* entries that will be stored in the
+    #' archive if called through the [OptimInstance].
     #' These extra entries are referred to as *extras*.
     eval = function(xs) {
       as.list(self$eval_many(list(xs)))
@@ -87,15 +89,18 @@ Objective = R6Class("Objective",
 
     #' @description
     #' Evaluates multiple input values on the objective function
-    #' @param xss `list()`\cr
-    #' A list of lists that contains multiple x values, e.g.
-    #' `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
+    #'
+    #' @param xss (`list()`)\cr
+    #'   A list of lists that contains multiple x values, e.g.
+    #'   `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
+    #'
     #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+    #' A `data.table` that contains one y-column for single-objective functions and
+    #' multiple y-columns for multi-objective functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
-    #' It can also contain additional columns that will be stored in the archive if called through the `OptimInstance`.
+    #' It may also contain additional columns that will be stored in the archive if
+    #' called through the [OptimInstance].
     #' These extra columns are referred to as *extras*.
-
     eval_many = function(xss) {
       res = map_dtr(xss, function(xs) {
         ys = self$eval(xs)
@@ -108,11 +113,10 @@ Objective = R6Class("Objective",
 
     #' @description
     #' Evaluates multiple input values on the objective function
-    #' @param xdt `data.table()`\cr
-    #' A `data.table` that contains one point to evaluate per row, e.g.
-    #' `data.table(x1 = c(1,3), x2 = c(2,4))`.
+    #'
     #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+    #' A `data.table` that contains one y-column for single-objective functions and
+    #' multiple y-columns for multi-objective functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_dt = function(xdt) {
       self$eval_many(transpose_list(xdt))
@@ -121,9 +125,12 @@ Objective = R6Class("Objective",
     #' @description
     #' Evaluates a single input value on the objective function and checks its
     #' validity as well as the validity of the result.
-    #' Note: Calling the objective this way will fail if the function returns extras (see above) because the output is checked against the codomain.
-    #' @param xs `list()`\cr
+    #' Note: Calling the objective this way will fail if the function returns extras (see above)
+    #' because the output is checked against the codomain.
+    #'
+    #' @param xs (`list()`)\cr
     #' A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
+    #'
     #' @return `list()`\cr
     #' A list that contains the result of the evaluation, e.g. `list(y = 1)`.
     eval_checked = function(xs) {
@@ -136,11 +143,14 @@ Objective = R6Class("Objective",
     #' @description
     #' Evaluates multiple input values on the objective function and checks the
     #' validity of the input.
-    #' @param xss `list()`\cr
+    #'
+    #' @param xss (`list()`)\cr
     #' A list of lists that contains multiple x values, e.g.
     #' `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
+    #'
     #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+    #' A `data.table` that contains one y-column for single-objective functions and multiple
+    #' y-columns for multi-objective functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)
@@ -150,11 +160,11 @@ Objective = R6Class("Objective",
   ),
 
   active = list(
-    #' @field xdim `ìnteger(1)`\cr
+    #' @field xdim (`ìnteger(1)`)\cr
     #' Dimension of domain.
     xdim = function() self$domain$length,
 
-    #' @field ydim `ìnteger(1)`\cr
+    #' @field ydim (`ìnteger(1)`)\cr
     #' Dimension of codomain.
     ydim = function() self$codomain$length
   )

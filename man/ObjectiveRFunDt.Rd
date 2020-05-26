@@ -12,7 +12,7 @@ Objective interface where user cass pass R function.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{fun}}{\code{function}\cr
+\item{\code{fun}}{(\code{function})\cr
 Objective function.}
 }
 \if{html}{\out{</div>}}
@@ -55,19 +55,20 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{fun}}{\code{function}\cr
-R function that encodes objective and expects an \code{data.table} as input whereas each point is represented by one row.}
+\item{\code{fun}}{(\code{function})\cr
+R function that encodes objective and expects an \code{data.table} as input
+whereas each point is represented by one row.}
 
-\item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
-Specifies domain of function, hence its innput parameters, their types
+\item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specifies domain of function, hence its input parameters, their types
 and ranges.}
 
-\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function, hence its feasible values.}
 
-\item{\code{id}}{\code{character(1)}}
+\item{\code{id}}{(\code{character(1)}).}
 
-\item{\code{properties}}{\code{character()}}
+\item{\code{properties}}{(\code{character()}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -76,7 +77,8 @@ Specifies codomain of function, hence its feasible values.}
 \if{html}{\out{<a id="method-eval_many"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
-Evaluates multiple input values received as a list, converted to a \code{data.table} on the objective function.
+Evaluates multiple input values received as a list, converted to a \code{data.table} on the
+objective function.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFunDt$eval_many(xss)}\if{html}{\out{</div>}}
 }
@@ -84,7 +86,7 @@ Evaluates multiple input values received as a list, converted to a \code{data.ta
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xss}}{\code{list()}\cr
+\item{\code{xss}}{(\code{list()})\cr
 A list of lists that contains multiple x values, e.g.
 \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
 }
@@ -92,7 +94,8 @@ A list of lists that contains multiple x values, e.g.
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-objective functions and multiple
+y-columns for multi-objective functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
@@ -108,15 +111,16 @@ Evaluates multiple input values on the objective function suplied by the user.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{\code{data.table()}\cr
-A \code{data.table} that contains one point to evaluate per row, e.g.
-\code{data.table(x1 = c(1,3), x2 = c(2,4))}.}
+\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+Set of untransformed points / points from the \emph{search space}.
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and multiple y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-objective functions and multiple
+y-columns for multi-objective functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }

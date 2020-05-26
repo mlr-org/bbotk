@@ -17,7 +17,7 @@ test_that("Objective works", {
   expect_list(res1, len = 1L)
   expect_names(names(res1), identical.to = "y")
   res2 = obj$eval_many(xss)
-  expect_data_table(res2, nrow = 3, ncol = 1)
+  expect_data_table(res2, nrows = 3, ncols = 1)
   expect_names(names(res2), identical.to = "y")
 
   # checked interface

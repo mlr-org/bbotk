@@ -2,14 +2,15 @@
 % Please edit documentation in R/helper.R
 \name{is_dominated}
 \alias{is_dominated}
-\title{Calculate which points are domintad}
+\title{Calculate which points are dominated}
 \usage{
 is_dominated(ymat)
 }
 \arguments{
-\item{ymat}{\code{matrix} \cr
-A numeric matrix. Each column(!) contains one point.}
+\item{ymat}{(\code{matrix()}) \cr
+A numeric matrix. Each column (!) contains one point.}
 }
 \description{
-A slow implementation that calculates which points are not dominated / belong to the Pareto front.
+A slow implementation that calculates which points are not dominated,
+i.e. points that belong to the Pareto front.
 }

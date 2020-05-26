@@ -42,7 +42,8 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #' @param archive [Archive].
+    #'
+    #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       pv = self$param_set$values

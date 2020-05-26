@@ -66,10 +66,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Set of control parameters for terminator.}
 
-\item{\code{properties}}{\code{character()}\cr
+\item{\code{properties}}{(\code{character()})\cr
 Set of properties.}
 }
 \if{html}{\out{</div>}}

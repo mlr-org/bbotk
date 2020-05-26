@@ -15,13 +15,13 @@ estimated performance vector.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
-\item{\code{param_classes}}{\code{character()}}
+\item{\code{param_classes}}{(\code{character()}).}
 
-\item{\code{properties}}{\code{character()}}
+\item{\code{properties}}{(\code{character()}).}
 
-\item{\code{packages}}{\code{character()}}
+\item{\code{packages}}{(\code{character()}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -47,13 +47,13 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
-\item{\code{param_classes}}{\code{character()}}
+\item{\code{param_classes}}{(\code{character()}).}
 
-\item{\code{properties}}{\code{character()}}
+\item{\code{properties}}{(\code{character()}).}
 
-\item{\code{packages}}{\code{character()}}
+\item{\code{packages}}{(\code{character()}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -78,14 +78,14 @@ Print method.
 }
 
 \subsection{Returns}{
-\code{character()}
+(\code{character()}).
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-optimize}{}}}
 \subsection{Method \code{optimize()}}{
-Performes the optimization and writes optimization result into \link{OptimInstance}.
+Performs the optimization and writes optimization result into \link{OptimInstance}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize(inst)}\if{html}{\out{</div>}}
 }
@@ -93,7 +93,7 @@ Performes the optimization and writes optimization result into \link{OptimInstan
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{inst}}{\link{OptimInstance}}
+\item{\code{inst}}{(\link{OptimInstance}).}
 }
 \if{html}{\out{</div>}}
 }

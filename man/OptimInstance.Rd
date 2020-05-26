@@ -17,31 +17,31 @@ point on.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{objective}}{\link{Objective}}
+\item{\code{objective}}{(\link{Objective}).}
 
-\item{\code{search_space}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
-\item{\code{terminator}}{\link{Terminator}}
+\item{\code{terminator}}{(\link{Terminator}).}
 
-\item{\code{is_terminated}}{\code{logical(1)}}
+\item{\code{is_terminated}}{(\code{logical(1)}).}
 
-\item{\code{archive}}{\link{Archive}}
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{result}}{\code{list()}\cr
+\item{\code{result}}{(\code{list()})\cr
 Get result}
 
-\item{\code{result_x}}{\code{data.frame()}\cr
+\item{\code{result_x}}{(\code{data.frame()})\cr
 x part of the result in the \emph{search space}.}
 
-\item{\code{result_opt_x}}{\code{list()}\cr
+\item{\code{result_opt_x}}{(\code{list()})\cr
 (transformed) x part of the result in the \emph{domain space} of the objective.}
 
-\item{\code{result_y}}{\code{numeric(1)}
+\item{\code{result_y}}{(\code{numeric(1)})
 Optimal outcome.}
 }
 \if{html}{\out{</div>}}
@@ -69,11 +69,11 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{objective}}{\link{Objective}}
+\item{\code{objective}}{(\link{Objective}).}
 
-\item{\code{search_space}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
-\item{\code{terminator}}{\link{Terminator}}
+\item{\code{terminator}}{(\link{Terminator}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -111,7 +111,7 @@ Printer.
 \subsection{Method \code{eval_batch()}}{
 Evaluates all input values in \code{xdt} by calling
 the \link{Objective}. Applies possible transformations to the input values
-and writes the results to the \link{Archive}-
+and writes the results to the \link{Archive}.
 
 Before each batch-evaluation, the \link{Terminator} is checked, and if it
 is positive, an exception of class \code{terminated_error} is raised. This
@@ -123,7 +123,9 @@ function should be internally called by the \link{Optimizer}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{\link[data.table:data.table]{data.table::data.table}}
+\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+Set of untransformed points / points from the \emph{search space}.
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -141,11 +143,15 @@ and estimated performance values here. For internal use.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{\link[data.table:data.table]{data.table::data.table} :: set of untransformed points / points from the \emph{search space} that lead to the result of the optimization}
+\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+Set of untransformed points / points from the \emph{search space}.
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
 
-\item{\code{y}}{\code{numeric(1)} :: Optimal outcome.}
+\item{\code{y}}{(\code{numeric(1)})\cr
+Optimal outcome.}
 
-\item{\code{opt_x}}{\code{list()} :: Transformed x values / points from the \emph{domain} of the \link{Objective} as a named list.}
+\item{\code{opt_x}}{(\code{list()})\cr
+Transformed x values / points from the \emph{domain} of the \link{Objective} as a named list.}
 }
 \if{html}{\out{</div>}}
 }

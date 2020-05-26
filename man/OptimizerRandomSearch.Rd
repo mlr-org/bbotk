@@ -2,7 +2,7 @@
 % Please edit documentation in R/OptimizerRandomSearch.R
 \name{OptimizerRandomSearch}
 \alias{OptimizerRandomSearch}
-\title{OptimizerRandomSearch}
+\title{Optimization via Random Search}
 \description{
 \code{OptimizerRandomSearch} class that implements a simple Random Search.
 }

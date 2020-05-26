@@ -13,30 +13,32 @@
 Optimizer = R6Class("Optimizer",
   public = list(
 
-    #' @field param_set [paradox::ParamSet]
+    #' @field param_set ([paradox::ParamSet]).
     param_set = NULL,
 
-    #' @field param_classes `character()`
+    #' @field param_classes (`character()`).
     param_classes = NULL,
 
-    #' @field properties `character()`
+    #' @field properties (`character()`).
     properties = NULL,
 
-    #' @field packages `character()`
+    #' @field packages (`character()`).
     packages = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param param_set [paradox::ParamSet]
-    #' @param param_classes `character()`
-    #' @param properties `character()`
-    #' @param packages `character()`
+    #'
+    #' @param param_set ([paradox::ParamSet]).
+    #' @param param_classes (`character()`).
+    #' @param properties (`character()`).
+    #' @param packages (`character()`).
     initialize = function(param_set, param_classes, properties,
       packages = character(0)) {
       self$param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
-      self$properties = assert_character(properties) # FIXME: assert_subset(properties, blabot_reflections$optimizer_properties)
+      # FIXME: assert_subset(properties, blabot_reflections$optimizer_properties)
+      self$properties = assert_character(properties)
       self$packages = assert_set(packages)
     },
 
@@ -48,7 +50,7 @@ Optimizer = R6Class("Optimizer",
 
     #' @description
     #' Print method.
-    #' @return `character()`
+    #' @return (`character()`).
     print = function() {
       catf(format(self))
       catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
@@ -58,8 +60,9 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @description
-    #' Performes the optimization and writes optimization result into [OptimInstance].
-    #' @param inst [OptimInstance]
+    #' Performs the optimization and writes optimization result into [OptimInstance].
+    #'
+    #' @param inst ([OptimInstance]).
     #' @return NULL
     optimize = function(inst) {
       assert_r6(inst, "OptimInstance")
@@ -81,7 +84,7 @@ Optimizer = R6Class("Optimizer",
       }
       tryCatch({
         private$.optimize(inst)
-      }, terminated_error = function(cond) {})
+      }, terminated_error = function(cond) { })
       private$.assign_result(inst)
       invisible(NULL)
     }

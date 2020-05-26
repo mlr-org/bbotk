@@ -4,6 +4,8 @@
 #' Wraps an multi-criteria [Objective] function with extra services for convenient evaluation.
 #' Inherits from [OptimInstance]
 #'
+#' @template param_xdt
+#' @template param_ydt
 #' @export
 OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
   inherit = OptimInstance,
@@ -12,9 +14,9 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
     #' @description
     #' The [Optimizer] object writes the best found points
     #' and estimated performance values here (e.g. the Pareto Front). For internal use.
-    #' @param xdt [data.table::data.table] :: set of untransformed points / points from the *search space* that lead to the result of the optimization
-    #' @param ydt [data.table::data.table] :: Optimal outcome.
-    #' @param opt_x `list()` :: Transformed x values / points from the *domain* of the [Objective] as a named list.
+    #'
+    #' @param opt_x (`list()`)\cr
+    #'   Transformed x values / points from the *domain* of the [Objective] as a named list.
     assign_result = function(xdt, ydt, opt_x = NULL) {
       #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
@@ -35,14 +37,14 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
   ),
 
   active = list(
-    #' @field result_opt_x `list()`\cr
-    #' (transformed) x part of the result in the *domain space* of the objective.
+    #' @field result_opt_x (`list()`)\cr
+    #'   (transformed) x part of the result in the *domain space* of the objective.
     result_opt_x = function() {
       private$.result$opt_x
     },
 
-    #' @field result_y `numeric(1)`
-    #' Optimal outcome.
+    #' @field result_y (`numeric(1)`)\cr
+    #'   Optimal outcome.
     result_y = function() {
       private$.result[, self$objective$codomain$ids(), with = FALSE]
     }

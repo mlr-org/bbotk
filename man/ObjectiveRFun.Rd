@@ -2,9 +2,9 @@
 % Please edit documentation in R/ObjectiveRFun.R
 \name{ObjectiveRFun}
 \alias{ObjectiveRFun}
-\title{Objective interface where user cass pass R function}
+\title{Objective interface with custom R function}
 \description{
-Objective interface where user cass pass R function.
+Objective interface with custom R function.
 }
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFun}
@@ -12,7 +12,7 @@ Objective interface where user cass pass R function.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{fun}}{\code{function}\cr
+\item{\code{fun}}{(\code{function})\cr
 Objective function.}
 }
 \if{html}{\out{</div>}}
@@ -55,19 +55,21 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{fun}}{\code{function}\cr
-R function that encodes objective and expects a list with the input for a single point (e.g. \code{list(x1 = 1, x2 = 2)}) and returns the result either as a numeric vector or a list (e.g. \code{list(y = 3)}).}
+\item{\code{fun}}{(\code{function})\cr
+R function that encodes objective and expects a list with the input for a single point
+(e.g. \code{list(x1 = 1, x2 = 2)}) and returns the result either as a numeric vector or a
+list (e.g. \code{list(y = 3)}).}
 
-\item{\code{domain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
-Specifies domain of function, hence its innput parameters, their types
+\item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specifies domain of function, hence its input parameters, their types
 and ranges.}
 
-\item{\code{codomain}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function, hence its feasible values.}
 
-\item{\code{id}}{\code{character(1)}}
+\item{\code{id}}{(\code{character(1)}).}
 
-\item{\code{properties}}{\code{character()}}
+\item{\code{properties}}{(\code{character()}).}
 }
 \if{html}{\out{</div>}}
 }

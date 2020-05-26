@@ -10,30 +10,32 @@
 #'   exception is raised, and no further evaluations can be performed from this
 #'   point on.
 #'
+#' @template param_xdt
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
 
-    #' @field objective [Objective]
+    #' @field objective ([Objective]).
     objective = NULL,
 
-    #' @field search_space [paradox::ParamSet]
+    #' @field search_space ([paradox::ParamSet]).
     search_space = NULL,
 
-    #' @field terminator [Terminator]
+    #' @field terminator ([Terminator]).
     terminator = NULL,
 
-    #' @field is_terminated `logical(1)`
+    #' @field is_terminated (`logical(1)`).
     is_terminated = FALSE,
 
-    #' @field archive [Archive]
+    #' @field archive ([Archive]).
     archive = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param objective [Objective]
-    #' @param search_space [paradox::ParamSet]
-    #' @param terminator [Terminator]
+    #'
+    #' @param objective ([Objective]).
+    #' @param search_space ([paradox::ParamSet]).
+    #' @param terminator ([Terminator]).
     initialize = function(objective, search_space, terminator) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = assert_param_set(search_space)
@@ -50,6 +52,7 @@ OptimInstance = R6Class("OptimInstance",
 
     #' @description
     #' Printer.
+    #'
     #' @param ... (ignored).
     print = function(...) {
       catf(format(self))
@@ -63,12 +66,11 @@ OptimInstance = R6Class("OptimInstance",
     #' @description
     #' Evaluates all input values in `xdt` by calling
     #' the [Objective]. Applies possible transformations to the input values
-    #' and writes the results to the [Archive]-
+    #' and writes the results to the [Archive].
     #'
     #' Before each batch-evaluation, the [Terminator] is checked, and if it
     #' is positive, an exception of class `terminated_error` is raised. This
     #' function should be internally called by the [Optimizer].
-    #' @param xdt [data.table::data.table]
     eval_batch = function(xdt) {
       if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
         self$is_terminated = TRUE
@@ -88,9 +90,11 @@ OptimInstance = R6Class("OptimInstance",
     #' @description
     #' The [Optimizer] object writes the best found point
     #' and estimated performance values here. For internal use.
-    #' @param xdt [data.table::data.table] :: set of untransformed points / points from the *search space* that lead to the result of the optimization
-    #' @param y `numeric(1)` :: Optimal outcome.
-    #' @param opt_x `list()` :: Transformed x values / points from the *domain* of the [Objective] as a named list.
+    #'
+    #' @param y (`numeric(1)`)\cr
+    #'   Optimal outcome.
+    #' @param opt_x (`list()`)\cr
+    #'   Transformed x values / points from the *domain* of the [Objective] as a named list.
     assign_result = function(xdt, y, opt_x = NULL) {
       #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt, nrows = 1)
@@ -112,26 +116,26 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   active = list(
-    #' @field result `list()`\cr
+    #' @field result (`list()`)\cr
     #' Get result
     result = function() {
       private$.result
     },
 
-    #' @field result_x `data.frame()`\cr
-    #' x part of the result in the *search space*.
+    #' @field result_x (`data.frame()`)\cr
+    #'   x part of the result in the *search space*.
     result_x = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
     },
 
-    #' @field result_opt_x `list()`\cr
-    #' (transformed) x part of the result in the *domain space* of the objective.
+    #' @field result_opt_x (`list()`)\cr
+    #'   (transformed) x part of the result in the *domain space* of the objective.
     result_opt_x = function() {
       private$.result$opt_x[[1]]
     },
 
-    #' @field result_y `numeric(1)`
-    #' Optimal outcome.
+    #' @field result_y (`numeric(1)`)
+    #'   Optimal outcome.
     result_y = function() {
       unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
     }

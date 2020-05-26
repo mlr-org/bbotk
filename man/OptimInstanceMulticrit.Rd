@@ -13,10 +13,10 @@ Inherits from \link{OptimInstance}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{result_opt_x}}{\code{list()}\cr
+\item{\code{result_opt_x}}{(\code{list()})\cr
 (transformed) x part of the result in the \emph{domain space} of the objective.}
 
-\item{\code{result_y}}{\code{numeric(1)}
+\item{\code{result_y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
 }
 \if{html}{\out{</div>}}
@@ -51,11 +51,15 @@ and estimated performance values here (e.g. the Pareto Front). For internal use.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{\link[data.table:data.table]{data.table::data.table} :: set of untransformed points / points from the \emph{search space} that lead to the result of the optimization}
+\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+Set of untransformed points / points from the \emph{search space}.
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
 
-\item{\code{ydt}}{\link[data.table:data.table]{data.table::data.table} :: Optimal outcome.}
+\item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+Optimal outcome.}
 
-\item{\code{opt_x}}{\code{list()} :: Transformed x values / points from the \emph{domain} of the \link{Objective} as a named list.}
+\item{\code{opt_x}}{(\code{list()})\cr
+Transformed x values / points from the \emph{domain} of the \link{Objective} as a named list.}
 }
 \if{html}{\out{</div>}}
 }

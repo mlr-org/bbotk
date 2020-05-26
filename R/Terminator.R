@@ -37,9 +37,9 @@ Terminator = R6Class("Terminator",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param param_set [paradox::ParamSet]\cr
+    #' @param param_set ([paradox::ParamSet])\cr
     #'   Set of control parameters for terminator.
-    #' @param properties `character()`\cr
+    #' @param properties (`character()`)\cr
     #'   Set of properties.
     initialize = function(param_set = ParamSet$new(), properties = character()) {
       self$param_set = assert_param_set(param_set)
@@ -54,6 +54,7 @@ Terminator = R6Class("Terminator",
 
     #' @description
     #' Printer.
+    #'
     #' @param ... (ignored).
     print = function(...) {
       catf(self$format())

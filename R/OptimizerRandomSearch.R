@@ -1,4 +1,4 @@
-#' @title OptimizerRandomSearch
+#' @title Optimization via Random Search
 #'
 #' @description
 #' `OptimizerRandomSearch` class that implements a simple Random Search.

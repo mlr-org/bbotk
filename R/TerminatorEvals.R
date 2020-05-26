@@ -36,7 +36,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #' @param archive [Archive].
+    #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       archive$n_evals >= self$param_set$values$n_evals

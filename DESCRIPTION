@@ -37,7 +37,7 @@ Imports:
     checkmate (>= 1.9.4),
     data.table,
     lgr,
-    mlr3misc (>= 0.2.0),
+    mlr3misc (>= 0.2.1),
     paradox,
     R6
 Suggests:
