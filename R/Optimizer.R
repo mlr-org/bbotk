@@ -97,7 +97,7 @@ Optimizer = R6Class("Optimizer",
       assert_r6(inst, "OptimInstance")
       res = inst$archive$get_best()
 
-      xdt = res[, inst$objective$domain$ids(), with = FALSE]
+      xdt = res[, inst$search_space$ids(), with = FALSE]
       opt_x = res[["opt_x"]][[1]]
       y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) #unlist keeps name!
 

@@ -110,7 +110,7 @@ OptimInstance = R6Class("OptimInstance",
         opt_x = design$transpose(trafo = TRUE, filter_na = TRUE)[[1]]
       }
       assert_list(opt_x)
-      assert_names(names(opt_x), permutation.of = self$objective$domain$ids())
+      assert_names(names(opt_x), subset.of = self$objective$domain$ids()) #the domain can be bigger then the search space after trafo
       private$.result = cbind(xdt, opt_x = list(opt_x), t(y)) #t(y) so the name of y stays
     }
   ),
