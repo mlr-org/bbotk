@@ -11,7 +11,7 @@ terminated_error = function(optim_instance) {
 
 #' @title Calculate which points are dominated
 #' @description
-#' A slow implementation that calculates which points are not dominated,
+#' Calculates which points are not dominated,
 #' i.e. points that belong to the Pareto front.
 #'
 #' @param ymat (`matrix()`) \cr
