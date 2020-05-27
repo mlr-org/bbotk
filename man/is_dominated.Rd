@@ -11,6 +11,6 @@ is_dominated(ymat)
 A numeric matrix. Each column (!) contains one point.}
 }
 \description{
-A slow implementation that calculates which points are not dominated,
+Calculates which points are not dominated,
 i.e. points that belong to the Pareto front.
 }
