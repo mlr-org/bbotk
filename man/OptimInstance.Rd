@@ -123,9 +123,10 @@ function should be internally called by the \link{Optimizer}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
+\item{\code{xdt}}{(\code{data.table})\cr
+x values as \code{data.table} with one point per row.
+Contains the value in the \emph{search space} of the \link{OptimInstance} object.
+Can contain additional columns for extra information.}
 }
 \if{html}{\out{</div>}}
 }
@@ -143,9 +144,10 @@ and estimated performance values here. For internal use.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
+\item{\code{xdt}}{(\code{data.table})\cr
+x values as \code{data.table} with one row.
+Contains the value in the \emph{search space} of the \link{OptimInstance} object.
+Can contain additional columns for extra information.}
 
 \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
