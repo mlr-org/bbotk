@@ -80,7 +80,7 @@ Archive = R6Class("Archive",
 
       if (self$codomain$length == 1L) {
         order = if (self$codomain$tags[1L] == "minimize") 1L else -1L
-        setorderv(tab, self$codomain$ids(), order = order)
+        setorderv(tab, self$codomain$ids(), order = order, na.last = TRUE)
         res = tab[1, ]
       } else {
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
