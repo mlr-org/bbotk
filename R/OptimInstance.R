@@ -93,7 +93,7 @@ OptimInstance = R6Class("OptimInstance",
 
     #' @description
     #' The [Optimizer] object writes the best found point
-    #' and estimated performance values here. For internal use.
+    #' and estimated performance value here. For internal use.
     #'
     #' @param xdt (`data.table`)\cr
     #'   x values as `data.table` with one row.
@@ -102,7 +102,8 @@ OptimInstance = R6Class("OptimInstance",
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
     #' @param opt_x (`list()`)\cr
-    #'   Transformed x values / points from the *domain* of the [Objective] as a named list.
+    #'   Transformed x value / point from the *domain* of the [Objective] as a named list.
+    #'   Corresponds to the point in `xdt`.
     assign_result = function(xdt, y, opt_x = NULL) {
       #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt, nrows = 1)

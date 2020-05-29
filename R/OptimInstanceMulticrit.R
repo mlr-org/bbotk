@@ -15,8 +15,16 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
     #' The [Optimizer] object writes the best found points
     #' and estimated performance values here (e.g. the Pareto Front). For internal use.
     #'
+    #' @param xdt (`data.table`)\cr
+    #'   x values as `data.table`.
+    #'   Each row is one point.
+    #'   Contains the value in the *search space* of the [OptimInstance] object.
+    #'   Can contain additional columns for extra information.
+    #' @param ydt (`numeric(1)`)\cr
+    #'   Optimal outcomes, e.g. the Pareto front.
     #' @param opt_x (`list()`)\cr
-    #'   Transformed x values / points from the *domain* of the [Objective] as a named list.
+    #'   Transformed x values / points from the *domain* of the [Objective] as a list of named lists.
+    #'   Corresponds to the points in `xdt`.
     assign_result = function(xdt, ydt, opt_x = NULL) {
       #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)

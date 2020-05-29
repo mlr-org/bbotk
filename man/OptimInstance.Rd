@@ -136,7 +136,7 @@ Can contain additional columns for extra information.}
 \if{latex}{\out{\hypertarget{method-assign_result}{}}}
 \subsection{Method \code{assign_result()}}{
 The \link{Optimizer} object writes the best found point
-and estimated performance values here. For internal use.
+and estimated performance value here. For internal use.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y, opt_x = NULL)}\if{html}{\out{</div>}}
 }
@@ -153,7 +153,8 @@ Can contain additional columns for extra information.}
 Optimal outcome.}
 
 \item{\code{opt_x}}{(\code{list()})\cr
-Transformed x values / points from the \emph{domain} of the \link{Objective} as a named list.}
+Transformed x value / point from the \emph{domain} of the \link{Objective} as a named list.
+Corresponds to the point in \code{xdt}.}
 }
 \if{html}{\out{</div>}}
 }

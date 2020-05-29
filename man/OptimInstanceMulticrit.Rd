@@ -51,15 +51,18 @@ and estimated performance values here (e.g. the Pareto Front). For internal use.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
+\item{\code{xdt}}{(\code{data.table})\cr
+x values as \code{data.table}.
+Each row is one point.
+Contains the value in the \emph{search space} of the \link{OptimInstance} object.
+Can contain additional columns for extra information.}
 
-\item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Optimal outcome.}
+\item{\code{ydt}}{(\code{numeric(1)})\cr
+Optimal outcomes, e.g. the Pareto front.}
 
 \item{\code{opt_x}}{(\code{list()})\cr
-Transformed x values / points from the \emph{domain} of the \link{Objective} as a named list.}
+Transformed x values / points from the \emph{domain} of the \link{Objective} as a list of named lists.
+Corresponds to the points in \code{xdt}.}
 }
 \if{html}{\out{</div>}}
 }
