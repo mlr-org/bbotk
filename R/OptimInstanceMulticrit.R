@@ -32,12 +32,7 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
       assert_data_table(ydt)
       assert_names(names(ydt), permutation.of = self$objective$codomain$ids())
       if (is.null(opt_x)) {
-        design = Design$new(
-          self$search_space,
-          xdt[, self$search_space$ids(), with = FALSE],
-          remove_dupl = FALSE
-        )
-        opt_x = design$transpose(trafo = TRUE, filter_na = TRUE)
+        opt_x = transform_xdt_to_xss(xdt, self$search_space)
       }
       assert_list(opt_x, len = nrow(xdt))
       private$.result = cbind(xdt, opt_x = opt_x, ydt)

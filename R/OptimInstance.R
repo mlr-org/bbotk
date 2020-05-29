@@ -80,12 +80,7 @@ OptimInstance = R6Class("OptimInstance",
         self$is_terminated = TRUE
         stop(terminated_error(self))
       }
-      design = Design$new(
-        self$search_space,
-        xdt[, self$search_space$ids(), with = FALSE],
-        remove_dupl = FALSE
-      )
-      xss_trafoed = design$transpose(trafo = TRUE, filter_na = TRUE)
+      xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       ydt = self$objective$eval_many(xss_trafoed)
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       return(invisible(ydt))
@@ -111,12 +106,7 @@ OptimInstance = R6Class("OptimInstance",
       assert_number(y)
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
       if (is.null(opt_x)) {
-        design = Design$new(
-          self$search_space,
-          xdt[, self$search_space$ids(), with = FALSE],
-          remove_dupl = FALSE
-        )
-        opt_x = design$transpose(trafo = TRUE, filter_na = TRUE)[[1]]
+        opt_x = transform_xdt_to_xss(xdt, self$search_space)[[1]]
       }
       assert_list(opt_x)
       assert_names(names(opt_x), subset.of = self$objective$domain$ids()) #the domain can be bigger then the search space after trafo
