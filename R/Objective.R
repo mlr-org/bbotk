@@ -51,8 +51,7 @@ Objective = R6Class("Objective",
       }
 
       self$codomain = assert_codomain(codomain)
-      self$properties = assert_character(properties)
-      # FIXME: assert_subset(properties, blabot_reflections$objective_properties)
+      self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
     },
 
     #' @description

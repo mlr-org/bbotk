@@ -20,3 +20,4 @@ Transforms a given \code{data.table} to a list with transformed x values.
 If no trafo is defined it will just convert the \code{data.table} to a list.
 Mainly for internal usage.
 }
+\keyword{internal}

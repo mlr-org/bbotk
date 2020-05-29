@@ -36,6 +36,7 @@ is_dominated = function(ymat) {
 #' @param search_space [paradox::ParamSet] \cr
 #' The ParamSet.
 #' @value `list()`
+#' @keywords internal
 #' @export
 transform_xdt_to_xss = function(xdt, search_space) {
   design = Design$new(

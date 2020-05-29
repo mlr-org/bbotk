@@ -71,6 +71,7 @@ Collate:
     'TerminatorRunTime.R'
     'TerminatorStagnation.R'
     'assertions.R'
+    'bbotk_reflections.R'
     'helper.R'
     'sugar.R'
     'zzz.R'

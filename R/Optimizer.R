@@ -37,8 +37,7 @@ Optimizer = R6Class("Optimizer",
       self$param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
-      # FIXME: assert_subset(properties, blabot_reflections$optimizer_properties)
-      self$properties = assert_character(properties)
+      self$properties = assert_subset(properties, bbotk_reflections$optimizer_properties)
       self$packages = assert_set(packages)
     },
 
