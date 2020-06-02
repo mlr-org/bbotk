@@ -138,7 +138,7 @@ Can contain additional columns for extra information.}
 The \link{Optimizer} object writes the best found point
 and estimated performance value here. For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y, opt_x = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -151,10 +151,6 @@ Can contain additional columns for extra information.}
 
 \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
-
-\item{\code{opt_x}}{(\code{list()})\cr
-Transformed x value / point from the \emph{domain} of the \link{Objective} as a named list.
-Corresponds to the point in \code{xdt}.}
 }
 \if{html}{\out{</div>}}
 }

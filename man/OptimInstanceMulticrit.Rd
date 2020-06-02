@@ -45,7 +45,7 @@ Optimal outcome.}
 The \link{Optimizer} object writes the best found points
 and estimated performance values here (e.g. the Pareto Front). For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceMulticrit$assign_result(xdt, ydt, opt_x = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceMulticrit$assign_result(xdt, ydt)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -59,10 +59,6 @@ Can contain additional columns for extra information.}
 
 \item{\code{ydt}}{(\code{numeric(1)})\cr
 Optimal outcomes, e.g. the Pareto front.}
-
-\item{\code{opt_x}}{(\code{list()})\cr
-Transformed x values / points from the \emph{domain} of the \link{Objective} as a list of named lists.
-Corresponds to the points in \code{xdt}.}
 }
 \if{html}{\out{</div>}}
 }

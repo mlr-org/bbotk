@@ -96,20 +96,13 @@ OptimInstance = R6Class("OptimInstance",
     #'   Can contain additional columns for extra information.
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
-    #' @param opt_x (`list()`)\cr
-    #'   Transformed x value / point from the *domain* of the [Objective] as a named list.
-    #'   Corresponds to the point in `xdt`.
-    assign_result = function(xdt, y, opt_x = NULL) {
+    assign_result = function(xdt, y) {
       #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt, nrows = 1)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_number(y)
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
-      if (is.null(opt_x)) {
-        opt_x = transform_xdt_to_xss(xdt, self$search_space)[[1]]
-      }
-      assert_list(opt_x)
-      assert_names(names(opt_x), subset.of = self$objective$domain$ids()) #the domain can be bigger then the search space after trafo
+      opt_x = transform_xdt_to_xss(xdt, self$search_space)[[1]]
       private$.result = cbind(xdt, opt_x = list(opt_x), t(y)) #t(y) so the name of y stays
     }
   ),

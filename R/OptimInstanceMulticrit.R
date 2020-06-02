@@ -22,19 +22,13 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
     #'   Can contain additional columns for extra information.
     #' @param ydt (`numeric(1)`)\cr
     #'   Optimal outcomes, e.g. the Pareto front.
-    #' @param opt_x (`list()`)\cr
-    #'   Transformed x values / points from the *domain* of the [Objective] as a list of named lists.
-    #'   Corresponds to the points in `xdt`.
-    assign_result = function(xdt, ydt, opt_x = NULL) {
+    assign_result = function(xdt, ydt) {
       #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_data_table(ydt)
       assert_names(names(ydt), permutation.of = self$objective$codomain$ids())
-      if (is.null(opt_x)) {
-        opt_x = transform_xdt_to_xss(xdt, self$search_space)
-      }
-      assert_list(opt_x, len = nrow(xdt))
+      opt_x = transform_xdt_to_xss(xdt, self$search_space)
       private$.result = cbind(xdt, opt_x = opt_x, ydt)
     }
   ),
