@@ -49,7 +49,7 @@ Archive = R6Class("Archive",
       assert_data_table(xdt)
       assert_data_table(ydt)
       assert_list(xss_trafoed)
-      map(ydt[, self$codomain$ids(), with = FALSE], function(y) {
+      map(ydt[, self$cols_y, with = FALSE], function(y) {
         assert_numeric(y, any.missing = FALSE)
       })
       xydt = cbind(xdt, ydt)
