@@ -14,6 +14,17 @@ exception is raised, and no further evaluations can be performed from this
 point on.
 }
 }
+\section{Technical details}{
+
+
+In order the replace the default logging messages with custom logging, the
+\verb{.log_*} private methods can be overwritten in an \code{OptimInstance} subclass:
+\itemize{
+\item \verb{$.log_eval_batch_start()} Called at the beginning of \verb{$eval_batch()}
+\item \verb{$.log_eval_batch_finish()} Called at the end of \verb{$eval_batch()}
+}
+}
+
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

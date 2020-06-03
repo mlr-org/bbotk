@@ -12,6 +12,17 @@ A \code{Optimizer} object must write its result to the \verb{$assign_result()} m
 of the \link{OptimInstance} at the end in order to store the best point  and its
 estimated performance vector.
 }
+\section{Technical details}{
+
+
+In order the replace the default logging messages with custom logging, the
+\verb{.log_*} private methods can be overwritten in an \code{Optimizer} subclass:
+\itemize{
+\item \verb{$.log_optimize_start()} Called at the beginning of \verb{$optimize()}
+\item \verb{$.log_optimize_finish()} Called at the end of \verb{$optimize()}
+}
+}
+
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
