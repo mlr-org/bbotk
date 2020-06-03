@@ -38,3 +38,12 @@ test_that("Unnest columns", {
   expect_equal(a$opt_x_x1, 1)
   expect_equal(a$opt_x_x2, 2)
 })
+
+test_that("NAs in ydt throw an error", {
+  a = Archive$new(PS_1D, FUN_1D_CODOMAIN)
+  xdt = data.table(x = 1)
+  xss_trafoed = list(list(x = 1))
+  ydt = data.table(y = NA)
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt))
+})
+
