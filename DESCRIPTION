@@ -70,6 +70,7 @@ Collate:
     'TerminatorPerfReached.R'
     'TerminatorRunTime.R'
     'TerminatorStagnation.R'
+    'TerminatorStagnationBatch.R'
     'assertions.R'
     'bbotk_reflections.R'
     'helper.R'
