@@ -5,7 +5,8 @@
 #'
 #' @description
 #' Class to terminate the optimization after the performance stagnates, i.e.
-#' does not improve more than `threshold` over the last `n` batches.
+#' does not improve more than `threshold` over the last and the previous `n`
+#' batches.
 #'
 #' @templateVar id stagnation
 #' @template section_dictionary_terminator
