@@ -8,6 +8,7 @@ test_that("OptimInstance", {
   expect_identical(inst$archive$n_evals, 0L)
   expect_identical(inst$archive$n_batch, 0L)
   expect_null(inst$result)
+  expect_output(print(inst), "ParamSet")
 
   xdt = data.table(x1 = -1:1, x2 = list(-1, 0, 1))
   inst$eval_batch(xdt)

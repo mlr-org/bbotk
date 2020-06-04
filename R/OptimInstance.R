@@ -57,7 +57,8 @@ OptimInstance = R6Class("OptimInstance",
     print = function(...) {
       catf(format(self))
       catf(str_indent("* Objective:", format(self$objective)))
-      catf(str_indent("* Search Space:", format(self$search_space)))
+      catf("* Search Space:")
+      print(self$search_space)
       catf(str_indent("* Terminator:", format(self$terminator)))
       catf(str_indent("* Terminated:", self$is_terminated))
       print(self$archive)
