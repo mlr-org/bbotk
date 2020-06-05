@@ -43,9 +43,6 @@ Archive = R6Class("Archive",
     #'
     #' @param xss_trafoed (`list()`).
     add_evals = function(xdt, xss_trafoed, ydt) {
-
-      # FIXME: add checks here for the dts and their domains
-      # FIXME: make asserts better!
       assert_data_table(xdt)
       assert_data_table(ydt)
       assert_list(xss_trafoed)
