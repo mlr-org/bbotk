@@ -11,7 +11,7 @@
 #'   point on.
 #'
 #' @section Technical details:
-#' The [Optimizer] writes the optimized outcome to the `.result` field by using
+#' The [Optimizer] writes the final result to the `.result` field by using
 #' the `$assign_result()` method. `.result` stores a [data.table::data.table]
 #' consisting of x values in the *search space*, (transformed) x values in the
 #' *domain space* and y values in the *codomain space* of the [Objective]. The
@@ -116,13 +116,13 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   active = list(
-    #' @field result (`list()`)\cr
+    #' @field result ([data.table::data.table])\cr
     #' Get result
     result = function() {
       private$.result
     },
 
-    #' @field result_x (`data.frame()`)\cr
+    #' @field result_x ([data.table::data.table])\cr
     #'   x part of the result in the *search space*.
     result_x = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
@@ -134,7 +134,7 @@ OptimInstance = R6Class("OptimInstance",
       private$.result$opt_x[[1]]
     },
 
-    #' @field result_y (`numeric(1)`)
+    #' @field result_y (`numeric()`)\cr
     #'   Optimal outcome.
     result_y = function() {
       unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])

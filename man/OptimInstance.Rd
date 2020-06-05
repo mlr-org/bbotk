@@ -16,7 +16,7 @@ point on.
 }
 \section{Technical details}{
 
-The \link{Optimizer} writes the optimized outcome to the \code{.result} field by using
+The \link{Optimizer} writes the final result to the \code{.result} field by using
 the \verb{$assign_result()} method. \code{.result} stores a \link[data.table:data.table]{data.table::data.table}
 consisting of x values in the \emph{search space}, (transformed) x values in the
 \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}. The
@@ -41,16 +41,16 @@ user can access the results with active bindings (see below).
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{result}}{(\code{list()})\cr
+\item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Get result}
 
-\item{\code{result_x}}{(\code{data.frame()})\cr
+\item{\code{result_x}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
 
 \item{\code{result_opt_x}}{(\code{list()})\cr
 (transformed) x part of the result in the \emph{domain space} of the objective.}
 
-\item{\code{result_y}}{(\code{numeric(1)})
+\item{\code{result_y}}{(\code{numeric()})\cr
 Optimal outcome.}
 }
 \if{html}{\out{</div>}}
