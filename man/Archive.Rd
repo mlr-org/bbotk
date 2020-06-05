@@ -100,7 +100,9 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-get_best"></a>}}
 \if{latex}{\out{\hypertarget{method-get_best}{}}}
 \subsection{Method \code{get_best()}}{
-Returns best scoring evaluation.
+Returns the best scoring evaluation. For single-criteria optimization,
+the solution that minimize/ maximize the objective function. For
+multi-criteria optimization, the non-dominant solution set.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Archive$get_best(m = NULL)}\if{html}{\out{</div>}}
 }
@@ -112,6 +114,9 @@ Returns best scoring evaluation.
 Take only batches \code{m} into account. Default is all batches.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\link[data.table:data.table]{data.table::data.table}
 }
 }
 \if{html}{\out{<hr>}}

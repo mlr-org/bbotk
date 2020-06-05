@@ -61,10 +61,13 @@ Archive = R6Class("Archive",
     },
 
     #' @description
-    #' Returns best scoring evaluation.
+    #' Returns the best scoring evaluation. For single-criteria optimization,
+    #' the solution that minimize/ maximize the objective function. For
+    #' multi-criteria optimization, the non-dominant solution set.
     #'
     #' @param m (`integer()`)\cr
     #'   Take only batches `m` into account. Default is all batches.
+    #' @return [data.table::data.table]
     get_best = function(m = NULL) {
       if (self$n_batch == 0L) {
         stop("No results stored in archive")
