@@ -34,6 +34,9 @@ Terminator = R6Class("Terminator",
     #'   Set of properties.
     properties = NULL,
 
+    #' @field progressbar
+    progressbar = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'

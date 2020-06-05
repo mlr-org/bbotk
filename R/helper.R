@@ -46,3 +46,11 @@ transform_xdt_to_xss = function(xdt, search_space) {
   )
   design$transpose(trafo = TRUE, filter_na = TRUE)
 }
+
+get_progressor = function(n, label = NA_character_) {
+  if (!isNamespaceLoaded("progressr")) {
+    return(NULL)
+  }
+
+  progressr::progressor(steps = n, label = label)
+}
