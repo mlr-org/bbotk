@@ -10,6 +10,13 @@
 #'   exception is raised, and no further evaluations can be performed from this
 #'   point on.
 #'
+#' @section Technical details:
+#' The [Optimizer] writes the optimized outcome to the `.result` field by using
+#' the `$assign_result()` method. `.result` stores a [data.table::data.table]
+#' consisting of x values in the *search space*, (transformed) x values in the
+#' *domain space* and y values in the *codomain space* of the [Objective]. The
+#' user can access the results with active bindings (see below).
+#'
 #' @template param_xdt
 #' @export
 OptimInstance = R6Class("OptimInstance",
