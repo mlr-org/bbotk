@@ -9,7 +9,7 @@ Authors@R:
              comment = c(ORCID = "0000-0003-4481-5554")),
       person(given = "Michel",
              family = "Lang",
-             role = c("aut"),
+             role = "aut",
              email = "michellang@gmail.com",
              comment = c(ORCID = "0000-0001-9754-0393")),
       person(given = "Bernd",
@@ -45,6 +45,7 @@ Suggests:
     evaluate,
     future (>= 1.9.0),
     future.apply (>= 1.1.0),
+    progressr,
     testthat
 Remotes:
     mlr-org/mlr3misc
