@@ -52,8 +52,7 @@ Archive = R6Class("Archive",
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "opt_x" := list(xss_trafoed)]
-      # FIXME: this will break in 2038
-      xydt[, "timestamp" := as.integer(Sys.time())]
+      xydt[, "timestamp" := Sys.time()]
       batch_nr = self$data$batch_nr
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
       xydt[, "batch_nr" := batch_nr]
