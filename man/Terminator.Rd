@@ -40,8 +40,11 @@ Other Terminator:
 \item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Set of control parameters for terminator.}
 
-\item{\code{properties}}{\code{character()}\cr
+\item{\code{properties}}{(\code{character()})\cr
 Set of properties.}
+
+\item{\code{progressor}}{(\code{progressor()})\cr
+Stores \code{progressor} function.}
 }
 \if{html}{\out{</div>}}
 }

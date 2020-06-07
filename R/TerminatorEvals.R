@@ -39,11 +39,11 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      if (is.null(self$progressbar)) {
+      if (is.null(self$progressor)) {
         n = self$param_set$values$n_evals
-        self$progressbar = get_progressor(n)
+        self$progressor = get_progressor(n)
       } else {
-        self$progressbar(message = sprintf("%i", archive$n_evals),
+        self$progressor(message = sprintf("%i", archive$n_evals),
           amount = archive$n_evals / archive$n_batch)
       }
       archive$n_evals >= self$param_set$values$n_evals

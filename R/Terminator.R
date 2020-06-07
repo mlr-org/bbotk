@@ -27,15 +27,16 @@
 Terminator = R6Class("Terminator",
   public = list(
     #' @field param_set [paradox::ParamSet]\cr
-    #'   Set of control parameters for terminator.
+    #' Set of control parameters for terminator.
     param_set = NULL,
 
-    #' @field properties `character()`\cr
-    #'   Set of properties.
+    #' @field properties (`character()`)\cr
+    #' Set of properties.
     properties = NULL,
 
-    #' @field progressbar
-    progressbar = NULL,
+    #' @field progressor (`progressor()`)\cr
+    #' Stores `progressor` function.
+    progressor = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
