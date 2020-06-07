@@ -37,6 +37,8 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+      d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
+
       if (is.null(self$progressor)) {
         n = self$param_set$values$secs
         self$progressor = get_progressor(n)
@@ -45,9 +47,10 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         time_diff = as.numeric(difftime(
           time_stamps[length(time_stamps)], time_stamps[length(time_stamps)-1]),
           units = "secs")
-        self$progressor(amount = time_diff)
+        self$progressor(message = sprintf("%i seconds left",
+          self$param_set$values$secs-as.integer(d)), amount = time_diff)
       }
-      d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
+
       return(d >= self$param_set$values$secs)
     }
   )

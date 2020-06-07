@@ -43,9 +43,10 @@ TerminatorEvals = R6Class("TerminatorEvals",
         n = self$param_set$values$n_evals
         self$progressor = get_progressor(n)
       } else {
-        self$progressor(message = sprintf("%i", archive$n_evals),
+        self$progressor(message = sprintf("%i evaluations", archive$n_evals),
           amount = archive$n_evals / archive$n_batch)
       }
+
       archive$n_evals >= self$param_set$values$n_evals
     }
   )

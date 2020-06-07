@@ -52,7 +52,9 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
         time_diff = as.numeric(difftime(
           time_stamps[length(time_stamps)], time_stamps[length(time_stamps)-1]),
           units = "secs")
-        self$progressor(amount = time_diff)
+        d = as.integer(difftime(self$param_set$values$stop_time, Sys.time()), unit = "secs")
+        self$progressor(message = sprintf("%i seconds left", d),
+          amount = time_diff)
       }
 
       return(Sys.time() >= self$param_set$values$stop_time)
