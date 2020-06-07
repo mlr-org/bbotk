@@ -13,7 +13,6 @@
 #' @section Parameters:
 #' * `stop_time` `POSIXct(1)`\cr
 #'   Terminator stops after this point in time.
-#'   Mutually exclusive with argument `secs`.
 #'
 #' @family Terminator
 #' @export
