@@ -23,9 +23,6 @@ Archive = R6Class("Archive",
     #' Codomain of objective function that is logged into archive.
     codomain = NULL,
 
-    #' @field start_time ([POSIXct]).
-    start_time = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -58,9 +55,6 @@ Archive = R6Class("Archive",
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
       xydt[, "batch_nr" := batch_nr]
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
-      if(self$n_batch == 1) {
-        self$start_time = self$data[batch_nr == min(batch_nr), timestamp][1]
-      }
     },
 
     #' @description
@@ -157,7 +151,17 @@ Archive = R6Class("Archive",
     cols_x = function() self$search_space$ids(),
 
     #' @field cols_y (`character()`).
-    cols_y = function() self$codomain$ids()
+    cols_y = function() self$codomain$ids(),
     # idx_unevaled = function() self$data$y
-  ),
+
+    #' @field start_time ([POSIXct])\cr
+    #' Timestamp of first batch
+    start_time = function() {
+      if(self$n_batch == 0) {
+        return(NULL)
+      } else {
+        self$data[batch_nr == min(batch_nr), timestamp][1]
+      }
+    }
+  )
 )
