@@ -12,6 +12,18 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
   public = list(
 
     #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @param objective ([Objective]).
+    #' @param search_space ([paradox::ParamSet]).
+    #' @param terminator ([Terminator])\cr
+    #' Multi-objective terminator.
+    initialize = function(objective, search_space, terminator) {
+      assert_subset(terminator$properties, "multi-objective", empty.ok = FALSE)
+      super$initialize(objective, search_space, terminator)
+    },
+
+    #' @description
     #' The [Optimizer] object writes the best found points
     #' and estimated performance values here (e.g. the Pareto Front). For internal use.
     #'
