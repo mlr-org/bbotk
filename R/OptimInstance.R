@@ -11,6 +11,11 @@
 #'   point on.
 #'
 #' @section Technical details:
+#' The [Optimizer] writes the final result to the `.result` field by using
+#' the `$assign_result()` method. `.result` stores a [data.table::data.table]
+#' consisting of x values in the *search space*, (transformed) x values in the
+#' *domain space* and y values in the *codomain space* of the [Objective]. The
+#' user can access the results with active bindings (see below).
 #'
 #' In order to replace the default logging messages with custom logging, the
 #' `.log_*` private methods can be overwritten in an `OptimInstance` subclass:
@@ -65,7 +70,8 @@ OptimInstance = R6Class("OptimInstance",
     print = function(...) {
       catf(format(self))
       catf(str_indent("* Objective:", format(self$objective)))
-      catf(str_indent("* Search Space:", format(self$search_space)))
+      catf("* Search Space:")
+      print(self$search_space)
       catf(str_indent("* Terminator:", format(self$terminator)))
       catf(str_indent("* Terminated:", self$is_terminated))
       print(self$archive)
@@ -118,13 +124,13 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   active = list(
-    #' @field result (`list()`)\cr
+    #' @field result ([data.table::data.table])\cr
     #' Get result
     result = function() {
       private$.result
     },
 
-    #' @field result_x (`data.frame()`)\cr
+    #' @field result_x ([data.table::data.table])\cr
     #'   x part of the result in the *search space*.
     result_x = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
@@ -136,7 +142,7 @@ OptimInstance = R6Class("OptimInstance",
       private$.result$opt_x[[1]]
     },
 
-    #' @field result_y (`numeric(1)`)
+    #' @field result_y (`numeric()`)\cr
     #'   Optimal outcome.
     result_y = function() {
       unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
