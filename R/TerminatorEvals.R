@@ -39,15 +39,22 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      if (is.null(self$progressor)) {
-        n = self$param_set$values$n_evals
-        self$progressor = get_progressor(n)
-      } else {
-        self$progressor(message = sprintf("%i evaluations", archive$n_evals),
-          amount = archive$n_evals / archive$n_batch)
-      }
-
+      private$.run_progressor(archive)
       archive$n_evals >= self$param_set$values$n_evals
+    }
+  ),
+  private = list(
+    .run_progressor = function(archive) {
+      if (isNamespaceLoaded("progressr")) {
+        ps = self$param_set$values
+        if (is.null(self$progressor)) {
+          n = ps$n_evals
+          self$progressor = progressr::progressor(steps = n)
+        } else {
+          self$progressor(message = sprintf("%i of %i evaluations", archive$n_evals, ps$n_evals),
+            amount = nrow(archive$data[batch_nr == archive$n_batch]))
+        }
+      }
     }
   )
 )

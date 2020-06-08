@@ -43,21 +43,26 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      if (is.null(self$progressor)) {
-        n = as.numeric(self$param_set$values$stop_time,
-          units = "secs") - as.numeric(Sys.time(), units = "secs")
-        self$progressor = get_progressor(n)
-      } else {
-        time_stamps = unique(archive$data$timestamp)
-        time_diff = as.numeric(difftime(
-          time_stamps[length(time_stamps)], time_stamps[length(time_stamps)-1]),
-          units = "secs")
-        d = as.integer(difftime(self$param_set$values$stop_time, Sys.time()), unit = "secs")
-        self$progressor(message = sprintf("%i seconds left", d),
-          amount = time_diff)
-      }
-
+      private$.run_progressor(archive)
       return(Sys.time() >= self$param_set$values$stop_time)
+    }
+  ),
+  private = list(
+    .run_progressor = function(archive) {
+      if (isNamespaceLoaded("progressr") && !is.null(archive$start_time)) {
+        ps = self$param_set$values
+        if (is.null(self$progressor)) {
+          n = ceiling(as.numeric(difftime(ps$stop_time, archive$start_time), units = "secs"))
+          print(n)
+          self$progressor = progressr::progressor(steps = n)
+        } else {
+          ts = unique(archive$data$timestamp)
+          td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]), units = "secs")
+          d = as.integer(difftime(ps$stop_time, Sys.time()), unit = "secs")
+          self$progressor(message = sprintf("%i seconds left", d),
+            amount = td)
+        }
+      }
     }
   )
 )
