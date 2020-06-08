@@ -44,17 +44,14 @@ Archive = R6Class("Archive",
     #' @param xss_trafoed (`list()`)\cr
     #' Transformed point(s) in the *domain space*.
     add_evals = function(xdt, xss_trafoed, ydt) {
-
-      # FIXME: add checks here for the dts and their domains
-      # FIXME: make asserts better!
       assert_data_table(xdt)
       assert_data_table(ydt)
       assert_list(xss_trafoed)
+      assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "opt_x" := list(xss_trafoed)]
-      # FIXME: this will break in 2038
-      xydt[, "timestamp" := as.integer(Sys.time())]
+      xydt[, "timestamp" := Sys.time()]
       batch_nr = self$data$batch_nr
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
       xydt[, "batch_nr" := batch_nr]
