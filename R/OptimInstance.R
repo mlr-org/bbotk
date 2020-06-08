@@ -12,7 +12,7 @@
 #'
 #' @section Technical details:
 #'
-#' In order the replace the default logging messages with custom logging, the
+#' In order to replace the default logging messages with custom logging, the
 #' `.log_*` private methods can be overwritten in an `OptimInstance` subclass:
 #'
 #' * `$.log_eval_batch_start()` Called at the beginning of `$eval_batch()`
@@ -92,7 +92,7 @@ OptimInstance = R6Class("OptimInstance",
       private$.log_eval_batch_start(xdt)
       ydt = self$objective$eval_many(xss_trafoed)
       self$archive$add_evals(xdt, xss_trafoed, ydt)
-      private$.log_eval_batch_finish()
+      private$.log_eval_batch_finish(xdt, ydt)
       return(invisible(ydt))
     },
 
@@ -150,10 +150,9 @@ OptimInstance = R6Class("OptimInstance",
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
     },
 
-    .log_eval_batch_finish = function() {
+    .log_eval_batch_finish = function(xdt, ydt) {
       lg$info("Result of batch %i:", self$archive$n_batch)
-      lg$info(capture.output(print(
-        self$archive$data[batch_nr == self$archive$n_batch, ],
+      lg$info(capture.output(print(cbind(xdt, ydt),
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
     }
   )

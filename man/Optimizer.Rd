@@ -15,7 +15,7 @@ estimated performance vector.
 \section{Technical details}{
 
 
-In order the replace the default logging messages with custom logging, the
+In order to replace the default logging messages with custom logging, the
 \verb{.log_*} private methods can be overwritten in an \code{Optimizer} subclass:
 \itemize{
 \item \verb{$.log_optimize_start()} Called at the beginning of \verb{$optimize()}

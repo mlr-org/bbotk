@@ -11,7 +11,7 @@
 #'
 #' @section Technical details:
 #'
-#' In order the replace the default logging messages with custom logging, the
+#' In order to replace the default logging messages with custom logging, the
 #' `.log_*` private methods can be overwritten in an `Optimizer` subclass:
 #'
 #' * `$.log_optimize_start()` Called at the beginning of `$optimize()`
