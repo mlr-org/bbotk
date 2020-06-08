@@ -21,6 +21,13 @@ the \verb{$assign_result()} method. \code{.result} stores a \link[data.table:dat
 consisting of x values in the \emph{search space}, (transformed) x values in the
 \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}. The
 user can access the results with active bindings (see below).
+
+In order to replace the default logging messages with custom logging, the
+\verb{.log_*} private methods can be overwritten in an \code{OptimInstance} subclass:
+\itemize{
+\item \verb{$.log_eval_batch_start()} Called at the beginning of \verb{$eval_batch()}
+\item \verb{$.log_eval_batch_finish()} Called at the end of \verb{$eval_batch()}
+}
 }
 
 \section{Public fields}{

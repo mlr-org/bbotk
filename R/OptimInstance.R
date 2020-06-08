@@ -17,6 +17,12 @@
 #' *domain space* and y values in the *codomain space* of the [Objective]. The
 #' user can access the results with active bindings (see below).
 #'
+#' In order to replace the default logging messages with custom logging, the
+#' `.log_*` private methods can be overwritten in an `OptimInstance` subclass:
+#'
+#' * `$.log_eval_batch_start()` Called at the beginning of `$eval_batch()`
+#' * `$.log_eval_batch_finish()` Called at the end of `$eval_batch()`
+#'
 #' @template param_xdt
 #' @export
 OptimInstance = R6Class("OptimInstance",
@@ -89,8 +95,10 @@ OptimInstance = R6Class("OptimInstance",
         stop(terminated_error(self))
       }
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+      private$.log_eval_batch_start(xdt)
       ydt = self$objective$eval_many(xss_trafoed)
       self$archive$add_evals(xdt, xss_trafoed, ydt)
+      private$.log_eval_batch_finish(xdt, ydt)
       return(invisible(ydt))
     },
 
@@ -105,13 +113,13 @@ OptimInstance = R6Class("OptimInstance",
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
     assign_result = function(xdt, y) {
-      #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
+      # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt, nrows = 1)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_number(y)
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
       opt_x = transform_xdt_to_xss(xdt, self$search_space)[[1]]
-      private$.result = cbind(xdt, opt_x = list(opt_x), t(y)) #t(y) so the name of y stays
+      private$.result = cbind(xdt, opt_x = list(opt_x), t(y)) # t(y) so the name of y stays
     }
   ),
 
@@ -142,6 +150,16 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   private = list(
-    .result = NULL
+    .result = NULL,
+
+    .log_eval_batch_start = function(xdt) {
+      lg$info("Evaluating %i configuration(s)", nrow(xdt))
+    },
+
+    .log_eval_batch_finish = function(xdt, ydt) {
+      lg$info("Result of batch %i:", self$archive$n_batch)
+      lg$info(capture.output(print(cbind(xdt, ydt),
+        class = FALSE, row.names = FALSE, print.keys = FALSE)))
+    }
   )
 )
