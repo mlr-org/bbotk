@@ -15,13 +15,14 @@ point on.
 }
 }
 \section{Technical details}{
+
 The \link{Optimizer} writes the final result to the \code{.result} field by using
 the \verb{$assign_result()} method. \code{.result} stores a \link[data.table:data.table]{data.table::data.table}
 consisting of x values in the \emph{search space}, (transformed) x values in the
 \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}. The
 user can access the results with active bindings (see below).
-  
- In order to replace the default logging messages with custom logging, the
+
+In order to replace the default logging messages with custom logging, the
 \verb{.log_*} private methods can be overwritten in an \code{OptimInstance} subclass:
 \itemize{
 \item \verb{$.log_eval_batch_start()} Called at the beginning of \verb{$eval_batch()}
