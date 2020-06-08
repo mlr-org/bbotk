@@ -34,7 +34,6 @@ Archive = R6Class("Archive",
     initialize = function(search_space, codomain) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
-      self$start_time = Sys.time()
       self$data = data.table()
     },
 
@@ -59,6 +58,9 @@ Archive = R6Class("Archive",
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
       xydt[, "batch_nr" := batch_nr]
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
+      if(self$n_batch == 1) {
+        self$start_time = self$data[batch_nr == min(batch_nr), timestamp][1]
+      }
     },
 
     #' @description
