@@ -52,13 +52,15 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
       if (isNamespaceLoaded("progressr") && !is.null(archive$start_time)) {
         ps = self$param_set$values
         if (is.null(self$progressor)) {
-          n = ceiling(as.numeric(difftime(ps$stop_time, archive$start_time), units = "secs"))
-          print(n)
+          n = as.numeric(difftime(ps$stop_time, archive$start_time),
+            units = "secs")
           self$progressor = progressr::progressor(steps = n)
         } else {
           ts = unique(archive$data$timestamp)
-          td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]), units = "secs")
-          d = as.integer(difftime(ps$stop_time, Sys.time()), unit = "secs")
+          td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]),
+            units = "secs")
+          d = as.integer(ceiling(difftime(ps$stop_time, Sys.time(),
+            unit = "secs")))
           self$progressor(message = sprintf("%i seconds left", d),
             amount = td)
         }
