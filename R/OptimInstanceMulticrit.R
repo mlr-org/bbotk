@@ -46,9 +46,15 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
   ),
 
   active = list(
-    #' @field result_opt_x (`list()`)\cr
+    #' @field result_x_seach_space ([data.table::data.table])\cr
+    #'   x part of the result in the *search space*.
+    result_x_seach_space = function() {
+      private$.result[, self$search_space$ids(), with = FALSE]
+    },
+
+    #' @field result_x_domain (`list()`)\cr
     #'   (transformed) x part of the result in the *domain space* of the objective.
-    result_opt_x = function() {
+    result_x_domain = function() {
       private$.result$opt_x
     },
 

@@ -51,10 +51,10 @@ In order to replace the default logging messages with custom logging, the
 \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Get result}
 
-\item{\code{result_x}}{(\link[data.table:data.table]{data.table::data.table})\cr
+\item{\code{result_x_seach_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
 
-\item{\code{result_opt_x}}{(\code{list()})\cr
+\item{\code{result_x_domain}}{(\code{list()})\cr
 (transformed) x part of the result in the \emph{domain space} of the objective.}
 
 \item{\code{result_y}}{(\code{numeric()})\cr

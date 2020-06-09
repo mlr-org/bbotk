@@ -22,9 +22,9 @@ test_that("OptimInstanceMulticrit", {
   xdt = data.table(x1 = c(0,0), x2 = c(list(0),list(0)))
   ydt = data.table(y1 = c(-10, -10), y2 = c(10, 10))
   inst$assign_result(xdt = xdt, ydt = ydt)
-  expect_equal(inst$result_x, xdt)
+  expect_equal(inst$result_x_seach_space, xdt)
   expect_equal(inst$result_y, ydt)
-  expect_equal(inst$result_opt_x, replicate(n = 2, list(x1 = 0, x2 = 0), simplify = FALSE))
+  expect_equal(inst$result_x_domain, replicate(n = 2, list(x1 = 0, x2 = 0), simplify = FALSE))
 
 })
 
