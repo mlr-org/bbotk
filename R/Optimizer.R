@@ -108,7 +108,12 @@ Optimizer = R6Class("Optimizer",
       res = inst$archive$get_best()
 
       xdt = res[, inst$search_space$ids(), with = FALSE]
-      y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) # unlist keeps name!
+
+      if(inst$objective$codomain$length > 1) {
+        y = res[, inst$objective$codomain$ids(), with = FALSE]
+      } else {
+        y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) # unlist keeps name!
+      }
 
       inst$assign_result(xdt, y)
       invisible(NULL)
