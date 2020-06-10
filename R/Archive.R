@@ -4,6 +4,11 @@
 #' Container around a [data.table::data.table] which stores all performed
 #' [Objective] function calls.
 #'
+#' @description Technical details:
+#' `.data` stores a [data.table::data.table] which logs all performed
+#' [Objective] function calls. The [data.table::data.table] is accessed with
+#' the `$data()` method.
+#'
 #' @template param_codomain
 #' @template param_xdt
 #' @template param_ydt
