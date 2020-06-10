@@ -6,13 +6,15 @@
 \description{
 Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
 \link{Objective} function calls.
+
+Technical details:
+\code{.data} stores a \link[data.table:data.table]{data.table::data.table} which logs all performed
+\link{Objective} function calls. The \link[data.table:data.table]{data.table::data.table} is accessed with
+the \verb{$data()} method.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Holds data of the archive.}
-
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Search space that is logged into archive.}
 
@@ -43,8 +45,8 @@ Number of batches stored in the archive.}
 \itemize{
 \item \href{#method-new}{\code{Archive$new()}}
 \item \href{#method-add_evals}{\code{Archive$add_evals()}}
-\item \href{#method-get_best}{\code{Archive$get_best()}}
-\item \href{#method-get_data}{\code{Archive$get_data()}}
+\item \href{#method-best}{\code{Archive$best()}}
+\item \href{#method-data}{\code{Archive$data()}}
 \item \href{#method-format}{\code{Archive$format()}}
 \item \href{#method-print}{\code{Archive$print()}}
 \item \href{#method-clear}{\code{Archive$clear()}}
@@ -98,14 +100,14 @@ Optimal outcome.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_best"></a>}}
-\if{latex}{\out{\hypertarget{method-get_best}{}}}
-\subsection{Method \code{get_best()}}{
+\if{html}{\out{<a id="method-best"></a>}}
+\if{latex}{\out{\hypertarget{method-best}{}}}
+\subsection{Method \code{best()}}{
 Returns the best scoring evaluation. For single-criteria optimization,
 the solution that minimize/ maximize the objective function. For
 multi-criteria optimization, the non-dominant solution set.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$get_best(m = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$best(m = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -121,13 +123,13 @@ Take only batches \code{m} into account. Default is all batches.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_data"></a>}}
-\if{latex}{\out{\hypertarget{method-get_data}{}}}
-\subsection{Method \code{get_data()}}{
+\if{html}{\out{<a id="method-data"></a>}}
+\if{latex}{\out{\hypertarget{method-data}{}}}
+\subsection{Method \code{data()}}{
 Returns a \link[data.table:data.table]{data.table::data.table} which contains all performed
 \link{Objective} function calls.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$get_data(unnest = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$data(unnest = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

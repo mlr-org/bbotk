@@ -3,15 +3,20 @@
 \name{bbotk_assertions}
 \alias{bbotk_assertions}
 \alias{assert_terminator}
+\alias{assert_terminable}
 \alias{assert_set}
 \title{Assertion for bbotk objects}
 \usage{
-assert_terminator(terminator)
+assert_terminator(terminator, instance)
+
+assert_terminable(terminator, instance)
 
 assert_set(x, empty = TRUE, .var.name = vname(x))
 }
 \arguments{
 \item{terminator}{(\link{Terminator}).}
+
+\item{instance}{(\link{OptimInstance}).}
 
 \item{x}{(any)}
 
@@ -21,7 +26,13 @@ assert_set(x, empty = TRUE, .var.name = vname(x))
 }
 \description{
 Most assertion functions ensure the right class attribute, and optionally
-additional properties.
+additional properties. Additionally, the following compound assertions are
+implemented:
+\itemize{
+\item \code{assert_terminable(terminator, instance)}\cr
+(\link{Terminator}, \link{OptimInstance}) -> \code{NULL}\cr
+Checks if the terminator is applicable to the optimization.
+}
 
 If an assertion fails, an exception is raised. Otherwise, the input object is
 returned invisibly.

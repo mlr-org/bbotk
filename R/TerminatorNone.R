@@ -19,7 +19,7 @@ TerminatorNone = R6Class("TerminatorNone",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      super$initialize(properties = "multi-objective")
+      super$initialize(properties = c("single-objective", "multi-objective"))
     },
 
     #' @description

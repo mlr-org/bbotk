@@ -41,7 +41,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
         ParamDbl$new("threshold", lower = 0, default = 0, tags = "required")
       ))
       ps$values = list(iters = 10, threshold = 0)
-      super$initialize(param_set = ps, properties = "multi-objective")
+      super$initialize(param_set = ps, properties = "single-objective")
     },
 
     #' @description
@@ -59,7 +59,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
       if (archive$n_evals <= pv$iters) { # we cannot terminate until we have enough observations
         return(FALSE)
       }
-      ydata = archive$data[, ycols, , drop = FALSE, with = FALSE]
+      ydata = archive$data()[, ycols, , drop = FALSE, with = FALSE]
       col_success = mapply(function(col, col_min) {
         perf_before = head(col, -iters)
         perf_window = tail(col, iters)

@@ -9,6 +9,14 @@
 #' of the [OptimInstance] at the end in order to store the best point  and its
 #' estimated performance vector.
 #'
+#' @section Technical details:
+#'
+#' In order to replace the default logging messages with custom logging, the
+#' `.log_*` private methods can be overwritten in an `Optimizer` subclass:
+#'
+#' * `$.log_optimize_start()` Called at the beginning of `$optimize()`
+#' * `$.log_optimize_finish()` Called at the end of `$optimize()`
+#'
 #' @export
 Optimizer = R6Class("Optimizer",
   public = list(
@@ -64,6 +72,7 @@ Optimizer = R6Class("Optimizer",
     #' @param inst ([OptimInstance]).
     #' @return NULL
     optimize = function(inst) {
+
       assert_r6(inst, "OptimInstance")
       require_namespaces(self$packages, "Packages for the Optimization")
       # check dependencies
@@ -78,13 +87,15 @@ Optimizer = R6Class("Optimizer",
         self$param_classes)
       if (length(not_supported_pclasses) > 0L) {
         stopf(
-          "Tuner '%s' does not support param types: '%s'", class(self)[1L],
+          "Optimizer '%s' does not support param types: '%s'", class(self)[1L],
           paste0(not_supported_pclasses, collapse = ","))
       }
+      private$.log_optimize_start(inst)
       tryCatch({
         private$.optimize(inst)
       }, terminated_error = function(cond) { })
       private$.assign_result(inst)
+      private$.log_optimize_finish(inst)
       invisible(NULL)
     }
   ),
@@ -94,13 +105,31 @@ Optimizer = R6Class("Optimizer",
 
     .assign_result = function(inst) {
       assert_r6(inst, "OptimInstance")
-      res = inst$archive$get_best()
+      res = inst$archive$best()
 
       xdt = res[, inst$search_space$ids(), with = FALSE]
-      y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) #unlist keeps name!
+
+      if(inst$objective$codomain$length > 1) {
+        y = res[, inst$objective$codomain$ids(), with = FALSE]
+      } else {
+        y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) # unlist keeps name!
+      }
 
       inst$assign_result(xdt, y)
       invisible(NULL)
+    },
+
+    .log_optimize_start = function(inst) {
+      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
+        inst$search_space$length, self$format(), inst$terminator$format())
+    },
+
+    .log_optimize_finish = function(inst) {
+      lg$info("Finished optimizing after %i evaluation(s)",
+        inst$archive$n_evals)
+      lg$info("Result:")
+      lg$info(capture.output(print(
+        inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
     }
   )
 )

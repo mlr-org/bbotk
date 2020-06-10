@@ -13,7 +13,10 @@ Inherits from \link{OptimInstance}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{result_opt_x}}{(\code{list()})\cr
+\item{\code{result_x_seach_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
+x part of the result in the \emph{search space}.}
+
+\item{\code{result_x_domain}}{(\code{list()})\cr
 (transformed) x part of the result in the \emph{domain space} of the objective.}
 
 \item{\code{result_y}}{(\code{numeric(1)})\cr
@@ -24,6 +27,7 @@ Optimal outcome.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-new}{\code{OptimInstanceMulticrit$new()}}
 \item \href{#method-assign_result}{\code{OptimInstanceMulticrit$assign_result()}}
 \item \href{#method-clone}{\code{OptimInstanceMulticrit$clone()}}
 }
@@ -33,10 +37,31 @@ Optimal outcome.}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="eval_batch">}\href{../../bbotk/html/OptimInstance.html#method-eval_batch}{\code{bbotk::OptimInstance$eval_batch()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format">}\href{../../bbotk/html/OptimInstance.html#method-format}{\code{bbotk::OptimInstance$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="initialize">}\href{../../bbotk/html/OptimInstance.html#method-initialize}{\code{bbotk::OptimInstance$initialize()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print">}\href{../../bbotk/html/OptimInstance.html#method-print}{\code{bbotk::OptimInstance$print()}}\out{</span>}
 }
 \out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Creates a new instance of this \link[R6:R6Class]{R6} class.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceMulticrit$new(objective, search_space, terminator)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{objective}}{(\link{Objective}).}
+
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
+
+\item{\code{terminator}}{(\link{Terminator})\cr
+Multi-objective terminator.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-assign_result"></a>}}
