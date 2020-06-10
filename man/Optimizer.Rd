@@ -12,6 +12,15 @@ A \code{Optimizer} object must write its result to the \verb{$assign_result()} m
 of the \link{OptimInstance} at the end in order to store the best point  and its
 estimated performance vector.
 }
+\section{Progress Bars}{
+
+\verb{$optimize()} supports progress bars via the package \CRANpkg{progressr}
+combined with \link{Terminator} subclasses with the \code{progressr} property. Simply
+wrap the function in \code{progressr::with_progress()} to enable them. We
+recommend to use package \CRANpkg{progress} as backend; enable with
+\code{progressr::handlers("progress")}.
+}
+
 \section{Technical details}{
 
 

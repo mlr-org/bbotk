@@ -46,6 +46,11 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
       return(Sys.time() >= self$param_set$values$stop_time)
     },
 
+    #' @description
+    #' Initializes and increases `progressor` function. Internally called by
+    #' `$eval_batch()` in [OptimInstance].
+    #'
+    #' @param archive ([Archive]).
     run_progressor = function(archive) {
       if (isNamespaceLoaded("progressr") && !is.null(archive$start_time)) {
         ps = self$param_set$values

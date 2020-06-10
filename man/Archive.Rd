@@ -20,8 +20,6 @@ Search space that is logged into archive.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Codomain of objective function that is logged into archive.}
-
-\item{\code{start_time}}{(\link{POSIXct}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -37,6 +35,9 @@ Number of batches stored in the archive.}
 \item{\code{cols_x}}{(\code{character()}).}
 
 \item{\code{cols_y}}{(\code{character()}).}
+
+\item{\code{start_time}}{(\link{POSIXct})\cr
+Timestamp of first batch}
 }
 \if{html}{\out{</div>}}
 }

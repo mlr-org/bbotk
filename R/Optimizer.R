@@ -9,6 +9,13 @@
 #' of the [OptimInstance] at the end in order to store the best point  and its
 #' estimated performance vector.
 #'
+#' @section Progress Bars:
+#' `$optimize()` supports progress bars via the package \CRANpkg{progressr}
+#' combined with [Terminator] subclasses with the `progressr` property. Simply
+#' wrap the function in `progressr::with_progress()` to enable them. We
+#' recommend to use package \CRANpkg{progress} as backend; enable with
+#' `progressr::handlers("progress")`.
+#'
 #' @section Technical details:
 #'
 #' In order to replace the default logging messages with custom logging, the

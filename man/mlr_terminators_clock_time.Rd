@@ -49,6 +49,7 @@ Other Terminator:
 \itemize{
 \item \href{#method-new}{\code{TerminatorClockTime$new()}}
 \item \href{#method-is_terminated}{\code{TerminatorClockTime$is_terminated()}}
+\item \href{#method-run_progressor}{\code{TerminatorClockTime$run_progressor()}}
 \item \href{#method-clone}{\code{TerminatorClockTime$clone()}}
 }
 }
@@ -89,6 +90,24 @@ otherwise.
 }
 \subsection{Returns}{
 \code{logical(1)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-run_progressor"></a>}}
+\if{latex}{\out{\hypertarget{method-run_progressor}{}}}
+\subsection{Method \code{run_progressor()}}{
+Initializes and increases \code{progressor} function. Internally called by
+\verb{$eval_batch()} in \link{OptimInstance}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorClockTime$run_progressor(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

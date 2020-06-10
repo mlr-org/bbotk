@@ -42,6 +42,11 @@ TerminatorEvals = R6Class("TerminatorEvals",
       archive$n_evals >= self$param_set$values$n_evals
     },
 
+    #' @description
+    #' Initializes and increases `progressor` function. Internally called by
+    #' `$eval_batch()` in [OptimInstance].
+    #'
+    #' @param archive ([Archive]).
     run_progressor = function(archive) {
       if (isNamespaceLoaded("progressr")) {
         ps = self$param_set$values
