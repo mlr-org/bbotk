@@ -22,8 +22,7 @@ term("perf_reached")
 \item \code{level} \code{numeric(1)}\cr Performance level that needs to be reached,
 default is 0. Terminates if the performance exceeds (respective measure has
 to be maximized) or falls below (respective measure has to be minimized)
-this value. For multi-objective optimization this has to be a vector and
-all single values have to be exceeded.
+this value.
 }
 }
 
@@ -39,6 +38,7 @@ Other Terminator:
 \code{\link{mlr_terminators_evals}},
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_run_time}},
+\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }

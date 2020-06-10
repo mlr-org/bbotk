@@ -7,7 +7,7 @@
 \alias{assert_set}
 \title{Assertion for bbotk objects}
 \usage{
-assert_terminator(terminator, instance)
+assert_terminator(terminator, instance = NULL)
 
 assert_terminable(terminator, instance)
 
