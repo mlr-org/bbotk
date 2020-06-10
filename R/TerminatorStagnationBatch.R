@@ -5,8 +5,7 @@
 #'
 #' @description
 #' Class to terminate the optimization after the performance stagnates, i.e.
-#' does not improve more than `threshold` over the last and the previous `n`
-#' batches.
+#' does not improve more than `threshold` over the last `n` batches.
 #'
 #' @templateVar id stagnation
 #' @template section_dictionary_terminator
@@ -37,7 +36,7 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
         ParamDbl$new("threshold", lower = 0, default = 0, tags = "required")
       ))
       ps$values = list(n = 1, threshold = 0)
-      super$initialize(param_set = ps, properties = "multi-objective")
+      super$initialize(param_set = ps, properties = "single-objective")
     },
 
     #' @description
@@ -50,24 +49,28 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
     is_terminated = function(archive) {
       pv = self$param_set$values
       ycol = archive$cols_y
-      data = archive$data
       present_batch = archive$n_batch
       previous_batch = (archive$n_batch-1):(archive$n_batch-pv$n)
+      minimize = "minimize" %in% archive$codomain$tags
 
       # we cannot terminate until we have enough observations
       if (archive$n_batch <= pv$n) {
         return(FALSE)
       }
 
-      perf_before = data[batch_nr %in% previous_batch, c(ycol, "batch_nr"), with = FALSE]
-      perf_present = data[batch_nr == present_batch, c(ycol, "batch_nr"), with = FALSE]
+      perf_before = archive$data()[batch_nr %in% previous_batch,
+        c(ycol, "batch_nr"), with = FALSE]
+      perf_present = archive$data()[batch_nr == present_batch,
+        c(ycol, "batch_nr"), with = FALSE]
 
-      if ("minimize" %in% archive$codomain$tags) {
+      if (minimize) {
         res = map(perf_before$batch_nr, function(nr) {
-          min(perf_present[, ycol, with=FALSE]) >= min(perf_before[batch_nr == nr, ycol, with=FALSE]) - pv$threshold})
+          min(perf_present[, ycol, with=FALSE]) >= min(
+            perf_before[batch_nr == nr, ycol, with=FALSE]) - pv$threshold})
       } else {
         res = map(perf_before$batch_nr, function(nr) {
-          max(perf_present[, ycol, with=FALSE]) <= max(perf_before[batch_nr == nr, ycol, with=FALSE]) + pv$threshold})
+          max(perf_present[, ycol, with=FALSE]) <= max(
+            perf_before[batch_nr == nr, ycol, with=FALSE]) + pv$threshold})
       }
 
       all(unlist(res))

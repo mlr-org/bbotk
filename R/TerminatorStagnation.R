@@ -47,20 +47,20 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-
-      browser()
-
       pv = self$param_set$values
       iters = pv$iters
-      ycols = archive$cols_y
-      if (archive$n_evals <= pv$iters) { # we cannot terminate until we have enough observations
+      ycol = archive$cols_y
+      minimize = "minimize" %in% archive$codomain$tags
+
+      # we cannot terminate until we have enough observations
+      if (archive$n_evals <= pv$iters) {
         return(FALSE)
       }
-      ydata = archive$data()[, ycols, , drop = FALSE, with = FALSE]
+
+      ydata = archive$data()[, ycol, , drop = FALSE, with = FALSE]
       perf_before = head(ydata, -iters)
       perf_window = tail(ydata, iters)
-
-      if (archive$codomain$tags == "minimize") {
+      if (minimize) {
         return(min(perf_window) >= min(perf_before) - pv$threshold)
       } else {
         return(max(perf_window) <= max(perf_before) + pv$threshold)
