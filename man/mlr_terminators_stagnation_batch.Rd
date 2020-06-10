@@ -6,8 +6,7 @@
 \title{Terminator that stops when optimization does not improve}
 \description{
 Class to terminate the optimization after the performance stagnates, i.e.
-does not improve more than \code{threshold} over the last and the previous \code{n}
-batches.
+does not improve more than \code{threshold} over the last \code{n} batches.
 }
 \section{Dictionary}{
 
