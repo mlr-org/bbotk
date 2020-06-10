@@ -31,3 +31,8 @@ test_that("TerminatorStagnationBatch works with single objective and n = 2", {
   # Arbitrary points since termination is checked before evalaluation
   expect_error(inst$eval_batch(xdt = data.table(x1 = 0, x2 = 0)))
 })
+
+test_that("TerminatorStagnationBatch in OptimInstanceMulticrit throws an error", {
+  terminator = TerminatorStagnationBatch$new()
+  expect_error(MAKE_INST_2D_2D(terminator))
+})
