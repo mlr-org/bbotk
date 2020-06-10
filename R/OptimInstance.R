@@ -10,6 +10,19 @@
 #'   exception is raised, and no further evaluations can be performed from this
 #'   point on.
 #'
+#' @section Technical details:
+#' The [Optimizer] writes the final result to the `.result` field by using
+#' the `$assign_result()` method. `.result` stores a [data.table::data.table]
+#' consisting of x values in the *search space*, (transformed) x values in the
+#' *domain space* and y values in the *codomain space* of the [Objective]. The
+#' user can access the results with active bindings (see below).
+#'
+#' In order to replace the default logging messages with custom logging, the
+#' `.log_*` private methods can be overwritten in an `OptimInstance` subclass:
+#'
+#' * `$.log_eval_batch_start()` Called at the beginning of `$eval_batch()`
+#' * `$.log_eval_batch_finish()` Called at the end of `$eval_batch()`
+#'
 #' @template param_xdt
 #' @export
 OptimInstance = R6Class("OptimInstance",
@@ -39,7 +52,7 @@ OptimInstance = R6Class("OptimInstance",
     initialize = function(objective, search_space, terminator) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = assert_param_set(search_space)
-      self$terminator = assert_terminator(terminator)
+      self$terminator = assert_terminator(terminator, self)
       self$archive = Archive$new(search_space = search_space,
         codomain = objective$codomain)
     },
@@ -57,7 +70,8 @@ OptimInstance = R6Class("OptimInstance",
     print = function(...) {
       catf(format(self))
       catf(str_indent("* Objective:", format(self$objective)))
-      catf(str_indent("* Search Space:", format(self$search_space)))
+      catf("* Search Space:")
+      print(self$search_space)
       catf(str_indent("* Terminator:", format(self$terminator)))
       catf(str_indent("* Terminated:", self$is_terminated))
       print(self$archive)
@@ -81,8 +95,10 @@ OptimInstance = R6Class("OptimInstance",
         stop(terminated_error(self))
       }
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+      private$.log_eval_batch_start(xdt)
       ydt = self$objective$eval_many(xss_trafoed)
       self$archive$add_evals(xdt, xss_trafoed, ydt)
+      private$.log_eval_batch_finish(xdt, ydt)
       return(invisible(ydt))
     },
 
@@ -97,36 +113,36 @@ OptimInstance = R6Class("OptimInstance",
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
     assign_result = function(xdt, y) {
-      #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
+      # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt, nrows = 1)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_number(y)
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
       opt_x = transform_xdt_to_xss(xdt, self$search_space)[[1]]
-      private$.result = cbind(xdt, opt_x = list(opt_x), t(y)) #t(y) so the name of y stays
+      private$.result = cbind(xdt, opt_x = list(opt_x), t(y)) # t(y) so the name of y stays
     }
   ),
 
   active = list(
-    #' @field result (`list()`)\cr
+    #' @field result ([data.table::data.table])\cr
     #' Get result
     result = function() {
       private$.result
     },
 
-    #' @field result_x (`data.frame()`)\cr
+    #' @field result_x_seach_space ([data.table::data.table])\cr
     #'   x part of the result in the *search space*.
-    result_x = function() {
+    result_x_seach_space = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
     },
 
-    #' @field result_opt_x (`list()`)\cr
+    #' @field result_x_domain (`list()`)\cr
     #'   (transformed) x part of the result in the *domain space* of the objective.
-    result_opt_x = function() {
+    result_x_domain = function() {
       private$.result$opt_x[[1]]
     },
 
-    #' @field result_y (`numeric(1)`)
+    #' @field result_y (`numeric()`)\cr
     #'   Optimal outcome.
     result_y = function() {
       unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
@@ -134,6 +150,16 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   private = list(
-    .result = NULL
+    .result = NULL,
+
+    .log_eval_batch_start = function(xdt) {
+      lg$info("Evaluating %i configuration(s)", nrow(xdt))
+    },
+
+    .log_eval_batch_finish = function(xdt, ydt) {
+      lg$info("Result of batch %i:", self$archive$n_batch)
+      lg$info(capture.output(print(cbind(xdt, ydt),
+        class = FALSE, row.names = FALSE, print.keys = FALSE)))
+    }
   )
 )

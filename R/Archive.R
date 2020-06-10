@@ -1,8 +1,13 @@
 #' @title Logging object for objective function evaluations
 #'
 #' @description
-#' Container around a [data.table()] which stores all performed [Objective] function
-#' calls.
+#' Container around a [data.table::data.table] which stores all performed
+#' [Objective] function calls.
+#'
+#' @description Technical details:
+#' `.data` stores a [data.table::data.table] which logs all performed
+#' [Objective] function calls. The [data.table::data.table] is accessed with
+#' the `$data()` method.
 #'
 #' @template param_codomain
 #' @template param_xdt
@@ -10,10 +15,6 @@
 #' @export
 Archive = R6Class("Archive",
   public = list(
-
-    #' @field data ([data.table::data.table])\cr
-    #' Holds data of the archive.
-    data = NULL,
 
     #' @field search_space ([paradox::ParamSet])\cr
     #' Search space that is logged into archive.
@@ -30,42 +31,44 @@ Archive = R6Class("Archive",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param search_space ([paradox::ParamSet])\cr
-    #'   Search space that is logged into archive.
+    #' Search space that is logged into archive.
     initialize = function(search_space, codomain) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
       self$start_time = Sys.time()
-      self$data = data.table()
+      private$.data = data.table()
     },
 
     #' @description
     #' Adds function evaluations to the archive table.
     #'
-    #' @param xss_trafoed (`list()`).
+    #' @param xss_trafoed (`list()`)\cr
+    #' Transformed point(s) in the *domain space*.
     add_evals = function(xdt, xss_trafoed, ydt) {
-
-      # FIXME: add checks here for the dts and their domains
-      # FIXME: make asserts better!
       assert_data_table(xdt)
       assert_data_table(ydt)
       assert_list(xss_trafoed)
+      assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "opt_x" := list(xss_trafoed)]
-      # FIXME: this will break in 2038
-      xydt[, "timestamp" := as.integer(Sys.time())]
-      batch_nr = self$data$batch_nr
+      xydt[, "timestamp" := Sys.time()]
+      batch_nr = private$.data$batch_nr
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
       xydt[, "batch_nr" := batch_nr]
-      self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
+      private$.data = rbindlist(list(private$.data, xydt), fill = TRUE, use.names = TRUE)
     },
 
     #' @description
-    #' Returns best scoring evaluation.
+    #' Returns the best scoring evaluation. For single-criteria optimization,
+    #' the solution that minimize/ maximize the objective function. For
+    #' multi-criteria optimization, the non-dominant solution set.
     #'
     #' @param m (`integer()`)\cr
-    #'   Take only batches `m` into account. Default is all batches.
-    get_best = function(m = NULL) {
+    #' Take only batches `m` into account. Default is all batches.
+    #'
+    #' @return [data.table::data.table]
+    best = function(m = NULL) {
       if (self$n_batch == 0L) {
         stop("No results stored in archive")
       }
@@ -76,7 +79,7 @@ Archive = R6Class("Archive",
         assert_integerish(m, lower = 1L, upper = self$n_batch, coerce = TRUE)
       }
 
-      tab = self$data[batch_nr %in% m]
+      tab = private$.data[batch_nr %in% m]
 
       if (self$codomain$length == 1L) {
         order = if (self$codomain$tags[1L] == "minimize") 1L else -1L
@@ -93,17 +96,19 @@ Archive = R6Class("Archive",
     },
 
     #' @description
-    #' Returns a data.table which contains all performed [Objective] function
-    #' calls.
+    #' Returns a [data.table::data.table] which contains all performed
+    #' [Objective] function calls.
     #'
     #' @param unnest (`character()`)\cr
-    #'   Set of column names for columns to unnest via [mlr3misc::unnest()].
-    #'   Unnested columns are stored in separate columns instead of list-columns.
-    get_data = function(unnest = NULL) {
+    #' Set of column names for columns to unnest via [mlr3misc::unnest()].
+    #' Unnested columns are stored in separate columns instead of list-columns.
+    #'
+    #' @return [data.table::data.table]
+    data = function(unnest = NULL) {
       if (is.null(unnest)) {
-        return(copy(self$data))
+        return(copy(private$.data))
       }
-      unnest(copy(self$data), unnest, prefix = "{col}_")
+      unnest(copy(private$.data), unnest, prefix = "{col}_")
     },
 
     #' @description
@@ -114,32 +119,33 @@ Archive = R6Class("Archive",
 
     #' @description
     #' Printer.
+    #'
     #' @param ... (ignored).
     print = function() {
       catf(format(self))
-      print(self$data)
+      print(private$.data)
     },
 
     #' @description
     #' Clear all evaluation results from archive.
     clear = function() {
-      self$data = data.table()
+      private$.data = data.table()
     }
   ),
 
   active = list(
 
-    #' @field n_evals (`ìnteger(1)`=\cr
-    #'   Number of evaluations stored in the archive.
-    n_evals = function() nrow(self$data),
+    #' @field n_evals (`ìnteger(1)`)\cr
+    #' Number of evaluations stored in the archive.
+    n_evals = function() nrow(private$.data),
 
     #' @field n_batch (`ìnteger(1)`)\cr
-    #'   Number of batches stored in the archive.
+    #' Number of batches stored in the archive.
     n_batch = function() {
-      if (is.null(self$data$batch_nr)) {
+      if (is.null(private$.data$batch_nr)) {
         0L
       } else {
-        max(self$data$batch_nr)
+        max(private$.data$batch_nr)
       }
     },
 
@@ -148,6 +154,10 @@ Archive = R6Class("Archive",
 
     #' @field cols_y (`character()`).
     cols_y = function() self$codomain$ids()
-    # idx_unevaled = function() self$data$y
+    # idx_unevaled = function() private$.data$y
   ),
+
+  private = list(
+    .data = NULL
+  )
 )
