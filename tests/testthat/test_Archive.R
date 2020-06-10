@@ -11,7 +11,7 @@ test_that("Archive", {
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$n_evals, 1)
-  expect_equal(a$data$opt_x, xss_trafoed)
+  expect_equal(a$data()$opt_x, xss_trafoed)
   # FIXME: a$get_best(), a$clear()
 })
 
@@ -22,8 +22,8 @@ test_that("Archive on 1D problem works", {
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$n_evals, 1)
-  expect_equal(a$data$opt_x, xss_trafoed)
-  expect_list(a$data$opt_x[[1]])
+  expect_equal(a$data()$opt_x, xss_trafoed)
+  expect_list(a$data()$opt_x[[1]])
 })
 
 test_that("Unnest columns", {
@@ -32,7 +32,7 @@ test_that("Unnest columns", {
   xss_trafoed = list(list(x1 = 1, x2 = 2))
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
-  a = a$get_data(unnest = "opt_x")
+  a = a$data(unnest = "opt_x")
   expect_true("opt_x_x1" %in% colnames(a))
   expect_true("opt_x_x2" %in% colnames(a))
   expect_equal(a$opt_x_x1, 1)

@@ -11,10 +11,6 @@
 Archive = R6Class("Archive",
   public = list(
 
-    #' @field data ([data.table::data.table])\cr
-    #' Holds data of the archive.
-    data = NULL,
-
     #' @field search_space ([paradox::ParamSet])\cr
     #' Search space that is logged into archive.
     search_space = NULL,
@@ -35,7 +31,7 @@ Archive = R6Class("Archive",
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
       self$start_time = Sys.time()
-      self$data = data.table()
+      private$.data = data.table()
     },
 
     #' @description
@@ -52,10 +48,10 @@ Archive = R6Class("Archive",
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "opt_x" := list(xss_trafoed)]
       xydt[, "timestamp" := Sys.time()]
-      batch_nr = self$data$batch_nr
+      batch_nr = private$.data$batch_nr
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
       xydt[, "batch_nr" := batch_nr]
-      self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
+      private$.data = rbindlist(list(private$.data, xydt), fill = TRUE, use.names = TRUE)
     },
 
     #' @description
@@ -67,7 +63,7 @@ Archive = R6Class("Archive",
     #' Take only batches `m` into account. Default is all batches.
     #'
     #' @return [data.table::data.table]
-    get_best = function(m = NULL) {
+    best = function(m = NULL) {
       if (self$n_batch == 0L) {
         stop("No results stored in archive")
       }
@@ -78,7 +74,7 @@ Archive = R6Class("Archive",
         assert_integerish(m, lower = 1L, upper = self$n_batch, coerce = TRUE)
       }
 
-      tab = self$data[batch_nr %in% m]
+      tab = private$.data[batch_nr %in% m]
 
       if (self$codomain$length == 1L) {
         order = if (self$codomain$tags[1L] == "minimize") 1L else -1L
@@ -103,11 +99,11 @@ Archive = R6Class("Archive",
     #' Unnested columns are stored in separate columns instead of list-columns.
     #'
     #' @return [data.table::data.table]
-    get_data = function(unnest = NULL) {
+    data = function(unnest = NULL) {
       if (is.null(unnest)) {
-        return(copy(self$data))
+        return(copy(private$.data))
       }
-      unnest(copy(self$data), unnest, prefix = "{col}_")
+      unnest(copy(private$.data), unnest, prefix = "{col}_")
     },
 
     #' @description
@@ -122,13 +118,13 @@ Archive = R6Class("Archive",
     #' @param ... (ignored).
     print = function() {
       catf(format(self))
-      print(self$data)
+      print(private$.data)
     },
 
     #' @description
     #' Clear all evaluation results from archive.
     clear = function() {
-      self$data = data.table()
+      private$.data = data.table()
     }
   ),
 
@@ -136,15 +132,15 @@ Archive = R6Class("Archive",
 
     #' @field n_evals (`ìnteger(1)`)\cr
     #' Number of evaluations stored in the archive.
-    n_evals = function() nrow(self$data),
+    n_evals = function() nrow(private$.data),
 
     #' @field n_batch (`ìnteger(1)`)\cr
     #' Number of batches stored in the archive.
     n_batch = function() {
-      if (is.null(self$data$batch_nr)) {
+      if (is.null(private$.data$batch_nr)) {
         0L
       } else {
-        max(self$data$batch_nr)
+        max(private$.data$batch_nr)
       }
     },
 
@@ -153,6 +149,10 @@ Archive = R6Class("Archive",
 
     #' @field cols_y (`character()`).
     cols_y = function() self$codomain$ids()
-    # idx_unevaled = function() self$data$y
+    # idx_unevaled = function() private$.data$y
   ),
+
+  private = list(
+    .data = NULL
+  )
 )

@@ -51,7 +51,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
       if (archive$n_evals == 0) {
         return(FALSE)
       }
-      ydata = archive$data[, ycols, , drop = FALSE, with = FALSE]
+      ydata = archive$data()[, ycols, , drop = FALSE, with = FALSE]
       col_success = Map(function(col, col_min, col_lvl) {
         if (col_min) {
           col <= col_lvl

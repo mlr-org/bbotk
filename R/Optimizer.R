@@ -105,7 +105,7 @@ Optimizer = R6Class("Optimizer",
 
     .assign_result = function(inst) {
       assert_r6(inst, "OptimInstance")
-      res = inst$archive$get_best()
+      res = inst$archive$best()
 
       xdt = res[, inst$search_space$ids(), with = FALSE]
 
