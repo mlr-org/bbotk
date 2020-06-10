@@ -33,7 +33,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
         ParamUty$new("stop_time", tags = "required",
           custom_check = custom_check)
       ))
-      super$initialize(param_set = ps, properties = "multi-objective")
+      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective"))
     },
 
     #' @description

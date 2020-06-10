@@ -2,7 +2,12 @@
 #'
 #' @description
 #' Most assertion functions ensure the right class attribute, and optionally
-#' additional properties.
+#' additional properties. Additionally, the following compound assertions are
+#' implemented:
+#'
+#' * `assert_terminable(terminator, instance)`\cr
+#'   ([Terminator], [OptimInstance]) -> `NULL`\cr
+#'   Checks if the terminator is applicable to the optimization.
 #'
 #' If an assertion fails, an exception is raised. Otherwise, the input object is
 #' returned invisibly.
@@ -13,9 +18,34 @@ NULL
 
 #' @export
 #' @param terminator ([Terminator]).
+#' @param instance ([OptimInstance]).
 #' @rdname bbotk_assertions
-assert_terminator = function(terminator) {
+assert_terminator = function(terminator, instance = NULL) {
   assert_r6(terminator, "Terminator")
+
+  if (!is.null(instance)) {
+    assert_terminable(terminator, instance)
+  }
+
+  invisible(terminator)
+}
+
+#' @export
+#' @param terminator ([Terminator]).
+#' @param instance ([OptimInstance]).
+#' @rdname bbotk_assertions
+assert_terminable = function(terminator, instance) {
+  if ("OptimInstanceMulticrit" %in% class(instance)) {
+    if (!"multi-objective" %in% terminator$properties) {
+      stopf("Terminator '%s' does not support multi-objective optimization",
+        terminator$format())
+    }
+  } else {
+    if (!"single-objective" %in% terminator$properties) {
+      stopf("Terminator '%s' does not support single-objective optimization",
+        terminator$format())
+    }
+  }
 }
 
 #' @export

@@ -52,7 +52,7 @@ OptimInstance = R6Class("OptimInstance",
     initialize = function(objective, search_space, terminator) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = assert_param_set(search_space)
-      self$terminator = assert_terminator(terminator)
+      self$terminator = assert_terminator(terminator, self)
       self$archive = Archive$new(search_space = search_space,
         codomain = objective$codomain)
     },

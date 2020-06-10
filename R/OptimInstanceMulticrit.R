@@ -19,7 +19,6 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
     #' @param terminator ([Terminator])\cr
     #' Multi-objective terminator.
     initialize = function(objective, search_space, terminator) {
-      assert_subset(terminator$properties, "multi-objective", empty.ok = FALSE)
       super$initialize(objective, search_space, terminator)
     },
 

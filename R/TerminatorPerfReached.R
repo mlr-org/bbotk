@@ -36,7 +36,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
           default = c(y1 = 0.1))
       ))
       ps$values = list(level = c(y1 = 0.1))
-      super$initialize(param_set = ps)
+      super$initialize(param_set = ps, "single-objective")
     },
 
     #' @description

@@ -28,7 +28,7 @@ test_that("OptimInstanceMulticrit", {
 
 })
 
-test_that("OptimInstanceMulticrit does not work with singlecrit terminators", {
+test_that("Terminator assertions work", {
   terminator = term("perf_reached")
   expect_error(MAKE_INST_2D_2D(terminator))
 })

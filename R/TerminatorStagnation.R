@@ -41,7 +41,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
         ParamDbl$new("threshold", lower = 0, default = 0, tags = "required")
       ))
       ps$values = list(iters = 10, threshold = 0)
-      super$initialize(param_set = ps, properties = "multi-objective")
+      super$initialize(param_set = ps, properties = "single-objective")
     },
 
     #' @description

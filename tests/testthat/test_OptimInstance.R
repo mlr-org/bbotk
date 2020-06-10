@@ -78,3 +78,9 @@ test_that("OptimInstance does not work with multi-objective terminator", {
   terminator$properties = "multi-objective"
   inst = MAKE_INST(terminator = terminator)
 })
+
+test_that("Terminator assertions work", {
+  terminator = Terminator$new()
+  terminator$properties = "multi-objective"
+  expect_error(MAKE_INST(terminator = terminator))
+})
