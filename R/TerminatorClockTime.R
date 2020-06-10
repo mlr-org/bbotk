@@ -32,7 +32,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
         ParamUty$new("stop_time", tags = "required",
           custom_check = custom_check)
       ))
-      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective"))
+      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective", "progressr"))
     },
 
     #' @description
@@ -43,26 +43,24 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      private$.run_progressor(archive)
       return(Sys.time() >= self$param_set$values$stop_time)
-    }
-  ),
-  private = list(
-    .run_progressor = function(archive) {
+    },
+
+    run_progressor = function(archive) {
       if (isNamespaceLoaded("progressr") && !is.null(archive$start_time)) {
         ps = self$param_set$values
         if (is.null(self$progressor)) {
           n = as.numeric(difftime(ps$stop_time, archive$start_time),
-            units = "secs")
+                         units = "secs")
           self$progressor = progressr::progressor(steps = n)
         } else {
-          ts = unique(archive$data$timestamp)
+          ts = unique(archive$data()$timestamp)
           td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]),
-            units = "secs")
+                          units = "secs")
           d = as.integer(ceiling(difftime(ps$stop_time, Sys.time(),
-            unit = "secs")))
+                                          unit = "secs")))
           self$progressor(message = sprintf("%i seconds left", d),
-            amount = td)
+                          amount = td)
         }
       }
     }

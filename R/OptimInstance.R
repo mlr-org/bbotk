@@ -94,6 +94,11 @@ OptimInstance = R6Class("OptimInstance",
         self$is_terminated = TRUE
         stop(terminated_error(self))
       }
+      if("progressr" %in% self$terminator$properties && isNamespaceLoaded(
+        "progressr")) {
+        self$terminator$run_progressor(self$archive)
+      }
+
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       private$.log_eval_batch_start(xdt)
       ydt = self$objective$eval_many(xss_trafoed)

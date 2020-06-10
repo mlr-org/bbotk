@@ -39,6 +39,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
       ps = ParamSet$new(list(ParamLgl$new("any", default = TRUE, tags = "required")))
       ps$values = list(any = TRUE)
       properties = Reduce(intersect, map(terminators, "properties"))
+      properties = properties[properties != "progressr"]
       super$initialize(param_set = ps, properties = properties)
     },
 

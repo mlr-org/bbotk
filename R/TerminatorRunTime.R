@@ -28,7 +28,7 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         ParamDbl$new("secs", lower = 0, default = 30)
       ))
       ps$values$secs = 30
-      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective"))
+      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective", "progressr"))
     },
 
     #' @description
@@ -37,24 +37,23 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      if (!is.null(archive$start_time)) {
-        private$.run_progressor(archive)
-        d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
-        return(d >= self$param_set$values$secs)
-      } else {
+      if (is.null(archive$start_time)) {
         return(FALSE)
       }
-    }
-  ),
-  private = list(
-    .run_progressor = function(archive) {
+
+      d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
+      return(d >= self$param_set$values$secs)
+
+    },
+
+    run_progressor = function(archive) {
       if (isNamespaceLoaded("progressr") && !is.null(archive$start_time)) {
         ps = self$param_set$values
         if (is.null(self$progressor)) {
           n = ps$secs
           self$progressor = progressr::progressor(steps = n)
         } else {
-          ts = unique(archive$data$timestamp)
+          ts = unique(archive$data()$timestamp)
           td = as.numeric(difftime(
             ts[length(ts)], ts[length(ts) - 1]), units = "secs")
           d = ps$secs - as.integer(difftime(Sys.time(), archive$start_time), units = "secs")

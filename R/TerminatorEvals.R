@@ -30,7 +30,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
         tags = "required")))
       ps$values = list(n_evals = 100L)
 
-      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective"))
+      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective", "progressr"))
     },
 
     #' @description
@@ -39,12 +39,10 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      private$.run_progressor(archive)
       archive$n_evals >= self$param_set$values$n_evals
-    }
-  ),
-  private = list(
-    .run_progressor = function(archive) {
+    },
+
+    run_progressor = function(archive) {
       if (isNamespaceLoaded("progressr")) {
         ps = self$param_set$values
         if (is.null(self$progressor)) {
@@ -52,7 +50,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
           self$progressor = progressr::progressor(steps = n)
         } else {
           self$progressor(message = sprintf("%i of %i evaluations", archive$n_evals, ps$n_evals),
-            amount = nrow(archive$data[batch_nr == archive$n_batch]))
+                          amount = nrow(archive$data()[batch_nr == archive$n_batch]))
         }
       }
     }

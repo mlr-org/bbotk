@@ -32,7 +32,6 @@ Archive = R6Class("Archive",
     initialize = function(search_space, codomain) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
-      self$start_time = Sys.time()
       private$.data = data.table()
     },
 
@@ -160,7 +159,7 @@ Archive = R6Class("Archive",
       if(self$n_batch == 0) {
         return(NULL)
       } else {
-        self$data[batch_nr == min(batch_nr), timestamp][1]
+        private$.data[batch_nr == min(batch_nr), timestamp][1]
       }
     }
   ),
