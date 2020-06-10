@@ -73,12 +73,6 @@ test_that("OptimInstance works with extras output", {
   expect_equal(inst$archive$data()$extra3, c(NA, NA, NA, -122, -100, -82))
 })
 
-test_that("OptimInstance does not work with multi-objective terminator", {
-  terminator = Terminator$new()
-  terminator$properties = "multi-objective"
-  inst = MAKE_INST(terminator = terminator)
-})
-
 test_that("Terminator assertions work", {
   terminator = Terminator$new()
   terminator$properties = "multi-objective"
