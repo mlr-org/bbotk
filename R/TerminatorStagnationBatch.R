@@ -49,7 +49,7 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       pv = self$param_set$values
-      ycols = archive$cols_y
+      ycol = archive$cols_y
       data = archive$data
       present_batch = archive$n_batch
       previous_batch = (archive$n_batch-1):(archive$n_batch-pv$n)
@@ -59,22 +59,18 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
         return(FALSE)
       }
 
-      col_success = mapply(function(col, col_min) {
-        perf_before = data[batch_nr %in% previous_batch, c(col, "batch_nr"), with = FALSE]
-        perf_present = data[batch_nr == present_batch, c(col, "batch_nr"), with = FALSE]
+      perf_before = data[batch_nr %in% previous_batch, c(ycol, "batch_nr"), with = FALSE]
+      perf_present = data[batch_nr == present_batch, c(ycol, "batch_nr"), with = FALSE]
 
-        if (col_min) {
-          map(perf_before$batch_nr, function(nr) {
-            min(perf_present[, col, with=FALSE]) >= min(perf_before[batch_nr == nr, col, with=FALSE]) - pv$threshold
-          })
-        } else {
-          map(perf_before$batch_nr, function(nr) {
-            max(perf_present[, col, with=FALSE]) <= max(perf_before[batch_nr == nr, col, with=FALSE]) + pv$threshold
-          })
-        }
-      }, col = ycols, col_min = map_lgl(archive$codomain$tags,
-        identical, y = "minimize"))
-      all(unlist(col_success))
+      if ("minimize" %in% archive$codomain$tags) {
+        res = map(perf_before$batch_nr, function(nr) {
+          min(perf_present[, ycol, with=FALSE]) >= min(perf_before[batch_nr == nr, ycol, with=FALSE]) - pv$threshold})
+      } else {
+        res = map(perf_before$batch_nr, function(nr) {
+          max(perf_present[, ycol, with=FALSE]) <= max(perf_before[batch_nr == nr, ycol, with=FALSE]) + pv$threshold})
+      }
+
+      all(unlist(res))
     }
   )
 )
