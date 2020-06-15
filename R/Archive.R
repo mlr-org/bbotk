@@ -49,6 +49,7 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       assert_list(xss_trafoed)
       assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
+      self$search_space$assert_dt(xdt)
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "opt_x" := list(xss_trafoed)]
