@@ -9,7 +9,14 @@
 .onLoad = function(libname, pkgname) {
   # nocov start
 
-  assign("lg", lgr::get_logger("mlr3/bbotk"), envir = parent.env(environment()))
+  if(isNamespaceLoaded("mlr3tuning")) {
+    assign("lg", lgr::get_logger("mlr3/mlr3tuning"), envir = parent.env(environment()))
+  } else if (isNamespaceLoaded("mlr3fselect")) {
+    assign("lg", lgr::get_logger("mlr3/mlr3fselect"), envir = parent.env(environment()))
+  } else {
+    assign("lg", lgr::get_logger("bbotk"), envir = parent.env(environment()))
+  }
+
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
   }
