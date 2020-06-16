@@ -58,7 +58,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
 \item{\code{terminator}}{(\link{Terminator})\cr
-Multi-objective terminator.}
+Multi-criteria terminator.}
 }
 \if{html}{\out{</div>}}
 }

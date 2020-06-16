@@ -39,8 +39,8 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #'   `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
     #'
     #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-objective functions and multiple
-    #' y-columns for multi-objective functions, e.g.
+    #' A `data.table` that contains one y-column for single-criteria functions and multiple
+    #' y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
       private$.fun(rbindlist(xss))
@@ -50,8 +50,8 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' Evaluates multiple input values on the objective function suplied by the user.
     #'
     #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-objective functions and multiple
-    #' y-columns for multi-objective functions, e.g.
+    #' A `data.table` that contains one y-column for single-criteria functions and multiple
+    #' y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_dt = function(xdt) {
       private$.fun(xdt)

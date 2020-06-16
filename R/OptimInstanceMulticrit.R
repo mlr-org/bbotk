@@ -17,7 +17,7 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
     #' @param objective ([Objective]).
     #' @param search_space ([paradox::ParamSet]).
     #' @param terminator ([Terminator])\cr
-    #' Multi-objective terminator.
+    #' Multi-criteria terminator.
     initialize = function(objective, search_space, terminator) {
       super$initialize(objective, search_space, terminator)
     },

@@ -75,12 +75,26 @@ Optimizer = R6Class("Optimizer",
 
       assert_r6(inst, "OptimInstance")
       require_namespaces(self$packages, "Packages for the Optimization")
+
+      # check multi or single-crit
+      if ("multi-crit" %nin% self$properties && inst$objective$ydim > 1) {
+        stopf(
+          "Optimizer '%s' does not support multi-crit objectives",
+          self$format())
+      }
+      if ("single-crit" %nin% self$properties && inst$objective$ydim == 1) {
+        stopf(
+          "Optimizer '%s' does not support single-crit objectives",
+          self$format())
+      }
+
       # check dependencies
       if ("dependencies" %nin% self$properties && inst$search_space$has_deps) {
         stopf(
-          "Tuner '%s' does not support param sets with dependencies!",
+          "Optimizer '%s' does not support param sets with dependencies!",
           self$format())
       }
+
       # check supported parameter class
       not_supported_pclasses = setdiff(
         unique(inst$search_space$class),
@@ -90,6 +104,8 @@ Optimizer = R6Class("Optimizer",
           "Optimizer '%s' does not support param types: '%s'", class(self)[1L],
           paste0(not_supported_pclasses, collapse = ","))
       }
+
+      # start optimization
       private$.log_optimize_start(inst)
       tryCatch({
         private$.optimize(inst)

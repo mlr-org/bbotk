@@ -149,8 +149,8 @@ A list of lists that contains multiple x values, e.g.
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and
-multiple y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-criteria functions and
+multiple y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 It may also contain additional columns that will be stored in the archive if
 called through the \link{OptimInstance}.
@@ -177,8 +177,8 @@ One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and
-multiple y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-criteria functions and
+multiple y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
@@ -228,8 +228,8 @@ A list of lists that contains multiple x values, e.g.
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and multiple
-y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-criteria functions and multiple
+y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }

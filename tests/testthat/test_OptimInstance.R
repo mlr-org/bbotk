@@ -75,6 +75,6 @@ test_that("OptimInstance works with extras output", {
 
 test_that("Terminator assertions work", {
   terminator = Terminator$new()
-  terminator$properties = "multi-objective"
+  terminator$properties = "multi-crit"
   expect_error(MAKE_INST(terminator = terminator))
 })

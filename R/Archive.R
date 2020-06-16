@@ -4,10 +4,12 @@
 #' Container around a [data.table::data.table] which stores all performed
 #' [Objective] function calls.
 #'
-#' @description Technical details:
-#' `.data` stores a [data.table::data.table] which logs all performed
-#' [Objective] function calls. The [data.table::data.table] is accessed with
-#' the `$data()` method.
+#' @section Technical details:
+#'
+#' The data is stored in a private `.data` field that contains a [data.table::data.table] which
+#' logs all performed [Objective] function calls. The [data.table::data.table] is accessed with
+#' the `$data()` method. New values can be added with the `$add_evals()` method.
+#' This however is usually done through the evaluation of the [OptimInstance] by the [Optimizer].
 #'
 #' @template param_codomain
 #' @template param_xdt

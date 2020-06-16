@@ -36,13 +36,13 @@ assert_terminator = function(terminator, instance = NULL) {
 #' @rdname bbotk_assertions
 assert_terminable = function(terminator, instance) {
   if ("OptimInstanceMulticrit" %in% class(instance)) {
-    if (!"multi-objective" %in% terminator$properties) {
-      stopf("Terminator '%s' does not support multi-objective optimization",
+    if (!"multi-crit" %in% terminator$properties) {
+      stopf("Terminator '%s' does not support multi-crit optimization",
         terminator$format())
     }
   } else {
-    if (!"single-objective" %in% terminator$properties) {
-      stopf("Terminator '%s' does not support single-objective optimization",
+    if (!"single-crit" %in% terminator$properties) {
+      stopf("Terminator '%s' does not support single-crit optimization",
         terminator$format())
     }
   }
