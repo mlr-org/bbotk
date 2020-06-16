@@ -42,6 +42,7 @@ Other Terminator:
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
+\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators}}
 }
 \concept{Terminator}
@@ -87,7 +88,7 @@ otherwise.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{archive}}{\link{Archive}.}
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }

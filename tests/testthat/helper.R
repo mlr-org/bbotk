@@ -1,4 +1,8 @@
 # Simple 1D Function
+PS_1D_domain = ParamSet$new(list(
+  ParamDbl$new("x", lower = -1, upper = 1),
+  ParamUty$new("foo") # the domain of the function should not matter.
+))
 PS_1D = ParamSet$new(list(
   ParamDbl$new("x", lower = -1, upper = 1)
 ))
@@ -6,9 +10,14 @@ FUN_1D = function(xs) {
   list(y = as.numeric(xs)^2)
 }
 FUN_1D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
-OBJ_1D = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D)
+OBJ_1D = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain)
 
 # Simple 2D Function
+PS_2D_domain = ParamSet$new(list(
+  ParamDbl$new("x1", lower = -1, upper = 1),
+  ParamDbl$new("x2", lower = -1, upper = 1),
+  ParamUty$new("foo") # the domain of the function should not matter.
+))
 PS_2D = ParamSet$new(list(
   ParamDbl$new("x1", lower = -1, upper = 1),
   ParamDbl$new("x2", lower = -1, upper = 1)
@@ -18,7 +27,7 @@ FUN_2D = function(xs) {
   list(y = y)
 }
 FUN_2D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
-OBJ_2D = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D)
+OBJ_2D = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D_domain)
 
 
 # Simple 2D Function with trafo
@@ -51,8 +60,12 @@ MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D,
     tt$param_set$values$n_evals = terminator
     terminator = tt
   }
-  OptimInstance$new(objective = objective, search_space = search_space,
-    terminator = terminator)
+  if (objective$codomain$length == 1) {
+    OptimInstance$new(objective = objective, search_space = search_space, terminator = terminator)
+  } else {
+    OptimInstanceMulticrit$new(objective = objective, search_space = search_space, terminator = terminator)
+  }
+
 }
 
 MAKE_INST_1D = function(terminator) {

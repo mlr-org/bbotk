@@ -4,7 +4,7 @@
 #' @include Terminator.R
 #'
 #' @description
-#' Class to terminate the optimization after the complete process took a
+#' Class to terminate the optimization after the optimization process took a
 #' number of seconds on the clock.
 #'
 #' @templateVar id run_time
@@ -29,13 +29,13 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         ParamDbl$new("secs", lower = 0, default = 30)
       ))
       ps$values$secs = 30
-      super$initialize(param_set = ps, properties = "multi-objective")
+      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective"))
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #' @param archive [Archive].
+    #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")

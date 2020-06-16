@@ -9,12 +9,25 @@ test_that("Objective works", {
   )
   obj = ObjectiveTestEval$new(domain = PS_2D)
   expect_output(print(obj), "<ObjectiveTestEval:f>")
-  xs = list(x1 = 1, x2 = 2)
-  xss = replicate(10, xs, simplify = FALSE)
+  expect_equal(obj$xdim, 2L)
+  expect_equal(obj$ydim, 1L)
+  xs = list(x1 = 0, x2 = 1)
+  xss = replicate(3, xs, simplify = FALSE)
   res1 = obj$eval(xs)
-  expect_list(res1)
+  expect_list(res1, len = 1L)
+  expect_names(names(res1), identical.to = "y")
   res2 = obj$eval_many(xss)
-  expect_data_table(res2)
+  expect_data_table(res2, nrows = 3, ncols = 1)
+  expect_names(names(res2), identical.to = "y")
+
+  # checked interface
+  expect_silent(obj$eval_checked(xs))
+  xsf = list(x1 = 0, x2 = 3)
+  expect_error(obj$eval_checked(xsf), "is not <= 1")
+  expect_silent(obj$eval_many_checked(xss))
+  xssf = xss
+  xssf[[2]]$x1 = 2
+  expect_error(obj$eval_many_checked(xssf), "is not <= 1")
 
   ObjectiveTestEvalMany = R6Class("ObjectiveTestEvalMany",
     inherit = Objective,
@@ -28,7 +41,7 @@ test_that("Objective works", {
   expect_output(print(obj), "<ObjectiveTestEvalMany:f>")
   res1many = obj$eval(xs)
   expect_list(res1many)
-  res2many = obj$eval_many(replicate(10, xs, simplify = FALSE))
+  res2many = obj$eval_many(replicate(3, xs, simplify = FALSE))
   expect_data_table(res2many)
 
   expect_equal(res1, res1many)
@@ -46,13 +59,20 @@ test_that("Objective specialzations work", {
       rfun = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D, codomain = FUN_1D_CODOMAIN),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_1D_DT, domain = PS_1D, codomain = FUN_1D_CODOMAIN)),
     list( # 2d x, 1d y
-      rfun = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D, codomain = FUN_1D_CODOMAIN),
-      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DT, domain = PS_2D, codomain = FUN_1D_CODOMAIN))
+      rfun = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D),
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DT, domain = PS_2D)
+    )
   )
 
   for (fun_pairs in funs) {
     fun1 = fun_pairs$rfun
     fun2 = fun_pairs$rfun_dt
+
+    expect_function(fun1$fun) #check AB
+    expect_function(fun2$fun)
+
+    expect_output(print(fun1), "ObjectiveRFun:function")
+    expect_output(print(fun2), "ObjectiveRFunDt:function")
 
     ps = fun1$domain
     sampler = SamplerUnif$new(param_set = ps)

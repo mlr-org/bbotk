@@ -1,12 +1,9 @@
 random_search = function(inst, batch_size = 10) {
   assert_r6(inst, "OptimInstance")
   batch_size = assert_int(batch_size, coerce = TRUE)
-  tryCatch({
-    repeat {
-       des = generate_design_random(inst$search_space, batch_size)
-       inst$eval_batch(des$data)
-      }
-    }, terminated_error = function(cond) {})
+  optim = OptimizerRandomSearch$new()
+  optim$param_set$values$batch_size = batch_size
+  optim$optimize(inst)
   return(inst$archive)
 }
 

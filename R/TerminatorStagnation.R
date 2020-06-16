@@ -1,8 +1,3 @@
-# FIXME: it is undocumented what it means that this terminator works in the MOO-case
-# am also unsure that the current way the code works actually makes sense for MOO?
-# i disabled the unit test for that too
-
-
 #' @title Terminator that stops when optimization does not improve
 #'
 #' @name mlr_terminators_stagnation
@@ -41,34 +36,35 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
         ParamDbl$new("threshold", lower = 0, default = 0, tags = "required")
       ))
       ps$values = list(iters = 10, threshold = 0)
-      super$initialize(param_set = ps, properties = "multi-objective")
+      super$initialize(param_set = ps, properties = "single-objective")
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #' @param archive [Archive].
+    #'
+    #' @param archive ([Archive]).
+    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-
       pv = self$param_set$values
       iters = pv$iters
-      ycols = archive$cols_y
-      if (archive$n_evals <= pv$iters) { # we cannot terminate until we have enough observations
+      ycol = archive$cols_y
+      minimize = "minimize" %in% archive$codomain$tags
+
+      # we cannot terminate until we have enough observations
+      if (archive$n_evals <= pv$iters) {
         return(FALSE)
       }
-      ydata = archive$data[, ycols, , drop = FALSE, with = FALSE]
-      col_success = mapply(function(col, col_min) {
-        perf_before = head(col, -iters)
-        perf_window = tail(col, iters)
-        if (col_min) {
-          min(perf_window) >= min(perf_before) - pv$threshold
-        } else {
-          max(perf_window) <= max(perf_before) + pv$threshold
-        }
-      }, col = ydata, col_min = map_lgl(archive$codomain$tags,
-        identical, y = "minimize"))
-      all(col_success)
+
+      ydata = archive$data()[, ycol, , drop = FALSE, with = FALSE]
+      perf_before = head(ydata, -iters)
+      perf_window = tail(ydata, iters)
+      if (minimize) {
+        return(min(perf_window) >= min(perf_before) - pv$threshold)
+      } else {
+        return(max(perf_window) <= max(perf_before) + pv$threshold)
+      }
     }
   )
 )

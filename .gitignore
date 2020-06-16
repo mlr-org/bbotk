@@ -30,3 +30,5 @@ cran-comments.md
 .vscode/
 docs/
 .vscode
+/src/*.so
+/src/*.o

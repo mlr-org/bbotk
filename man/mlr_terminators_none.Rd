@@ -25,6 +25,7 @@ Other Terminator:
 \code{\link{mlr_terminators_evals}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
+\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }
@@ -70,7 +71,7 @@ Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} other
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{archive}}{\link{Archive}.}
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }

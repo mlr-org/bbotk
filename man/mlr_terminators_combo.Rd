@@ -39,6 +39,7 @@ Other Terminator:
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
+\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }
@@ -59,6 +60,7 @@ List of objects of class \link{Terminator}.}
 \itemize{
 \item \href{#method-new}{\code{TerminatorCombo$new()}}
 \item \href{#method-is_terminated}{\code{TerminatorCombo$is_terminated()}}
+\item \href{#method-print}{\code{TerminatorCombo$print()}}
 \item \href{#method-clone}{\code{TerminatorCombo$clone()}}
 }
 }
@@ -66,7 +68,6 @@ List of objects of class \link{Terminator}.}
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -106,6 +107,23 @@ Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} other
 }
 \subsection{Returns}{
 \code{logical(1)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Printer.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{(ignored).}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

@@ -11,14 +11,11 @@
 #' @export
 #' @examples
 #' term("evals", n_evals = 10)
-
-#' @rdname tnr
-#' @export
 term = function(.key, ...) {
   dictionary_sugar(mlr_terminators, .key, ...)
 }
 
-#' @rdname tnr
+#' @rdname term
 #' @export
 terms = function(.key, ...) {
   dictionary_sugar_mget(mlr_terminators, .key, ...)

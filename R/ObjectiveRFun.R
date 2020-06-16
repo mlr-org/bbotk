@@ -1,8 +1,10 @@
-#' @title Objective interface where user cass pass R function
+#' @title Objective interface with custom R function
 #'
 #' @description
-#' Objective interface where user cass pass R function.
+#' Objective interface with custom R function.
 #'
+#' @template param_domain
+#' @template param_codomain
 #' @export
 ObjectiveRFun = R6Class("ObjectiveRFun",
   inherit = Objective,
@@ -10,15 +12,13 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #' @param fun `function`\cr
-    #' R function that encodes objective and expects a list with the input for a single point (e.g. `list(x1 = 1, x2 = 2)`) and returns the result either as a numeric vector or a list (e.g. `list(y = 3)`).
-    #' @param domain [paradox::ParamSet]\cr
-    #' Specifies domain of function, hence its innput parameters, their types
-    #' and ranges.
-    #' @param codomain [paradox::ParamSet]\cr
-    #' Specifies codomain of function, hence its feasible values.
-    #' @param id `character(1)`
-    #' @param properties `character()`
+    #'
+    #' @param fun (`function`)\cr
+    #' R function that encodes objective and expects a list with the input for a single point
+    #' (e.g. `list(x1 = 1, x2 = 2)`) and returns the result either as a numeric vector or a
+    #' list (e.g. `list(y = 3)`).
+    #' @param id (`character(1)`).
+    #' @param properties (`character()`).
     initialize = function(fun, domain, codomain = NULL, id = "function",
       properties = character(0)) {
       if (is.null(codomain)) {
@@ -41,8 +41,8 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
 
   active = list(
 
-    #' @field fun `function`\cr
-    #' Objective function.
+    #' @field fun (`function`)\cr
+    #'   Objective function.
     fun = function(lhs) {
       if (!missing(lhs) && !identical(lhs, private$.fun)) stop("fun is read-only")
       private$.fun

@@ -19,12 +19,13 @@ TerminatorNone = R6Class("TerminatorNone",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      super$initialize(properties = "multi-objective")
+      super$initialize(properties = c("single-objective", "multi-objective"))
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
-    #' @param archive [Archive].
+    #'
+    #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       return(FALSE)

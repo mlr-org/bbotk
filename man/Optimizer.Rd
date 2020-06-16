@@ -12,16 +12,27 @@ A \code{Optimizer} object must write its result to the \verb{$assign_result()} m
 of the \link{OptimInstance} at the end in order to store the best point  and its
 estimated performance vector.
 }
+\section{Technical details}{
+
+
+In order to replace the default logging messages with custom logging, the
+\verb{.log_*} private methods can be overwritten in an \code{Optimizer} subclass:
+\itemize{
+\item \verb{$.log_optimize_start()} Called at the beginning of \verb{$optimize()}
+\item \verb{$.log_optimize_finish()} Called at the end of \verb{$optimize()}
+}
+}
+
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
-\item{\code{param_classes}}{\code{character()}}
+\item{\code{param_classes}}{(\code{character()}).}
 
-\item{\code{properties}}{\code{character()}}
+\item{\code{properties}}{(\code{character()}).}
 
-\item{\code{packages}}{\code{character()}}
+\item{\code{packages}}{(\code{character()}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -47,13 +58,13 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}}
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
-\item{\code{param_classes}}{\code{character()}}
+\item{\code{param_classes}}{(\code{character()}).}
 
-\item{\code{properties}}{\code{character()}}
+\item{\code{properties}}{(\code{character()}).}
 
-\item{\code{packages}}{\code{character()}}
+\item{\code{packages}}{(\code{character()}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -78,14 +89,14 @@ Print method.
 }
 
 \subsection{Returns}{
-\code{character()}
+(\code{character()}).
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-optimize}{}}}
 \subsection{Method \code{optimize()}}{
-Performes the optimization.
+Performs the optimization and writes optimization result into \link{OptimInstance}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize(inst)}\if{html}{\out{</div>}}
 }
@@ -93,9 +104,12 @@ Performes the optimization.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{inst}}{\link{OptimInstance}}
+\item{\code{inst}}{(\link{OptimInstance}).}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+NULL
 }
 }
 \if{html}{\out{<hr>}}

@@ -2,16 +2,16 @@ Package: bbotk
 Title: Black-Box Optimization Toolkit
 Version: 0.1.1
 Authors@R:
-    c(person(given = "Michel",
-             family = "Lang",
-             role = c("cre", "aut"),
-             email = "michellang@gmail.com",
-             comment = c(ORCID = "0000-0001-9754-0393")),
-      person(given = "Jakob",
+    c(person(given = "Jakob",
              family = "Richter",
-             role = "aut",
+             role = c("cre", "aut"),
              email = "jakob1richter@gmail.com",
              comment = c(ORCID = "0000-0003-4481-5554")),
+      person(given = "Michel",
+             family = "Lang",
+             role = c("aut"),
+             email = "michellang@gmail.com",
+             comment = c(ORCID = "0000-0001-9754-0393")),
       person(given = "Bernd",
              family = "Bischl",
              role = "aut",
@@ -37,7 +37,7 @@ Imports:
     checkmate (>= 1.9.4),
     data.table,
     lgr,
-    mlr3misc (>= 0.2.0),
+    mlr3misc (>= 0.2.1),
     paradox,
     R6
 Suggests:
@@ -46,6 +46,8 @@ Suggests:
     future (>= 1.9.0),
     future.apply (>= 1.1.0),
     testthat
+Remotes:
+    mlr-org/mlr3misc
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
@@ -56,7 +58,9 @@ Collate:
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'
     'OptimInstance.R'
+    'OptimInstanceMulticrit.R'
     'Optimizer.R'
+    'OptimizerRandomSearch.R'
     'mlr_terminators.R'
     'Terminator.R'
     'TerminatorClockTime.R'
@@ -66,7 +70,9 @@ Collate:
     'TerminatorPerfReached.R'
     'TerminatorRunTime.R'
     'TerminatorStagnation.R'
+    'TerminatorStagnationBatch.R'
     'assertions.R'
+    'bbotk_reflections.R'
     'helper.R'
     'sugar.R'
     'zzz.R'

@@ -5,7 +5,7 @@
 \alias{TerminatorRunTime}
 \title{Terminator that stops according to the run time}
 \description{
-Class to terminate the optimization after the complete process took a
+Class to terminate the optimization after the optimization process took a
 number of seconds on the clock.
 }
 \section{Dictionary}{
@@ -37,6 +37,7 @@ Other Terminator:
 \code{\link{mlr_terminators_evals}},
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
+\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }
@@ -83,7 +84,7 @@ otherwise.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{archive}}{\link{Archive}.}
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }

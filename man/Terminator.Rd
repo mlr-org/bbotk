@@ -30,6 +30,7 @@ Other Terminator:
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
+\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }
@@ -51,7 +52,6 @@ Set of properties.}
 \item \href{#method-new}{\code{Terminator$new()}}
 \item \href{#method-format}{\code{Terminator$format()}}
 \item \href{#method-print}{\code{Terminator$print()}}
-\item \href{#method-is_terminated}{\code{Terminator$is_terminated()}}
 \item \href{#method-clone}{\code{Terminator$clone()}}
 }
 }
@@ -67,10 +67,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Set of control parameters for terminator.}
 
-\item{\code{properties}}{\code{character()}\cr
+\item{\code{properties}}{(\code{character()})\cr
 Set of properties.}
 }
 \if{html}{\out{</div>}}
@@ -101,27 +101,6 @@ Printer.
 \item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_terminated"></a>}}
-\if{latex}{\out{\hypertarget{method-is_terminated}{}}}
-\subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
-otherwise. Must be implemented in each subclass.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$is_terminated(archive)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{\link{Archive}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{logical(1)}.
 }
 }
 \if{html}{\out{<hr>}}
