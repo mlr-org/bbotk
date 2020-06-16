@@ -39,8 +39,8 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_data_table(ydt)
       assert_names(names(ydt), permutation.of = self$objective$codomain$ids())
-      opt_x = transform_xdt_to_xss(xdt, self$search_space)
-      private$.result = cbind(xdt, opt_x = opt_x, ydt)
+      x_domain = transform_xdt_to_xss(xdt, self$search_space)
+      private$.result = cbind(xdt, x_domain = x_domain, ydt)
     }
   ),
 
@@ -54,7 +54,7 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
     #' @field result_x_domain (`list()`)\cr
     #'   (transformed) x part of the result in the *domain space* of the objective.
     result_x_domain = function() {
-      private$.result$opt_x
+      private$.result$x_domain
     },
 
     #' @field result_y (`numeric(1)`)\cr

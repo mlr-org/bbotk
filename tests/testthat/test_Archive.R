@@ -11,7 +11,7 @@ test_that("Archive", {
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$n_evals, 1)
-  expect_equal(a$data()$opt_x, xss_trafoed)
+  expect_equal(a$data()$x_domain, xss_trafoed)
   a$clear()
   expect_data_table(a$data(), nrows = 0)
 })
@@ -39,8 +39,8 @@ test_that("Archive on 1D problem works", {
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$n_evals, 1)
-  expect_equal(a$data()$opt_x, xss_trafoed)
-  expect_list(a$data()$opt_x[[1]])
+  expect_equal(a$data()$x_domain, xss_trafoed)
+  expect_list(a$data()$x_domain[[1]])
 })
 
 test_that("Unnest columns", {
@@ -49,11 +49,11 @@ test_that("Unnest columns", {
   xss_trafoed = list(list(x1 = 1, x2 = 2))
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
-  a = a$data(unnest = "opt_x")
-  expect_true("opt_x_x1" %in% colnames(a))
-  expect_true("opt_x_x2" %in% colnames(a))
-  expect_equal(a$opt_x_x1, 1)
-  expect_equal(a$opt_x_x2, 2)
+  a = a$data(unnest = "x_domain")
+  expect_true("x_domain_x1" %in% colnames(a))
+  expect_true("x_domain_x2" %in% colnames(a))
+  expect_equal(a$x_domain_x1, 1)
+  expect_equal(a$x_domain_x2, 2)
 })
 
 test_that("NAs in ydt throw an error", {
