@@ -1,5 +1,7 @@
 #' @title Optimizer
 #'
+#' @include mlr_optimizers.R
+#'
 #' @description
 #' Abstract `Optimizer` class that implements the base functionality each
 #' `Optimizer` subclass must provide. A `Optimizer` object describes the

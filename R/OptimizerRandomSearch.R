@@ -1,5 +1,7 @@
 #' @title Optimization via Random Search
 #'
+#' @include Optimizer.R
+#'
 #' @description
 #' `OptimizerRandomSearch` class that implements a simple Random Search.
 #'
@@ -35,3 +37,6 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
     }
   )
 )
+
+mlr_optimizers$add("random_search", OptimizerRandomSearch)
+
