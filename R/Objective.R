@@ -87,7 +87,9 @@ Objective = R6Class("Objective",
     },
 
     #' @description
-    #' Evaluates multiple input values on the objective function
+    #' Evaluates multiple input values on the objective function.
+    #' If the function should make use of parallel computing it has to be implemented here by the user.
+    #' *bbotk* does not take care of parallelization itself.
     #'
     #' @param xss (`list()`)\cr
     #'   A list of lists that contains multiple x values, e.g.
