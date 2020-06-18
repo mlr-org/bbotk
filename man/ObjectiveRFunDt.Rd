@@ -2,9 +2,9 @@
 % Please edit documentation in R/ObjectiveRFunDt.R
 \name{ObjectiveRFunDt}
 \alias{ObjectiveRFunDt}
-\title{Objective interface where user cass pass R function}
+\title{Objective interface for basic R functions.}
 \description{
-Objective interface where user cass pass R function.
+Objective interface where user can pass an R function that works on an \code{data.table}.
 }
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFunDt}
@@ -103,7 +103,7 @@ y-columns for multi-criteria functions, e.g.
 \if{html}{\out{<a id="method-eval_dt"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_dt}{}}}
 \subsection{Method \code{eval_dt()}}{
-Evaluates multiple input values on the objective function suplied by the user.
+Evaluates multiple input values on the objective function supplied by the user.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFunDt$eval_dt(xdt)}\if{html}{\out{</div>}}
 }

@@ -1,7 +1,7 @@
-#' @title Objective interface where user cass pass R function
+#' @title Objective interface for basic R functions.
 #'
 #' @description
-#' Objective interface where user cass pass R function.
+#' Objective interface where user can pass an R function that works on an `data.table`.
 #'
 #' @template param_domain
 #' @template param_codomain
@@ -47,7 +47,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     },
 
     #' @description
-    #' Evaluates multiple input values on the objective function suplied by the user.
+    #' Evaluates multiple input values on the objective function supplied by the user.
     #'
     #' @return `data.table()`\cr
     #' A `data.table` that contains one y-column for single-criteria functions and multiple
