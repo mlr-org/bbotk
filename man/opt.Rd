@@ -2,11 +2,12 @@
 % Please edit documentation in R/sugar.R
 \name{opt}
 \alias{opt}
+\alias{opts}
 \title{Syntactic Sugar Optimizer Construction}
 \usage{
 opt(.key, ...)
 
-opt(.key, ...)
+opts(.key, ...)
 }
 \arguments{
 \item{.key}{(\code{character(1)})\cr
