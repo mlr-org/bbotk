@@ -24,7 +24,7 @@ terms = function(.key, ...) {
 #' @title Syntactic Sugar Optimizer Construction
 #'
 #' @description
-#' This function complements [mlr_optimizer] with functions in the spirit
+#' This function complements [mlr_optimizers] with functions in the spirit
 #' of [mlr3::mlr_sugar].
 #'
 #' @inheritParams mlr3::mlr_sugar

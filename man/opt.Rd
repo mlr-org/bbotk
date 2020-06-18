@@ -24,7 +24,7 @@ See \code{\link[mlr3misc:dictionary_sugar_get]{mlr3misc::dictionary_sugar_get()}
 }
 }
 \description{
-This function complements \link{mlr_optimizer} with functions in the spirit
+This function complements \link{mlr_optimizers} with functions in the spirit
 of \link[mlr3:mlr_sugar]{mlr3::mlr_sugar}.
 }
 \examples{
