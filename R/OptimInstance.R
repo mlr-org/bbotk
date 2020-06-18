@@ -132,7 +132,7 @@ OptimInstance = R6Class("OptimInstance",
 
     #' @field result_x_seach_space ([data.table::data.table])\cr
     #'   x part of the result in the *search space*.
-    result_x_seach_space = function() {
+    result_x_search_space = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
     },
 
