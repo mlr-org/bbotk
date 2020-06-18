@@ -13,7 +13,7 @@ Inherits from \link{OptimInstance}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{result_x_seach_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
+\item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
 
 \item{\code{result_x_domain}}{(\code{list()})\cr

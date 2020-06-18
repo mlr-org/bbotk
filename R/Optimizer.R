@@ -125,13 +125,14 @@ Optimizer = R6Class("Optimizer",
 
       xdt = res[, inst$search_space$ids(), with = FALSE]
 
-      if(inst$objective$codomain$length > 1) {
-        y = res[, inst$objective$codomain$ids(), with = FALSE]
+      if (inherits(inst, "OptimInstanceMulticrit")) {
+        ydt = res[, inst$objective$codomain$ids(), with = FALSE]
+        inst$assign_result(xdt, ydt)
       } else {
         y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) # unlist keeps name!
+        inst$assign_result(xdt, y)
       }
 
-      inst$assign_result(xdt, y)
       invisible(NULL)
     },
 
