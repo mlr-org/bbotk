@@ -43,7 +43,7 @@ Imports:
 Suggests:
     testthat
 Remotes:
-    mlr-org/mlr3misc
+    mlr-org/mlr3misc,
     mlr-org/paradox@data_table_checks
 Encoding: UTF-8
 NeedsCompilation: no
