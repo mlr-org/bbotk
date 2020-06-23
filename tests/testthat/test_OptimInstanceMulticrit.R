@@ -9,7 +9,7 @@ test_that("OptimInstanceMulticrit", {
   expect_identical(inst$archive$n_evals, 0L)
   expect_identical(inst$archive$n_batch, 0L)
 
-  xdt = data.table(x1 = c(-1,-1,-1), x2 = list(1, 0, -1))
+  xdt = data.table(x1 = c(-1,-1,-1), x2 = c(1, 0, -1))
   inst$eval_batch(xdt)
   expect_data_table(inst$archive$data(), nrows = 3L)
   expect_equal(inst$archive$data()$y1, c(1, 1, 1))
@@ -22,10 +22,18 @@ test_that("OptimInstanceMulticrit", {
   xdt = data.table(x1 = c(0,0), x2 = c(list(0),list(0)))
   ydt = data.table(y1 = c(-10, -10), y2 = c(10, 10))
   inst$assign_result(xdt = xdt, ydt = ydt)
-  expect_equal(inst$result_x_seach_space, xdt)
+  expect_equal(inst$result_x_search_space, xdt)
   expect_equal(inst$result_y, ydt)
   expect_equal(inst$result_x_domain, replicate(n = 2, list(x1 = 0, x2 = 0), simplify = FALSE))
+})
 
+test_that("OptimInstanceMultiCrit with 1 Crit", {
+  tt = term("evals", n_evals = 5)
+  inst = OptimInstanceMulticrit$new(objective = OBJ_2D, search_space = PS_2D, terminator = tt)
+  opt = OptimizerRandomSearch$new()
+  opt$optimize(inst)
+  expect_data_table(inst$result_y, ncols = 1)
+  expect_data_table(inst$result_x_search_space)
 })
 
 test_that("Terminator assertions work", {

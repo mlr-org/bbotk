@@ -87,15 +87,17 @@ Objective = R6Class("Objective",
     },
 
     #' @description
-    #' Evaluates multiple input values on the objective function
+    #' Evaluates multiple input values on the objective function.
+    #' If the function should make use of parallel computing it has to be implemented here by the user.
+    #' *bbotk* does not take care of parallelization itself.
     #'
     #' @param xss (`list()`)\cr
     #'   A list of lists that contains multiple x values, e.g.
     #'   `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
     #'
     #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-objective functions and
-    #' multiple y-columns for multi-objective functions, e.g.
+    #' A `data.table` that contains one y-column for single-criteria functions and
+    #' multiple y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     #' It may also contain additional columns that will be stored in the archive if
     #' called through the [OptimInstance].
@@ -114,8 +116,8 @@ Objective = R6Class("Objective",
     #' Evaluates multiple input values on the objective function
     #'
     #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-objective functions and
-    #' multiple y-columns for multi-objective functions, e.g.
+    #' A `data.table` that contains one y-column for single-criteria functions and
+    #' multiple y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_dt = function(xdt) {
       self$eval_many(transpose_list(xdt))
@@ -148,8 +150,8 @@ Objective = R6Class("Objective",
     #' `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
     #'
     #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-objective functions and multiple
-    #' y-columns for multi-objective functions, e.g.
+    #' A `data.table` that contains one y-column for single-criteria functions and multiple
+    #' y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)

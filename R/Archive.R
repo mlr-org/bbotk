@@ -4,10 +4,12 @@
 #' Container around a [data.table::data.table] which stores all performed
 #' [Objective] function calls.
 #'
-#' @description Technical details:
-#' `.data` stores a [data.table::data.table] which logs all performed
-#' [Objective] function calls. The [data.table::data.table] is accessed with
-#' the `$data()` method.
+#' @section Technical details:
+#'
+#' The data is stored in a private `.data` field that contains a [data.table::data.table] which
+#' logs all performed [Objective] function calls. The [data.table::data.table] is accessed with
+#' the `$data()` method. New values can be added with the `$add_evals()` method.
+#' This however is usually done through the evaluation of the [OptimInstance] by the [Optimizer].
 #'
 #' @template param_codomain
 #' @template param_xdt
@@ -52,7 +54,7 @@ Archive = R6Class("Archive",
       self$search_space$assert_dt(xdt[, self$cols_x, with =FALSE])
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
-      xydt[, "opt_x" := list(xss_trafoed)]
+      xydt[, "x_domain" := list(xss_trafoed)]
       xydt[, "timestamp" := Sys.time()]
       batch_nr = private$.data$batch_nr
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L

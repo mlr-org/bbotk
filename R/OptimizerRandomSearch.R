@@ -1,5 +1,7 @@
 #' @title Optimization via Random Search
 #'
+#' @include Optimizer.R
+#'
 #' @description
 #' `OptimizerRandomSearch` class that implements a simple Random Search.
 #'
@@ -19,7 +21,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
       super$initialize(
         param_set = ps,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = "dependencies"
+        properties = c("dependencies", "single-crit", "multi-crit")
       )
     }
   ),
@@ -27,7 +29,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
   private = list(
     .optimize = function(inst) {
       batch_size = self$param_set$values$batch_size
-      sampler = SamplerUnif$new(inst$search_space) #FIXME if instance has sampler take this
+      sampler = SamplerUnif$new(inst$search_space)
       repeat { # iterate until we have an exception from eval_batch
         design = sampler$sample(batch_size)
         inst$eval_batch(design$data)
@@ -35,3 +37,6 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
     }
   )
 )
+
+mlr_optimizers$add("random_search", OptimizerRandomSearch)
+

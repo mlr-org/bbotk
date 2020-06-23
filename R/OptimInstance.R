@@ -118,8 +118,8 @@ OptimInstance = R6Class("OptimInstance",
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_number(y)
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
-      opt_x = transform_xdt_to_xss(xdt, self$search_space)[[1]]
-      private$.result = cbind(xdt, opt_x = list(opt_x), t(y)) # t(y) so the name of y stays
+      x_domain = transform_xdt_to_xss(xdt, self$search_space)[[1]]
+      private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
     }
   ),
 
@@ -130,16 +130,16 @@ OptimInstance = R6Class("OptimInstance",
       private$.result
     },
 
-    #' @field result_x_seach_space ([data.table::data.table])\cr
+    #' @field result_x_search_space ([data.table::data.table])\cr
     #'   x part of the result in the *search space*.
-    result_x_seach_space = function() {
+    result_x_search_space = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
     },
 
     #' @field result_x_domain (`list()`)\cr
     #'   (transformed) x part of the result in the *domain space* of the objective.
     result_x_domain = function() {
-      private$.result$opt_x[[1]]
+      private$.result$x_domain[[1]]
     },
 
     #' @field result_y (`numeric()`)\cr

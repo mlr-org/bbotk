@@ -1,7 +1,7 @@
 #' @title Objective interface with custom R function
 #'
 #' @description
-#' Objective interface with custom R function.
+#' Objective interface where the user can pass a custom R function that expects a list as input.
 #'
 #' @template param_domain
 #' @template param_codomain

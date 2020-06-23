@@ -30,7 +30,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
         tags = "required")))
       ps$values = list(n_evals = 100L)
 
-      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective"))
+      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
     },
 
     #' @description

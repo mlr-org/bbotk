@@ -13,7 +13,7 @@ Inherits from \link{OptimInstance}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{result_x_seach_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
+\item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
 
 \item{\code{result_x_domain}}{(\code{list()})\cr
@@ -58,7 +58,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 
 \item{\code{terminator}}{(\link{Terminator})\cr
-Multi-objective terminator.}
+Multi-criteria terminator.}
 }
 \if{html}{\out{</div>}}
 }

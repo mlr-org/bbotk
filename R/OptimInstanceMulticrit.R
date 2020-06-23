@@ -17,7 +17,7 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
     #' @param objective ([Objective]).
     #' @param search_space ([paradox::ParamSet]).
     #' @param terminator ([Terminator])\cr
-    #' Multi-objective terminator.
+    #' Multi-criteria terminator.
     initialize = function(objective, search_space, terminator) {
       super$initialize(objective, search_space, terminator)
     },
@@ -39,22 +39,22 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_data_table(ydt)
       assert_names(names(ydt), permutation.of = self$objective$codomain$ids())
-      opt_x = transform_xdt_to_xss(xdt, self$search_space)
-      private$.result = cbind(xdt, opt_x = opt_x, ydt)
+      x_domain = transform_xdt_to_xss(xdt, self$search_space)
+      private$.result = cbind(xdt, x_domain = x_domain, ydt)
     }
   ),
 
   active = list(
-    #' @field result_x_seach_space ([data.table::data.table])\cr
+    #' @field result_x_search_space ([data.table::data.table])\cr
     #'   x part of the result in the *search space*.
-    result_x_seach_space = function() {
+    result_x_search_space = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
     },
 
     #' @field result_x_domain (`list()`)\cr
     #'   (transformed) x part of the result in the *domain space* of the objective.
     result_x_domain = function() {
-      private$.result$opt_x
+      private$.result$x_domain
     },
 
     #' @field result_y (`numeric(1)`)\cr

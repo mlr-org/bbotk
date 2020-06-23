@@ -5,6 +5,7 @@
 \alias{assert_terminator}
 \alias{assert_terminable}
 \alias{assert_set}
+\alias{assert_optimizer}
 \title{Assertion for bbotk objects}
 \usage{
 assert_terminator(terminator, instance = NULL)
@@ -12,6 +13,8 @@ assert_terminator(terminator, instance = NULL)
 assert_terminable(terminator, instance)
 
 assert_set(x, empty = TRUE, .var.name = vname(x))
+
+assert_optimizer(optimizer)
 }
 \arguments{
 \item{terminator}{(\link{Terminator}).}
@@ -23,6 +26,8 @@ assert_set(x, empty = TRUE, .var.name = vname(x))
 \item{empty}{(\code{logical(1)})}
 
 \item{.var.name}{(\code{character(1)})}
+
+\item{optimizer}{(\link{Optimizer})}
 }
 \description{
 Most assertion functions ensure the right class attribute, and optionally

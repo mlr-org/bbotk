@@ -8,9 +8,9 @@ transform_xdt_to_xss(xdt, search_space)
 }
 \arguments{
 \item{xdt}{(\code{data.table}) \cr
-The data table with x-colums.
+The data table with x-columns.
 Column names have to match ids of the \code{search_space}.
-However, \code{xdt} can contain additinal columns.}
+However, \code{xdt} can contain additional columns.}
 
 \item{search_space}{\link[paradox:ParamSet]{paradox::ParamSet} \cr
 The ParamSet.}

@@ -18,7 +18,7 @@ test_that("OptimInstance", {
   expect_identical(inst$archive$n_batch, 1L)
   expect_null(inst$result)
   inst$assign_result(xdt = xdt[2,], y = c(y=-10))
-  expect_equal(inst$result, cbind(xdt[2,], opt_x = list(list(x1 = 0, x2 = 0)), y = -10))
+  expect_equal(inst$result, cbind(xdt[2,], x_domain = list(list(x1 = 0, x2 = 0)), y = -10))
 })
 
 test_that("OptimInstance works with trafos", {
@@ -27,7 +27,7 @@ test_that("OptimInstance works with trafos", {
   inst$eval_batch(xdt)
   expect_data_table(inst$archive$data(), nrows = 3L)
   expect_equal(inst$archive$data()$y, c(2, 0, 2))
-  expect_equal(inst$archive$data()$opt_x[[1]], list(x1 = -1, x2 = -1))
+  expect_equal(inst$archive$data()$x_domain[[1]], list(x1 = -1, x2 = -1))
   expect_output(print(inst), "<OptimInstance>")
 })
 
@@ -37,7 +37,7 @@ test_that("OptimInstance works with extras input", {
   inst$eval_batch(xdt)
   expect_data_table(inst$archive$data(), nrows = 3L)
   expect_equal(inst$archive$data()$y, c(2, 0, 2))
-  expect_equal(inst$archive$data()$opt_x[[1]], list(x1 = -1, x2 = -1))
+  expect_equal(inst$archive$data()$x_domain[[1]], list(x1 = -1, x2 = -1))
   expect_subset(colnames(xdt), colnames(inst$archive$data()))
   expect_equal(xdt, inst$archive$data()[, colnames(xdt), with = FALSE])
 
@@ -75,6 +75,6 @@ test_that("OptimInstance works with extras output", {
 
 test_that("Terminator assertions work", {
   terminator = Terminator$new()
-  terminator$properties = "multi-objective"
+  terminator$properties = "multi-crit"
   expect_error(MAKE_INST(terminator = terminator))
 })

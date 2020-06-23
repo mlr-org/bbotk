@@ -30,9 +30,9 @@ is_dominated = function(ymat) {
 #' Mainly for internal usage.
 #'
 #' @param xdt (`data.table`) \cr
-#' The data table with x-colums.
+#' The data table with x-columns.
 #' Column names have to match ids of the `search_space`.
-#' However, `xdt` can contain additinal columns.
+#' However, `xdt` can contain additional columns.
 #' @param search_space [paradox::ParamSet] \cr
 #' The ParamSet.
 #' @value `list()`

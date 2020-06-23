@@ -36,7 +36,7 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
         ParamDbl$new("threshold", lower = 0, default = 0, tags = "required")
       ))
       ps$values = list(n = 1, threshold = 0)
-      super$initialize(param_set = ps, properties = "single-objective")
+      super$initialize(param_set = ps, properties = "single-crit")
     },
 
     #' @description
