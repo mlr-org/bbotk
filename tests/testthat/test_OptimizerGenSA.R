@@ -1,10 +1,10 @@
-context("OptimizerRandomSearch")
+context("OptimizerGenSA")
 
-test_that("OptimizerRandomSearch", {
-  opt = OptimizerRandomSearch$new()
+test_that("OptimizerGenSA", {
+  opt = OptimizerGenSA$new()
   expect_class(opt, "Optimizer")
-  expect_class(opt, "OptimizerRandomSearch")
-  expect_output(print(opt), "OptimizerRandomSearch")
+  expect_class(opt, "OptimizerGenSA")
+  expect_output(print(opt), "OptimizerGenSA")
   inst = MAKE_INST()
   opt$optimize(inst)
   expect_data_table(inst$result)

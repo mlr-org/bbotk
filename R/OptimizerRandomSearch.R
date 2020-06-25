@@ -1,9 +1,13 @@
 #' @title Optimization via Random Search
 #'
 #' @include Optimizer.R
+#' @name mlr_optimizers_random_search
 #'
 #' @description
 #' `OptimizerRandomSearch` class that implements a simple Random Search.
+#'
+#' @templateVar id random_search
+#' @template section_dictionary_optimizers
 #'
 #' @export
 OptimizerRandomSearch = R6Class("OptimizerRandomSearch",

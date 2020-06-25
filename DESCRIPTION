@@ -9,7 +9,7 @@ Authors@R:
              comment = c(ORCID = "0000-0003-4481-5554")),
       person(given = "Michel",
              family = "Lang",
-             role = c("aut"),
+             role = "aut",
              email = "michellang@gmail.com",
              comment = c(ORCID = "0000-0001-9754-0393")),
       person(given = "Bernd",
@@ -41,13 +41,14 @@ Imports:
     paradox,
     R6
 Suggests:
+    GenSA,
     testthat
 Remotes:
     mlr-org/mlr3misc
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.0.9000
 Collate:
     'Archive.R'
     'Objective.R'
@@ -57,6 +58,7 @@ Collate:
     'OptimInstanceMulticrit.R'
     'mlr_optimizers.R'
     'Optimizer.R'
+    'OptimizerGenSA.R'
     'OptimizerRandomSearch.R'
     'mlr_terminators.R'
     'Terminator.R'
