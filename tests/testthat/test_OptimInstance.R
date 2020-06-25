@@ -78,3 +78,11 @@ test_that("Terminator assertions work", {
   terminator$properties = "multi-crit"
   expect_error(MAKE_INST(terminator = terminator))
 })
+
+test_that("objective_function works", {
+  inst = MAKE_INST_1D(terminator = term("evals", n_evals = 20))
+  expect_numeric(inst$objective_lower(), names = "named", len = inst$search_space$length)
+  expect_numeric(inst$objective_upper(), names = "named", len = inst$search_space$length)
+  y = inst$objective_function(c(1))
+  expect_equal(y, 1)
+})
