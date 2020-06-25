@@ -18,11 +18,18 @@ test_that("Archive", {
 
 test_that("Archive best works", {
   a = Archive$new(PS_2D, FUN_2D_CODOMAIN)
+  expect_error(a$best(), "No results stored in archive")
   xdt = data.table(x1 = c(0, 0.5), x2 = c(1, 1))
   xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
   ydt = data.table(y = c(1, 0.25))
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$best()$y,0.25)
+
+  xdt = data.table(x1 = 1, x2 = 1)
+  xss_trafoed = list(list(x1 = 1, x2 = 1))
+  ydt = data.table(y = 2)
+  a$add_evals(xdt, xss_trafoed, ydt)
+  expect_equal(a$best(m = 2)$batch_nr, 2L)
 
   a = Archive$new(PS_2D, FUN_2D_2D_CODOMAIN)
   xdt = data.table(x1 = c(-1,-1,-1), x2 = c(1, 0, -1))
