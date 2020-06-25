@@ -1,12 +1,12 @@
 context("OptimizerGenSA")
 
 test_that("OptimizerGenSA", {
-  opt = OptimizerGenSA$new()
-  expect_class(opt, "Optimizer")
-  expect_class(opt, "OptimizerGenSA")
-  expect_output(print(opt), "OptimizerGenSA")
+  optimizer = OptimizerGenSA$new()
+  expect_class(optimizer, "Optimizer")
+  expect_class(optimizer, "OptimizerGenSA")
+  expect_output(print(optimizer), "OptimizerGenSA")
   inst = MAKE_INST()
-  opt$optimize(inst)
+  optimizer$optimize(inst)
   expect_data_table(inst$result)
   expect_number(inst$result_y)
   expect_equal(names(inst$result_y), inst$objective$codomain$ids())
