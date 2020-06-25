@@ -2,12 +2,12 @@ context("OptimizerRandomSearch")
 
 
 test_that("OptimizerRandomSearch", {
-  opt = OptimizerRandomSearch$new()
-  expect_class(opt, "Optimizer")
-  expect_class(opt, "OptimizerRandomSearch")
-  expect_output(print(opt), "OptimizerRandomSearch")
+  optimizer = OptimizerRandomSearch$new()
+  expect_class(optimizer, "Optimizer")
+  expect_class(optimizer, "OptimizerRandomSearch")
+  expect_output(print(optimizer), "OptimizerRandomSearch")
   inst = MAKE_INST()
-  opt$optimize(inst)
+  optimizer$optimize(inst)
   expect_data_table(inst$result)
   expect_number(inst$result_y)
   expect_equal(names(inst$result_y), inst$objective$codomain$ids())
