@@ -123,24 +123,24 @@ OptimInstance = R6Class("OptimInstance",
     },
 
     #' @description
-    #' Evaluates (untransformed) points of only numeric values, and returns a
-    #' scalar objective value, where the return value is negated if the measure
-    #' is maximized. Internally, `$eval_batch()` is called with a single row.
-    #' This function serves as a objective function for optimizers of numeric
-    #' spaces - which should always be minimized.
+    #' Evaluates (untransformed) points of only numeric values. Returns a scalar
+    #' objective value for single-crit or a vector of objective values for
+    #' multi-crit. The return value(s) are negated if the measure is maximized.
+    #' Internally, `$eval_batch()` is called with a single row. This function
+    #' serves as a objective function for optimizers of numeric spaces - which
+    #' should always be minimized.
     #'
     #' @param x (`numeric()`)\cr
     #' Untransformed points.
     #'
-    #' @return Objective value as `numeric(1)`.
+    #' @return Objective value as `numeric()`.
     objective_function = function(x) {
-      assert_numeric(x, len = self$search_space$length)
       xs = set_names(as.list(x), self$search_space$ids())
       self$search_space$assert(xs)
       xdt = as.data.table(xs)
       res = self$eval_batch(xdt)
-      y = as.numeric(res[, self$objective$codomain$ids()[1], with=FALSE])
-      if(self$objective$codomain$tags[[1]] == "minimize") y else -y
+      y = as.numeric(res[, self$objective$codomain$ids(), with=FALSE])
+      ifelse(self$objective$codomain$tags == "minimize", y, -y)
     },
 
     #' @description

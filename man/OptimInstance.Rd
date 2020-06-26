@@ -178,11 +178,12 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-objective_function"></a>}}
 \if{latex}{\out{\hypertarget{method-objective_function}{}}}
 \subsection{Method \code{objective_function()}}{
-Evaluates (untransformed) points of only numeric values, and returns a
-scalar objective value, where the return value is negated if the measure
-is maximized. Internally, \verb{$eval_batch()} is called with a single row.
-This function serves as a objective function for optimizers of numeric
-spaces - which should always be minimized.
+Evaluates (untransformed) points of only numeric values. Returns a scalar
+objective value for single-crit or a vector of objective values for
+multi-crit. The return value(s) are negated if the measure is maximized.
+Internally, \verb{$eval_batch()} is called with a single row. This function
+serves as a objective function for optimizers of numeric spaces - which
+should always be minimized.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$objective_function(x)}\if{html}{\out{</div>}}
 }
@@ -196,7 +197,7 @@ Untransformed points.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Objective value as \code{numeric(1)}.
+Objective value as \code{numeric()}.
 }
 }
 \if{html}{\out{<hr>}}
