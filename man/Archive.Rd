@@ -26,6 +26,8 @@ Search space that is logged into archive.}
 Codomain of objective function that is logged into archive.}
 
 \item{\code{start_time}}{(\link{POSIXct}).}
+
+\item{\code{check_evals_xdt}}{('logical(1)')}
 }
 \if{html}{\out{</div>}}
 }
@@ -63,17 +65,20 @@ Number of batches stored in the archive.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_evals_xdt = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space that is logged into archive.}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function, hence its feasible values.}
+
+\item{\code{check_evals_xdt}}{('logical(1)')\cr
+Should x-values that are added to the archive be checked for validity?
+Search space that is logged into archive.}
 }
 \if{html}{\out{</div>}}
 }

@@ -43,7 +43,7 @@ test_that("Archive on 1D problem works", {
   expect_list(a$data()$x_domain[[1]])
 
   xdt = data.table(x = 2)
-  expect_error(a$add_evals(xdt, xss_trafoed, ydt))
+  expect_error(a$add_evals(xdt, ydt))
 })
 
 test_that("Unnest columns", {
