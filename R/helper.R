@@ -35,7 +35,7 @@ is_dominated = function(ymat) {
 #' However, `xdt` can contain additional columns.
 #' @param search_space [paradox::ParamSet] \cr
 #' The ParamSet.
-#' @value `list()`
+#' @return `list()`
 #' @keywords internal
 #' @export
 transform_xdt_to_xss = function(xdt, search_space) {

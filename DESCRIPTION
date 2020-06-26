@@ -41,6 +41,7 @@ Imports:
     paradox,
     R6
 Suggests:
+    emoa,
     testthat
 Remotes:
     mlr-org/mlr3misc
@@ -71,5 +72,6 @@ Collate:
     'assertions.R'
     'bbotk_reflections.R'
     'helper.R'
+    'nds_selection.R'
     'sugar.R'
     'zzz.R'

@@ -54,6 +54,7 @@ Number of batches stored in the archive.}
 \item \href{#method-format}{\code{Archive$format()}}
 \item \href{#method-print}{\code{Archive$print()}}
 \item \href{#method-clear}{\code{Archive$clear()}}
+\item \href{#method-nds_selection}{\code{Archive$nds_selection()}}
 \item \href{#method-clone}{\code{Archive$clone()}}
 }
 }
@@ -185,6 +186,27 @@ Clear all evaluation results from archive.
 \if{html}{\out{<div class="r">}}\preformatted{Archive$clear()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-nds_selection"></a>}}
+\if{latex}{\out{\hypertarget{method-nds_selection}{}}}
+\subsection{Method \code{nds_selection()}}{
+Calculate best points w.r.t. non domainated sortin with hypervolume contribution.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$nds_selection(n_select, ref_point = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n_select}}{(\code{integer(1L)})\cr
+Amount of points to select}
+
+\item{\code{ref_point}}{(\code{numeric()})\cr
+Reference point for hypervolume}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

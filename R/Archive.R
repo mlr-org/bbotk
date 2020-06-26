@@ -14,6 +14,8 @@
 #' @template param_codomain
 #' @template param_xdt
 #' @template param_ydt
+#' @template param_n_select
+#' @template param_ref_point
 #' @export
 Archive = R6Class("Archive",
   public = list(
@@ -132,6 +134,15 @@ Archive = R6Class("Archive",
     #' Clear all evaluation results from archive.
     clear = function() {
       private$.data = data.table()
+    },
+
+    #' @description
+    #' Calculate best points w.r.t. non domainated sortin with hypervolume contribution.
+    nds_selection = function(n_select, ref_point = NULL) {
+      points = t(as.matrix(private$.data[, self$cols_y, with = FALSE]))
+      minimize = map_lgl(self$codomain$tags, has_element, "minimize")
+      inds = nds_selection(points, n_select, ref_point, minimize)
+      private$.data[inds, ]
     }
   ),
 
