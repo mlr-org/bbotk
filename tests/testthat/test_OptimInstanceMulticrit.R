@@ -30,8 +30,8 @@ test_that("OptimInstanceMulticrit", {
 test_that("OptimInstanceMultiCrit with 1 Crit", {
   tt = term("evals", n_evals = 5)
   inst = OptimInstanceMulticrit$new(objective = OBJ_2D, search_space = PS_2D, terminator = tt)
-  opt = OptimizerRandomSearch$new()
-  opt$optimize(inst)
+  optimizer = OptimizerRandomSearch$new()
+  optimizer$optimize(inst)
   expect_data_table(inst$result_y, ncols = 1)
   expect_data_table(inst$result_x_search_space)
 })

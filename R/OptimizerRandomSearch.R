@@ -10,6 +10,7 @@
 #' @template section_dictionary_optimizers
 #'
 #' @export
+#' @template example
 OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
   inherit = Optimizer,
   public = list(
