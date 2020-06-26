@@ -42,7 +42,7 @@ PS_2D_TRF$trafo = function(x, param_set) {
 
 # Simple 2D Function with deps
 PS_2D_DEPS = ParamSet$new(list(
-  ParamDbl$new("x1", lower = -1, upper = 1),
+  ParamInt$new("x1", lower = -1, upper = 1),
   ParamDbl$new("x2", lower = 1, upper = 3)
 ))
 PS_2D_DEPS$add_dep("x2", "x1", CondEqual$new(1))
@@ -88,7 +88,7 @@ MAKE_INST_2D_2D = function(terminator) {
     terminator = terminator)
 }
 
-MAKE_OPT = function(param_set = ParamSet$new(), param_classes = "ParamDbl",
+MAKE_OPT = function(param_set = ParamSet$new(), param_classes = c("ParamDbl", "ParamInt"),
   properties = "single-crit", packages = character(0)) {
   Optimizer$new(param_set = param_set,
     param_classes = param_classes,
