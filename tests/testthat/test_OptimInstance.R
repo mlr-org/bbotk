@@ -82,20 +82,16 @@ test_that("Terminator assertions work", {
 test_that("objective_function works", {
   terminator = terminator = term("evals", n_evals = 100)
   inst = MAKE_INST_1D(terminator = terminator)
-  expect_numeric(inst$objective_lower(), names = "named", len = inst$search_space$length)
-  expect_numeric(inst$objective_upper(), names = "named", len = inst$search_space$length)
   y = inst$objective_function(1)
   expect_equal(y, c(y = 1))
 
   obj = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain, codomain = ParamSet$new(list(ParamDbl$new("y", tags = "maximize"))))
   inst = MAKE_INST(objective = obj, search_space = PS_1D, terminator = terminator)
-  expect_numeric(inst$objective_lower(), names = "named", len = inst$search_space$length)
-  expect_numeric(inst$objective_upper(), names = "named", len = inst$search_space$length)
   y = inst$objective_function(1)
   expect_equal(y, c(y = -1))
 
-  z = optimize(inst$objective_function, lower = inst$objective_lower(),
-    upper = inst$objective_upper())
+  z = optimize(inst$objective_function, lower = inst$search_space$lower,
+    upper = inst$search_space$upper)
   expect_list(z, any.missing = FALSE, names = "named", len = 2L)
 
 })

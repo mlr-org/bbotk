@@ -33,13 +33,11 @@ Optimal outcome.}
 }
 }
 \if{html}{
-\out{<details ><summary>Inherited methods</summary>}
+\out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="eval_batch">}\href{../../bbotk/html/OptimInstance.html#method-eval_batch}{\code{bbotk::OptimInstance$eval_batch()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format">}\href{../../bbotk/html/OptimInstance.html#method-format}{\code{bbotk::OptimInstance$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="objective_function">}\href{../../bbotk/html/OptimInstance.html#method-objective_function}{\code{bbotk::OptimInstance$objective_function()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="objective_lower">}\href{../../bbotk/html/OptimInstance.html#method-objective_lower}{\code{bbotk::OptimInstance$objective_lower()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="objective_upper">}\href{../../bbotk/html/OptimInstance.html#method-objective_upper}{\code{bbotk::OptimInstance$objective_upper()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print">}\href{../../bbotk/html/OptimInstance.html#method-print}{\code{bbotk::OptimInstance$print()}}\out{</span>}
 }
 \out{</details>}

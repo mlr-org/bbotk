@@ -71,8 +71,6 @@ Optimal outcome.}
 \item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
 \item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
 \item \href{#method-objective_function}{\code{OptimInstance$objective_function()}}
-\item \href{#method-objective_lower}{\code{OptimInstance$objective_lower()}}
-\item \href{#method-objective_upper}{\code{OptimInstance$objective_upper()}}
 \item \href{#method-clone}{\code{OptimInstance$clone()}}
 }
 }
@@ -198,32 +196,6 @@ Untransformed points.}
 }
 \subsection{Returns}{
 Objective value as \code{numeric(1)}, negated for maximization problems.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-objective_lower"></a>}}
-\if{latex}{\out{\hypertarget{method-objective_lower}{}}}
-\subsection{Method \code{objective_lower()}}{
-Returns lower bounds of search space.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$objective_lower()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-\code{numeric(1)}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-objective_upper"></a>}}
-\if{latex}{\out{\hypertarget{method-objective_upper}{}}}
-\subsection{Method \code{objective_upper()}}{
-Returns upper bounds of search space.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$objective_upper()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-\code{numeric(1)}
 }
 }
 \if{html}{\out{<hr>}}

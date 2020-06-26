@@ -44,8 +44,6 @@ test_that("Terminator assertions work", {
 test_that("objective_function works", {
   terminator = terminator = term("evals", n_evals = 100)
   inst = MAKE_INST_2D_2D(terminator = terminator)
-  expect_numeric(inst$objective_lower(), names = "named", len = inst$search_space$length)
-  expect_numeric(inst$objective_upper(), names = "named", len = inst$search_space$length)
   y = inst$objective_function(c(1,1))
   expect_equal(y, c(y1 = 1, y2 = 1))
 })

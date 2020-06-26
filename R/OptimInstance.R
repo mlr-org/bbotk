@@ -141,20 +141,6 @@ OptimInstance = R6Class("OptimInstance",
       res = self$eval_batch(xdt)
       y = as.numeric(res[, self$objective$codomain$ids(), with=FALSE])
       ifelse(self$objective$codomain$tags == "minimize", y, -y)
-    },
-
-    #' @description
-    #' Returns lower bounds of search space.
-    #' @return `numeric(1)`
-    objective_lower = function() {
-      self$search_space$lower
-    },
-
-    #' @description
-    #' Returns upper bounds of search space.
-    #' @return `numeric(1)`
-    objective_upper = function() {
-      self$search_space$upper
     }
   ),
 
