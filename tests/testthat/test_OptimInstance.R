@@ -94,4 +94,10 @@ test_that("objective_function works", {
     upper = inst$search_space$upper)
   expect_list(z, any.missing = FALSE, names = "named", len = 2L)
 
+  search_space = ParamSet$new(list(
+    ParamLgl$new("x1"),
+    ParamDbl$new("x2", lower = -1, upper = 1)
+  ))
+  inst = MAKE_INST(objective = obj, search_space = search_space, terminator = terminator)
+  expect_error(inst$objective_function(1), "objective_function can only")
 })

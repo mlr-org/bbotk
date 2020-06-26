@@ -135,6 +135,10 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @return Objective value as `numeric(1)`, negated for maximization problems.
     objective_function = function(x) {
+      if(!all(self$search_space$is_number)) {
+        stop("$objective_function can only be called if search_space only
+          contains numeric values")
+      }
       xs = set_names(as.list(x), self$search_space$ids())
       self$search_space$assert(xs)
       xdt = as.data.table(xs)
