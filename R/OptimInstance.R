@@ -124,7 +124,7 @@ OptimInstance = R6Class("OptimInstance",
 
     #' @description
     #' Evaluates (untransformed) points of only numeric values, and returns a
-    #' scalar objective value, where the return value is negated if the measure
+    #' scalar objective value, where the return value is negated if the objective
     #' is maximized. Internally, `$eval_batch()` is called with a single row.
     #' This function serves as an objective function for optimizers of numeric
     #' spaces - which should always be minimized.
