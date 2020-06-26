@@ -6,6 +6,8 @@
 #' `OptimizerRandomSearch` class that implements a simple Random Search.
 #'
 #' @export
+#' @templateVar id random_search
+#' @template example
 OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
   inherit = Optimizer,
   public = list(
