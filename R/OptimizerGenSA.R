@@ -24,6 +24,7 @@
 #' algorithm and where our terminators allow to obtain the same behavior.
 #'
 #' @export
+#' @template example
 OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
   public = list(
 
