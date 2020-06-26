@@ -197,7 +197,7 @@ Untransformed points.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Objective value as \code{numeric()}.
+Objective value as \code{numeric(1)}, negated for maximization problems.
 }
 }
 \if{html}{\out{<hr>}}

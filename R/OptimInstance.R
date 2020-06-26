@@ -133,7 +133,7 @@ OptimInstance = R6Class("OptimInstance",
     #' @param x (`numeric()`)\cr
     #' Untransformed points.
     #'
-    #' @return Objective value as `numeric()`.
+    #' @return Objective value as `numeric(1)`, negated for maximization problems.
     objective_function = function(x) {
       xs = set_names(as.list(x), self$search_space$ids())
       self$search_space$assert(xs)
