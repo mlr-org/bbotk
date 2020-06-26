@@ -44,7 +44,7 @@ Suggests:
     testthat
 Remotes:
     mlr-org/mlr3misc,
-    mlr-org/paradox@data_table_checks
+    mlr-org/paradox
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
