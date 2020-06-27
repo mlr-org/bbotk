@@ -6,12 +6,25 @@
 \title{Optimization via Random Search}
 \description{
 \code{OptimizerRandomSearch} class that implements a simple Random Search.
+
+In order to support general termination criteria and parallelization, we
+evaluate points in a batch-fashion of size \code{batch_size}. Larger batches mean
+we can parallelize more, smaller batches imply a more fine-grained checking
+of termination criteria.
 }
 \section{Dictionary}{
 
 This \link{Optimizer} can be instantiated via the \link[mlr3misc:Dictionary]{dictionary}
 \link{mlr_optimizers} or with the associated sugar function \code{\link[=opt]{opt()}}:\preformatted{mlr_optimizers$get("random_search")
 opt("random_search")
+}
+}
+
+\section{Parameters}{
+
+\describe{
+\item{\code{batch_size}}{\code{integer(1)}\cr
+Maximum number of points to try in a batch.}
 }
 }
 
