@@ -1,4 +1,4 @@
-#' @title OptimizerGenSA
+#' @title Optimization via Generalized Simulated Annealing
 #'
 #' @include Optimizer.R
 #' @name mlr_optimizers_gensa
