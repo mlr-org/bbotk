@@ -40,6 +40,13 @@ PS_2D_TRF$trafo = function(x, param_set) {
   return(x)
 }
 
+# Simple 2D Function with deps
+PS_2D_DEPS = ParamSet$new(list(
+  ParamInt$new("x1", lower = -1, upper = 1),
+  ParamDbl$new("x2", lower = 1, upper = 3)
+))
+PS_2D_DEPS$add_dep("x2", "x1", CondEqual$new(1))
+
 # Multi-objecitve 2D->2D function
 FUN_2D_2D = function(xs) {
   list(y1 = xs[[1]]^2, y2 = -xs[[2]]^2)
@@ -143,4 +150,12 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
   }
 
   list(optimizer = optimizer, instance = instance)
+}
+
+MAKE_OPT = function(param_set = ParamSet$new(), param_classes = c("ParamDbl", "ParamInt"),
+  properties = "single-crit", packages = character(0)) {
+  Optimizer$new(param_set = param_set,
+    param_classes = param_classes,
+    properties = properties,
+    packages = packages)
 }
