@@ -123,9 +123,9 @@ OptimInstance = R6Class("OptimInstance",
     },
 
     #' @description
-    #' Evaluates (untransformed) points of only numeric values. Returns a scalar
-    #' objective value for single-crit or a vector of objective values for
-    #' multi-crit. The return value(s) are negated if the measure is maximized.
+    #' Evaluates (untransformed) points of only numeric values. 
+    #' Returns a numeric scalar for single-crit or a numeric vector for multi-crit. 
+    #' The return value(s) are negated if the measure is maximized.
     #' Internally, `$eval_batch()` is called with a single row. This function
     #' serves as a objective function for optimizers of numeric spaces - which
     #' should always be minimized.

@@ -24,7 +24,8 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
 
     #' @description
     #' The [Optimizer] object writes the best found points
-    #' and estimated performance values here (e.g. the Pareto Front). For internal use.
+    #' and estimated performance values here (probably the Pareto set / front). 
+    #' For internal use.
     #'
     #' @param xdt (`data.table`)\cr
     #'   x values as `data.table`.
