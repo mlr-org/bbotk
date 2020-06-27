@@ -70,6 +70,7 @@ Optimal outcome.}
 \item \href{#method-print}{\code{OptimInstance$print()}}
 \item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
 \item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
+\item \href{#method-objective_function}{\code{OptimInstance$objective_function()}}
 \item \href{#method-clone}{\code{OptimInstance$clone()}}
 }
 }
@@ -169,6 +170,32 @@ Can contain additional columns for extra information.}
 Optimal outcome.}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-objective_function"></a>}}
+\if{latex}{\out{\hypertarget{method-objective_function}{}}}
+\subsection{Method \code{objective_function()}}{
+Evaluates (untransformed) points of only numeric values. Returns a scalar
+objective value for single-crit or a vector of objective values for
+multi-crit. The return value(s) are negated if the measure is maximized.
+Internally, \verb{$eval_batch()} is called with a single row. This function
+serves as a objective function for optimizers of numeric spaces - which
+should always be minimized.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$objective_function(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{numeric()})\cr
+Untransformed points.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Objective value as \code{numeric(1)}, negated for maximization problems.
 }
 }
 \if{html}{\out{<hr>}}

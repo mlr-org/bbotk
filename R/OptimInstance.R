@@ -120,6 +120,31 @@ OptimInstance = R6Class("OptimInstance",
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
       x_domain = transform_xdt_to_xss(xdt, self$search_space)[[1]]
       private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
+    },
+
+    #' @description
+    #' Evaluates (untransformed) points of only numeric values. 
+    #' Returns a numeric scalar for single-crit or a numeric vector for multi-crit. 
+    #' The return value(s) are negated if the measure is maximized.
+    #' Internally, `$eval_batch()` is called with a single row. This function
+    #' serves as a objective function for optimizers of numeric spaces - which
+    #' should always be minimized.
+    #'
+    #' @param x (`numeric()`)\cr
+    #' Untransformed points.
+    #'
+    #' @return Objective value as `numeric(1)`, negated for maximization problems.
+    objective_function = function(x) {
+      if(!all(self$search_space$is_number)) {
+        stop("$objective_function can only be called if search_space only
+          contains numeric values")
+      }
+      xs = set_names(as.list(x), self$search_space$ids())
+      self$search_space$assert(xs)
+      xdt = as.data.table(xs)
+      res = self$eval_batch(xdt)
+      y = as.numeric(res[, self$objective$codomain$ids(), with=FALSE])
+      ifelse(self$objective$codomain$tags == "minimize", y, -y)
     }
   ),
 

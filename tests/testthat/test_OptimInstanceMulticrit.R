@@ -40,3 +40,10 @@ test_that("Terminator assertions work", {
   terminator = term("perf_reached")
   expect_error(MAKE_INST_2D_2D(terminator))
 })
+
+test_that("objective_function works", {
+  terminator = terminator = term("evals", n_evals = 100)
+  inst = MAKE_INST_2D_2D(terminator = terminator)
+  y = inst$objective_function(c(1,1))
+  expect_equal(y, c(y1 = 1, y2 = 1))
+})

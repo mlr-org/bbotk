@@ -1,12 +1,26 @@
 #' @title Optimization via Random Search
 #'
 #' @include Optimizer.R
+#' @name mlr_optimizers_random_search
 #'
 #' @description
 #' `OptimizerRandomSearch` class that implements a simple Random Search.
 #'
-#' @export
+#' In order to support general termination criteria and parallelization, we
+#' evaluate points in a batch-fashion of size `batch_size`. Larger batches mean
+#' we can parallelize more, smaller batches imply a more fine-grained checking
+#' of termination criteria.
+#'
 #' @templateVar id random_search
+#' @template section_dictionary_optimizers
+#'
+#' @section Parameters:
+#' \describe{
+#' \item{`batch_size`}{`integer(1)`\cr
+#' Maximum number of points to try in a batch.}
+#' }
+#'
+#' @export
 #' @template example
 OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
   inherit = Optimizer,

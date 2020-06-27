@@ -53,6 +53,3 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     .fun = NULL
   )
 )
-
-# FIXME: ist das mit dem evaluate, evaluate_checked so sinnvoll?
-# kann man die checks nur in der instance vielleicht machen? per flag an und aus?
