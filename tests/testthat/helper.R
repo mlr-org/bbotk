@@ -132,9 +132,9 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
 
   if (n_dim == 1) {
     expect_list(x_opt, len = n_dim)
-    expect_named(x_opt, c("x"))
+    expect_named(x_opt, "x")
     expect_numeric(y_opt, len = n_dim)
-    expect_named(y_opt, c("y"))
+    expect_named(y_opt, "y")
   } else {
     expect_list(x_opt[[1]], len = n_dim)
     expect_named(x_opt[[1]], c("x1", "x2"))
@@ -144,5 +144,3 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
 
   list(optimizer = optimizer, instance = instance)
 }
-
-# FIXME OptimInstace works with codomain > 1
