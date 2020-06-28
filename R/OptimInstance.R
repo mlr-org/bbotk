@@ -82,10 +82,12 @@ OptimInstance = R6Class("OptimInstance",
         stop(terminated_error(self))
       }
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
-      private$.log_eval_batch_start(xdt)
+      lg$info("Evaluating %i configuration(s)", nrow(xdt))
       ydt = self$objective$eval_many(xss_trafoed)
       self$archive$add_evals(xdt, xss_trafoed, ydt)
-      private$.log_eval_batch_finish(xdt, ydt)
+      lg$info("Result of batch %i:", self$archive$n_batch)
+      lg$info(capture.output(print(cbind(xdt, ydt),
+        class = FALSE, row.names = FALSE, print.keys = FALSE)))
       return(invisible(ydt))
     },
 
@@ -156,16 +158,6 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   private = list(
-    .result = NULL,
-
-    .log_eval_batch_start = function(xdt) {
-      lg$info("Evaluating %i configuration(s)", nrow(xdt))
-    },
-
-    .log_eval_batch_finish = function(xdt, ydt) {
-      lg$info("Result of batch %i:", self$archive$n_batch)
-      lg$info(capture.output(print(cbind(xdt, ydt),
-        class = FALSE, row.names = FALSE, print.keys = FALSE)))
-    }
+    .result = NULL
   )
 )
