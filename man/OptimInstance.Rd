@@ -4,15 +4,7 @@
 \alias{OptimInstance}
 \title{Optimization Instance with budget and archive}
 \description{
-Wraps an \link{Objective} function with extra services for convenient evaluation.
-\itemize{
-\item Automatic storing of results in an \link{Archive} after evaluation.
-\item Automatic checking for termination. Evaluations of design points are
-performed in batches. Before a batch is evaluated, the \link{Terminator} is
-queried for the remaining budget. If the available budget is exhausted, an
-exception is raised, and no further evaluations can be performed from this
-point on.
-}
+Abstract base class.
 }
 \section{Technical details}{
 
@@ -21,13 +13,6 @@ the \verb{$assign_result()} method. \code{.result} stores a \link[data.table:dat
 consisting of x values in the \emph{search space}, (transformed) x values in the
 \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}. The
 user can access the results with active bindings (see below).
-
-In order to replace the default logging messages with custom logging, the
-\verb{.log_*} private methods can be overwritten in an \code{OptimInstance} subclass:
-\itemize{
-\item \verb{$.log_eval_batch_start()} Called at the beginning of \verb{$eval_batch()}
-\item \verb{$.log_eval_batch_finish()} Called at the end of \verb{$eval_batch()}
-}
 }
 
 \section{Public fields}{
@@ -176,9 +161,9 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-objective_function"></a>}}
 \if{latex}{\out{\hypertarget{method-objective_function}{}}}
 \subsection{Method \code{objective_function()}}{
-Evaluates (untransformed) points of only numeric values. Returns a scalar
-objective value for single-crit or a vector of objective values for
-multi-crit. The return value(s) are negated if the measure is maximized.
+Evaluates (untransformed) points of only numeric values.
+Returns a numeric scalar for single-crit or a numeric vector for multi-crit.
+The return value(s) are negated if the measure is maximized.
 Internally, \verb{$eval_batch()} is called with a single row. This function
 serves as a objective function for optimizers of numeric spaces - which
 should always be minimized.

@@ -45,7 +45,7 @@ objective = ObjectiveRFun$new(fun = objective_function,
                               domain = domain,
                               codomain = codomain)
 terminator = term("evals", n_evals = 10)
-instance = OptimInstance$new(objective = objective,
+instance = OptimInstanceSinglecrit$new(objective = objective,
                              search_space = search_space,
                              terminator = terminator)
 

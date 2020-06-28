@@ -1,14 +1,7 @@
 #' @title Optimization Instance with budget and archive
 #'
 #' @description
-#' Wraps an [Objective] function with extra services for convenient evaluation.
-#'
-#' * Automatic storing of results in an [Archive] after evaluation.
-#' * Automatic checking for termination. Evaluations of design points are
-#'   performed in batches. Before a batch is evaluated, the [Terminator] is
-#'   queried for the remaining budget. If the available budget is exhausted, an
-#'   exception is raised, and no further evaluations can be performed from this
-#'   point on.
+#' Abstract base class.
 #'
 #' @section Technical details:
 #' The [Optimizer] writes the final result to the `.result` field by using
@@ -16,12 +9,6 @@
 #' consisting of x values in the *search space*, (transformed) x values in the
 #' *domain space* and y values in the *codomain space* of the [Objective]. The
 #' user can access the results with active bindings (see below).
-#'
-#' In order to replace the default logging messages with custom logging, the
-#' `.log_*` private methods can be overwritten in an `OptimInstance` subclass:
-#'
-#' * `$.log_eval_batch_start()` Called at the beginning of `$eval_batch()`
-#' * `$.log_eval_batch_finish()` Called at the end of `$eval_batch()`
 #'
 #' @template param_xdt
 #' @export
@@ -113,18 +100,12 @@ OptimInstance = R6Class("OptimInstance",
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
     assign_result = function(xdt, y) {
-      # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
-      assert_data_table(xdt, nrows = 1)
-      assert_names(names(xdt), must.include = self$search_space$ids())
-      assert_number(y)
-      assert_names(names(y), permutation.of = self$objective$codomain$ids())
-      x_domain = transform_xdt_to_xss(xdt, self$search_space)[[1]]
-      private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
+      stop("Abstract class")
     },
 
     #' @description
-    #' Evaluates (untransformed) points of only numeric values. 
-    #' Returns a numeric scalar for single-crit or a numeric vector for multi-crit. 
+    #' Evaluates (untransformed) points of only numeric values.
+    #' Returns a numeric scalar for single-crit or a numeric vector for multi-crit.
     #' The return value(s) are negated if the measure is maximized.
     #' Internally, `$eval_batch()` is called with a single row. This function
     #' serves as a objective function for optimizers of numeric spaces - which

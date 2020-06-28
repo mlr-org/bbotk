@@ -1,8 +1,15 @@
 #' @title Optimization Instance with budget and archive
 #'
 #' @description
-#' Wraps an multi-criteria [Objective] function with extra services for convenient evaluation.
-#' Inherits from [OptimInstance]
+#' Wraps a multi-criteria [Objective] function with extra services for
+#' convenient evaluation. Inherits from [OptimInstance].
+#'
+#' * Automatic storing of results in an [Archive] after evaluation.
+#' * Automatic checking for termination. Evaluations of design points are
+#'   performed in batches. Before a batch is evaluated, the [Terminator] is
+#'   queried for the remaining budget. If the available budget is exhausted, an
+#'   exception is raised, and no further evaluations can be performed from this
+#'   point on.
 #'
 #' @template param_xdt
 #' @template param_ydt
@@ -24,7 +31,7 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
 
     #' @description
     #' The [Optimizer] object writes the best found points
-    #' and estimated performance values here (probably the Pareto set / front). 
+    #' and estimated performance values here (probably the Pareto set / front).
     #' For internal use.
     #'
     #' @param xdt (`data.table`)\cr
@@ -46,12 +53,6 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
   ),
 
   active = list(
-    #' @field result_x_search_space ([data.table::data.table])\cr
-    #'   x part of the result in the *search space*.
-    result_x_search_space = function() {
-      private$.result[, self$search_space$ids(), with = FALSE]
-    },
-
     #' @field result_x_domain (`list()`)\cr
     #'   (transformed) x part of the result in the *domain space* of the objective.
     result_x_domain = function() {
@@ -63,9 +64,5 @@ OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
     result_y = function() {
       private$.result[, self$objective$codomain$ids(), with = FALSE]
     }
-  ),
-
-  private = list(
-    .result = NULL
   )
 )
