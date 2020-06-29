@@ -106,3 +106,50 @@ test_that("Objective specialzations work", {
     expect_equal(res5, fun2$eval_many(xdt3$transpose()))
   }
 })
+
+test_that("codomain assertions work", {
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize")))
+  expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamLgl$new("y1")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = c("minimize", "maximize"))))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2", tags = "maximize")))
+  expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1"), ParamDbl$new("y2")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains no 'minimize' or 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamLgl$new("y2", tags = "maximize")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain is not numeric")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamLgl$new("y1", tags = "minimize"), ParamLgl$new("y2", tags = "maximize")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2", tags = c("minimize", "maximize"))))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains a 'minimize' and 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = c("minimize", "maximize")), ParamDbl$new("y2", tags = c("minimize", "maximize"))))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
+})
+
