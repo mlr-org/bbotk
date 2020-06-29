@@ -35,21 +35,6 @@ Objective = R6Class("Objective",
       codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
-
-      assert_codomain = function(x) {
-        # check that "codomain" is
-        # (1) all numeric and
-        # (2) every parameter's tags contain at most one of 'minimize' or 'maximize' and
-        # (3) there is at least one parameter with tag 'minimize' / 'maximize'
-        assert_param_set(x)
-        assert_true(all(x$is_number))
-        assert_true(all(sapply(x$tags, function(x) {
-          sum(x %in% c("minimize", "maximize"))
-        }) <= 1))
-        assert_true(any(c("minimize", "maximize") %in% unlist(x$tags)))
-        return(x)
-      }
-
       self$codomain = assert_codomain(codomain)
       self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
     },
