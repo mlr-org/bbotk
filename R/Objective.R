@@ -124,7 +124,7 @@ Objective = R6Class("Objective",
     eval_checked = function(xs) {
       self$domain$assert(xs)
       res = self$eval(xs)
-      self$codomain$assert(res) #FIXME: Does not allow extras do be returned
+      self$codomain$assert(res[self$codomain$ids()])
       return(res)
     },
 
@@ -143,7 +143,8 @@ Objective = R6Class("Objective",
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)
       res = self$eval_many(xss)
-      # lapply(res, self$codomain$assert) #FIXME: Does not work easily if res is dt
+      self$codomain$assert_dt(res[, self$codomain$ids(), with= FALSE])
+      return(res)
     }
   ),
 
