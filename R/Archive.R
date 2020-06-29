@@ -37,7 +37,6 @@ Archive = R6Class("Archive",
     initialize = function(search_space, codomain) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
-      self$start_time = Sys.time()
       private$.data = data.table()
     },
 
@@ -63,7 +62,7 @@ Archive = R6Class("Archive",
 
     #' @description
     #' Returns the best scoring evaluation. For single-crit optimization,
-    #' the solution that minimizes / maximizes the objective function. 
+    #' the solution that minimizes / maximizes the objective function.
     #' For multi-crit optimization, the Pareto set / front.
     #'
     #' @param m (`integer()`)\cr

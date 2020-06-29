@@ -65,6 +65,7 @@ Optimizer = R6Class("Optimizer",
     #' @return NULL
     optimize = function(inst) {
       assert_instance_properties(self, inst)
+      inst$archive$start_time = Sys.time()
       # start optimization
       lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
         inst$search_space$length, self$format(), inst$terminator$format())
