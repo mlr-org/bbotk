@@ -1,14 +1,10 @@
 #' @title Terminator that stops according to the run time
 #'
-#' @name mlr_terminators_run_time
 #' @include Terminator.R
 #'
 #' @description
 #' Class to terminate the optimization after the optimization process took a
 #' number of seconds on the clock.
-#'
-#' @templateVar id run_time
-#' @template section_dictionary_terminator
 #'
 #' @section Parameters:
 #' * `secs` `numeric(1)`\cr
@@ -18,7 +14,8 @@
 #' @family Terminator
 #' @export
 #' @examples
-#' term("run_time", secs = 1800)
+#' terminator = TerminatorRunTime$new()
+#' terminator$param_set$values$secs = 1000
 TerminatorRunTime = R6Class("TerminatorRunTime",
   inherit = Terminator,
   public = list(
@@ -43,5 +40,3 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     }
   )
 )
-
-mlr_terminators$add("run_time", TerminatorRunTime)

@@ -1,14 +1,10 @@
 #' @title Combine Terminators
 #'
-#' @name mlr_terminators_combo
 #' @include Terminator.R
 #'
 #' @description
 #' This class takes multiple [Terminator]s and terminates as soon as one or all
 #' of the included terminators are positive.
-#'
-#' @templateVar id combo
-#' @template section_dictionary_terminator
 #'
 #' @section Parameters:
 #' * `any` (`logical(1)`)\cr
@@ -17,10 +13,11 @@
 #' @family Terminator
 #' @export
 #' @examples
-#' term("combo",
-#'   list(term("clock_time", stop_time = Sys.time() + 60), term("evals", n_evals = 10)),
-#'   any = FALSE
-#' )
+#' terminators = c(TerminatorClockTime$new(), TerminatorEvals$new())
+#' terminators[[1]]$param_set$values$stop_time = Sys.time() + 60
+#' terminators[[2]]$param_set$values$n_evals = 10
+#' terminator = TerminatorCombo$new(terminators)
+#' terminator$param_set$values$any = FALSE
 TerminatorCombo = R6Class("TerminatorCombo",
   inherit = Terminator,
 
@@ -64,5 +61,3 @@ TerminatorCombo = R6Class("TerminatorCombo",
 
   )
 )
-
-mlr_terminators$add("combo", TerminatorCombo)

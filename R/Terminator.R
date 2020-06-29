@@ -1,7 +1,5 @@
 #' @title Abstract Terminator Class
 #'
-#' @include mlr_terminators.R
-#'
 #' @description
 #' Abstract `Terminator` class that implements the base functionality each
 #' terminator must provide. A terminator is an object that determines when to

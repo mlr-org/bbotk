@@ -24,15 +24,14 @@ particular if you are benchmarking multiple optimization algorithms.
 }
 \seealso{
 Other Terminator: 
-\code{\link{mlr_terminators_clock_time}},
-\code{\link{mlr_terminators_combo}},
-\code{\link{mlr_terminators_evals}},
-\code{\link{mlr_terminators_none}},
-\code{\link{mlr_terminators_perf_reached}},
-\code{\link{mlr_terminators_run_time}},
-\code{\link{mlr_terminators_stagnation_batch}},
-\code{\link{mlr_terminators_stagnation}},
-\code{\link{mlr_terminators}}
+\code{\link{TerminatorClockTime}},
+\code{\link{TerminatorCombo}},
+\code{\link{TerminatorEvals}},
+\code{\link{TerminatorNone}},
+\code{\link{TerminatorPerfReached}},
+\code{\link{TerminatorRunTime}},
+\code{\link{TerminatorStagnationBatch}},
+\code{\link{TerminatorStagnation}}
 }
 \concept{Terminator}
 \section{Public fields}{

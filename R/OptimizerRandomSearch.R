@@ -1,7 +1,6 @@
 #' @title Optimization via Random Search
 #'
 #' @include Optimizer.R
-#' @name mlr_optimizers_random_search
 #'
 #' @description
 #' `OptimizerRandomSearch` class that implements a simple Random Search.
@@ -11,9 +10,6 @@
 #' we can parallelize more, smaller batches imply a more fine-grained checking
 #' of termination criteria.
 #'
-#' @templateVar id random_search
-#' @template section_dictionary_optimizers
-#'
 #' @section Parameters:
 #' \describe{
 #' \item{`batch_size`}{`integer(1)`\cr
@@ -21,6 +17,7 @@
 #' }
 #'
 #' @export
+#' @templateVar id OptimizerRandomSearch$new()
 #' @template example
 OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
   inherit = Optimizer,
@@ -53,6 +50,3 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
     }
   )
 )
-
-mlr_optimizers$add("random_search", OptimizerRandomSearch)
-

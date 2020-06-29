@@ -1,14 +1,10 @@
 #' @title Terminator that stops according to the clock time
 #'
-#' @name mlr_terminators_clock_time
 #' @include Terminator.R
 #'
 #' @description
 #' Class to terminate the optimization after a fixed time point has been reached
 #' (as reported by [Sys.time()]).
-#'
-#' @templateVar id clock_time
-#' @template section_dictionary_terminator
 #'
 #' @section Parameters:
 #' * `stop_time` `POSIXct(1)`\cr
@@ -19,7 +15,8 @@
 #' @export
 #' @examples
 #' stop_time = as.POSIXct("2030-01-01 00:00:00")
-#' term("clock_time", stop_time = stop_time)
+#' terminator = TerminatorClockTime$new()
+#' terminator$param_set$values$stop_time = stop_time
 TerminatorClockTime = R6Class("TerminatorClockTime",
   inherit = Terminator,
   public = list(
@@ -48,5 +45,3 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     }
   )
 )
-
-mlr_terminators$add("clock_time", TerminatorClockTime)

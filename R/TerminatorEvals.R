@@ -1,14 +1,10 @@
 #' @title Terminator that stops after a number of evaluations
 #'
-#' @name mlr_terminators_evals
 #' @include Terminator.R
 #'
 #' @description
 #' Class to terminate the optimization depending on the number of evaluations.
 #' An evaluation is defined by one resampling of a parameter value.
-#'
-#' @templateVar id evals
-#' @template section_dictionary_terminator
 #'
 #' @section Parameters:
 #' * `n_evals` `integer(1)`\cr
@@ -17,8 +13,8 @@
 #' @family Terminator
 #' @export
 #' @examples
-#' TerminatorEvals$new()
-#' term("evals", n_evals = 5)
+#' terminator = TerminatorEvals$new()
+#' terminator$param_set$values$n_evals = 5
 TerminatorEvals = R6Class("TerminatorEvals",
   inherit = Terminator,
   public = list(
@@ -43,5 +39,3 @@ TerminatorEvals = R6Class("TerminatorEvals",
     }
   )
 )
-
-mlr_terminators$add("evals", TerminatorEvals)

@@ -1,13 +1,9 @@
-#' @title Terminator that stops when a performance level has been reached
+#' @title Terminator that stops when a performance level has been reached#
 #'
-#' @name mlr_terminators_perf_reached
 #' @include Terminator.R
 #'
 #' @description
 #' Class to terminate the optimization after a performance level has been hit.
-#'
-#' @templateVar id perf_reached
-#' @template section_dictionary_terminator
 #'
 #' @section Parameters:
 #' * `level` `numeric(1)`\cr Performance level that needs to be reached,
@@ -19,7 +15,6 @@
 #' @export
 #' @examples
 #' TerminatorPerfReached$new()
-#' term("perf_reached")
 TerminatorPerfReached = R6Class("TerminatorPerfReached",
   inherit = Terminator,
   public = list(
@@ -62,5 +57,3 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     }
   )
 )
-
-mlr_terminators$add("perf_reached", TerminatorPerfReached)
