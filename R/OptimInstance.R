@@ -35,12 +35,18 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param objective ([Objective]).
     #' @param search_space ([paradox::ParamSet]).
+    #' If no search space is provided, search space is set to domain of
+    #' objective.
     #' @param terminator ([Terminator]).
-    initialize = function(objective, search_space, terminator) {
+    initialize = function(objective, search_space = NULL, terminator) {
       self$objective = assert_r6(objective, "Objective")
-      self$search_space = assert_param_set(search_space)
+      self$search_space = if(is.null(search_space)) {
+         self$objective$domain
+      } else {
+        assert_param_set(search_space)
+      }
       self$terminator = assert_terminator(terminator, self)
-      self$archive = Archive$new(search_space = search_space,
+      self$archive = Archive$new(search_space = self$search_space,
         codomain = objective$codomain)
 
       if (!all(self$search_space$is_number)) {

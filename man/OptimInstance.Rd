@@ -65,7 +65,7 @@ Optimal outcome.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$new(objective, search_space, terminator)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$new(objective, search_space = NULL, terminator)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -73,7 +73,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{objective}}{(\link{Objective}).}
 
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).
+If no search space is provided, search space is set to domain of
+objective.}
 
 \item{\code{terminator}}{(\link{Terminator}).}
 }
