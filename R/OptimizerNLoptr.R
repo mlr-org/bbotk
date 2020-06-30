@@ -107,7 +107,7 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
     .optimize = function(inst) {
       pv = self$param_set$values
       opts = pv[which(names(pv) %nin% formalArgs(nloptr::nloptr))]
-      # Deactivate termination criterions which are placed by Terminators
+      # Deactivate termination criterions which are replaced by Terminators
       opts = insert_named(opts, list(
         maxeval = -1,
         maxtime = -1,
