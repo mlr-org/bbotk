@@ -133,10 +133,8 @@ test_optimizer = function(optimizer, param_set = list(), n_dim, term_evals = 2L,
   optimizer$optimize(instance)
   archive = instance$archive
 
-  if(!is.na(real_evals)) {
-    expect_data_table(archive$data(), nrows = real_evals)
-    expect_equal(instance$archive$n_evals, real_evals)
-  }
+  expect_data_table(archive$data(), nrows = real_evals)
+  expect_equal(instance$archive$n_evals, real_evals)
 
   x_opt = instance$result_x_domain
   y_opt = instance$result_y

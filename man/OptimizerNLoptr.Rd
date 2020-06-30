@@ -4,24 +4,35 @@
 \alias{OptimizerNLoptr}
 \title{Optimization via Non-linear Optimization}
 \description{
-\code{OptimizerNLopt} class that implements non-linear optimization. Calls
+\code{OptimizerNLoptr} class that implements non-linear optimization. Calls
 \link[nloptr:nloptr]{nloptr::nloptr} from package \CRANpkg{nloptr}.
 }
 \section{Parameters}{
 
 \describe{
-\item{\code{smooth}}{\code{logical(1)}}
-\item{\code{temperature}}{\code{numeric(1)}}
-\item{\code{acceptance.param}}{\code{numeric(1)}}
-\item{\code{verbose}}{\code{logical(1)}}
-\item{\code{trace.mat}}{\code{logical(1)}}
+\item{\code{algorithm}}{\code{character(1)}}
+\item{\code{x0}}{\code{numeric()}}
+\item{\code{eval_g_ineq}}{\verb{function)}}
+\item{\code{xtol_rel}}{\code{numeric(1)}}
+\item{\code{xtol_abs}}{\code{numeric(1)}}
+\item{\code{ftol_rel}}{\code{numeric(1)}}
+\item{\code{ftol_abs}}{\code{numeric(1)}}
 }
 
-Termination is handled by \link[nloptr:nloptr]{nloptr::nloptr} termination conditions.
+For the meaning of the control parameters, see \code{\link[nloptr:nloptr]{nloptr::nloptr()}} and
+\code{\link[nloptr:nloptr.print.options]{nloptr::nloptr.print.options()}}.
+
+The termination conditions \code{stopval}, \code{maxtime} and \code{maxeval} of
+\code{\link[nloptr:nloptr]{nloptr::nloptr()}} are deactivated and replaced by the \link{Terminator}
+subclasses. The x and function value tolerance termination conditions
+(\code{xtol_rel = 10^-4}, \code{xtol_abs = rep(0.0, length(x0))},
+\code{ftol_rel = 0.0} and \code{ftol_abs = 0.0}) are still available and implemented with
+their package defaults. To deactivate these conditions, set them to \code{-1}.
 }
 
 \examples{
 library(paradox)
+library(data.table)
 
 domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
 
@@ -34,15 +45,19 @@ objective_function = function(xs) {
 }
 
 objective = ObjectiveRFun$new(fun = objective_function,
-                              domain = domain,
-                              codomain = codomain)
-terminator = TerminatorEvals$new()
-terminator$param_set$values$n_evals = 10
-instance = OptimInstanceSinglecrit$new(objective = objective,
-                             search_space = search_space,
-                             terminator = terminator)
+  domain = domain,
+  codomain = codomain)
 
-optimizer = OptimizerGenSA$new()
+# We use the internal termination criterion xtol_rel
+terminator = TerminatorNone$new()
+
+instance = OptimInstanceSinglecrit$new(objective = objective,
+  search_space = search_space,
+  terminator = terminator)
+
+optimizer = OptimizerNLoptr$new()
+optimizer$param_set$values = mlr3misc::insert_named(optimizer$param_set$values,
+  list(x0 = 1, algorithm = "NLOPT_LN_BOBYQA"))
 
 # Modifies the instance by reference
 optimizer$optimize(instance)
