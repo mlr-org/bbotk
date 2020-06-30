@@ -61,6 +61,7 @@ Collate:
     'OptimizerDesignPoints.R'
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
+    'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
     'Terminator.R'
     'TerminatorClockTime.R'
