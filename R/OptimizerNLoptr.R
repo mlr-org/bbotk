@@ -61,15 +61,12 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
-      opts = pv[which(names(pv) %nin% c("measure", "eval_g_ineq", "lb", "ub"))]
-      nloptr::nloptr(
-        x0 = pv$x0,
-        eval_f = inst$objective_function,
-        lb = inst$search_space$lower,
-        ub = inst$search_space$upper,
-        eval_g_ineq = pv$eval_g_ineq,
-        opts = opts,
-      )
+      opts = pv[which(names(pv) %nin% formalArgs(nloptr::nloptr))]
+      pv = pv[which(names(pv) %nin% names(opts))]
+
+      invoke(nloptr::nloptr, eval_f = inst$objective_function,
+        lb = inst$search_space$lower, ub = inst$search_space$upper, opts = opts,
+        .args = pv)
     }
   )
 )
