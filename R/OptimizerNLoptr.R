@@ -10,7 +10,7 @@
 #' \describe{
 #' \item{`algorithm`}{`character(1)`}
 #' \item{`x0`}{`numeric()`}
-#' \item{`eval_g_ineq`}{`function)`}
+#' \item{`eval_g_ineq`}{`function()`}
 #' \item{`xtol_rel`}{`numeric(1)`}
 #' \item{`xtol_abs`}{`numeric(1)`}
 #' \item{`ftol_rel`}{`numeric(1)`}

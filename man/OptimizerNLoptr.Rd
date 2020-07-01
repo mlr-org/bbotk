@@ -12,7 +12,7 @@
 \describe{
 \item{\code{algorithm}}{\code{character(1)}}
 \item{\code{x0}}{\code{numeric()}}
-\item{\code{eval_g_ineq}}{\verb{function)}}
+\item{\code{eval_g_ineq}}{\verb{function()}}
 \item{\code{xtol_rel}}{\code{numeric(1)}}
 \item{\code{xtol_abs}}{\code{numeric(1)}}
 \item{\code{ftol_rel}}{\code{numeric(1)}}
