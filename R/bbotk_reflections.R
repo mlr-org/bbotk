@@ -29,7 +29,7 @@ local({
 
   ### objective_properties
   bbotk_reflections$objective_properties = c(
-    "noisy", "single-cit", "multi-crit", "deterministic"
+    "noisy", "single-crit", "multi-crit", "deterministic"
   )
 
   bbotk_reflections$terminator_properties = c(

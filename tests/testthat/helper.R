@@ -10,7 +10,7 @@ FUN_1D = function(xs) {
   list(y = as.numeric(xs)^2)
 }
 FUN_1D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
-OBJ_1D = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain)
+OBJ_1D = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain, properties = "single-crit")
 
 # Simple 2D Function
 PS_2D_domain = ParamSet$new(list(
@@ -27,7 +27,7 @@ FUN_2D = function(xs) {
   list(y = y)
 }
 FUN_2D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
-OBJ_2D = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D_domain)
+OBJ_2D = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D_domain, properties = "single-crit")
 
 
 # Simple 2D Function with trafo
@@ -57,7 +57,7 @@ FUN_2D_2D_CODOMAIN = ParamSet$new(list(
 ))
 
 OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D,
-  codomain = FUN_2D_2D_CODOMAIN)
+  codomain = FUN_2D_2D_CODOMAIN, properties = "multi-crit")
 
 # General Helper
 MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D,
@@ -104,7 +104,7 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
       list(y = y)
     }
     objective = ObjectiveRFun$new(fun = objective_function, domain = domain,
-      codomain = codomain)
+      codomain = codomain, properties = "single-crit")
     instance = OptimInstanceSingleCrit$new(objective = objective,
       search_space = search_space, terminator = terminator)
   } else if(n_dim == 2) {
@@ -121,7 +121,7 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
       list(y1 = xs[[1]]^2, y2 = -xs[[2]]^2)
     }
     objective = ObjectiveRFun$new(fun = objective_function, domain = domain,
-      codomain = codomain)
+      codomain = codomain, properties = "multi-crit")
     instance = OptimInstanceMultiCrit$new(objective = objective,
       search_space = search_space, terminator = terminator)
   }
