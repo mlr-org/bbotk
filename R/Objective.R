@@ -4,6 +4,10 @@
 #' Describes a black-box objective function that maps an arbitrary domain to a
 #' numerical codomain.
 #'
+#' @section Technical details:
+#' `Objective` objects can take the following properties `noisy`, `deterministic`, `single-crit` and
+#' `multi-crit`.
+#'
 #' @template param_domain
 #' @template param_codomain
 #' @template param_xdt
