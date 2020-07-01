@@ -50,19 +50,9 @@ OptimInstance = R6Class("OptimInstance",
         codomain = objective$codomain)
 
       if (!all(self$search_space$is_number)) {
-        private$.objective_function = function(x) {
-          stop("$objective_function can only be called if search_space only
-          contains numeric values")
-        }
+        private$.objective_function = objective_error
       } else {
-        private$.objective_function = function(x) {
-          xs = set_names(as.list(x), self$search_space$ids())
-          self$search_space$assert(xs)
-          xdt = as.data.table(xs)
-          res = self$eval_batch(xdt)
-          y = as.numeric(res[, self$objective$codomain$ids(), with = FALSE])
-          y * private$.objective_multiplicator
-        }
+        private$.objective_function = objective_function
         private$.objective_multiplicator =
           ifelse(self$objective$codomain$tags == "minimize", 1, -1)
       }
@@ -142,7 +132,7 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @return Objective value as `numeric(1)`, negated for maximization problems.
     objective_function = function(x) {
-      private$.objective_function(x)
+      private$.objective_function(x, self, private$.objective_multiplicator)
     }
   ),
 
@@ -180,3 +170,17 @@ OptimInstance = R6Class("OptimInstance",
     .objective_multiplicator = NULL
   )
 )
+
+objective_function = function(x, inst, multiplicator) {
+    xs = set_names(as.list(x), inst$search_space$ids())
+    inst$search_space$assert(xs)
+    xdt = as.data.table(xs)
+    res = inst$eval_batch(xdt)
+    y = as.numeric(res[, inst$objective$codomain$ids(), with = FALSE])
+    y * multiplicator
+}
+
+objective_error = function(x, inst, multiplicator) {
+  stop("$objective_function can only be called if search_space only
+    contains numeric values")
+}
