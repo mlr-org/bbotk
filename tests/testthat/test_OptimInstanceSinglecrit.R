@@ -106,3 +106,8 @@ test_that("search_space is optional", {
   inst = OptimInstanceSinglecrit$new(objective = OBJ_1D, terminator = TerminatorEvals$new())
   expect_identical(inst$search_space, OBJ_1D$domain)
 })
+
+test_that("OptimInstaceSinglecrit does not work with codomain > 1", {
+  expect_error(OptimInstanceSinglecrit$new(objective = OBJ_2D_2D,
+    terminator = term("none")), "Codomain > 1")
+})
