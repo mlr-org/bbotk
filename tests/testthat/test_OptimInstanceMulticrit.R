@@ -1,9 +1,9 @@
-context("OptimInstanceMulticrit")
+context("OptimInstanceMultiCrit")
 
 
-test_that("OptimInstanceMulticrit", {
+test_that("OptimInstanceMultiCrit", {
   inst = MAKE_INST_2D_2D(20L)
-  expect_output(print(inst), "OptimInstanceMulticrit")
+  expect_output(print(inst), "OptimInstanceMultiCrit")
   expect_r6(inst$archive, "Archive")
   expect_data_table(inst$archive$data(), nrows = 0L)
   expect_identical(inst$archive$n_evals, 0L)
@@ -29,7 +29,7 @@ test_that("OptimInstanceMulticrit", {
 
 test_that("OptimInstanceMultiCrit with 1 Crit", {
   tt = term("evals", n_evals = 5)
-  inst = OptimInstanceMulticrit$new(objective = OBJ_2D, search_space = PS_2D, terminator = tt)
+  inst = OptimInstanceMultiCrit$new(objective = OBJ_2D, search_space = PS_2D, terminator = tt)
   optimizer = OptimizerRandomSearch$new()
   optimizer$optimize(inst)
   expect_data_table(inst$result_y, ncols = 1)

@@ -1,7 +1,6 @@
-context("OptimInstance")
+context("OptimInstanceSingleCrit")
 
-
-test_that("OptimInstance", {
+test_that("OptimInstanceSingleCrit", {
   inst = MAKE_INST_2D(20L)
   expect_r6(inst$archive, "Archive")
   expect_data_table(inst$archive$data(), nrows = 0L)
@@ -28,7 +27,7 @@ test_that("OptimInstance works with trafos", {
   expect_data_table(inst$archive$data(), nrows = 3L)
   expect_equal(inst$archive$data()$y, c(2, 0, 2))
   expect_equal(inst$archive$data()$x_domain[[1]], list(x1 = -1, x2 = -1))
-  expect_output(print(inst), "<OptimInstanceSinglecrit>")
+  expect_output(print(inst), "<OptimInstanceSingleCrit>")
 })
 
 test_that("OptimInstance works with extras input", {
@@ -103,11 +102,11 @@ test_that("objective_function works", {
 })
 
 test_that("search_space is optional", {
-  inst = OptimInstanceSinglecrit$new(objective = OBJ_1D, terminator = TerminatorEvals$new())
+  inst = OptimInstanceSingleCrit$new(objective = OBJ_1D, terminator = TerminatorEvals$new())
   expect_identical(inst$search_space, OBJ_1D$domain)
 })
 
-test_that("OptimInstaceSinglecrit does not work with codomain > 1", {
-  expect_error(OptimInstanceSinglecrit$new(objective = OBJ_2D_2D,
+test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
+  expect_error(OptimInstanceSingleCrit$new(objective = OBJ_2D_2D,
     terminator = term("none")), "Codomain > 1")
 })

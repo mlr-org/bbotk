@@ -101,7 +101,7 @@ Optimizer = R6Class("Optimizer",
 
       xdt = res[, inst$search_space$ids(), with = FALSE]
 
-      if (inherits(inst, "OptimInstanceMulticrit")) {
+      if (inherits(inst, "OptimInstanceMultiCrit")) {
         ydt = res[, inst$objective$codomain$ids(), with = FALSE]
         inst$assign_result(xdt, ydt)
       } else {
