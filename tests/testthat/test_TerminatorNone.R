@@ -1,7 +1,7 @@
 context("TerminatorNone")
 
 test_that("TerminatorNone works", {
-  trms = c(TerminatorEvals$new(), TerminatorNone$new())
+  trms = terms(c("evals", "none"))
   trms[[1]]$param_set$values$n_evals = 10L
   expect_output(print(trms[[2]]), "TerminatorNone")
   terminator = TerminatorCombo$new(trms)

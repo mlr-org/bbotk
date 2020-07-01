@@ -1,10 +1,14 @@
 #' @title Optimization via Generalized Simulated Annealing
 #'
 #' @include Optimizer.R
+#' @name mlr_optimizers_gensa
 #'
 #' @description
 #' `OptimizerGenSA` class that implements generalized simulated annealing. Calls
 #' [GenSA::GenSA()] from package \CRANpkg{GenSA}.
+#'
+#' @templateVar id gensa
+#' @template section_dictionary_optimizers
 #'
 #' @section Parameters:
 #' \describe{
@@ -20,7 +24,6 @@
 #' algorithm and where our terminators allow to obtain the same behavior.
 #'
 #' @export
-#' @templateVar id OptimizerGenSA$new()
 #' @template example
 OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
   public = list(
@@ -54,3 +57,5 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
     }
   )
 )
+
+mlr_optimizers$add("gensa", OptimizerGenSA)

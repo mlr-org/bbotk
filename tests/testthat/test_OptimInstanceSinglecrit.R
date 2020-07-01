@@ -80,8 +80,7 @@ test_that("Terminator assertions work", {
 })
 
 test_that("objective_function works", {
-  terminator = TerminatorEvals$new()
-  terminator$param_set$values$n_evals = 100
+  terminator = terminator = term("evals", n_evals = 100)
   inst = MAKE_INST_1D(terminator = terminator)
   y = inst$objective_function(1)
   expect_equal(y, c(y = 1))

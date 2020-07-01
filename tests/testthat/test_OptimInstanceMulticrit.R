@@ -28,8 +28,7 @@ test_that("OptimInstanceMulticrit", {
 })
 
 test_that("OptimInstanceMultiCrit with 1 Crit", {
-  tt = TerminatorEvals$new()
-  tt$param_set$values$n_evals = 5
+  tt = term("evals", n_evals = 5)
   inst = OptimInstanceMulticrit$new(objective = OBJ_2D, search_space = PS_2D, terminator = tt)
   optimizer = OptimizerRandomSearch$new()
   optimizer$optimize(inst)
@@ -38,13 +37,12 @@ test_that("OptimInstanceMultiCrit with 1 Crit", {
 })
 
 test_that("Terminator assertions work", {
-  terminator = TerminatorPerfReached$new()
+  terminator = term("perf_reached")
   expect_error(MAKE_INST_2D_2D(terminator))
 })
 
 test_that("objective_function works", {
-  terminator = TerminatorEvals$new()
-  terminator$param_set$values$n_evals = 100
+  terminator = terminator = term("evals", n_evals = 100)
   inst = MAKE_INST_2D_2D(terminator = terminator)
   y = inst$objective_function(c(1,1))
   expect_equal(y, c(y1 = 1, y2 = 1))

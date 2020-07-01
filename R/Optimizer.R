@@ -1,5 +1,7 @@
 #' @title Optimizer
 #'
+#' @include mlr_optimizers.R
+#'
 #' @description
 #' Abstract `Optimizer` class that implements the base functionality each
 #' `Optimizer` subclass must provide. A `Optimizer` object describes the
@@ -8,6 +10,14 @@
 #' A `Optimizer` object must write its result to the `$assign_result()` method
 #' of the [OptimInstance] at the end in order to store the best point  and its
 #' estimated performance vector.
+#'
+#' @section Technical details:
+#'
+#' In order to replace the default logging messages with custom logging, the
+#' `.log_*` private methods can be overwritten in an `Optimizer` subclass:
+#'
+#' * `$.log_optimize_start()` Called at the beginning of `$optimize()`
+#' * `$.log_optimize_finish()` Called at the end of `$optimize()`
 #'
 #' @export
 Optimizer = R6Class("Optimizer",

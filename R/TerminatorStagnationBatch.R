@@ -1,10 +1,14 @@
 #' @title Terminator that stops when optimization does not improve
 #'
+#' @name mlr_terminators_stagnation_batch
 #' @include Terminator.R
 #'
 #' @description
 #' Class to terminate the optimization after the performance stagnates, i.e.
 #' does not improve more than `threshold` over the last `n` batches.
+#'
+#' @templateVar id stagnation
+#' @template section_dictionary_terminator
 #'
 #' @section Parameters:
 #' * `n` `integer(1)`\cr
@@ -18,9 +22,8 @@
 #' @family Terminator
 #' @export
 #' @examples
-#' terminator = TerminatorStagnationBatch$new()
-#' terminator$param_set$values$n = 1
-#' terminator$param_set$values$threshold = 1e-5
+#' TerminatorStagnationBatch$new()
+#' term("stagnation_batch", n = 1, threshold = 1e-5)
 TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
   inherit = Terminator,
   public = list(
@@ -74,3 +77,5 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
     }
   )
 )
+
+mlr_terminators$add("stagnation_batch", TerminatorStagnationBatch)
