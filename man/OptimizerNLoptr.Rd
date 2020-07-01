@@ -50,7 +50,7 @@ objective = ObjectiveRFun$new(fun = objective_function,
 
 # We use the internal termination criterion xtol_rel
 terminator = term("none")
-instance = OptimInstanceSinglecrit$new(objective = objective,
+instance = OptimInstanceSingleCrit$new(objective = objective,
                              search_space = search_space,
                              terminator = terminator)
 
