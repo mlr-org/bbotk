@@ -2,19 +2,15 @@ context("OptimizerDesignPoints")
 
 test_that("OptimizerDesignPoints", {
   design = data.table(x = c(-1, 0, 1))
-  param_set = list(design = design)
-  z = test_optimizer(OptimizerDesignPoints$new(), param_set, n_dim = 1,
-    term_evals = 10L, real_evals = 3)
+  z = test_optimizer("design_points", design = design, n_dim = 1, term_evals = 10L, real_evals = 3)
   expect_class(z$optimizer, "OptimizerDesignPoints")
   expect_output(print(z$optimizer), "OptimizerDesignPoints")
 
   design = data.table(x1 = c(-1, 0, 1), x2 = c(-1, 0, 1))
-  param_set = list(design = design)
-  z = test_optimizer(OptimizerDesignPoints$new(), param_set, n_dim = 2,
-    term_evals = 10L, real_evals = 3)
+  z = test_optimizer("design_points", design = design, n_dim = 2, term_evals = 10L, real_evals = 3)
   expect_class(z$optimizer, "OptimizerDesignPoints")
   expect_output(print(z$optimizer), "OptimizerDesignPoints")
 
-  expect_error(test_optimizer(OptimizerDesignPoints$new(), n_dim = 1,
-    term_evals = 10L, real_evals = 3), "Please set design datatable")
+  expect_error(test_optimizer("design_points", n_dim = 1, term_evals = 10L, real_evals = 3),
+    "Please set design datatable")
 })

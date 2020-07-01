@@ -80,8 +80,7 @@ test_that("Terminator assertions work", {
 })
 
 test_that("objective_function works", {
-  terminator = TerminatorEvals$new()
-  terminator$param_set$values$n_evals = 100
+  terminator = terminator = term("evals", n_evals = 100)
   inst = MAKE_INST_1D(terminator = terminator)
   y = inst$objective_function(1)
   expect_equal(y, c(y = 1))
@@ -101,4 +100,9 @@ test_that("objective_function works", {
   ))
   inst = MAKE_INST(objective = obj, search_space = search_space, terminator = terminator)
   expect_error(inst$objective_function(1), "objective_function can only")
+})
+
+test_that("search_space is optional", {
+  inst = OptimInstanceSinglecrit$new(objective = OBJ_1D, terminator = TerminatorEvals$new())
+  expect_identical(inst$search_space, OBJ_1D$domain)
 })

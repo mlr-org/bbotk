@@ -1,6 +1,7 @@
 #' @title Optimization via Grid Search
 #'
 #' @include Optimizer.R
+#' @name mlr_optimizers_grid_search
 #'
 #' @description
 #' `OptimizerGridSearch` class that implements grid search. The grid is
@@ -12,6 +13,9 @@
 #' evaluate points in a batch-fashion of size `batch_size`. Larger batches mean
 #' we can parallelize more, smaller batches imply a more fine-grained checking
 #' of termination criteria.
+#'
+#' @templateVar id grid_search
+#' @template section_dictionary_optimizers
 #'
 #' @section Parameters:
 #' \describe{
@@ -25,7 +29,6 @@
 #' }
 #'
 #' @export
-#' @templateVar id OptimizerGridSearch$new()
 #' @template example
 OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
   public = list(
@@ -60,3 +63,5 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
     }
   )
 )
+
+mlr_optimizers$add("grid_search", OptimizerGridSearch)

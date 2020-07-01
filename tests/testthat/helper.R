@@ -88,10 +88,9 @@ MAKE_INST_2D_2D = function(terminator) {
     terminator = terminator)
 }
 
-test_optimizer = function(optimizer, param_set = list(), n_dim, term_evals = 2L, real_evals = term_evals) {
-  terminator = TerminatorEvals$new()
-  terminator$param_set$values = insert_named(terminator$param_set$values,
-                                             list(n_evals = term_evals))
+test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_evals) {
+  terminator = term("evals", n_evals = term_evals)
+
   if(n_dim == 1) {
     search_space =  ParamSet$new(list(
       ParamDbl$new("x", lower = -1, upper = 1)
@@ -127,9 +126,8 @@ test_optimizer = function(optimizer, param_set = list(), n_dim, term_evals = 2L,
       search_space = search_space, terminator = terminator)
   }
 
+  optimizer = opt(key, ...)
   expect_class(optimizer, "Optimizer")
-  optimizer$param_set$values = insert_named(optimizer$param_set$values, param_set)
-
   optimizer$optimize(instance)
   archive = instance$archive
 

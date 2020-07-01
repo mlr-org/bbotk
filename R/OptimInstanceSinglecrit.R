@@ -22,8 +22,10 @@ OptimInstanceSinglecrit = R6Class("OptimInstanceSinglecrit",
     #'
     #' @param objective ([Objective]).
     #' @param search_space ([paradox::ParamSet]).
+    #' If no search space is provided, search space is set to domain of
+    #' objective.
     #' @param terminator ([Terminator]).
-    initialize = function(objective, search_space, terminator) {
+    initialize = function(objective, search_space = NULL, terminator) {
       super$initialize(objective, search_space, terminator)
     },
 

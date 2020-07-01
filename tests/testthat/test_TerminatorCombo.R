@@ -1,7 +1,7 @@
 context("TerminatorCombo")
 
 test_that("TerminatorCombo works", {
-  trms = c(TerminatorEvals$new(), TerminatorEvals$new())
+  trms = terms(c("evals", "evals"))
   trms[[1]]$param_set$values$n_evals = 3L
   trms[[2]]$param_set$values$n_evals = 6L
   terminator = TerminatorCombo$new(trms)

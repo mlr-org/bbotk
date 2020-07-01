@@ -1,6 +1,7 @@
 #' @title Optimization via Design Points
 #'
 #' @include Optimizer.R
+#' @name mlr_optimizers_design_points
 #'
 #' @description
 #' `OptimizerDesignPoints` class that implements optimization w.r.t. fixed
@@ -11,6 +12,9 @@
 #' evaluate points in a batch-fashion of size `batch_size`. Larger batches mean
 #' we can parallelize more, smaller batches imply a more fine-grained checking
 #' of termination criteria.
+#'
+#' @templateVar id design_points
+#' @template section_dictionary_optimizers
 #'
 #' @section Parameters:
 #' \describe{
@@ -38,16 +42,14 @@
 #' objective = ObjectiveRFun$new(fun = objective_function,
 #'                               domain = domain,
 #'                               codomain = codomain)
-#' terminator = TerminatorEvals$new()
-#' terminator$param_set$values$n_evals = 10
+#' terminator = term("evals", n_evals = 10)
 #' instance = OptimInstanceSinglecrit$new(objective = objective,
 #'                              search_space = search_space,
 #'                              terminator = terminator)
 #'
 #' design = data.table(x = c(0, 1))
 #'
-#' optimizer = OptimizerDesignPoints$new()
-#' optimizer$param_set$values$design = design
+#' optimizer = opt("design_points", design = design)
 #'
 #' # Modifies the instance by reference
 #' optimizer$optimize(instance)
@@ -93,3 +95,5 @@ OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
     }
   )
 )
+
+mlr_optimizers$add("design_points", OptimizerDesignPoints)

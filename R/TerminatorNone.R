@@ -1,10 +1,14 @@
 #' @title Terminator that never stops.
 #'
+#' @name mlr_terminators_none
 #' @include Terminator.R
 #'
 #' @description
 #' Mainly useful for optimization algorithms where the stopping is inherently
 #' controlled by the algorithm itself (e.g. [mlr3tuning::TunerGridSearch]).
+#'
+#' @templateVar id none
+#' @template section_dictionary_terminator
 #'
 #' @family Terminator
 #' @export
@@ -28,3 +32,5 @@ TerminatorNone = R6Class("TerminatorNone",
     }
   )
 )
+
+mlr_terminators$add("none", TerminatorNone)

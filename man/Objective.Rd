@@ -7,6 +7,12 @@
 Describes a black-box objective function that maps an arbitrary domain to a
 numerical codomain.
 }
+\section{Technical details}{
+
+\code{Objective} objects can take the following properties \code{noisy}, \code{deterministic}, \code{single-crit} and
+\code{multi-crit}.
+}
+
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

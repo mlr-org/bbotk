@@ -14,13 +14,12 @@
 #' objective = ObjectiveRFun$new(fun = objective_function,
 #'                               domain = domain,
 #'                               codomain = codomain)
-#' terminator = TerminatorEvals$new()
-#' terminator$param_set$values$n_evals = 10
+#' terminator = term("evals", n_evals = 10)
 #' instance = OptimInstanceSinglecrit$new(objective = objective,
 #'                              search_space = search_space,
 #'                              terminator = terminator)
 #'
-#' optimizer = <%= id %>
+#' optimizer = opt("<%= id %>")
 #'
 #' # Modifies the instance by reference
 #' optimizer$optimize(instance)
