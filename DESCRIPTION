@@ -42,6 +42,7 @@ Imports:
     R6
 Suggests:
     GenSA,
+    nloptr,
     testthat
 Remotes:
     mlr-org/paradox
@@ -62,6 +63,7 @@ Collate:
     'OptimizerDesignPoints.R'
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
+    'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
     'mlr_terminators.R'
     'Terminator.R'
