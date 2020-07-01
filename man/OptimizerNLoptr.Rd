@@ -49,15 +49,12 @@ objective = ObjectiveRFun$new(fun = objective_function,
   codomain = codomain)
 
 # We use the internal termination criterion xtol_rel
-terminator = TerminatorNone$new()
-
+terminator = term("none")
 instance = OptimInstanceSinglecrit$new(objective = objective,
-  search_space = search_space,
-  terminator = terminator)
+                             search_space = search_space,
+                             terminator = terminator)
 
-optimizer = OptimizerNLoptr$new()
-optimizer$param_set$values = mlr3misc::insert_named(optimizer$param_set$values,
-  list(x0 = 1, algorithm = "NLOPT_LN_BOBYQA"))
+optimizer = opt("nloptr", x0 = 1, algorithm = "NLOPT_LN_BOBYQA")
 
 # Modifies the instance by reference
 optimizer$optimize(instance)
