@@ -68,9 +68,9 @@ MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D,
     terminator = tt
   }
   if (objective$codomain$length == 1) {
-    OptimInstanceSinglecrit$new(objective = objective, search_space = search_space, terminator = terminator)
+    OptimInstanceSingleCrit$new(objective = objective, search_space = search_space, terminator = terminator)
   } else {
-    OptimInstanceMulticrit$new(objective = objective, search_space = search_space, terminator = terminator)
+    OptimInstanceMultiCrit$new(objective = objective, search_space = search_space, terminator = terminator)
   }
 
 }
@@ -105,7 +105,7 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
     }
     objective = ObjectiveRFun$new(fun = objective_function, domain = domain,
       codomain = codomain)
-    instance = OptimInstanceSinglecrit$new(objective = objective,
+    instance = OptimInstanceSingleCrit$new(objective = objective,
       search_space = search_space, terminator = terminator)
   } else if(n_dim == 2) {
     search_space = ParamSet$new(list(
@@ -122,7 +122,7 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
     }
     objective = ObjectiveRFun$new(fun = objective_function, domain = domain,
       codomain = codomain)
-    instance = OptimInstanceMulticrit$new(objective = objective,
+    instance = OptimInstanceMultiCrit$new(objective = objective,
       search_space = search_space, terminator = terminator)
   }
 

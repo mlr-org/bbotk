@@ -13,7 +13,7 @@
 #'
 #' @template param_xdt
 #' @export
-OptimInstanceSinglecrit = R6Class("OptimInstanceSinglecrit",
+OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
   inherit = OptimInstance,
   public = list(
 

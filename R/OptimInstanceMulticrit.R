@@ -14,7 +14,7 @@
 #' @template param_xdt
 #' @template param_ydt
 #' @export
-OptimInstanceMulticrit = R6Class("OptimInstanceMulticrit",
+OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
   inherit = OptimInstance,
   public = list(
 
