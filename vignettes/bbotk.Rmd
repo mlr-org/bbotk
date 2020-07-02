@@ -1,0 +1,165 @@
+---
+title: "bbotk: A brief introduction"
+author: "Jakob Richter"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A brief introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+set.seed(1)
+library(bbotk)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Overview
+
+The main goal of the *black box optimization toolkit* (`bbotk`) is to provide other packages a common framework for optimization.
+Therefore `bbotk` includes the following *R6* classes that can be used in a variety of optimization scenarios.
+
+- `Optimizer`: Objects of this class allow you to optimize an object of the class `OptimInstance`.
+- `OptimInstance`: Defines the optimization problem, consisting of an `Objective`, the `search_space` and a `Terminator`. 
+   All evaluations on the `OptimInstance` will be automatically stored in its own `Archive`.
+- `Objective`: Objects of this class contain the objective function. 
+   The class ensures that the objective function is called in the right way and defines, whether the function should be minimized or maximized.
+- `Terminator`: Objects of this class control the termination of the optimization independent of the optimizer. 
+
+As `bbotk` also includes some basic optimizers and can be used on it's own.
+The registered optimizers can be queried as follows:
+
+```{r}
+opts()
+```
+
+This Vignette will show you how to use the `bbotk`-classes to solve an simple optimization problem.
+Furthermore you will learn how to
+
+- construct your `Objective`.
+- implement your own `Optimizer`.
+- implement your own `Terminator`.
+
+## Use `bbotk` to optimize a function
+
+In the following we will use `bbotk` to minimize this function:
+
+```{r}
+fun = function(xs) {
+  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+}
+```
+
+First we need to wrap `fun` inside an `Objective` object.
+For functions that expect a list as input we can use the `ObjectiveRFun` class.
+Additionally, we need to specify the domain, i.e. the space of x-values that the function accepts as an input.
+Optionally, we can define the co-domain, i.e. the output space of our objective function.
+This is only necessary if we want to deviate from the default which would define the output to be named *y* and be minimized.
+Such spaces are defined using the package [`paradox`](https://cran.r-project.org/package=paradox).
+
+```{r}
+domain = ParamSet$new(list(
+  ParamDbl$new("x1", -10, 10), 
+  ParamDbl$new("x2", -5, 5)
+))
+codomain = ParamSet$new(list(
+  ParamDbl$new("y", tags = "maximize")
+))
+obfun = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain, 
+  properties = "deterministic" # i.e. the result always returns the same result for the same input.
+)
+```
+
+In the next step we decide when the optimization should stop.
+We can list all available terminators as follows:
+```{r}
+terms()
+```
+
+The termination should stop, when it takes longer then 10 seconds or when 20 evaluations are reached.
+```{r}
+terminators = list(
+  evals = term("evals", n_evals = 20),
+  run_time = term("run_time")
+)
+terminators
+```
+We have to correct the default of `secs=30` by setting the `values` in the `param_set` of the terminator.
+```{r}
+terminators$run_time$param_set$values$secs = 10
+```
+We have created `Terminator` objects for both of our criteria.
+To combine them we use the *combo* `Terminator`.
+```{r}
+term_combo = TerminatorCombo$new(terminators = terminators)
+```
+Before we finally start the optimization, we have to create an `OptimInstance` that contains also the `Objective` and the `Terminator`.
+```{r}
+instance = OptimInstanceSingleCrit$new(objective = obfun, terminator = term_combo)
+instance
+```
+Note, that `OptimInstance(SingleCrit/MultiCirt)$new()` also has an optional `search_space` argument.
+It can be used if the `search_space` is only a subset of `obfun$domain` or if you want to apply transformations.
+More on that later.
+
+Finally, we have to define an `Optimizer`.
+As we have seen above, that we can call `opts()` to list all available optimizers.
+We opt for evolutionary optimizer, from the `GenSA` package.
+```{r}
+optimizer = opt("gensa")
+optimizer
+```
+
+To start the optimization we have to call the `Optimizer` on the `OptimInstance`.
+```{r}
+optimizer$optimize(instance)
+```
+Note, that we did not specify the termination inside the optimizer.
+`bbotk` generally sets the termination of the optimizers to never terminate and instead breaks the code internally as soon as a termination criterion is fulfilled.
+
+The results can be queried from the `OptimInstance`.
+```{r}
+# result as a data.table
+instance$result
+# result as a list that can be passed to the Objective
+instance$result_x_domain
+# result outcome
+instance$result_y
+```
+
+You can also access the whole history of evaluated points.
+```{r}
+instance$archive$data()
+```
+
+### Search Space Transformations
+
+TODO
+
+
+## Implementing your own Objective
+
+TODO
+
+### Storing extra output in the archive
+
+TODO
+
+## Implementing your own Optimizer
+
+TODO
+
+### Storing extra tuner information in the archive
+
+TODO
+
+## Implement your own Terminator
+
+TODO

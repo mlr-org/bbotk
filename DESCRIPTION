@@ -43,13 +43,15 @@ Imports:
 Suggests:
     GenSA,
     nloptr,
-    testthat
+    testthat,
+    knitr
 Remotes:
     mlr-org/paradox
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0.9000
+VignetteBuilder: knitr
 Collate:
     'Archive.R'
     'Objective.R'
