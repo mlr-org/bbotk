@@ -71,3 +71,12 @@ test_that("NAs in ydt throw an error", {
   expect_error(a$add_evals(xdt, xss_trafoed, ydt))
 })
 
+test_that("start_time is set by Optimizer", {
+  inst = MAKE_INST()
+  expect_null(inst$archive$start_time)
+  optimizer = OptimizerRandomSearch$new()
+  time = Sys.time()
+  optimizer$optimize(inst)
+  expect_equal(inst$archive$start_time, time, tolerance=0.5)
+})
+

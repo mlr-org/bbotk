@@ -15,7 +15,7 @@
 #'                               domain = domain,
 #'                               codomain = codomain)
 #' terminator = term("evals", n_evals = 10)
-#' instance = OptimInstance$new(objective = objective,
+#' instance = OptimInstanceSingleCrit$new(objective = objective,
 #'                              search_space = search_space,
 #'                              terminator = terminator)
 #'

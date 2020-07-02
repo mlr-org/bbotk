@@ -75,13 +75,19 @@ Optimizer = R6Class("Optimizer",
     #' @return NULL
     optimize = function(inst) {
       assert_instance_properties(self, inst)
+      inst$archive$start_time = Sys.time()
       # start optimization
-      private$.log_optimize_start(inst)
+      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
+        inst$search_space$length, self$format(), inst$terminator$format())
       tryCatch({
         private$.optimize(inst)
       }, terminated_error = function(cond) { })
       private$.assign_result(inst)
-      private$.log_optimize_finish(inst)
+      lg$info("Finished optimizing after %i evaluation(s)",
+              inst$archive$n_evals)
+      lg$info("Result:")
+      lg$info(capture.output(print(
+        inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
       invisible(NULL)
     }
   ),
@@ -95,7 +101,7 @@ Optimizer = R6Class("Optimizer",
 
       xdt = res[, inst$search_space$ids(), with = FALSE]
 
-      if (inherits(inst, "OptimInstanceMulticrit")) {
+      if (inherits(inst, "OptimInstanceMultiCrit")) {
         ydt = res[, inst$objective$codomain$ids(), with = FALSE]
         inst$assign_result(xdt, ydt)
       } else {
@@ -104,19 +110,6 @@ Optimizer = R6Class("Optimizer",
       }
 
       invisible(NULL)
-    },
-
-    .log_optimize_start = function(inst) {
-      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-        inst$search_space$length, self$format(), inst$terminator$format())
-    },
-
-    .log_optimize_finish = function(inst) {
-      lg$info("Finished optimizing after %i evaluation(s)",
-        inst$archive$n_evals)
-      lg$info("Result:")
-      lg$info(capture.output(print(
-        inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
     }
   )
 )

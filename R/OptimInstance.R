@@ -1,14 +1,7 @@
 #' @title Optimization Instance with budget and archive
 #'
 #' @description
-#' Wraps an [Objective] function with extra services for convenient evaluation.
-#'
-#' * Automatic storing of results in an [Archive] after evaluation.
-#' * Automatic checking for termination. Evaluations of design points are
-#'   performed in batches. Before a batch is evaluated, the [Terminator] is
-#'   queried for the remaining budget. If the available budget is exhausted, an
-#'   exception is raised, and no further evaluations can be performed from this
-#'   point on.
+#' Abstract base class.
 #'
 #' @section Technical details:
 #' The [Optimizer] writes the final result to the `.result` field by using
@@ -16,12 +9,6 @@
 #' consisting of x values in the *search space*, (transformed) x values in the
 #' *domain space* and y values in the *codomain space* of the [Objective]. The
 #' user can access the results with active bindings (see below).
-#'
-#' In order to replace the default logging messages with custom logging, the
-#' `.log_*` private methods can be overwritten in an `OptimInstance` subclass:
-#'
-#' * `$.log_eval_batch_start()` Called at the beginning of `$eval_batch()`
-#' * `$.log_eval_batch_finish()` Called at the end of `$eval_batch()`
 #'
 #' @template param_xdt
 #' @export
@@ -48,13 +35,27 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param objective ([Objective]).
     #' @param search_space ([paradox::ParamSet]).
+    #' If no search space is provided, search space is set to domain of
+    #' objective.
     #' @param terminator ([Terminator]).
-    initialize = function(objective, search_space, terminator) {
+    initialize = function(objective, search_space = NULL, terminator) {
       self$objective = assert_r6(objective, "Objective")
-      self$search_space = assert_param_set(search_space)
+      self$search_space = if(is.null(search_space)) {
+         self$objective$domain
+      } else {
+        assert_param_set(search_space)
+      }
       self$terminator = assert_terminator(terminator, self)
-      self$archive = Archive$new(search_space = search_space,
+      self$archive = Archive$new(search_space = self$search_space,
         codomain = objective$codomain)
+
+      if (!all(self$search_space$is_number)) {
+        private$.objective_function = objective_error
+      } else {
+        private$.objective_function = objective_function
+        private$.objective_multiplicator =
+          ifelse(self$objective$codomain$tags == "minimize", 1, -1)
+      }
     },
 
     #' @description
@@ -95,10 +96,12 @@ OptimInstance = R6Class("OptimInstance",
         stop(terminated_error(self))
       }
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
-      private$.log_eval_batch_start(xdt)
+      lg$info("Evaluating %i configuration(s)", nrow(xdt))
       ydt = self$objective$eval_many(xss_trafoed)
       self$archive$add_evals(xdt, xss_trafoed, ydt)
-      private$.log_eval_batch_finish(xdt, ydt)
+      lg$info("Result of batch %i:", self$archive$n_batch)
+      lg$info(capture.output(print(cbind(xdt, ydt),
+        class = FALSE, row.names = FALSE, print.keys = FALSE)))
       return(invisible(ydt))
     },
 
@@ -113,18 +116,12 @@ OptimInstance = R6Class("OptimInstance",
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
     assign_result = function(xdt, y) {
-      # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
-      assert_data_table(xdt, nrows = 1)
-      assert_names(names(xdt), must.include = self$search_space$ids())
-      assert_number(y)
-      assert_names(names(y), permutation.of = self$objective$codomain$ids())
-      x_domain = transform_xdt_to_xss(xdt, self$search_space)[[1]]
-      private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
+      stop("Abstract class")
     },
 
     #' @description
-    #' Evaluates (untransformed) points of only numeric values. 
-    #' Returns a numeric scalar for single-crit or a numeric vector for multi-crit. 
+    #' Evaluates (untransformed) points of only numeric values.
+    #' Returns a numeric scalar for single-crit or a numeric vector for multi-crit.
     #' The return value(s) are negated if the measure is maximized.
     #' Internally, `$eval_batch()` is called with a single row. This function
     #' serves as a objective function for optimizers of numeric spaces - which
@@ -135,16 +132,7 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @return Objective value as `numeric(1)`, negated for maximization problems.
     objective_function = function(x) {
-      if(!all(self$search_space$is_number)) {
-        stop("$objective_function can only be called if search_space only
-          contains numeric values")
-      }
-      xs = set_names(as.list(x), self$search_space$ids())
-      self$search_space$assert(xs)
-      xdt = as.data.table(xs)
-      res = self$eval_batch(xdt)
-      y = as.numeric(res[, self$objective$codomain$ids(), with=FALSE])
-      ifelse(self$objective$codomain$tags == "minimize", y, -y)
+      private$.objective_function(x, self, private$.objective_multiplicator)
     }
   ),
 
@@ -177,14 +165,22 @@ OptimInstance = R6Class("OptimInstance",
   private = list(
     .result = NULL,
 
-    .log_eval_batch_start = function(xdt) {
-      lg$info("Evaluating %i configuration(s)", nrow(xdt))
-    },
+    .objective_function = NULL,
 
-    .log_eval_batch_finish = function(xdt, ydt) {
-      lg$info("Result of batch %i:", self$archive$n_batch)
-      lg$info(capture.output(print(cbind(xdt, ydt),
-        class = FALSE, row.names = FALSE, print.keys = FALSE)))
-    }
+    .objective_multiplicator = NULL
   )
 )
+
+objective_function = function(x, inst, multiplicator) {
+    xs = set_names(as.list(x), inst$search_space$ids())
+    inst$search_space$assert(xs)
+    xdt = as.data.table(xs)
+    res = inst$eval_batch(xdt)
+    y = as.numeric(res[, inst$objective$codomain$ids(), with = FALSE])
+    y * multiplicator
+}
+
+objective_error = function(x, inst, multiplicator) {
+  stop("$objective_function can only be called if search_space only
+    contains numeric values")
+}
