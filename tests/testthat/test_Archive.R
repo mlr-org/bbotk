@@ -75,7 +75,7 @@ test_that("NAs in ydt throw an error", {
   xdt = data.table(x = 1)
   xss_trafoed = list(list(x = 1))
   ydt = data.table(y = NA)
-  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Element 1 is not")
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Contains missing values")
 })
 
 test_that("start_time is set by Optimizer", {
