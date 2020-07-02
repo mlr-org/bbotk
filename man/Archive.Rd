@@ -20,10 +20,10 @@ This however is usually done through the evaluation of the \link{OptimInstance} 
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space that is logged into archive.}
+Search space of objective.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Codomain of objective function that is logged into archive.}
+Codomain of objective function.}
 
 \item{\code{start_time}}{(\link{POSIXct}).}
 
@@ -112,9 +112,9 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-best"></a>}}
 \if{latex}{\out{\hypertarget{method-best}{}}}
 \subsection{Method \code{best()}}{
-Returns the best scoring evaluation. For single-criteria optimization,
-the solution that minimize/ maximize the objective function. For
-multi-criteria optimization, the non-dominant solution set.
+Returns the best scoring evaluation. For single-crit optimization,
+the solution that minimizes / maximizes the objective function.
+For multi-crit optimization, the Pareto set / front.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Archive$best(m = NULL)}\if{html}{\out{</div>}}
 }

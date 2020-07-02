@@ -1,9 +1,9 @@
-context("OptimInstanceMulticrit")
+context("OptimInstanceMultiCrit")
 
 
-test_that("OptimInstanceMulticrit", {
+test_that("OptimInstanceMultiCrit", {
   inst = MAKE_INST_2D_2D(20L)
-  expect_output(print(inst), "OptimInstanceMulticrit")
+  expect_output(print(inst), "OptimInstanceMultiCrit")
   expect_r6(inst$archive, "Archive")
   expect_data_table(inst$archive$data(), nrows = 0L)
   expect_identical(inst$archive$n_evals, 0L)
@@ -29,9 +29,9 @@ test_that("OptimInstanceMulticrit", {
 
 test_that("OptimInstanceMultiCrit with 1 Crit", {
   tt = term("evals", n_evals = 5)
-  inst = OptimInstanceMulticrit$new(objective = OBJ_2D, search_space = PS_2D, terminator = tt)
-  opt = OptimizerRandomSearch$new()
-  opt$optimize(inst)
+  inst = OptimInstanceMultiCrit$new(objective = OBJ_2D, search_space = PS_2D, terminator = tt)
+  optimizer = OptimizerRandomSearch$new()
+  optimizer$optimize(inst)
   expect_data_table(inst$result_y, ncols = 1)
   expect_data_table(inst$result_x_search_space)
 })
@@ -39,4 +39,11 @@ test_that("OptimInstanceMultiCrit with 1 Crit", {
 test_that("Terminator assertions work", {
   terminator = term("perf_reached")
   expect_error(MAKE_INST_2D_2D(terminator))
+})
+
+test_that("objective_function works", {
+  terminator = terminator = term("evals", n_evals = 100)
+  inst = MAKE_INST_2D_2D(terminator = terminator)
+  y = inst$objective_function(c(1,1))
+  expect_equal(y, c(y1 = 1, y2 = 1))
 })

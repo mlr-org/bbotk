@@ -74,46 +74,20 @@ Optimizer = R6Class("Optimizer",
     #' @param inst ([OptimInstance]).
     #' @return NULL
     optimize = function(inst) {
-
-      assert_r6(inst, "OptimInstance")
-      require_namespaces(self$packages, "Packages for the Optimization")
-
-      # check multi or single-crit
-      if ("multi-crit" %nin% self$properties && inst$objective$ydim > 1) {
-        stopf(
-          "Optimizer '%s' does not support multi-crit objectives",
-          self$format())
-      }
-      if ("single-crit" %nin% self$properties && inst$objective$ydim == 1) {
-        stopf(
-          "Optimizer '%s' does not support single-crit objectives",
-          self$format())
-      }
-
-      # check dependencies
-      if ("dependencies" %nin% self$properties && inst$search_space$has_deps) {
-        stopf(
-          "Optimizer '%s' does not support param sets with dependencies!",
-          self$format())
-      }
-
-      # check supported parameter class
-      not_supported_pclasses = setdiff(
-        unique(inst$search_space$class),
-        self$param_classes)
-      if (length(not_supported_pclasses) > 0L) {
-        stopf(
-          "Optimizer '%s' does not support param types: '%s'", class(self)[1L],
-          paste0(not_supported_pclasses, collapse = ","))
-      }
-
+      assert_instance_properties(self, inst)
+      inst$archive$start_time = Sys.time()
       # start optimization
-      private$.log_optimize_start(inst)
+      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
+        inst$search_space$length, self$format(), inst$terminator$format())
       tryCatch({
         private$.optimize(inst)
       }, terminated_error = function(cond) { })
       private$.assign_result(inst)
-      private$.log_optimize_finish(inst)
+      lg$info("Finished optimizing after %i evaluation(s)",
+              inst$archive$n_evals)
+      lg$info("Result:")
+      lg$info(capture.output(print(
+        inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
       invisible(NULL)
     }
   ),
@@ -127,7 +101,7 @@ Optimizer = R6Class("Optimizer",
 
       xdt = res[, inst$search_space$ids(), with = FALSE]
 
-      if (inherits(inst, "OptimInstanceMulticrit")) {
+      if (inherits(inst, "OptimInstanceMultiCrit")) {
         ydt = res[, inst$objective$codomain$ids(), with = FALSE]
         inst$assign_result(xdt, ydt)
       } else {
@@ -136,19 +110,6 @@ Optimizer = R6Class("Optimizer",
       }
 
       invisible(NULL)
-    },
-
-    .log_optimize_start = function(inst) {
-      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-        inst$search_space$length, self$format(), inst$terminator$format())
-    },
-
-    .log_optimize_finish = function(inst) {
-      lg$info("Finished optimizing after %i evaluation(s)",
-        inst$archive$n_evals)
-      lg$info("Result:")
-      lg$info(capture.output(print(
-        inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
     }
   )
 )

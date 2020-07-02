@@ -42,7 +42,6 @@ Archive = R6Class("Archive",
     initialize = function(search_space, codomain, check_evals_xdt = TRUE) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
-      self$start_time = Sys.time()
       self$check_evals_xdt = assert_flag(check_evals_xdt)
       private$.data = data.table()
     },

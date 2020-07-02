@@ -10,7 +10,7 @@ test_that("TerminatorStagnation works", {
   expect_equal(a$n_evals, 11)
 })
 
-test_that("TerminatorStagnation in OptimInstanceMulticrit throws an error", {
+test_that("TerminatorStagnation in OptimInstanceMultiCrit throws an error", {
   terminator = TerminatorStagnation$new()
   expect_error(MAKE_INST_2D_2D(terminator))
 })

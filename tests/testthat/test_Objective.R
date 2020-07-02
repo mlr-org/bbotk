@@ -106,3 +106,75 @@ test_that("Objective specialzations work", {
     expect_equal(res5, fun2$eval_many(xdt3$transpose()))
   }
 })
+
+test_that("codomain assertions work", {
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize")))
+  expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamLgl$new("y1")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = c("minimize", "maximize"))))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2", tags = "maximize")))
+  expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1"), ParamDbl$new("y2")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains no 'minimize' or 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamLgl$new("y2", tags = "maximize")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain is not numeric")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamLgl$new("y1", tags = "minimize"), ParamLgl$new("y2", tags = "maximize")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2", tags = c("minimize", "maximize"))))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains a 'minimize' and 'maximize' tag")
+
+  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = c("minimize", "maximize")), ParamDbl$new("y2", tags = c("minimize", "maximize"))))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
+})
+
+test_that("*_check with extra output works", {
+  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+    inherit = Objective,
+    public = list(
+      eval = function(xs) list(y = sum(as.numeric(xs))^2, extra = 2)
+    )
+  )
+  obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN)
+  expect_list(obj$eval_checked(list(x1 = 0, x2 = 1)), len = 2)
+
+  ObjectiveTestEvalMany = R6Class("ObjectiveTestEvalMany",
+    inherit = Objective,
+    public = list(
+      eval_many = function(xss) {
+        res = data.table(y = map_dbl(xss, function(xs) sum(as.numeric(xs))^2))
+        extra = list(extra = 2)
+        res[, extra := extra]
+      }
+    )
+  )
+  obj = ObjectiveTestEvalMany$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN)
+  expect_data_table(obj$eval_many_checked(
+    list(list(x1 = 0, x2 = 1), list(x1 = 1, x2 = 0))), nrows = 2, ncols = 2)
+})
+

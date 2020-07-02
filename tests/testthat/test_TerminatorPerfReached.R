@@ -10,7 +10,7 @@ test_that("TerminatorPerfReached works", {
   expect_true(tail(a$data()$y, 1) < 0.2)
 })
 
-test_that("TerminatorPerfReached in OptimInstanceMulticrit throws an error", {
+test_that("TerminatorPerfReached in OptimInstanceMultiCrit throws an error", {
   terminator = TerminatorPerfReached$new()
   expect_error(MAKE_INST_2D_2D(terminator))
 })

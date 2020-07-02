@@ -7,6 +7,12 @@
 Describes a black-box objective function that maps an arbitrary domain to a
 numerical codomain.
 }
+\section{Technical details}{
+
+\code{Objective} objects can take the following properties \code{noisy}, \code{deterministic}, \code{single-crit} and
+\code{multi-crit}.
+}
+
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -134,8 +140,10 @@ These extra entries are referred to as \emph{extras}.
 \if{latex}{\out{\hypertarget{method-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
 Evaluates multiple input values on the objective function.
-If the function should make use of parallel computing it has to be implemented here by the user.
-\emph{bbotk} does not take care of parallelization itself.
+\emph{bbotk} does not take care of parallelization.
+If the function should make use of parallel computing,
+it has to be implemented by deriving from this class and
+overwriting this function.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Objective$eval_many(xss)}\if{html}{\out{</div>}}
 }

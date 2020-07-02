@@ -1,7 +1,6 @@
-context("OptimInstance")
+context("OptimInstanceSingleCrit")
 
-
-test_that("OptimInstance", {
+test_that("OptimInstanceSingleCrit", {
   inst = MAKE_INST_2D(20L)
   expect_r6(inst$archive, "Archive")
   expect_data_table(inst$archive$data(), nrows = 0L)
@@ -28,7 +27,7 @@ test_that("OptimInstance works with trafos", {
   expect_data_table(inst$archive$data(), nrows = 3L)
   expect_equal(inst$archive$data()$y, c(2, 0, 2))
   expect_equal(inst$archive$data()$x_domain[[1]], list(x1 = -1, x2 = -1))
-  expect_output(print(inst), "<OptimInstance>")
+  expect_output(print(inst), "<OptimInstanceSingleCrit>")
 })
 
 test_that("OptimInstance works with extras input", {
@@ -77,4 +76,37 @@ test_that("Terminator assertions work", {
   terminator = Terminator$new()
   terminator$properties = "multi-crit"
   expect_error(MAKE_INST(terminator = terminator))
+})
+
+test_that("objective_function works", {
+  terminator = terminator = term("evals", n_evals = 100)
+  inst = MAKE_INST_1D(terminator = terminator)
+  y = inst$objective_function(1)
+  expect_equal(y, c(y = 1))
+
+  obj = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain, codomain = ParamSet$new(list(ParamDbl$new("y", tags = "maximize"))))
+  inst = MAKE_INST(objective = obj, search_space = PS_1D, terminator = terminator)
+  y = inst$objective_function(1)
+  expect_equal(y, c(y = -1))
+
+  z = optimize(inst$objective_function, lower = inst$search_space$lower,
+    upper = inst$search_space$upper)
+  expect_list(z, any.missing = FALSE, names = "named", len = 2L)
+
+  search_space = ParamSet$new(list(
+    ParamLgl$new("x1"),
+    ParamDbl$new("x2", lower = -1, upper = 1)
+  ))
+  inst = MAKE_INST(objective = obj, search_space = search_space, terminator = terminator)
+  expect_error(inst$objective_function(1), "objective_function can only")
+})
+
+test_that("search_space is optional", {
+  inst = OptimInstanceSingleCrit$new(objective = OBJ_1D, terminator = TerminatorEvals$new())
+  expect_identical(inst$search_space, OBJ_1D$domain)
+})
+
+test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
+  expect_error(OptimInstanceSingleCrit$new(objective = OBJ_2D_2D,
+    terminator = term("none")), "Codomain > 1")
 })

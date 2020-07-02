@@ -6,6 +6,8 @@
 \alias{assert_terminable}
 \alias{assert_set}
 \alias{assert_optimizer}
+\alias{assert_instance_properties}
+\alias{assert_codomain}
 \title{Assertion for bbotk objects}
 \usage{
 assert_terminator(terminator, instance = NULL)
@@ -15,6 +17,10 @@ assert_terminable(terminator, instance)
 assert_set(x, empty = TRUE, .var.name = vname(x))
 
 assert_optimizer(optimizer)
+
+assert_instance_properties(optimizer, inst)
+
+assert_codomain(codomain)
 }
 \arguments{
 \item{terminator}{(\link{Terminator}).}
@@ -27,7 +33,9 @@ assert_optimizer(optimizer)
 
 \item{.var.name}{(\code{character(1)})}
 
-\item{optimizer}{(\link{Optimizer})}
+\item{optimizer}{(\link{Optimizer}).}
+
+\item{codomain}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 }
 \description{
 Most assertion functions ensure the right class attribute, and optionally
@@ -37,6 +45,9 @@ implemented:
 \item \code{assert_terminable(terminator, instance)}\cr
 (\link{Terminator}, \link{OptimInstance}) -> \code{NULL}\cr
 Checks if the terminator is applicable to the optimization.
+\item \code{assert_instance_properties(optimizer, instance)}\cr
+(\link{Optimizer}, \link{OptimInstance}) -> \code{NULL}\cr
+Checks if the instance is applicable to the optimizer.
 }
 
 If an assertion fails, an exception is raised. Otherwise, the input object is
