@@ -43,7 +43,7 @@ test_that("Archive on 1D problem works", {
   expect_list(a$data()$x_domain[[1]])
 
   xdt = data.table(x = 2)
-  expect_error(a$add_evals(xdt, ydt))
+  expect_error(a$add_evals(xdt, transpose_list(xdt), ydt), "Element 1 is not")
 })
 
 test_that("Unnest columns", {
@@ -60,7 +60,7 @@ test_that("Unnest columns", {
 
   a = Archive$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = 0.5, x2 = 2)
-  expect_error(a$add_evals(xdt, xss_trafoed, ydt))
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Element 1 is not")
 })
 
 test_that("NAs in ydt throw an error", {
@@ -68,6 +68,6 @@ test_that("NAs in ydt throw an error", {
   xdt = data.table(x = 1)
   xss_trafoed = list(list(x = 1))
   ydt = data.table(y = NA)
-  expect_error(a$add_evals(xdt, xss_trafoed, ydt))
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Element 1 is not")
 })
 
