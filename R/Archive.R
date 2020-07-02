@@ -29,14 +29,20 @@ Archive = R6Class("Archive",
     #' @field start_time ([POSIXct]).
     start_time = NULL,
 
+    #' @field check_evals_xdt ('logical(1)')
+    check_evals_xdt = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param search_space ([paradox::ParamSet])\cr
+    #' @param check_evals_xdt ('logical(1)')\cr
+    #'   Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(search_space, codomain) {
+    initialize = function(search_space, codomain, check_evals_xdt = TRUE) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
+      self$check_evals_xdt = assert_flag(check_evals_xdt)
       private$.data = data.table()
     },
 
@@ -50,6 +56,9 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       assert_list(xss_trafoed)
       assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
+      if (self$check_evals_xdt) {
+        self$search_space$assert_dt(xdt[, self$cols_x, with =FALSE])
+      }
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "x_domain" := list(xss_trafoed)]

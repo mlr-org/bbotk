@@ -54,22 +54,22 @@ test_that("OptimInstance works with extras output", {
   fun_extra = function(xs) {
     y = sum(as.numeric(xs)^2)
     res = list(y = y, extra1 = runif(1), extra2 = list(a = runif(1), b = Sys.time()))
-    if (y > 10) { #sometimes add extras
+    if (y > 0.5) { #sometimes add extras
       res$extra3 = -y
     }
     return(res)
   }
   obj_extra = ObjectiveRFun$new(fun = fun_extra, domain = PS_2D, codomain = FUN_2D_CODOMAIN)
   inst = MAKE_INST(objective = obj_extra, search_space = PS_2D, terminator = 20L)
-  xdt = data.table(x1 = -1:1, x2 = -1:1)
+  xdt = data.table(x1 = c(0.25, 0.5), x2 = c(0.25, 0.5))
   inst$eval_batch(xdt)
   expect_equal(xdt, inst$archive$data()[, obj_extra$domain$ids(), with = FALSE])
   expect_numeric(inst$archive$data()$extra1, any.missing = FALSE, len = nrow(xdt))
   expect_list(inst$archive$data()$extra2, len = nrow(xdt))
 
-  xdt = data.table(x1 = -1:1, x2 = c(-11,10,9))
+  xdt = data.table(x1 = c(0.75, 1), x2 = c(0.75, 1))
   inst$eval_batch(xdt)
-  expect_equal(inst$archive$data()$extra3, c(NA, NA, NA, -122, -100, -82))
+  expect_equal(inst$archive$data()$extra3, c(NA, NA, -1.125, -2))
 })
 
 test_that("Terminator assertions work", {

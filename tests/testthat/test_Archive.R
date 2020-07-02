@@ -48,6 +48,9 @@ test_that("Archive on 1D problem works", {
   expect_equal(a$n_evals, 1)
   expect_equal(a$data()$x_domain, xss_trafoed)
   expect_list(a$data()$x_domain[[1]])
+
+  xdt = data.table(x = 2)
+  expect_error(a$add_evals(xdt, transpose_list(xdt), ydt), "Element 1 is not")
 })
 
 test_that("Unnest columns", {
@@ -61,6 +64,10 @@ test_that("Unnest columns", {
   expect_true("x_domain_x2" %in% colnames(a))
   expect_equal(a$x_domain_x1, 1)
   expect_equal(a$x_domain_x2, 2)
+
+  a = Archive$new(PS_2D, FUN_2D_CODOMAIN)
+  xdt = data.table(x1 = 0.5, x2 = 2)
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Element 1 is not")
 })
 
 test_that("NAs in ydt throw an error", {
@@ -68,7 +75,7 @@ test_that("NAs in ydt throw an error", {
   xdt = data.table(x = 1)
   xss_trafoed = list(list(x = 1))
   ydt = data.table(y = NA)
-  expect_error(a$add_evals(xdt, xss_trafoed, ydt))
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Contains missing values")
 })
 
 test_that("start_time is set by Optimizer", {
