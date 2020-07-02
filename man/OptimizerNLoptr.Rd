@@ -31,6 +31,7 @@ their package defaults. To deactivate these conditions, set them to \code{-1}.
 }
 
 \examples{
+\dontrun{
 library(paradox)
 library(data.table)
 
@@ -64,6 +65,7 @@ instance$result
 
 # Allows access of data.table of full path of all evaluations
 instance$archive$data()
+}
 }
 \section{Super class}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerNLoptr}

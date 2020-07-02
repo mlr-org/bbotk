@@ -29,6 +29,7 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' library(paradox)
 #' library(data.table)
 #'
@@ -62,6 +63,7 @@
 #'
 #' # Allows access of data.table of full path of all evaluations
 #' instance$archive$data()
+#' }
 OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
   public = list(
 
