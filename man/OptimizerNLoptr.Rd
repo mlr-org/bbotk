@@ -51,8 +51,8 @@ objective = ObjectiveRFun$new(fun = objective_function,
 # We use the internal termination criterion xtol_rel
 terminator = term("none")
 instance = OptimInstanceSingleCrit$new(objective = objective,
-                             search_space = search_space,
-                             terminator = terminator)
+  search_space = search_space,
+  terminator = terminator)
 
 optimizer = opt("nloptr", x0 = 1, algorithm = "NLOPT_LN_BOBYQA")
 

@@ -49,8 +49,8 @@
 #' # We use the internal termination criterion xtol_rel
 #' terminator = term("none")
 #' instance = OptimInstanceSingleCrit$new(objective = objective,
-#'                              search_space = search_space,
-#'                              terminator = terminator)
+#'   search_space = search_space,
+#'   terminator = terminator)
 #'
 #' optimizer = opt("nloptr", x0 = 1, algorithm = "NLOPT_LN_BOBYQA")
 #'
@@ -69,7 +69,7 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       ps = ParamSet$new(list(
-        ParamFct$new("algorithm", default = "NLOPT_LN_COBYLA", levels =
+        ParamFct$new("algorithm", levels =
           c("NLOPT_GN_DIRECT", "NLOPT_GN_DIRECT_L", "NLOPT_GN_DIRECT_L_RAND",
             "NLOPT_GN_DIRECT_NOSCAL", "NLOPT_GN_DIRECT_L_NOSCAL",
             "NLOPT_GN_DIRECT_L_RAND_NOSCAL", "NLOPT_GN_ORIG_DIRECT",
@@ -83,8 +83,9 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
             "NLOPT_LD_CCSAQ", "NLOPT_LN_COBYLA", "NLOPT_LN_NEWUOA",
             "NLOPT_LN_NEWUOA_BOUND", "NLOPT_LN_NELDERMEAD", "NLOPT_LN_SBPLX",
             "NLOPT_LN_AUGLAG", "NLOPT_LD_AUGLAG", "NLOPT_LN_AUGLAG_EQ",
-            "NLOPT_LD_AUGLAG_EQ", "NLOPT_LN_BOBYQA", "NLOPT_GN_ISRES")),
-        ParamUty$new("x0"),
+            "NLOPT_LD_AUGLAG_EQ", "NLOPT_LN_BOBYQA", "NLOPT_GN_ISRES"),
+          tags = "required"),
+        ParamUty$new("x0", tags = "required"),
         ParamUty$new("eval_g_ineq", default = NULL),
         ParamDbl$new("xtol_rel", default = 10^-4, lower = 0, upper = Inf,
           special_vals = list(-1)),
