@@ -147,7 +147,7 @@ Objective = R6Class("Objective",
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)
       res = self$eval_many(xss)
-      self$codomain$assert_dt(res[, self$codomain$ids(), with= FALSE])
+      self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     }
   ),

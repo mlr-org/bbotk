@@ -16,7 +16,7 @@ test_that("OptimInstanceSingleCrit", {
   expect_identical(inst$archive$n_evals, 3L)
   expect_identical(inst$archive$n_batch, 1L)
   expect_null(inst$result)
-  inst$assign_result(xdt = xdt[2,], y = c(y=-10))
+  inst$assign_result(xdt = xdt[2,], y = c(y = -10))
   expect_equal(inst$result, cbind(xdt[2,], x_domain = list(list(x1 = 0, x2 = 0)), y = -10))
 })
 
