@@ -73,9 +73,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{objective}}{(\link{Objective}).}
 
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).
-If no search space is provided, search space is set to domain of
-objective.}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specifies the search space for the \link{Optimizer}.
+The \link[paradox:ParamSet]{paradox::ParamSet} describes either a subset of the \code{domain} of the \link{Objective} or it describes a set of parameters together with a \code{trafo} function that transforms values from the search space to values of the domain.
+Depending on the context, this value defaults to the domain of the objective.}
 
 \item{\code{terminator}}{(\link{Terminator}).}
 }

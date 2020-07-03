@@ -12,6 +12,7 @@
 #' This however is usually done through the evaluation of the [OptimInstance] by the [Optimizer].
 #'
 #' @template param_codomain
+#' @template param_search_space
 #' @template param_xdt
 #' @template param_ydt
 #' @export
@@ -35,7 +36,6 @@ Archive = R6Class("Archive",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param search_space ([paradox::ParamSet])\cr
     #' @param check_evals_xdt ('logical(1)')\cr
     #'   Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.

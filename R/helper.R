@@ -29,12 +29,8 @@ is_dominated = function(ymat) {
 #' If no trafo is defined it will just convert the `data.table` to a list.
 #' Mainly for internal usage.
 #'
-#' @param xdt (`data.table`) \cr
-#' The data table with x-columns.
-#' Column names have to match ids of the `search_space`.
-#' However, `xdt` can contain additional columns.
-#' @param search_space [paradox::ParamSet] \cr
-#' The ParamSet.
+#' @template param_xdt
+#' @template param_search_space
 #' @value `list()`
 #' @keywords internal
 #' @export

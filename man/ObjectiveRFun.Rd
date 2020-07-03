@@ -61,11 +61,14 @@ R function that encodes objective and expects a list with the input for a single
 list (e.g. \code{list(y = 3)}).}
 
 \item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specifies domain of function, hence its input parameters, their types
-and ranges.}
+Specifies domain of function.
+The \link[paradox:ParamSet]{paradox::ParamSet} should describe all possible input parameters of the objective function.
+This includes their \code{id}, their types and the possible range.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specifies codomain of function, hence its feasible values.}
+Specifies codomain of function.
+Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
+The default is to minimize each component.}
 
 \item{\code{id}}{(\code{character(1)}).}
 

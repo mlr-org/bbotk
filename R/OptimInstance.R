@@ -11,6 +11,7 @@
 #' user can access the results with active bindings (see below).
 #'
 #' @template param_xdt
+#' @template param_search_space
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
@@ -34,9 +35,6 @@ OptimInstance = R6Class("OptimInstance",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param objective ([Objective]).
-    #' @param search_space ([paradox::ParamSet]).
-    #' If no search space is provided, search space is set to domain of
-    #' objective.
     #' @param terminator ([Terminator]).
     initialize = function(objective, search_space = NULL, terminator) {
       self$objective = assert_r6(objective, "Objective")

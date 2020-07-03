@@ -13,6 +13,7 @@
 #'
 #' @template param_xdt
 #' @template param_ydt
+#' @template param_search_space
 #' @export
 OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
   inherit = OptimInstance,
@@ -22,9 +23,6 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param objective ([Objective]).
-    #' @param search_space ([paradox::ParamSet]).
-    #' If no search space is provided, search space is set to domain of
-    #' objective.
     #' @param terminator ([Terminator])\cr
     #' Multi-criteria terminator.
     initialize = function(objective, search_space = NULL, terminator) {
@@ -36,11 +34,6 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' and estimated performance values here (probably the Pareto set / front).
     #' For internal use.
     #'
-    #' @param xdt (`data.table`)\cr
-    #'   x values as `data.table`.
-    #'   Each row is one point.
-    #'   Contains the value in the *search space* of the [OptimInstance] object.
-    #'   Can contain additional columns for extra information.
     #' @param ydt (`numeric(1)`)\cr
     #'   Optimal outcomes, e.g. the Pareto front.
     assign_result = function(xdt, ydt) {

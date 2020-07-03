@@ -71,10 +71,15 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specifies the search space for the \link{Optimizer}.
+The \link[paradox:ParamSet]{paradox::ParamSet} describes either a subset of the \code{domain} of the \link{Objective} or it describes a set of parameters together with a \code{trafo} function that transforms values from the search space to values of the domain.
+Depending on the context, this value defaults to the domain of the objective.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specifies codomain of function, hence its feasible values.}
+Specifies codomain of function.
+Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
+The default is to minimize each component.}
 
 \item{\code{check_evals_xdt}}{('logical(1)')\cr
 Should x-values that are added to the archive be checked for validity?
@@ -97,7 +102,9 @@ Adds function evaluations to the archive table.
 \describe{
 \item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
+Column names have to match ids of the \code{search_space}.
+However, \code{xdt} can contain additional columns.}
 
 \item{\code{xss_trafoed}}{(\code{list()})\cr
 Transformed point(s) in the \emph{domain space}.}
