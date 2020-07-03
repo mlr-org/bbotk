@@ -4,15 +4,7 @@
 \alias{OptimInstance}
 \title{Optimization Instance with budget and archive}
 \description{
-Wraps an \link{Objective} function with extra services for convenient evaluation.
-\itemize{
-\item Automatic storing of results in an \link{Archive} after evaluation.
-\item Automatic checking for termination. Evaluations of design points are
-performed in batches. Before a batch is evaluated, the \link{Terminator} is
-queried for the remaining budget. If the available budget is exhausted, an
-exception is raised, and no further evaluations can be performed from this
-point on.
-}
+Abstract base class.
 }
 \section{Technical details}{
 
@@ -21,13 +13,6 @@ the \verb{$assign_result()} method. \code{.result} stores a \link[data.table:dat
 consisting of x values in the \emph{search space}, (transformed) x values in the
 \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}. The
 user can access the results with active bindings (see below).
-
-In order to replace the default logging messages with custom logging, the
-\verb{.log_*} private methods can be overwritten in an \code{OptimInstance} subclass:
-\itemize{
-\item \verb{$.log_eval_batch_start()} Called at the beginning of \verb{$eval_batch()}
-\item \verb{$.log_eval_batch_finish()} Called at the end of \verb{$eval_batch()}
-}
 }
 
 \section{Public fields}{
@@ -51,7 +36,7 @@ In order to replace the default logging messages with custom logging, the
 \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Get result}
 
-\item{\code{result_x_seach_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
+\item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
 
 \item{\code{result_x_domain}}{(\code{list()})\cr
@@ -70,6 +55,7 @@ Optimal outcome.}
 \item \href{#method-print}{\code{OptimInstance$print()}}
 \item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
 \item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
+\item \href{#method-objective_function}{\code{OptimInstance$objective_function()}}
 \item \href{#method-clone}{\code{OptimInstance$clone()}}
 }
 }
@@ -79,7 +65,7 @@ Optimal outcome.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$new(objective, search_space, terminator)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$new(objective, search_space = NULL, terminator)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -87,7 +73,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{objective}}{(\link{Objective}).}
 
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).
+If no search space is provided, search space is set to domain of
+objective.}
 
 \item{\code{terminator}}{(\link{Terminator}).}
 }
@@ -169,6 +157,32 @@ Can contain additional columns for extra information.}
 Optimal outcome.}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-objective_function"></a>}}
+\if{latex}{\out{\hypertarget{method-objective_function}{}}}
+\subsection{Method \code{objective_function()}}{
+Evaluates (untransformed) points of only numeric values.
+Returns a numeric scalar for single-crit or a numeric vector for multi-crit.
+The return value(s) are negated if the measure is maximized.
+Internally, \verb{$eval_batch()} is called with a single row. This function
+serves as a objective function for optimizers of numeric spaces - which
+should always be minimized.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$objective_function(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{(\code{numeric()})\cr
+Untransformed points.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Objective value as \code{numeric(1)}, negated for maximization problems.
 }
 }
 \if{html}{\out{<hr>}}

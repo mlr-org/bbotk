@@ -2,9 +2,9 @@
 % Please edit documentation in R/ObjectiveRFunDt.R
 \name{ObjectiveRFunDt}
 \alias{ObjectiveRFunDt}
-\title{Objective interface where user cass pass R function}
+\title{Objective interface for basic R functions.}
 \description{
-Objective interface where user cass pass R function.
+Objective interface where user can pass an R function that works on an \code{data.table}.
 }
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFunDt}
@@ -94,8 +94,8 @@ A list of lists that contains multiple x values, e.g.
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and multiple
-y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-criteria functions and multiple
+y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
@@ -103,7 +103,7 @@ y-columns for multi-objective functions, e.g.
 \if{html}{\out{<a id="method-eval_dt"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_dt}{}}}
 \subsection{Method \code{eval_dt()}}{
-Evaluates multiple input values on the objective function suplied by the user.
+Evaluates multiple input values on the objective function supplied by the user.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFunDt$eval_dt(xdt)}\if{html}{\out{</div>}}
 }
@@ -119,8 +119,8 @@ One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and multiple
-y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-criteria functions and multiple
+y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }

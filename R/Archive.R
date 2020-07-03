@@ -4,10 +4,12 @@
 #' Container around a [data.table::data.table] which stores all performed
 #' [Objective] function calls.
 #'
-#' @description Technical details:
-#' `.data` stores a [data.table::data.table] which logs all performed
-#' [Objective] function calls. The [data.table::data.table] is accessed with
-#' the `$data()` method.
+#' @section Technical details:
+#'
+#' The data is stored in a private `.data` field that contains a [data.table::data.table] which
+#' logs all performed [Objective] function calls. The [data.table::data.table] is accessed with
+#' the `$data()` method. New values can be added with the `$add_evals()` method.
+#' This however is usually done through the evaluation of the [OptimInstance] by the [Optimizer].
 #'
 #' @template param_codomain
 #' @template param_xdt
@@ -17,21 +19,30 @@ Archive = R6Class("Archive",
   public = list(
 
     #' @field search_space ([paradox::ParamSet])\cr
-    #' Search space that is logged into archive.
+    #' Search space of objective.
     search_space = NULL,
 
     #' @field codomain ([paradox::ParamSet])\cr
-    #' Codomain of objective function that is logged into archive.
+    #' Codomain of objective function.
     codomain = NULL,
+
+    #' @field start_time ([POSIXct]).
+    start_time = NULL,
+
+    #' @field check_evals_xdt ('logical(1)')
+    check_evals_xdt = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param search_space ([paradox::ParamSet])\cr
+    #' @param check_evals_xdt ('logical(1)')\cr
+    #'   Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(search_space, codomain) {
+    initialize = function(search_space, codomain, check_evals_xdt = TRUE) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
+      self$check_evals_xdt = assert_flag(check_evals_xdt)
       private$.data = data.table()
     },
 
@@ -45,9 +56,12 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       assert_list(xss_trafoed)
       assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
+      if (self$check_evals_xdt) {
+        self$search_space$assert_dt(xdt[, self$cols_x, with =FALSE])
+      }
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
-      xydt[, "opt_x" := list(xss_trafoed)]
+      xydt[, "x_domain" := list(xss_trafoed)]
       xydt[, "timestamp" := Sys.time()]
       batch_nr = private$.data$batch_nr
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
@@ -56,9 +70,9 @@ Archive = R6Class("Archive",
     },
 
     #' @description
-    #' Returns the best scoring evaluation. For single-criteria optimization,
-    #' the solution that minimize/ maximize the objective function. For
-    #' multi-criteria optimization, the non-dominant solution set.
+    #' Returns the best scoring evaluation. For single-crit optimization,
+    #' the solution that minimizes / maximizes the objective function.
+    #' For multi-crit optimization, the Pareto set / front.
     #'
     #' @param m (`integer()`)\cr
     #' Take only batches `m` into account. Default is all batches.
@@ -150,18 +164,8 @@ Archive = R6Class("Archive",
 
     #' @field cols_y (`character()`).
 
-    cols_y = function() self$codomain$ids(),
+    cols_y = function() self$codomain$ids()
     # idx_unevaled = function() self$data$y
-
-    #' @field start_time ([POSIXct])\cr
-    #' Timestamp of first batch
-    start_time = function() {
-      if(self$n_batch == 0) {
-        return(NULL)
-      } else {
-        private$.data[batch_nr == min(batch_nr), timestamp][1]
-      }
-    }
   ),
 
   private = list(

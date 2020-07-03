@@ -13,7 +13,7 @@ test_that("Evaluator", {
     class = "terminated_error")
 })
 
-test_that("Evaluator Multi-objective", {
+test_that("Evaluator Multi-criteria", {
   a = Archive$new(OBJ_2D_2D)
   term = TerminatorEvals$new()
   term$param_set$values$n_evals = 2

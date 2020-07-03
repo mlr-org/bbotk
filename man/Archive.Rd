@@ -6,20 +6,28 @@
 \description{
 Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
 \link{Objective} function calls.
-
-Technical details:
-\code{.data} stores a \link[data.table:data.table]{data.table::data.table} which logs all performed
-\link{Objective} function calls. The \link[data.table:data.table]{data.table::data.table} is accessed with
-the \verb{$data()} method.
 }
+\section{Technical details}{
+
+
+The data is stored in a private \code{.data} field that contains a \link[data.table:data.table]{data.table::data.table} which
+logs all performed \link{Objective} function calls. The \link[data.table:data.table]{data.table::data.table} is accessed with
+the \verb{$data()} method. New values can be added with the \verb{$add_evals()} method.
+This however is usually done through the evaluation of the \link{OptimInstance} by the \link{Optimizer}.
+}
+
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space that is logged into archive.}
+Search space of objective.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Codomain of objective function that is logged into archive.}
+Codomain of objective function.}
+
+\item{\code{start_time}}{(\link{POSIXct}).}
+
+\item{\code{check_evals_xdt}}{('logical(1)')}
 }
 \if{html}{\out{</div>}}
 }
@@ -35,9 +43,6 @@ Number of batches stored in the archive.}
 \item{\code{cols_x}}{(\code{character()}).}
 
 \item{\code{cols_y}}{(\code{character()}).}
-
-\item{\code{start_time}}{(\link{POSIXct})\cr
-Timestamp of first batch}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,17 +65,20 @@ Timestamp of first batch}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_evals_xdt = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space that is logged into archive.}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function, hence its feasible values.}
+
+\item{\code{check_evals_xdt}}{('logical(1)')\cr
+Should x-values that are added to the archive be checked for validity?
+Search space that is logged into archive.}
 }
 \if{html}{\out{</div>}}
 }
@@ -104,9 +112,9 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-best"></a>}}
 \if{latex}{\out{\hypertarget{method-best}{}}}
 \subsection{Method \code{best()}}{
-Returns the best scoring evaluation. For single-criteria optimization,
-the solution that minimize/ maximize the objective function. For
-multi-criteria optimization, the non-dominant solution set.
+Returns the best scoring evaluation. For single-crit optimization,
+the solution that minimizes / maximizes the objective function.
+For multi-crit optimization, the Pareto set / front.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Archive$best(m = NULL)}\if{html}{\out{</div>}}
 }

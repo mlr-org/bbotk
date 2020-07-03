@@ -7,6 +7,12 @@
 Describes a black-box objective function that maps an arbitrary domain to a
 numerical codomain.
 }
+\section{Technical details}{
+
+\code{Objective} objects can take the following properties \code{noisy}, \code{deterministic}, \code{single-crit} and
+\code{multi-crit}.
+}
+
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -133,7 +139,11 @@ These extra entries are referred to as \emph{extras}.
 \if{html}{\out{<a id="method-eval_many"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
-Evaluates multiple input values on the objective function
+Evaluates multiple input values on the objective function.
+\emph{bbotk} does not take care of parallelization.
+If the function should make use of parallel computing,
+it has to be implemented by deriving from this class and
+overwriting this function.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Objective$eval_many(xss)}\if{html}{\out{</div>}}
 }
@@ -149,8 +159,8 @@ A list of lists that contains multiple x values, e.g.
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and
-multiple y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-criteria functions and
+multiple y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 It may also contain additional columns that will be stored in the archive if
 called through the \link{OptimInstance}.
@@ -177,8 +187,8 @@ One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and
-multiple y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-criteria functions and
+multiple y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
@@ -228,8 +238,8 @@ A list of lists that contains multiple x values, e.g.
 }
 \subsection{Returns}{
 \code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-objective functions and multiple
-y-columns for multi-objective functions, e.g.
+A \code{data.table} that contains one y-column for single-criteria functions and multiple
+y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }

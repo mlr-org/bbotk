@@ -1,7 +1,7 @@
 #' @title Objective interface with custom R function
 #'
 #' @description
-#' Objective interface with custom R function.
+#' Objective interface where the user can pass a custom R function that expects a list as input.
 #'
 #' @template param_domain
 #' @template param_codomain
@@ -53,6 +53,3 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     .fun = NULL
   )
 )
-
-# FIXME: ist das mit dem evaluate, evaluate_checked so sinnvoll?
-# kann man die checks nur in der instance vielleicht machen? per flag an und aus?

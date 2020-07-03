@@ -4,7 +4,7 @@
 \alias{ObjectiveRFun}
 \title{Objective interface with custom R function}
 \description{
-Objective interface with custom R function.
+Objective interface where the user can pass a custom R function that expects a list as input.
 }
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFun}

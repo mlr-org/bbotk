@@ -41,26 +41,33 @@ Imports:
     paradox,
     R6
 Suggests:
-    callr,
-    evaluate,
-    future (>= 1.9.0),
-    future.apply (>= 1.1.0),
+    GenSA,
+    nloptr,
+    testthat,
+    knitr,
     progressr,
-    testthat
+    rmarkdown
 Remotes:
-    mlr-org/mlr3misc
+    mlr-org/paradox
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.0.9000
+VignetteBuilder: knitr
 Collate:
     'Archive.R'
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'
     'OptimInstance.R'
-    'OptimInstanceMulticrit.R'
+    'OptimInstanceMultiCrit.R'
+    'OptimInstanceSingleCrit.R'
+    'mlr_optimizers.R'
     'Optimizer.R'
+    'OptimizerDesignPoints.R'
+    'OptimizerGenSA.R'
+    'OptimizerGridSearch.R'
+    'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
     'mlr_terminators.R'
     'Terminator.R'
@@ -71,6 +78,7 @@ Collate:
     'TerminatorPerfReached.R'
     'TerminatorRunTime.R'
     'TerminatorStagnation.R'
+    'TerminatorStagnationBatch.R'
     'assertions.R'
     'bbotk_reflections.R'
     'helper.R'

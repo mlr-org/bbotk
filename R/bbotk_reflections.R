@@ -24,11 +24,15 @@ bbotk_reflections = new.env(parent = emptyenv())
 local({
   ### optimizer_properties
   bbotk_reflections$optimizer_properties = c(
-    "dependencies"
+    "dependencies", "single-crit", "multi-crit"
   )
 
   ### objective_properties
   bbotk_reflections$objective_properties = c(
-    "noisy"
+    "noisy", "single-crit", "multi-crit", "deterministic"
+  )
+
+  bbotk_reflections$terminator_properties = c(
+    "single-crit", "multi-crit", 'progressr'
   )
 })

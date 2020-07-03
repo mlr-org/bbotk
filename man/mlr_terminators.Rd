@@ -36,6 +36,7 @@ Other Terminator:
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
+\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}}
 }
 \concept{Terminator}

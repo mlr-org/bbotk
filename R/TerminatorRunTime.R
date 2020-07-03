@@ -28,7 +28,7 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         ParamDbl$new("secs", lower = 0, default = 30)
       ))
       ps$values$secs = 30
-      super$initialize(param_set = ps, properties = c("single-objective", "multi-objective", "progressr"))
+      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit", "progressr"))
     },
 
     #' @description

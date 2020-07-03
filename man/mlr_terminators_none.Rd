@@ -6,7 +6,7 @@
 \title{Terminator that never stops.}
 \description{
 Mainly useful for optimization algorithms where the stopping is inherently
-controlled by the algorithm itself (e.g. \link[mlr3tuning:TunerGridSearch]{mlr3tuning::TunerGridSearch}).
+controlled by the algorithm itself (e.g. \link[mlr3tuning:mlr_tuners_grid_search]{mlr3tuning::TunerGridSearch}).
 }
 \section{Dictionary}{
 
@@ -25,6 +25,7 @@ Other Terminator:
 \code{\link{mlr_terminators_evals}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
+\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators}}
 }

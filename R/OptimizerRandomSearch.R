@@ -1,9 +1,27 @@
 #' @title Optimization via Random Search
 #'
+#' @include Optimizer.R
+#' @name mlr_optimizers_random_search
+#'
 #' @description
 #' `OptimizerRandomSearch` class that implements a simple Random Search.
 #'
+#' In order to support general termination criteria and parallelization, we
+#' evaluate points in a batch-fashion of size `batch_size`. Larger batches mean
+#' we can parallelize more, smaller batches imply a more fine-grained checking
+#' of termination criteria.
+#'
+#' @templateVar id random_search
+#' @template section_dictionary_optimizers
+#'
+#' @section Parameters:
+#' \describe{
+#' \item{`batch_size`}{`integer(1)`\cr
+#' Maximum number of points to try in a batch.}
+#' }
+#'
 #' @export
+#' @template example
 OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
   inherit = Optimizer,
   public = list(
@@ -19,7 +37,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
       super$initialize(
         param_set = ps,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = "dependencies"
+        properties = c("dependencies", "single-crit", "multi-crit")
       )
     }
   ),
@@ -27,7 +45,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
   private = list(
     .optimize = function(inst) {
       batch_size = self$param_set$values$batch_size
-      sampler = SamplerUnif$new(inst$search_space) #FIXME if instance has sampler take this
+      sampler = SamplerUnif$new(inst$search_space)
       repeat { # iterate until we have an exception from eval_batch
         design = sampler$sample(batch_size)
         inst$eval_batch(design$data)
@@ -35,3 +53,6 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
     }
   )
 )
+
+mlr_optimizers$add("random_search", OptimizerRandomSearch)
+
