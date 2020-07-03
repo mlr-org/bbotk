@@ -26,7 +26,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
     #' objective.
     #' @param terminator ([Terminator]).
     initialize = function(objective, search_space = NULL, terminator) {
-      if(objective$codomain$length > 1) {
+      if (objective$codomain$length > 1) {
         stop("Codomain > 1")
       }
       super$initialize(objective, search_space, terminator)

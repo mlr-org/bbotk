@@ -65,8 +65,8 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
 
       if (minimize) {
         res = map(perf_before$batch_nr, function(nr) {
-          min(perf_present[, ycol, with=FALSE]) >= min(
-            perf_before[batch_nr == nr, ycol, with=FALSE]) - pv$threshold})
+          min(perf_present[, ycol, with = FALSE]) >= min(
+            perf_before[batch_nr == nr, ycol, with = FALSE]) - pv$threshold})
       } else {
         res = map(perf_before$batch_nr, function(nr) {
           max(perf_present[, ycol, with=FALSE]) <= max(
