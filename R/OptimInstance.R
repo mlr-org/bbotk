@@ -30,6 +30,10 @@ OptimInstance = R6Class("OptimInstance",
     #' @field archive ([Archive]).
     archive = NULL,
 
+    #' @field progressor (`progressor()`)\cr
+    #' Stores `progressor` function.
+    progressor = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -97,9 +101,20 @@ OptimInstance = R6Class("OptimInstance",
       }
       if("progressr" %in% self$terminator$properties && isNamespaceLoaded(
         "progressr")) {
-        self$terminator$run_progressor(self$archive)
-      }
+        if(is.null(self$progressor)) {
+          self$progressor = progressr::progressor(steps = terminator$progressr_steps(self$archive))
+        } else {
+          steps = terminator$progressr_steps(self$archive)
+          update = terminator$progressr_amount(self$archive)
+          sum = update$sum
+          amount = update$amount
 
+          browser()
+
+          self$progressor(message = sprintf("%i of %i", sum, steps),
+                          amount = update$amount)
+        }
+      }
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
       ydt = self$objective$eval_many(xss_trafoed)

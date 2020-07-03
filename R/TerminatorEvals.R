@@ -50,15 +50,25 @@ TerminatorEvals = R6Class("TerminatorEvals",
       if (isNamespaceLoaded("progressr")) {
         ps = self$param_set$values
         if (is.null(self$progressor)) {
-          n = ps$n_evals
+
           self$progressor = progressr::progressor(steps = n)
         } else {
           self$progressor(message = sprintf("%i of %i evaluations", archive$n_evals, ps$n_evals),
-                          amount = nrow(archive$data()[batch_nr == archive$n_batch]))
+            amount = )
         }
       }
+    },
+
+    progressr_steps = function(archive) {
+      self$param_set$values$n_evals
+    },
+
+    progressr_amount = function(archive) {
+      list(
+        amount = nrow(archive$data()[batch_nr == archive$n_batch]),
+        sum = archive$n_evals)
     }
-  )
+  ),
 )
 
 mlr_terminators$add("evals", TerminatorEvals)

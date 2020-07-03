@@ -33,10 +33,6 @@ Terminator = R6Class("Terminator",
     #' Set of properties.
     properties = NULL,
 
-    #' @field progressor (`progressor()`)\cr
-    #' Stores `progressor` function.
-    progressor = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -62,6 +58,14 @@ Terminator = R6Class("Terminator",
     print = function(...) {
       catf(self$format())
       catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
+    },
+
+    progressr_steps = function(archive) {
+      stop("Abstract class")
+    },
+
+    progressr_amount = function(archive) {
+      stop("Abstract class")
     }
-  )
+  ),
 )

@@ -68,6 +68,21 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
                           amount = td)
         }
       }
+    },
+
+    progressr_steps = function(archive) {
+      as.numeric(difftime(self$param_set$values$stop_time, archive$start_time),
+                 units = "secs")
+    },
+
+    progressr_amount = function(archive) {
+      ts = unique(archive$data()$timestamp)
+      ts = c(archive$start_time, ts)
+      td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]), units = "secs")
+      d = as.integer(ceiling(difftime(self$param_set$values$stop_time, Sys.time(),
+                                      unit = "secs")))
+      list(amount = td,
+           sum = d)
     }
   )
 )
