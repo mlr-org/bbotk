@@ -10,6 +10,7 @@ assign_result_default(inst)
 \item{inst}{\link{OptimInstance}}
 }
 \description{
-Default assign_result function
+Used internally in the \link{Optimizer}.
+It is the default way to determine the result by simply obtaining the best performing result from the archive.
 }
 \keyword{internal}

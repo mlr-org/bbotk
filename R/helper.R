@@ -44,6 +44,9 @@ transform_xdt_to_xss = function(xdt, search_space) {
 }
 
 #' @title Default optimization function
+#' @description
+#' Used internally in the [Optimizer].
+#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
 #'
 #' @param inst [OptimInstance]
 #' @param self [Optimizer]
@@ -72,6 +75,9 @@ optimize_default = function(inst, self, private) {
 }
 
 #' @title Default assign_result function
+#' @description
+#' Used internally in the [Optimizer].
+#' It is the default way to determine the result by simply obtaining the best performing result from the archive.
 #'
 #' @param inst [OptimInstance]
 #'

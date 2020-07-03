@@ -14,6 +14,7 @@ optimize_default(inst, self, private)
 \item{private}{(\code{environment()})}
 }
 \description{
-Default optimization function
+Used internally in the \link{Optimizer}.
+Brings together the private \code{.optimize()} method and the private \code{.assign_result()} method.
 }
 \keyword{internal}
