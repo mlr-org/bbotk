@@ -43,29 +43,6 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
 
       d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
       return(d >= self$param_set$values$secs)
-
-    },
-
-    #' @description
-    #' Initializes and increases `progressor` function. Internally called by
-    #' `$eval_batch()` in [OptimInstance].
-    #'
-    #' @param archive ([Archive]).
-    run_progressor = function(archive) {
-      if (isNamespaceLoaded("progressr") && !is.null(archive$start_time)) {
-        ps = self$param_set$values
-        if (is.null(self$progressor)) {
-          n = ps$secs
-          self$progressor = progressr::progressor(steps = n)
-        } else {
-          ts = unique(archive$data()$timestamp)
-          td = as.numeric(difftime(
-            ts[length(ts)], ts[length(ts) - 1]), units = "secs")
-          d = ps$secs - as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
-          self$progressor(message = sprintf("%i seconds left", d),
-            amount = td)
-        }
-      }
     },
 
     progressr_steps = function(archive) {

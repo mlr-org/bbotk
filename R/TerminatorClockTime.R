@@ -46,41 +46,17 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
       return(Sys.time() >= self$param_set$values$stop_time)
     },
 
-    #' @description
-    #' Initializes and increases `progressor` function. Internally called by
-    #' `$eval_batch()` in [OptimInstance].
-    #'
-    #' @param archive ([Archive]).
-    run_progressor = function(archive) {
-      if (isNamespaceLoaded("progressr") && !is.null(archive$start_time)) {
-        ps = self$param_set$values
-        if (is.null(self$progressor)) {
-          n = as.numeric(difftime(ps$stop_time, archive$start_time),
-                         units = "secs")
-          self$progressor = progressr::progressor(steps = n)
-        } else {
-          ts = unique(archive$data()$timestamp)
-          td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]),
-                          units = "secs")
-          d = as.integer(ceiling(difftime(ps$stop_time, Sys.time(),
-                                          unit = "secs")))
-          self$progressor(message = sprintf("%i seconds left", d),
-                          amount = td)
-        }
-      }
-    },
-
     progressr_steps = function(archive) {
-      as.numeric(difftime(self$param_set$values$stop_time, archive$start_time),
-                 units = "secs")
+      as.integer(ceiling(difftime(self$param_set$values$stop_time, archive$start_time, units = "secs"))
+                )
     },
 
     progressr_amount = function(archive) {
       ts = unique(archive$data()$timestamp)
       ts = c(archive$start_time, ts)
       td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]), units = "secs")
-      d = as.integer(ceiling(difftime(self$param_set$values$stop_time, Sys.time(),
-                                      unit = "secs")))
+      d = as.integer(difftime(self$param_set$values$stop_time, Sys.time(),
+                                      unit = "secs"))
       list(amount = td,
            sum = d)
     }
