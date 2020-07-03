@@ -191,11 +191,14 @@ Dimension of codomain.</p></dd>
 <dt><code>properties</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).</p></dd>
 
 <dt><code>domain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Specifies domain of function, hence its input parameters, their types
-and ranges.</p></dd>
+Specifies domain of function.
+The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a> should describe all possible input parameters of the objective function.
+This includes their <code>id</code>, their types and the possible range.</p></dd>
 
 <dt><code>codomain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Specifies codomain of function, hence its feasible values.</p></dd>
+Specifies codomain of function.
+Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
+The default is to minimize each component.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
@@ -261,7 +264,9 @@ These extra columns are referred to as <em>extras</em>.</p>
 <p><div class="arguments"></p><dl'>
 <dt><code>xdt</code></dt><dd><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
 Set of untransformed points / points from the <em>search space</em>.
-One point per row, e.g. <code>data.table(x1 = c(1, 3), x2 = c(2, 4))</code>.</p></dd>
+One point per row, e.g. <code>data.table(x1 = c(1, 3), x2 = c(2, 4))</code>.
+Column names have to match ids of the <code>search_space</code>.
+However, <code>xdt</code> can contain additional columns.</p></dd>
 
 </dl><p></div></p>
 <h3>Returns</h3>

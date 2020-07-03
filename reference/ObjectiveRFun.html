@@ -175,11 +175,14 @@ R function that encodes objective and expects a list with the input for a single
 list (e.g. <code><a href='https://rdrr.io/r/base/list.html'>list(y = 3)</a></code>).</p></dd>
 
 <dt><code>domain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Specifies domain of function, hence its input parameters, their types
-and ranges.</p></dd>
+Specifies domain of function.
+The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a> should describe all possible input parameters of the objective function.
+This includes their <code>id</code>, their types and the possible range.</p></dd>
 
 <dt><code>codomain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Specifies codomain of function, hence its feasible values.</p></dd>
+Specifies codomain of function.
+Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
+The default is to minimize each component.</p></dd>
 
 <dt><code>id</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>).</p></dd>
 

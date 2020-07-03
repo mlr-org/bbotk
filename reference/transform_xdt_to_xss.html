@@ -134,15 +134,18 @@ Mainly for internal usage.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>xdt</th>
-      <td><p>(<code>data.table</code>) <br />
-The data table with x-columns.
+      <td><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
+Set of untransformed points / points from the <em>search space</em>.
+One point per row, e.g. <code>data.table(x1 = c(1, 3), x2 = c(2, 4))</code>.
 Column names have to match ids of the <code>search_space</code>.
 However, <code>xdt</code> can contain additional columns.</p></td>
     </tr>
     <tr>
       <th>search_space</th>
-      <td><p><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a> <br />
-The ParamSet.</p></td>
+      <td><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
+Specifies the search space for the <a href='Optimizer.html'>Optimizer</a>.
+The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a> describes either a subset of the <code>domain</code> of the <a href='Objective.html'>Objective</a> or it describes a set of parameters together with a <code>trafo</code> function that transforms values from the search space to values of the domain.
+Depending on the context, this value defaults to the domain of the objective.</p></td>
     </tr>
     </table>
 
