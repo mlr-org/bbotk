@@ -27,6 +27,9 @@ user can access the results with active bindings (see below).
 \item{\code{is_terminated}}{(\code{logical(1)}).}
 
 \item{\code{archive}}{(\link{Archive}).}
+
+\item{\code{progressor}}{(\code{progressor()})\cr
+Stores \code{progressor} function.}
 }
 \if{html}{\out{</div>}}
 }

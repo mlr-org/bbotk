@@ -6,7 +6,7 @@
 \title{Terminator that never stops.}
 \description{
 Mainly useful for optimization algorithms where the stopping is inherently
-controlled by the algorithm itself (e.g. \link[mlr3tuning:TunerGridSearch]{mlr3tuning::TunerGridSearch}).
+controlled by the algorithm itself (e.g. \link[mlr3tuning:mlr_tuners_grid_search]{mlr3tuning::TunerGridSearch}).
 }
 \section{Dictionary}{
 
@@ -46,6 +46,8 @@ Other Terminator:
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="progressr_amount">}\href{../../bbotk/html/Terminator.html#method-progressr_amount}{\code{bbotk::Terminator$progressr_amount()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="progressr_steps">}\href{../../bbotk/html/Terminator.html#method-progressr_steps}{\code{bbotk::Terminator$progressr_steps()}}\out{</span>}
 }
 \out{</details>}
 }

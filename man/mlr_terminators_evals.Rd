@@ -51,6 +51,8 @@ Other Terminator:
 \item \href{#method-new}{\code{TerminatorEvals$new()}}
 \item \href{#method-is_terminated}{\code{TerminatorEvals$is_terminated()}}
 \item \href{#method-run_progressor}{\code{TerminatorEvals$run_progressor()}}
+\item \href{#method-progressr_steps}{\code{TerminatorEvals$progressr_steps()}}
+\item \href{#method-progressr_amount}{\code{TerminatorEvals$progressr_amount()}}
 \item \href{#method-clone}{\code{TerminatorEvals$clone()}}
 }
 }
@@ -109,6 +111,47 @@ Initializes and increases \code{progressor} function. Internally called by
 \item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-progressr_steps"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_steps}{}}}
+\subsection{Method \code{progressr_steps()}}{
+Returns the number of allowed evaluations.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorEvals$progressr_steps(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{integer(1)}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-progressr_amount"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_amount}{}}}
+\subsection{Method \code{progressr_amount()}}{
+Returns the number of evaluations in the last batch (\code{amount}) and the
+total number of evaluations (\code{sum}).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorEvals$progressr_amount(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+list of \code{numeric(1)} and \code{integer(1)}
 }
 }
 \if{html}{\out{<hr>}}

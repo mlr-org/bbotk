@@ -49,7 +49,8 @@ Other Terminator:
 \itemize{
 \item \href{#method-new}{\code{TerminatorRunTime$new()}}
 \item \href{#method-is_terminated}{\code{TerminatorRunTime$is_terminated()}}
-\item \href{#method-run_progressor}{\code{TerminatorRunTime$run_progressor()}}
+\item \href{#method-progressr_steps}{\code{TerminatorRunTime$progressr_steps()}}
+\item \href{#method-progressr_amount}{\code{TerminatorRunTime$progressr_amount()}}
 \item \href{#method-clone}{\code{TerminatorRunTime$clone()}}
 }
 }
@@ -93,13 +94,12 @@ otherwise.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run_progressor"></a>}}
-\if{latex}{\out{\hypertarget{method-run_progressor}{}}}
-\subsection{Method \code{run_progressor()}}{
-Initializes and increases \code{progressor} function. Internally called by
-\verb{$eval_batch()} in \link{OptimInstance}.
+\if{html}{\out{<a id="method-progressr_steps"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_steps}{}}}
+\subsection{Method \code{progressr_steps()}}{
+Returns the allowed runtime in seconds.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorRunTime$run_progressor(archive)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorRunTime$progressr_steps(archive)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -108,6 +108,30 @@ Initializes and increases \code{progressor} function. Internally called by
 \item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{integer(1)}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-progressr_amount"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_amount}{}}}
+\subsection{Method \code{progressr_amount()}}{
+Returns time difference between the last two batches (\code{amount}) and
+current runtime (\code{sum}) in seconds.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorRunTime$progressr_amount(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+list of \code{numeric(1)} and \code{integer(1)}
 }
 }
 \if{html}{\out{<hr>}}

@@ -45,7 +45,7 @@ OptimInstance = R6Class("OptimInstance",
     initialize = function(objective, search_space = NULL, terminator) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
-         self$objective$domain
+        self$objective$domain
       } else {
         assert_param_set(search_space)
       }
@@ -95,14 +95,15 @@ OptimInstance = R6Class("OptimInstance",
     #'   Contains the value in the *search space* of the [OptimInstance] object.
     #'   Can contain additional columns for extra information.
     eval_batch = function(xdt) {
+
       if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
         self$is_terminated = TRUE
         stop(terminated_error(self))
       }
 
-      if("progressr" %in% self$terminator$properties && isNamespaceLoaded(
+      if ("progressr" %in% self$terminator$properties && isNamespaceLoaded(
         "progressr")) {
-        if(is.null(self$progressor)) {
+        if (is.null(self$progressor)) {
           self$progressor = progressr::progressor(steps =
             terminator$progressr_steps(self$archive))
         } else {
@@ -112,7 +113,7 @@ OptimInstance = R6Class("OptimInstance",
           amount = update$amount
 
           self$progressor(message = sprintf("%i of %i", sum, steps),
-                          amount = update$amount)
+            amount = update$amount)
         }
       }
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
@@ -192,12 +193,12 @@ OptimInstance = R6Class("OptimInstance",
 )
 
 objective_function = function(x, inst, multiplicator) {
-    xs = set_names(as.list(x), inst$search_space$ids())
-    inst$search_space$assert(xs)
-    xdt = as.data.table(xs)
-    res = inst$eval_batch(xdt)
-    y = as.numeric(res[, inst$objective$codomain$ids(), with = FALSE])
-    y * multiplicator
+  xs = set_names(as.list(x), inst$search_space$ids())
+  inst$search_space$assert(xs)
+  xdt = as.data.table(xs)
+  res = inst$eval_batch(xdt)
+  y = as.numeric(res[, inst$objective$codomain$ids(), with = FALSE])
+  y * multiplicator
 }
 
 objective_error = function(x, inst, multiplicator) {

@@ -59,10 +59,20 @@ TerminatorEvals = R6Class("TerminatorEvals",
       }
     },
 
+
+    #' @description
+    #' Returns the number of allowed evaluations.
+    #' @param archive ([Archive]).
+    #' @return `integer(1)`
     progressr_steps = function(archive) {
       self$param_set$values$n_evals
     },
 
+    #' @description
+    #' Returns the number of evaluations in the last batch (`amount`) and the
+    #' total number of evaluations (`sum`).
+    #' @param archive ([Archive]).
+    #' @return list of `numeric(1)` and `integer(1)`
     progressr_amount = function(archive) {
       list(
         amount = nrow(archive$data()[batch_nr == archive$n_batch]),

@@ -60,10 +60,23 @@ Terminator = R6Class("Terminator",
       catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
     },
 
+    #' @description
+    #' Subclasses overwrite this method to define the number of steps in the
+    #' progressor.
+    #' @param archive ([Archive]).
+    #' @return `integer(1)`
     progressr_steps = function(archive) {
       stop("Abstract class")
     },
 
+    #' @description
+    #' Subclasses overwrite this method to define the amount of progress made in
+    #' each batch and the total progress.
+    #'
+    #' Returns time difference between the last two batches (`amount`) and
+    #' current runtime (`sum`) in seconds.
+    #' @param archive ([Archive]).
+    #' @return list of `numeric(1)` and `integer(1)`
     progressr_amount = function(archive) {
       stop("Abstract class")
     }

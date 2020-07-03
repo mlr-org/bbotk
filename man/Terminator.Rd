@@ -43,9 +43,6 @@ Set of control parameters for terminator.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties.}
-
-\item{\code{progressor}}{(\code{progressor()})\cr
-Stores \code{progressor} function.}
 }
 \if{html}{\out{</div>}}
 }
@@ -55,6 +52,8 @@ Stores \code{progressor} function.}
 \item \href{#method-new}{\code{Terminator$new()}}
 \item \href{#method-format}{\code{Terminator$format()}}
 \item \href{#method-print}{\code{Terminator$print()}}
+\item \href{#method-progressr_steps}{\code{Terminator$progressr_steps()}}
+\item \href{#method-progressr_amount}{\code{Terminator$progressr_amount()}}
 \item \href{#method-clone}{\code{Terminator$clone()}}
 }
 }
@@ -104,6 +103,51 @@ Printer.
 \item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-progressr_steps"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_steps}{}}}
+\subsection{Method \code{progressr_steps()}}{
+Subclasses overwrite this method to define the number of steps in the
+progressor.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$progressr_steps(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{integer(1)}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-progressr_amount"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_amount}{}}}
+\subsection{Method \code{progressr_amount()}}{
+Subclasses overwrite this method to define the amount of progress made in
+each batch and the total progress.
+
+Returns time difference between the last two batches (\code{amount}) and
+current runtime (\code{sum}) in seconds.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$progressr_amount(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+list of \code{numeric(1)} and \code{integer(1)}
 }
 }
 \if{html}{\out{<hr>}}

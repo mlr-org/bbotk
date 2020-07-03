@@ -46,19 +46,28 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
       return(Sys.time() >= self$param_set$values$stop_time)
     },
 
+    #' @description
+    #' Returns time difference between start time and stop time in seconds.
+    #' @param archive ([Archive]).
+    #' @return `integer(1)`
     progressr_steps = function(archive) {
-      as.integer(ceiling(difftime(self$param_set$values$stop_time, archive$start_time, units = "secs"))
-                )
+      as.integer(ceiling(difftime(self$param_set$values$stop_time,
+        archive$start_time, units = "secs")))
     },
 
+    #' @description
+    #' Returns time difference between the last two batches (`amount`) and
+    #' current runtime (`sum`) in seconds.
+    #' @param archive ([Archive]).
+    #' @return list of `numeric(1)` and `integer(1)`
     progressr_amount = function(archive) {
       ts = unique(archive$data()$timestamp)
       ts = c(archive$start_time, ts)
       td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]), units = "secs")
       d = as.integer(difftime(self$param_set$values$stop_time, Sys.time(),
-                                      unit = "secs"))
+        unit = "secs"))
       list(amount = td,
-           sum = d)
+        sum = d)
     }
   )
 )
