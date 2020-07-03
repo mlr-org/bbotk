@@ -11,7 +11,6 @@ vignette: >
 
 ```{r setup, include = FALSE}
 set.seed(1)
-library(bbotk)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -34,6 +33,7 @@ As `bbotk` also includes some basic optimizers and can be used on it's own.
 The registered optimizers can be queried as follows:
 
 ```{r}
+library(bbotk)
 opts()
 ```
 
@@ -62,6 +62,8 @@ This is only necessary if we want to deviate from the default which would define
 Such spaces are defined using the package [`paradox`](https://cran.r-project.org/package=paradox).
 
 ```{r}
+library(paradox)
+
 domain = ParamSet$new(list(
   ParamDbl$new("x1", -10, 10), 
   ParamDbl$new("x2", -5, 5)
@@ -209,6 +211,8 @@ obj$eval(inst$result_x_domain)
 The following is just meant for *advanced* readers.
 If you want to evaluate the function outside of the optimization but have the result stored in the `Archive` you can do so by resetting the termination and call `$eval_batch()`.
 ```{r}
+library(data.table)
+
 inst$is_terminated = FALSE
 inst$terminator = term("none")
 xvals = data.table(h = c(0.6666, 0.6667), w = c(0.6666, 0.6667))

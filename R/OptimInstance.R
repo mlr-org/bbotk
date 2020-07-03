@@ -44,7 +44,7 @@ OptimInstance = R6Class("OptimInstance",
     #' @param terminator ([Terminator]).
     initialize = function(objective, search_space = NULL, terminator) {
       self$objective = assert_r6(objective, "Objective")
-      self$search_space = if(is.null(search_space)) {
+      self$search_space = if (is.null(search_space)) {
          self$objective$domain
       } else {
         assert_param_set(search_space)

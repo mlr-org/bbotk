@@ -84,6 +84,6 @@ test_that("start_time is set by Optimizer", {
   optimizer = OptimizerRandomSearch$new()
   time = Sys.time()
   optimizer$optimize(inst)
-  expect_equal(inst$archive$start_time, time, tolerance=0.5)
+  expect_equal(inst$archive$start_time, time, tolerance = 0.5)
 })
 

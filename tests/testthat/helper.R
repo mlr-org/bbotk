@@ -91,7 +91,7 @@ MAKE_INST_2D_2D = function(terminator) {
 test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_evals) {
   terminator = term("evals", n_evals = term_evals)
 
-  if(n_dim == 1) {
+  if (n_dim == 1) {
     search_space =  ParamSet$new(list(
       ParamDbl$new("x", lower = -1, upper = 1)
     ))
@@ -107,7 +107,7 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
       codomain = codomain, properties = "single-crit")
     instance = OptimInstanceSingleCrit$new(objective = objective,
       search_space = search_space, terminator = terminator)
-  } else if(n_dim == 2) {
+  } else if (n_dim == 2) {
     search_space = ParamSet$new(list(
       ParamDbl$new("x1", lower = -1, upper = 1),
       ParamDbl$new("x2", lower = -1, upper = 1)
