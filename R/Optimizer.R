@@ -74,21 +74,7 @@ Optimizer = R6Class("Optimizer",
     #' @param inst ([OptimInstance]).
     #' @return NULL
     optimize = function(inst) {
-      assert_instance_properties(self, inst)
-      inst$archive$start_time = Sys.time()
-      # start optimization
-      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-        inst$search_space$length, self$format(), inst$terminator$format())
-      tryCatch({
-        private$.optimize(inst)
-      }, terminated_error = function(cond) { })
-      private$.assign_result(inst)
-      lg$info("Finished optimizing after %i evaluation(s)",
-              inst$archive$n_evals)
-      lg$info("Result:")
-      lg$info(capture.output(print(
-        inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-      invisible(NULL)
+      optimize_default(inst, self, private)
     }
   ),
 
@@ -97,19 +83,7 @@ Optimizer = R6Class("Optimizer",
 
     .assign_result = function(inst) {
       assert_r6(inst, "OptimInstance")
-      res = inst$archive$best()
-
-      xdt = res[, inst$search_space$ids(), with = FALSE]
-
-      if (inherits(inst, "OptimInstanceMultiCrit")) {
-        ydt = res[, inst$objective$codomain$ids(), with = FALSE]
-        inst$assign_result(xdt, ydt)
-      } else {
-        y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) # unlist keeps name!
-        inst$assign_result(xdt, y)
-      }
-
-      invisible(NULL)
+      assign_result_default(inst)
     }
   )
 )
