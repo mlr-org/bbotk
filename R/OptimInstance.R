@@ -70,11 +70,17 @@ OptimInstance = R6Class("OptimInstance",
     #' @param ... (ignored).
     print = function(...) {
       catf(format(self))
+      catf(str_indent("* State: ", if(is.null(private$.result)) "Not optimized" else "Optimized"))
       catf(str_indent("* Objective:", format(self$objective)))
       catf("* Search Space:")
       print(self$search_space)
       catf(str_indent("* Terminator:", format(self$terminator)))
       catf(str_indent("* Terminated:", self$is_terminated))
+      if(!is.null(private$.result)) {
+        catf("* Result:")
+        print(self$result)
+      }
+      catf("* Archive:")
       print(self$archive)
     },
 
