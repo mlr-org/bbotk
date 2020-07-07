@@ -74,7 +74,7 @@ OptimInstance = R6Class("OptimInstance",
       print(self$search_space)
       catf(str_indent("* Terminator:", format(self$terminator)))
       catf(str_indent("* Terminated:", self$is_terminated))
-      if(!is.null(private$.result)) {
+      if (!is.null(private$.result)) {
         catf("* Result:")
         print(self$result)
       }

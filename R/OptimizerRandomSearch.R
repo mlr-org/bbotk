@@ -55,4 +55,3 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
 )
 
 mlr_optimizers$add("random_search", OptimizerRandomSearch)
-
