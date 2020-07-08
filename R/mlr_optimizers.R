@@ -22,8 +22,4 @@
 #' @export
 #' @examples
 #' opt("random_search", batch_size = 10)
-mlr_optimizers = R6Class("DictionaryOptimizer",
-                          inherit = Dictionary,
-                          cloneable = FALSE
-)$new()
-
+mlr_optimizers = R6Class("DictionaryOptimizer", inherit = Dictionary, cloneable = FALSE)$new()

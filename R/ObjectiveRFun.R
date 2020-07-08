@@ -20,7 +20,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(fun, domain, codomain = NULL, id = "function",
-      properties = character(0)) {
+      properties = character()) {
       if (is.null(codomain)) {
         codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
       }
