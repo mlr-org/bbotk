@@ -31,12 +31,19 @@ OptimInstance = R6Class("OptimInstance",
     #' @field archive ([Archive]).
     archive = NULL,
 
+    #' @field check_values (`logical(1)`).
+    check_values = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
-    initialize = function(objective, search_space = NULL, terminator) {
+    #' @param check_values (`logical(1)`)\cr
+    #' Check the validity of the points suggested by the [Optimizer] and the validity
+    #' of the objective values.
+    initialize = function(objective, search_space = NULL, terminator,
+      check_values = TRUE) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
          self$objective$domain
@@ -54,6 +61,7 @@ OptimInstance = R6Class("OptimInstance",
         private$.objective_multiplicator =
           ifelse(self$objective$codomain$tags == "minimize", 1, -1)
       }
+      self$check_values = assert_logical(check_values)
     },
 
     #' @description
@@ -101,6 +109,11 @@ OptimInstance = R6Class("OptimInstance",
       }
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
+      ydt = if(self$check_values) {
+        self$objective$eval_many_checked(xss_trafoed)
+      } else {
+        self$objective$eval_many(xss_trafoed)
+      }
       ydt = self$objective$eval_many(xss_trafoed)
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)

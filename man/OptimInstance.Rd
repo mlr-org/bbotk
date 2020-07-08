@@ -27,6 +27,8 @@ user can access the results with active bindings (see below).
 \item{\code{is_terminated}}{(\code{logical(1)}).}
 
 \item{\code{archive}}{(\link{Archive}).}
+
+\item{\code{check_values}}{(\code{logical(1)}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -65,7 +67,12 @@ Optimal outcome.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$new(objective, search_space = NULL, terminator)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$new(
+  objective,
+  search_space = NULL,
+  terminator,
+  check_values = TRUE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -79,6 +86,10 @@ The \link[paradox:ParamSet]{paradox::ParamSet} describes either a subset of the 
 Depending on the context, this value defaults to the domain of the objective.}
 
 \item{\code{terminator}}{(\link{Terminator}).}
+
+\item{\code{check_values}}{(\code{logical(1)})\cr
+Check the validity of the points suggested by the \link{Optimizer} and the validity
+of the objective values.}
 }
 \if{html}{\out{</div>}}
 }

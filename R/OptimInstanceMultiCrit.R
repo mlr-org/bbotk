@@ -25,8 +25,12 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator])\cr
     #' Multi-criteria terminator.
-    initialize = function(objective, search_space = NULL, terminator) {
-      super$initialize(objective, search_space, terminator)
+    #' @param check_values (`logical(1)`)\cr
+    #' Check the validity of the points suggested by the [Optimizer] and the validity
+    #' of the objective values.
+    initialize = function(objective, search_space = NULL, terminator,
+      check_values = TRUE) {
+      super$initialize(objective, search_space, terminator, check_values)
     },
 
     #' @description
