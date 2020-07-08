@@ -12,6 +12,7 @@
 #'
 #' @template param_xdt
 #' @template param_search_space
+#' @template param_check_values
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
@@ -39,9 +40,6 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
-    #' @param check_values (`logical(1)`)\cr
-    #' Check the validity of the points suggested by the [Optimizer] and the validity
-    #' of the objective values.
     initialize = function(objective, search_space = NULL, terminator,
       check_values = TRUE) {
       self$objective = assert_r6(objective, "Objective")

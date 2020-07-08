@@ -14,6 +14,7 @@
 #' @template param_xdt
 #' @template param_ydt
 #' @template param_search_space
+#' @template param_check_values
 #' @export
 OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
   inherit = OptimInstance,
@@ -25,9 +26,6 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator])\cr
     #' Multi-criteria terminator.
-    #' @param check_values (`logical(1)`)\cr
-    #' Check the validity of the points suggested by the [Optimizer] and the validity
-    #' of the objective values.
     initialize = function(objective, search_space = NULL, terminator,
       check_values = TRUE) {
       super$initialize(objective, search_space, terminator, check_values)
