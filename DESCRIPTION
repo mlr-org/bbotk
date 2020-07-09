@@ -41,18 +41,20 @@ Imports:
     paradox (>= 0.2.0.9000),
     R6
 Suggests:
+    adagio,
     GenSA,
-    nloptr,
-    testthat,
     knitr,
-    rmarkdown
+    nloptr,
+    rmarkdown,
+    testthat
+VignetteBuilder: 
+    knitr
 Remotes:
     mlr-org/paradox
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-VignetteBuilder: knitr
 Collate:
     'Archive.R'
     'Objective.R'
@@ -63,6 +65,7 @@ Collate:
     'OptimInstanceSingleCrit.R'
     'mlr_optimizers.R'
     'Optimizer.R'
+    'OptimizerCmaes.R'
     'OptimizerDesignPoints.R'
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
