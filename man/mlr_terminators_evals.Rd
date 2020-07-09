@@ -50,7 +50,6 @@ Other Terminator:
 \itemize{
 \item \href{#method-new}{\code{TerminatorEvals$new()}}
 \item \href{#method-is_terminated}{\code{TerminatorEvals$is_terminated()}}
-\item \href{#method-run_progressor}{\code{TerminatorEvals$run_progressor()}}
 \item \href{#method-progressr_steps}{\code{TerminatorEvals$progressr_steps()}}
 \item \href{#method-progressr_update}{\code{TerminatorEvals$progressr_update()}}
 \item \href{#method-clone}{\code{TerminatorEvals$clone()}}
@@ -61,7 +60,6 @@ Other Terminator:
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="progressr_amount">}\href{../../bbotk/html/Terminator.html#method-progressr_amount}{\code{bbotk::Terminator$progressr_amount()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -94,24 +92,6 @@ otherwise.
 }
 \subsection{Returns}{
 \code{logical(1)}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run_progressor"></a>}}
-\if{latex}{\out{\hypertarget{method-run_progressor}{}}}
-\subsection{Method \code{run_progressor()}}{
-Initializes and increases \code{progressor} function. Internally called by
-\verb{$eval_batch()} in \link{OptimInstance}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorEvals$run_progressor(archive)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

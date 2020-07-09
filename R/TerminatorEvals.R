@@ -42,25 +42,6 @@ TerminatorEvals = R6Class("TerminatorEvals",
     },
 
     #' @description
-    #' Initializes and increases `progressor` function. Internally called by
-    #' `$eval_batch()` in [OptimInstance].
-    #'
-    #' @param archive ([Archive]).
-    run_progressor = function(archive) {
-      if (isNamespaceLoaded("progressr")) {
-        ps = self$param_set$values
-        if (is.null(self$progressor)) {
-
-          self$progressor = progressr::progressor(steps = n)
-        } else {
-          self$progressor(message = sprintf("%i of %i evaluations", archive$n_evals, ps$n_evals),
-            amount = )
-        }
-      }
-    },
-
-
-    #' @description
     #' Returns the number of allowed evaluations.
     #' @param archive ([Archive]).
     #' @return `integer(1)`

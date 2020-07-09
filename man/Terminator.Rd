@@ -53,7 +53,7 @@ Set of properties.}
 \item \href{#method-format}{\code{Terminator$format()}}
 \item \href{#method-print}{\code{Terminator$print()}}
 \item \href{#method-progressr_steps}{\code{Terminator$progressr_steps()}}
-\item \href{#method-progressr_amount}{\code{Terminator$progressr_amount()}}
+\item \href{#method-progressr_update}{\code{Terminator$progressr_update()}}
 \item \href{#method-clone}{\code{Terminator$clone()}}
 }
 }
@@ -127,13 +127,13 @@ progressor.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-progressr_amount"></a>}}
-\if{latex}{\out{\hypertarget{method-progressr_amount}{}}}
-\subsection{Method \code{progressr_amount()}}{
+\if{html}{\out{<a id="method-progressr_update"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_update}{}}}
+\subsection{Method \code{progressr_update()}}{
 Subclasses overwrite this method to define the amount of progress made in
 each batch and the total progress.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$progressr_amount(archive)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$progressr_update(archive)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

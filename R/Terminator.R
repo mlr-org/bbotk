@@ -76,7 +76,7 @@ Terminator = R6Class("Terminator",
     #'
     #' @param archive ([Archive]).
     #' @return list of `numeric(1)` and `integer(1)`
-    progressr_amount = function(archive) {
+    progressr_update = function(archive) {
       stop("Abstract class")
     }
   ),
