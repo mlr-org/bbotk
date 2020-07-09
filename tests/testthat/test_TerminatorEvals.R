@@ -28,7 +28,7 @@ test_that("progressr package works", {
   skip_if_not_installed("progressr")
   requireNamespace("progressr")
 
-  progressr::handlers("progress")
+  progressr::handlers("debug")
   terminator = term("evals", n_evals = 10)
   inst = MAKE_INST_1D(terminator = terminator)
   optimizer = opt("random_search")
