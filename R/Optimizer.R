@@ -17,15 +17,6 @@
 #' wrap the function in `progressr::with_progress()` to enable them. We
 #' recommend to use package \CRANpkg{progress} as backend; enable with
 #' `progressr::handlers("progress")`.
-#'
-#' @section Technical details:
-#'
-#' In order to replace the default logging messages with custom logging, the
-#' `.log_*` private methods can be overwritten in an `Optimizer` subclass:
-#'
-#' * `$.log_optimize_start()` Called at the beginning of `$optimize()`
-#' * `$.log_optimize_finish()` Called at the end of `$optimize()`
-#'
 #' @export
 Optimizer = R6Class("Optimizer",
   public = list(
@@ -50,7 +41,7 @@ Optimizer = R6Class("Optimizer",
     #' @param properties (`character()`).
     #' @param packages (`character()`).
     initialize = function(param_set, param_classes, properties,
-      packages = character(0)) {
+      packages = character()) {
       self$param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
@@ -81,21 +72,7 @@ Optimizer = R6Class("Optimizer",
     #' @param inst ([OptimInstance]).
     #' @return NULL
     optimize = function(inst) {
-      assert_instance_properties(self, inst)
-      inst$archive$start_time = Sys.time()
-      # start optimization
-      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-        inst$search_space$length, self$format(), inst$terminator$format())
-      tryCatch({
-        private$.optimize(inst)
-      }, terminated_error = function(cond) { })
-      private$.assign_result(inst)
-      lg$info("Finished optimizing after %i evaluation(s)",
-              inst$archive$n_evals)
-      lg$info("Result:")
-      lg$info(capture.output(print(
-        inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-      invisible(NULL)
+      optimize_default(inst, self, private)
     }
   ),
 
@@ -104,19 +81,7 @@ Optimizer = R6Class("Optimizer",
 
     .assign_result = function(inst) {
       assert_r6(inst, "OptimInstance")
-      res = inst$archive$best()
-
-      xdt = res[, inst$search_space$ids(), with = FALSE]
-
-      if (inherits(inst, "OptimInstanceMultiCrit")) {
-        ydt = res[, inst$objective$codomain$ids(), with = FALSE]
-        inst$assign_result(xdt, ydt)
-      } else {
-        y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) # unlist keeps name!
-        inst$assign_result(xdt, y)
-      }
-
-      invisible(NULL)
+      assign_result_default(inst)
     }
   )
 )

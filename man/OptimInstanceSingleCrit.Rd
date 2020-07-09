@@ -50,9 +50,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{objective}}{(\link{Objective}).}
 
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).
-If no search space is provided, search space is set to domain of
-objective.}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specifies the search space for the \link{Optimizer}.
+The \link[paradox:ParamSet]{paradox::ParamSet} describes either a subset of the \code{domain} of the \link{Objective} or it describes a set of parameters together with a \code{trafo} function that transforms values from the search space to values of the domain.
+Depending on the context, this value defaults to the domain of the objective.}
 
 \item{\code{terminator}}{(\link{Terminator}).}
 }
@@ -72,10 +73,11 @@ and estimated performance value here. For internal use.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{(\code{data.table})\cr
-x values as \code{data.table} with one row.
-Contains the value in the \emph{search space} of the \link{OptimInstance} object.
-Can contain additional columns for extra information.}
+\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+Set of untransformed points / points from the \emph{search space}.
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
+Column names have to match ids of the \code{search_space}.
+However, \code{xdt} can contain additional columns.}
 
 \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}

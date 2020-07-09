@@ -29,12 +29,8 @@ is_dominated = function(ymat) {
 #' If no trafo is defined it will just convert the `data.table` to a list.
 #' Mainly for internal usage.
 #'
-#' @param xdt (`data.table`) \cr
-#' The data table with x-columns.
-#' Column names have to match ids of the `search_space`.
-#' However, `xdt` can contain additional columns.
-#' @param search_space [paradox::ParamSet] \cr
-#' The ParamSet.
+#' @template param_xdt
+#' @template param_search_space
 #' @value `list()`
 #' @keywords internal
 #' @export
@@ -45,4 +41,61 @@ transform_xdt_to_xss = function(xdt, search_space) {
     remove_dupl = FALSE
   )
   design$transpose(trafo = TRUE, filter_na = TRUE)
+}
+
+#' @title Default optimization function
+#' @description
+#' Used internally in the [Optimizer].
+#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
+#'
+#' @param inst [OptimInstance]
+#' @param self [Optimizer]
+#' @param private (`environment()`)
+#'
+#' @keywords internal
+#' @export
+optimize_default = function(inst, self, private) {
+
+  assert_instance_properties(self, inst)
+  inst$archive$start_time = Sys.time()
+  # start optimization
+  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
+    inst$search_space$length, self$format(), inst$terminator$format())
+  tryCatch({
+    private$.optimize(inst)
+  }, terminated_error = function(cond) {
+  })
+  private$.assign_result(inst)
+  lg$info("Finished optimizing after %i evaluation(s)",
+    inst$archive$n_evals)
+  lg$info("Result:")
+  lg$info(capture.output(print(
+    inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+  invisible(NULL)
+}
+
+#' @title Default assign_result function
+#' @description
+#' Used internally in the [Optimizer].
+#' It is the default way to determine the result by simply obtaining the best performing result from the archive.
+#'
+#' @param inst [OptimInstance]
+#'
+#' @keywords internal
+#' @export
+assign_result_default = function(inst) {
+  res = inst$archive$best()
+
+  xdt = res[, inst$search_space$ids(), with = FALSE]
+
+  if (inherits(inst, "OptimInstanceMultiCrit")) {
+    ydt = res[, inst$objective$codomain$ids(), with = FALSE]
+    inst$assign_result(xdt, ydt)
+  } else {
+    # unlist keeps name!
+    y = unlist(res[, inst$objective$codomain$ids(), with = FALSE])
+    inst$assign_result(xdt, y)
+  }
+
+  invisible(NULL)
 }

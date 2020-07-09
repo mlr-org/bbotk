@@ -48,7 +48,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   domain,
   codomain = NULL,
   id = "function",
-  properties = character(0)
+  properties = character()
 )}\if{html}{\out{</div>}}
 }
 
@@ -60,11 +60,14 @@ R function that encodes objective and expects an \code{data.table} as input
 whereas each point is represented by one row.}
 
 \item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specifies domain of function, hence its input parameters, their types
-and ranges.}
+Specifies domain of function.
+The \link[paradox:ParamSet]{paradox::ParamSet} should describe all possible input parameters of the objective function.
+This includes their \code{id}, their types and the possible range.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specifies codomain of function, hence its feasible values.}
+Specifies codomain of function.
+Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
+The default is to minimize each component.}
 
 \item{\code{id}}{(\code{character(1)}).}
 
@@ -113,7 +116,9 @@ Evaluates multiple input values on the objective function supplied by the user.
 \describe{
 \item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
+Column names have to match ids of the \code{search_space}.
+However, \code{xdt} can contain additional columns.}
 }
 \if{html}{\out{</div>}}
 }

@@ -2,7 +2,8 @@
 #'
 #' @format [environment].
 #' @description
-#' Environment which stores various information to allow objects to examine and introspect their structure and properties
+#' Environment which stores various information to allow objects to examine and
+#' introspect their structure and properties
 #' (c.f. [Reflections](https://www.wikiwand.com/en/Reflection_(computer_programming))).
 #'
 #' This environment be modified by third-party packages.
@@ -21,18 +22,17 @@
 #' ls.str(bbotk_reflections)
 bbotk_reflections = new.env(parent = emptyenv())
 
-local({
-  ### optimizer_properties
-  bbotk_reflections$optimizer_properties = c(
-    "dependencies", "single-crit", "multi-crit"
-  )
+### optimizer_properties
+bbotk_reflections$optimizer_properties = c(
+  "dependencies", "single-crit", "multi-crit"
+)
 
-  ### objective_properties
-  bbotk_reflections$objective_properties = c(
-    "noisy", "single-crit", "multi-crit", "deterministic"
-  )
+### objective_properties
+bbotk_reflections$objective_properties = c(
+  "noisy", "single-crit", "multi-crit", "deterministic"
+)
 
-  bbotk_reflections$terminator_properties = c(
+### terminator_properties
+bbotk_reflections$terminator_properties = c(
     "single-crit", "multi-crit", 'progressr'
-  )
-})
+)

@@ -21,17 +21,6 @@ recommend to use package \CRANpkg{progress} as backend; enable with
 \code{progressr::handlers("progress")}.
 }
 
-\section{Technical details}{
-
-
-In order to replace the default logging messages with custom logging, the
-\verb{.log_*} private methods can be overwritten in an \code{Optimizer} subclass:
-\itemize{
-\item \verb{$.log_optimize_start()} Called at the beginning of \verb{$optimize()}
-\item \verb{$.log_optimize_finish()} Called at the end of \verb{$optimize()}
-}
-}
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -61,7 +50,7 @@ In order to replace the default logging messages with custom logging, the
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$new(param_set, param_classes, properties, packages = character(0))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Optimizer$new(param_set, param_classes, properties, packages = character())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

@@ -38,7 +38,7 @@ Imports:
     data.table,
     lgr,
     mlr3misc (>= 0.2.1),
-    paradox,
+    paradox (>= 0.2.0.9000),
     R6
 Suggests:
     GenSA,

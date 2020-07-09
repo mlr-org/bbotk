@@ -7,13 +7,16 @@
 transform_xdt_to_xss(xdt, search_space)
 }
 \arguments{
-\item{xdt}{(\code{data.table}) \cr
-The data table with x-columns.
+\item{xdt}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+Set of untransformed points / points from the \emph{search space}.
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
 Column names have to match ids of the \code{search_space}.
 However, \code{xdt} can contain additional columns.}
 
-\item{search_space}{\link[paradox:ParamSet]{paradox::ParamSet} \cr
-The ParamSet.}
+\item{search_space}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specifies the search space for the \link{Optimizer}.
+The \link[paradox:ParamSet]{paradox::ParamSet} describes either a subset of the \code{domain} of the \link{Objective} or it describes a set of parameters together with a \code{trafo} function that transforms values from the search space to values of the domain.
+Depending on the context, this value defaults to the domain of the objective.}
 }
 \description{
 Transforms a given \code{data.table} to a list with transformed x values.

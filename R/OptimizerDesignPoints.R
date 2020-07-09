@@ -85,12 +85,12 @@ OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
       pv = self$param_set$values
       if (is.null(pv$design))
         stopf("Please set design datatable!")
-      d = Design$new(pv$design,
-                     param_set = instance$search_space, remove_dupl = FALSE) # does assert for us
-      ch = chunk_vector(seq_row(d$data), chunk_size = pv$batch_size,
+      design = instance$search_space$assert_dt(pv$design)
+
+      ch = chunk_vector(seq_row(design), chunk_size = pv$batch_size,
                         shuffle = FALSE)
       for (inds in ch) {
-        instance$eval_batch(d$data[inds, ])
+        instance$eval_batch(design[inds, ])
       }
     }
   )
