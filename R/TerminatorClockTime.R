@@ -66,7 +66,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
       amount = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]),
         units = "secs")
       sum = as.integer(ceiling(
-        difftime(self$param_set$values$stop_time, Sys.time(), unit = "secs")))
+        difftime(self$param_set$values$stop_time, Sys.time(), units = "secs")))
       list(amount = amount, sum = sum)
     }
   )
