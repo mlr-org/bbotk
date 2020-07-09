@@ -10,3 +10,15 @@ test_that("TerminatorClockTime works", {
   time_needed = as.numeric(difftime(Sys.time(), now), units = "secs")
   expect_true(time_needed > 2)
 })
+
+test_that("progressr works", {
+  terminator = term("clock_time", stop_time = Sys.time() + 3)
+  inst = MAKE_INST_1D(terminator = terminator)
+  inst$archive$start_time = Sys.time()
+  xdt = data.table(x = 1)
+  inst$eval_batch(xdt)
+
+  expect_equal(terminator$progressr_steps(inst$archive), 3)
+  expect_equal(terminator$progressr_update(inst$archive)$sum, 3)
+  expect_equal(terminator$progressr_update(inst$archive)$amount, 0, tolerance = 0.15)
+})
