@@ -51,7 +51,7 @@ Other Terminator:
 \item \href{#method-new}{\code{TerminatorClockTime$new()}}
 \item \href{#method-is_terminated}{\code{TerminatorClockTime$is_terminated()}}
 \item \href{#method-progressr_steps}{\code{TerminatorClockTime$progressr_steps()}}
-\item \href{#method-progressr_amount}{\code{TerminatorClockTime$progressr_amount()}}
+\item \href{#method-progressr_update}{\code{TerminatorClockTime$progressr_update()}}
 \item \href{#method-clone}{\code{TerminatorClockTime$clone()}}
 }
 }
@@ -60,6 +60,7 @@ Other Terminator:
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="progressr_amount">}\href{../../bbotk/html/Terminator.html#method-progressr_amount}{\code{bbotk::Terminator$progressr_amount()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -115,13 +116,13 @@ Returns time difference between start time and stop time in seconds.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-progressr_amount"></a>}}
-\if{latex}{\out{\hypertarget{method-progressr_amount}{}}}
-\subsection{Method \code{progressr_amount()}}{
+\if{html}{\out{<a id="method-progressr_update"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_update}{}}}
+\subsection{Method \code{progressr_update()}}{
 Returns time difference between the last two batches (\code{amount}) and
 current runtime (\code{sum}) in seconds.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorClockTime$progressr_amount(archive)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorClockTime$progressr_update(archive)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

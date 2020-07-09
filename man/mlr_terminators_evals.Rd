@@ -52,7 +52,7 @@ Other Terminator:
 \item \href{#method-is_terminated}{\code{TerminatorEvals$is_terminated()}}
 \item \href{#method-run_progressor}{\code{TerminatorEvals$run_progressor()}}
 \item \href{#method-progressr_steps}{\code{TerminatorEvals$progressr_steps()}}
-\item \href{#method-progressr_amount}{\code{TerminatorEvals$progressr_amount()}}
+\item \href{#method-progressr_update}{\code{TerminatorEvals$progressr_update()}}
 \item \href{#method-clone}{\code{TerminatorEvals$clone()}}
 }
 }
@@ -61,6 +61,7 @@ Other Terminator:
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="progressr_amount">}\href{../../bbotk/html/Terminator.html#method-progressr_amount}{\code{bbotk::Terminator$progressr_amount()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -134,13 +135,13 @@ Returns the number of allowed evaluations.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-progressr_amount"></a>}}
-\if{latex}{\out{\hypertarget{method-progressr_amount}{}}}
-\subsection{Method \code{progressr_amount()}}{
+\if{html}{\out{<a id="method-progressr_update"></a>}}
+\if{latex}{\out{\hypertarget{method-progressr_update}{}}}
+\subsection{Method \code{progressr_update()}}{
 Returns the number of evaluations in the last batch (\code{amount}) and the
 total number of evaluations (\code{sum}).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorEvals$progressr_amount(archive)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorEvals$progressr_update(archive)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

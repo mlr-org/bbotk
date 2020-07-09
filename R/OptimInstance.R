@@ -108,9 +108,9 @@ OptimInstance = R6Class("OptimInstance",
             terminator$progressr_steps(self$archive))
         } else {
           steps = assert_int(terminator$progressr_steps(self$archive))
-          update = terminator$progressr_amount(self$archive)
+          update = terminator$progressr_update(self$archive)
           sum = assert_int(update$sum)
-          amount = update$amount
+          amount = assert_numeric(update$amount)
 
           self$progressor(message = sprintf("%i of %i", sum, steps),
             amount = update$amount)

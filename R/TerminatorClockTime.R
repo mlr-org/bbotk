@@ -60,14 +60,14 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #' current runtime (`sum`) in seconds.
     #' @param archive ([Archive]).
     #' @return list of `numeric(1)` and `integer(1)`
-    progressr_amount = function(archive) {
+    progressr_update = function(archive) {
       ts = unique(archive$data()$timestamp)
       ts = c(archive$start_time, ts)
-      td = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]), units = "secs")
-      d = as.integer(ceiling(difftime(self$param_set$values$stop_time, Sys.time(),
-        unit = "secs")))
-      list(amount = td,
-        sum = d)
+      amount = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]),
+        units = "secs")
+      sum = as.integer(ceiling(
+        difftime(self$param_set$values$stop_time, Sys.time(), unit = "secs")))
+      list(amount = amount, sum = sum)
     }
   )
 )
