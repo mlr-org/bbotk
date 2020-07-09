@@ -132,9 +132,6 @@ progressor.
 \subsection{Method \code{progressr_amount()}}{
 Subclasses overwrite this method to define the amount of progress made in
 each batch and the total progress.
-
-Returns time difference between the last two batches (\code{amount}) and
-current runtime (\code{sum}) in seconds.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Terminator$progressr_amount(archive)}\if{html}{\out{</div>}}
 }
