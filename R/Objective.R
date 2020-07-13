@@ -5,8 +5,8 @@
 #' numerical codomain.
 #'
 #' @section Technical details:
-#' `Objective` objects can take the following properties `noisy`, `deterministic`, `single-crit` and
-#' `multi-crit`.
+#' `Objective` objects can take the following properties `noisy`,
+#' `deterministic`, `single-crit` and `multi-crit`.
 #'
 #' @template param_domain
 #' @template param_codomain
@@ -30,17 +30,23 @@ Objective = R6Class("Objective",
     #' Specifies codomain of function, hence its feasible values.
     codomain = NULL,
 
+    #' @field check_values (`logical(1)`)\cr
+    #'
+    check_values = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(id = "f", properties = character(), domain,
-      codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
+      codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
+      check_values = TRUE) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
       self$codomain = assert_codomain(codomain)
       self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
+      self$check_values = assert_logical(check_values)
     },
 
     #' @description
@@ -72,7 +78,7 @@ Objective = R6Class("Objective",
     #' archive if called through the [OptimInstance].
     #' These extra entries are referred to as *extras*.
     eval = function(xs) {
-      as.list(self$eval_many(list(xs)))
+      if(self$check_values) self$eval_checked(xs) else private$eval(xs)
     },
 
     #' @description
@@ -94,13 +100,7 @@ Objective = R6Class("Objective",
     #' called through the [OptimInstance].
     #' These extra columns are referred to as *extras*.
     eval_many = function(xss) {
-      res = map_dtr(xss, function(xs) {
-        ys = self$eval(xs)
-        as.data.table(lapply(ys, function(y) if (is.list(y)) list(y) else y))
-      })
-      # to keep it simple we expect the order of the results to be right. extras keep their names
-      colnames(res)[seq_len(self$codomain$length)] = self$codomain$ids()
-      return(res)
+      if(self$check_values) self$eval_many_checked(xss) else private$.eval_many(xss)
     },
 
     #' @description
@@ -127,7 +127,7 @@ Objective = R6Class("Objective",
     #' A list that contains the result of the evaluation, e.g. `list(y = 1)`.
     eval_checked = function(xs) {
       self$domain$assert(xs)
-      res = self$eval(xs)
+      res = private$.eval(xs)
       self$codomain$assert(res[self$codomain$ids()])
       return(res)
     },
@@ -146,7 +146,7 @@ Objective = R6Class("Objective",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many_checked = function(xss) {
       lapply(xss, self$domain$assert)
-      res = self$eval_many(xss)
+      res = private$.eval_many(xss)
       self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     }
@@ -160,5 +160,21 @@ Objective = R6Class("Objective",
     #' @field ydim (`ìnteger(1)`)\cr
     #' Dimension of codomain.
     ydim = function() self$codomain$length
+  ),
+
+  private = list(
+    .eval = function (xs) {
+      as.list(self$eval_many(list(xs)))
+    },
+
+    .eval_many = function(xss) {
+      res = map_dtr(xss, function(xs) {
+        ys = self$eval(xs)
+        as.data.table(lapply(ys, function(y) if (is.list(y)) list(y) else y))
+      })
+      # to keep it simple we expect the order of the results to be right. extras keep their names
+      colnames(res)[seq_len(self$codomain$length)] = self$codomain$ids()
+      return(res)
+    }
   )
 )

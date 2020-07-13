@@ -30,8 +30,8 @@ Archive = R6Class("Archive",
     #' @field start_time ([POSIXct]).
     start_time = NULL,
 
-    #' @field check_evals_xdt ('logical(1)')
-    check_evals_xdt = NULL,
+    #' @field check_values ('logical(1)')
+    check_values = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
