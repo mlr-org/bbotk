@@ -126,14 +126,17 @@ obfun = ObjectiveRFun$new(
   fun = fun,
   domain = domain,
   codomain = codomain, 
-  properties = "deterministic" # i.e. the result always returns the same result for the same input.
+  properties = "deterministic"
 )
 
 # Define termination criterion
 terminator = term("evals", n_evals = 20)
 
 # Create optimization instance
-instance = OptimInstanceSingleCrit$new(objective = obfun, terminator = terminator)
+instance = OptimInstanceSingleCrit$new(
+  objective = obfun, 
+  terminator = terminator
+)
 
 # Load optimizer
 optimizer = opt("gensa")
