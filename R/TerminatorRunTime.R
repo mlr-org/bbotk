@@ -37,10 +37,6 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      if (is.null(archive$start_time)) {
-        return(FALSE)
-      }
-
       d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
       return(d >= self$param_set$values$secs)
     },
