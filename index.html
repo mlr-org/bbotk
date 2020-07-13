@@ -99,6 +99,51 @@
 <p>Development version</p>
 <pre class="{r}"><code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("mlr-org/bbotk")</a></code></pre>
 </div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<pre class="{r}"><code><a href="https://rdrr.io/pkg/bbotk/man">library(bbotk)
+library(paradox)
+
+# Define objective function
+fun = function(xs) {
+  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+}
+
+# Set domain
+domain = ParamSet$new(list(
+  ParamDbl$new("x1", -10, 10), 
+  ParamDbl$new("x2", -5, 5)
+))
+
+# Set codomain
+codomain = ParamSet$new(list(
+  ParamDbl$new("y", tags = "maximize")
+))
+
+# Create Objective object
+obfun = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain, 
+  properties = "deterministic" # i.e. the result always returns the same result for the same input.
+)
+
+# Define termination criterion
+terminator = term("evals", n_evals = 20)
+
+# Create optimization instance
+instance = OptimInstanceSingleCrit$new(objective = obfun, terminator = terminator)
+
+# Load optimizer
+optimizer = opt("gensa")
+
+# Trigger optimization
+optimizer$optimize(instance)
+
+# View results
+instance$result</a></code></pre>
+</div>
 </div>
   </div>
 
