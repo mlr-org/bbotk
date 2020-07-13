@@ -32,3 +32,49 @@ Development version
 ```{r}
 remotes::install_github("mlr-org/bbotk")
 ```
+
+## Example
+
+```{r}
+library(bbotk)
+library(paradox)
+
+# Define objective function
+fun = function(xs) {
+  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+}
+
+# Set domain
+domain = ParamSet$new(list(
+  ParamDbl$new("x1", -10, 10), 
+  ParamDbl$new("x2", -5, 5)
+))
+
+# Set codomain
+codomain = ParamSet$new(list(
+  ParamDbl$new("y", tags = "maximize")
+))
+
+# Create Objective object
+obfun = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain, 
+  properties = "deterministic" # i.e. the result always returns the same result for the same input.
+)
+
+# Define termination criterion
+terminator = term("evals", n_evals = 20)
+
+# Create optimization instance
+instance = OptimInstanceSingleCrit$new(objective = obfun, terminator = terminator)
+
+# Load optimizer
+optimizer = opt("gensa")
+
+# Trigger optimization
+optimizer$optimize(instance)
+
+# View results
+instance$result
+```
