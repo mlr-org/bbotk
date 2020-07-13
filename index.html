@@ -76,8 +76,21 @@
 <div id="bbotk---black-box-optimization-toolkit" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#bbotk---black-box-optimization-toolkit" class="anchor"></a>bbotk - Black-Box Optimization Toolkit</h1></div>
+<p>Package website: <a href="https://bbotk.mlr-org.com/">release</a></p>
 <!-- badges: start -->
-
+<p><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=master" alt="tic"></a> <a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a> <a href="https://codecov.io/gh/mlr-org/bbotk?branch=master"><img src="https://codecov.io/github/mlr-org/bbotk/coverage.svg?branch=master" alt="codecov.io"></a> <!-- badges: end --></p>
+<p>This package provides a common framework for optimization including</p>
+<ul>
+<li>
+<code>Optimizer</code>: Objects of this class allow you to optimize an object of the class <code>OptimInstance</code>.</li>
+<li>
+<code>OptimInstance</code>: Defines the optimization problem, consisting of an <code>Objective</code>, the <code>search_space</code> and a <code>Terminator</code>. All evaluations on the <code>OptimInstance</code> will be automatically stored in its own <code>Archive</code>.</li>
+<li>
+<code>Objective</code>: Objects of this class contain the objective function. The class ensures that the objective function is called in the right way and defines, whether the function should be minimized or maximized.</li>
+<li>
+<code>Terminator</code>: Objects of this class control the termination of the optimization independent of the optimizer.</li>
+</ul>
+<p>Various optimization methods are already implemented e.g. grid search, random search and generalized simulated annealing.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -116,15 +129,7 @@
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
-<li><a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a></li>
-<li><a href="https://codecov.io/gh/mlr-org/bbotk?branch=master"><img src="https://codecov.io/github/mlr-org/bbotk/coverage.svg?branch=master" alt="codecov.io"></a></li>
-</ul>
-</div>
-</div>
+  </div>
 </div>
 
 
