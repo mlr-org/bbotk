@@ -153,6 +153,42 @@ test_that("codomain assertions work", {
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
 })
 
+test_that("check_values flag works", {
+  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+    inherit = Objective,
+    private = list(
+      .eval = function(xs) list(y = sum(as.numeric(xs))^2, extra = 2)
+    )
+  )
+
+  obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN,
+    check_values = FALSE)
+  expect_list(obj$eval(list(x1 = 2, x2 = 1)), len = 2)
+
+  obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN,
+    check_values = TRUE)
+  expect_error(obj$eval(list(x1 = 2, x2 = 1)),
+              fixed = "Assertion on 'X[[i]]' failed: x1: Element 1 is not <= 1.")
+
+  ObjectiveTestEvalMany = R6Class("ObjectiveTestEvalMany",
+    inherit = Objective,
+    private = list(
+      .eval_many = function(xss) {
+        data.table(y = map_dbl(xss, function(xs) sum(as.numeric(xs))^2))
+      }
+    )
+  )
+
+  obj = ObjectiveTestEvalMany$new(domain = PS_2D, check_values = FALSE)
+  xs = list(x1 = 2, x2 = 1)
+  expect_data_table(obj$eval_many(replicate(3, xs, simplify = FALSE)))
+
+  obj = ObjectiveTestEvalMany$new(domain = PS_2D, check_values = TRUE)
+  xs = list(x1 = 2, x2 = 1)
+  expect_error(obj$eval(list(x1 = 2, x2 = 1)),
+    fixed = "Assertion on 'X[[i]]' failed: x1: Element 1 is not <= 1.")
+})
+
 test_that("check_values = TRUE with extra output works", {
   ObjectiveTestEval = R6Class("ObjectiveTestEval",
     inherit = Objective,
@@ -177,4 +213,5 @@ test_that("check_values = TRUE with extra output works", {
   expect_data_table(obj$eval_many(
     list(list(x1 = 0, x2 = 1), list(x1 = 1, x2 = 0))), nrows = 2, ncols = 2)
 })
+
 

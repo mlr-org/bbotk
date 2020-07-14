@@ -128,24 +128,3 @@ test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
     terminator = term("none")), "Codomain > 1")
 })
 
-test_that("check_values flag works", {
-  inst = OptimInstanceSingleCrit$new(objective = OBJ_2D,
-                                      terminator = term("evals", n_evals= 1),
-                                      search_space = PS_2D)
-
-  xdt = data.table(x1 = 2, x2 = 2)
-  expect_error(inst$eval_batch(xdt),
-    fixed = "Assertion on 'X[[i]]' failed: x1: Element 1 is not <= 1.")
-  # Error thrown in Objective$eval_many_checked
-
-  inst = OptimInstanceSingleCrit$new(objective = OBJ_2D,
-                                     terminator = term("evals", n_evals= 1),
-                                     search_space = PS_2D,
-                                     check_values = FALSE)
-
-  xdt = data.table(x1 = 2, x2 = 2)
-  expect_error(inst$eval_batch(xdt),
-    fixed = "'Assertion on xdt[, self$cols_x, with = FALSE]' failed: x1: Element 1 is not <= 1")
-  # Error thrown in Archive$add_evals
-})
-
