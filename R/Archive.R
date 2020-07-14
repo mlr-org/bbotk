@@ -6,10 +6,11 @@
 #'
 #' @section Technical details:
 #'
-#' The data is stored in a private `.data` field that contains a [data.table::data.table] which
-#' logs all performed [Objective] function calls. The [data.table::data.table] is accessed with
-#' the `$data()` method. New values can be added with the `$add_evals()` method.
-#' This however is usually done through the evaluation of the [OptimInstance] by the [Optimizer].
+#' The data is stored in a private `.data` field that contains a
+#' [data.table::data.table] which logs all performed [Objective] function calls.
+#' The [data.table::data.table] is accessed with the `$data()` method. New
+#' values can be added with the `$add_evals()` method. This however is usually
+#' done through the evaluation of the [OptimInstance] by the [Optimizer].
 #'
 #' @template param_codomain
 #' @template param_search_space
@@ -36,13 +37,13 @@ Archive = R6Class("Archive",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param check_evals_xdt ('logical(1)')\cr
-    #'   Should x-values that are added to the archive be checked for validity?
+    #' @param check_values ('logical(1)')\cr
+    #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(search_space, codomain, check_evals_xdt = TRUE) {
+    initialize = function(search_space, codomain, check_values = TRUE) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
-      self$check_evals_xdt = assert_flag(check_evals_xdt)
+      self$check_values = assert_flag(check_values)
       private$.data = data.table()
     },
 
@@ -56,7 +57,7 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       assert_list(xss_trafoed)
       assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
-      if (self$check_evals_xdt) {
+      if (self$check_values) {
         self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
       }
       xydt = cbind(xdt, ydt)

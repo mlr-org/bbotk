@@ -9,8 +9,8 @@ numerical codomain.
 }
 \section{Technical details}{
 
-\code{Objective} objects can take the following properties \code{noisy}, \code{deterministic}, \code{single-crit} and
-\code{multi-crit}.
+\code{Objective} objects can take the following properties \code{noisy},
+\code{deterministic}, \code{single-crit} and \code{multi-crit}.
 }
 
 \section{Public fields}{
@@ -26,6 +26,8 @@ and ranges.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function, hence its feasible values.}
+
+\item{\code{check_values}}{(\code{logical(1)})\cr}
 }
 \if{html}{\out{</div>}}
 }
@@ -49,8 +51,6 @@ Dimension of codomain.}
 \item \href{#method-eval}{\code{Objective$eval()}}
 \item \href{#method-eval_many}{\code{Objective$eval_many()}}
 \item \href{#method-eval_dt}{\code{Objective$eval_dt()}}
-\item \href{#method-eval_checked}{\code{Objective$eval_checked()}}
-\item \href{#method-eval_many_checked}{\code{Objective$eval_many_checked()}}
 \item \href{#method-clone}{\code{Objective$clone()}}
 }
 }
@@ -64,7 +64,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   id = "f",
   properties = character(),
   domain,
-  codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+  codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
+  check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
 
@@ -84,6 +85,10 @@ This includes their \code{id}, their types and the possible range.}
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
 The default is to minimize each component.}
+
+\item{\code{check_values}}{('logical(1)')\cr
+Should points before the evaluation and the results be checked for
+validity?}
 }
 \if{html}{\out{</div>}}
 }
@@ -118,7 +123,9 @@ Print method.
 \if{html}{\out{<a id="method-eval"></a>}}
 \if{latex}{\out{\hypertarget{method-eval}{}}}
 \subsection{Method \code{eval()}}{
-Evaluates a single input value on the objective function
+Evaluates a single input value on the objective function. If
+\code{check_values = TRUE}, the validity of the point as well as the validity
+of the result is checked.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Objective$eval(xs)}\if{html}{\out{</div>}}
 }
@@ -142,11 +149,12 @@ These extra entries are referred to as \emph{extras}.
 \if{html}{\out{<a id="method-eval_many"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
-Evaluates multiple input values on the objective function.
-\emph{bbotk} does not take care of parallelization.
-If the function should make use of parallel computing,
-it has to be implemented by deriving from this class and
-overwriting this function.
+Evaluates multiple input values on the objective function. If
+\code{check_values = TRUE}, the validity of the points as well as the validity
+of the results are checked. \emph{bbotk} does not take care of
+parallelization. If the function should make use of parallel computing,
+it has to be implemented by deriving from this class and overwriting this
+function.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Objective$eval_many(xss)}\if{html}{\out{</div>}}
 }
@@ -194,57 +202,6 @@ However, \code{xdt} can contain additional columns.}
 \code{data.table()}\cr
 A \code{data.table} that contains one y-column for single-criteria functions and
 multiple y-columns for multi-criteria functions, e.g.
-\code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval_checked"></a>}}
-\if{latex}{\out{\hypertarget{method-eval_checked}{}}}
-\subsection{Method \code{eval_checked()}}{
-Evaluates a single input value on the objective function and checks its
-validity as well as the validity of the result.
-Note: Calling the objective this way will fail if the function returns extras (see above)
-because the output is checked against the codomain.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$eval_checked(xs)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xs}}{(\code{list()})\cr
-A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{list()}\cr
-A list that contains the result of the evaluation, e.g. \code{list(y = 1)}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval_many_checked"></a>}}
-\if{latex}{\out{\hypertarget{method-eval_many_checked}{}}}
-\subsection{Method \code{eval_many_checked()}}{
-Evaluates multiple input values on the objective function and checks the
-validity of the input.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$eval_many_checked(xss)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xss}}{(\code{list()})\cr
-A list of lists that contains multiple x values, e.g.
-\code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-criteria functions and multiple
-y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
