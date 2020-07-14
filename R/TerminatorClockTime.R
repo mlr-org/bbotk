@@ -15,6 +15,7 @@
 #'   Terminator stops after this point in time.
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' stop_time = as.POSIXct("2030-01-01 00:00:00")
@@ -38,9 +39,6 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #'
-    #' @param archive ([Archive]).
-    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       return(Sys.time() >= self$param_set$values$stop_time)
@@ -48,7 +46,6 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
 
     #' @description
     #' Returns time difference between start time and stop time in seconds.
-    #' @param archive ([Archive]).
     #' @return `integer(1)`
     progressr_steps = function(archive) {
       as.integer(ceiling(difftime(self$param_set$values$stop_time,
@@ -58,7 +55,6 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #' @description
     #' Returns time difference between the last two batches (`amount`) and
     #' current runtime (`sum`) in seconds.
-    #' @param archive ([Archive]).
     #' @return list of `numeric(1)` and `integer(1)`
     progressr_update = function(archive) {
       ts = unique(archive$data()$timestamp)

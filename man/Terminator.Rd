@@ -22,6 +22,18 @@ evaluated in a single batch (c.f. batch size parameter of many optimization
 algorithms). So it is advised to check the size of the returned archive, in
 particular if you are benchmarking multiple optimization algorithms.
 }
+\section{Technical details}{
+
+\code{Terminator} subclasses can implement \verb{$progressr_steps()} and
+\verb{$progressr_update()} to support progress bars via the package
+\CRANpkg{progressr}. \verb{$progressr_steps()} is called one time in
+\code{OptimInstace$eval_batch()} to initialize the progress bar with the total
+amount of steps. \verb{$progressr_update()} is called each time a new batch is
+evaluated and must return a named list with the amount of progress made in
+the last batch (\code{amount}) and the total amount of progress made (\code{sum}). Supported
+terminators need the property \code{progressr}.
+}
+
 \seealso{
 Other Terminator: 
 \code{\link{mlr_terminators_clock_time}},
@@ -52,8 +64,6 @@ Set of properties.}
 \item \href{#method-new}{\code{Terminator$new()}}
 \item \href{#method-format}{\code{Terminator$format()}}
 \item \href{#method-print}{\code{Terminator$print()}}
-\item \href{#method-progressr_steps}{\code{Terminator$progressr_steps()}}
-\item \href{#method-progressr_update}{\code{Terminator$progressr_update()}}
 \item \href{#method-clone}{\code{Terminator$clone()}}
 }
 }
@@ -103,48 +113,6 @@ Printer.
 \item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-progressr_steps"></a>}}
-\if{latex}{\out{\hypertarget{method-progressr_steps}{}}}
-\subsection{Method \code{progressr_steps()}}{
-Subclasses overwrite this method to define the number of steps in the
-progressor.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$progressr_steps(archive)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{integer(1)}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-progressr_update"></a>}}
-\if{latex}{\out{\hypertarget{method-progressr_update}{}}}
-\subsection{Method \code{progressr_update()}}{
-Subclasses overwrite this method to define the amount of progress made in
-each batch and the total progress.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$progressr_update(archive)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-list of \code{numeric(1)} and \code{integer(1)}
 }
 }
 \if{html}{\out{<hr>}}

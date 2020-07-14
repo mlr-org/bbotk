@@ -15,6 +15,7 @@
 #'   Maximum allowed time, in seconds, default is 30.
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' term("run_time", secs = 1800)
@@ -34,7 +35,6 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
@@ -43,7 +43,6 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
 
     #' @description
     #' Returns the allowed runtime in seconds.
-    #' @param archive ([Archive]).
     #' @return `integer(1)`
     progressr_steps = function(archive) {
       self$param_set$values$secs
@@ -52,7 +51,6 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     #' @description
     #' Returns time difference between the last two batches (`amount`) and
     #' current runtime (`sum`) in seconds.
-    #' @param archive ([Archive]).
     #' @return list of `numeric(1)` and `integer(1)`
     progressr_update = function(archive) {
       ts = unique(archive$data()$timestamp)

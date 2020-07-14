@@ -68,8 +68,6 @@ List of objects of class \link{Terminator}.}
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="progressr_steps">}\href{../../bbotk/html/Terminator.html#method-progressr_steps}{\code{bbotk::Terminator$progressr_steps()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="progressr_update">}\href{../../bbotk/html/Terminator.html#method-progressr_update}{\code{bbotk::Terminator$progressr_update()}}\out{</span>}
 }
 \out{</details>}
 }

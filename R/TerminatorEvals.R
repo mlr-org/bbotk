@@ -15,6 +15,7 @@
 #'   Number of allowed evaluations, default is 100L
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' TerminatorEvals$new()
@@ -35,7 +36,6 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       archive$n_evals >= self$param_set$values$n_evals
@@ -43,7 +43,6 @@ TerminatorEvals = R6Class("TerminatorEvals",
 
     #' @description
     #' Returns the number of allowed evaluations.
-    #' @param archive ([Archive]).
     #' @return `integer(1)`
     progressr_steps = function(archive) {
       self$param_set$values$n_evals
@@ -52,7 +51,6 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @description
     #' Returns the number of evaluations in the last batch (`amount`) and the
     #' total number of evaluations (`sum`).
-    #' @param archive ([Archive]).
     #' @return list of `numeric(1)` and `integer(1)`
     progressr_update = function(archive) {
       amount = nrow(archive$data()[batch_nr == archive$n_batch])

@@ -20,6 +20,7 @@
 #'  default is `0`.
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' TerminatorStagnationBatch$new()
@@ -42,9 +43,6 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #'
-    #' @param archive ([Archive]).
-    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       pv = self$param_set$values

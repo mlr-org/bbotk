@@ -21,6 +21,16 @@
 #' algorithms). So it is advised to check the size of the returned archive, in
 #' particular if you are benchmarking multiple optimization algorithms.
 #'
+#' @section Technical details:
+#' `Terminator` subclasses can implement `$progressr_steps()` and
+#' `$progressr_update()` to support progress bars via the package
+#' \CRANpkg{progressr}. `$progressr_steps()` is called one time in
+#' `OptimInstace$eval_batch()` to initialize the progress bar with the total
+#' amount of steps. `$progressr_update()` is called each time a new batch is
+#' evaluated and must return a named list with the amount of progress made in
+#' the last batch (`amount`) and the total amount of progress made (`sum`). Supported
+#' terminators need the property `progressr`.
+#'
 #' @family Terminator
 #' @export
 Terminator = R6Class("Terminator",
@@ -58,26 +68,6 @@ Terminator = R6Class("Terminator",
     print = function(...) {
       catf(self$format())
       catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
-    },
-
-    #' @description
-    #' Subclasses overwrite this method to define the number of steps in the
-    #' progressor.
-    #'
-    #' @param archive ([Archive]).
-    #' @return `integer(1)`
-    progressr_steps = function(archive) {
-      stop("Abstract class")
-    },
-
-    #' @description
-    #' Subclasses overwrite this method to define the amount of progress made in
-    #' each batch and the total progress.
-    #'
-    #' @param archive ([Archive]).
-    #' @return list of `numeric(1)` and `integer(1)`
-    progressr_update = function(archive) {
-      stop("Abstract class")
     }
   ),
 )
