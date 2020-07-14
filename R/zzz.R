@@ -3,8 +3,8 @@
 #' @import paradox
 #' @import mlr3misc
 #' @importFrom R6 R6Class
+#' @importFrom utils capture.output
 "_PACKAGE"
-
 
 .onLoad = function(libname, pkgname) {
   # nocov start
