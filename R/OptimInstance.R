@@ -12,7 +12,6 @@
 #'
 #' @template param_xdt
 #' @template param_search_space
-#' @template param_check_values
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(

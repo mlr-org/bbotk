@@ -14,7 +14,6 @@
 #' @template param_xdt
 #' @template param_ydt
 #' @template param_search_space
-#' @template param_check_values
 #' @export
 OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
   inherit = OptimInstance,

@@ -13,7 +13,6 @@
 #'
 #' @template param_xdt
 #' @template param_search_space
-#' @template param_check_values
 #' @export
 OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
   inherit = OptimInstance,

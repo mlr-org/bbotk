@@ -46,7 +46,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   domain,
   codomain = NULL,
   id = "function",
-  properties = character(0)
+  properties = character()
 )}\if{html}{\out{</div>}}
 }
 
