@@ -4,7 +4,7 @@ author: "Jakob Richter"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{A brief introduction}
+  %\VignetteIndexEntry{bbotk: A brief introduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,17 +19,17 @@ knitr::opts_chunk$set(
 
 # Overview
 
-The main goal of the *black box optimization toolkit* (`bbotk`) is to provide other packages a common framework for optimization.
+The main goal of the *black box optimization toolkit* (`bbotk`) is to provide a common framework for optimization for other packages.
 Therefore `bbotk` includes the following *R6* classes that can be used in a variety of optimization scenarios.
 
 - `Optimizer`: Objects of this class allow you to optimize an object of the class `OptimInstance`.
-- `OptimInstance`: Defines the optimization problem, consisting of an `Objective`, the `search_space` and a `Terminator`. 
+- `OptimInstance`: Defines the optimization problem, consisting of an `Objective`, the `search_space` and a `Terminator`.
    All evaluations on the `OptimInstance` will be automatically stored in its own `Archive`.
-- `Objective`: Objects of this class contain the objective function. 
+- `Objective`: Objects of this class contain the objective function.
    The class ensures that the objective function is called in the right way and defines, whether the function should be minimized or maximized.
-- `Terminator`: Objects of this class control the termination of the optimization independent of the optimizer. 
+- `Terminator`: Objects of this class control the termination of the optimization independent of the optimizer.
 
-As `bbotk` also includes some basic optimizers and can be used on it's own.
+As `bbotk` also includes some basic optimizers and can be used on its own.
 The registered optimizers can be queried as follows:
 
 ```{r}
@@ -37,12 +37,14 @@ library(bbotk)
 opts()
 ```
 
-This Vignette will show you how to use the `bbotk`-classes to solve an simple optimization problem.
-Furthermore you will learn how to
+This Vignette will show you how to use the `bbotk`-classes to solve a simple optimization problem.
+Furthermore, you will learn how to
 
 - construct your `Objective`.
-- implement your own `Optimizer`.
-- implement your own `Terminator`.
+- define your optimization problem in an `OptimInstance`
+- define a restricted `search_space`.
+- define the logging threshold.
+- access the `Archive` of evaluated function calls.
 
 ## Use `bbotk` to optimize a function
 
@@ -65,7 +67,7 @@ Such spaces are defined using the package [`paradox`](https://cran.r-project.org
 library(paradox)
 
 domain = ParamSet$new(list(
-  ParamDbl$new("x1", -10, 10), 
+  ParamDbl$new("x1", -10, 10),
   ParamDbl$new("x2", -5, 5)
 ))
 codomain = ParamSet$new(list(
@@ -74,18 +76,20 @@ codomain = ParamSet$new(list(
 obfun = ObjectiveRFun$new(
   fun = fun,
   domain = domain,
-  codomain = codomain, 
+  codomain = codomain,
   properties = "deterministic" # i.e. the result always returns the same result for the same input.
 )
 ```
 
 In the next step we decide when the optimization should stop.
 We can list all available terminators as follows:
+
 ```{r}
 terms()
 ```
 
 The termination should stop, when it takes longer then 10 seconds or when 20 evaluations are reached.
+
 ```{r}
 terminators = list(
   evals = term("evals", n_evals = 20),
@@ -93,20 +97,27 @@ terminators = list(
 )
 terminators
 ```
+
 We have to correct the default of `secs=30` by setting the `values` in the `param_set` of the terminator.
+
 ```{r}
 terminators$run_time$param_set$values$secs = 10
 ```
+
 We have created `Terminator` objects for both of our criteria.
 To combine them we use the *combo* `Terminator`.
+
 ```{r}
 term_combo = TerminatorCombo$new(terminators = terminators)
 ```
+
 Before we finally start the optimization, we have to create an `OptimInstance` that contains also the `Objective` and the `Terminator`.
+
 ```{r}
 instance = OptimInstanceSingleCrit$new(objective = obfun, terminator = term_combo)
 instance
 ```
+
 Note, that `OptimInstance(SingleCrit/MultiCirt)$new()` also has an optional `search_space` argument.
 It can be used if the `search_space` is only a subset of `obfun$domain` or if you want to apply transformations.
 More on that later.
@@ -114,19 +125,23 @@ More on that later.
 Finally, we have to define an `Optimizer`.
 As we have seen above, that we can call `opts()` to list all available optimizers.
 We opt for evolutionary optimizer, from the `GenSA` package.
+
 ```{r}
 optimizer = opt("gensa")
 optimizer
 ```
 
 To start the optimization we have to call the `Optimizer` on the `OptimInstance`.
+
 ```{r}
 optimizer$optimize(instance)
 ```
+
 Note, that we did not specify the termination inside the optimizer.
 `bbotk` generally sets the termination of the optimizers to never terminate and instead breaks the code internally as soon as a termination criterion is fulfilled.
 
 The results can be queried from the `OptimInstance`.
+
 ```{r}
 # result as a data.table
 instance$result
@@ -137,6 +152,7 @@ instance$result_y
 ```
 
 You can also access the whole history of evaluated points.
+
 ```{r}
 instance$archive$data()
 ```
@@ -147,7 +163,7 @@ If the domain of the `Objective` is complex, it is often necessary to define a s
 
 Reasons for transformations can be:
 
-1. The objective is more sensitive to changes of small values then to changes of bigger values of a certain parameter. 
+1. The objective is more sensitive to changes of small values than to changes of bigger values of a certain parameter.
    E.g. we could suspect that for a parameter `x3` the change from `0.1` to `0.2` has a similar effect as the change of `100` to `200`.
 2. Certain restrictions are known, i.e. the sum of three parameters is supposed to be 1.
 3. many more...
@@ -156,6 +172,7 @@ In the following we will look at an example for 2.)
 
 We want to construct a box with the maximal volume, with the restriction that `h+w+d = 1`.
 For simplicity we define our problem as a minimization problem.
+
 ```{r}
 fun_volume = function(xs) {
   - (xs$h * xs$w * xs$d)
@@ -170,8 +187,10 @@ obj = ObjectiveRFun$new(
   domain = domain
 )
 ```
+
 We notice, that our optimization problem has three parameters but due to the restriction it only the degree of freedom 2.
 Therefore we only need to optimize two parameters and calculate `h`, `w`, `d` accordingly.
+
 ```{r}
 search_space = ParamSet$new(list(
   ParamDbl$new("h", lower = 0, upper = 1),
@@ -184,11 +203,13 @@ search_space$trafo = function(x, param_set){
   as.list(x)
 }
 ```
+
 Instead of the domain of the `Objective` we now use our constructed `search_space` that includes the `trafo` for the `OptimInstance`.
+
 ```{r}
 inst = OptimInstanceSingleCrit$new(
-  objective = obj, 
-  search_space = search_space, 
+  objective = obj,
+  search_space = search_space,
   terminator = term("evals", n_evals = 30)
 )
 optimizer = opt("gensa")
@@ -197,10 +218,12 @@ optimizer$optimize(inst)
 lg = lgr::get_logger("bbotk")$set_threshold("info") # turn on console output
 ```
 The optimizer only saw the search space during optimization and returns the following result:
+
 ```{r}
 inst$result_x_search_space
 ```
 Internally, the `OptimInstance` transformed these values to the *domain* so that the result for the `Objective` looks as follows:
+
 ```{r}
 inst$result_x_domain
 obj$eval(inst$result_x_domain)
@@ -210,6 +233,7 @@ obj$eval(inst$result_x_domain)
 
 The following is just meant for *advanced* readers.
 If you want to evaluate the function outside of the optimization but have the result stored in the `Archive` you can do so by resetting the termination and call `$eval_batch()`.
+
 ```{r}
 library(data.table)
 
@@ -219,9 +243,10 @@ xvals = data.table(h = c(0.6666, 0.6667), w = c(0.6666, 0.6667))
 inst$eval_batch(xdt = xvals)
 tail(inst$archive$data())
 ```
-However, this does not update the result. 
+However, this does not update the result.
 You could set the result by calling `inst$assign_result()` but this should be handled by the optimizer.
 Another way to get the best point is the following:
+
 ```{r}
 inst$archive$best()
 ```
@@ -229,22 +254,19 @@ Note, that this method just looks for the best outcome and returns the according
 For stochastic optimization problems this is overly optimistic and leads to biased results.
 For this reason the optimizer can use advanced methods to determine the result and set it itself.
 
-## Implementing your own Objective
 
-TODO
+```{r, eval = FALSE, include = FALSE}
+# TODO: Write the following sections:
+
+## Implementing your own Objective
 
 ### Storing extra output in the archive
 
-TODO
-
 ## Implementing your own Optimizer
-
-TODO
 
 ### Storing extra tuner information in the archive
 
-TODO
-
 ## Implement your own Terminator
 
-TODO
+# TODO: Fix intro after more sections are added
+```
