@@ -127,3 +127,4 @@ test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
   expect_error(OptimInstanceSingleCrit$new(objective = OBJ_2D_2D,
     terminator = term("none")), "Codomain > 1")
 })
+
