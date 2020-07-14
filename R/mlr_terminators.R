@@ -22,7 +22,4 @@
 #' @export
 #' @examples
 #' term("evals", n_evals = 10)
-mlr_terminators = R6Class("DictionaryTerminator",
-  inherit = Dictionary,
-  cloneable = FALSE
-)$new()
+mlr_terminators = R6Class("DictionaryTerminator", inherit = Dictionary, cloneable = FALSE)$new()

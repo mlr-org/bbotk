@@ -35,7 +35,7 @@ Optimizer = R6Class("Optimizer",
     #' @param properties (`character()`).
     #' @param packages (`character()`).
     initialize = function(param_set, param_classes, properties,
-      packages = character(0)) {
+      packages = character()) {
       self$param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
