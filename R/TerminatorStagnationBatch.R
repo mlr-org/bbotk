@@ -11,13 +11,14 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `n` `integer(1)`\cr
-#'   Number of batches to evaluate the performance improvement on, default
-#'   is 1.
-#'
-#' * `threshold` `numeric(1)`\cr
-#'   If the improvement is less than `threshold`, optimization is stopped,
-#'  default is `0`.
+#' \describe{
+#' \item{`n`}{`integer(1)`\cr
+#'  Number of batches to evaluate the performance improvement on, default
+#'  is 1.}
+#' \item{`threshold`}{`numeric(1)`\cr
+#'  If the improvement is less than `threshold`, optimization is stopped,
+#'  default is `0`.}
+#'}
 #'
 #' @family Terminator
 #' @export

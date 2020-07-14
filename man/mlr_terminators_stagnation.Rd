@@ -19,13 +19,13 @@ term("stagnation")
 
 \section{Parameters}{
 
-\itemize{
-\item \code{iters} \code{integer(1)}\cr
+\describe{
+\item{\code{iters}}{\code{integer(1)}\cr
 Number of iterations to evaluate the performance improvement on, default
-is 10.
-\item \code{threshold} \code{numeric(1)}\cr
+is 10.}
+\item{\code{threshold}}{\code{numeric(1)}\cr
 If the improvement is less than \code{threshold}, optimization is stopped,
-default is \code{0}.
+default is \code{0}.}
 }
 }
 

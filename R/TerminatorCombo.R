@@ -11,8 +11,10 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `any` (`logical(1)`)\cr
-#'   Terminate iff any included terminator is positive? (not all), default is `TRUE.
+#' \describe{
+#' \item{`any`}{`logical(1)`\cr
+#' Terminate iff any included terminator is positive? (not all), default is `TRUE`.}
+#'}
 #'
 #' @family Terminator
 #' @export

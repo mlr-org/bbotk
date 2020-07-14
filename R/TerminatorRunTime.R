@@ -11,9 +11,10 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `secs` `numeric(1)`\cr
-#'   Maximum allowed time, in seconds, default is 100.
-#'   Mutually exclusive with argument `stop_time`.
+#' \describe{
+#' \item{`secs`}{`numeric(1)`\cr
+#' Maximum allowed time, in seconds, default is 100.}
+#'}
 #'
 #' @family Terminator
 #' @export

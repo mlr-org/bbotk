@@ -19,9 +19,9 @@ term("combo")
 
 \section{Parameters}{
 
-\itemize{
-\item \code{any} (\code{logical(1)})\cr
-Terminate iff any included terminator is positive? (not all), default is `TRUE.
+\describe{
+\item{\code{any}}{\code{logical(1)}\cr
+Terminate iff any included terminator is positive? (not all), default is \code{TRUE}.}
 }
 }
 

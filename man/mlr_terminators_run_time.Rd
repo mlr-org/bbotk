@@ -19,10 +19,9 @@ term("run_time")
 
 \section{Parameters}{
 
-\itemize{
-\item \code{secs} \code{numeric(1)}\cr
-Maximum allowed time, in seconds, default is 100.
-Mutually exclusive with argument \code{stop_time}.
+\describe{
+\item{\code{secs}}{\code{numeric(1)}\cr
+Maximum allowed time, in seconds, default is 100.}
 }
 }
 

@@ -19,9 +19,9 @@ term("evals")
 
 \section{Parameters}{
 
-\itemize{
-\item \code{n_evals} \code{integer(1)}\cr
-Number of allowed evaluations, default is 100L
+\describe{
+\item{\code{n_evals}}{\code{integer(1)}\cr
+Number of allowed evaluations, default is 100L.}
 }
 }
 

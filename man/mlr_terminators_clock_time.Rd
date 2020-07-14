@@ -19,10 +19,9 @@ term("clock_time")
 
 \section{Parameters}{
 
-\itemize{
-\item \code{stop_time} \code{POSIXct(1)}\cr
-Terminator stops after this point in time.
-Mutually exclusive with argument \code{secs}.
+\describe{
+\item{\code{stop_time}}{\code{POSIXct(1)}\cr
+Terminator stops after this point in time.}
 }
 }
 
