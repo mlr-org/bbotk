@@ -101,7 +101,6 @@ OptimInstance = R6Class("OptimInstance",
       }
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
-      self$objective$eval_many(xss_trafoed)
       ydt = self$objective$eval_many(xss_trafoed)
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
