@@ -82,9 +82,9 @@ Objective = R6Class("Objective",
     #' archive if called through the [OptimInstance].
     #' These extra entries are referred to as *extras*.
     eval = function(xs) {
-      if(self$check_values) self$domain$assert(xs)
+      if (self$check_values) self$domain$assert(xs)
       res = private$.eval(xs)
-      if(self$check_values) self$codomain$assert(res[self$codomain$ids()])
+      if (self$check_values) self$codomain$assert(res[self$codomain$ids()])
       return(res)
     },
 
@@ -108,9 +108,9 @@ Objective = R6Class("Objective",
     #' called through the [OptimInstance].
     #' These extra columns are referred to as *extras*.
     eval_many = function(xss) {
-      if(self$check_values) lapply(xss, self$domain$assert)
+      if (self$check_values) lapply(xss, self$domain$assert)
       res = private$.eval_many(xss)
-      if(self$check_values) {
+      if (self$check_values) {
         self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       }
       return(res)
@@ -139,7 +139,7 @@ Objective = R6Class("Objective",
   ),
 
   private = list(
-    .eval = function (xs) {
+    .eval = function(xs) {
       as.list(self$eval_many(list(xs)))
     },
 

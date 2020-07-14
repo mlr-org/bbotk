@@ -39,7 +39,7 @@ OptimInstance = R6Class("OptimInstance",
     initialize = function(objective, search_space = NULL, terminator) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
-         self$objective$domain
+        self$objective$domain
       } else {
         assert_param_set(search_space)
       }
@@ -67,8 +67,9 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param ... (ignored).
     print = function(...) {
+
       catf(format(self))
-      catf(str_indent("* State: ", if(is.null(private$.result)) "Not optimized" else "Optimized"))
+      catf(str_indent("* State: ", if (is.null(private$.result)) "Not optimized" else "Optimized"))
       catf(str_indent("* Objective:", format(self$objective)))
       catf("* Search Space:")
       print(self$search_space)
@@ -176,12 +177,12 @@ OptimInstance = R6Class("OptimInstance",
 )
 
 objective_function = function(x, inst, multiplicator) {
-    xs = set_names(as.list(x), inst$search_space$ids())
-    inst$search_space$assert(xs)
-    xdt = as.data.table(xs)
-    res = inst$eval_batch(xdt)
-    y = as.numeric(res[, inst$objective$codomain$ids(), with = FALSE])
-    y * multiplicator
+  xs = set_names(as.list(x), inst$search_space$ids())
+  inst$search_space$assert(xs)
+  xdt = as.data.table(xs)
+  res = inst$eval_batch(xdt)
+  y = as.numeric(res[, inst$objective$codomain$ids(), with = FALSE])
+  y * multiplicator
 }
 
 objective_error = function(x, inst, multiplicator) {

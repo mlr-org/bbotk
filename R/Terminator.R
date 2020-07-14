@@ -21,7 +21,6 @@
 #' algorithms). So it is advised to check the size of the returned archive, in
 #' particular if you are benchmarking multiple optimization algorithms.
 #'
-#'
 #' @family Terminator
 #' @export
 Terminator = R6Class("Terminator",

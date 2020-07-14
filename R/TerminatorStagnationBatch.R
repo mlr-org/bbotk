@@ -18,7 +18,7 @@
 #' \item{`threshold`}{`numeric(1)`\cr
 #'  If the improvement is less than `threshold`, optimization is stopped,
 #'  default is `0`.}
-#'}
+#' }
 #'
 #' @family Terminator
 #' @export
@@ -48,10 +48,11 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+
       pv = self$param_set$values
       ycol = archive$cols_y
       present_batch = archive$n_batch
-      previous_batch = (archive$n_batch-1):(archive$n_batch-pv$n)
+      previous_batch = (archive$n_batch - 1):(archive$n_batch - pv$n)
       minimize = "minimize" %in% archive$codomain$tags
 
       # we cannot terminate until we have enough observations
@@ -67,11 +68,13 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
       if (minimize) {
         res = map(perf_before$batch_nr, function(nr) {
           min(perf_present[, ycol, with = FALSE]) >= min(
-            perf_before[batch_nr == nr, ycol, with = FALSE]) - pv$threshold})
+            perf_before[batch_nr == nr, ycol, with = FALSE]) - pv$threshold
+        })
       } else {
         res = map(perf_before$batch_nr, function(nr) {
-          max(perf_present[, ycol, with=FALSE]) <= max(
-            perf_before[batch_nr == nr, ycol, with=FALSE]) + pv$threshold})
+          max(perf_present[, ycol, with = FALSE]) <= max(
+            perf_before[batch_nr == nr, ycol, with = FALSE]) + pv$threshold
+        })
       }
 
       all(unlist(res))

@@ -40,12 +40,12 @@
 #' }
 #'
 #' objective = ObjectiveRFun$new(fun = objective_function,
-#'                               domain = domain,
-#'                               codomain = codomain)
+#'   domain = domain,
+#'   codomain = codomain)
 #' terminator = term("evals", n_evals = 10)
 #' instance = OptimInstanceSingleCrit$new(objective = objective,
-#'                              search_space = search_space,
-#'                              terminator = terminator)
+#'   search_space = search_space,
+#'   terminator = terminator)
 #'
 #' design = data.table(x = c(0, 1))
 #'
@@ -83,12 +83,13 @@ OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
   private = list(
     .optimize = function(instance) {
       pv = self$param_set$values
-      if (is.null(pv$design))
+      if (is.null(pv$design)) {
         stopf("Please set design datatable!")
+      }
       design = instance$search_space$assert_dt(pv$design)
 
       ch = chunk_vector(seq_row(design), chunk_size = pv$batch_size,
-                        shuffle = FALSE)
+        shuffle = FALSE)
       for (inds in ch) {
         instance$eval_batch(design[inds, ])
       }

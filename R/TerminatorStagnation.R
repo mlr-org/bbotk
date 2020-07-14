@@ -18,7 +18,7 @@
 #' \item{`threshold`}{`numeric(1)`\cr
 #'  If the improvement is less than `threshold`, optimization is stopped,
 #'  default is `0`.}
-#'}
+#' }
 #'
 #' @family Terminator
 #' @export
@@ -48,6 +48,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+
       pv = self$param_set$values
       iters = pv$iters
       ycol = archive$cols_y

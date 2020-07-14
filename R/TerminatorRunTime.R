@@ -14,7 +14,7 @@
 #' \describe{
 #' \item{`secs`}{`numeric(1)`\cr
 #' Maximum allowed time, in seconds, default is 100.}
-#'}
+#' }
 #'
 #' @family Terminator
 #' @export

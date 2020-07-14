@@ -124,14 +124,12 @@ assert_codomain = function(codomain) {
 
     # (2) every parameter's tags contain at most one of 'minimize' or 'maximize'
     if (sum(y$tags %in% c("minimize", "maximize")) > 1) {
-      stopf("%s in codomain contains a 'minimize' and 'maximize' tag",
-            y$id)
+      stopf("%s in codomain contains a 'minimize' and 'maximize' tag", y$id)
     }
 
     # (3) every parameter contains a 'minimize' or 'maximize' tag
     if (!any(y$tags %in% c("minimize", "maximize"))) {
-      stopf("%s in codomain contains no 'minimize' or 'maximize' tag",
-            y$id)
+      stopf("%s in codomain contains no 'minimize' or 'maximize' tag", y$id)
     }
   }
   return(codomain)

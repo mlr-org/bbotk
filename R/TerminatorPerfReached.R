@@ -15,7 +15,7 @@
 #' Performance level that needs to be reached, default is 0. Terminates if the
 #' performance exceeds (respective measure has to be maximized) or falls below
 #' (respective measure has to be minimized) this value.}
-#'}
+#' }
 #'
 #' @family Terminator
 #' @export

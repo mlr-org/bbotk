@@ -37,7 +37,7 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' @param ydt (`numeric(1)`)\cr
     #'   Optimal outcomes, e.g. the Pareto front.
     assign_result = function(xdt, ydt) {
-      #FIXME: We could have one way that just lets us put a 1xn DT as result directly.
+      # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_data_table(ydt)

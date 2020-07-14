@@ -14,7 +14,7 @@
 #' \describe{
 #' \item{`stop_time`}{`POSIXct(1)`\cr
 #' Terminator stops after this point in time.}
-#'}
+#' }
 #'
 #' @family Terminator
 #' @export

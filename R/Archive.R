@@ -31,7 +31,7 @@ Archive = R6Class("Archive",
     #' @field start_time ([POSIXct]).
     start_time = NULL,
 
-    #' @field check_values ('logical(1)')
+    #' @field check_values (`logical(1)`)
     check_values = NULL,
 
     #' @description

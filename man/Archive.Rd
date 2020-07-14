@@ -28,7 +28,7 @@ Codomain of objective function.}
 
 \item{\code{start_time}}{(\link{POSIXct}).}
 
-\item{\code{check_values}}{('logical(1)')}
+\item{\code{check_values}}{(\code{logical(1)})}
 }
 \if{html}{\out{</div>}}
 }
