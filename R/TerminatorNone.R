@@ -5,7 +5,7 @@
 #'
 #' @description
 #' Mainly useful for optimization algorithms where the stopping is inherently
-#' controlled by the algorithm itself (e.g. [mlr3tuning::TunerGridSearch]).
+#' controlled by the algorithm itself (e.g. [OptimizerGridSearch]).
 #'
 #' @templateVar id none
 #' @template section_dictionary_terminator
