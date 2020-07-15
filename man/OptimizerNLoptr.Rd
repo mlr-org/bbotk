@@ -3,6 +3,9 @@
 \name{OptimizerNLoptr}
 \alias{OptimizerNLoptr}
 \title{Optimization via Non-linear Optimization}
+\source{
+\cite{bbotk}{johnson_2014}
+}
 \description{
 \code{OptimizerNLoptr} class that implements non-linear optimization. Calls
 \code{\link[nloptr:nloptr]{nloptr::nloptr()}} from package \CRANpkg{nloptr}.
