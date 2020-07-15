@@ -223,9 +223,9 @@ function should be internally called by the <a href='Optimizer.html'>Optimizer</
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
 <dt><code>xdt</code></dt><dd><p>(<code>data.table</code>)<br />
-x values as <code>data.table</code> with one point per row.
-Contains the value in the <em>search space</em> of the OptimInstance object.
-Can contain additional columns for extra information.</p></dd>
+x values as <code>data.table</code> with one point per row. Contains the value in
+the <em>search space</em> of the OptimInstance object. Can contain additional
+columns for extra information.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
@@ -237,9 +237,9 @@ and estimated performance value here. For internal use.</p><h3>Usage</h3>
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl'>
 <dt><code>xdt</code></dt><dd><p>(<code>data.table</code>)<br />
-x values as <code>data.table</code> with one row.
-Contains the value in the <em>search space</em> of the OptimInstance object.
-Can contain additional columns for extra information.</p></dd>
+x values as <code>data.table</code> with one row. Contains the value in the <em>search
+space</em> of the OptimInstance object. Can contain additional columns for
+extra information.</p></dd>
 
 <dt><code>y</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
 Optimal outcome.</p></dd>
@@ -247,12 +247,12 @@ Optimal outcome.</p></dd>
 </dl><p></div></p>
 <p><hr>
 <a id="method-objective_function"></a></p><h3>Method <code>objective_function()</code></h3>
-<p>Evaluates (untransformed) points of only numeric values.
-Returns a numeric scalar for single-crit or a numeric vector for multi-crit.
-The return value(s) are negated if the measure is maximized.
-Internally, <code>$eval_batch()</code> is called with a single row. This function
-serves as a objective function for optimizers of numeric spaces - which
-should always be minimized.</p><h3>Usage</h3>
+<p>Evaluates (untransformed) points of only numeric values. Returns a
+numeric scalar for single-crit or a numeric vector for multi-crit. The
+return value(s) are negated if the measure is maximized. Internally,
+<code>$eval_batch()</code> is called with a single row. This function serves as a
+objective function for optimizers of numeric spaces - which should always
+be minimized.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>OptimInstance</span>$<span class='fu'>objective_function</span>(<span class='no'>x</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>

@@ -142,7 +142,8 @@ sugar function <code><a href='term.html'>term()</a></code>:</p><pre><span class=
 
 <dl'>
 <dt><code>any</code></dt><dd><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code><br />
-Terminate iff any included terminator is positive? (not all), default is <code>TRUE</code>.</p></dd>
+Terminate iff any included terminator is positive? (not all), default is
+<code>TRUE</code>.</p></dd>
 
 </dl>
 
@@ -198,7 +199,8 @@ List of objects of class <a href='Terminator.html'>Terminator</a>.</p></dd>
 </dl><p></div></p>
 <p><hr>
 <a id="method-is_terminated"></a></p><h3>Method <code>is_terminated()</code></h3>
-<p>Is <code>TRUE</code> iff the termination criterion is positive, and <code>FALSE</code> otherwise.</p><h3>Usage</h3>
+<p>Is <code>TRUE</code> iff the termination criterion is positive, and <code>FALSE</code>
+otherwise.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>TerminatorCombo</span>$<span class='fu'>is_terminated</span>(<span class='no'>archive</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
@@ -233,8 +235,8 @@ List of objects of class <a href='Terminator.html'>Terminator</a>.</p></dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"combo"</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"clock_time"</span>, <span class='kw'>stop_time</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>() + <span class='fl'>60</span>), <span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"evals"</span>, <span class='kw'>n_evals</span> <span class='kw'>=</span> <span class='fl'>10</span>)),
-  <span class='kw'>any</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"clock_time"</span>, <span class='kw'>stop_time</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>() + <span class='fl'>60</span>),
+    <span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"evals"</span>, <span class='kw'>n_evals</span> <span class='kw'>=</span> <span class='fl'>10</span>)), <span class='kw'>any</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</div><div class='output co'>#&gt; &lt;TerminatorCombo&gt;
 #&gt; * Parameters: any=FALSE
 #&gt; * Terminators: &lt;TerminatorClockTime&gt;,&lt;TerminatorEvals&gt;</div></pre>
