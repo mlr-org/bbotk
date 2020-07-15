@@ -16,15 +16,10 @@ toc:
 
 navbar:
   structure:
-    left:  [articles, reference, news, book]
+    left:  [reference, news, book]
     right: [github, mattermost, stackoverflow, rss]
   components:
     home: ~
-    articles:
-      text: Vignettes
-      menu:
-        - text: Get Started
-          href: https://bbotk.mlr-org.com/bbotk.html
     mattermost:
       icon: fa fa-comments
       href: https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/
