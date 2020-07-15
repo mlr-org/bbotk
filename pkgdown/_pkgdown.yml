@@ -1,0 +1,71 @@
+url: https://bbotk.mlr-org.com
+
+template:
+  package: mlr3pkgdowntemplate
+  params:
+    bootswatch: journal
+  default_assets: false
+
+development:
+  mode: auto
+  version_label: default
+  version_tooltip: "Version"
+
+toc:
+  depth: 3
+
+navbar:
+  structure:
+    left:  [articles, reference, news, book]
+    right: [github, mattermost, stackoverflow, rss]
+  components:
+    home: ~
+    articles:
+      text: Vignettes
+      menu:
+        - text: Survival Analysis
+          href: https://mlr3book.mlr-org.com/survival.html
+        - text: Density Estimation
+          href: articles/density.html
+    mattermost:
+      icon: fa fa-comments
+      href: https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/
+    book:
+      text: mlr3book
+      icon: fa fa-link
+      href: https://mlr3book.mlr-org.com
+    stackoverflow:
+      icon: fab fa-stack-overflow
+      href: https://stackoverflow.com/questions/tagged/mlr3
+    rss:
+      icon: fa-rss
+      href: https://mlr-org.com/
+
+reference:
+  - title: Package
+    contents:
+      - bbotk-package
+  - title: Objective
+    contents:
+      - starts_with("Objective")
+  - title: Terminator
+    contents:
+      - starts_with("Terminator")
+      - mlr_terminators
+      - term
+      - terms
+  - title: Optimization Instance
+    contents:
+      - starts_with("OptimInstance")
+  - title: Optimizer
+    contents:
+      - starts_with("Optimizer")
+      - mlr_optimizers
+      - opt
+      - opts
+  - title: Archive
+    contents:
+      - Archive
+  - title: Misc
+    contents:
+      - is_dominated
