@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Logging object for objective function evaluations — Archive" />
 <meta property="og:description" content="Container around a data.table::data.table which stores all performed
-Objective function calls." />
+function calls of the Objective." />
 
 
 
@@ -122,7 +122,7 @@ Objective function calls." />
 
     <div class="ref-description">
     <p>Container around a <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> which stores all performed
-<a href='Objective.html'>Objective</a> function calls.</p>
+function calls of the Objective.</p>
     </div>
 
 
@@ -133,8 +133,8 @@ Objective function calls." />
 
 
 <p>The data is stored in a private <code>.data</code> field that contains a
-<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> which logs all performed <a href='Objective.html'>Objective</a> function calls.
-The <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> is accessed with the <code>$data()</code> method. New
+<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> which logs all performed function calls of the <a href='Objective.html'>Objective</a>.
+This <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> is accessed with the public <code>$data()</code> method. New
 values can be added with the <code>$add_evals()</code> method. This however is usually
 done through the evaluation of the <a href='OptimInstance.html'>OptimInstance</a> by the <a href='Optimizer.html'>Optimizer</a>.</p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
@@ -154,10 +154,10 @@ Codomain of objective function.</p></dd>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl'>
-<dt><code>n_evals</code></dt><dd><p>(<code>ìnteger(1)</code>)<br />
+<dt><code>n_evals</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of evaluations stored in the archive.</p></dd>
 
-<dt><code>n_batch</code></dt><dd><p>(<code>ìnteger(1)</code>)<br />
+<dt><code>n_batch</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of batches stored in the archive.</p></dd>
 
 <dt><code>cols_x</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).</p></dd>
