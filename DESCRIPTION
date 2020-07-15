@@ -48,6 +48,8 @@ Suggests:
     testthat
 VignetteBuilder:
     knitr
+RdMacros:
+    mlr3misc
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
