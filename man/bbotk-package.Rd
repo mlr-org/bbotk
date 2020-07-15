@@ -6,11 +6,13 @@
 \alias{bbotk-package}
 \title{bbotk: Black-Box Optimization Toolkit}
 \description{
-Provide a common framework for optimization for other packages.
+Provide a common framework for optimization for
+    other packages.
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://bbotk.mlr-org.com}
   \item \url{https://github.com/mlr-org/bbotk}
   \item Report bugs at \url{https://github.com/mlr-org/bbotk/issues}
 }

@@ -31,7 +31,7 @@ is_dominated = function(ymat) {
 #'
 #' @template param_xdt
 #' @template param_search_space
-#' @value `list()`
+#' @return `list()`
 #' @keywords internal
 #' @export
 transform_xdt_to_xss = function(xdt, search_space) {
