@@ -21,14 +21,15 @@ term("combo")
 
 \describe{
 \item{\code{any}}{\code{logical(1)}\cr
-Terminate iff any included terminator is positive? (not all), default is \code{TRUE}.}
+Terminate iff any included terminator is positive? (not all), default is
+\code{TRUE}.}
 }
 }
 
 \examples{
 term("combo",
-  list(term("clock_time", stop_time = Sys.time() + 60), term("evals", n_evals = 10)),
-  any = FALSE
+  list(term("clock_time", stop_time = Sys.time() + 60),
+    term("evals", n_evals = 10)), any = FALSE
 )
 }
 \seealso{
@@ -93,7 +94,8 @@ List of objects of class \link{Terminator}.}
 \if{html}{\out{<a id="method-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+otherwise.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$is_terminated(archive)}\if{html}{\out{</div>}}
 }

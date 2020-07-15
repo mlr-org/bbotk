@@ -129,9 +129,9 @@ function should be internally called by the \link{Optimizer}.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{xdt}}{(\code{data.table})\cr
-x values as \code{data.table} with one point per row.
-Contains the value in the \emph{search space} of the \link{OptimInstance} object.
-Can contain additional columns for extra information.}
+x values as \code{data.table} with one point per row. Contains the value in
+the \emph{search space} of the \link{OptimInstance} object. Can contain additional
+columns for extra information.}
 }
 \if{html}{\out{</div>}}
 }
@@ -150,9 +150,9 @@ and estimated performance value here. For internal use.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{xdt}}{(\code{data.table})\cr
-x values as \code{data.table} with one row.
-Contains the value in the \emph{search space} of the \link{OptimInstance} object.
-Can contain additional columns for extra information.}
+x values as \code{data.table} with one row. Contains the value in the \emph{search
+space} of the \link{OptimInstance} object. Can contain additional columns for
+extra information.}
 
 \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
@@ -164,12 +164,12 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-objective_function"></a>}}
 \if{latex}{\out{\hypertarget{method-objective_function}{}}}
 \subsection{Method \code{objective_function()}}{
-Evaluates (untransformed) points of only numeric values.
-Returns a numeric scalar for single-crit or a numeric vector for multi-crit.
-The return value(s) are negated if the measure is maximized.
-Internally, \verb{$eval_batch()} is called with a single row. This function
-serves as a objective function for optimizers of numeric spaces - which
-should always be minimized.
+Evaluates (untransformed) points of only numeric values. Returns a
+numeric scalar for single-crit or a numeric vector for multi-crit. The
+return value(s) are negated if the measure is maximized. Internally,
+\verb{$eval_batch()} is called with a single row. This function serves as a
+objective function for optimizers of numeric spaces - which should always
+be minimized.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$objective_function(x)}\if{html}{\out{</div>}}
 }

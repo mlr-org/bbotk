@@ -53,6 +53,7 @@ Optimizer = R6Class("Optimizer",
 
     #' @description
     #' Print method.
+    #'
     #' @return (`character()`).
     print = function() {
       catf(format(self))

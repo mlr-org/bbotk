@@ -92,9 +92,9 @@ OptimInstance = R6Class("OptimInstance",
     #' is positive, an exception of class `terminated_error` is raised. This
     #' function should be internally called by the [Optimizer].
     #' @param xdt (`data.table`)\cr
-    #'   x values as `data.table` with one point per row.
-    #'   Contains the value in the *search space* of the [OptimInstance] object.
-    #'   Can contain additional columns for extra information.
+    #' x values as `data.table` with one point per row. Contains the value in
+    #' the *search space* of the [OptimInstance] object. Can contain additional
+    #' columns for extra information.
     eval_batch = function(xdt) {
       if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
         self$is_terminated = TRUE
@@ -115,9 +115,9 @@ OptimInstance = R6Class("OptimInstance",
     #' and estimated performance value here. For internal use.
     #'
     #' @param xdt (`data.table`)\cr
-    #'   x values as `data.table` with one row.
-    #'   Contains the value in the *search space* of the [OptimInstance] object.
-    #'   Can contain additional columns for extra information.
+    #' x values as `data.table` with one row. Contains the value in the *search
+    #' space* of the [OptimInstance] object. Can contain additional columns for
+    #' extra information.
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
     assign_result = function(xdt, y) {
@@ -125,12 +125,12 @@ OptimInstance = R6Class("OptimInstance",
     },
 
     #' @description
-    #' Evaluates (untransformed) points of only numeric values.
-    #' Returns a numeric scalar for single-crit or a numeric vector for multi-crit.
-    #' The return value(s) are negated if the measure is maximized.
-    #' Internally, `$eval_batch()` is called with a single row. This function
-    #' serves as a objective function for optimizers of numeric spaces - which
-    #' should always be minimized.
+    #' Evaluates (untransformed) points of only numeric values. Returns a
+    #' numeric scalar for single-crit or a numeric vector for multi-crit. The
+    #' return value(s) are negated if the measure is maximized. Internally,
+    #' `$eval_batch()` is called with a single row. This function serves as a
+    #' objective function for optimizers of numeric spaces - which should always
+    #' be minimized.
     #'
     #' @param x (`numeric()`)\cr
     #' Untransformed points.
@@ -149,19 +149,19 @@ OptimInstance = R6Class("OptimInstance",
     },
 
     #' @field result_x_search_space ([data.table::data.table])\cr
-    #'   x part of the result in the *search space*.
+    #' x part of the result in the *search space*.
     result_x_search_space = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
     },
 
     #' @field result_x_domain (`list()`)\cr
-    #'   (transformed) x part of the result in the *domain space* of the objective.
+    #' (transformed) x part of the result in the *domain space* of the objective.
     result_x_domain = function() {
       private$.result$x_domain[[1]]
     },
 
     #' @field result_y (`numeric()`)\cr
-    #'   Optimal outcome.
+    #' Optimal outcome.
     result_y = function() {
       unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
     }

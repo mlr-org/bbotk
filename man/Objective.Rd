@@ -86,7 +86,7 @@ Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
 The default is to minimize each component.}
 
-\item{\code{check_values}}{('logical(1)')\cr
+\item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for
 validity?}
 }

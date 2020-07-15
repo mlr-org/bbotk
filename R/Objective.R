@@ -38,7 +38,7 @@ Objective = R6Class("Objective",
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
-    #' @param check_values ('logical(1)')\cr
+    #' @param check_values (`logical(1)`)\cr
     #' Should points before the evaluation and the results be checked for
     #' validity?
     initialize = function(id = "f", properties = character(), domain,

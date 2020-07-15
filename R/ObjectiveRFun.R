@@ -42,7 +42,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
   active = list(
 
     #' @field fun (`function`)\cr
-    #'   Objective function.
+    #' Objective function.
     fun = function(lhs) {
       if (!missing(lhs) && !identical(lhs, private$.fun)) stop("fun is read-only")
       private$.fun

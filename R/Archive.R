@@ -37,7 +37,7 @@ Archive = R6Class("Archive",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param check_values ('logical(1)')\cr
+    #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
     initialize = function(search_space, codomain, check_values = TRUE) {

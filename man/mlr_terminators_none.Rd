@@ -63,7 +63,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<a id="method-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+otherwise.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TerminatorNone$is_terminated(archive)}\if{html}{\out{</div>}}
 }

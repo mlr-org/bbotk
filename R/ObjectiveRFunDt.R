@@ -15,8 +15,8 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param fun (`function`)\cr
-    #'   R function that encodes objective and expects an `data.table` as input
-    #'   whereas each point is represented by one row.
+    #' R function that encodes objective and expects an `data.table` as input
+    #' whereas each point is represented by one row.
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(fun, domain, codomain = NULL, id = "function",

@@ -40,9 +40,11 @@ Terminator = R6Class("Terminator",
     #'   Set of control parameters for terminator.
     #' @param properties (`character()`)\cr
     #'   Set of properties.
-    initialize = function(param_set = ParamSet$new(), properties = character()) {
+    initialize = function(param_set = ParamSet$new(),
+      properties = character()) {
       self$param_set = assert_param_set(param_set)
-      self$properties = assert_subset(properties, bbotk_reflections$terminator_properties)
+      self$properties = assert_subset(properties,
+        bbotk_reflections$terminator_properties)
     },
 
     #' @description
