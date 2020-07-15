@@ -5,14 +5,14 @@
 \title{Logging object for objective function evaluations}
 \description{
 Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
-\link{Objective} function calls.
+function calls of the Objective.
 }
 \section{Technical details}{
 
 
 The data is stored in a private \code{.data} field that contains a
-\link[data.table:data.table]{data.table::data.table} which logs all performed \link{Objective} function calls.
-The \link[data.table:data.table]{data.table::data.table} is accessed with the \verb{$data()} method. New
+\link[data.table:data.table]{data.table::data.table} which logs all performed function calls of the \link{Objective}.
+This \link[data.table:data.table]{data.table::data.table} is accessed with the public \verb{$data()} method. New
 values can be added with the \verb{$add_evals()} method. This however is usually
 done through the evaluation of the \link{OptimInstance} by the \link{Optimizer}.
 }
@@ -35,10 +35,10 @@ Codomain of objective function.}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{n_evals}}{(\code{ìnteger(1)})\cr
+\item{\code{n_evals}}{(\code{integer(1)})\cr
 Number of evaluations stored in the archive.}
 
-\item{\code{n_batch}}{(\code{ìnteger(1)})\cr
+\item{\code{n_batch}}{(\code{integer(1)})\cr
 Number of batches stored in the archive.}
 
 \item{\code{cols_x}}{(\code{character()}).}

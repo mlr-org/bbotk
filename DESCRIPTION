@@ -41,12 +41,13 @@ Imports:
     paradox (>= 0.3),
     R6
 Suggests:
+    mlr3,
     GenSA,
     knitr,
     nloptr,
     rmarkdown,
     testthat
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 NeedsCompilation: no

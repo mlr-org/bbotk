@@ -2,13 +2,13 @@
 #'
 #' @description
 #' Container around a [data.table::data.table] which stores all performed
-#' [Objective] function calls.
+#' function calls of the Objective.
 #'
 #' @section Technical details:
 #'
 #' The data is stored in a private `.data` field that contains a
-#' [data.table::data.table] which logs all performed [Objective] function calls.
-#' The [data.table::data.table] is accessed with the `$data()` method. New
+#' [data.table::data.table] which logs all performed function calls of the [Objective].
+#' This [data.table::data.table] is accessed with the public `$data()` method. New
 #' values can be added with the `$add_evals()` method. This however is usually
 #' done through the evaluation of the [OptimInstance] by the [Optimizer].
 #'
@@ -146,11 +146,11 @@ Archive = R6Class("Archive",
 
   active = list(
 
-    #' @field n_evals (`ìnteger(1)`)\cr
+    #' @field n_evals (`integer(1)`)\cr
     #' Number of evaluations stored in the archive.
     n_evals = function() nrow(private$.data),
 
-    #' @field n_batch (`ìnteger(1)`)\cr
+    #' @field n_batch (`integer(1)`)\cr
     #' Number of batches stored in the archive.
     n_batch = function() {
       if (is.null(private$.data$batch_nr)) {
