@@ -73,7 +73,7 @@ optimize_default = function(inst, self, private) {
   lg$info("Result:")
   lg$info(capture.output(print(
     inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-  invisible(inst$result)
+  return(inst$result)
 }
 
 #' @title Default assign_result function
