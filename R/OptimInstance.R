@@ -91,8 +91,8 @@ OptimInstance = R6Class("OptimInstance",
     #' Before each batch-evaluation, the [Terminator] is checked, and if it
     #' is positive, an exception of class `terminated_error` is raised. This
     #' function should be internally called by the [Optimizer].
-    #' @param xdt (`data.table`)\cr
-    #' x values as `data.table` with one point per row. Contains the value in
+    #' @param xdt (`data.table::data.table()`)\cr
+    #' x values as `data.table()` with one point per row. Contains the value in
     #' the *search space* of the [OptimInstance] object. Can contain additional
     #' columns for extra information.
     eval_batch = function(xdt) {
@@ -114,8 +114,8 @@ OptimInstance = R6Class("OptimInstance",
     #' The [Optimizer] object writes the best found point
     #' and estimated performance value here. For internal use.
     #'
-    #' @param xdt (`data.table`)\cr
-    #' x values as `data.table` with one row. Contains the value in the *search
+    #' @param xdt (`data.table::data.table()`)\cr
+    #' x values as `data.table()` with one row. Contains the value in the *search
     #' space* of the [OptimInstance] object. Can contain additional columns for
     #' extra information.
     #' @param y (`numeric(1)`)\cr

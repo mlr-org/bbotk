@@ -78,7 +78,7 @@ Archive = R6Class("Archive",
     #' @param m (`integer()`)\cr
     #' Take only batches `m` into account. Default is all batches.
     #'
-    #' @return [data.table::data.table]
+    #' @return [data.table::data.table()].
     best = function(m = NULL) {
       if (self$n_batch == 0L) {
         stop("No results stored in archive")
@@ -114,7 +114,7 @@ Archive = R6Class("Archive",
     #' Set of column names for columns to unnest via [mlr3misc::unnest()].
     #' Unnested columns are stored in separate columns instead of list-columns.
     #'
-    #' @return [data.table::data.table]
+    #' @return [data.table::data.table()].
     data = function(unnest = NULL) {
       if (is.null(unnest)) {
         return(copy(private$.data))

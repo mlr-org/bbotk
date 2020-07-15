@@ -19,11 +19,11 @@ The \link[paradox:ParamSet]{paradox::ParamSet} describes either a subset of the 
 Depending on the context, this value defaults to the domain of the objective.}
 }
 \value{
-\code{list()}
+\code{list()}.
 }
 \description{
-Transforms a given \code{data.table} to a list with transformed x values.
-If no trafo is defined it will just convert the \code{data.table} to a list.
+Transforms a given \code{data.table()} to a list with transformed x values.
+If no trafo is defined it will just convert the \code{data.table()} to a list.
 Mainly for internal usage.
 }
 \keyword{internal}

@@ -67,7 +67,7 @@ Optimizer = R6Class("Optimizer",
     #' Performs the optimization and writes optimization result into [OptimInstance].
     #'
     #' @param inst ([OptimInstance]).
-    #' @return NULL
+    #' @return `NULL`.
     optimize = function(inst) {
       optimize_default(inst, self, private)
     }

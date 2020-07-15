@@ -41,7 +41,6 @@ Imports:
     paradox (>= 0.3),
     R6
 Suggests:
-    mlr3,
     GenSA,
     knitr,
     nloptr,
@@ -50,6 +49,7 @@ Suggests:
 VignetteBuilder:
     knitr
 Encoding: UTF-8
+Language: en-US
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1

@@ -18,6 +18,7 @@
 #' @return
 #' * [Terminator] for `term()`.
 #' * list of [Terminator] for `terms()`.
+#'
 #' @export
 #' @examples
 #' term("evals", n_evals = 10)
@@ -51,6 +52,7 @@ terms = function(.keys, ...) {
 #' @return
 #' * [Optimizer] for `opt()`.
 #' * list of [Optimizer] for `opts()`.
+#'
 #' @export
 #' @examples
 #' opt("random_search", batch_size = 10)

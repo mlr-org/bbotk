@@ -5,7 +5,7 @@
 \title{Optimization via Non-linear Optimization}
 \description{
 \code{OptimizerNLoptr} class that implements non-linear optimization. Calls
-\link[nloptr:nloptr]{nloptr::nloptr} from package \CRANpkg{nloptr}.
+\code{\link[nloptr:nloptr]{nloptr::nloptr()}} from package \CRANpkg{nloptr}.
 }
 \section{Parameters}{
 

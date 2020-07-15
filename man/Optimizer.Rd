@@ -98,7 +98,7 @@ Performs the optimization and writes optimization result into \link{OptimInstanc
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-NULL
+\code{NULL}.
 }
 }
 \if{html}{\out{<hr>}}

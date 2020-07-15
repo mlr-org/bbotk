@@ -79,8 +79,8 @@ Depending on the context, this value defaults to the domain of the objective.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function.
-Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
-The default is to minimize each component.}
+Most importantly the tags of each output "Parameter" define whether it should
+be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
@@ -136,7 +136,7 @@ Take only batches \code{m} into account. Default is all batches.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}
+\code{\link[data.table:data.table]{data.table::data.table()}}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -159,7 +159,7 @@ Unnested columns are stored in separate columns instead of list-columns.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}
+\code{\link[data.table:data.table]{data.table::data.table()}}.
 }
 }
 \if{html}{\out{<hr>}}

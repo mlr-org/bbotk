@@ -5,8 +5,8 @@
 #' numerical codomain.
 #'
 #' @section Technical details:
-#' `Objective` objects can take the following properties `noisy`,
-#' `deterministic`, `single-crit` and `multi-crit`.
+#' `Objective` objects can have the following properties: `"noisy"`,
+#' `"deterministic"`, `"single-crit"` and `"multi-crit"`.
 #'
 #' @template param_domain
 #' @template param_codomain
@@ -53,14 +53,14 @@ Objective = R6Class("Objective",
 
     #' @description
     #' Helper for print outputs.
-    #' @return `character()`
+    #' @return `character()`.
     format = function() {
       sprintf("<%s:%s>", class(self)[1L], self$id)
     },
 
     #' @description
     #' Print method.
-    #' @return `character()`
+    #' @return `character()`.
     print = function() {
       catf(self$format())
       catf("Domain:")
@@ -100,10 +100,9 @@ Objective = R6Class("Objective",
     #'   A list of lists that contains multiple x values, e.g.
     #'   `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
     #'
-    #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-criteria functions and
-    #' multiple y-columns for multi-criteria functions, e.g.
-    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    #' @return data.table::data.table()] that contains one y-column for
+    #' single-criteria functions and multiple y-columns for multi-criteria functions,
+    #' e.g.  `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     #' It may also contain additional columns that will be stored in the archive if
     #' called through the [OptimInstance].
     #' These extra columns are referred to as *extras*.
@@ -119,21 +118,20 @@ Objective = R6Class("Objective",
     #' @description
     #' Evaluates multiple input values on the objective function
     #'
-    #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-criteria functions and
-    #' multiple y-columns for multi-criteria functions, e.g.
-    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    #' @return data.table::data.table()] that contains one y-column for
+    #' single-criteria functions and multiple y-columns for multi-criteria
+    #' functions, e.g.  `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_dt = function(xdt) {
       self$eval_many(transpose_list(xdt))
     }
   ),
 
   active = list(
-    #' @field xdim (`ìnteger(1)`)\cr
+    #' @field xdim (`integer(1)`)\cr
     #' Dimension of domain.
     xdim = function() self$domain$length,
 
-    #' @field ydim (`ìnteger(1)`)\cr
+    #' @field ydim (`integer(1)`)\cr
     #' Dimension of codomain.
     ydim = function() self$codomain$length
   ),
