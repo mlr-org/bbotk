@@ -27,6 +27,9 @@
 #' `ftol_abs = 0.0`) are still available and implemented with their package
 #' defaults. To deactivate these conditions, set them to `-1`.
 #'
+#' @source
+#' \cite{bbotk}{johnson_2014}
+#'
 #' @export
 #' @examples
 #' \dontrun{

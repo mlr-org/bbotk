@@ -42,6 +42,7 @@ Imports:
     paradox (>= 0.3),
     R6
 Suggests:
+    bibtex,
     GenSA,
     knitr,
     nloptr,
