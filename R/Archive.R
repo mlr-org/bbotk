@@ -161,9 +161,11 @@ Archive = R6Class("Archive",
     },
 
     #' @field cols_x (`character()`).
+    #' Column names of search space parameters.
     cols_x = function() self$search_space$ids(),
 
     #' @field cols_y (`character()`).
+    #' Column names of codomain parameters.
     cols_y = function() self$codomain$ids()
     # idx_unevaled = function() private$.data$y
   ),
