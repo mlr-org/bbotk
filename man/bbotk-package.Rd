@@ -6,8 +6,8 @@
 \alias{bbotk-package}
 \title{bbotk: Black-Box Optimization Toolkit}
 \description{
-Provide a common framework for optimization for
-    other packages.
+Provides a common framework for optimization of black-box functions
+    for other packages, e.g. 'mlr3'.
 }
 \seealso{
 Useful links:

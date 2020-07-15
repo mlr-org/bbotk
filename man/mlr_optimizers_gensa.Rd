@@ -4,6 +4,11 @@
 \alias{mlr_optimizers_gensa}
 \alias{OptimizerGenSA}
 \title{Optimization via Generalized Simulated Annealing}
+\source{
+\cite{bbotk}{tsallis_1996}
+
+\cite{bbotk}{xiang_2013}
+}
 \description{
 \code{OptimizerGenSA} class that implements generalized simulated annealing. Calls
 \code{\link[GenSA:GenSA]{GenSA::GenSA()}} from package \CRANpkg{GenSA}.

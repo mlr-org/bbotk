@@ -25,13 +25,13 @@ is_dominated = function(ymat) {
 
 #' @title Calculates the transformed x-values
 #' @description
-#' Transforms a given `data.table` to a list with transformed x values.
-#' If no trafo is defined it will just convert the `data.table` to a list.
+#' Transforms a given `data.table()` to a list with transformed x values.
+#' If no trafo is defined it will just convert the `data.table()` to a list.
 #' Mainly for internal usage.
 #'
 #' @template param_xdt
 #' @template param_search_space
-#' @return `list()`
+#' @return `list()`.
 #' @keywords internal
 #' @export
 transform_xdt_to_xss = function(xdt, search_space) {

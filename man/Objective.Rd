@@ -9,8 +9,8 @@ numerical codomain.
 }
 \section{Technical details}{
 
-\code{Objective} objects can take the following properties \code{noisy},
-\code{deterministic}, \code{single-crit} and \code{multi-crit}.
+\code{Objective} objects can have the following properties: \code{"noisy"},
+\code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
 }
 
 \section{Public fields}{
@@ -34,10 +34,10 @@ Specifies codomain of function, hence its feasible values.}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{xdim}}{(\code{ìnteger(1)})\cr
+\item{\code{xdim}}{(\code{integer(1)})\cr
 Dimension of domain.}
 
-\item{\code{ydim}}{(\code{ìnteger(1)})\cr
+\item{\code{ydim}}{(\code{integer(1)})\cr
 Dimension of codomain.}
 }
 \if{html}{\out{</div>}}
@@ -83,8 +83,8 @@ This includes their \code{id}, their types and the possible range.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function.
-Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
-The default is to minimize each component.}
+Most importantly the tags of each output "Parameter" define whether it should
+be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for
@@ -103,7 +103,7 @@ Helper for print outputs.
 }
 
 \subsection{Returns}{
-\code{character()}
+\code{character()}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -116,7 +116,7 @@ Print method.
 }
 
 \subsection{Returns}{
-\code{character()}
+\code{character()}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -169,10 +169,9 @@ A list of lists that contains multiple x values, e.g.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-criteria functions and
-multiple y-columns for multi-criteria functions, e.g.
-\code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
+data.table::data.table()] that contains one y-column for
+single-criteria functions and multiple y-columns for multi-criteria functions,
+e.g.  \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 It may also contain additional columns that will be stored in the archive if
 called through the \link{OptimInstance}.
 These extra columns are referred to as \emph{extras}.
@@ -199,10 +198,9 @@ However, \code{xdt} can contain additional columns.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-criteria functions and
-multiple y-columns for multi-criteria functions, e.g.
-\code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
+data.table::data.table()] that contains one y-column for
+single-criteria functions and multiple y-columns for multi-criteria
+functions, e.g.  \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
 \if{html}{\out{<hr>}}

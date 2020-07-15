@@ -4,7 +4,7 @@
 #'
 #' @description
 #' `OptimizerNLoptr` class that implements non-linear optimization. Calls
-#' [nloptr::nloptr] from package \CRANpkg{nloptr}.
+#' [nloptr::nloptr()] from package \CRANpkg{nloptr}.
 #'
 #' @section Parameters:
 #' \describe{

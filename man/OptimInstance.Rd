@@ -128,8 +128,8 @@ function should be internally called by the \link{Optimizer}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{(\code{data.table})\cr
-x values as \code{data.table} with one point per row. Contains the value in
+\item{\code{xdt}}{(\code{data.table::data.table()})\cr
+x values as \code{data.table()} with one point per row. Contains the value in
 the \emph{search space} of the \link{OptimInstance} object. Can contain additional
 columns for extra information.}
 }
@@ -149,8 +149,8 @@ and estimated performance value here. For internal use.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xdt}}{(\code{data.table})\cr
-x values as \code{data.table} with one row. Contains the value in the \emph{search
+\item{\code{xdt}}{(\code{data.table::data.table()})\cr
+x values as \code{data.table()} with one row. Contains the value in the \emph{search
 space} of the \link{OptimInstance} object. Can contain additional columns for
 extra information.}
 
