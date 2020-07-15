@@ -43,11 +43,14 @@
 <meta property="og:description" content="Abstract Terminator class that implements the base functionality each
 terminator must provide. A terminator is an object that determines when to
 stop the optimization.
-Termination of optimization works as follows: * Evaluations in a instance are
-performed in batches. * Before each batch evaluation, the Terminator is
-checked, and if it is positive, we stop. * The optimization algorithm itself
-might decide not to produce any more points, or even might decide to do a
-smaller batch in its last evaluation.
+Termination of optimization works as follows:
+Evaluations in a instance are performed in batches.
+Before each batch evaluation, the Terminator is checked, and if it is positive,
+we stop.
+The optimization algorithm itself might decide not to produce any more points,
+or even might decide to do a smaller batch in its last evaluation.
+
+
 Therefore the following note seems in order: While it is definitely possible
 to execute a fine-grained control for termination, and for many optimization
 algorithms we can specify exactly when to stop, it might happen that too few
@@ -137,11 +140,14 @@ particular if you are benchmarking multiple optimization algorithms." />
     <p>Abstract <code>Terminator</code> class that implements the base functionality each
 terminator must provide. A terminator is an object that determines when to
 stop the optimization.</p>
-<p>Termination of optimization works as follows: * Evaluations in a instance are
-performed in batches. * Before each batch evaluation, the Terminator is
-checked, and if it is positive, we stop. * The optimization algorithm itself
-might decide not to produce any more points, or even might decide to do a
-smaller batch in its last evaluation.</p>
+<p>Termination of optimization works as follows:</p><ul>
+<li><p>Evaluations in a instance are performed in batches.</p></li>
+<li><p>Before each batch evaluation, the Terminator is checked, and if it is positive,
+we stop.</p></li>
+<li><p>The optimization algorithm itself might decide not to produce any more points,
+or even might decide to do a smaller batch in its last evaluation.</p></li>
+</ul>
+
 <p>Therefore the following note seems in order: While it is definitely possible
 to execute a fine-grained control for termination, and for many optimization
 algorithms we can specify exactly when to stop, it might happen that too few
