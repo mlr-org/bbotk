@@ -20,6 +20,9 @@
 #' Maximum number of points to try in a batch.}
 #' }
 #'
+#' @source
+#' \cite{bbotk}{bergstra_2012}
+#'
 #' @export
 #' @template example
 OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
