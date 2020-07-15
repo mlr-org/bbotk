@@ -215,7 +215,9 @@ estimated performance vector.</p>
 <p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).</p>
 <p><hr>
 <a id="method-optimize"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/optimize.html'>optimize()</a></code></h3>
-<p>Performs the optimization and writes optimization result into <a href='OptimInstance.html'>OptimInstance</a>.</p><h3>Usage</h3>
+<p>Performs the optimization and writes optimization result into
+<a href='OptimInstance.html'>OptimInstance</a>. The optimization result is returned but the complete
+optimization path is stored in <a href='Archive.html'>Archive</a> of <a href='OptimInstance.html'>OptimInstance</a>.</p><h3>Usage</h3>
 <p><div class="r"></p><pre><span class='no'>Optimizer</span>$<span class='fu'><a href='https://rdrr.io/r/stats/optimize.html'>optimize</a></span>(<span class='no'>inst</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
@@ -224,7 +226,7 @@ estimated performance vector.</p>
 
 </dl><p></div></p>
 <h3>Returns</h3>
-<p><code>NULL</code>.</p>
+<p><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>

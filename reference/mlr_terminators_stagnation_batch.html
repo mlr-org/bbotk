@@ -159,8 +159,8 @@ does not improve more than <code>threshold</code> over the last <code>n</code> b
 
 <p>This <a href='Terminator.html'>Terminator</a> can be instantiated via the
 <a href='https://mlr3misc.mlr-org.com/reference/Dictionary.html'>dictionary</a> <a href='mlr_terminators.html'>mlr_terminators</a> or with the associated
-sugar function <code><a href='term.html'>term()</a></code>:</p><pre><span class='no'>mlr_terminators</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"stagnation"</span>)
-<span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"stagnation"</span>)</pre>
+sugar function <code><a href='trm.html'>trm()</a></code>:</p><pre><span class='no'>mlr_terminators</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"stagnation"</span>)
+<span class='fu'><a href='trm.html'>trm</a></span>(<span class='st'>"stagnation"</span>)</pre>
 
     <h2 class="hasAnchor" id="parameters"><a class="anchor" href="#parameters"></a>Parameters</h2>
 
@@ -241,7 +241,7 @@ otherwise.</p><h3>Usage</h3>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>TerminatorStagnationBatch</span>$<span class='fu'>new</span>()</div><div class='output co'>#&gt; &lt;TerminatorStagnationBatch&gt;
-#&gt; * Parameters: n=1, threshold=0</div><div class='input'><span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"stagnation_batch"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>)</div><div class='output co'>#&gt; &lt;TerminatorStagnationBatch&gt;
+#&gt; * Parameters: n=1, threshold=0</div><div class='input'><span class='fu'><a href='trm.html'>trm</a></span>(<span class='st'>"stagnation_batch"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>)</div><div class='output co'>#&gt; &lt;TerminatorStagnationBatch&gt;
 #&gt; * Parameters: n=1, threshold=1e-05</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

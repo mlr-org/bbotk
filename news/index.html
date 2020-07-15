@@ -146,27 +146,6 @@
 <h1 class="page-header" data-toc-text="0.2">
 <a href="#bbotk-02" class="anchor"></a>bbotk 0.2</h1>
 <ul>
-<li>First version of bbotk released on CRAN</li>
-<li>API change: <code>OptimInstance</code> becomes an abstract base class for <code>OptimInstanceSingleCrit</code> and <code>OptimInstanceMultiCrit</code>.</li>
-<li>API change: <code>Objective$eval_checked()</code> and <code>Objective$eval_many_checked()</code> are removed and replaced by the <code>check_values</code> flag.</li>
-<li>API change: <code>$eval()</code> and <code>$eval_many()</code> are private methods.</li>
-<li>
-<code>OptimizerNloptr</code> based on <code><a href="https://rdrr.io/pkg/nloptr/man/nloptr.html">nloptr::nloptr</a></code> added.</li>
-<li>Vignette added.</li>
-</ul>
-</div>
-    <div id="bbotk-011" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.1">
-<a href="#bbotk-011" class="anchor"></a>bbotk 0.1.1</h1>
-<ul>
-<li>API Change: <code>OptimInstance$param_set</code> becomes <code>OptimInstance$search_space</code> to avoid confusion as the <code>param_set</code> usually contains the parameters that change the behaviour of the object.</li>
-<li>New <code>Objective</code> subclass: <code>ObjectiveRFunDt</code> allows to connect functions that expect a <code>data.frame</code> as input.</li>
-</ul>
-</div>
-    <div id="bbotk-010" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.0">
-<a href="#bbotk-010" class="anchor"></a>bbotk 0.1.0</h1>
-<ul>
 <li>First version of the Black-Box Optimization Toolkit</li>
 </ul>
 </div>

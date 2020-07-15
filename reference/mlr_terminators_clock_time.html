@@ -159,8 +159,8 @@
 
 <p>This <a href='Terminator.html'>Terminator</a> can be instantiated via the
 <a href='https://mlr3misc.mlr-org.com/reference/Dictionary.html'>dictionary</a> <a href='mlr_terminators.html'>mlr_terminators</a> or with the associated
-sugar function <code><a href='term.html'>term()</a></code>:</p><pre><span class='no'>mlr_terminators</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"clock_time"</span>)
-<span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"clock_time"</span>)</pre>
+sugar function <code><a href='trm.html'>trm()</a></code>:</p><pre><span class='no'>mlr_terminators</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"clock_time"</span>)
+<span class='fu'><a href='trm.html'>trm</a></span>(<span class='st'>"clock_time"</span>)</pre>
 
     <h2 class="hasAnchor" id="parameters"><a class="anchor" href="#parameters"></a>Parameters</h2>
 
@@ -237,7 +237,7 @@ otherwise.</p><h3>Usage</h3>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>stop_time</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span>(<span class='st'>"2030-01-01 00:00:00"</span>)
-<span class='fu'><a href='term.html'>term</a></span>(<span class='st'>"clock_time"</span>, <span class='kw'>stop_time</span> <span class='kw'>=</span> <span class='no'>stop_time</span>)</div><div class='output co'>#&gt; &lt;TerminatorClockTime&gt;
+<span class='fu'><a href='trm.html'>trm</a></span>(<span class='st'>"clock_time"</span>, <span class='kw'>stop_time</span> <span class='kw'>=</span> <span class='no'>stop_time</span>)</div><div class='output co'>#&gt; &lt;TerminatorClockTime&gt;
 #&gt; * Parameters: stop_time=&lt;POSIXct&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
