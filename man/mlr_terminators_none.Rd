@@ -12,8 +12,8 @@ controlled by the algorithm itself (e.g. \link{OptimizerGridSearch}).
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("none")
-term("none")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("none")
+trm("none")
 }
 }
 

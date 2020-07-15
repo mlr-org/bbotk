@@ -64,7 +64,7 @@ obfun = ObjectiveRFun$new(
 )
 
 # Define termination criterion
-terminator = term("evals", n_evals = 20)
+terminator = trm("evals", n_evals = 20)
 
 # Create optimization instance
 instance = OptimInstanceSingleCrit$new(

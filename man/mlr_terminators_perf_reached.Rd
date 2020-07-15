@@ -11,8 +11,8 @@ Class to terminate the optimization after a performance level has been hit.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("perf_reached")
-term("perf_reached")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("perf_reached")
+trm("perf_reached")
 }
 }
 
@@ -28,7 +28,7 @@ performance exceeds (respective measure has to be maximized) or falls below
 
 \examples{
 TerminatorPerfReached$new()
-term("perf_reached")
+trm("perf_reached")
 }
 \seealso{
 Other Terminator: 

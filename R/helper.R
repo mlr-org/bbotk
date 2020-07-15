@@ -52,6 +52,8 @@ transform_xdt_to_xss = function(xdt, search_space) {
 #' @param self [Optimizer]
 #' @param private (`environment()`)
 #'
+#' @return [data.table::data.table]
+#'
 #' @keywords internal
 #' @export
 optimize_default = function(inst, self, private) {
@@ -71,7 +73,7 @@ optimize_default = function(inst, self, private) {
   lg$info("Result:")
   lg$info(capture.output(print(
     inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-  invisible(NULL)
+  invisible(inst$result)
 }
 
 #' @title Default assign_result function

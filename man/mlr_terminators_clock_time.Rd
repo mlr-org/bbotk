@@ -12,8 +12,8 @@ Class to terminate the optimization after a fixed time point has been reached
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("clock_time")
-term("clock_time")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("clock_time")
+trm("clock_time")
 }
 }
 
@@ -27,7 +27,7 @@ Terminator stops after this point in time.}
 
 \examples{
 stop_time = as.POSIXct("2030-01-01 00:00:00")
-term("clock_time", stop_time = stop_time)
+trm("clock_time", stop_time = stop_time)
 }
 \seealso{
 Other Terminator: 

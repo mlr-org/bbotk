@@ -20,9 +20,9 @@
 #' @family Terminator
 #' @export
 #' @examples
-#' term("combo",
-#'   list(term("clock_time", stop_time = Sys.time() + 60),
-#'     term("evals", n_evals = 10)), any = FALSE
+#' trm("combo",
+#'   list(trm("clock_time", stop_time = Sys.time() + 60),
+#'     trm("evals", n_evals = 10)), any = FALSE
 #' )
 TerminatorCombo = R6Class("TerminatorCombo",
   inherit = Terminator,

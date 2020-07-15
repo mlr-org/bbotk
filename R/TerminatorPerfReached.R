@@ -21,7 +21,7 @@
 #' @export
 #' @examples
 #' TerminatorPerfReached$new()
-#' term("perf_reached")
+#' trm("perf_reached")
 TerminatorPerfReached = R6Class("TerminatorPerfReached",
   inherit = Terminator,
   public = list(

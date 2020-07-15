@@ -48,7 +48,7 @@
 #'   codomain = codomain)
 #'
 #' # We use the internal termination criterion xtol_rel
-#' terminator = term("none")
+#' terminator = trm("none")
 #' instance = OptimInstanceSingleCrit$new(objective = objective,
 #'   search_space = search_space,
 #'   terminator = terminator)

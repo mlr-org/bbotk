@@ -20,7 +20,7 @@
 #' @export
 #' @examples
 #' TerminatorEvals$new()
-#' term("evals", n_evals = 5)
+#' trm("evals", n_evals = 5)
 TerminatorEvals = R6Class("TerminatorEvals",
   inherit = Terminator,
   public = list(

@@ -11,16 +11,16 @@
 #' packages.
 #'
 #' For a more convenient way to retrieve and construct terminator, see
-#' [term()]/[terms()].
+#' [trm()]/[trms()].
 #'
 #' @section Methods:
 #' See [mlr3misc::Dictionary].
 #'
 #' @family Terminator
 #' @seealso
-#' Sugar functions: [term()], [terms()]
+#' Sugar functions: [trm()], [trms()]
 #' @export
 #' @examples
-#' term("evals", n_evals = 10)
+#' trm("evals", n_evals = 10)
 mlr_terminators = R6Class("DictionaryTerminator", inherit = Dictionary,
   cloneable = FALSE)$new()

@@ -89,7 +89,7 @@ MAKE_INST_2D_2D = function(terminator) {
 }
 
 test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_evals) {
-  terminator = term("evals", n_evals = term_evals)
+  terminator = trm("evals", n_evals = term_evals)
 
   if (n_dim == 1) {
     search_space =  ParamSet$new(list(

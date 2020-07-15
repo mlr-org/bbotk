@@ -64,10 +64,12 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @description
-    #' Performs the optimization and writes optimization result into [OptimInstance].
+    #' Performs the optimization and writes optimization result into
+    #' [OptimInstance]. The optimization result is returned but the complete
+    #' optimization path is stored in [Archive] of [OptimInstance].
     #'
     #' @param inst ([OptimInstance]).
-    #' @return `NULL`.
+    #' @return [data.table::data.table].
     optimize = function(inst) {
       optimize_default(inst, self, private)
     }

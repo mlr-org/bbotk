@@ -24,7 +24,7 @@
 #' @export
 #' @examples
 #' TerminatorStagnation$new()
-#' term("stagnation", iters = 5, threshold = 1e-5)
+#' trm("stagnation", iters = 5, threshold = 1e-5)
 TerminatorStagnation = R6Class("TerminatorStagnation",
   inherit = Terminator,
   public = list(

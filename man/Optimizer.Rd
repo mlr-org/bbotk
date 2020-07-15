@@ -85,7 +85,9 @@ Print method.
 \if{html}{\out{<a id="method-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-optimize}{}}}
 \subsection{Method \code{optimize()}}{
-Performs the optimization and writes optimization result into \link{OptimInstance}.
+Performs the optimization and writes optimization result into
+\link{OptimInstance}. The optimization result is returned but the complete
+optimization path is stored in \link{Archive} of \link{OptimInstance}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize(inst)}\if{html}{\out{</div>}}
 }
@@ -98,7 +100,7 @@ Performs the optimization and writes optimization result into \link{OptimInstanc
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{NULL}.
+\link[data.table:data.table]{data.table::data.table}.
 }
 }
 \if{html}{\out{<hr>}}

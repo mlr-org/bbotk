@@ -12,8 +12,8 @@ of the included terminators are positive.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("combo")
-term("combo")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("combo")
+trm("combo")
 }
 }
 
@@ -27,9 +27,9 @@ Terminate iff any included terminator is positive? (not all), default is
 }
 
 \examples{
-term("combo",
-  list(term("clock_time", stop_time = Sys.time() + 60),
-    term("evals", n_evals = 10)), any = FALSE
+trm("combo",
+  list(trm("clock_time", stop_time = Sys.time() + 60),
+    trm("evals", n_evals = 10)), any = FALSE
 )
 }
 \seealso{

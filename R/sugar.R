@@ -16,19 +16,19 @@
 #' [mlr3misc::dictionary_sugar_get()] for more details.
 #'
 #' @return
-#' * [Terminator] for `term()`.
-#' * list of [Terminator] for `terms()`.
+#' * [Terminator] for `trm()`.
+#' * list of [Terminator] for `trms()`.
 #'
 #' @export
 #' @examples
-#' term("evals", n_evals = 10)
-term = function(.key, ...) {
+#' trm("evals", n_evals = 10)
+trm = function(.key, ...) {
   dictionary_sugar(mlr_terminators, .key, ...)
 }
 
-#' @rdname term
+#' @rdname trm
 #' @export
-terms = function(.keys, ...) {
+trms = function(.keys, ...) {
   dictionary_sugar_mget(mlr_terminators, .keys, ...)
 }
 

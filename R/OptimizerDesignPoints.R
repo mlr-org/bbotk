@@ -42,7 +42,7 @@
 #' objective = ObjectiveRFun$new(fun = objective_function,
 #'   domain = domain,
 #'   codomain = codomain)
-#' terminator = term("evals", n_evals = 10)
+#' terminator = trm("evals", n_evals = 10)
 #' instance = OptimInstanceSingleCrit$new(objective = objective,
 #'   search_space = search_space,
 #'   terminator = terminator)

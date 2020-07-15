@@ -85,15 +85,15 @@ In the next step we decide when the optimization should stop.
 We can list all available terminators as follows:
 
 ```{r}
-terms()
+trms()
 ```
 
 The termination should stop, when it takes longer then 10 seconds or when 20 evaluations are reached.
 
 ```{r}
 terminators = list(
-  evals = term("evals", n_evals = 20),
-  run_time = term("run_time")
+  evals = trm("evals", n_evals = 20),
+  run_time = trm("run_time")
 )
 terminators
 ```
@@ -210,7 +210,7 @@ Instead of the domain of the `Objective` we now use our constructed `search_spac
 inst = OptimInstanceSingleCrit$new(
   objective = obj,
   search_space = search_space,
-  terminator = term("evals", n_evals = 30)
+  terminator = trm("evals", n_evals = 30)
 )
 optimizer = opt("gensa")
 lg = lgr::get_logger("bbotk")$set_threshold("warn") # turn off console output
@@ -238,7 +238,7 @@ If you want to evaluate the function outside of the optimization but have the re
 library(data.table)
 
 inst$is_terminated = FALSE
-inst$terminator = term("none")
+inst$terminator = trm("none")
 xvals = data.table(h = c(0.6666, 0.6667), w = c(0.6666, 0.6667))
 inst$eval_batch(xdt = xvals)
 tail(inst$archive$data())

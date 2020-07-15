@@ -1,10 +1,10 @@
 context("TerminatorCombo")
 
 test_that("TerminatorCombo works", {
-  trms = terms(c("evals", "evals"))
-  trms[[1]]$param_set$values$n_evals = 3L
-  trms[[2]]$param_set$values$n_evals = 6L
-  terminator = TerminatorCombo$new(trms)
+  terminators = trms(c("evals", "evals"))
+  terminators[[1]]$param_set$values$n_evals = 3L
+  terminators[[2]]$param_set$values$n_evals = 6L
+  terminator = TerminatorCombo$new(terminators)
   expect_output(print(terminator), "TerminatorEvals")
   for (mode in c("any", "all")) {
     terminator$param_set$values$any = (mode == "any")

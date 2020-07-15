@@ -24,7 +24,7 @@
 #' @export
 #' @examples
 #' TerminatorStagnationBatch$new()
-#' term("stagnation_batch", n = 1, threshold = 1e-5)
+#' trm("stagnation_batch", n = 1, threshold = 1e-5)
 TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
   inherit = Terminator,
   public = list(

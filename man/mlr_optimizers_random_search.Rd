@@ -4,6 +4,9 @@
 \alias{mlr_optimizers_random_search}
 \alias{OptimizerRandomSearch}
 \title{Optimization via Random Search}
+\source{
+\cite{bbotk}{bergstra_2012}
+}
 \description{
 \code{OptimizerRandomSearch} class that implements a simple Random Search.
 
@@ -44,7 +47,7 @@ objective_function = function(xs) {
 objective = ObjectiveRFun$new(fun = objective_function,
                               domain = domain,
                               codomain = codomain)
-terminator = term("evals", n_evals = 10)
+terminator = trm("evals", n_evals = 10)
 instance = OptimInstanceSingleCrit$new(objective = objective,
                              search_space = search_space,
                              terminator = terminator)

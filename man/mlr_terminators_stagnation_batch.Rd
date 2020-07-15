@@ -12,8 +12,8 @@ does not improve more than \code{threshold} over the last \code{n} batches.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("stagnation")
-term("stagnation")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("stagnation")
+trm("stagnation")
 }
 }
 
@@ -31,7 +31,7 @@ default is \code{0}.}
 
 \examples{
 TerminatorStagnationBatch$new()
-term("stagnation_batch", n = 1, threshold = 1e-5)
+trm("stagnation_batch", n = 1, threshold = 1e-5)
 }
 \seealso{
 Other Terminator: 

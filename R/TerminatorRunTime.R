@@ -19,7 +19,7 @@
 #' @family Terminator
 #' @export
 #' @examples
-#' term("run_time", secs = 1800)
+#' trm("run_time", secs = 1800)
 TerminatorRunTime = R6Class("TerminatorRunTime",
   inherit = Terminator,
   public = list(
