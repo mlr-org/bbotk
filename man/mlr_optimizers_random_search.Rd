@@ -4,6 +4,9 @@
 \alias{mlr_optimizers_random_search}
 \alias{OptimizerRandomSearch}
 \title{Optimization via Random Search}
+\source{
+\cite{bbotk}{bergstra_2012}
+}
 \description{
 \code{OptimizerRandomSearch} class that implements a simple Random Search.
 
