@@ -220,7 +220,7 @@ defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>paradox</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
 
@@ -247,14 +247,25 @@ defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
 <span class='no'>optimizer</span> <span class='kw'>=</span> <span class='fu'><a href='opt.html'>opt</a></span>(<span class='st'>"nloptr"</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>algorithm</span> <span class='kw'>=</span> <span class='st'>"NLOPT_LN_BOBYQA"</span>)
 
 <span class='co'># Modifies the instance by reference</span>
-<span class='no'>optimizer</span>$<span class='fu'><a href='https://rdrr.io/r/stats/optimize.html'>optimize</a></span>(<span class='no'>instance</span>)
-
+<span class='no'>optimizer</span>$<span class='fu'><a href='https://rdrr.io/r/stats/optimize.html'>optimize</a></span>(<span class='no'>instance</span>)</div><div class='output co'>#&gt;    x x_domain y
+#&gt; 1: 0   &lt;list&gt; 0</div><div class='input'>
 <span class='co'># Returns best scoring evaluation</span>
-<span class='no'>instance</span>$<span class='no'>result</span>
-
+<span class='no'>instance</span>$<span class='no'>result</span></div><div class='output co'>#&gt;    x x_domain y
+#&gt; 1: 0   &lt;list&gt; 0</div><div class='input'>
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
-<span class='no'>instance</span>$<span class='no'>archive</span>$<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>()
-}</div></pre>
+<span class='no'>instance</span>$<span class='no'>archive</span>$<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>()</div><div class='output co'>#&gt;          x       y x_domain           timestamp batch_nr
+#&gt;  1:  1e+00 1.0e+00   &lt;list&gt; 2020-07-20 09:33:42        1
+#&gt;  2:  1e+00 1.0e+00   &lt;list&gt; 2020-07-20 09:33:42        2
+#&gt;  3:  1e+00 1.0e+00   &lt;list&gt; 2020-07-20 09:33:42        3
+#&gt;  4:  5e-01 2.5e-01   &lt;list&gt; 2020-07-20 09:33:42        4
+#&gt;  5:  0e+00 0.0e+00   &lt;list&gt; 2020-07-20 09:33:42        5
+#&gt;  6: -5e-02 2.5e-03   &lt;list&gt; 2020-07-20 09:33:42        6
+#&gt;  7:  5e-03 2.5e-05   &lt;list&gt; 2020-07-20 09:33:42        7
+#&gt;  8: -5e-03 2.5e-05   &lt;list&gt; 2020-07-20 09:33:42        8
+#&gt;  9: -5e-04 2.5e-07   &lt;list&gt; 2020-07-20 09:33:42        9
+#&gt; 10:  5e-04 2.5e-07   &lt;list&gt; 2020-07-20 09:33:42       10
+#&gt; 11:  0e+00 0.0e+00   &lt;list&gt; 2020-07-20 09:33:42       11</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
