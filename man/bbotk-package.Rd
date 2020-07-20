@@ -30,4 +30,9 @@ Authors:
   \item Martin Binder \email{martin.binder@mail.com}
 }
 
+Other contributors:
+\itemize{
+  \item Olaf Mersmann \email{olafm@statistik.tu-dortmund.de} [contributor]
+}
+
 }

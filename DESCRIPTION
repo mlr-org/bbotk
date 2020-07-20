@@ -25,7 +25,11 @@ Authors@R:
       person(given = "Martin",
              family = "Binder",
              role = "aut",
-             email = "martin.binder@mail.com"))
+             email = "martin.binder@mail.com"),
+      person(given = "Olaf",
+             family = "Mersmann",
+             role = "ctb",
+             email = "olafm@statistik.tu-dortmund.de"))
 Description: Provides a common framework for optimization of black-box functions
     for other packages, e.g. 'mlr3'. It offers various optimization methods e.g. 
     grid search, random search and generalized simulated annealing. 

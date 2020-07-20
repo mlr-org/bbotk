@@ -34,7 +34,7 @@ defaults. To deactivate these conditions, set them to \code{-1}.
 }
 
 \examples{
-\dontrun{
+\donttest{
 library(paradox)
 library(data.table)
 

@@ -32,7 +32,7 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(paradox)
 #' library(data.table)
 #'
