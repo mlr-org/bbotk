@@ -250,23 +250,23 @@ Maximum number of points to try in a batch.</p></dd>
 <span class='no'>optimizer</span> <span class='kw'>=</span> <span class='fu'><a href='opt.html'>opt</a></span>(<span class='st'>"grid_search"</span>)
 
 <span class='co'># Modifies the instance by reference</span>
-<span class='no'>optimizer</span>$<span class='fu'><a href='https://rdrr.io/r/stats/optimize.html'>optimize</a></span>(<span class='no'>instance</span>)</div><div class='output co'>#&gt;            x x_domain          y
-#&gt; 1: 0.1111111   &lt;list&gt; 0.01234568</div><div class='input'>
+<span class='no'>optimizer</span>$<span class='fu'><a href='https://rdrr.io/r/stats/optimize.html'>optimize</a></span>(<span class='no'>instance</span>)</div><div class='output co'>#&gt;            x  x_domain          y
+#&gt; 1: 0.1111111 &lt;list[1]&gt; 0.01234568</div><div class='input'>
 <span class='co'># Returns best scoring evaluation</span>
-<span class='no'>instance</span>$<span class='no'>result</span></div><div class='output co'>#&gt;            x x_domain          y
-#&gt; 1: 0.1111111   &lt;list&gt; 0.01234568</div><div class='input'>
+<span class='no'>instance</span>$<span class='no'>result</span></div><div class='output co'>#&gt;            x  x_domain          y
+#&gt; 1: 0.1111111 &lt;list[1]&gt; 0.01234568</div><div class='input'>
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
-<span class='no'>instance</span>$<span class='no'>archive</span>$<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>()</div><div class='output co'>#&gt;              x          y x_domain           timestamp batch_nr
-#&gt;  1:  0.1111111 0.01234568   &lt;list&gt; 2020-07-24 04:09:19        1
-#&gt;  2:  1.0000000 1.00000000   &lt;list&gt; 2020-07-24 04:09:19        2
-#&gt;  3:  0.7777778 0.60493827   &lt;list&gt; 2020-07-24 04:09:19        3
-#&gt;  4: -0.1111111 0.01234568   &lt;list&gt; 2020-07-24 04:09:19        4
-#&gt;  5: -0.7777778 0.60493827   &lt;list&gt; 2020-07-24 04:09:19        5
-#&gt;  6: -0.5555556 0.30864198   &lt;list&gt; 2020-07-24 04:09:19        6
-#&gt;  7: -1.0000000 1.00000000   &lt;list&gt; 2020-07-24 04:09:19        7
-#&gt;  8:  0.5555556 0.30864198   &lt;list&gt; 2020-07-24 04:09:19        8
-#&gt;  9:  0.3333333 0.11111111   &lt;list&gt; 2020-07-24 04:09:19        9
-#&gt; 10: -0.3333333 0.11111111   &lt;list&gt; 2020-07-24 04:09:19       10</div></pre>
+<span class='no'>instance</span>$<span class='no'>archive</span>$<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>()</div><div class='output co'>#&gt;              x          y  x_domain           timestamp batch_nr
+#&gt;  1:  0.1111111 0.01234568 &lt;list[1]&gt; 2020-07-25 04:30:34        1
+#&gt;  2:  1.0000000 1.00000000 &lt;list[1]&gt; 2020-07-25 04:30:34        2
+#&gt;  3:  0.7777778 0.60493827 &lt;list[1]&gt; 2020-07-25 04:30:34        3
+#&gt;  4: -0.1111111 0.01234568 &lt;list[1]&gt; 2020-07-25 04:30:34        4
+#&gt;  5: -0.7777778 0.60493827 &lt;list[1]&gt; 2020-07-25 04:30:34        5
+#&gt;  6: -0.5555556 0.30864198 &lt;list[1]&gt; 2020-07-25 04:30:34        6
+#&gt;  7: -1.0000000 1.00000000 &lt;list[1]&gt; 2020-07-25 04:30:34        7
+#&gt;  8:  0.5555556 0.30864198 &lt;list[1]&gt; 2020-07-25 04:30:34        8
+#&gt;  9:  0.3333333 0.11111111 &lt;list[1]&gt; 2020-07-25 04:30:34        9
+#&gt; 10: -0.3333333 0.11111111 &lt;list[1]&gt; 2020-07-25 04:30:34       10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

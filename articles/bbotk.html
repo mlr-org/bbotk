@@ -101,7 +101,7 @@
       <h1 data-toc-skip>bbotk: A brief introduction</h1>
                         <h4 class="author">Jakob Richter</h4>
             
-            <h4 class="date">2020-07-24</h4>
+            <h4 class="date">2020-07-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlr-org/bbotk/blob/master/vignettes/bbotk.Rmd"><code>vignettes/bbotk.Rmd</code></a></small>
       <div class="hidden name"><code>bbotk.Rmd</code></div>
@@ -191,9 +191,9 @@
 <span class="co">#&gt; * Objective: &lt;ObjectiveRFun:function&gt;</span>
 <span class="co">#&gt; * Search Space:</span>
 <span class="co">#&gt; &lt;ParamSet&gt;</span>
-<span class="co">#&gt;    id    class lower upper levels     default value</span>
-<span class="co">#&gt; 1: x1 ParamDbl   -10    10        &lt;NoDefault&gt;      </span>
-<span class="co">#&gt; 2: x2 ParamDbl    -5     5        &lt;NoDefault&gt;      </span>
+<span class="co">#&gt;    id    class lower upper levels        default value</span>
+<span class="co">#&gt; 1: x1 ParamDbl   -10    10        &lt;NoDefault[3]&gt;      </span>
+<span class="co">#&gt; 2: x2 ParamDbl    -5     5        &lt;NoDefault[3]&gt;      </span>
 <span class="co">#&gt; * Terminator: &lt;TerminatorCombo&gt;</span>
 <span class="co">#&gt; * Terminated: FALSE</span>
 <span class="co">#&gt; * Archive:</span>
@@ -210,14 +210,14 @@
 <span class="co">#&gt; * Packages: GenSA</span></pre></body></html></div>
 <p>To start the optimization we have to call the <code>Optimizer</code> on the <code>OptimInstance</code>.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">optimizer</span>$<span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimize</a></span>(<span class="no">instance</span>)
-<span class="co">#&gt;    x1 x2 x_domain  y</span>
-<span class="co">#&gt; 1:  2 -3   &lt;list&gt; 10</span></pre></body></html></div>
+<span class="co">#&gt;    x1 x2  x_domain  y</span>
+<span class="co">#&gt; 1:  2 -3 &lt;list[2]&gt; 10</span></pre></body></html></div>
 <p>Note, that we did not specify the termination inside the optimizer. <code>bbotk</code> generally sets the termination of the optimizers to never terminate and instead breaks the code internally as soon as a termination criterion is fulfilled.</p>
 <p>The results can be queried from the <code>OptimInstance</code>.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># result as a data.table</span>
 <span class="no">instance</span>$<span class="no">result</span>
-<span class="co">#&gt;    x1 x2 x_domain  y</span>
-<span class="co">#&gt; 1:  2 -3   &lt;list&gt; 10</span>
+<span class="co">#&gt;    x1 x2  x_domain  y</span>
+<span class="co">#&gt; 1:  2 -3 &lt;list[2]&gt; 10</span>
 <span class="co"># result as a list that can be passed to the Objective</span>
 <span class="no">instance</span>$<span class="no">result_x_domain</span>
 <span class="co">#&gt; $x1</span>
@@ -231,27 +231,27 @@
 <span class="co">#&gt; 10</span></pre></body></html></div>
 <p>You can also access the whole history of evaluated points.</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">instance</span>$<span class="no">archive</span>$<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>()
-<span class="co">#&gt;            x1        x2          y x_domain           timestamp batch_nr</span>
-<span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445   &lt;list&gt; 2020-07-24 04:09:23        1</span>
-<span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999   &lt;list&gt; 2020-07-24 04:09:23        2</span>
-<span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907   &lt;list&gt; 2020-07-24 04:09:23        3</span>
-<span class="co">#&gt;  4:  2.045200 -1.519948   7.807403   &lt;list&gt; 2020-07-24 04:09:23        4</span>
-<span class="co">#&gt;  5:  2.045200 -2.064742   9.123250   &lt;list&gt; 2020-07-24 04:09:23        5</span>
-<span class="co">#&gt;  6:  2.045200 -2.064742   9.123250   &lt;list&gt; 2020-07-24 04:09:23        6</span>
-<span class="co">#&gt;  7:  2.045201 -2.064742   9.123250   &lt;list&gt; 2020-07-24 04:09:23        7</span>
-<span class="co">#&gt;  8:  2.045199 -2.064742   9.123250   &lt;list&gt; 2020-07-24 04:09:23        8</span>
-<span class="co">#&gt;  9:  2.045200 -2.064741   9.123248   &lt;list&gt; 2020-07-24 04:09:23        9</span>
-<span class="co">#&gt; 10:  2.045200 -2.064743   9.123252   &lt;list&gt; 2020-07-24 04:09:23       10</span>
-<span class="co">#&gt; 11:  1.954800 -3.935258   9.123250   &lt;list&gt; 2020-07-24 04:09:23       11</span>
-<span class="co">#&gt; 12:  1.954801 -3.935258   9.123250   &lt;list&gt; 2020-07-24 04:09:23       12</span>
-<span class="co">#&gt; 13:  1.954799 -3.935258   9.123250   &lt;list&gt; 2020-07-24 04:09:23       13</span>
-<span class="co">#&gt; 14:  1.954800 -3.935257   9.123252   &lt;list&gt; 2020-07-24 04:09:23       14</span>
-<span class="co">#&gt; 15:  1.954800 -3.935259   9.123248   &lt;list&gt; 2020-07-24 04:09:23       15</span>
-<span class="co">#&gt; 16:  2.000000 -3.000000  10.000000   &lt;list&gt; 2020-07-24 04:09:23       16</span>
-<span class="co">#&gt; 17:  2.000001 -3.000000  10.000000   &lt;list&gt; 2020-07-24 04:09:23       17</span>
-<span class="co">#&gt; 18:  1.999999 -3.000000  10.000000   &lt;list&gt; 2020-07-24 04:09:23       18</span>
-<span class="co">#&gt; 19:  2.000000 -2.999999  10.000000   &lt;list&gt; 2020-07-24 04:09:23       19</span>
-<span class="co">#&gt; 20:  2.000000 -3.000001  10.000000   &lt;list&gt; 2020-07-24 04:09:23       20</span></pre></body></html></div>
+<span class="co">#&gt;            x1        x2          y  x_domain           timestamp batch_nr</span>
+<span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 &lt;list[2]&gt; 2020-07-25 04:30:39        1</span>
+<span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 &lt;list[2]&gt; 2020-07-25 04:30:39        2</span>
+<span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 &lt;list[2]&gt; 2020-07-25 04:30:39        3</span>
+<span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 &lt;list[2]&gt; 2020-07-25 04:30:39        4</span>
+<span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 &lt;list[2]&gt; 2020-07-25 04:30:39        5</span>
+<span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 &lt;list[2]&gt; 2020-07-25 04:30:39        6</span>
+<span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 &lt;list[2]&gt; 2020-07-25 04:30:39        7</span>
+<span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 &lt;list[2]&gt; 2020-07-25 04:30:39        8</span>
+<span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 &lt;list[2]&gt; 2020-07-25 04:30:39        9</span>
+<span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 &lt;list[2]&gt; 2020-07-25 04:30:39       10</span>
+<span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 &lt;list[2]&gt; 2020-07-25 04:30:39       11</span>
+<span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 &lt;list[2]&gt; 2020-07-25 04:30:39       12</span>
+<span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 &lt;list[2]&gt; 2020-07-25 04:30:39       13</span>
+<span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 &lt;list[2]&gt; 2020-07-25 04:30:39       14</span>
+<span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 &lt;list[2]&gt; 2020-07-25 04:30:39       15</span>
+<span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 &lt;list[2]&gt; 2020-07-25 04:30:39       16</span>
+<span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 &lt;list[2]&gt; 2020-07-25 04:30:39       17</span>
+<span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 &lt;list[2]&gt; 2020-07-25 04:30:39       18</span>
+<span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 &lt;list[2]&gt; 2020-07-25 04:30:39       19</span>
+<span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 &lt;list[2]&gt; 2020-07-25 04:30:39       20</span></pre></body></html></div>
 <div id="search-space-transformations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#search-space-transformations" class="anchor"></a>Search Space Transformations</h3>
@@ -296,8 +296,8 @@
 <span class="no">optimizer</span> <span class="kw">=</span> <span class="fu"><a href="../reference/opt.html">opt</a></span>(<span class="st">"gensa"</span>)
 <span class="no">lg</span> <span class="kw">=</span> <span class="kw pkg">lgr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/lgr/man/get_logger.html">get_logger</a></span>(<span class="st">"bbotk"</span>)$<span class="fu">set_threshold</span>(<span class="st">"warn"</span>) <span class="co"># turn off console output</span>
 <span class="no">optimizer</span>$<span class="fu"><a href="https://rdrr.io/r/stats/optimize.html">optimize</a></span>(<span class="no">inst</span>)
-<span class="co">#&gt;            h         w x_domain          y</span>
-<span class="co">#&gt; 1: 0.6647984 0.6671394   &lt;list&gt; -0.0370368</span>
+<span class="co">#&gt;            h         w  x_domain          y</span>
+<span class="co">#&gt; 1: 0.6647984 0.6671394 &lt;list[3]&gt; -0.0370368</span>
 <span class="no">lg</span> <span class="kw">=</span> <span class="kw pkg">lgr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/lgr/man/get_logger.html">get_logger</a></span>(<span class="st">"bbotk"</span>)$<span class="fu">set_threshold</span>(<span class="st">"info"</span>) <span class="co"># turn on console output</span></pre></body></html></div>
 <p>The optimizer only saw the search space during optimization and returns the following result:</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">inst</span>$<span class="no">result_x_search_space</span>
@@ -326,23 +326,23 @@
 <span class="no">inst</span>$<span class="no">terminator</span> <span class="kw">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span>(<span class="st">"none"</span>)
 <span class="no">xvals</span> <span class="kw">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html">data.table</a></span>(<span class="kw">h</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.6666</span>, <span class="fl">0.6667</span>), <span class="kw">w</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.6666</span>, <span class="fl">0.6667</span>))
 <span class="no">inst</span>$<span class="fu">eval_batch</span>(<span class="kw">xdt</span> <span class="kw">=</span> <span class="no">xvals</span>)
-<span class="co">#&gt; INFO  [04:09:24.302] Evaluating 2 configuration(s) </span>
-<span class="co">#&gt; INFO  [04:09:24.340] Result of batch 31: </span>
-<span class="co">#&gt; INFO  [04:09:24.352]       h      w           y </span>
-<span class="co">#&gt; INFO  [04:09:24.352]  0.6666 0.6666 -0.03703704 </span>
-<span class="co">#&gt; INFO  [04:09:24.352]  0.6667 0.6667 -0.03703704</span>
+<span class="co">#&gt; INFO  [04:30:39.832] Evaluating 2 configuration(s) </span>
+<span class="co">#&gt; INFO  [04:30:39.870] Result of batch 31: </span>
+<span class="co">#&gt; INFO  [04:30:39.882]       h      w           y </span>
+<span class="co">#&gt; INFO  [04:30:39.882]  0.6666 0.6666 -0.03703704 </span>
+<span class="co">#&gt; INFO  [04:30:39.882]  0.6667 0.6667 -0.03703704</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="no">inst</span>$<span class="no">archive</span>$<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>())
-<span class="co">#&gt;            h         w           y x_domain           timestamp batch_nr</span>
-<span class="co">#&gt; 1: 0.6647984 0.6671394 -0.03703680   &lt;list&gt; 2020-07-24 04:09:24       27</span>
-<span class="co">#&gt; 2: 0.6647964 0.6671394 -0.03703680   &lt;list&gt; 2020-07-24 04:09:24       28</span>
-<span class="co">#&gt; 3: 0.6647974 0.6671404 -0.03703680   &lt;list&gt; 2020-07-24 04:09:24       29</span>
-<span class="co">#&gt; 4: 0.6647974 0.6671384 -0.03703680   &lt;list&gt; 2020-07-24 04:09:24       30</span>
-<span class="co">#&gt; 5: 0.6666000 0.6666000 -0.03703704   &lt;list&gt; 2020-07-24 04:09:24       31</span>
-<span class="co">#&gt; 6: 0.6667000 0.6667000 -0.03703704   &lt;list&gt; 2020-07-24 04:09:24       31</span></pre></body></html></div>
+<span class="co">#&gt;            h         w           y  x_domain           timestamp batch_nr</span>
+<span class="co">#&gt; 1: 0.6647984 0.6671394 -0.03703680 &lt;list[3]&gt; 2020-07-25 04:30:39       27</span>
+<span class="co">#&gt; 2: 0.6647964 0.6671394 -0.03703680 &lt;list[3]&gt; 2020-07-25 04:30:39       28</span>
+<span class="co">#&gt; 3: 0.6647974 0.6671404 -0.03703680 &lt;list[3]&gt; 2020-07-25 04:30:39       29</span>
+<span class="co">#&gt; 4: 0.6647974 0.6671384 -0.03703680 &lt;list[3]&gt; 2020-07-25 04:30:39       30</span>
+<span class="co">#&gt; 5: 0.6666000 0.6666000 -0.03703704 &lt;list[3]&gt; 2020-07-25 04:30:39       31</span>
+<span class="co">#&gt; 6: 0.6667000 0.6667000 -0.03703704 &lt;list[3]&gt; 2020-07-25 04:30:39       31</span></pre></body></html></div>
 <p>However, this does not update the result. You could set the result by calling <code>inst$assign_result()</code> but this should be handled by the optimizer. Another way to get the best point is the following:</p>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">inst</span>$<span class="no">archive</span>$<span class="fu">best</span>()
-<span class="co">#&gt;         h      w           y x_domain           timestamp batch_nr</span>
-<span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704   &lt;list&gt; 2020-07-24 04:09:24       31</span></pre></body></html></div>
+<span class="co">#&gt;         h      w           y  x_domain           timestamp batch_nr</span>
+<span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2020-07-25 04:30:39       31</span></pre></body></html></div>
 <p>Note, that this method just looks for the best outcome and returns the according row from the archive. For stochastic optimization problems this is overly optimistic and leads to biased results. For this reason the optimizer can use advanced methods to determine the result and set it itself.</p>
 </div>
 </div>
