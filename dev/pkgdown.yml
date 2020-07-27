@@ -1,0 +1,10 @@
+pandoc: 2.7.3
+pkgdown: 1.5.1
+pkgdown_sha: ~
+articles:
+  bbotk: bbotk.html
+last_built: 2020-07-27T07:54Z
+urls:
+  reference: https://bbotk.mlr-org.com/reference
+  article: https://bbotk.mlr-org.com/articles
+
