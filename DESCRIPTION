@@ -57,7 +57,7 @@ VignetteBuilder:
 RdMacros:
     mlr3misc
 Remotes:
-    mlr-org/paradox@leanify
+    mlr-org/paradox@leanify,
     mlr-org/mlr3misc
 Encoding: UTF-8
 Language: en-US
