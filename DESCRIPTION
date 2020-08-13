@@ -42,7 +42,7 @@ Imports:
     checkmate (>= 2.0.0),
     data.table,
     lgr,
-    mlr3misc (>= 0.3.0),
+    mlr3misc (>= 0.5.0),
     paradox (>= 0.3),
     R6
 Suggests:
@@ -57,7 +57,6 @@ VignetteBuilder:
 RdMacros:
     mlr3misc
 Remotes:
-    mlr-org/paradox,
     mlr-org/mlr3misc
 Encoding: UTF-8
 Language: en-US
