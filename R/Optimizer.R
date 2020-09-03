@@ -43,6 +43,8 @@ Optimizer = R6Class("Optimizer",
       self$properties = assert_subset(properties,
         bbotk_reflections$optimizer_properties, empty.ok = FALSE)
       self$packages = assert_set(packages)
+
+      check_packages_installed(self$packages, msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self)))
     },
 
     #' @description

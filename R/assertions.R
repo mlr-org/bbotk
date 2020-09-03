@@ -76,7 +76,7 @@ assert_optimizer = function(optimizer) {
 assert_instance_properties = function(optimizer, inst) {
   assert_r6(inst, "OptimInstance")
 
-  require_namespaces(optimizer$packages, "Packages for the Optimization")
+  require_namespaces(optimizer$packages)
 
   # check multi or single-crit
   if ("multi-crit" %nin% optimizer$properties && inst$objective$ydim > 1) {
