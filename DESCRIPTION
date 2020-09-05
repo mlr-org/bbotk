@@ -30,9 +30,10 @@ Authors@R:
              family = "Mersmann",
              role = "ctb",
              email = "olafm@statistik.tu-dortmund.de"))
-Description: Provides a common framework for optimization of black-box functions
-    for other packages, e.g. 'mlr3'. It offers various optimization methods e.g.
-    grid search, random search and generalized simulated annealing.
+Description: Provides a common framework for optimization of
+    black-box functions for other packages, e.g. 'mlr3'. It offers various
+    optimization methods e.g.  grid search, random search and generalized
+    simulated annealing.
 License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
@@ -42,6 +43,7 @@ Imports:
     checkmate (>= 2.0.0),
     data.table,
     lgr,
+    methods,
     mlr3misc (>= 0.5.0),
     paradox (>= 0.3),
     R6

@@ -6,9 +6,10 @@
 \alias{bbotk-package}
 \title{bbotk: Black-Box Optimization Toolkit}
 \description{
-Provides a common framework for optimization of black-box functions
-    for other packages, e.g. 'mlr3'. It offers various optimization methods e.g.
-    grid search, random search and generalized simulated annealing.
+Provides a common framework for optimization of
+    black-box functions for other packages, e.g. 'mlr3'. It offers various
+    optimization methods e.g.  grid search, random search and generalized
+    simulated annealing.
 }
 \seealso{
 Useful links:
