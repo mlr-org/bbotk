@@ -89,7 +89,7 @@ Archive = R6Class("Archive",
       } else {
         assert_integerish(m, lower = 1L, upper = self$n_batch, coerce = TRUE)
       }
-
+      batch_nr = NULL # CRAN check
       tab = private$.data[batch_nr %in% m]
 
       if (self$codomain$length == 1L) {
