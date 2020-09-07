@@ -92,14 +92,13 @@ Archive = R6Class("Archive",
       batch_nr = NULL # CRAN check
       tab = private$.data[batch_nr %in% m]
 
+      max_to_min = mult_max_to_min(self$codomain)
       if (self$codomain$length == 1L) {
-        order = if (self$codomain$tags[1L] == "minimize") 1L else -1L
-        setorderv(tab, self$codomain$ids(), order = order, na.last = TRUE)
+        setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
         res = tab[1, ]
       } else {
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-        minimize = map_lgl(self$codomain$tags, has_element, "minimize")
-        ymat = ifelse(minimize, 1L, -1L) * ymat
+        ymat = max_to_min * ymat
         res = tab[!is_dominated(ymat)]
       }
 
