@@ -237,6 +237,31 @@ supplied by the user.</p><h3>Usage</h3>
 
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>paradox</span>)
+<span class='co'># Define objective function</span>
+<span class='no'>fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>xs</span>) {
+  - (<span class='no'>xs</span><span class='kw'>[[</span><span class='fl'>1</span>]] - <span class='fl'>2</span>)^<span class='fl'>2</span> - (<span class='no'>xs</span><span class='kw'>[[</span><span class='fl'>2</span>]] + <span class='fl'>3</span>)^<span class='fl'>2</span> + <span class='fl'>10</span>
+}
+
+<span class='co'># Set domain</span>
+<span class='no'>domain</span> <span class='kw'>=</span> <span class='no'>ParamSet</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+  <span class='no'>ParamDbl</span>$<span class='fu'>new</span>(<span class='st'>"x1"</span>, -<span class='fl'>10</span>, <span class='fl'>10</span>),
+  <span class='no'>ParamDbl</span>$<span class='fu'>new</span>(<span class='st'>"x2"</span>, -<span class='fl'>5</span>, <span class='fl'>5</span>)
+))
+
+<span class='co'># Set codomain</span>
+<span class='no'>codomain</span> <span class='kw'>=</span> <span class='no'>ParamSet</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+  <span class='no'>ParamDbl</span>$<span class='fu'>new</span>(<span class='st'>"y"</span>, <span class='kw'>tags</span> <span class='kw'>=</span> <span class='st'>"maximize"</span>)
+))
+
+<span class='co'># Create Objective object</span>
+<span class='no'>obfun</span> <span class='kw'>=</span> <span class='no'>ObjectiveRFun</span>$<span class='fu'>new</span>(
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>fun</span>,
+  <span class='kw'>domain</span> <span class='kw'>=</span> <span class='no'>domain</span>,
+  <span class='kw'>codomain</span> <span class='kw'>=</span> <span class='no'>codomain</span>,
+  <span class='kw'>properties</span> <span class='kw'>=</span> <span class='st'>"deterministic"</span>
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
