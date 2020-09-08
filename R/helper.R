@@ -101,3 +101,18 @@ assign_result_default = function(inst) {
 
   invisible(NULL)
 }
+
+#' @title Multiplication vector for output
+#' @description
+#' Returns a numeric vector with values -1 and 1.
+#' If you multiply this vector with an outcome of `codomain` it will be turned into a minimization problem.
+#'
+#' @param codomain [ParamSet]
+#'
+#' @return 'numeric()'
+#'
+#' @keywords internal
+#' @export
+mult_max_to_min = function(codomain) {
+  ifelse(map_lgl(codomain$tags, has_element, "minimize"), 1, -1)
+}

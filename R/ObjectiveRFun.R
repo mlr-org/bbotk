@@ -3,6 +3,32 @@
 #' @description
 #' Objective interface where the user can pass a custom R function that expects a list as input.
 #'
+#' @examples
+#' library(paradox)
+#' # Define objective function
+#' fun = function(xs) {
+#'   - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+#' }
+#'
+#' # Set domain
+#' domain = ParamSet$new(list(
+#'   ParamDbl$new("x1", -10, 10),
+#'   ParamDbl$new("x2", -5, 5)
+#' ))
+#'
+#' # Set codomain
+#' codomain = ParamSet$new(list(
+#'   ParamDbl$new("y", tags = "maximize")
+#' ))
+#'
+#' # Create Objective object
+#' obfun = ObjectiveRFun$new(
+#'   fun = fun,
+#'   domain = domain,
+#'   codomain = codomain,
+#'   properties = "deterministic"
+#' )
+#'
 #' @template param_domain
 #' @template param_codomain
 #' @export

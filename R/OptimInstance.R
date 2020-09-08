@@ -51,8 +51,7 @@ OptimInstance = R6Class("OptimInstance",
         private$.objective_function = objective_error
       } else {
         private$.objective_function = objective_function
-        private$.objective_multiplicator =
-          ifelse(self$objective$codomain$tags == "minimize", 1, -1)
+        private$.objective_multiplicator = mult_max_to_min(self$objective$codomain)
       }
     },
 
