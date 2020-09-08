@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^LICENSE$
 ^tic\.R$
 ^appveyor\.yml$
@@ -16,3 +18,7 @@
 ^\.vscode$
 ^\.ccache$
 ^\.github$
+^doc$
+^Meta$
+^cran-comments\.md$
+^CRAN-RELEASE$
