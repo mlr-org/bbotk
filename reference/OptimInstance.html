@@ -162,7 +162,7 @@ consisting of x values in the <em>search space</em>, (transformed) x values in t
 user can access the results with active bindings (see below).</p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
-    <p><div class="r6-fields"></p><dl'>
+    <p><div class="r6-fields"></p><dl>
 <dt><code>objective</code></dt><dd><p>(<a href='Objective.html'>Objective</a>).</p></dd>
 
 <dt><code>search_space</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>).</p></dd>
@@ -176,7 +176,7 @@ user can access the results with active bindings (see below).</p>
 </dl><p></div></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
-    <p><div class="r6-active-bindings"></p><dl'>
+    <p><div class="r6-active-bindings"></p><dl>
 <dt><code>result</code></dt><dd><p>(<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>)<br />
 Get result</p></dd>
 
@@ -193,7 +193,7 @@ Optimal outcome.</p></dd>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>OptimInstance$new()</code></a></p></li>
@@ -205,12 +205,12 @@ Optimal outcome.</p></dd>
 <li><p><a href='#method-clone'><code>OptimInstance$clone()</code></a></p></li>
 </ul>
 <p><hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>OptimInstance</span>$<span class='fu'>new</span>(<span class='no'>objective</span>, <span class='kw'>search_space</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>terminator</span>)</pre><p></div></p>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>OptimInstance</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>objective</span>, search_space = <span class='kw'>NULL</span>, <span class='kw'>terminator</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>objective</code></dt><dd><p>(<a href='Objective.html'>Objective</a>).</p></dd>
 
 <dt><code>search_space</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
@@ -222,32 +222,32 @@ Depending on the context, this value defaults to the domain of the objective.</p
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-format"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/format.html'>format()</a></code></h3>
-<p>Helper for print outputs.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>OptimInstance</span>$<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>()</pre><p></div></p>
+<a id="method-format"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/format.html'>format()</a></code></h3>
+<p>Helper for print outputs.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>OptimInstance</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>()</pre><p></div></p>
 
 <p><hr>
-<a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Printer.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>OptimInstance</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>...</span>)</pre><p></div></p>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Printer.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>OptimInstance</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>...</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>(ignored).</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-eval_batch"></a></p><h3>Method <code>eval_batch()</code></h3>
+<a id="method-eval_batch"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>eval_batch()</code></h3>
 <p>Evaluates all input values in <code>xdt</code> by calling
 the <a href='Objective.html'>Objective</a>. Applies possible transformations to the input values
 and writes the results to the <a href='Archive.html'>Archive</a>.</p>
 <p>Before each batch-evaluation, the <a href='Terminator.html'>Terminator</a> is checked, and if it
 is positive, an exception of class <code>terminated_error</code> is raised. This
-function should be internally called by the <a href='Optimizer.html'>Optimizer</a>.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>OptimInstance</span>$<span class='fu'>eval_batch</span>(<span class='no'>xdt</span>)</pre><p></div></p>
+function should be internally called by the <a href='Optimizer.html'>Optimizer</a>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>OptimInstance</span><span class='op'>$</span><span class='fu'>eval_batch</span>(<span class='kw'>xdt</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>xdt</code></dt><dd><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
 x values as <code>data.table()</code> with one point per row. Contains the value in
 the <em>search space</em> of the OptimInstance object. Can contain additional
@@ -255,13 +255,13 @@ columns for extra information.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-assign_result"></a></p><h3>Method <code>assign_result()</code></h3>
+<a id="method-assign_result"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>assign_result()</code></h3>
 <p>The <a href='Optimizer.html'>Optimizer</a> object writes the best found point
-and estimated performance value here. For internal use.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>OptimInstance</span>$<span class='fu'>assign_result</span>(<span class='no'>xdt</span>, <span class='no'>y</span>)</pre><p></div></p>
+and estimated performance value here. For internal use.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>OptimInstance</span><span class='op'>$</span><span class='fu'>assign_result</span>(<span class='kw'>xdt</span>, <span class='kw'>y</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>xdt</code></dt><dd><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
 x values as <code>data.table()</code> with one row. Contains the value in the <em>search
 space</em> of the OptimInstance object. Can contain additional columns for
@@ -272,30 +272,30 @@ Optimal outcome.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-objective_function"></a></p><h3>Method <code>objective_function()</code></h3>
+<a id="method-objective_function"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>objective_function()</code></h3>
 <p>Evaluates (untransformed) points of only numeric values. Returns a
 numeric scalar for single-crit or a numeric vector for multi-crit. The
 return value(s) are negated if the measure is maximized. Internally,
 <code>$eval_batch()</code> is called with a single row. This function serves as a
 objective function for optimizers of numeric spaces - which should always
-be minimized.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>OptimInstance</span>$<span class='fu'>objective_function</span>(<span class='no'>x</span>)</pre><p></div></p>
+be minimized.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>OptimInstance</span><span class='op'>$</span><span class='fu'>objective_function</span>(<span class='kw'>x</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>x</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code>)<br />
 Untransformed points.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Objective value as <code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>, negated for maximization problems.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>OptimInstance</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>OptimInstance</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -317,7 +317,7 @@ Untransformed points.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
