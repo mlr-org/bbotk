@@ -95,6 +95,7 @@ OptimInstance = R6Class("OptimInstance",
     #' the *search space* of the [OptimInstance] object. Can contain additional
     #' columns for extra information.
     eval_batch = function(xdt) {
+      if(!is.null(self$on_eval_begin)) self$on_eval_begin(self)
       if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
         self$is_terminated = TRUE
         stop(terminated_error(self))
@@ -106,6 +107,7 @@ OptimInstance = R6Class("OptimInstance",
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      if(!is.null(self$on_eval_end)) self$on_eval_end(self)
       return(invisible(ydt))
     },
 
@@ -163,6 +165,28 @@ OptimInstance = R6Class("OptimInstance",
     #' Optimal outcome.
     result_y = function() {
       unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
+    },
+
+    #' @field on_eval_begin (`function(inst)`)\cr
+    #' Callback function called at the beginning of `$eval_batch`.
+    on_eval_begin = function(f) {
+      if(missing(f)) {
+        private$.on_eval_begin
+      } else {
+        assert_function(f, args = "inst")
+        private$.on_eval_begin = f
+      }
+    },
+
+    #' @field on_eval_end (`function(inst)`)\cr
+    #' Callback function called at the end of `$eval_batch`.
+    on_eval_end = function(f) {
+      if(missing(f)) {
+        private$.on_eval_end
+      } else {
+        assert_function(f, args = "inst")
+        private$.on_eval_end = f
+      }
     }
   ),
 
@@ -171,7 +195,11 @@ OptimInstance = R6Class("OptimInstance",
 
     .objective_function = NULL,
 
-    .objective_multiplicator = NULL
+    .objective_multiplicator = NULL,
+
+    .on_eval_begin = NULL,
+
+    .on_eval_end = NULL
   )
 )
 

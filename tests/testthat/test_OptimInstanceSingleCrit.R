@@ -22,8 +22,8 @@ test_that("OptimInstanceSingleCrit", {
   expect_identical(inst$archive$n_evals, 3L)
   expect_identical(inst$archive$n_batch, 1L)
   expect_null(inst$result)
-  inst$assign_result(xdt = xdt[2,], y = c(y = -10))
-  expect_equal(inst$result, cbind(xdt[2,], x_domain = list(list(x1 = 0, x2 = 0)), y = -10))
+  inst$assign_result(xdt = xdt[2, ], y = c(y = -10))
+  expect_equal(inst$result, cbind(xdt[2, ], x_domain = list(list(x1 = 0, x2 = 0)), y = -10))
 
   inst = MAKE_INST_2D(20L)
   optimizer = opt("random_search")
@@ -71,7 +71,7 @@ test_that("OptimInstance works with extras output", {
   fun_extra = function(xs) {
     y = sum(as.numeric(xs)^2)
     res = list(y = y, extra1 = runif(1), extra2 = list(a = runif(1), b = Sys.time()))
-    if (y > 0.5) { #sometimes add extras
+    if (y > 0.5) { # sometimes add extras
       res$extra3 = -y
     }
     return(res)
@@ -106,7 +106,8 @@ test_that("objective_function works", {
   y = inst$objective_function(1)
   expect_equal(y, c(y = -1))
 
-  z = optimize(inst$objective_function, lower = inst$search_space$lower,
+  z = optimize(inst$objective_function,
+    lower = inst$search_space$lower,
     upper = inst$search_space$upper)
   expect_list(z, any.missing = FALSE, names = "named", len = 2L)
 
@@ -124,7 +125,45 @@ test_that("search_space is optional", {
 })
 
 test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
-  expect_error(OptimInstanceSingleCrit$new(objective = OBJ_2D_2D,
+  expect_error(OptimInstanceSingleCrit$new(
+    objective = OBJ_2D_2D,
     terminator = trm("none")), "Codomain > 1")
 })
 
+test_that("on_eval_begin works", {
+  terminator = trm("evals", n_evals = 1)
+  inst = MAKE_INST_1D(terminator = terminator)
+
+  inst$on_eval_begin = function(inst) {
+    inst$objective$domain$params$x$upper = 2
+  }
+  inst$eval_batch(data.table(x = 1))
+
+  expect_equal(inst$objective$domain$params$x$upper, 2)
+
+  expect_error({
+    inst$on_eval_begin = function(x) {
+    }
+  },
+  regexp = "Assertion on 'f' failed: Must have formal arguments: inst",
+  fixed = TRUE)
+})
+
+test_that("on_eval_end works", {
+  terminator = trm("evals", n_evals = 1)
+  inst = MAKE_INST_1D(terminator = terminator)
+
+  inst$on_eval_end = function(inst) {
+    inst$objective$domain$params$x$upper = 2
+  }
+  inst$eval_batch(data.table(x = 1))
+
+  expect_equal(inst$objective$domain$params$x$upper, 2)
+
+  expect_error({
+    inst$on_eval_end = function(x) {
+    }
+  },
+  regexp = "Assertion on 'f' failed: Must have formal arguments: inst",
+  fixed = TRUE)
+})

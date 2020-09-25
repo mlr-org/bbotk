@@ -44,6 +44,12 @@ x part of the result in the \emph{search space}.}
 
 \item{\code{result_y}}{(\code{numeric()})\cr
 Optimal outcome.}
+
+\item{\code{on_eval_begin}}{(\verb{function(inst)})\cr
+Callback function called at the beginning of \verb{$eval_batch}.}
+
+\item{\code{on_eval_end}}{(\verb{function(inst)})\cr
+Callback function called at the end of \verb{$eval_batch}.}
 }
 \if{html}{\out{</div>}}
 }
