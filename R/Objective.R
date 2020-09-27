@@ -106,9 +106,9 @@ Objective = R6Class("Objective",
     #' It may also contain additional columns that will be stored in the archive if
     #' called through the [OptimInstance].
     #' These extra columns are referred to as *extras*.
-    eval_many = function(xss) {
+    eval_many = function(xss, continue_hash) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = private$.eval_many(xss)
+      res = private$.eval_many(xss, continue_hash)
       if (self$check_values) {
         self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       }
