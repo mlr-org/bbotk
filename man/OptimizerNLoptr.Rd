@@ -4,7 +4,9 @@
 \alias{OptimizerNLoptr}
 \title{Optimization via Non-linear Optimization}
 \source{
-\cite{bbotk}{johnson_2014}
+Johnson, G S (2020).
+\dQuote{The NLopt nonlinear-optimization package.}
+\url{https://github.com/stevengj/nlopt}.
 }
 \description{
 \code{OptimizerNLoptr} class that implements non-linear optimization. Calls

@@ -48,7 +48,6 @@ Imports:
     paradox (>= 0.3),
     R6
 Suggests:
-    bibtex,
     GenSA,
     knitr,
     nloptr,
@@ -56,8 +55,6 @@ Suggests:
     testthat
 VignetteBuilder:
     knitr
-RdMacros:
-    mlr3misc
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
@@ -90,6 +87,7 @@ Collate:
     'TerminatorStagnationBatch.R'
     'assertions.R'
     'bbotk_reflections.R'
+    'bibentries.R'
     'helper.R'
     'sugar.R'
     'zzz.R'

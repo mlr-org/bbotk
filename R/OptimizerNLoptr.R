@@ -28,7 +28,7 @@
 #' defaults. To deactivate these conditions, set them to `-1`.
 #'
 #' @source
-#' \cite{bbotk}{johnson_2014}
+#' `r tools::toRd(bibentries["johnson_2014"])`
 #'
 #' @export
 #' @examples
