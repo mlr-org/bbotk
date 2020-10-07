@@ -1,6 +1,7 @@
 # bbotk 0.2.1-9000
 
 * Removed dependency on orphaned package `bibtex`.
+* Improved documentation.
 
 # bbotk 0.2.1
 
