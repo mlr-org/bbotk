@@ -83,7 +83,7 @@ function calls of the Objective." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.1</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -210,8 +210,8 @@ Column names of codomain parameters.</p></dd>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Archive</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>search_space</span>, <span class='kw'>codomain</span>, check_values = <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>search_space</span>, <span class='va'>codomain</span>, check_values <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -233,7 +233,7 @@ Search space that is logged into archive.</p></dd>
 <p><hr>
 <a id="method-add_evals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_evals()</code></h3>
 <p>Adds function evaluations to the archive table.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Archive</span><span class='op'>$</span><span class='fu'>add_evals</span>(<span class='kw'>xdt</span>, <span class='kw'>xss_trafoed</span>, <span class='kw'>ydt</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>add_evals</span><span class='op'>(</span><span class='va'>xdt</span>, <span class='va'>xss_trafoed</span>, <span class='va'>ydt</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -255,7 +255,7 @@ Optimal outcome.</p></dd>
 <p>Returns the best scoring evaluation. For single-crit optimization,
 the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Archive</span><span class='op'>$</span><span class='fu'>best</span>(m = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>best</span><span class='op'>(</span>m <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -269,7 +269,7 @@ Take only batches <code>m</code> into account. Default is all batches.</p></dd>
 <a id="method-data"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/utils/data.html'>data()</a></code></h3>
 <p>Returns a <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> which contains all performed
 <a href='Objective.html'>Objective</a> function calls.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Archive</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(unnest = <span class='kw'>NULL</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>data</span><span class='op'>(</span>unnest <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -283,12 +283,12 @@ Unnested columns are stored in separate columns instead of list-columns.</p></dd
 <p><hr>
 <a id="method-format"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/format.html'>format()</a></code></h3>
 <p>Helper for print outputs.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Archive</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>format</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Printer.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Archive</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -298,12 +298,12 @@ Unnested columns are stored in separate columns instead of list-columns.</p></dd
 <p><hr>
 <a id="method-clear"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clear()</code></h3>
 <p>Clear all evaluation results from archive.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Archive</span><span class='op'>$</span><span class='fu'>clear</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>clear</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Archive</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

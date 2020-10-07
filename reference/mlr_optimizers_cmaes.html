@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Optimization via Design Points — mlr_optimizers_design_points • bbotk</title>
+<title>Optimization via Covariance Matrix Adaptation Evolution Strategy — mlr_optimizers_cmaes • bbotk</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -47,14 +47,9 @@
 
 
 
-<meta property="og:title" content="Optimization via Design Points — mlr_optimizers_design_points" />
-<meta property="og:description" content="OptimizerDesignPoints class that implements optimization w.r.t. fixed
-design points. We simply search over a set of points fully specified by the
-user. The points in the design are evaluated in order as given.
-In order to support general termination criteria and parallelization, we
-evaluate points in a batch-fashion of size batch_size. Larger batches mean
-we can parallelize more, smaller batches imply a more fine-grained checking
-of termination criteria." />
+<meta property="og:title" content="Optimization via Covariance Matrix Adaptation Evolution Strategy — mlr_optimizers_cmaes" />
+<meta property="og:description" content="OptimizerCmaes class that implements CMA-ES. Calls
+adagio::pureCMAES() from package adagio." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -146,19 +141,14 @@ of termination criteria." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Optimization via Design Points</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mlr-org/bbotk/blob/master/R/OptimizerDesignPoints.R'><code>R/OptimizerDesignPoints.R</code></a></small>
-    <div class="hidden name"><code>mlr_optimizers_design_points.Rd</code></div>
+    <h1>Optimization via Covariance Matrix Adaptation Evolution Strategy</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mlr-org/bbotk/blob/master/R/OptimizerCmaes.R'><code>R/OptimizerCmaes.R</code></a></small>
+    <div class="hidden name"><code>mlr_optimizers_cmaes.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>OptimizerDesignPoints</code> class that implements optimization w.r.t. fixed
-design points. We simply search over a set of points fully specified by the
-user. The points in the design are evaluated in order as given.</p>
-<p>In order to support general termination criteria and parallelization, we
-evaluate points in a batch-fashion of size <code>batch_size</code>. Larger batches mean
-we can parallelize more, smaller batches imply a more fine-grained checking
-of termination criteria.</p>
+    <p><code>OptimizerCmaes</code> class that implements CMA-ES. Calls
+<code><a href='https://rdrr.io/pkg/adagio/man/cmaes.html'>adagio::pureCMAES()</a></code> from package <a href='https://CRAN.R-project.org/package=adagio'><span class="pkg">adagio</span></a>.</p>
     </div>
 
 
@@ -168,8 +158,8 @@ of termination criteria.</p>
     
 
 <p>This <a href='Optimizer.html'>Optimizer</a> can be instantiated via the <a href='https://mlr3misc.mlr-org.com/reference/Dictionary.html'>dictionary</a>
-<a href='mlr_optimizers.html'>mlr_optimizers</a> or with the associated sugar function <code><a href='opt.html'>opt()</a></code>:</p><pre><span class='va'>mlr_optimizers</span><span class='op'>$</span><span class='fu'>get</span><span class='op'>(</span><span class='st'>"design_points"</span><span class='op'>)</span>
-<span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"design_points"</span><span class='op'>)</span>
+<a href='mlr_optimizers.html'>mlr_optimizers</a> or with the associated sugar function <code><a href='opt.html'>opt()</a></code>:</p><pre><span class='va'>mlr_optimizers</span><span class='op'>$</span><span class='fu'>get</span><span class='op'>(</span><span class='st'>"cmaes"</span><span class='op'>)</span>
+<span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"cmaes"</span><span class='op'>)</span>
 </pre>
 
     <h2 class="hasAnchor" id="parameters"><a class="anchor" href="#parameters"></a>Parameters</h2>
@@ -177,24 +167,25 @@ of termination criteria.</p>
     
 
 <dl>
-<dt><code>batch_size</code></dt><dd><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code><br />
-Maximum number of configurations to try in a batch.</p></dd>
-<dt><code>design</code></dt><dd><p><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a><br />
-Design points to try in search, one per row.</p></dd>
+<dt><code>par</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code></p></dd>
+<dt><code>sigma</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
 
 </dl>
 
+<p>For the meaning of the control parameters, see <code><a href='https://rdrr.io/pkg/adagio/man/cmaes.html'>adagio::pureCMAES()</a></code>. Note
+that we have removed all control parameters which refer to the termination of
+the algorithm and where our terminators allow to obtain the same behavior.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerDesignPoints</code></p>
+    <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerCmaes</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>OptimizerDesignPoints$new()</code></a></p></li>
-<li><p><a href='#method-clone'><code>OptimizerDesignPoints$clone()</code></a></p></li>
+<li><p><a href='#method-new'><code>OptimizerCmaes$new()</code></a></p></li>
+<li><p><a href='#method-clone'><code>OptimizerCmaes$clone()</code></a></p></li>
 </ul>
 <p><details open ><summary>Inherited methods</summary>
 <ul>
@@ -207,12 +198,12 @@ Design points to try in search, one per row.</p></dd>
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>OptimizerDesignPoints</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OptimizerCmaes</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>OptimizerDesignPoints</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OptimizerCmaes</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -237,30 +228,28 @@ Design points to try in search, one per row.</p></dd>
 <span class='op'>}</span>
 
 <span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>fun <span class='op'>=</span> <span class='va'>objective_function</span>,
-  domain <span class='op'>=</span> <span class='va'>domain</span>,
-  codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
-<span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+                              domain <span class='op'>=</span> <span class='va'>domain</span>,
+                              codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
+<span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 <span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>objective <span class='op'>=</span> <span class='va'>objective</span>,
-  search_space <span class='op'>=</span> <span class='va'>search_space</span>,
-  terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+                             search_space <span class='op'>=</span> <span class='va'>search_space</span>,
+                             terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
 
-<span class='va'>design</span> <span class='op'>=</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"design_points"</span>, design <span class='op'>=</span> <span class='va'>design</span><span class='op'>)</span>
+<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"cmaes"</span>, par <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># Modifies the instance by reference</span>
 <span class='va'>optimizer</span><span class='op'>$</span><span class='fu'>optimize</span><span class='op'>(</span><span class='va'>instance</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    x  x_domain y
-#&gt; 1: 0 &lt;list[1]&gt; 0</div><div class='input'>
+</div><div class='output co'>#&gt;             x  x_domain         y
+#&gt; 1: -0.4000435 &lt;list[1]&gt; 0.1600348</div><div class='input'>
 <span class='co'># Returns best scoring evaluation</span>
 <span class='va'>instance</span><span class='op'>$</span><span class='va'>result</span>
-</div><div class='output co'>#&gt;    x  x_domain y
-#&gt; 1: 0 &lt;list[1]&gt; 0</div><div class='input'>
+</div><div class='output co'>#&gt;             x  x_domain         y
+#&gt; 1: -0.4000435 &lt;list[1]&gt; 0.1600348</div><div class='input'>
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
 <span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='fu'>data</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    x y  x_domain           timestamp batch_nr
-#&gt; 1: 0 0 &lt;list[1]&gt; 2020-10-07 09:29:37        1
-#&gt; 2: 1 1 &lt;list[1]&gt; 2020-10-07 09:29:37        2</div></pre>
+</div><div class='output co'>#&gt;             x         y  x_domain           timestamp batch_nr
+#&gt; 1: -0.4000435 0.1600348 &lt;list[1]&gt; 2020-10-07 09:29:37        1
+#&gt; 2:  1.0000000 1.0000000 &lt;list[1]&gt; 2020-10-07 09:29:37        2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
