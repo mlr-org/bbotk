@@ -2,6 +2,7 @@
 
 * Removed dependency on orphaned package `bibtex`.
 * Improved documentation.
+* Adds `OptimizerCmaes` from adagio package.
 
 # bbotk 0.2.1
 
