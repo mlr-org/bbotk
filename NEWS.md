@@ -1,3 +1,7 @@
+# bbotk 0.2.1-9000
+
+* Removed dependency on orphaned package `bibtex`.
+
 # bbotk 0.2.1
 
 * Compact in-memory representation of R6 objects to save space when
