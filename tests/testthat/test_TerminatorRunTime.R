@@ -1,7 +1,9 @@
 context("TerminatorRunTime")
 
 test_that("TerminatorRunTime works", {
-  terminator = term("run_time", secs = 1)
+  skip_on_cran()
+
+  terminator = trm("run_time", secs = 1)
   expect_output(print(terminator), "TerminatorRunTime")
   now = Sys.time()
   inst = MAKE_INST_2D(terminator)

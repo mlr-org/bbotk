@@ -11,19 +11,20 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `iters` `integer(1)`\cr
-#'   Number of iterations to evaluate the performance improvement on, default
-#'   is 10.
-#'
-#' * `threshold` `numeric(1)`\cr
-#'   If the improvement is less than `threshold`, optimization is stopped,
-#'  default is `0`.
+#' \describe{
+#' \item{`iters`}{`integer(1)`\cr
+#'  Number of iterations to evaluate the performance improvement on, default
+#'  is 10.}
+#' \item{`threshold`}{`numeric(1)`\cr
+#'  If the improvement is less than `threshold`, optimization is stopped,
+#'  default is `0`.}
+#' }
 #'
 #' @family Terminator
 #' @export
 #' @examples
 #' TerminatorStagnation$new()
-#' term("stagnation", iters = 5, threshold = 1e-5)
+#' trm("stagnation", iters = 5, threshold = 1e-5)
 TerminatorStagnation = R6Class("TerminatorStagnation",
   inherit = Terminator,
   public = list(
@@ -47,6 +48,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+
       pv = self$param_set$values
       iters = pv$iters
       ycol = archive$cols_y

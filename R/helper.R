@@ -25,13 +25,13 @@ is_dominated = function(ymat) {
 
 #' @title Calculates the transformed x-values
 #' @description
-#' Transforms a given `data.table` to a list with transformed x values.
-#' If no trafo is defined it will just convert the `data.table` to a list.
+#' Transforms a given `data.table()` to a list with transformed x values.
+#' If no trafo is defined it will just convert the `data.table()` to a list.
 #' Mainly for internal usage.
 #'
 #' @template param_xdt
 #' @template param_search_space
-#' @value `list()`
+#' @return `list()`.
 #' @keywords internal
 #' @export
 transform_xdt_to_xss = function(xdt, search_space) {
@@ -52,6 +52,8 @@ transform_xdt_to_xss = function(xdt, search_space) {
 #' @param self [Optimizer]
 #' @param private (`environment()`)
 #'
+#' @return [data.table::data.table]
+#'
 #' @keywords internal
 #' @export
 optimize_default = function(inst, self, private) {
@@ -71,7 +73,7 @@ optimize_default = function(inst, self, private) {
   lg$info("Result:")
   lg$info(capture.output(print(
     inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-  invisible(NULL)
+  return(inst$result)
 }
 
 #' @title Default assign_result function
@@ -98,4 +100,19 @@ assign_result_default = function(inst) {
   }
 
   invisible(NULL)
+}
+
+#' @title Multiplication vector for output
+#' @description
+#' Returns a numeric vector with values -1 and 1.
+#' If you multiply this vector with an outcome of `codomain` it will be turned into a minimization problem.
+#'
+#' @param codomain [ParamSet]
+#'
+#' @return 'numeric()'
+#'
+#' @keywords internal
+#' @export
+mult_max_to_min = function(codomain) {
+  ifelse(map_lgl(codomain$tags, has_element, "minimize"), 1, -1)
 }

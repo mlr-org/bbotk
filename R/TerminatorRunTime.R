@@ -11,14 +11,15 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `secs` `numeric(1)`\cr
-#'   Maximum allowed time, in seconds, default is 100.
-#'   Mutually exclusive with argument `stop_time`.
+#' \describe{
+#' \item{`secs`}{`numeric(1)`\cr
+#' Maximum allowed time, in seconds, default is 100.}
+#' }
 #'
 #' @family Terminator
 #' @export
 #' @examples
-#' term("run_time", secs = 1800)
+#' trm("run_time", secs = 1800)
 TerminatorRunTime = R6Class("TerminatorRunTime",
   inherit = Terminator,
   public = list(
@@ -29,7 +30,8 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         ParamDbl$new("secs", lower = 0, default = 30)
       ))
       ps$values$secs = 30
-      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
+      super$initialize(param_set = ps, properties = c("single-crit",
+        "multi-crit"))
     },
 
     #' @description

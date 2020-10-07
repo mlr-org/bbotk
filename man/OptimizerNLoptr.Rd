@@ -3,9 +3,14 @@
 \name{OptimizerNLoptr}
 \alias{OptimizerNLoptr}
 \title{Optimization via Non-linear Optimization}
+\source{
+Johnson, G S (2020).
+\dQuote{The NLopt nonlinear-optimization package.}
+\url{https://github.com/stevengj/nlopt}.
+}
 \description{
 \code{OptimizerNLoptr} class that implements non-linear optimization. Calls
-\link[nloptr:nloptr]{nloptr::nloptr} from package \CRANpkg{nloptr}.
+\code{\link[nloptr:nloptr]{nloptr::nloptr()}} from package \CRANpkg{nloptr}.
 }
 \section{Parameters}{
 
@@ -25,13 +30,13 @@ For the meaning of the control parameters, see \code{\link[nloptr:nloptr]{nloptr
 The termination conditions \code{stopval}, \code{maxtime} and \code{maxeval} of
 \code{\link[nloptr:nloptr]{nloptr::nloptr()}} are deactivated and replaced by the \link{Terminator}
 subclasses. The x and function value tolerance termination conditions
-(\code{xtol_rel = 10^-4}, \code{xtol_abs = rep(0.0, length(x0))},
-\code{ftol_rel = 0.0} and \code{ftol_abs = 0.0}) are still available and implemented with
-their package defaults. To deactivate these conditions, set them to \code{-1}.
+(\code{xtol_rel = 10^-4}, \code{xtol_abs = rep(0.0, length(x0))}, \code{ftol_rel = 0.0} and
+\code{ftol_abs = 0.0}) are still available and implemented with their package
+defaults. To deactivate these conditions, set them to \code{-1}.
 }
 
 \examples{
-\dontrun{
+\donttest{
 library(paradox)
 library(data.table)
 
@@ -50,7 +55,7 @@ objective = ObjectiveRFun$new(fun = objective_function,
   codomain = codomain)
 
 # We use the internal termination criterion xtol_rel
-terminator = term("none")
+terminator = trm("none")
 instance = OptimInstanceSingleCrit$new(objective = objective,
   search_space = search_space,
   terminator = terminator)

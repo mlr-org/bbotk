@@ -5,8 +5,8 @@
 #' numerical codomain.
 #'
 #' @section Technical details:
-#' `Objective` objects can take the following properties `noisy`, `deterministic`, `single-crit` and
-#' `multi-crit`.
+#' `Objective` objects can have the following properties: `"noisy"`,
+#' `"deterministic"`, `"single-crit"` and `"multi-crit"`.
 #'
 #' @template param_domain
 #' @template param_codomain
@@ -30,29 +30,37 @@ Objective = R6Class("Objective",
     #' Specifies codomain of function, hence its feasible values.
     codomain = NULL,
 
+    #' @field check_values (`logical(1)`)\cr
+    check_values = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
+    #' @param check_values (`logical(1)`)\cr
+    #' Should points before the evaluation and the results be checked for
+    #' validity?
     initialize = function(id = "f", properties = character(), domain,
-      codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))) {
+      codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
+      check_values = TRUE) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
       self$codomain = assert_codomain(codomain)
       self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
+      self$check_values = assert_flag(check_values)
     },
 
     #' @description
     #' Helper for print outputs.
-    #' @return `character()`
+    #' @return `character()`.
     format = function() {
       sprintf("<%s:%s>", class(self)[1L], self$id)
     },
 
     #' @description
     #' Print method.
-    #' @return `character()`
+    #' @return `character()`.
     print = function() {
       catf(self$format())
       catf("Domain:")
@@ -62,7 +70,9 @@ Objective = R6Class("Objective",
     },
 
     #' @description
-    #' Evaluates a single input value on the objective function
+    #' Evaluates a single input value on the objective function. If
+    #' `check_values = TRUE`, the validity of the point as well as the validity
+    #' of the result is checked.
     #'
     #' @param xs (`list()`)\cr
     #'   A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
@@ -72,28 +82,66 @@ Objective = R6Class("Objective",
     #' archive if called through the [OptimInstance].
     #' These extra entries are referred to as *extras*.
     eval = function(xs) {
-      as.list(self$eval_many(list(xs)))
+      if (self$check_values) self$domain$assert(xs)
+      res = private$.eval(xs)
+      if (self$check_values) self$codomain$assert(res[self$codomain$ids()])
+      return(res)
     },
 
     #' @description
-    #' Evaluates multiple input values on the objective function.
-    #' *bbotk* does not take care of parallelization.
-    #' If the function should make use of parallel computing,
-    #' it has to be implemented by deriving from this class and
-    #' overwriting this function.
+    #' Evaluates multiple input values on the objective function. If
+    #' `check_values = TRUE`, the validity of the points as well as the validity
+    #' of the results are checked. *bbotk* does not take care of
+    #' parallelization. If the function should make use of parallel computing,
+    #' it has to be implemented by deriving from this class and overwriting this
+    #' function.
     #'
     #' @param xss (`list()`)\cr
     #'   A list of lists that contains multiple x values, e.g.
     #'   `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
     #'
-    #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-criteria functions and
-    #' multiple y-columns for multi-criteria functions, e.g.
-    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    #' @return data.table::data.table()] that contains one y-column for
+    #' single-criteria functions and multiple y-columns for multi-criteria functions,
+    #' e.g.  `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     #' It may also contain additional columns that will be stored in the archive if
     #' called through the [OptimInstance].
     #' These extra columns are referred to as *extras*.
     eval_many = function(xss) {
+      if (self$check_values) lapply(xss, self$domain$assert)
+      res = private$.eval_many(xss)
+      if (self$check_values) {
+        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
+      }
+      return(res)
+    },
+
+    #' @description
+    #' Evaluates multiple input values on the objective function
+    #'
+    #' @return data.table::data.table()] that contains one y-column for
+    #' single-criteria functions and multiple y-columns for multi-criteria
+    #' functions, e.g.  `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    eval_dt = function(xdt) {
+      self$eval_many(transpose_list(xdt))
+    }
+  ),
+
+  active = list(
+    #' @field xdim (`integer(1)`)\cr
+    #' Dimension of domain.
+    xdim = function() self$domain$length,
+
+    #' @field ydim (`integer(1)`)\cr
+    #' Dimension of codomain.
+    ydim = function() self$codomain$length
+  ),
+
+  private = list(
+    .eval = function(xs) {
+      as.list(self$eval_many(list(xs)))
+    },
+
+    .eval_many = function(xss) {
       res = map_dtr(xss, function(xs) {
         ys = self$eval(xs)
         as.data.table(lapply(ys, function(y) if (is.list(y)) list(y) else y))
@@ -101,64 +149,6 @@ Objective = R6Class("Objective",
       # to keep it simple we expect the order of the results to be right. extras keep their names
       colnames(res)[seq_len(self$codomain$length)] = self$codomain$ids()
       return(res)
-    },
-
-    #' @description
-    #' Evaluates multiple input values on the objective function
-    #'
-    #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-criteria functions and
-    #' multiple y-columns for multi-criteria functions, e.g.
-    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
-    eval_dt = function(xdt) {
-      self$eval_many(transpose_list(xdt))
-    },
-
-    #' @description
-    #' Evaluates a single input value on the objective function and checks its
-    #' validity as well as the validity of the result.
-    #' Note: Calling the objective this way will fail if the function returns extras (see above)
-    #' because the output is checked against the codomain.
-    #'
-    #' @param xs (`list()`)\cr
-    #' A list that contains a single x value, e.g. `list(x1 = 1, x2 = 2)`.
-    #'
-    #' @return `list()`\cr
-    #' A list that contains the result of the evaluation, e.g. `list(y = 1)`.
-    eval_checked = function(xs) {
-      self$domain$assert(xs)
-      res = self$eval(xs)
-      self$codomain$assert(res[self$codomain$ids()])
-      return(res)
-    },
-
-    #' @description
-    #' Evaluates multiple input values on the objective function and checks the
-    #' validity of the input.
-    #'
-    #' @param xss (`list()`)\cr
-    #' A list of lists that contains multiple x values, e.g.
-    #' `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
-    #'
-    #' @return `data.table()`\cr
-    #' A `data.table` that contains one y-column for single-criteria functions and multiple
-    #' y-columns for multi-criteria functions, e.g.
-    #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
-    eval_many_checked = function(xss) {
-      lapply(xss, self$domain$assert)
-      res = self$eval_many(xss)
-      self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      return(res)
     }
-  ),
-
-  active = list(
-    #' @field xdim (`ìnteger(1)`)\cr
-    #' Dimension of domain.
-    xdim = function() self$domain$length,
-
-    #' @field ydim (`ìnteger(1)`)\cr
-    #' Dimension of codomain.
-    ydim = function() self$codomain$length
   )
 )

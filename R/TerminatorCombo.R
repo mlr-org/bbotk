@@ -11,15 +11,18 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `any` (`logical(1)`)\cr
-#'   Terminate iff any included terminator is positive? (not all), default is `TRUE.
+#' \describe{
+#' \item{`any`}{`logical(1)`\cr
+#' Terminate iff any included terminator is positive? (not all), default is
+#' `TRUE`.}
+#' }
 #'
 #' @family Terminator
 #' @export
 #' @examples
-#' term("combo",
-#'   list(term("clock_time", stop_time = Sys.time() + 60), term("evals", n_evals = 10)),
-#'   any = FALSE
+#' trm("combo",
+#'   list(trm("clock_time", stop_time = Sys.time() + 60),
+#'     trm("evals", n_evals = 10)), any = FALSE
 #' )
 TerminatorCombo = R6Class("TerminatorCombo",
   inherit = Terminator,
@@ -35,15 +38,18 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' @param terminators (`list()`)\cr
     #'   List of objects of class [Terminator].
     initialize = function(terminators = list(TerminatorNone$new())) {
-      self$terminators = assert_list(terminators, types = "Terminator", min.len = 1L)
-      ps = ParamSet$new(list(ParamLgl$new("any", default = TRUE, tags = "required")))
+      self$terminators = assert_list(terminators, types = "Terminator",
+        min.len = 1L)
+      ps = ParamSet$new(list(ParamLgl$new("any", default = TRUE,
+        tags = "required")))
       ps$values = list(any = TRUE)
       properties = Reduce(intersect, map(terminators, "properties"))
       super$initialize(param_set = ps, properties = properties)
     },
 
     #' @description
-    #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
+    #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
+    #' otherwise.
     #'
     #' @param archive ([Archive]).
     #'
@@ -59,7 +65,8 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' @param ... (ignored).
     print = function(...) {
       super$print(...)
-      catf(str_indent("* Terminators:", paste(map_chr(self$terminators, format), collapse = ",")))
+      catf(str_indent("* Terminators:", paste(map_chr(self$terminators, format),
+        collapse = ",")))
     }
 
   )

@@ -12,22 +12,21 @@ number of seconds on the clock.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("run_time")
-term("run_time")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("run_time")
+trm("run_time")
 }
 }
 
 \section{Parameters}{
 
-\itemize{
-\item \code{secs} \code{numeric(1)}\cr
-Maximum allowed time, in seconds, default is 100.
-Mutually exclusive with argument \code{stop_time}.
+\describe{
+\item{\code{secs}}{\code{numeric(1)}\cr
+Maximum allowed time, in seconds, default is 100.}
 }
 }
 
 \examples{
-term("run_time", secs = 1800)
+trm("run_time", secs = 1800)
 }
 \seealso{
 Other Terminator: 

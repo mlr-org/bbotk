@@ -4,7 +4,7 @@
 #'
 #' @description
 #' `OptimizerNLoptr` class that implements non-linear optimization. Calls
-#' [nloptr::nloptr] from package \CRANpkg{nloptr}.
+#' [nloptr::nloptr()] from package \CRANpkg{nloptr}.
 #'
 #' @section Parameters:
 #' \describe{
@@ -23,13 +23,16 @@
 #' The termination conditions `stopval`, `maxtime` and `maxeval` of
 #' [nloptr::nloptr()] are deactivated and replaced by the [Terminator]
 #' subclasses. The x and function value tolerance termination conditions
-#' (`xtol_rel = 10^-4`, `xtol_abs = rep(0.0, length(x0))`,
-#' `ftol_rel = 0.0` and `ftol_abs = 0.0`) are still available and implemented with
-#' their package defaults. To deactivate these conditions, set them to `-1`.
+#' (`xtol_rel = 10^-4`, `xtol_abs = rep(0.0, length(x0))`, `ftol_rel = 0.0` and
+#' `ftol_abs = 0.0`) are still available and implemented with their package
+#' defaults. To deactivate these conditions, set them to `-1`.
+#'
+#' @source
+#' `r tools::toRd(bibentries["johnson_2014"])`
 #'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(paradox)
 #' library(data.table)
 #'
@@ -48,7 +51,7 @@
 #'   codomain = codomain)
 #'
 #' # We use the internal termination criterion xtol_rel
-#' terminator = term("none")
+#' terminator = trm("none")
 #' instance = OptimInstanceSingleCrit$new(objective = objective,
 #'   search_space = search_space,
 #'   terminator = terminator)
@@ -86,7 +89,7 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
             "NLOPT_LN_NEWUOA_BOUND", "NLOPT_LN_NELDERMEAD", "NLOPT_LN_SBPLX",
             "NLOPT_LN_AUGLAG", "NLOPT_LD_AUGLAG", "NLOPT_LN_AUGLAG_EQ",
             "NLOPT_LD_AUGLAG_EQ", "NLOPT_LN_BOBYQA", "NLOPT_GN_ISRES"),
-          tags = "required"),
+        tags = "required"),
         ParamUty$new("x0", tags = "required"),
         ParamUty$new("eval_g_ineq", default = NULL),
         ParamDbl$new("xtol_rel", default = 10^-4, lower = 0, upper = Inf,
