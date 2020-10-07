@@ -48,12 +48,13 @@ Imports:
     paradox (>= 0.3),
     R6
 Suggests:
+    adagio,
     GenSA,
     knitr,
     nloptr,
     rmarkdown,
     testthat
-VignetteBuilder:
+VignetteBuilder: 
     knitr
 Encoding: UTF-8
 Language: en-US
@@ -70,6 +71,7 @@ Collate:
     'OptimInstanceSingleCrit.R'
     'mlr_optimizers.R'
     'Optimizer.R'
+    'OptimizerCmaes.R'
     'OptimizerDesignPoints.R'
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
