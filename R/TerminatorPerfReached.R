@@ -11,7 +11,7 @@
 #'
 #' @section Parameters:
 #' \describe{
-#' \item{`level`}{`numeric(1)`\cr
+#' \item{`level`}{Named `numeric(1)`\cr
 #' Performance level that needs to be reached, default is 0. Terminates if the
 #' performance exceeds (respective measure has to be maximized) or falls below
 #' (respective measure has to be minimized) this value.}
@@ -30,7 +30,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       custom_check = function(x) {
-        check_numeric(x, finite = TRUE, any.missing = FALSE, names = "unique")
+        check_numeric(x, finite = TRUE, any.missing = FALSE)
       }
       ps = ParamSet$new(list(
         ParamUty$new("level", tags = "required", custom_check = custom_check,
@@ -50,6 +50,13 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
       pv = self$param_set$values
       ycol = archive$cols_y
       minimize = "minimize" %in% archive$codomain$tags
+
+      if(!isTRUE(names(pv$level) == archive$codomain$ids())) {
+        stopf("Name of level %s does not macht codomain id %s.",
+             paste0("'", names(pv$level), "'"),
+             paste0("'", archive$codomain$ids(), "'"))
+      }
+
       if (archive$n_evals == 0) {
         return(FALSE)
       }

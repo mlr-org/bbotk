@@ -1,3 +1,7 @@
+# bbotk 0.2.2.9000
+
+* Improved `TerminatorPerfRearched` documentation.
+
 # bbotk 0.2.2
 
 * Removed dependency on orphaned package `bibtex`.
