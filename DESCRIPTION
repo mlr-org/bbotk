@@ -31,9 +31,9 @@ Authors@R:
              role = "ctb",
              email = "olafm@statistik.tu-dortmund.de"))
 Description: Provides a common framework for optimization of
-    black-box functions for other packages, e.g. 'mlr3'. It offers various
-    optimization methods e.g.  grid search, random search and generalized
-    simulated annealing.
+    black-box functions for other packages, e.g. 'mlr3tuning' or 'mlr3fselect'.
+    It offers various optimization methods e.g. grid search, random search and
+    generalized simulated annealing.
 License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
@@ -54,7 +54,7 @@ Suggests:
     nloptr,
     rmarkdown,
     testthat
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
