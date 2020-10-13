@@ -29,14 +29,10 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      custom_check = function(x) {
-        check_numeric(x, finite = TRUE, any.missing = FALSE)
-      }
       ps = ParamSet$new(list(
-        ParamUty$new("level", tags = "required", custom_check = custom_check,
-          default = c(y1 = 0.1))
+        ParamDbl$new("level", tags = "required", default = 0.1)
       ))
-      ps$values = list(level = c(y1 = 0.1))
+      ps$values = list(level = 0.1)
       super$initialize(param_set = ps, "single-crit")
     },
 
@@ -51,23 +47,16 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
       ycol = archive$cols_y
       minimize = "minimize" %in% archive$codomain$tags
 
-      if(!isTRUE(names(pv$level) == archive$codomain$ids())) {
-        stopf("Name of level %s does not macht codomain id %s.",
-             paste0("'", names(pv$level), "'"),
-             paste0("'", archive$codomain$ids(), "'"))
-      }
-
-      if (archive$n_evals == 0) {
+      if (archive$n_evals == 0L) {
         return(FALSE)
       }
 
       ydata = archive$data()[, ycol, , drop = FALSE, with = FALSE]
       if (minimize) {
-        res = ydata <= pv$level
+        ydata <= pv$level
       } else {
-        res = ydata >= pv$level
+        ydata >= pv$level
       }
-      any(res)
     }
   )
 )
