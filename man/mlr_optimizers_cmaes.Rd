@@ -6,7 +6,7 @@
 \title{Optimization via Covariance Matrix Adaptation Evolution Strategy}
 \description{
 \code{OptimizerCmaes} class that implements CMA-ES. Calls
-\code{\link[adagio:cmaes]{adagio::pureCMAES()}} from package \CRANpkg{adagio}.
+\code{\link[adagio:pureCMAES]{adagio::pureCMAES()}} from package \CRANpkg{adagio}.
 }
 \section{Dictionary}{
 
@@ -23,7 +23,7 @@ opt("cmaes")
 \item{\code{sigma}}{\code{numeric(1)}}
 }
 
-For the meaning of the control parameters, see \code{\link[adagio:cmaes]{adagio::pureCMAES()}}. Note
+For the meaning of the control parameters, see \code{\link[adagio:pureCMAES]{adagio::pureCMAES()}}. Note
 that we have removed all control parameters which refer to the termination of
 the algorithm and where our terminators allow to obtain the same behavior.
 }

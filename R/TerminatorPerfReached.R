@@ -43,7 +43,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      pv = self$param_set$values
+      level = self$param_set$values$level
       ycol = archive$cols_y
       minimize = "minimize" %in% archive$codomain$tags
 
@@ -51,11 +51,11 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
         return(FALSE)
       }
 
-      ydata = archive$data()[, ycol, , drop = FALSE, with = FALSE]
+      ydata = get_private(archive)$.data[[ycol]]
       if (minimize) {
-        ydata <= pv$level
+        any(ydata <= pv$level)
       } else {
-        ydata >= pv$level
+        any(ydata >= pv$level)
       }
     }
   )
