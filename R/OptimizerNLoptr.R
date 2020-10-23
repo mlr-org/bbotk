@@ -1,6 +1,7 @@
 #' @title Optimization via Non-linear Optimization
 #'
 #' @include Optimizer.R
+#' @name mlr_optimizers_nloptr
 #'
 #' @description
 #' `OptimizerNLoptr` class that implements non-linear optimization. Calls
