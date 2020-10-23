@@ -28,9 +28,6 @@
     <loc>https://bbotk.mlr-org.com/reference/Optimizer.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/OptimizerNLoptr.html</loc>
-  </url>
-  <url>
     <loc>https://bbotk.mlr-org.com/reference/Terminator.html</loc>
   </url>
   <url>
@@ -62,6 +59,9 @@
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_grid_search.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_nloptr.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_random_search.html</loc>
