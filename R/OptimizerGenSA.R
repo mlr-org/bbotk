@@ -24,9 +24,7 @@
 #' algorithm and where our terminators allow to obtain the same behavior.
 #'
 #' @source
-#' \cite{bbotk}{tsallis_1996}
-#'
-#' \cite{bbotk}{xiang_2013}
+#' `r tools::toRd(bibentries[c("tsallis_1996", "xiang_2013")])`
 #'
 #' @export
 #' @template example

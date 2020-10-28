@@ -1,6 +1,7 @@
 #' @title Optimization via Non-linear Optimization
 #'
 #' @include Optimizer.R
+#' @name mlr_optimizers_nloptr
 #'
 #' @description
 #' `OptimizerNLoptr` class that implements non-linear optimization. Calls
@@ -28,7 +29,7 @@
 #' defaults. To deactivate these conditions, set them to `-1`.
 #'
 #' @source
-#' \cite{bbotk}{johnson_2014}
+#' `r tools::toRd(bibentries["johnson_2014"])`
 #'
 #' @export
 #' @examples

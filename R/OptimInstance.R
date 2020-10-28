@@ -99,6 +99,7 @@ OptimInstance = R6Class("OptimInstance",
         self$is_terminated = TRUE
         stop(terminated_error(self))
       }
+      assert_data_table(xdt)
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
       ydt = self$objective$eval_many(xss_trafoed)

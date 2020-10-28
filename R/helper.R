@@ -116,3 +116,8 @@ assign_result_default = function(inst) {
 mult_max_to_min = function(codomain) {
   ifelse(map_lgl(codomain$tags, has_element, "minimize"), 1, -1)
 }
+
+
+get_private = function(x) {
+    x[[".__enclos_env__"]][["private"]]
+}
