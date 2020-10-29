@@ -141,7 +141,7 @@ Objective = R6Class("Objective",
       as.list(self$eval_many(list(xs)))
     },
 
-    .eval_many = function(xss) {
+    .eval_many = function(xss, c_hash) {
       res = map_dtr(xss, function(xs) {
         ys = self$eval(xs)
         as.data.table(lapply(ys, function(y) if (is.list(y)) list(y) else y))
