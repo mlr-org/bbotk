@@ -53,12 +53,22 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
-      g = generate_design_grid(inst$search_space, resolution = pv$resolution,
-        param_resolutions = pv$param_resolutions)
-      ch = chunk_vector(seq_row(g$data), chunk_size = pv$batch_size,
-        shuffle = TRUE)
+      data = generate_design_grid(inst$search_space, resolution = pv$resolution,
+        param_resolutions = pv$param_resolutions)$data
+
+      if ("budget" %in% inst$search_space$tags) {
+        budget_id = inst$search_space$ids(tags = "budget")
+        ids = inst$search_space$ids()[inst$search_space$ids() %nin% budget_id]
+
+        data[, continue_hash := .GRP, by = ids]
+        setorderv(data, cols = c(budget_id, "continue_hash"))
+        pv$batch_size = max(data$continue_hash)
+      }
+
+      ch = chunk_vector(seq_row(data), chunk_size = pv$batch_size,
+        shuffle = FALSE)
       for (inds in ch) {
-        inst$eval_batch(g$data[inds])
+        inst$eval_batch(data[inds])
       }
     }
   )
