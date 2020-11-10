@@ -9,7 +9,7 @@ test_that("TerminatorEvals works", {
 })
 
 test_that("progressr works", {
-  terminator = term("evals", n_evals = 10)
+  terminator = trm("evals", n_evals = 10)
   inst = MAKE_INST_1D(terminator = terminator)
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
@@ -29,7 +29,7 @@ test_that("progressr package works", {
   requireNamespace("progressr")
 
   progressr::handlers("debug")
-  terminator = term("evals", n_evals = 10)
+  terminator = trm("evals", n_evals = 10)
   inst = MAKE_INST_1D(terminator = terminator)
   optimizer = opt("random_search")
   progressr::with_progress(optimizer$optimize(inst))

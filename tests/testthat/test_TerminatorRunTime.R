@@ -13,7 +13,7 @@ test_that("TerminatorRunTime works", {
 })
 
 test_that("progressr works", {
-  terminator = term("run_time", secs = 3)
+  terminator = trm("run_time", secs = 3)
   inst = MAKE_INST_1D(terminator = terminator)
   inst$archive$start_time = Sys.time()
   xdt = data.table(x = 1)
