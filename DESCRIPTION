@@ -51,8 +51,10 @@ Suggests:
     adagio,
     GenSA,
     knitr,
+    nloptr,
     progressr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder:
     knitr
 Encoding: UTF-8

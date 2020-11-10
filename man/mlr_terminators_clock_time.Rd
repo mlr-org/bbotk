@@ -19,15 +19,9 @@ trm("clock_time")
 
 \section{Parameters}{
 
-<<<<<<< HEAD
-\itemize{
-\item \code{stop_time} \code{POSIXct(1)}\cr
-Terminator stops after this point in time.
-=======
 \describe{
 \item{\code{stop_time}}{\code{POSIXct(1)}\cr
 Terminator stops after this point in time.}
->>>>>>> master
 }
 }
 

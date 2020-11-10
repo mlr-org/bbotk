@@ -19,15 +19,9 @@ trm("run_time")
 
 \section{Parameters}{
 
-<<<<<<< HEAD
-\itemize{
-\item \code{secs} \code{numeric(1)}\cr
-Maximum allowed time, in seconds, default is 30.
-=======
 \describe{
 \item{\code{secs}}{\code{numeric(1)}\cr
 Maximum allowed time, in seconds, default is 100.}
->>>>>>> master
 }
 }
 

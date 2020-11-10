@@ -44,8 +44,7 @@ Number of batches stored in the archive.}
 \item{\code{cols_x}}{(\code{character()}).
 Column names of search space parameters.}
 
-\item{\code{cols_y}}{(\code{character()}).
-Column names of codomain parameters.}
+\item{\code{cols_y}}{(\code{character()}).}
 }
 \if{html}{\out{</div>}}
 }
