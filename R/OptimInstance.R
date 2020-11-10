@@ -104,7 +104,6 @@ OptimInstance = R6Class("OptimInstance",
         self$is_terminated = TRUE
         stop(terminated_error(self))
       }
-<<<<<<< HEAD
 
       if ("progressr" %in% self$terminator$properties && isNamespaceLoaded(
         "progressr")) {
@@ -121,9 +120,7 @@ OptimInstance = R6Class("OptimInstance",
             amount = update$amount)
         }
       }
-=======
       assert_data_table(xdt)
->>>>>>> master
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
       ydt = self$objective$eval_many(xss_trafoed)

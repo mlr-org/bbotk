@@ -24,14 +24,10 @@ TerminatorNone = R6Class("TerminatorNone",
     },
 
     #' @description
-<<<<<<< HEAD
-    #' Is `TRUE` iff the termination criterion is positive, and `FALSE` otherwise.
-=======
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
     #'
     #' @param archive ([Archive]).
->>>>>>> master
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       return(FALSE)

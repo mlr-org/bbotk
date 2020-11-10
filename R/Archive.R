@@ -164,11 +164,6 @@ Archive = R6Class("Archive",
     cols_x = function() self$search_space$ids(),
 
     #' @field cols_y (`character()`).
-<<<<<<< HEAD
-
-=======
-    #' Column names of codomain parameters.
->>>>>>> master
     cols_y = function() self$codomain$ids()
     # idx_unevaled = function() self$data$y
   ),

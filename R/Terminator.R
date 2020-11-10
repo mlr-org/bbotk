@@ -23,7 +23,6 @@
 #' algorithms). So it is advised to check the size of the returned archive, in
 #' particular if you are benchmarking multiple optimization algorithms.
 #'
-<<<<<<< HEAD
 #' @section Technical details:
 #' `Terminator` subclasses can implement `$progressr_steps()` and
 #' `$progressr_update()` to support progress bars via the package
@@ -34,8 +33,6 @@
 #' the last batch (`amount`) and the total amount of progress made (`sum`). Supported
 #' terminators need the property `progressr`.
 #'
-=======
->>>>>>> master
 #' @family Terminator
 #' @export
 Terminator = R6Class("Terminator",
