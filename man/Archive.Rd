@@ -5,15 +5,16 @@
 \title{Logging object for objective function evaluations}
 \description{
 Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
-\link{Objective} function calls.
+function calls of the Objective.
 }
 \section{Technical details}{
 
 
-The data is stored in a private \code{.data} field that contains a \link[data.table:data.table]{data.table::data.table} which
-logs all performed \link{Objective} function calls. The \link[data.table:data.table]{data.table::data.table} is accessed with
-the \verb{$data()} method. New values can be added with the \verb{$add_evals()} method.
-This however is usually done through the evaluation of the \link{OptimInstance} by the \link{Optimizer}.
+The data is stored in a private \code{.data} field that contains a
+\link[data.table:data.table]{data.table::data.table} which logs all performed function calls of the \link{Objective}.
+This \link[data.table:data.table]{data.table::data.table} is accessed with the public \verb{$data()} method. New
+values can be added with the \verb{$add_evals()} method. This however is usually
+done through the evaluation of the \link{OptimInstance} by the \link{Optimizer}.
 }
 
 \section{Public fields}{
@@ -27,22 +28,24 @@ Codomain of objective function.}
 
 \item{\code{start_time}}{(\link{POSIXct}).}
 
-\item{\code{check_evals_xdt}}{('logical(1)')}
+\item{\code{check_values}}{(\code{logical(1)})}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{n_evals}}{(\code{ìnteger(1)})\cr
+\item{\code{n_evals}}{(\code{integer(1)})\cr
 Number of evaluations stored in the archive.}
 
-\item{\code{n_batch}}{(\code{ìnteger(1)})\cr
+\item{\code{n_batch}}{(\code{integer(1)})\cr
 Number of batches stored in the archive.}
 
-\item{\code{cols_x}}{(\code{character()}).}
+\item{\code{cols_x}}{(\code{character()}).
+Column names of search space parameters.}
 
-\item{\code{cols_y}}{(\code{character()}).}
+\item{\code{cols_y}}{(\code{character()}).
+Column names of codomain parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -65,7 +68,7 @@ Number of batches stored in the archive.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_evals_xdt = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -78,10 +81,10 @@ Depending on the context, this value defaults to the domain of the objective.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function.
-Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
-The default is to minimize each component.}
+Most importantly the tags of each output "Parameter" define whether it should
+be minimized or maximized.  The default is to minimize each component.}
 
-\item{\code{check_evals_xdt}}{('logical(1)')\cr
+\item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
 }
@@ -135,7 +138,7 @@ Take only batches \code{m} into account. Default is all batches.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}
+\code{\link[data.table:data.table]{data.table::data.table()}}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -158,7 +161,7 @@ Unnested columns are stored in separate columns instead of list-columns.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}
+\code{\link[data.table:data.table]{data.table::data.table()}}.
 }
 }
 \if{html}{\out{<hr>}}

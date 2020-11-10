@@ -6,6 +6,33 @@
 \description{
 Objective interface where the user can pass a custom R function that expects a list as input.
 }
+\examples{
+library(paradox)
+# Define objective function
+fun = function(xs) {
+  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+}
+
+# Set domain
+domain = ParamSet$new(list(
+  ParamDbl$new("x1", -10, 10),
+  ParamDbl$new("x2", -5, 5)
+))
+
+# Set codomain
+codomain = ParamSet$new(list(
+  ParamDbl$new("y", tags = "maximize")
+))
+
+# Create Objective object
+obfun = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain,
+  properties = "deterministic"
+)
+
+}
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFun}
 }
@@ -26,12 +53,10 @@ Objective function.}
 }
 }
 \if{html}{
-\out{<details ><summary>Inherited methods</summary>}
+\out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_checked">}\href{../../bbotk/html/Objective.html#method-eval_checked}{\code{bbotk::Objective$eval_checked()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_dt">}\href{../../bbotk/html/Objective.html#method-eval_dt}{\code{bbotk::Objective$eval_dt()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many">}\href{../../bbotk/html/Objective.html#method-eval_many}{\code{bbotk::Objective$eval_many()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many_checked">}\href{../../bbotk/html/Objective.html#method-eval_many_checked}{\code{bbotk::Objective$eval_many_checked()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format">}\href{../../bbotk/html/Objective.html#method-format}{\code{bbotk::Objective$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print">}\href{../../bbotk/html/Objective.html#method-print}{\code{bbotk::Objective$print()}}\out{</span>}
 }
@@ -67,8 +92,8 @@ This includes their \code{id}, their types and the possible range.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function.
-Most importantly the tags of each output "Parameter" define wheter it should be minimized or maximized.
-The default is to minimize each component.}
+Most importantly the tags of each output "Parameter" define whether it should
+be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{id}}{(\code{character(1)}).}
 

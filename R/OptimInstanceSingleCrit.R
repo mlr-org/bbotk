@@ -35,7 +35,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
     #' and estimated performance value here. For internal use.
     #'
     #' @param y (`numeric(1)`)\cr
-    #'   Optimal outcome.
+    #' Optimal outcome.
     assign_result = function(xdt, y) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt, nrows = 1L)

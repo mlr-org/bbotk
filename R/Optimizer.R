@@ -45,8 +45,12 @@ Optimizer = R6Class("Optimizer",
       self$param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
-      self$properties = assert_subset(properties, bbotk_reflections$optimizer_properties, empty.ok = FALSE) #has to have at least multi-crit or single-crit property
+      # has to have at least multi-crit or single-crit property
+      self$properties = assert_subset(properties,
+        bbotk_reflections$optimizer_properties, empty.ok = FALSE)
       self$packages = assert_set(packages)
+
+      check_packages_installed(self$packages, msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self)))
     },
 
     #' @description
@@ -57,6 +61,7 @@ Optimizer = R6Class("Optimizer",
 
     #' @description
     #' Print method.
+    #'
     #' @return (`character()`).
     print = function() {
       catf(format(self))
@@ -67,10 +72,12 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @description
-    #' Performs the optimization and writes optimization result into [OptimInstance].
+    #' Performs the optimization and writes optimization result into
+    #' [OptimInstance]. The optimization result is returned but the complete
+    #' optimization path is stored in [Archive] of [OptimInstance].
     #'
     #' @param inst ([OptimInstance]).
-    #' @return NULL
+    #' @return [data.table::data.table].
     optimize = function(inst) {
       optimize_default(inst, self, private)
     }

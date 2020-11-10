@@ -12,22 +12,22 @@ An evaluation is defined by one resampling of a parameter value.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("evals")
-term("evals")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("evals")
+trm("evals")
 }
 }
 
 \section{Parameters}{
 
-\itemize{
-\item \code{n_evals} \code{integer(1)}\cr
-Number of allowed evaluations, default is 100L
+\describe{
+\item{\code{n_evals}}{\code{integer(1)}\cr
+Number of allowed evaluations, default is 100L.}
 }
 }
 
 \examples{
 TerminatorEvals$new()
-term("evals", n_evals = 5)
+trm("evals", n_evals = 5)
 }
 \seealso{
 Other Terminator: 

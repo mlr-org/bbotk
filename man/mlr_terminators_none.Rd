@@ -6,14 +6,14 @@
 \title{Terminator that never stops.}
 \description{
 Mainly useful for optimization algorithms where the stopping is inherently
-controlled by the algorithm itself (e.g. \link[mlr3tuning:mlr_tuners_grid_search]{mlr3tuning::TunerGridSearch}).
+controlled by the algorithm itself (e.g. \link{OptimizerGridSearch}).
 }
 \section{Dictionary}{
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("none")
-term("none")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("none")
+trm("none")
 }
 }
 
@@ -63,7 +63,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<a id="method-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+otherwise.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TerminatorNone$is_terminated(archive)}\if{html}{\out{</div>}}
 }

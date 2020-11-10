@@ -12,23 +12,24 @@ of the included terminators are positive.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("combo")
-term("combo")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("combo")
+trm("combo")
 }
 }
 
 \section{Parameters}{
 
-\itemize{
-\item \code{any} (\code{logical(1)})\cr
-Terminate iff any included terminator is positive? (not all), default is `TRUE.
+\describe{
+\item{\code{any}}{\code{logical(1)}\cr
+Terminate iff any included terminator is positive? (not all), default is
+\code{TRUE}.}
 }
 }
 
 \examples{
-term("combo",
-  list(term("clock_time", stop_time = Sys.time() + 60), term("evals", n_evals = 10)),
-  any = FALSE
+trm("combo",
+  list(trm("clock_time", stop_time = Sys.time() + 60),
+    trm("evals", n_evals = 10)), any = FALSE
 )
 }
 \seealso{
@@ -93,7 +94,8 @@ List of objects of class \link{Terminator}.}
 \if{html}{\out{<a id="method-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+otherwise.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$is_terminated(archive)}\if{html}{\out{</div>}}
 }

@@ -9,7 +9,7 @@ PS_1D = ParamSet$new(list(
 FUN_1D = function(xs) {
   list(y = as.numeric(xs)^2)
 }
-FUN_1D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+FUN_1D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = c("minimize", "random_tag"))))
 OBJ_1D = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain, properties = "single-crit")
 
 # Simple 2D Function
@@ -26,7 +26,7 @@ FUN_2D = function(xs) {
   y = sum(as.numeric(xs)^2)
   list(y = y)
 }
-FUN_2D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+FUN_2D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = c("minimize", "random_tag"))))
 OBJ_2D = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D_domain, properties = "single-crit")
 
 
@@ -89,7 +89,7 @@ MAKE_INST_2D_2D = function(terminator) {
 }
 
 test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_evals) {
-  terminator = term("evals", n_evals = term_evals)
+  terminator = trm("evals", n_evals = term_evals)
 
   if (n_dim == 1) {
     search_space =  ParamSet$new(list(
@@ -113,7 +113,7 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
       ParamDbl$new("x2", lower = -1, upper = 1)
     ))
     codomain = ParamSet$new(list(
-      ParamDbl$new("y1", tags = "minimize"),
+      ParamDbl$new("y1", tags = c("minimize", "random_tag")),
       ParamDbl$new("y2", tags = "maximize")
     ))
     domain = search_space

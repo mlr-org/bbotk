@@ -12,26 +12,26 @@ does not improve more than \code{threshold} over the last \code{iters} iteration
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("stagnation")
-term("stagnation")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("stagnation")
+trm("stagnation")
 }
 }
 
 \section{Parameters}{
 
-\itemize{
-\item \code{iters} \code{integer(1)}\cr
+\describe{
+\item{\code{iters}}{\code{integer(1)}\cr
 Number of iterations to evaluate the performance improvement on, default
-is 10.
-\item \code{threshold} \code{numeric(1)}\cr
+is 10.}
+\item{\code{threshold}}{\code{numeric(1)}\cr
 If the improvement is less than \code{threshold}, optimization is stopped,
-default is \code{0}.
+default is \code{0}.}
 }
 }
 
 \examples{
 TerminatorStagnation$new()
-term("stagnation", iters = 5, threshold = 1e-5)
+trm("stagnation", iters = 5, threshold = 1e-5)
 }
 \seealso{
 Other Terminator: 

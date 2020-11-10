@@ -18,9 +18,12 @@ Specifies the search space for the \link{Optimizer}.
 The \link[paradox:ParamSet]{paradox::ParamSet} describes either a subset of the \code{domain} of the \link{Objective} or it describes a set of parameters together with a \code{trafo} function that transforms values from the search space to values of the domain.
 Depending on the context, this value defaults to the domain of the objective.}
 }
+\value{
+\code{list()}.
+}
 \description{
-Transforms a given \code{data.table} to a list with transformed x values.
-If no trafo is defined it will just convert the \code{data.table} to a list.
+Transforms a given \code{data.table()} to a list with transformed x values.
+If no trafo is defined it will just convert the \code{data.table()} to a list.
 Mainly for internal usage.
 }
 \keyword{internal}

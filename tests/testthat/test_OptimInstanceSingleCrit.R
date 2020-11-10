@@ -96,7 +96,7 @@ test_that("Terminator assertions work", {
 })
 
 test_that("objective_function works", {
-  terminator = terminator = term("evals", n_evals = 100)
+  terminator = trm("evals", n_evals = 100)
   inst = MAKE_INST_1D(terminator = terminator)
   y = inst$objective_function(1)
   expect_equal(y, c(y = 1))
@@ -125,5 +125,6 @@ test_that("search_space is optional", {
 
 test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
   expect_error(OptimInstanceSingleCrit$new(objective = OBJ_2D_2D,
-    terminator = term("none")), "Codomain > 1")
+    terminator = trm("none")), "Codomain > 1")
 })
+

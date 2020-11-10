@@ -11,15 +11,17 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `stop_time` `POSIXct(1)`\cr
-#'   Terminator stops after this point in time.
+#' \describe{
+#' \item{`stop_time`}{`POSIXct(1)`\cr
+#' Terminator stops after this point in time.}
+#' }
 #'
 #' @family Terminator
 #' @template param_archive
 #' @export
 #' @examples
 #' stop_time = as.POSIXct("2030-01-01 00:00:00")
-#' term("clock_time", stop_time = stop_time)
+#' trm("clock_time", stop_time = stop_time)
 TerminatorClockTime = R6Class("TerminatorClockTime",
   inherit = Terminator,
   public = list(

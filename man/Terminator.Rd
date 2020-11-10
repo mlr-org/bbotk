@@ -8,11 +8,14 @@ Abstract \code{Terminator} class that implements the base functionality each
 terminator must provide. A terminator is an object that determines when to
 stop the optimization.
 
-Termination of optimization works as follows: * Evaluations in a instance are
-performed in batches. * Before each batch evaluation, the \link{Terminator} is
-checked, and if it is positive, we stop. * The optimization algorithm itself
-might decide not to produce any more points, or even might decide to do a
-smaller batch in its last evaluation.
+Termination of optimization works as follows:
+\itemize{
+\item Evaluations in a instance are performed in batches.
+\item Before each batch evaluation, the \link{Terminator} is checked, and if it is positive,
+we stop.
+\item The optimization algorithm itself might decide not to produce any more points,
+or even might decide to do a smaller batch in its last evaluation.
+}
 
 Therefore the following note seems in order: While it is definitely possible
 to execute a fine-grained control for termination, and for many optimization

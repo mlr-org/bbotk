@@ -2,7 +2,7 @@ context("TerminatorPerfReached")
 
 test_that("TerminatorPerfReached works", {
   terminator = TerminatorPerfReached$new()
-  terminator$param_set$values$level = c(y = 0.2)
+  terminator$param_set$values$level = 0.2
   expect_output(print(terminator), "TerminatorPerfReached")
   inst = MAKE_INST_2D(terminator)
   a = random_search(inst, batch_size = 1L)

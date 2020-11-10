@@ -7,15 +7,21 @@
 \usage{
 opt(.key, ...)
 
-opts(.key, ...)
+opts(.keys, ...)
 }
 \arguments{
 \item{.key}{(\code{character(1)})\cr
-Key passed to the respective \link[mlr3misc:Dictionary]{dictionary} to retrieve the object.}
+Key passed to the respective \link[mlr3misc:Dictionary]{dictionary} to retrieve
+the object.}
 
 \item{...}{(named \code{list()})\cr
-Named arguments passed to the constructor, to be set as parameters in the \link[paradox:ParamSet]{paradox::ParamSet}, or to be set as public field.
-See \code{\link[mlr3misc:dictionary_sugar_get]{mlr3misc::dictionary_sugar_get()}} for more details.}
+Named arguments passed to the constructor, to be set as parameters in the
+\link[paradox:ParamSet]{paradox::ParamSet}, or to be set as public field. See
+\code{\link[mlr3misc:dictionary_sugar_get]{mlr3misc::dictionary_sugar_get()}} for more details.}
+
+\item{.keys}{(\code{character()})\cr
+Keys passed to the respective \link[mlr3misc:Dictionary]{dictionary} to retrieve
+multiple objects.}
 }
 \value{
 \itemize{
@@ -25,7 +31,7 @@ See \code{\link[mlr3misc:dictionary_sugar_get]{mlr3misc::dictionary_sugar_get()}
 }
 \description{
 This function complements \link{mlr_optimizers} with functions in the spirit
-of \link[mlr3:mlr_sugar]{mlr3::mlr_sugar}.
+of \code{mlr_sugar} from \CRANpkg{mlr3}.
 }
 \examples{
 opt("random_search", batch_size = 10)

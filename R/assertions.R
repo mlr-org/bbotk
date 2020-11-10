@@ -76,7 +76,7 @@ assert_optimizer = function(optimizer) {
 assert_instance_properties = function(optimizer, inst) {
   assert_r6(inst, "OptimInstance")
 
-  require_namespaces(optimizer$packages, "Packages for the Optimization")
+  require_namespaces(optimizer$packages)
 
   # check multi or single-crit
   if ("multi-crit" %nin% optimizer$properties && inst$objective$ydim > 1) {
@@ -124,14 +124,12 @@ assert_codomain = function(codomain) {
 
     # (2) every parameter's tags contain at most one of 'minimize' or 'maximize'
     if (sum(y$tags %in% c("minimize", "maximize")) > 1) {
-      stopf("%s in codomain contains a 'minimize' and 'maximize' tag",
-            y$id)
+      stopf("%s in codomain contains a 'minimize' and 'maximize' tag", y$id)
     }
 
     # (3) every parameter contains a 'minimize' or 'maximize' tag
     if (!any(y$tags %in% c("minimize", "maximize"))) {
-      stopf("%s in codomain contains no 'minimize' or 'maximize' tag",
-            y$id)
+      stopf("%s in codomain contains no 'minimize' or 'maximize' tag", y$id)
     }
   }
   return(codomain)

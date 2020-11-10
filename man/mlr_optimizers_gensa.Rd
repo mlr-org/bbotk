@@ -4,6 +4,16 @@
 \alias{mlr_optimizers_gensa}
 \alias{OptimizerGenSA}
 \title{Optimization via Generalized Simulated Annealing}
+\source{
+Tsallis C, Stariolo DA (1996).
+\dQuote{Generalized simulated annealing.}
+\emph{Physica A: Statistical Mechanics and its Applications}, \bold{233}(1-2), 395--406.
+\doi{10.1016/s0378-4371(96)00271-3}.
+Xiang Y, Gubian S, Suomela B, Hoeng J (2013).
+\dQuote{Generalized Simulated Annealing for Global Optimization: The GenSA Package.}
+\emph{The R Journal}, \bold{5}(1), 13.
+\doi{10.32614/rj-2013-002}.
+}
 \description{
 \code{OptimizerGenSA} class that implements generalized simulated annealing. Calls
 \code{\link[GenSA:GenSA]{GenSA::GenSA()}} from package \CRANpkg{GenSA}.
@@ -47,7 +57,7 @@ objective_function = function(xs) {
 objective = ObjectiveRFun$new(fun = objective_function,
                               domain = domain,
                               codomain = codomain)
-terminator = term("evals", n_evals = 10)
+terminator = trm("evals", n_evals = 10)
 instance = OptimInstanceSingleCrit$new(objective = objective,
                              search_space = search_space,
                              terminator = terminator)

@@ -2,14 +2,15 @@
 #'
 #' @description
 #' Container around a [data.table::data.table] which stores all performed
-#' [Objective] function calls.
+#' function calls of the Objective.
 #'
 #' @section Technical details:
 #'
-#' The data is stored in a private `.data` field that contains a [data.table::data.table] which
-#' logs all performed [Objective] function calls. The [data.table::data.table] is accessed with
-#' the `$data()` method. New values can be added with the `$add_evals()` method.
-#' This however is usually done through the evaluation of the [OptimInstance] by the [Optimizer].
+#' The data is stored in a private `.data` field that contains a
+#' [data.table::data.table] which logs all performed function calls of the [Objective].
+#' This [data.table::data.table] is accessed with the public `$data()` method. New
+#' values can be added with the `$add_evals()` method. This however is usually
+#' done through the evaluation of the [OptimInstance] by the [Optimizer].
 #'
 #' @template param_codomain
 #' @template param_search_space
@@ -30,19 +31,19 @@ Archive = R6Class("Archive",
     #' @field start_time ([POSIXct]).
     start_time = NULL,
 
-    #' @field check_evals_xdt ('logical(1)')
-    check_evals_xdt = NULL,
+    #' @field check_values (`logical(1)`)
+    check_values = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param check_evals_xdt ('logical(1)')\cr
-    #'   Should x-values that are added to the archive be checked for validity?
+    #' @param check_values (`logical(1)`)\cr
+    #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(search_space, codomain, check_evals_xdt = TRUE) {
+    initialize = function(search_space, codomain, check_values = TRUE) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
-      self$check_evals_xdt = assert_flag(check_evals_xdt)
+      self$check_values = assert_flag(check_values)
       private$.data = data.table()
     },
 
@@ -56,7 +57,7 @@ Archive = R6Class("Archive",
       assert_data_table(ydt)
       assert_list(xss_trafoed)
       assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
-      if (self$check_evals_xdt) {
+      if (self$check_values) {
         self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
       }
       xydt = cbind(xdt, ydt)
@@ -77,7 +78,7 @@ Archive = R6Class("Archive",
     #' @param m (`integer()`)\cr
     #' Take only batches `m` into account. Default is all batches.
     #'
-    #' @return [data.table::data.table]
+    #' @return [data.table::data.table()].
     best = function(m = NULL) {
       if (self$n_batch == 0L) {
         stop("No results stored in archive")
@@ -88,17 +89,16 @@ Archive = R6Class("Archive",
       } else {
         assert_integerish(m, lower = 1L, upper = self$n_batch, coerce = TRUE)
       }
-
+      batch_nr = NULL # CRAN check
       tab = private$.data[batch_nr %in% m]
 
+      max_to_min = mult_max_to_min(self$codomain)
       if (self$codomain$length == 1L) {
-        order = if (self$codomain$tags[1L] == "minimize") 1L else -1L
-        setorderv(tab, self$codomain$ids(), order = order, na.last = TRUE)
+        setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
         res = tab[1, ]
       } else {
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-        minimize = map_lgl(self$codomain$tags, has_element, "minimize")
-        ymat = ifelse(minimize, 1L, -1L) * ymat
+        ymat = max_to_min * ymat
         res = tab[!is_dominated(ymat)]
       }
 
@@ -113,7 +113,7 @@ Archive = R6Class("Archive",
     #' Set of column names for columns to unnest via [mlr3misc::unnest()].
     #' Unnested columns are stored in separate columns instead of list-columns.
     #'
-    #' @return [data.table::data.table]
+    #' @return [data.table::data.table()].
     data = function(unnest = NULL) {
       if (is.null(unnest)) {
         return(copy(private$.data))
@@ -145,11 +145,11 @@ Archive = R6Class("Archive",
 
   active = list(
 
-    #' @field n_evals (`ìnteger(1)`)\cr
+    #' @field n_evals (`integer(1)`)\cr
     #' Number of evaluations stored in the archive.
     n_evals = function() nrow(private$.data),
 
-    #' @field n_batch (`ìnteger(1)`)\cr
+    #' @field n_batch (`integer(1)`)\cr
     #' Number of batches stored in the archive.
     n_batch = function() {
       if (is.null(private$.data$batch_nr)) {
@@ -160,10 +160,15 @@ Archive = R6Class("Archive",
     },
 
     #' @field cols_x (`character()`).
+    #' Column names of search space parameters.
     cols_x = function() self$search_space$ids(),
 
     #' @field cols_y (`character()`).
+<<<<<<< HEAD
 
+=======
+    #' Column names of codomain parameters.
+>>>>>>> master
     cols_y = function() self$codomain$ids()
     # idx_unevaled = function() self$data$y
   ),

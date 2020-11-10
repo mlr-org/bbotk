@@ -20,6 +20,9 @@
 #' Maximum number of points to try in a batch.}
 #' }
 #'
+#' @source
+#' `r tools::toRd(bibentries["bergstra_2012"])`
+#'
 #' @export
 #' @template example
 OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
