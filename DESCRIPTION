@@ -51,18 +51,10 @@ Suggests:
     adagio,
     GenSA,
     knitr,
-<<<<<<< HEAD
     progressr,
     rmarkdown
-Remotes:
-    mlr-org/paradox
-=======
-    nloptr,
-    rmarkdown,
-    testthat
 VignetteBuilder:
     knitr
->>>>>>> master
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
