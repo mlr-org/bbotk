@@ -24,7 +24,7 @@
 #' algorithm and where our terminators allow to obtain the same behavior.
 #'
 #' @source
-#' `r tools::toRd(bibentries[c("tsallis_1996", "xiang_2013")])`
+#' `r format_bib("tsallis_1996", "xiang_2013")`
 #'
 #' @export
 #' @template example

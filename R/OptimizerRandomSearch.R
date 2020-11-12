@@ -21,7 +21,7 @@
 #' }
 #'
 #' @source
-#' `r tools::toRd(bibentries["bergstra_2012"])`
+#' `r format_bib("bergstra_2012")`
 #'
 #' @export
 #' @template example

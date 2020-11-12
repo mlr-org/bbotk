@@ -29,7 +29,7 @@
 #' defaults. To deactivate these conditions, set them to `-1`.
 #'
 #' @source
-#' `r tools::toRd(bibentries["johnson_2014"])`
+#' `r format_bib("johnson_2014")`
 #'
 #' @export
 #' @examples
