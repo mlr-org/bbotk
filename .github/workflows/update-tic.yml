@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: macOS-latest, r: "release" }
+          - { os: ubuntu-latest, r: "release" }
 
     env:
       # use GITHUB_TOKEN from GItHub to workaround rate limits in {remotes}
