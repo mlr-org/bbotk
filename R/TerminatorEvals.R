@@ -55,6 +55,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' total number of evaluations (`sum`).
     #' @return list of `numeric(1)` and `integer(1)`
     progressr_update = function(archive) {
+      batch_nr = NULL
       amount = nrow(archive$data()[batch_nr == archive$n_batch])
       sum = archive$n_evals
       list(amount = amount, sum = sum)
