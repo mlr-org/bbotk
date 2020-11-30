@@ -108,16 +108,10 @@ OptimInstance = R6Class("OptimInstance",
       if ("progressr" %in% self$terminator$properties && isNamespaceLoaded(
         "progressr")) {
         if (is.null(self$progressor)) {
-          self$progressor = progressr::progressor(steps =
-            self$terminator$progressr_steps(self$archive))
+          self$progressor = Progressor$new(self$terminator$max(self$archive), 
+          self$terminator$unit)
         } else {
-          steps = assert_int(self$terminator$progressr_steps(self$archive))
-          update = self$terminator$progressr_update(self$archive)
-          sum = assert_int(update$sum)
-          amount = assert_numeric(update$amount)
-
-          self$progressor(message = sprintf("%i of %i", sum, steps),
-            amount = update$amount)
+          self$progressor$update(self$terminator$current(self$archive))
         }
       }
       assert_data_table(xdt)

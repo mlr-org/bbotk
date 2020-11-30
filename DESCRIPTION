@@ -78,6 +78,7 @@ Collate:
     'OptimizerGridSearch.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
+    'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
     'TerminatorClockTime.R'

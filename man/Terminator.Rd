@@ -58,6 +58,9 @@ Set of control parameters for terminator.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties.}
+
+\item{\code{unit}}{(\code{character()})\cr
+Unit of steps.}
 }
 \if{html}{\out{</div>}}
 }
@@ -67,6 +70,9 @@ Set of properties.}
 \item \href{#method-new}{\code{Terminator$new()}}
 \item \href{#method-format}{\code{Terminator$format()}}
 \item \href{#method-print}{\code{Terminator$print()}}
+\item \href{#method-max}{\code{Terminator$max()}}
+\item \href{#method-max_time}{\code{Terminator$max_time()}}
+\item \href{#method-current}{\code{Terminator$current()}}
 \item \href{#method-clone}{\code{Terminator$clone()}}
 }
 }
@@ -114,6 +120,57 @@ Printer.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{(ignored).}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-max"></a>}}
+\if{latex}{\out{\hypertarget{method-max}{}}}
+\subsection{Method \code{max()}}{
+Returns total number of steps.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$max(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-max_time"></a>}}
+\if{latex}{\out{\hypertarget{method-max_time}{}}}
+\subsection{Method \code{max_time()}}{
+Maximum runtime in seconds.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$max_time(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-current"></a>}}
+\if{latex}{\out{\hypertarget{method-current}{}}}
+\subsection{Method \code{current()}}{
+Returns steps made.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$current(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }

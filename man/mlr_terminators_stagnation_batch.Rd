@@ -60,7 +60,10 @@ Other Terminator:
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="current">}\href{../../bbotk/html/Terminator.html#method-current}{\code{bbotk::Terminator$current()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="max">}\href{../../bbotk/html/Terminator.html#method-max}{\code{bbotk::Terminator$max()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="max_time">}\href{../../bbotk/html/Terminator.html#method-max_time}{\code{bbotk::Terminator$max_time()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
 }
 \out{</details>}

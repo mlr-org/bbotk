@@ -12,13 +12,17 @@ test_that("TerminatorClockTime works", {
 })
 
 test_that("progressr works", {
+  skip_if_not_installed("progressr")
+  requireNamespace("progressr")
+
+  progressr::handlers("debug")
   terminator = trm("clock_time", stop_time = Sys.time() + 3)
   inst = MAKE_INST_1D(terminator = terminator)
   inst$archive$start_time = Sys.time()
   xdt = data.table(x = 1)
-  inst$eval_batch(xdt)
+  progressr::with_progress(inst$eval_batch(xdt))
 
-  expect_equal(terminator$progressr_steps(inst$archive), 3)
-  expect_equal(terminator$progressr_update(inst$archive)$sum, 3)
-  expect_equal(terminator$progressr_update(inst$archive)$amount, 0, tolerance = 0.15)
+  expect_class(inst$progressor$progressor, "progressor")
+  expect_equal(inst$terminator$max(inst$archive), 3)
+  expect_equal(inst$terminator$current(inst$archive), 1, tolerance = 1)
 })

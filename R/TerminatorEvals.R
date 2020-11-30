@@ -33,6 +33,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
         tags = "required")))
       ps$values = list(n_evals = 100L)
       super$initialize(param_set = ps, properties = c("single-crit", "multi-crit", "progressr"))
+      self$unit = "evaluations"
     },
 
     #' @description
@@ -41,26 +42,18 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       archive$n_evals >= self$param_set$values$n_evals
-    },
+    }
+  ),
 
-    #' @description
-    #' Returns the number of allowed evaluations.
-    #' @return `integer(1)`
-    progressr_steps = function(archive) {
+  private = list(
+    .max = function(archive) {
       self$param_set$values$n_evals
     },
 
-    #' @description
-    #' Returns the number of evaluations in the last batch (`amount`) and the
-    #' total number of evaluations (`sum`).
-    #' @return list of `numeric(1)` and `integer(1)`
-    progressr_update = function(archive) {
-      batch_nr = NULL
-      amount = nrow(archive$data()[batch_nr == archive$n_batch])
-      sum = archive$n_evals
-      list(amount = amount, sum = sum)
+    .current = function(archive) {
+      archive$n_evals
     }
-  ),
+  )
 )
 
 mlr_terminators$add("evals", TerminatorEvals)

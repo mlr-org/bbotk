@@ -34,6 +34,7 @@
 #' terminators need the property `progressr`.
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 Terminator = R6Class("Terminator",
   public = list(
@@ -44,6 +45,10 @@ Terminator = R6Class("Terminator",
     #' @field properties (`character()`)\cr
     #' Set of properties.
     properties = NULL,
+
+    #' @field unit (`character()`)\cr
+    #' Unit of steps.
+    unit = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -72,6 +77,30 @@ Terminator = R6Class("Terminator",
     print = function(...) {
       catf(self$format())
       catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
+    },
+
+    #' @description
+    #' Returns total number of steps.
+    max = function(archive) {
+      assert_r6(archive, "Archive")
+      private$.max(archive)
+    },
+
+    #' @description
+    #' Maximum runtime in seconds.
+    max_time = function(archive) {
+      if (isTRUE(self$unit == "seconds")) {
+        self$max(archive)
+      } else {
+        Inf
+      }
+    },
+
+    #' @description
+    #' Returns steps made.
+    current = function(archive) {
+      assert_r6(archive, "Archive")
+      private$.current(archive)
     }
-  ),
+  )
 )

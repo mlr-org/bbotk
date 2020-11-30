@@ -36,6 +36,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
           custom_check = custom_check)
       ))
       super$initialize(param_set = ps, properties = c("single-crit", "multi-crit", "progressr"))
+      self$unit = "seconds"
     },
 
     #' @description
@@ -44,28 +45,17 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       return(Sys.time() >= self$param_set$values$stop_time)
-    },
+    }
+  ),
 
-    #' @description
-    #' Returns time difference between start time and stop time in seconds.
-    #' @return `integer(1)`
-    progressr_steps = function(archive) {
-      as.integer(ceiling(difftime(self$param_set$values$stop_time,
+  private = list(
+    .max = function(archive) {
+       as.integer(ceiling(difftime(self$param_set$values$stop_time,
         archive$start_time, units = "secs")))
     },
 
-    #' @description
-    #' Returns time difference between the last two batches (`amount`) and
-    #' current runtime (`sum`) in seconds.
-    #' @return list of `numeric(1)` and `integer(1)`
-    progressr_update = function(archive) {
-      ts = unique(archive$data()$timestamp)
-      ts = c(archive$start_time, ts)
-      amount = as.numeric(difftime(ts[length(ts)], ts[length(ts) - 1]),
-        units = "secs")
-      sum = as.integer(ceiling(
-        difftime(self$param_set$values$stop_time, Sys.time(), units = "secs")))
-      list(amount = amount, sum = sum)
+    .current = function(archive) {
+      as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
     }
   )
 )

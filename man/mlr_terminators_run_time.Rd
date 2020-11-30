@@ -49,15 +49,16 @@ Other Terminator:
 \itemize{
 \item \href{#method-new}{\code{TerminatorRunTime$new()}}
 \item \href{#method-is_terminated}{\code{TerminatorRunTime$is_terminated()}}
-\item \href{#method-progressr_steps}{\code{TerminatorRunTime$progressr_steps()}}
-\item \href{#method-progressr_update}{\code{TerminatorRunTime$progressr_update()}}
 \item \href{#method-clone}{\code{TerminatorRunTime$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="current">}\href{../../bbotk/html/Terminator.html#method-current}{\code{bbotk::Terminator$current()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="max">}\href{../../bbotk/html/Terminator.html#method-max}{\code{bbotk::Terminator$max()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="max_time">}\href{../../bbotk/html/Terminator.html#method-max_time}{\code{bbotk::Terminator$max_time()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
 }
 \out{</details>}
@@ -91,47 +92,6 @@ otherwise.
 }
 \subsection{Returns}{
 \code{logical(1)}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-progressr_steps"></a>}}
-\if{latex}{\out{\hypertarget{method-progressr_steps}{}}}
-\subsection{Method \code{progressr_steps()}}{
-Returns the allowed runtime in seconds.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorRunTime$progressr_steps(archive)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{integer(1)}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-progressr_update"></a>}}
-\if{latex}{\out{\hypertarget{method-progressr_update}{}}}
-\subsection{Method \code{progressr_update()}}{
-Returns time difference between the last two batches (\code{amount}) and
-current runtime (\code{sum}) in seconds.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorRunTime$progressr_update(archive)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-list of \code{numeric(1)} and \code{integer(1)}
 }
 }
 \if{html}{\out{<hr>}}
