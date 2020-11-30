@@ -8,20 +8,7 @@ test_that("TerminatorEvals works", {
   expect_data_table(a$data(), nrows = 7L)
 })
 
-test_that("progressr  works", {
-  skip_if_not_installed("progressr")
-  requireNamespace("progressr")
-
-  progressr::handlers("debug")
-  terminator = trm("evals", n_evals = 10)
-  inst = MAKE_INST_1D(terminator = terminator)
-  optimizer = opt("random_search")
-  progressr::with_progress(optimizer$optimize(inst))
-
-  expect_class(inst$progressor$progressor, "progressor")
-  expect_equal(terminator$max(inst$archive), 10)
-  expect_equal(terminator$current(inst$archive), 10)
-
+test_that("max and current work", {
   terminator = trm("evals", n_evals = 10)
   inst = MAKE_INST_1D(terminator = terminator)
   xdt = data.table(x = 1)
@@ -35,4 +22,19 @@ test_that("progressr  works", {
 
   expect_equal(terminator$max(inst$archive), 10)
   expect_equal(terminator$current(inst$archive), 2)
+})
+
+test_that("progressr package works", {
+  skip_if_not_installed("progressr")
+  requireNamespace("progressr")
+
+  progressr::handlers("debug")
+  terminator = trm("evals", n_evals = 10)
+  inst = MAKE_INST_1D(terminator = terminator)
+  optimizer = opt("random_search")
+  progressr::with_progress(optimizer$optimize(inst))
+
+  expect_class(inst$progressor$progressor, "progressor")
+  expect_equal(terminator$max(inst$archive), 10)
+  expect_equal(terminator$current(inst$archive), 10)
 })
