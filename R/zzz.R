@@ -9,7 +9,13 @@
 
 .onLoad = function(libname, pkgname) {
   # nocov start
-  assign("lg", lgr::get_logger("bbotk"), envir = parent.env(environment()))
+  lg = lgr::get_logger("bbokt")
+  assign("lg", lg, envir = parent.env(environment()))
+  f = function(event) {
+    event$msg = sapply(event$msg, function(msg) paste("[bbotk]", msg))
+    TRUE
+  }
+  lg$add_filter(f)
 
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
