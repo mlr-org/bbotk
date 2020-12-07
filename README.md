@@ -24,19 +24,19 @@ Various optimization methods are already implemented e.g. grid search, random se
 
 CRAN version
 
-```{r}
+```r
 install.packages("bbotk")
 ```
 
 Development version
 
-```{r}
+```r
 remotes::install_github("mlr-org/bbotk")
 ```
 
 ## Example
 
-```{r}
+```r
 library(bbotk)
 library(paradox)
 
