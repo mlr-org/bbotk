@@ -145,7 +145,7 @@ Returns total number of steps.
 \if{html}{\out{<a id="method-max_time"></a>}}
 \if{latex}{\out{\hypertarget{method-max_time}{}}}
 \subsection{Method \code{max_time()}}{
-Maximum runtime in seconds.
+Remaining runtime in seconds.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Terminator$max_time(archive)}\if{html}{\out{</div>}}
 }

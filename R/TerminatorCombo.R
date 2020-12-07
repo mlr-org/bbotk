@@ -69,7 +69,24 @@ TerminatorCombo = R6Class("TerminatorCombo",
       catf(str_indent("* Terminators:", paste(map_chr(self$terminators, format),
         collapse = ",")))
     }
+  ),
 
+  private = list(
+    .current = function(archive) {
+      if(self$param_set$values$any) {
+        max(map_int(self$terminators, function(t) as.integer(t$current(archive)/t$max(archive)*100)))
+      } else {
+        min(map_int(self$terminators, function(t) as.integer(t$current(archive)/t$max(archive)*100)))
+      }
+    },
+
+    .max_time = function(archive) {
+      if(self$param_set$values$any) {
+        min(map_int(self$terminators, function(t) t$max_time(archive)))
+      } else {
+        max(map_int(self$terminators, function(t) t$max_time(archive)))
+      }
+    }
   )
 )
 

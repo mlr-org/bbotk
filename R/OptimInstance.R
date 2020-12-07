@@ -99,21 +99,20 @@ OptimInstance = R6Class("OptimInstance",
     #' the *search space* of the [OptimInstance] object. Can contain additional
     #' columns for extra information.
     eval_batch = function(xdt) {
+      if (isNamespaceLoaded("progressr")) { # "progressr" %in% self$terminator$properties &&
+        if (is.null(self$progressor)) {
+          self$progressor = Progressor$new(self$terminator$max(self$archive),
+                                           self$terminator$unit)
+        } else {
+          self$progressor$update(self$terminator$current(self$archive))
+        }
+      }
 
       if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
         self$is_terminated = TRUE
         stop(terminated_error(self))
       }
 
-      if ("progressr" %in% self$terminator$properties && isNamespaceLoaded(
-        "progressr")) {
-        if (is.null(self$progressor)) {
-          self$progressor = Progressor$new(self$terminator$max(self$archive), 
-          self$terminator$unit)
-        } else {
-          self$progressor$update(self$terminator$current(self$archive))
-        }
-      }
       assert_data_table(xdt)
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       lg$info("Evaluating %i configuration(s)", nrow(xdt))

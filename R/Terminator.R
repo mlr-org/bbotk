@@ -62,6 +62,7 @@ Terminator = R6Class("Terminator",
       self$param_set = assert_param_set(param_set)
       self$properties = assert_subset(properties,
         bbotk_reflections$terminator_properties)
+      self$unit = "%"
     },
 
     #' @description
@@ -87,10 +88,10 @@ Terminator = R6Class("Terminator",
     },
 
     #' @description
-    #' Maximum runtime in seconds.
+    #' Remaining runtime in seconds.
     max_time = function(archive) {
       if (isTRUE(self$unit == "seconds")) {
-        self$max(archive)
+        self$max(archive)-self$current(archive)
       } else {
         Inf
       }
@@ -101,6 +102,16 @@ Terminator = R6Class("Terminator",
     current = function(archive) {
       assert_r6(archive, "Archive")
       private$.current(archive)
+    }
+  ),
+
+  private = list(
+    .max = function(archive) {
+      100
+    },
+
+    .current = function(archive) {
+      if (self$is_terminated(archive)) 100 else 0
     }
   )
 )
