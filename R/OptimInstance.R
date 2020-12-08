@@ -36,7 +36,8 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
-    initialize = function(objective, search_space = NULL, terminator) {
+    initialize = function(objective, search_space = NULL, terminator,
+      archive_minimal = FALSE) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
         self$objective$domain
@@ -44,8 +45,13 @@ OptimInstance = R6Class("OptimInstance",
         assert_param_set(search_space)
       }
       self$terminator = assert_terminator(terminator, self)
-      self$archive = Archive$new(search_space = self$search_space,
-        codomain = objective$codomain)
+      self$archive = if(archive_minimal) {
+        ArchiveMinimal$new(search_space = self$search_space,
+          codomain = objective$codomain)
+      } else {
+        Archive$new(search_space = self$search_space,
+          codomain = objective$codomain)
+      }
 
       if (!all(self$search_space$is_number)) {
         private$.objective_function = objective_error
