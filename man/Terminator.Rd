@@ -27,14 +27,10 @@ particular if you are benchmarking multiple optimization algorithms.
 }
 \section{Technical details}{
 
-\code{Terminator} subclasses can implement \verb{$progressr_steps()} and
-\verb{$progressr_update()} to support progress bars via the package
-\CRANpkg{progressr}. \verb{$progressr_steps()} is called one time in
-\code{OptimInstace$eval_batch()} to initialize the progress bar with the total
-amount of steps. \verb{$progressr_update()} is called each time a new batch is
-evaluated and must return a named list with the amount of progress made in
-the last batch (\code{amount}) and the total amount of progress made (\code{sum}). Supported
-terminators need the property \code{progressr}.
+\code{Terminator} subclasses can overwrite \code{.status()} to support progress bars
+via the package \CRANpkg{progressr}. The method must return the maximum
+number of steps (\code{max_steps}) and the currently achieved number of steps
+(\code{current_steps}) in a named integer.
 }
 
 \seealso{
@@ -70,9 +66,8 @@ Unit of steps.}
 \item \href{#method-new}{\code{Terminator$new()}}
 \item \href{#method-format}{\code{Terminator$format()}}
 \item \href{#method-print}{\code{Terminator$print()}}
-\item \href{#method-max}{\code{Terminator$max()}}
-\item \href{#method-max_time}{\code{Terminator$max_time()}}
-\item \href{#method-current}{\code{Terminator$current()}}
+\item \href{#method-status}{\code{Terminator$status()}}
+\item \href{#method-remaining_time}{\code{Terminator$remaining_time()}}
 \item \href{#method-clone}{\code{Terminator$clone()}}
 }
 }
@@ -125,12 +120,13 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-max"></a>}}
-\if{latex}{\out{\hypertarget{method-max}{}}}
-\subsection{Method \code{max()}}{
-Returns total number of steps.
+\if{html}{\out{<a id="method-status"></a>}}
+\if{latex}{\out{\hypertarget{method-status}{}}}
+\subsection{Method \code{status()}}{
+Returns how many progression steps are made (\code{current_steps}) and the
+amount steps needed for termination (\code{max_steps}).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$max(archive)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$status(archive)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -139,15 +135,19 @@ Returns total number of steps.
 \item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+named \code{integer(2)}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-max_time"></a>}}
-\if{latex}{\out{\hypertarget{method-max_time}{}}}
-\subsection{Method \code{max_time()}}{
-Remaining runtime in seconds.
+\if{html}{\out{<a id="method-remaining_time"></a>}}
+\if{latex}{\out{\hypertarget{method-remaining_time}{}}}
+\subsection{Method \code{remaining_time()}}{
+Returns remaining runtime in seconds. If the terminator is not
+time-based, the reaming runtime is \code{Inf}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$max_time(archive)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$remaining_time(archive)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -157,22 +157,8 @@ Remaining runtime in seconds.
 }
 \if{html}{\out{</div>}}
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-current"></a>}}
-\if{latex}{\out{\hypertarget{method-current}{}}}
-\subsection{Method \code{current()}}{
-Returns steps made.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$current(archive)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
+\subsection{Returns}{
+\code{integer(1)}.
 }
 }
 \if{html}{\out{<hr>}}

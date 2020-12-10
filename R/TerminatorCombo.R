@@ -18,6 +18,7 @@
 #' }
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' trm("combo",
@@ -46,13 +47,12 @@ TerminatorCombo = R6Class("TerminatorCombo",
       properties = Reduce(intersect, map(terminators, "properties"))
       properties = properties[properties != "progressr"]
       super$initialize(param_set = ps, properties = properties)
+      self$unit = "percent"
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #'
-    #' @param archive ([Archive]).
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
@@ -68,24 +68,47 @@ TerminatorCombo = R6Class("TerminatorCombo",
       super$print(...)
       catf(str_indent("* Terminators:", paste(map_chr(self$terminators, format),
         collapse = ",")))
-    }
-  ),
-
-  private = list(
-    .current = function(archive) {
-      if(self$param_set$values$any) {
-        max(map_int(self$terminators, function(t) as.integer(t$current(archive)/t$max(archive)*100)))
-      } else {
-        min(map_int(self$terminators, function(t) as.integer(t$current(archive)/t$max(archive)*100)))
-      }
     },
 
-    .max_time = function(archive) {
+    #' @description
+    #' Returns the remaining runtime in seconds. If `any = TRUE`, the remaining
+    #' runtime is determined by the time-based terminator with the shortest time
+    #' remaining. If non-time-based terminators are used and `any = FALSE`,
+    #' the the remaining runtime is always `Inf`.
+    #' @return `integer(1)`.
+    remaining_time = function(archive) {
       if(self$param_set$values$any) {
         min(map_int(self$terminators, function(t) t$max_time(archive)))
       } else {
         max(map_int(self$terminators, function(t) t$max_time(archive)))
       }
+    },
+
+    #' @description
+    #' Returns `max_steps` and `current_steps` for each terminator.
+    #' @return [data.table::data.table].
+    status_long = function(archive) {
+      map_dtr(self$terminators, function(t) {
+        cbind(as.data.table(as.list(t$status(archive))), unit = t$unit)
+      })
+    }
+  ),
+
+  private = list(
+    .status = function(archive) {
+      max_steps = 100
+      current_steps =  if(self$param_set$values$any) {
+        max(map_int(self$terminators, function(t) {
+          status = t$status(archive)
+          as.integer(status["current_steps"]/status["max_steps"]*100)
+          }))
+      } else {
+        min(map_int(self$terminators, function(t) {
+          status = t$status(archive)
+          as.integer(status["current_steps"]/status["max_steps"]*100)
+        }))
+      }
+      c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
 )

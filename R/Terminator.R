@@ -24,14 +24,10 @@
 #' particular if you are benchmarking multiple optimization algorithms.
 #'
 #' @section Technical details:
-#' `Terminator` subclasses can implement `$progressr_steps()` and
-#' `$progressr_update()` to support progress bars via the package
-#' \CRANpkg{progressr}. `$progressr_steps()` is called one time in
-#' `OptimInstace$eval_batch()` to initialize the progress bar with the total
-#' amount of steps. `$progressr_update()` is called each time a new batch is
-#' evaluated and must return a named list with the amount of progress made in
-#' the last batch (`amount`) and the total amount of progress made (`sum`). Supported
-#' terminators need the property `progressr`.
+#' `Terminator` subclasses can overwrite `.status()` to support progress bars
+#' via the package \CRANpkg{progressr}. The method must return the maximum
+#' number of steps (`max_steps`) and the currently achieved number of steps
+#' (`current_steps`) in a named integer.
 #'
 #' @family Terminator
 #' @template param_archive
@@ -54,9 +50,9 @@ Terminator = R6Class("Terminator",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param param_set ([paradox::ParamSet])\cr
-    #'   Set of control parameters for terminator.
+    #' Set of control parameters for terminator.
     #' @param properties (`character()`)\cr
-    #'   Set of properties.
+    #' Set of properties.
     initialize = function(param_set = ParamSet$new(),
       properties = character()) {
       self$param_set = assert_param_set(param_set)
@@ -81,37 +77,33 @@ Terminator = R6Class("Terminator",
     },
 
     #' @description
-    #' Returns total number of steps.
-    max = function(archive) {
+    #' Returns how many progression steps are made (`current_steps`) and the
+    #' amount steps needed for termination (`max_steps`).
+    #' @return named `integer(2)`.
+    status = function(archive) {
       assert_r6(archive, "Archive")
-      private$.max(archive)
+      private$.status(archive)
     },
 
     #' @description
-    #' Remaining runtime in seconds.
-    max_time = function(archive) {
+    #' Returns remaining runtime in seconds. If the terminator is not
+    #' time-based, the reaming runtime is `Inf`.
+    #' @return `integer(1)`.
+    remaining_time = function(archive) {
       if (isTRUE(self$unit == "seconds")) {
-        self$max(archive)-self$current(archive)
+        status = self$status(archive)
+        status$max_steps - status$current_steps
       } else {
         Inf
       }
-    },
-
-    #' @description
-    #' Returns steps made.
-    current = function(archive) {
-      assert_r6(archive, "Archive")
-      private$.current(archive)
     }
   ),
 
   private = list(
-    .max = function(archive) {
-      100
-    },
-
-    .current = function(archive) {
-      if (self$is_terminated(archive)) 100 else 0
+    .status = function(archive) {
+      max_steps = 100
+      current_steps = if (self$is_terminated(archive)) 100 else 0
+      c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
 )

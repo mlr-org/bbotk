@@ -14,14 +14,14 @@ test_that("max and current work", {
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(terminator$max(inst$archive), 10)
-  expect_equal(terminator$current(inst$archive), 1)
+  expect_equal(terminator$status(inst$archive)["max_steps"],  c("max_steps" = 10))
+  expect_equal(terminator$status(inst$archive)["current_steps"], c("current_steps"= 1))
 
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(terminator$max(inst$archive), 10)
-  expect_equal(terminator$current(inst$archive), 2)
+  expect_equal(terminator$status(inst$archive)["max_steps"],  c("max_steps" = 10))
+  expect_equal(terminator$status(inst$archive)["current_steps"], c("current_steps"= 2))
 })
 
 test_that("progressr package works", {
@@ -35,6 +35,6 @@ test_that("progressr package works", {
   progressr::with_progress(optimizer$optimize(inst))
 
   expect_class(inst$progressor$progressor, "progressor")
-  expect_equal(terminator$max(inst$archive), 10)
-  expect_equal(terminator$current(inst$archive), 10)
+  expect_equal(terminator$status(inst$archive)["max_steps"], c("max_steps" = 10))
+  expect_equal(terminator$status(inst$archive)["current_steps"], c("current_steps"= 10))
 })

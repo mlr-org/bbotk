@@ -31,7 +31,7 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         ParamDbl$new("secs", lower = 0, default = 30)
       ))
       ps$values$secs = 30
-      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit", "progressr"))
+      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
       self$unit = "seconds"
     },
 
@@ -46,12 +46,10 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
   ),
 
   private = list(
-    .max = function(archive) {
-      self$param_set$values$secs
-    },
-
-    .current = function(archive) {
-      as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
+    .status = function(archive) {
+      max_steps = self$param_set$values$secs
+      current_steps =  as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
+      c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
 )

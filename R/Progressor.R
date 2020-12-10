@@ -10,11 +10,11 @@ Progressor = R6Class("Progressor",
     #' @field progressor (`progressr::progressor()`).
     progressor = NULL,
 
-    #' @field max (`integer(1)`).
-    max = NULL,
+    #' @field max_steps (`integer(1)`).
+    max_steps = NULL,
 
-    #' @field current .
-    current = NULL,
+    #' @field current_steps (`integer(1)`).
+    current_steps = NULL,
 
     #' @field unit (`character(1)`).
     unit = NULL,
@@ -22,28 +22,40 @@ Progressor = R6Class("Progressor",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param max (`integer(1)`)\cr
+    #' @param max_steps (`integer(1)`)\cr
     #' Total number of steps.
     #' @param unit (`character(1)`)\cr
     #' Unit of steps.
-    initialize = function(max, unit) {
-      self$max = assert_int(max)
+    initialize = function(max_steps, unit) {
+      self$max_steps = assert_int(max_steps)
       self$unit = assert_character(unit)
 
-      self$progressor = progressr::progressor(steps = self$max)
+      self$progressor = progressr::progressor(steps = self$max_steps)
     },
 
     #' @description
     #' Updates `progressr::progressor()` with current steps.
     #'
-    #' @param current (`integer(1)`)\cr
+    #' @param current_steps (`integer(1)`)\cr
     #' Current steps.
-    update = function(current) {
-      amount = current - self$current
-      self$current = current
+    #' @param best_y ([data.table::data.table])\cr
+    #' Best outcome in archive.
+    update = function(current_steps, best_y) {
+      amount = current_steps - self$current_steps
+      self$current_steps = current_steps
+      best_y = sapply(as.list(best_y), function(x) str_collapse(round(x, 3)))
 
-      self$progressor(message = sprintf("%i of %i %s", self$current, self$max, self$unit),
-        amount = amount)
+      if(self$unit == "percent") {
+        message = sprintf("Best: %s", str_collapse(paste0(names(best_y), ": ", best_y)))
+      } else {
+        message = sprintf("%i/%i %s Best: %s", self$current_steps, self$max_steps, self$unit, str_collapse(paste0(names(best_y), ": ", best_y)))
+      }
+
+      self$progressor(message = message, amount = amount)
     }
   )
 )
+
+str_named = function(str) {
+
+}

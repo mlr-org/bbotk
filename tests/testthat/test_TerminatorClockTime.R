@@ -18,6 +18,6 @@ test_that("max and current works", {
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(inst$terminator$max(inst$archive), 3)
-  expect_equal(inst$terminator$current(inst$archive), 1, tolerance = 1)
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 3))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 1), tolerance = 1)
 })

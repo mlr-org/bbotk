@@ -99,12 +99,13 @@ OptimInstance = R6Class("OptimInstance",
     #' the *search space* of the [OptimInstance] object. Can contain additional
     #' columns for extra information.
     eval_batch = function(xdt) {
-      if (isNamespaceLoaded("progressr")) { # "progressr" %in% self$terminator$properties &&
+      if (isNamespaceLoaded("progressr")) {
+        status = self$terminator$status(self$archive)
         if (is.null(self$progressor)) {
-          self$progressor = Progressor$new(self$terminator$max(self$archive),
-                                           self$terminator$unit)
+          self$progressor = Progressor$new(status["max_steps"], self$terminator$unit)
         } else {
-          self$progressor$update(self$terminator$current(self$archive))
+          ydt = self$archive$best()[, self$archive$cols_y, with=FALSE]
+          self$progressor$update(status["current_steps"], ydt)
         }
       }
 

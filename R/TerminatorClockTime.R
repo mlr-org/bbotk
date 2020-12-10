@@ -35,7 +35,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
         ParamUty$new("stop_time", tags = "required",
           custom_check = custom_check)
       ))
-      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit", "progressr"))
+      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
       self$unit = "seconds"
     },
 
@@ -49,13 +49,12 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
   ),
 
   private = list(
-    .max = function(archive) {
-       as.integer(ceiling(difftime(self$param_set$values$stop_time,
+    .status = function(archive) {
+      max_steps =  as.integer(ceiling(difftime(self$param_set$values$stop_time,
         archive$start_time, units = "secs")))
-    },
-
-    .current = function(archive) {
-      as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
+      current_steps =  as.integer(difftime(Sys.time(), archive$start_time),
+        units = "secs")
+      c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
 )

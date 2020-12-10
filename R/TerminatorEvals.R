@@ -32,7 +32,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
       ps = ParamSet$new(list(ParamInt$new("n_evals", lower = 1L, default = 100L,
         tags = "required")))
       ps$values = list(n_evals = 100L)
-      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit", "progressr"))
+      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
       self$unit = "evaluations"
     },
 
@@ -46,12 +46,10 @@ TerminatorEvals = R6Class("TerminatorEvals",
   ),
 
   private = list(
-    .max = function(archive) {
-      self$param_set$values$n_evals
-    },
-
-    .current = function(archive) {
-      archive$n_evals
+    .status = function(archive) {
+      max_steps = self$param_set$values$n_evals
+      current_steps =  archive$n_evals
+      c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
 )

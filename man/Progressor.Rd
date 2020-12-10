@@ -11,9 +11,9 @@ Wraps \code{progressr::progressor()} function and stores current progress.
 \describe{
 \item{\code{progressor}}{(\code{progressr::progressor()}).}
 
-\item{\code{max}}{(\code{integer(1)}).}
+\item{\code{max_steps}}{(\code{integer(1)}).}
 
-\item{\code{current}}{.}
+\item{\code{current_steps}}{(\code{integer(1)}).}
 
 \item{\code{unit}}{(\code{character(1)}).}
 }
@@ -33,13 +33,13 @@ Wraps \code{progressr::progressor()} function and stores current progress.
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Progressor$new(max, unit)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Progressor$new(max_steps, unit)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{max}}{(\code{integer(1)})\cr
+\item{\code{max_steps}}{(\code{integer(1)})\cr
 Total number of steps.}
 
 \item{\code{unit}}{(\code{character(1)})\cr
@@ -54,14 +54,17 @@ Unit of steps.}
 \subsection{Method \code{update()}}{
 Updates \code{progressr::progressor()} with current steps.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Progressor$update(current)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Progressor$update(current_steps, best_y)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{current}}{(\code{integer(1)})\cr
+\item{\code{current_steps}}{(\code{integer(1)})\cr
 Current steps.}
+
+\item{\code{best_y}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Best outcome in archive.}
 }
 \if{html}{\out{</div>}}
 }
