@@ -165,7 +165,6 @@ Archive = R6Class("Archive",
 
     #' @field cols_y (`character()`).
     cols_y = function() self$codomain$ids()
-    # idx_unevaled = function() self$data$y
   ),
 
   private = list(

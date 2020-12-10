@@ -43,7 +43,7 @@ Progressor = R6Class("Progressor",
     update = function(current_steps, best_y) {
       amount = current_steps - self$current_steps
       self$current_steps = current_steps
-      best_y = sapply(as.list(best_y), function(x) str_collapse(round(x, 3)))
+      best_y = map_chr(as.list(best_y), function(x) str_collapse(round(x, 3)))
 
       if(self$unit == "percent") {
         message = sprintf("Best: %s", str_collapse(paste0(names(best_y), ": ", best_y)))
@@ -55,7 +55,3 @@ Progressor = R6Class("Progressor",
     }
   )
 )
-
-str_named = function(str) {
-
-}
