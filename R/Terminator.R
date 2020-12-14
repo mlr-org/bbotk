@@ -92,7 +92,7 @@ Terminator = R6Class("Terminator",
     remaining_time = function(archive) {
       if (isTRUE(self$unit == "seconds")) {
         status = self$status(archive)
-        status$max_steps - status$current_steps
+        unname(status["max_steps"] - status["current_steps"])
       } else {
         Inf
       }

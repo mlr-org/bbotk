@@ -77,11 +77,8 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' the the remaining runtime is always `Inf`.
     #' @return `integer(1)`.
     remaining_time = function(archive) {
-      if(self$param_set$values$any) {
-        min(map_int(self$terminators, function(t) t$max_time(archive)))
-      } else {
-        max(map_int(self$terminators, function(t) t$max_time(archive)))
-      }
+      min_max = if(self$param_set$values$any) min else max
+      min_max(map_dbl(self$terminators, function(t) t$remaining_time(archive)), na.rm = TRUE)
     },
 
     #' @description
@@ -97,17 +94,11 @@ TerminatorCombo = R6Class("TerminatorCombo",
   private = list(
     .status = function(archive) {
       max_steps = 100
-      current_steps =  if(self$param_set$values$any) {
-        max(map_int(self$terminators, function(t) {
-          status = t$status(archive)
-          as.integer(status["current_steps"]/status["max_steps"]*100)
-          }))
-      } else {
-        min(map_int(self$terminators, function(t) {
-          status = t$status(archive)
-          as.integer(status["current_steps"]/status["max_steps"]*100)
+      min_max = if(self$param_set$values$any) max else min
+      current_steps = min_max(map_int(self$terminators, function(t) {
+        status = t$status(archive)
+        as.integer(status["current_steps"]/status["max_steps"]*100)
         }))
-      }
       c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )

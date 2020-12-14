@@ -13,10 +13,9 @@
 #'
 #' @section Progress Bars:
 #' `$optimize()` supports progress bars via the package \CRANpkg{progressr}
-#' combined with [Terminator] subclasses with the `progressr` property. Simply
-#' wrap the function in `progressr::with_progress()` to enable them. We
-#' recommend to use package \CRANpkg{progress} as backend; enable with
-#' `progressr::handlers("progress")`.
+#' combined with a [Terminator]. Simply wrap the function in
+#' `progressr::with_progress()` to enable them. We recommend to use package
+#' \CRANpkg{progress} as backend; enable with `progressr::handlers("progress")`.
 #' @export
 Optimizer = R6Class("Optimizer",
   public = list(

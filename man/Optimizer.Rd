@@ -15,10 +15,9 @@ estimated performance vector.
 \section{Progress Bars}{
 
 \verb{$optimize()} supports progress bars via the package \CRANpkg{progressr}
-combined with \link{Terminator} subclasses with the \code{progressr} property. Simply
-wrap the function in \code{progressr::with_progress()} to enable them. We
-recommend to use package \CRANpkg{progress} as backend; enable with
-\code{progressr::handlers("progress")}.
+combined with a \link{Terminator}. Simply wrap the function in
+\code{progressr::with_progress()} to enable them. We recommend to use package
+\CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
 }
 
 \section{Public fields}{
