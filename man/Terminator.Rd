@@ -30,7 +30,7 @@ particular if you are benchmarking multiple optimization algorithms.
 \code{Terminator} subclasses can overwrite \code{.status()} to support progress bars
 via the package \CRANpkg{progressr}. The method must return the maximum
 number of steps (\code{max_steps}) and the currently achieved number of steps
-(\code{current_steps}) in a named integer.
+(\code{current_steps}) as a named integer vecor.
 }
 
 \seealso{
