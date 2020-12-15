@@ -36,6 +36,9 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
+    #' @param archive_type (`character(1)`)\cr
+    #' Archive type that stores full archive (`Archive`),
+    #' only best result (`ArchiveBest`) or only y (`ArchiveY`).
     initialize = function(objective, search_space = NULL, terminator,
       archive_type = "Archive") {
       assert_choice(archive_type, c("Archive", "ArchiveBest", "ArchiveY"))

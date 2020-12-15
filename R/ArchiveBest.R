@@ -30,26 +30,26 @@ ArchiveBest = R6Class("ArchiveBest",
     #' Stores the best result in `ydt`.
     #'
     #' @param xss_trafoed (`list()`)\cr
-    #' ignored.
+    #' Transformed point(s) in the *domain space*.
     add_evals = function(xdt, xss_trafoed, ydt) {
       private$.n_evals = private$.n_evals+nrow(xdt)
-      browser()
       tab = rbindlist(list(private$.best, cbind(xdt, ydt)), fill = TRUE, use.names = TRUE)
 
       max_to_min = mult_max_to_min(self$codomain)
       private$.best = if (self$codomain$length == 1L) {
         setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
-        res = tab[1, ]
+        tab[1, ]
       } else {
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
         ymat = max_to_min * ymat
-        res = tab[!is_dominated(ymat)]
+        tab[!is_dominated(ymat)]
       }
     },
 
     #' @description
     #' Returns the best scoring evaluation. For single-crit optimization,
     #' the solution that minimizes / maximizes the objective function.
+    #' For multi-crit optimization, the Pareto set / front.
     #'
     #' @param m (`integer()`)\cr
     #' ignored.

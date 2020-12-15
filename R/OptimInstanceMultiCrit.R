@@ -25,8 +25,12 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator])\cr
     #' Multi-criteria terminator.
-    initialize = function(objective, search_space = NULL, terminator) {
-      super$initialize(objective, search_space, terminator)
+    #' @param archive_type (`character(1)`)\cr
+    #' Archive type that stores full archive (`Archive`),
+    #' only best result (`ArchiveBest`) or only y (`ArchiveY`).
+    initialize = function(objective, search_space = NULL, terminator,
+      archive_type = "Archive") {
+      super$initialize(objective, search_space, terminator, archive_type)
     },
 
     #' @description

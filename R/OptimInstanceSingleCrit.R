@@ -23,6 +23,9 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
+    #' @param archive_type (`character(1)`)\cr
+    #' Archive type that stores full archive (`Archive`),
+    #' only best result (`ArchiveBest`) or only y (`ArchiveY`).
     initialize = function(objective, search_space = NULL, terminator,
       archive_type = "Archive") {
       if (objective$codomain$length > 1) {
