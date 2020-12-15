@@ -1,18 +1,18 @@
 #' @title Minimal logging object for objective function evaluations
 #'
 #' @description
-#' The [ArchiveMinimal] stores no data but records the best scoring evaluation
-#' passed by `add_evals`. The [Archive] API is fully implemented but many
+#' The [ArchiveBest] stores no data but records the best scoring evaluation
+#' passed to `$add_evals()`. The [Archive] API is fully implemented but many
 #' parameters are ignored and some methods do nothing. The archive still works
-#' with `TerminatorClockTime`, `TerminatorEvals`, `TerminatorNone` and
-#' `TerminatorEvals`.
+#' with [TerminatorClockTime], [TerminatorEvals], [TerminatorNone] and
+#' [TerminatorEvals].
 #'
 #' @template param_codomain
 #' @template param_search_space
 #' @template param_xdt
 #' @template param_ydt
 #' @export
-ArchiveMinimal = R6Class("ArchiveMinimal",
+ArchiveBest = R6Class("ArchiveBest",
   inherit = Archive,
   public = list(
 
@@ -27,25 +27,23 @@ ArchiveMinimal = R6Class("ArchiveMinimal",
     },
 
     #' @description
-    #' Increases `n_evals` counter and stores best result.
+    #' Stores the best result in `ydt`.
     #'
     #' @param xss_trafoed (`list()`)\cr
-    #' Transformed point(s) in the *domain space*.
+    #' ignored.
     add_evals = function(xdt, xss_trafoed, ydt) {
-
-      # Increase number of evaluations
       private$.n_evals = private$.n_evals+nrow(xdt)
+      browser()
+      tab = rbindlist(list(private$.best, cbind(xdt, ydt)), fill = TRUE, use.names = TRUE)
 
-      # Calculate best
-      tab = cbind(xdt, ydt)
       max_to_min = mult_max_to_min(self$codomain)
-      setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
-      private$.best = if(is.null(private$.best)) {
-        tab[1, ]
+      private$.best = if (self$codomain$length == 1L) {
+        setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
+        res = tab[1, ]
       } else {
-        y_old = as.numeric(private$.best[1, self$cols_y, with=FALSE])
-        y_new = as.numeric(tab[1, self$cols_y, with=FALSE])
-        if (y_new < y_old) tab[1, ] else private$.best
+        ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
+        ymat = max_to_min * ymat
+        res = tab[!is_dominated(ymat)]
       }
     },
 
@@ -93,10 +91,13 @@ ArchiveMinimal = R6Class("ArchiveMinimal",
   ),
 
   private = list(
-    .data = NULL,
+    # Is always an empty data.table
+    .data = data.table(),
 
+    # Is increased by $add_evals()
     .n_evals = 0,
 
+    # Stores best result
     .best = NULL
   )
 )

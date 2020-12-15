@@ -37,7 +37,8 @@ OptimInstance = R6Class("OptimInstance",
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
     initialize = function(objective, search_space = NULL, terminator,
-      archive_minimal = FALSE) {
+      archive_type = "Archive") {
+      assert_choice(archive_type, c("Archive", "ArchiveBest", "ArchiveY"))
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
         self$objective$domain
@@ -45,11 +46,15 @@ OptimInstance = R6Class("OptimInstance",
         assert_param_set(search_space)
       }
       self$terminator = assert_terminator(terminator, self)
-      self$archive = if(archive_minimal) {
-        ArchiveMinimal$new(search_space = self$search_space,
-          codomain = objective$codomain)
-      } else {
+
+      self$archive = if(archive_type == "Archive") {
         Archive$new(search_space = self$search_space,
+        codomain = objective$codomain)
+      } else if (archive_type == "ArchiveBest") {
+        ArchiveBest$new(search_space = self$search_space,
+          codomain = objective$codomain)
+      } else if (archive_type == "ArchiveY") {
+        ArchiveY$new(search_space = self$search_space,
           codomain = objective$codomain)
       }
 
