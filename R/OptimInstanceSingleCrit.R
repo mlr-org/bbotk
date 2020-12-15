@@ -23,11 +23,15 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
-    initialize = function(objective, search_space = NULL, terminator) {
+    #' @param check_values (`logical(1)`)\cr
+    #' Should x-values that are added to the archive be checked for validity?
+    #' Search space that is logged into archive.
+    initialize = function(objective, search_space = NULL, terminator,
+      check_values = TRUE) {
       if (objective$codomain$length > 1) {
         stop("Codomain > 1")
       }
-      super$initialize(objective, search_space, terminator)
+      super$initialize(objective, search_space, terminator, check_values)
     },
 
     #' @description

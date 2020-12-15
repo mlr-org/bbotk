@@ -31,6 +31,7 @@
 #'
 #' @template param_domain
 #' @template param_codomain
+#' @template param_check_values
 #' @export
 ObjectiveRFun = R6Class("ObjectiveRFun",
   inherit = Objective,
@@ -46,14 +47,14 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(fun, domain, codomain = NULL, id = "function",
-      properties = character()) {
+      properties = character(), check_values = TRUE) {
       if (is.null(codomain)) {
         codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
       }
       private$.fun = assert_function(fun, "xs")
       # asserts id, domain, codomain, properties
       super$initialize(id = id, domain = domain, codomain = codomain,
-        properties = properties)
+        properties = properties, check_values = check_values)
     },
 
     #' @description
@@ -61,7 +62,10 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     #' supplied by the user.
     #' @param xs Input values.
     eval = function(xs) {
-      private$.fun(xs)
+      if (self$check_values) self$domain$assert(xs)
+      res = private$.fun(xs)
+      if (self$check_values) self$codomain$assert(res[self$codomain$ids()])
+      return(res)
     }
   ),
 

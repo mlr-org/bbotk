@@ -6,6 +6,7 @@
 #' @template param_domain
 #' @template param_codomain
 #' @template param_xdt
+#' @template param_check_values
 #' @export
 ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
   inherit = Objective,
@@ -20,14 +21,14 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(fun, domain, codomain = NULL, id = "function",
-      properties = character()) {
+      properties = character(), check_values = TRUE) {
       if (is.null(codomain)) {
         codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
       }
       private$.fun = assert_function(fun, "xdt")
       # asserts id, domain, codomain, properties
       super$initialize(id = id, domain = domain, codomain = codomain,
-        properties = properties)
+        properties = properties, check_values = check_values)
     },
 
     #' @description
@@ -42,7 +43,12 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' and multiple y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
-      private$.fun(rbindlist(xss))
+      if (self$check_values) lapply(xss, self$domain$assert)
+      res = private$.fun(rbindlist(xss))
+      if (self$check_values) {
+        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
+      }
+      return(res)
     },
 
     #' @description
@@ -52,7 +58,12 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' and multiple y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_dt = function(xdt) {
-      private$.fun(xdt)
+      if (self$check_values) self$domain$assert_dt(xdt)
+      res = private$.fun(xdt)
+      if (self$check_values) {
+        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
+      }
+      return(res)
     }
   ),
 
