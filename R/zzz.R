@@ -12,7 +12,7 @@
   lg = lgr::get_logger("bbotk")
   assign("lg", lg, envir = parent.env(environment()))
   f = function(event) {
-    event$msg = sapply(event$msg, function(msg) paste("[bbotk]", msg))
+    event$msg = paste("[bbotk]", event$msg)
     TRUE
   }
   lg$add_filter(f)

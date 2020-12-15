@@ -28,9 +28,12 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' @param archive_type (`character(1)`)\cr
     #' Archive type that stores full archive (`Archive`),
     #' only best result (`ArchiveBest`) or only y (`ArchiveY`).
+    #' @param check_values (`logical(1)`)\cr
+    #' Should x-values that are added to the archive be checked for validity?
+    #' Search space that is logged into archive.
     initialize = function(objective, search_space = NULL, terminator,
-      archive_type = "Archive") {
-      super$initialize(objective, search_space, terminator, archive_type)
+      archive_type = "Archive", check_values = TRUE) {
+      super$initialize(objective, search_space, terminator, archive_type, check_values)
     },
 
     #' @description

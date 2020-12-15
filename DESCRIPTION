@@ -63,6 +63,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Collate:
     'Archive.R'
+    'ArchiveBest.R'
+    'ArchiveY.R'
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'

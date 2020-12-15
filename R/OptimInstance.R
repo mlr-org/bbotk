@@ -39,8 +39,12 @@ OptimInstance = R6Class("OptimInstance",
     #' @param archive_type (`character(1)`)\cr
     #' Archive type that stores full archive (`Archive`),
     #' only best result (`ArchiveBest`) or only y (`ArchiveY`).
+    #' @param check_values (`logical(1)`)\cr
+    #' Should x-values that are added to the archive be checked for validity?
+    #' Search space that is logged into archive.
     initialize = function(objective, search_space = NULL, terminator,
-      archive_type = "Archive") {
+      archive_type = "Archive", check_values = TRUE) {
+
       assert_choice(archive_type, c("Archive", "ArchiveBest", "ArchiveY"))
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
@@ -50,15 +54,16 @@ OptimInstance = R6Class("OptimInstance",
       }
       self$terminator = assert_terminator(terminator, self)
 
+      assert_flag(check_values)
       self$archive = if(archive_type == "Archive") {
         Archive$new(search_space = self$search_space,
-        codomain = objective$codomain)
+        codomain = objective$codomain, check_values = check_values)
       } else if (archive_type == "ArchiveBest") {
         ArchiveBest$new(search_space = self$search_space,
-          codomain = objective$codomain)
+          codomain = objective$codomain, check_values = check_values)
       } else if (archive_type == "ArchiveY") {
         ArchiveY$new(search_space = self$search_space,
-          codomain = objective$codomain)
+          codomain = objective$codomain, check_values = check_values)
       }
 
       if (!all(self$search_space$is_number)) {
