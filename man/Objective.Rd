@@ -27,6 +27,9 @@ and ranges.}
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function, hence its feasible values.}
 
+\item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet}).\cr
+Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
+
 \item{\code{check_values}}{(\code{logical(1)})\cr}
 }
 \if{html}{\out{</div>}}
@@ -65,6 +68,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   properties = character(),
   domain,
   codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
+  constants = ParamSet$new(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
