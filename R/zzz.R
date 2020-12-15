@@ -9,7 +9,7 @@
 
 .onLoad = function(libname, pkgname) {
   # nocov start
-  lg = lgr::get_logger("bbokt")
+  lg = lgr::get_logger("bbotk")
   assign("lg", lg, envir = parent.env(environment()))
   f = function(event) {
     event$msg = paste("[bbotk]", event$msg)
