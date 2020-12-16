@@ -29,6 +29,9 @@ Codomain of objective function.}
 \item{\code{start_time}}{(\link{POSIXct}).}
 
 \item{\code{check_values}}{(\code{logical(1)})}
+
+\item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Contains all performed \link{Objective} function calls.}
 }
 \if{html}{\out{</div>}}
 }
@@ -55,7 +58,6 @@ Column names of codomain parameters.}
 \item \href{#method-new}{\code{Archive$new()}}
 \item \href{#method-add_evals}{\code{Archive$add_evals()}}
 \item \href{#method-best}{\code{Archive$best()}}
-\item \href{#method-data}{\code{Archive$data()}}
 \item \href{#method-format}{\code{Archive$format()}}
 \item \href{#method-print}{\code{Archive$print()}}
 \item \href{#method-clear}{\code{Archive$clear()}}
@@ -134,29 +136,6 @@ For multi-crit optimization, the Pareto set / front.
 \describe{
 \item{\code{m}}{(\code{integer()})\cr
 Take only batches \code{m} into account. Default is all batches.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-data"></a>}}
-\if{latex}{\out{\hypertarget{method-data}{}}}
-\subsection{Method \code{data()}}{
-Returns a \link[data.table:data.table]{data.table::data.table} which contains all performed
-\link{Objective} function calls.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$data(unnest = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{unnest}}{(\code{character()})\cr
-Set of column names for columns to unnest via \code{\link[mlr3misc:unnest]{mlr3misc::unnest()}}.
-Unnested columns are stored in separate columns instead of list-columns.}
 }
 \if{html}{\out{</div>}}
 }

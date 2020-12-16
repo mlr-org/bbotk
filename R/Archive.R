@@ -34,6 +34,10 @@ Archive = R6Class("Archive",
     #' @field check_values (`logical(1)`)
     check_values = NULL,
 
+    #' @field data ([data.table::data.table])\cr
+    #' Contains all performed [Objective] function calls.
+    data = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -44,7 +48,7 @@ Archive = R6Class("Archive",
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
       self$check_values = assert_flag(check_values)
-      private$.data = data.table()
+      self$data = data.table()
     },
 
     #' @description
@@ -64,10 +68,10 @@ Archive = R6Class("Archive",
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       xydt[, "x_domain" := list(xss_trafoed)]
       xydt[, "timestamp" := Sys.time()]
-      batch_nr = private$.data$batch_nr
+      batch_nr = self$data$batch_nr
       batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
       xydt[, "batch_nr" := batch_nr]
-      private$.data = rbindlist(list(private$.data, xydt), fill = TRUE, use.names = TRUE)
+      self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
     #' @description
@@ -90,7 +94,7 @@ Archive = R6Class("Archive",
         assert_integerish(m, lower = 1L, upper = self$n_batch, coerce = TRUE)
       }
       batch_nr = NULL # CRAN check
-      tab = private$.data[batch_nr %in% m]
+      tab = self$data[batch_nr %in% m]
 
       max_to_min = mult_max_to_min(self$codomain)
       if (self$codomain$length == 1L) {
@@ -106,22 +110,6 @@ Archive = R6Class("Archive",
     },
 
     #' @description
-    #' Returns a [data.table::data.table] which contains all performed
-    #' [Objective] function calls.
-    #'
-    #' @param unnest (`character()`)\cr
-    #' Set of column names for columns to unnest via [mlr3misc::unnest()].
-    #' Unnested columns are stored in separate columns instead of list-columns.
-    #'
-    #' @return [data.table::data.table()].
-    data = function(unnest = NULL) {
-      if (is.null(unnest)) {
-        return(copy(private$.data))
-      }
-      unnest(copy(private$.data), unnest, prefix = "{col}_")
-    },
-
-    #' @description
     #' Helper for print outputs.
     format = function() {
       sprintf("<%s>", class(self)[1L])
@@ -133,13 +121,13 @@ Archive = R6Class("Archive",
     #' @param ... (ignored).
     print = function() {
       catf(format(self))
-      print(private$.data)
+      print(self$data)
     },
 
     #' @description
     #' Clear all evaluation results from archive.
     clear = function() {
-      private$.data = data.table()
+      self$data = data.table()
     }
   ),
 
@@ -147,15 +135,15 @@ Archive = R6Class("Archive",
 
     #' @field n_evals (`integer(1)`)\cr
     #' Number of evaluations stored in the archive.
-    n_evals = function() nrow(private$.data),
+    n_evals = function() nrow(self$data),
 
     #' @field n_batch (`integer(1)`)\cr
     #' Number of batches stored in the archive.
     n_batch = function() {
-      if (is.null(private$.data$batch_nr)) {
+      if (is.null(self$data$batch_nr)) {
         0L
       } else {
-        max(private$.data$batch_nr)
+        max(self$data$batch_nr)
       }
     },
 
@@ -166,10 +154,14 @@ Archive = R6Class("Archive",
     #' @field cols_y (`character()`).
     #' Column names of codomain parameters.
     cols_y = function() self$codomain$ids()
-    # idx_unevaled = function() private$.data$y
   ),
 
   private = list(
     .data = NULL
   )
 )
+
+#' @export
+as.data.table.Archive = function(x, ...) { # nolint
+  unnest(copy(x$data), "x_domain", prefix = "{col}_")
+}
