@@ -12,6 +12,7 @@
 #' @template param_codomain
 #' @template param_xdt
 #' @template param_check_values
+#' @template param_constants
 #' @export
 Objective = R6Class("Objective",
   public = list(
@@ -31,6 +32,10 @@ Objective = R6Class("Objective",
     #' Specifies codomain of function, hence its feasible values.
     codomain = NULL,
 
+    #' @field constants ([paradox::ParamSet]).\cr
+    #' Changeable constants or parameters that are not subject to tuning can be stored and accessed here.
+    constants = NULL,
+
     #' @field check_values (`logical(1)`)\cr
     check_values = NULL,
 
@@ -41,11 +46,12 @@ Objective = R6Class("Objective",
     #' @param properties (`character()`).
     initialize = function(id = "f", properties = character(), domain,
       codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
-      check_values = TRUE) {
+      constants = ParamSet$new(), check_values = TRUE) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
       self$codomain = assert_codomain(codomain)
       self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
+      self$constants = assert_param_set(constants)
       self$check_values = assert_flag(check_values)
     },
 
@@ -65,6 +71,10 @@ Objective = R6Class("Objective",
       print(self$domain)
       catf("Codomain:")
       print(self$codomain)
+      if (length(self$constants$values) > 0) {
+        catf("Constants:")
+        print(self$constants)
+      }
     },
 
     #' @description

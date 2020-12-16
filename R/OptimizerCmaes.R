@@ -52,7 +52,7 @@
 #' instance$result
 #'
 #' # Allows access of data.table of full path of all evaluations
-#' instance$archive$data()
+#' as.data.table(instance$archive)
 OptimizerCmaes = R6Class("OptimizerCmaes",
   inherit = Optimizer,
   public = list(
