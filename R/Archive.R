@@ -154,6 +154,5 @@ Archive = R6Class("Archive",
 
 #' @export
 as.data.table.Archive = function(x, ...) { # nolint
-  browser()
   unnest(copy(x$data), "x_domain", prefix = "{col}_")
 }
