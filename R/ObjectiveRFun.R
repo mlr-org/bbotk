@@ -47,14 +47,14 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(fun, domain, codomain = NULL, id = "function",
-      properties = character(), check_values = TRUE) {
+      properties = character(), constants = ParamSet$new(), check_values = TRUE) {
       if (is.null(codomain)) {
         codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
       }
       private$.fun = assert_function(fun, "xs")
       # asserts id, domain, codomain, properties
       super$initialize(id = id, domain = domain, codomain = codomain,
-        properties = properties, check_values = check_values)
+        properties = properties, constants = constants, check_values = check_values)
     },
 
     #' @description
