@@ -52,7 +52,7 @@ In the following we will use `bbotk` to minimize this function:
 
 ```{r}
 fun = function(xs) {
-  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+  c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 ```
 
@@ -175,7 +175,7 @@ For simplicity we define our problem as a minimization problem.
 
 ```{r}
 fun_volume = function(xs) {
-  - (xs$h * xs$w * xs$d)
+  c(y = - (xs$h * xs$w * xs$d))
 }
 domain = ParamSet$new(list(
   ParamDbl$new("h", lower = 0),

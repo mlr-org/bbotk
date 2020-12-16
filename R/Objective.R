@@ -92,7 +92,7 @@ Objective = R6Class("Objective",
     eval = function(xs) {
       if (self$check_values) self$domain$assert(xs)
       res = private$.eval(xs)
-      if (self$check_values) self$codomain$assert(res[self$codomain$ids()])
+      if (self$check_values) self$codomain$assert(res)
       return(res)
     },
 
