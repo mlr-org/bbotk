@@ -46,7 +46,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   domain,
   codomain = NULL,
   id = "function",
-  properties = character()
+  properties = character(),
+  check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
 
@@ -70,6 +71,10 @@ be minimized or maximized.  The default is to minimize each component.}
 \item{\code{id}}{(\code{character(1)}).}
 
 \item{\code{properties}}{(\code{character()}).}
+
+\item{\code{check_values}}{(\code{logical(1)})\cr
+Should points before the evaluation and the results be checked for
+validity?}
 }
 \if{html}{\out{</div>}}
 }

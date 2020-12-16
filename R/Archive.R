@@ -62,11 +62,10 @@ Archive = R6Class("Archive",
       }
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
-      xydt[, "x_domain" := list(xss_trafoed)]
-      xydt[, "timestamp" := Sys.time()]
       batch_nr = private$.data$batch_nr
-      batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
-      xydt[, "batch_nr" := batch_nr]
+      set(xydt, j = "x_domain", value = list(xss_trafoed))
+      set(xydt, j = "timestamp", value = Sys.time())
+      set(xydt, j = "batch_nr", value = if (length(batch_nr)) max(batch_nr) + 1L else 1L)
       private$.data = rbindlist(list(private$.data, xydt), fill = TRUE, use.names = TRUE)
     },
 

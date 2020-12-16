@@ -36,7 +36,11 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
-    initialize = function(objective, search_space = NULL, terminator) {
+    #' @param check_values (`logical(1)`)\cr
+    #' Should x-values that are added to the archive be checked for validity?
+    #' Search space that is logged into archive.
+    initialize = function(objective, search_space = NULL, terminator,
+      check_values = TRUE) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
         self$objective$domain
@@ -44,8 +48,9 @@ OptimInstance = R6Class("OptimInstance",
         assert_param_set(search_space)
       }
       self$terminator = assert_terminator(terminator, self)
+      assert_flag(check_values)
       self$archive = Archive$new(search_space = self$search_space,
-        codomain = objective$codomain)
+        codomain = objective$codomain, check_values = check_values)
 
       if (!all(self$search_space$is_number)) {
         private$.objective_function = objective_error

@@ -11,6 +11,7 @@
 #' @template param_domain
 #' @template param_codomain
 #' @template param_xdt
+#' @template param_check_values
 #' @export
 Objective = R6Class("Objective",
   public = list(
@@ -42,9 +43,6 @@ Objective = R6Class("Objective",
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
-    #' @param check_values (`logical(1)`)\cr
-    #' Should points before the evaluation and the results be checked for
-    #' validity?
     initialize = function(id = "f", properties = character(), domain,
       codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
       constants = ParamSet$new(), check_values = TRUE) {

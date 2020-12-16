@@ -1,6 +1,8 @@
 # bbotk 0.2.2.9000
 
 * Improved `TerminatorPerfRearched` documentation.
+* Added `check_values` flag in `OptimInstance`, `OptimInstanceSingleCrit`, 
+  `OptimInstanceMultiCrit`, `ObjectiveRFun` and `ObjectiveRFunDt`.
 
 # bbotk 0.2.2
 

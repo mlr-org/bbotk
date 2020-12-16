@@ -31,6 +31,7 @@
 #'
 #' @template param_domain
 #' @template param_codomain
+#' @template param_check_values
 #' @export
 ObjectiveRFun = R6Class("ObjectiveRFun",
   inherit = Objective,
@@ -61,7 +62,10 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     #' supplied by the user.
     #' @param xs Input values.
     eval = function(xs) {
-      private$.fun(xs)
+      if (self$check_values) self$domain$assert(xs)
+      res = private$.fun(xs)
+      if (self$check_values) self$codomain$assert(res[self$codomain$ids()])
+      return(res)
     }
   ),
 
