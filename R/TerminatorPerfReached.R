@@ -51,7 +51,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
         return(FALSE)
       }
 
-      ydata = get_private(archive)$.data[[ycol]]
+      ydata = archive$data[[ycol]]
       if (minimize) {
         any(ydata <= level)
       } else {

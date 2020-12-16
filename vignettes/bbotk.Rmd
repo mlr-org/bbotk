@@ -154,7 +154,7 @@ instance$result_y
 You can also access the whole history of evaluated points.
 
 ```{r}
-instance$archive$data()
+as.data.table(instance$archive)
 ```
 
 ### Search Space Transformations
@@ -241,7 +241,7 @@ inst$is_terminated = FALSE
 inst$terminator = trm("none")
 xvals = data.table(h = c(0.6666, 0.6667), w = c(0.6666, 0.6667))
 inst$eval_batch(xdt = xvals)
-tail(inst$archive$data())
+tail(as.data.table(instance$archive))
 ```
 However, this does not update the result.
 You could set the result by calling `inst$assign_result()` but this should be handled by the optimizer.

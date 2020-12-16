@@ -12,6 +12,7 @@
 #' @template param_codomain
 #' @template param_xdt
 #' @template param_check_values
+#' @template param_constants
 #' @export
 Objective = R6Class("Objective",
   public = list(

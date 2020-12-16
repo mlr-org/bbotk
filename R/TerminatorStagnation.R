@@ -59,7 +59,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
         return(FALSE)
       }
 
-      ydata = archive$data()[, ycol, , drop = FALSE, with = FALSE]
+      ydata = archive$data[, ycol, , drop = FALSE, with = FALSE]
       perf_before = head(ydata, -iters)
       perf_window = tail(ydata, iters)
       if (minimize) {

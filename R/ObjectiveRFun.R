@@ -32,6 +32,7 @@
 #' @template param_domain
 #' @template param_codomain
 #' @template param_check_values
+#' @template param_constants
 #' @export
 ObjectiveRFun = R6Class("ObjectiveRFun",
   inherit = Objective,

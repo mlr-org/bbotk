@@ -4,14 +4,6 @@
 #' Container around a [data.table::data.table] which stores all performed
 #' function calls of the Objective.
 #'
-#' @section Technical details:
-#'
-#' The data is stored in a private `.data` field that contains a
-#' [data.table::data.table] which logs all performed function calls of the [Objective].
-#' This [data.table::data.table] is accessed with the public `$data()` method. New
-#' values can be added with the `$add_evals()` method. This however is usually
-#' done through the evaluation of the [OptimInstance] by the [Optimizer].
-#'
 #' @template param_codomain
 #' @template param_search_space
 #' @template param_xdt
@@ -66,20 +58,11 @@ Archive = R6Class("Archive",
       }
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
-<<<<<<< HEAD
-      xydt[, "x_domain" := list(xss_trafoed)]
-      xydt[, "timestamp" := Sys.time()]
       batch_nr = self$data$batch_nr
-      batch_nr = if (length(batch_nr)) max(batch_nr) + 1L else 1L
-      xydt[, "batch_nr" := batch_nr]
-      self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
-=======
-      batch_nr = private$.data$batch_nr
       set(xydt, j = "x_domain", value = list(xss_trafoed))
       set(xydt, j = "timestamp", value = Sys.time())
       set(xydt, j = "batch_nr", value = if (length(batch_nr)) max(batch_nr) + 1L else 1L)
-      private$.data = rbindlist(list(private$.data, xydt), fill = TRUE, use.names = TRUE)
->>>>>>> 2f4d449a3d4d9bf450366ef93651e71238003299
+      self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
     #' @description

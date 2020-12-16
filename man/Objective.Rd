@@ -90,6 +90,9 @@ Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.}
 
+\item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
+
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for
 validity?}

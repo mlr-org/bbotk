@@ -47,6 +47,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   codomain = NULL,
   id = "function",
   properties = character(),
+  constants = ParamSet$new(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
@@ -71,6 +72,9 @@ be minimized or maximized.  The default is to minimize each component.}
 \item{\code{id}}{(\code{character(1)}).}
 
 \item{\code{properties}}{(\code{character()}).}
+
+\item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for

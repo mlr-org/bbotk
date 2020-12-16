@@ -131,7 +131,7 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
   optimizer$optimize(instance)
   archive = instance$archive
 
-  expect_data_table(archive$data(), nrows = real_evals)
+  expect_data_table(archive$data, nrows = real_evals)
   expect_equal(instance$archive$n_evals, real_evals)
 
   x_opt = instance$result_x_domain

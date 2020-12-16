@@ -7,16 +7,6 @@
 Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
 function calls of the Objective.
 }
-\section{Technical details}{
-
-
-The data is stored in a private \code{.data} field that contains a
-\link[data.table:data.table]{data.table::data.table} which logs all performed function calls of the \link{Objective}.
-This \link[data.table:data.table]{data.table::data.table} is accessed with the public \verb{$data()} method. New
-values can be added with the \verb{$add_evals()} method. This however is usually
-done through the evaluation of the \link{OptimInstance} by the \link{Optimizer}.
-}
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
