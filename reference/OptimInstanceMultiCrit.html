@@ -204,7 +204,12 @@ Optimal outcome.</p></dd>
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>OptimInstanceMultiCrit</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>objective</span>, search_space <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>terminator</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OptimInstanceMultiCrit</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>objective</span>,
+  search_space <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>terminator</span>,
+  check_values <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -217,6 +222,10 @@ Depending on the context, this value defaults to the domain of the objective.</p
 
 <dt><code>terminator</code></dt><dd><p>(<a href='Terminator.html'>Terminator</a>)<br />
 Multi-criteria terminator.</p></dd>
+
+<dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Should x-values that are added to the archive be checked for validity?
+Search space that is logged into archive.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

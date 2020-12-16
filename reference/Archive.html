@@ -153,16 +153,6 @@ function calls of the Objective.</p>
 
 
 
-    <h2 class="hasAnchor" id="technical-details"><a class="anchor" href="#technical-details"></a>Technical details</h2>
-
-    
-
-
-<p>The data is stored in a private <code>.data</code> field that contains a
-<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> which logs all performed function calls of the <a href='Objective.html'>Objective</a>.
-This <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> is accessed with the public <code>$data()</code> method. New
-values can be added with the <code>$add_evals()</code> method. This however is usually
-done through the evaluation of the <a href='OptimInstance.html'>OptimInstance</a> by the <a href='Optimizer.html'>Optimizer</a>.</p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
@@ -175,6 +165,9 @@ Codomain of objective function.</p></dd>
 <dt><code>start_time</code></dt><dd><p>(<a href='https://rdrr.io/r/base/DateTimeClasses.html'>POSIXct</a>).</p></dd>
 
 <dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</p></dd>
+
+<dt><code>data</code></dt><dd><p>(<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>)<br />
+Contains all performed <a href='Objective.html'>Objective</a> function calls.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
@@ -202,7 +195,6 @@ Column names of codomain parameters.</p></dd>
 <li><p><a href='#method-new'><code>Archive$new()</code></a></p></li>
 <li><p><a href='#method-add_evals'><code>Archive$add_evals()</code></a></p></li>
 <li><p><a href='#method-best'><code>Archive$best()</code></a></p></li>
-<li><p><a href='#method-data'><code>Archive$data()</code></a></p></li>
 <li><p><a href='#method-format'><code>Archive$format()</code></a></p></li>
 <li><p><a href='#method-print'><code>Archive$print()</code></a></p></li>
 <li><p><a href='#method-clear'><code>Archive$clear()</code></a></p></li>
@@ -261,21 +253,6 @@ For multi-crit optimization, the Pareto set / front.</p><h4 class='hasAnchor' id
 <p><div class="arguments"></p><dl>
 <dt><code>m</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
 Take only batches <code>m</code> into account. Default is all batches.</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>.</p>
-<p><hr>
-<a id="method-data"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/utils/data.html'>data()</a></code></h3>
-<p>Returns a <a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a> which contains all performed
-<a href='Objective.html'>Objective</a> function calls.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>data</span><span class='op'>(</span>unnest <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>unnest</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
-Set of column names for columns to unnest via <code><a href='https://mlr3misc.mlr-org.com/reference/unnest.html'>mlr3misc::unnest()</a></code>.
-Unnested columns are stored in separate columns instead of list-columns.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
