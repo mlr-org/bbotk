@@ -24,6 +24,11 @@ ArchiveBest = R6Class("ArchiveBest",
     initialize = function(search_space, codomain, check_values = FALSE) {
       self$search_space = assert_param_set(search_space)
       self$codomain = assert_param_set(codomain)
+      private$.max_to_min = mult_max_to_min(self$codomain)
+      if(self$codomain$length == 1) {
+        private$.best_y = if(private$.max_to_min == -1) -Inf else Inf
+      }
+      super$initialize(search_space, codomain, check_values = check_values)
     },
 
     #' @description
@@ -33,16 +38,24 @@ ArchiveBest = R6Class("ArchiveBest",
     #' Transformed point(s) in the *domain space*.
     add_evals = function(xdt, xss_trafoed, ydt) {
       private$.n_evals = private$.n_evals+nrow(xdt)
-      tab = rbindlist(list(private$.best, cbind(xdt, ydt)), fill = TRUE, use.names = TRUE)
 
-      max_to_min = mult_max_to_min(self$codomain)
-      private$.best = if (self$codomain$length == 1L) {
-        setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
-        tab[1, ]
+      if(self$codomain$length == 1) {
+        y = ydt[[1]]*private$.max_to_min
+        id = which_min(y)
+        if(y[id] < private$.best_y*private$.max_to_min) {
+          private$.best_y = ydt[id,]
+          private$.best_x = xdt[id,]
+        }
       } else {
-        ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-        ymat = max_to_min * ymat
-        tab[!is_dominated(ymat)]
+        y = rbindlist(list(ydt, private$.best_y))
+        x = rbindlist(list(xdt, private$.best_x))
+
+        ymat = t(as.matrix(y))
+        ymat = private$.max_to_min * ymat
+        id = !is_dominated(ymat)
+
+        private$.best_y = y[id,]
+        private$.best_x = x[id,]
       }
     },
 
@@ -56,18 +69,11 @@ ArchiveBest = R6Class("ArchiveBest",
     #'
     #' @return [data.table::data.table()]
     best = function(m = NULL) {
-      private$.best
-    },
-
-    #' @description
-    #' Empty [data.table].
-    #'
-    #' @param unnest (`character()`)\cr
-    #' ignored.
-    #'
-    #' @return [data.table].
-    data = function(unnest = NULL) {
-      data.table()
+      if(self$n_evals == 0) {
+        stop("No results stored in archive")
+      } else {
+        cbind(private$.best_x, private$.best_y)
+      }
     }
   ),
 
@@ -91,13 +97,15 @@ ArchiveBest = R6Class("ArchiveBest",
   ),
 
   private = list(
-    # Is always an empty data.table
-    .data = data.table(),
-
     # Is increased by $add_evals()
     .n_evals = 0,
 
-    # Stores best result
-    .best = NULL
+    # Stores best x
+    .best_x = NULL,
+
+    # Stores best y
+    .best_y = NULL,
+
+    .max_to_min = NULL
   )
 )
