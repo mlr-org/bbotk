@@ -24,7 +24,8 @@ Codomain of objective function.}
 Contains all performed \link{Objective} function calls.}
 
 \item{\code{store_x_domain}}{(\code{logical(1)})
-Determines if x values, should be stored in \verb{$data$x_domain} as list items. The trafo will be applied if defined in \code{search_space}.}
+Determines if x values, should be stored in \verb{$data$x_domain} as list items. The trafo will be applied if defined in \code{search_space}.
+Changing this value after evals have been added can lead to unexpected behavior.}
 }
 \if{html}{\out{</div>}}
 }

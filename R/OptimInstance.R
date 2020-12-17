@@ -57,7 +57,7 @@ OptimInstance = R6Class("OptimInstance",
 
       self$archive = Archive$new(search_space = self$search_space,
         codomain = objective$codomain, check_values = check_values,
-        store_x_domain = !is_rfundt && !objective$has_trafo)
+        store_x_domain = !is_rfundt && !self$search_space$has_trafo)
 
       if (!all(self$search_space$is_number)) {
         private$.objective_function = objective_error
@@ -117,14 +117,14 @@ OptimInstance = R6Class("OptimInstance",
 
       is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
       # calculate the x as (trafoed) domain only if needed
-      if (objective$has_trafo || self$archive$store_x_domain || !is_rfundt) {
+      if (self$search_space$has_trafo || self$archive$store_x_domain || !is_rfundt) {
         xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       } else {
         xss_trafoed = NULL
       }
 
       # if no trafos, and objective evals dt directly we go a shortcut
-      if (is_rfundt && !objective$has_trafo) {
+      if (is_rfundt && !self$search_space$has_trafo) {
         ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE],)
       } else {
         ydt = self$objective$eval_many(xss_trafoed)
