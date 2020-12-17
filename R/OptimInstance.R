@@ -51,13 +51,10 @@ OptimInstance = R6Class("OptimInstance",
       assert_flag(check_values)
 
       is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
-      # if (is_rfundt && objective$has_trafo) {
-      #   stop("The search_space has trafos and the Objective is of class ObjectiveRFunDt. This is not supported!")
-      # }
 
       self$archive = Archive$new(search_space = self$search_space,
         codomain = objective$codomain, check_values = check_values,
-        store_x_domain = !is_rfundt && !self$search_space$has_trafo)
+        store_x_domain = !is_rfundt || self$search_space$has_trafo) # only not store xss if we have RFunDT and not trafo
 
       if (!all(self$search_space$is_number)) {
         private$.objective_function = objective_error
