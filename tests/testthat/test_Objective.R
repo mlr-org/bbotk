@@ -52,6 +52,7 @@ test_that("Objective specialzations work", {
 
   FUN_1D_DT = function(xdt) data.table(y = xdt$x^2) # DT version oof FUN_1D in helper.R
   FUN_2D_DT = function(xdt) data.table(y = rowSums(xdt^2)) # same but FUN_2D
+  FUN_2D_2D_DT = function(xdt) data.table(y1 = xdt[[1]]^2, y2 = -xdt[[2]]^2) # same as FUN_2D_2D
 
   # Different function pairs, where the R function uses a different signature but they should do the same
   funs = list(
@@ -61,7 +62,15 @@ test_that("Objective specialzations work", {
     list( # 2d x, 1d y
       rfun = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DT, domain = PS_2D)
-    )
+    ),
+    list( #2d x with trafo, 1d y
+      rfun = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D_TRF),
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DT, domain = PS_2D_TRF)
+    ),
+    list( #2d x with trafo, 1d y + extra
+      rfun = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D_TRF, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1")),
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_2D_DT, domain = PS_2D_TRF, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"))
+    ),
   )
 
   for (fun_pairs in funs) {

@@ -49,8 +49,15 @@ OptimInstance = R6Class("OptimInstance",
       }
       self$terminator = assert_terminator(terminator, self)
       assert_flag(check_values)
+
+      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
+      # if (is_rfundt && objective$has_trafo) {
+      #   stop("The search_space has trafos and the Objective is of class ObjectiveRFunDt. This is not supported!")
+      # }
+
       self$archive = Archive$new(search_space = self$search_space,
-        codomain = objective$codomain, check_values = check_values)
+        codomain = objective$codomain, check_values = check_values,
+        store_x_domain = !is_rfundt && !objective$has_trafo)
 
       if (!all(self$search_space$is_number)) {
         private$.objective_function = objective_error
@@ -108,15 +115,21 @@ OptimInstance = R6Class("OptimInstance",
 
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
 
-      # if no trafos, and objective evals dt directly we go a shortcut
-      # FIXME: What about other Objective specializations that implement $eval_dt?
-      if (!self$search_space$has_trafo && inherits(self$objective, "ObjectiveRFunDt")) {
-        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE],)
-        xss_trafoed = NULL
-      } else {
+      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
+      # calculate the x as (trafoed) domain only if needed
+      if (objective$has_trafo || self$archive$store_x_domain || !is_rfundt) {
         xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+      } else {
+        xss_trafoed = NULL
+      }
+
+      # if no trafos, and objective evals dt directly we go a shortcut
+      if (is_rfundt && !objective$has_trafo) {
+        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE],)
+      } else {
         ydt = self$objective$eval_many(xss_trafoed)
       }
+
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),
