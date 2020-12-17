@@ -57,7 +57,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
-  archive_type = "Archive",
+  keep_evals = "all",
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
@@ -75,9 +75,8 @@ Depending on the context, this value defaults to the domain of the objective.}
 \item{\code{terminator}}{(\link{Terminator})\cr
 Multi-criteria terminator.}
 
-\item{\code{archive_type}}{(\code{character(1)})\cr
-Archive type that stores full archive (\code{Archive}),
-only best result (\code{ArchiveBest}) or only y (\code{ArchiveY}).}
+\item{\code{keep_evals}}{(\code{character(1)})\cr
+Keep \code{all} or only \code{best} evaluations in archive?}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?

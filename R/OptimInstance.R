@@ -12,6 +12,7 @@
 #'
 #' @template param_xdt
 #' @template param_search_space
+#' @template param_keep_evals
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
@@ -36,16 +37,13 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
-    #' @param archive_type (`character(1)`)\cr
-    #' Archive type that stores full archive (`Archive`),
-    #' only best result (`ArchiveBest`) or only y (`ArchiveY`).
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
     initialize = function(objective, search_space = NULL, terminator,
-      archive_type = "Archive", check_values = TRUE) {
+      keep_evals = "all", check_values = TRUE) {
 
-      assert_choice(archive_type, c("Archive", "ArchiveBest", "ArchiveY"))
+      assert_choice(keep_evals, c("all", "best"))
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
         self$objective$domain
@@ -55,14 +53,11 @@ OptimInstance = R6Class("OptimInstance",
       self$terminator = assert_terminator(terminator, self)
 
       assert_flag(check_values)
-      self$archive = if(archive_type == "Archive") {
+      self$archive = if (keep_evals == "all") {
         Archive$new(search_space = self$search_space,
         codomain = objective$codomain, check_values = check_values)
-      } else if (archive_type == "ArchiveBest") {
+      } else if (keep_evals == "best") {
         ArchiveBest$new(search_space = self$search_space,
-          codomain = objective$codomain, check_values = check_values)
-      } else if (archive_type == "ArchiveY") {
-        ArchiveY$new(search_space = self$search_space,
           codomain = objective$codomain, check_values = check_values)
       }
 

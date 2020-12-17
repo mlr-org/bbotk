@@ -3,7 +3,6 @@
 S3method(as.data.table,Archive)
 export(Archive)
 export(ArchiveBest)
-export(ArchiveY)
 export(Objective)
 export(ObjectiveRFun)
 export(ObjectiveRFunDt)

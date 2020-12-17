@@ -13,6 +13,7 @@
 #'
 #' @template param_xdt
 #' @template param_search_space
+#' @template param_keep_evals
 #' @export
 OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
   inherit = OptimInstance,
@@ -23,18 +24,15 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
     #'
     #' @param objective ([Objective]).
     #' @param terminator ([Terminator]).
-    #' @param archive_type (`character(1)`)\cr
-    #' Archive type that stores full archive (`Archive`),
-    #' only best result (`ArchiveBest`) or only y (`ArchiveY`).
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
     initialize = function(objective, search_space = NULL, terminator,
-      archive_type = "Archive", check_values = TRUE) {
+      keep_evals = "all", check_values = TRUE) {
       if (objective$codomain$length > 1) {
         stop("Codomain > 1")
       }
-      super$initialize(objective, search_space, terminator, archive_type, check_values)
+      super$initialize(objective, search_space, terminator, keep_evals, check_values)
     },
 
     #' @description
