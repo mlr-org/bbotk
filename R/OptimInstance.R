@@ -105,9 +105,18 @@ OptimInstance = R6Class("OptimInstance",
         stop(terminated_error(self))
       }
       assert_data_table(xdt)
-      xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
-      ydt = self$objective$eval_many(xss_trafoed)
+
+      # if no trafos, and objective evals dt directly we go a shortcut
+      # FIXME: What about other Objective specializations that implement $eval_dt?
+      if (!self$search_space$has_trafo && inherits(self$objective, "ObjectiveRFunDt")) {
+        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE],)
+        xss_trafoed = NULL
+      } else {
+        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+        ydt = self$objective$eval_many(xss_trafoed)
+      }
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),

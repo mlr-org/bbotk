@@ -48,10 +48,11 @@ Archive = R6Class("Archive",
     #'
     #' @param xss_trafoed (`list()`)\cr
     #' Transformed point(s) in the *domain space*.
-    add_evals = function(xdt, xss_trafoed, ydt) {
+    #' Not stored for [`ObjectiveRFunDt`].
+    add_evals = function(xdt, xss_trafoed = NULL, ydt) {
       assert_data_table(xdt)
       assert_data_table(ydt)
-      assert_list(xss_trafoed)
+      assert_list(xss_trafoed, null.ok = TRUE)
       assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
       if (self$check_values) {
         self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])

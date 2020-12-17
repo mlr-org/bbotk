@@ -89,7 +89,7 @@ Search space that is logged into archive.}
 \subsection{Method \code{add_evals()}}{
 Adds function evaluations to the archive table.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(xdt, xss_trafoed, ydt)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(xdt, xss_trafoed = NULL, ydt)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -102,7 +102,8 @@ Column names have to match ids of the \code{search_space}.
 However, \code{xdt} can contain additional columns.}
 
 \item{\code{xss_trafoed}}{(\code{list()})\cr
-Transformed point(s) in the \emph{domain space}.}
+Transformed point(s) in the \emph{domain space}.
+Not stored for \code{\link{ObjectiveRFunDt}}.}
 
 \item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Optimal outcome.}
