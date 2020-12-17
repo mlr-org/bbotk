@@ -22,13 +22,11 @@ ArchiveBest = R6Class("ArchiveBest",
     #' @param check_values (`logical(1)`)\cr
     #' ignored.
     initialize = function(search_space, codomain, check_values = FALSE) {
-      self$search_space = assert_param_set(search_space)
-      self$codomain = assert_param_set(codomain)
+      super$initialize(search_space, codomain, check_values = check_values)
       private$.max_to_min = mult_max_to_min(self$codomain)
       if(self$codomain$length == 1) {
         private$.best_y = if(private$.max_to_min == -1) -Inf else Inf
       }
-      super$initialize(search_space, codomain, check_values = check_values)
     },
 
     #' @description
@@ -85,15 +83,7 @@ ArchiveBest = R6Class("ArchiveBest",
 
     #' @field n_batch (`integer(1)`)\cr
     #' Number of batches stored in the archive.
-    n_batch = function() 1,
-
-    #' @field cols_x (`character()`)\cr
-    #' Column names of search space parameters.
-    cols_x = function() self$search_space$ids(),
-
-    #' @field cols_y (`character()`)\cr
-    #' Column names of codomain parameters.
-    cols_y = function() self$codomain$ids()
+    n_batch = function() 1
   ),
 
   private = list(
