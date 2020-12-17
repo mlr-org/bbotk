@@ -36,7 +36,6 @@ Column names of codomain parameters.}
 \item \href{#method-new}{\code{ArchiveBest$new()}}
 \item \href{#method-add_evals}{\code{ArchiveBest$add_evals()}}
 \item \href{#method-best}{\code{ArchiveBest$best()}}
-\item \href{#method-data}{\code{ArchiveBest$data()}}
 \item \href{#method-clone}{\code{ArchiveBest$clone()}}
 }
 }
@@ -125,27 +124,6 @@ ignored.}
 }
 \subsection{Returns}{
 \code{\link[data.table:data.table]{data.table::data.table()}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-data"></a>}}
-\if{latex}{\out{\hypertarget{method-data}{}}}
-\subsection{Method \code{data()}}{
-Empty \link{data.table}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$data(unnest = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{unnest}}{(\code{character()})\cr
-ignored.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\link{data.table}.
 }
 }
 \if{html}{\out{<hr>}}
