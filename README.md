@@ -42,7 +42,7 @@ library(paradox)
 
 # Define objective function
 fun = function(xs) {
-  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+  c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
 # Set domain
