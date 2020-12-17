@@ -154,5 +154,9 @@ Archive = R6Class("Archive",
 
 #' @export
 as.data.table.Archive = function(x, ...) { # nolint
-  unnest(copy(x$data), "x_domain", prefix = "{col}_")
+  if (nrow(x$data)==0) {
+    copy(x$data)
+  } else {
+    unnest(copy(x$data), "x_domain", prefix = "{col}_")
+  }
 }
