@@ -139,6 +139,9 @@ search_start = function(search_space, type = "random") {
   if(type == "random") {
     unlist(generate_design_random(search_space, 1)$data[1,])
   } else if (type == "center") {
+    if(!all(search_space$storage_type == "numeric")) {
+      stop("Cannot generate center values of non-numeric parameters.")
+    }
     (search_space$upper + search_space$lower) / 2
   }
 }
