@@ -122,7 +122,7 @@ OptimInstance = R6Class("OptimInstance",
 
       # if no trafos, and objective evals dt directly we go a shortcut
       if (is_rfundt && !self$search_space$has_trafo) {
-        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE],)
+        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
       } else {
         ydt = self$objective$eval_many(xss_trafoed)
       }
