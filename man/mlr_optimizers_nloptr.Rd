@@ -17,12 +17,13 @@ Johnson, G S (2020).
 
 \describe{
 \item{\code{algorithm}}{\code{character(1)}}
-\item{\code{x0}}{\code{numeric()}}
 \item{\code{eval_g_ineq}}{\verb{function()}}
 \item{\code{xtol_rel}}{\code{numeric(1)}}
 \item{\code{xtol_abs}}{\code{numeric(1)}}
 \item{\code{ftol_rel}}{\code{numeric(1)}}
 \item{\code{ftol_abs}}{\code{numeric(1)}}
+\item{\code{start_values}}{\code{character(1)}\cr
+Create \code{random} start values or based on \code{center} of search space?}
 }
 
 For the meaning of the control parameters, see \code{\link[nloptr:nloptr]{nloptr::nloptr()}} and

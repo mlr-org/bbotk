@@ -19,8 +19,9 @@ opt("cmaes")
 \section{Parameters}{
 
 \describe{
-\item{\code{par}}{\code{numeric()}}
 \item{\code{sigma}}{\code{numeric(1)}}
+\item{\code{start_values}}{\code{character(1)}\cr
+Create \code{random} start values or based on \code{center} of search space?}
 }
 
 For the meaning of the control parameters, see \code{\link[adagio:cmaes]{adagio::pureCMAES()}}. Note

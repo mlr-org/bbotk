@@ -12,8 +12,9 @@
 #'
 #' @section Parameters:
 #' \describe{
-#' \item{`par`}{`numeric()`}
 #' \item{`sigma`}{`numeric(1)`}
+#' \item{`start_values`}{`character(1)`\cr
+#' Create `random` start values or based on `center` of search space?}
 #' }
 #'
 #' For the meaning of the control parameters, see [adagio::pureCMAES()]. Note
@@ -61,9 +62,10 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       ps = ParamSet$new(list(
-        ParamUty$new("par", tags = "required"),
-        ParamDbl$new("sigma", default = 0.5)
+        ParamDbl$new("sigma", default = 0.5),
+        ParamFct$new("start_values", default = "random", levels = c("random", "center"))
       ))
+      ps$values$start_values = "random"
       super$initialize(
         param_set = ps,
         param_classes = "ParamDbl",
@@ -76,6 +78,8 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
+      pv$par = search_start(inst$search_space, type = pv$start_values)
+      pv$start_values = NULL
       pv$stopeval = .Machine$integer.max # make sure pureCMAES does not stop
       pv$stopfitness = -Inf
 
