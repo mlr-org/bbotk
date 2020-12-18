@@ -53,12 +53,18 @@ OptimInstance = R6Class("OptimInstance",
       self$terminator = assert_terminator(terminator, self)
 
       assert_flag(check_values)
+
+      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
+
       self$archive = if (keep_evals == "all") {
         Archive$new(search_space = self$search_space,
-        codomain = objective$codomain, check_values = check_values)
+          codomain = objective$codomain, check_values = check_values,
+          store_x_domain = !is_rfundt || self$search_space$has_trafo)
       } else if (keep_evals == "best") {
         ArchiveBest$new(search_space = self$search_space,
-          codomain = objective$codomain, check_values = check_values)
+          codomain = objective$codomain, check_values = check_values,
+          store_x_domain = !is_rfundt || self$search_space$has_trafo) 
+          # only not store xss if we have RFunDT and not trafo
       }
 
       if (!all(self$search_space$is_number)) {
@@ -114,9 +120,24 @@ OptimInstance = R6Class("OptimInstance",
         stop(terminated_error(self))
       }
       assert_data_table(xdt)
-      xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
-      ydt = self$objective$eval_many(xss_trafoed)
+
+      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
+      # calculate the x as (trafoed) domain only if needed
+      if (self$search_space$has_trafo || self$archive$store_x_domain || !is_rfundt) {
+        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+      } else {
+        xss_trafoed = NULL
+      }
+
+      # if no trafos, and objective evals dt directly we go a shortcut
+      if (is_rfundt && !self$search_space$has_trafo) {
+        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
+      } else {
+        ydt = self$objective$eval_many(xss_trafoed)
+      }
+
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),

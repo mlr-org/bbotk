@@ -52,6 +52,7 @@ test_that("Objective specialzations work", {
 
   FUN_1D_DT = function(xdt) data.table(y = xdt$x^2) # DT version oof FUN_1D in helper.R
   FUN_2D_DT = function(xdt) data.table(y = rowSums(xdt^2)) # same but FUN_2D
+  FUN_2D_2D_DT = function(xdt) data.table(y1 = xdt[[1]]^2, y2 = -xdt[[2]]^2) # same as FUN_2D_2D
 
   # Different function pairs, where the R function uses a different signature but they should do the same
   funs = list(
@@ -61,6 +62,14 @@ test_that("Objective specialzations work", {
     list( # 2d x, 1d y
       rfun = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DT, domain = PS_2D)
+    ),
+    list( #2d x, 1d y + extra
+      rfun = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"), id = "function_extras"),
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_2D_DT, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"), , id = "function_extras")
+    ),
+    list( #2d x, 2d y
+      rfun = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN),
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_2D_DT, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN)
     )
   )
 
@@ -80,14 +89,19 @@ test_that("Objective specialzations work", {
     # one single x value
     xdt1 = sampler$sample(1)
 
+    expected_ncols = fun1$codomain$length
+    if ("function_extras" == fun1$id) expected_ncols = expected_ncols + 1
+    expected_colnames = fun1$codomain$ids()
+    if ("function_extras" == fun1$id) expected_colnames = c(expected_colnames, "y2")
+
     res1 = fun1$eval_dt(xdt1$data)
-    expect_data_table(res1, nrows = 1, ncols = 1, any.missing = FALSE)
-    expect_equal(colnames(res1), "y")
+    expect_data_table(res1, nrows = 1, ncols = expected_ncols, any.missing = FALSE)
+    expect_equal(colnames(res1), expected_colnames)
     expect_equal(res1, fun2$eval_dt(xdt1$data))
 
     res2 = fun1$eval(xdt1$transpose()[[1]])
     expect_list(res2)
-    expect_equal(names(res2), "y")
+    expect_equal(names(res2), expected_colnames)
     expect_equal(res2, fun2$eval(xdt1$transpose()[[1]]))
 
     res3 = fun1$eval_many(xdt1$transpose())
@@ -97,8 +111,8 @@ test_that("Objective specialzations work", {
     # multiple x values in one call
     xdt3 = sampler$sample(3)
     res4 = fun1$eval_dt(xdt3$data)
-    expect_data_table(res4, nrows = 3, ncols = 1, any.missing = FALSE)
-    expect_equal(colnames(res4), "y")
+    expect_data_table(res4, nrows = 3, ncols = expected_ncols, any.missing = FALSE)
+    expect_equal(colnames(res4), expected_colnames)
     expect_equal(res4, fun2$eval_dt(xdt3$data))
 
     res5 = fun1$eval_many(xdt3$transpose())
