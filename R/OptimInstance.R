@@ -114,7 +114,7 @@ OptimInstance = R6Class("OptimInstance",
 
       is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
       # calculate the x as (trafoed) domain only if needed
-      if (self$search_space$has_trafo || self$archive$store_x_domain || !is_rfundt) {
+      if (!is_rfundt || self$archive$store_x_domain || self$search_space$has_trafo) {
         xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       } else {
         xss_trafoed = NULL
