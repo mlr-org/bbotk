@@ -31,7 +31,6 @@ the algorithm and where our terminators allow to obtain the same behavior.
 
 \examples{
 library(paradox)
-library(data.table)
 
 domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
 
@@ -46,12 +45,12 @@ objective_function = function(xs) {
 objective = ObjectiveRFun$new(fun = objective_function,
                               domain = domain,
                               codomain = codomain)
-terminator = trm("evals", n_evals = 2)
+terminator = trm("evals", n_evals = 10)
 instance = OptimInstanceSingleCrit$new(objective = objective,
                              search_space = search_space,
                              terminator = terminator)
 
-optimizer = opt("cmaes", par = 1)
+optimizer = opt("cmaes")
 
 # Modifies the instance by reference
 optimizer$optimize(instance)
@@ -60,7 +59,7 @@ optimizer$optimize(instance)
 instance$result
 
 # Allows access of data.table of full path of all evaluations
-as.data.table(instance$archive)
+as.data.table(instance$archive$data)
 }
 \section{Super class}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerCmaes}

@@ -58,7 +58,7 @@
 #'   search_space = search_space,
 #'   terminator = terminator)
 #'
-#' optimizer = opt("nloptr", x0 = 1, algorithm = "NLOPT_LN_BOBYQA")
+#' optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA")
 #'
 #' # Modifies the instance by reference
 #' optimizer$optimize(instance)
