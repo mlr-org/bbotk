@@ -91,7 +91,7 @@ point on.
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.1.9000</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -114,7 +114,7 @@ point on.
 </li>
         <li>
   <a href="https://github.com/mlr-org/bbotk/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -126,13 +126,13 @@ point on.
 </li>
 <li>
   <a href="https://stackoverflow.com/questions/tagged/mlr3">
-    <span class="fab fa fab fa-stack-overflow"></span>
+    <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fa fa-rss"></span>
+    <span class="fas fa-rss"></span>
      
   </a>
 </li>
@@ -194,7 +194,12 @@ point on.</p></li>
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>OptimInstanceSingleCrit</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>objective</span>, search_space <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>terminator</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OptimInstanceSingleCrit</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>objective</span>,
+  search_space <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>terminator</span>,
+  check_values <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -206,6 +211,10 @@ The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::Param
 Depending on the context, this value defaults to the domain of the objective.</p></dd>
 
 <dt><code>terminator</code></dt><dd><p>(<a href='Terminator.html'>Terminator</a>).</p></dd>
+
+<dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Should x-values that are added to the archive be checked for validity?
+Search space that is logged into archive.</p></dd>
 
 </dl><p></div></p>
 <p><hr>

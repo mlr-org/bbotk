@@ -20,9 +20,9 @@
 <link href="extra.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Black-Box Optimization Toolkit">
 <meta property="og:description" content="Provides a common framework for optimization of
-    black-box functions for other packages, e.g. mlr3. It offers various
-    optimization methods e.g.  grid search, random search and generalized
-    simulated annealing.">
+    black-box functions for other packages, e.g. mlr3tuning or mlr3fselect.
+    It offers various optimization methods e.g. grid search, random search and
+    generalized simulated annealing.">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -44,7 +44,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
-        <a class="navbar-brand" href="index.html">bbotk <small>v0.2.1.9000</small></a>
+        <a class="navbar-brand" href="index.html">bbotk <small>v0.2.2.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -67,7 +67,7 @@
 </li>
         <li>
   <a href="https://github.com/mlr-org/bbotk/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -79,13 +79,13 @@
 </li>
 <li>
   <a href="https://stackoverflow.com/questions/tagged/mlr3">
-    <span class="fab fa fab fa-stack-overflow"></span>
+    <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fa fa-rss"></span>
+    <span class="fas fa-rss"></span>
      
   </a>
 </li>
@@ -106,7 +106,7 @@
 <a href="#bbotk---black-box-optimization-toolkit" class="anchor"></a>bbotk - Black-Box Optimization Toolkit</h1></div>
 <p>Package website: <a href="https://bbotk.mlr-org.com/">release</a></p>
 <!-- badges: start -->
-<p><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=master" alt="tic"></a> <a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a> <a href="https://codecov.io/gh/mlr-org/bbotk?branch=master"><img src="https://codecov.io/github/mlr-org/bbotk/coverage.svg?branch=master" alt="codecov.io"></a> <!-- badges: end --></p>
+<p><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=master" alt="tic"></a> <a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a> <a href="https://codecov.io/gh/mlr-org/bbotk?branch=master"><img src="https://codecov.io/github/mlr-org/bbotk/coverage.svg?branch=master" alt="codecov.io"></a> <a href="https://www.codefactor.io/repository/github/mlr-org/bbotk"><img src="https://www.codefactor.io/repository/github/mlr-org/bbotk/badge" alt="CodeFactor"></a> <!-- badges: end --></p>
 <p>This package provides a common framework for optimization including</p>
 <ul>
 <li>
@@ -123,57 +123,60 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>CRAN version</p>
-<pre class="{r}"><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("bbotk")</a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"bbotk"</span><span class="op">)</span></code></pre></div>
 <p>Development version</p>
-<pre class="{r}"><code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("mlr-org/bbotk")</a></code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/bbotk"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<pre class="{r}"><code><a href="https://bbotk.mlr-org.com">library(bbotk)
-library(paradox)
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bbotk.mlr-org.com">bbotk</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://paradox.mlr-org.com">paradox</a></span><span class="op">)</span>
 
-# Define objective function
-fun = function(xs) {
-  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
-}
+<span class="co"># Define objective function</span>
+<span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span>
+<span class="op">}</span>
 
-# Set domain
-domain = ParamSet$new(list(
-  ParamDbl$new("x1", -10, 10), 
-  ParamDbl$new("x2", -5, 5)
-))
+<span class="co"># Set domain</span>
+<span class="va">domain</span> <span class="op">=</span> <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamSet.html">ParamSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamDbl.html">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x1"</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, 
+  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamDbl.html">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x2"</span>, <span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>
+<span class="op">)</span><span class="op">)</span>
 
-# Set codomain
-codomain = ParamSet$new(list(
-  ParamDbl$new("y", tags = "maximize")
-))
+<span class="co"># Set codomain</span>
+<span class="va">codomain</span> <span class="op">=</span> <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamSet.html">ParamSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamDbl.html">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"y"</span>, tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span>
+<span class="op">)</span><span class="op">)</span>
 
-# Create Objective object
-obfun = ObjectiveRFun$new(
-  fun = fun,
-  domain = domain,
-  codomain = codomain, 
-  properties = "deterministic"
-)
+<span class="co"># Create Objective object</span>
+<span class="va">obfun</span> <span class="op">=</span> <span class="va"><a href="reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  fun <span class="op">=</span> <span class="va">fun</span>,
+  domain <span class="op">=</span> <span class="va">domain</span>,
+  codomain <span class="op">=</span> <span class="va">codomain</span>, 
+  properties <span class="op">=</span> <span class="st">"deterministic"</span>
+<span class="op">)</span>
 
-# Define termination criterion
-terminator = trm("evals", n_evals = 20)
+<span class="co"># Define termination criterion</span>
+<span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
 
-# Create optimization instance
-instance = OptimInstanceSingleCrit$new(
-  objective = obfun, 
-  terminator = terminator
-)
+<span class="co"># Create optimization instance</span>
+<span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="reference/OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  objective <span class="op">=</span> <span class="va">obfun</span>, 
+  terminator <span class="op">=</span> <span class="va">terminator</span>
+<span class="op">)</span>
 
-# Load optimizer
-optimizer = opt("gensa")
+<span class="co"># Load optimizer</span>
+<span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span>
 
-# Trigger optimization
-optimizer$optimize(instance)
+<span class="co"># Trigger optimization</span>
+<span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span>
 
-# View results
-instance$result</a></code></pre>
+<span class="co"># View results</span>
+<span class="va">instance</span><span class="op">$</span><span class="va">result</span></code></pre></div>
 </div>
 </div>
   </div>

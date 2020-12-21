@@ -83,7 +83,7 @@ adagio::pureCMAES() from package adagio." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.1.9000</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -106,7 +106,7 @@ adagio::pureCMAES() from package adagio." />
 </li>
         <li>
   <a href="https://github.com/mlr-org/bbotk/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -118,13 +118,13 @@ adagio::pureCMAES() from package adagio." />
 </li>
 <li>
   <a href="https://stackoverflow.com/questions/tagged/mlr3">
-    <span class="fab fa fab fa-stack-overflow"></span>
+    <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fa fa-rss"></span>
+    <span class="fas fa-rss"></span>
      
   </a>
 </li>
@@ -215,7 +215,7 @@ the algorithm and where our terminators allow to obtain the same behavior.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com'>paradox</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://Rdatatable.gitlab.io/data.table'>data.table</a></span><span class='op'>)</span>
 
 <span class='va'>domain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -246,10 +246,10 @@ the algorithm and where our terminators allow to obtain the same behavior.</p>
 </div><div class='output co'>#&gt;             x  x_domain         y
 #&gt; 1: -0.4000435 &lt;list[1]&gt; 0.1600348</div><div class='input'>
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
-<span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='fu'>data</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             x         y  x_domain           timestamp batch_nr
-#&gt; 1: -0.4000435 0.1600348 &lt;list[1]&gt; 2020-10-07 09:12:44        1
-#&gt; 2:  1.0000000 1.0000000 &lt;list[1]&gt; 2020-10-07 09:12:44        2</div></pre>
+<span class='fu'><a href='https://paradox.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             x         y           timestamp batch_nr x_domain_x
+#&gt; 1: -0.4000435 0.1600348 2020-12-21 10:00:07        1 -0.4000435
+#&gt; 2:  1.0000000 1.0000000 2020-12-21 10:00:07        2  1.0000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
