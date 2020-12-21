@@ -70,22 +70,23 @@ Archive = R6Class("Archive",
     #' the solution that minimizes / maximizes the objective function.
     #' For multi-crit optimization, the Pareto set / front.
     #'
-    #' @param m (`integer()`)\cr
-    #' Take only batches `m` into account. Default is all batches.
+    #' @param batch (`integer()`)\cr
+    #' The batch number(s) to limit the best results to. Default is
+    #' all batches.
     #'
     #' @return [data.table::data.table()].
-    best = function(m = NULL) {
+    best = function(batch = NULL) {
       if (self$n_batch == 0L) {
         stop("No results stored in archive")
       }
 
-      m = if (is.null(m)) {
+      batch = if (is.null(batch)) {
         seq_len(self$n_batch)
       } else {
-        assert_integerish(m, lower = 1L, upper = self$n_batch, coerce = TRUE)
+        assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
       }
       batch_nr = NULL # CRAN check
-      tab = self$data[batch_nr %in% m]
+      tab = self$data[batch_nr %in% batch]
 
       max_to_min = mult_max_to_min(self$codomain)
       if (self$codomain$length == 1L) {
