@@ -247,12 +247,13 @@ Optimal outcome.</p></dd>
 <p>Returns the best scoring evaluation. For single-crit optimization,
 the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>best</span><span class='op'>(</span>m <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>best</span><span class='op'>(</span>batch <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>m</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
-Take only batches <code>m</code> into account. Default is all batches.</p></dd>
+<dt><code>batch</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
+The batch number(s) to limit the best results to. Default is
+all batches.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
