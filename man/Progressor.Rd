@@ -23,6 +23,7 @@ Wraps \code{progressr::progressor()} function and stores current progress.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Progressor$new()}}
+\item \href{#method-setup}{\code{Progressor$setup()}}
 \item \href{#method-update}{\code{Progressor$update()}}
 \item \href{#method-clone}{\code{Progressor$clone()}}
 }
@@ -33,17 +34,25 @@ Wraps \code{progressr::progressor()} function and stores current progress.
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Progressor$new(max_steps, unit)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Progressor$new()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-setup"></a>}}
+\if{latex}{\out{\hypertarget{method-setup}{}}}
+\subsection{Method \code{setup()}}{
+Creates \code{progressr::progressor()}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Progressor$setup(terminator, archive)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{max_steps}}{(\code{integer(1)})\cr
-Total number of steps.}
+\item{\code{terminator}}{(\link{Terminator}).}
 
-\item{\code{unit}}{(\code{character(1)})\cr
-Unit of steps.}
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -54,17 +63,15 @@ Unit of steps.}
 \subsection{Method \code{update()}}{
 Updates \code{progressr::progressor()} with current steps.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Progressor$update(current_steps, best_y)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Progressor$update(terminator, archive)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{current_steps}}{(\code{integer(1)})\cr
-Current steps.}
+\item{\code{terminator}}{(\link{Terminator}).}
 
-\item{\code{best_y}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Best outcome in archive.}
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }

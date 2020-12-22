@@ -57,6 +57,8 @@ OptimInstance = R6Class("OptimInstance",
         private$.objective_function = objective_function
         private$.objective_multiplicator = mult_max_to_min(self$objective$codomain)
       }
+
+      self$progressor = Progressor$new()
     },
 
     #' @description
@@ -99,15 +101,7 @@ OptimInstance = R6Class("OptimInstance",
     #' the *search space* of the [OptimInstance] object. Can contain additional
     #' columns for extra information.
     eval_batch = function(xdt) {
-      if (isNamespaceLoaded("progressr")) {
-        status = self$terminator$status(self$archive)
-        if (is.null(self$progressor)) {
-          self$progressor = Progressor$new(status["max_steps"], self$terminator$unit)
-        } else {
-          ydt = self$archive$best()[, self$archive$cols_y, with=FALSE]
-          self$progressor$update(status["current_steps"], ydt)
-        }
-      }
+      self$progressor$update(self$terminator, self$archive)
 
       if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
         self$is_terminated = TRUE
