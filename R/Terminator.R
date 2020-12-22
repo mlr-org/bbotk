@@ -58,7 +58,7 @@ Terminator = R6Class("Terminator",
       self$param_set = assert_param_set(param_set)
       self$properties = assert_subset(properties,
         bbotk_reflections$terminator_properties)
-      self$unit = "%"
+      self$unit = "percent"
     },
 
     #' @description
