@@ -31,6 +31,10 @@ OptimInstance = R6Class("OptimInstance",
     #' @field archive ([Archive]).
     archive = NULL,
 
+    #' @field progressor (`progressor()`)\cr
+    #' Stores `progressor` function.
+    progressor = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -58,6 +62,8 @@ OptimInstance = R6Class("OptimInstance",
         private$.objective_function = objective_function
         private$.objective_multiplicator = mult_max_to_min(self$objective$codomain)
       }
+
+      self$progressor = Progressor$new()
     },
 
     #' @description
@@ -100,10 +106,13 @@ OptimInstance = R6Class("OptimInstance",
     #' the *search space* of the [OptimInstance] object. Can contain additional
     #' columns for extra information.
     eval_batch = function(xdt) {
+      self$progressor$update(self$terminator, self$archive)
+
       if (self$is_terminated || self$terminator$is_terminated(self$archive)) {
         self$is_terminated = TRUE
         stop(terminated_error(self))
       }
+
       assert_data_table(xdt)
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       lg$info("Evaluating %i configuration(s)", nrow(xdt))

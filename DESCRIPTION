@@ -52,6 +52,7 @@ Suggests:
     GenSA,
     knitr,
     nloptr,
+    progressr,
     rmarkdown,
     testthat
 VignetteBuilder:
@@ -77,6 +78,7 @@ Collate:
     'OptimizerGridSearch.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
+    'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
     'TerminatorClockTime.R'

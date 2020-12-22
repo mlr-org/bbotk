@@ -11,6 +11,7 @@
 #' @template section_dictionary_terminator
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 TerminatorNone = R6Class("TerminatorNone",
   inherit = Terminator,
