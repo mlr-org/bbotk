@@ -205,11 +205,14 @@ List of objects of class <a href='Terminator.html'>Terminator</a>.</p></dd>
 <li><p><a href='#method-new'><code>TerminatorCombo$new()</code></a></p></li>
 <li><p><a href='#method-is_terminated'><code>TerminatorCombo$is_terminated()</code></a></p></li>
 <li><p><a href='#method-print'><code>TerminatorCombo$print()</code></a></p></li>
+<li><p><a href='#method-remaining_time'><code>TerminatorCombo$remaining_time()</code></a></p></li>
+<li><p><a href='#method-status_long'><code>TerminatorCombo$status_long()</code></a></p></li>
 <li><p><a href='#method-clone'><code>TerminatorCombo$clone()</code></a></p></li>
 </ul>
 <p><details open ><summary>Inherited methods</summary>
 <ul>
 <li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-format'><code>bbotk::Terminator$format()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-status'><code>bbotk::Terminator$status()</code></a></span></p></li>
 </ul>
 </details>
 
@@ -247,6 +250,33 @@ otherwise.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#argu
 <dt><code>...</code></dt><dd><p>(ignored).</p></dd>
 
 </dl><p></div></p>
+<p><hr>
+<a id="method-remaining_time"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>remaining_time()</code></h3>
+<p>Returns the remaining runtime in seconds. If <code>any = TRUE</code>, the remaining
+runtime is determined by the time-based terminator with the shortest time
+remaining. If non-time-based terminators are used and <code>any = FALSE</code>,
+the the remaining runtime is always <code>Inf</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>TerminatorCombo</span><span class='op'>$</span><span class='fu'>remaining_time</span><span class='op'>(</span><span class='va'>archive</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>archive</code></dt><dd><p>(<a href='Archive.html'>Archive</a>).</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>.</p>
+<p><hr>
+<a id="method-status_long"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>status_long()</code></h3>
+<p>Returns <code>max_steps</code> and <code>current_steps</code> for each terminator.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>TerminatorCombo</span><span class='op'>$</span><span class='fu'>status_long</span><span class='op'>(</span><span class='va'>archive</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>archive</code></dt><dd><p>(<a href='Archive.html'>Archive</a>).</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
