@@ -85,9 +85,17 @@ Set of properties.}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$format()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$format(with_params = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{with_params}}{(\code{logical(1)})\cr
+Add parameter values to format string.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

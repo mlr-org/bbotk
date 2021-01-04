@@ -62,7 +62,7 @@ optimize_default = function(inst, self, private) {
   inst$archive$start_time = Sys.time()
   # start optimization
   lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-    inst$search_space$length, self$format(), inst$terminator$format())
+    inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
   tryCatch({
     private$.optimize(inst)
   }, terminated_error = function(cond) {

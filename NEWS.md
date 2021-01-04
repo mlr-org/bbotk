@@ -3,12 +3,13 @@
 * Improved `TerminatorPerfRearched` documentation.
 * Added `check_values` flag in `OptimInstance`, `OptimInstanceSingleCrit`, 
   `OptimInstanceMultiCrit`, `ObjectiveRFun` and `ObjectiveRFunDt`.
+* Renamed `m` parameter to `batch` in `Archive$best()`.
 
 # bbotk 0.2.2
 
 * Removed dependency on orphaned package `bibtex`.
 * Improved documentation.
-* Adds `OptimizerCmaes` from adagio package.
+* Added `OptimizerCmaes` from adagio package.
 
 # bbotk 0.2.1
 
@@ -19,5 +20,5 @@
 
 # bbotk 0.2
 
-- First version of the Black-Box Optimization Toolkit
+* First version of the Black-Box Optimization Toolkit
 

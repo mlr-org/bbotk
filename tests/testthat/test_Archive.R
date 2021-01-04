@@ -41,7 +41,7 @@ test_that("Archive best works", {
   xss_trafoed = list(list(x1 = 1, x2 = 1))
   ydt = data.table(y = 2)
   a$add_evals(xdt, xss_trafoed, ydt)
-  expect_equal(a$best(m = 2)$batch_nr, 2L)
+  expect_equal(a$best(batch = 2)$batch_nr, 2L)
 
   a = Archive$new(PS_2D, FUN_2D_2D_CODOMAIN)
   xdt = data.table(x1 = c(-1,-1,-1), x2 = c(1, 0, -1))
