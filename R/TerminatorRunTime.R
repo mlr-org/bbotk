@@ -17,6 +17,7 @@
 #' }
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' trm("run_time", secs = 1800)
@@ -30,18 +31,25 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         ParamDbl$new("secs", lower = 0, default = 30)
       ))
       ps$values$secs = 30
-      super$initialize(param_set = ps, properties = c("single-crit",
-        "multi-crit"))
+      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
+      self$unit = "seconds"
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
       return(d >= self$param_set$values$secs)
+    }
+  ),
+
+  private = list(
+    .status = function(archive) {
+      max_steps = self$param_set$values$secs
+      current_steps =  as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
+      c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
 )
