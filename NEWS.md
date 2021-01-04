@@ -4,6 +4,7 @@
 * Added `check_values` flag in `OptimInstance`, `OptimInstanceSingleCrit`, 
   `OptimInstanceMultiCrit`, `ObjectiveRFun` and `ObjectiveRFunDt`.
 * Renamed `m` parameter to `batch` in `Archive$best()`.
+* `OptimizerDesignPoints` supports `ParamUty`.
 
 # bbotk 0.2.2
 
