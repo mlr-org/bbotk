@@ -164,12 +164,14 @@ nloptr::nloptr() from package nloptr." />
 
 <dl>
 <dt><code>algorithm</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code></p></dd>
-<dt><code>x0</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code></p></dd>
 <dt><code>eval_g_ineq</code></dt><dd><p><code>function()</code></p></dd>
 <dt><code>xtol_rel</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
 <dt><code>xtol_abs</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
 <dt><code>ftol_rel</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
 <dt><code>ftol_abs</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
+<dt><code>start_values</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
+Create <code>random</code> start values or based on <code>center</code> of search space? In the
+latter case, it is the center of the parameters before a trafo is applied.</p></dd>
 
 </dl>
 
@@ -244,30 +246,34 @@ defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
   search_space <span class='op'>=</span> <span class='va'>search_space</span>,
   terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
 
-<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"nloptr"</span>, x0 <span class='op'>=</span> <span class='fl'>1</span>, algorithm <span class='op'>=</span> <span class='st'>"NLOPT_LN_BOBYQA"</span><span class='op'>)</span>
+<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"nloptr"</span>, algorithm <span class='op'>=</span> <span class='st'>"NLOPT_LN_BOBYQA"</span><span class='op'>)</span>
 
 <span class='co'># Modifies the instance by reference</span>
 <span class='va'>optimizer</span><span class='op'>$</span><span class='fu'>optimize</span><span class='op'>(</span><span class='va'>instance</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    x  x_domain y
-#&gt; 1: 0 &lt;list[1]&gt; 0</div><div class='input'>
+</div><div class='output co'>#&gt;                x  x_domain            y
+#&gt; 1: -2.321947e-22 &lt;list[1]&gt; 5.391439e-44</div><div class='input'>
 <span class='co'># Returns best scoring evaluation</span>
 <span class='va'>instance</span><span class='op'>$</span><span class='va'>result</span>
-</div><div class='output co'>#&gt;    x  x_domain y
-#&gt; 1: 0 &lt;list[1]&gt; 0</div><div class='input'>
+</div><div class='output co'>#&gt;                x  x_domain            y
+#&gt; 1: -2.321947e-22 &lt;list[1]&gt; 5.391439e-44</div><div class='input'>
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
 <span class='fu'><a href='https://paradox.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;          x       y           timestamp batch_nr x_domain_x
-#&gt;  1:  1e+00 1.0e+00 2021-01-05 13:33:02        1      1e+00
-#&gt;  2:  1e+00 1.0e+00 2021-01-05 13:33:02        2      1e+00
-#&gt;  3:  1e+00 1.0e+00 2021-01-05 13:33:02        3      1e+00
-#&gt;  4:  5e-01 2.5e-01 2021-01-05 13:33:02        4      5e-01
-#&gt;  5:  0e+00 0.0e+00 2021-01-05 13:33:02        5      0e+00
-#&gt;  6: -5e-02 2.5e-03 2021-01-05 13:33:02        6     -5e-02
-#&gt;  7:  5e-03 2.5e-05 2021-01-05 13:33:02        7      5e-03
-#&gt;  8: -5e-03 2.5e-05 2021-01-05 13:33:02        8     -5e-03
-#&gt;  9: -5e-04 2.5e-07 2021-01-05 13:33:02        9     -5e-04
-#&gt; 10:  5e-04 2.5e-07 2021-01-05 13:33:02       10      5e-04
-#&gt; 11:  0e+00 0.0e+00 2021-01-05 13:33:02       11      0e+00</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt;                 x            y           timestamp batch_nr    x_domain_x
+#&gt;  1:  8.971532e-01 8.048838e-01 2021-01-05 13:43:35        1  8.971532e-01
+#&gt;  2:  8.971532e-01 8.048838e-01 2021-01-05 13:43:35        2  8.971532e-01
+#&gt;  3:  8.971532e-01 8.048838e-01 2021-01-05 13:43:35        3  8.971532e-01
+#&gt;  4:  9.742883e-01 9.492377e-01 2021-01-05 13:43:35        4  9.742883e-01
+#&gt;  5:  8.200180e-01 6.724295e-01 2021-01-05 13:43:35        5  8.200180e-01
+#&gt;  6:  7.428829e-01 5.518750e-01 2021-01-05 13:43:35        6  7.428829e-01
+#&gt;  7:  5.886126e-01 3.464648e-01 2021-01-05 13:43:35        7  5.886126e-01
+#&gt;  8:  2.800721e-01 7.844036e-02 2021-01-05 13:43:35        8  2.800721e-01
+#&gt;  9: -1.110223e-16 1.232595e-32 2021-01-05 13:43:35        9 -1.110223e-16
+#&gt; 10: -7.713514e-02 5.949829e-03 2021-01-05 13:43:35       10 -7.713514e-02
+#&gt; 11:  7.713514e-03 5.949829e-05 2021-01-05 13:43:35       11  7.713514e-03
+#&gt; 12: -7.713514e-04 5.949829e-07 2021-01-05 13:43:35       12 -7.713514e-04
+#&gt; 13:  7.713514e-05 5.949829e-09 2021-01-05 13:43:35       13  7.713514e-05
+#&gt; 14: -7.713514e-05 5.949829e-09 2021-01-05 13:43:35       14 -7.713514e-05
+#&gt; 15: -2.321947e-22 5.391439e-44 2021-01-05 13:43:35       15 -2.321947e-22</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • bbotk</title>
+<title>Get start values for optimizers. — search_start • bbotk</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -47,7 +47,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Get start values for optimizers. — search_start" />
+<meta property="og:description" content="Returns a named numeric vector with start
+values for optimizers." />
+<meta name="twitter:card" content="summary" />
 
 
 <meta name="robots" content="noindex">
@@ -66,7 +69,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -138,61 +141,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/mlr-org/bbotk/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Get start values for optimizers.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mlr-org/bbotk/blob/master/R/helper.R'><code>R/helper.R</code></a></small>
+    <div class="hidden name"><code>search_start.Rd</code></div>
     </div>
 
-    <div id="bbotk-0229000" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.2.9000">
-<a href="#bbotk-0229000" class="anchor"></a>bbotk 0.2.2.9000<small> Unreleased </small>
-</h1>
-<ul>
-<li>Improved <code>TerminatorPerfRearched</code> documentation.</li>
-<li>Added <code>check_values</code> flag in <code>OptimInstance</code>, <code>OptimInstanceSingleCrit</code>, <code>OptimInstanceMultiCrit</code>, <code>ObjectiveRFun</code> and <code>ObjectiveRFunDt</code>.</li>
-<li>Renamed <code>m</code> parameter to <code>batch</code> in <code>Archive$best()</code>.</li>
-<li>
-<code>ArchiveBest</code> stores no data but records the best scoring evaluation.</li>
-<li>Reduced runtime if <code>ObjectiveRFunDt</code> and a domain without trafo is used.</li>
-<li>
-<code>OptimizerDesignPoints</code> supports <code>ParamUty</code>.</li>
-<li>Start values for <code>OptimizerCmaes</code> abd <code>OptimizerNloptr</code> are created randomly or from center of search space.</li>
-</ul>
-</div>
-    <div id="bbotk-022" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.2">
-<a href="#bbotk-022" class="anchor"></a>bbotk 0.2.2<small> 2020-10-08 </small>
-</h1>
-<ul>
-<li>Removed dependency on orphaned package <code>bibtex</code>.</li>
-<li>Improved documentation.</li>
-<li>Added <code>OptimizerCmaes</code> from adagio package.</li>
-</ul>
-</div>
-    <div id="bbotk-021" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.1">
-<a href="#bbotk-021" class="anchor"></a>bbotk 0.2.1<small> 2020-09-05 </small>
-</h1>
-<ul>
-<li>Compact in-memory representation of R6 objects to save space when saving mlr3 objects via saveRDS(), serialize() etc.</li>
-<li>Warning and error messages if external package for optimization is not installed.</li>
-</ul>
-</div>
-    <div id="bbotk-02" class="section level1">
-<h1 class="page-header" data-toc-text="0.2">
-<a href="#bbotk-02" class="anchor"></a>bbotk 0.2<small> Unreleased </small>
-</h1>
-<ul>
-<li>First version of the Black-Box Optimization Toolkit</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Returns a named numeric vector with start
+values for optimizers.</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>search_start</span><span class='op'>(</span><span class='va'>search_space</span>, type <span class='op'>=</span> <span class='st'>"random"</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>search_space</th>
+      <td><p><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a>.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+<code>random</code> start values or <code>center</code> of search space?</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>named 'numeric()'</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 
