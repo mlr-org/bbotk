@@ -55,6 +55,8 @@ Suggests:
     progressr,
     rmarkdown,
     testthat
+Remotes:
+    mlr-org/paradox
 VignetteBuilder:
     knitr
 Encoding: UTF-8

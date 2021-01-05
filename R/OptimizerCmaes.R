@@ -12,8 +12,10 @@
 #'
 #' @section Parameters:
 #' \describe{
-#' \item{`par`}{`numeric()`}
 #' \item{`sigma`}{`numeric(1)`}
+#' \item{`start_values`}{`character(1)`\cr
+#' Create `random` start values or based on `center` of search space? In the 
+#' latter case, it is the center of the parameters before a trafo is applied.}
 #' }
 #'
 #' For the meaning of the control parameters, see [adagio::pureCMAES()]. Note
@@ -21,38 +23,7 @@
 #' the algorithm and where our terminators allow to obtain the same behavior.
 #'
 #' @export
-#' @examples
-#' library(paradox)
-#' library(data.table)
-#'
-#' domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
-#'
-#' objective_function = function(xs) {
-#'   list(y = as.numeric(xs)^2)
-#' }
-#'
-#' objective = ObjectiveRFun$new(fun = objective_function,
-#'                               domain = domain,
-#'                               codomain = codomain)
-#' terminator = trm("evals", n_evals = 2)
-#' instance = OptimInstanceSingleCrit$new(objective = objective,
-#'                              search_space = search_space,
-#'                              terminator = terminator)
-#'
-#' optimizer = opt("cmaes", par = 1)
-#'
-#' # Modifies the instance by reference
-#' optimizer$optimize(instance)
-#'
-#' # Returns best scoring evaluation
-#' instance$result
-#'
-#' # Allows access of data.table of full path of all evaluations
-#' as.data.table(instance$archive)
+#' @template example
 OptimizerCmaes = R6Class("OptimizerCmaes",
   inherit = Optimizer,
   public = list(
@@ -61,9 +32,10 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       ps = ParamSet$new(list(
-        ParamUty$new("par", tags = "required"),
-        ParamDbl$new("sigma", default = 0.5)
+        ParamDbl$new("sigma", default = 0.5),
+        ParamFct$new("start_values", default = "random", levels = c("random", "center"))
       ))
+      ps$values$start_values = "random"
       super$initialize(
         param_set = ps,
         param_classes = "ParamDbl",
@@ -76,6 +48,8 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
+      pv$par = search_start(inst$search_space, type = pv$start_values)
+      pv$start_values = NULL
       pv$stopeval = .Machine$integer.max # make sure pureCMAES does not stop
       pv$stopfitness = -Inf
 

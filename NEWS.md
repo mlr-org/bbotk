@@ -7,6 +7,8 @@
 * `ArchiveBest` stores no data but records the best scoring evaluation.
 * Reduced runtime if `ObjectiveRFunDt` and a domain without trafo is used.
 * `OptimizerDesignPoints` supports `ParamUty`.
+* Start values for `OptimizerCmaes` abd `OptimizerNloptr` are created randomly or
+  from center of search space.
 
 # bbotk 0.2.2
 

@@ -121,3 +121,27 @@ mult_max_to_min = function(codomain) {
 get_private = function(x) {
     x[[".__enclos_env__"]][["private"]]
 }
+
+#' @title Get start values for optimizers.
+#' @description
+#' Returns a named numeric vector with start
+#' values for optimizers.
+#'
+#' @param search_space [ParamSet].
+#' @param type (`character(1)`)\cr
+#' `random` start values or `center` of search space?
+#'
+#' @return named 'numeric()'
+#'
+#' @keywords internal
+search_start = function(search_space, type = "random") {
+  assert_choice(type, c("random", "center"))
+  if(type == "random") {
+    unlist(generate_design_random(search_space, 1)$data[1,])
+  } else if (type == "center") {
+    if(!all(search_space$storage_type == "numeric")) {
+      stop("Cannot generate center values of non-numeric parameters.")
+    }
+    (search_space$upper + search_space$lower) / 2
+  }
+}

@@ -10,12 +10,14 @@
 #' @section Parameters:
 #' \describe{
 #' \item{`algorithm`}{`character(1)`}
-#' \item{`x0`}{`numeric()`}
 #' \item{`eval_g_ineq`}{`function()`}
 #' \item{`xtol_rel`}{`numeric(1)`}
 #' \item{`xtol_abs`}{`numeric(1)`}
 #' \item{`ftol_rel`}{`numeric(1)`}
 #' \item{`ftol_abs`}{`numeric(1)`}
+#' \item{`start_values`}{`character(1)`\cr
+#' Create `random` start values or based on `center` of search space? In the 
+#' latter case, it is the center of the parameters before a trafo is applied.}
 #' }
 #'
 #' For the meaning of the control parameters, see [nloptr::nloptr()] and
@@ -57,7 +59,7 @@
 #'   search_space = search_space,
 #'   terminator = terminator)
 #'
-#' optimizer = opt("nloptr", x0 = 1, algorithm = "NLOPT_LN_BOBYQA")
+#' optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA")
 #'
 #' # Modifies the instance by reference
 #' optimizer$optimize(instance)
@@ -91,7 +93,6 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
             "NLOPT_LN_AUGLAG", "NLOPT_LD_AUGLAG", "NLOPT_LN_AUGLAG_EQ",
             "NLOPT_LD_AUGLAG_EQ", "NLOPT_LN_BOBYQA", "NLOPT_GN_ISRES"),
         tags = "required"),
-        ParamUty$new("x0", tags = "required"),
         ParamUty$new("eval_g_ineq", default = NULL),
         ParamDbl$new("xtol_rel", default = 10^-4, lower = 0, upper = Inf,
           special_vals = list(-1)),
@@ -100,8 +101,10 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
         ParamDbl$new("ftol_rel", default = 0, lower = 0, upper = Inf,
           special_vals = list(-1)),
         ParamDbl$new("ftol_abs", default = 0, lower = 0, upper = Inf,
-          special_vals = list(-1))
+          special_vals = list(-1)),
+        ParamFct$new("start_values", default = "random", levels = c("random", "center"))
       ))
+      ps$values$start_values = "random"
       super$initialize(param_set = ps, param_classes = "ParamDbl",
         properties = "single-crit", packages = "nloptr")
     }
@@ -110,6 +113,8 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
+      pv$x0 = search_start(inst$search_space, type = pv$start_values)
+      pv$start_values = NULL
       opts = pv[which(names(pv) %nin% formalArgs(nloptr::nloptr))]
       # Deactivate termination criterions which are replaced by Terminators
       opts = insert_named(opts, list(
