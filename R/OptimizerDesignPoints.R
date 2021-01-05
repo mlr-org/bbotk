@@ -74,7 +74,7 @@ OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
       ps$values = list(batch_size = 1L, design = NULL)
       super$initialize(
         param_set = ps,
-        param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
+        param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"),
         properties = c("dependencies", "single-crit", "multi-crit")
       )
     }

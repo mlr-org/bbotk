@@ -6,6 +6,7 @@
 * Renamed `m` parameter to `batch` in `Archive$best()`.
 * `ArchiveBest` stores no data but records the best scoring evaluation.
 * Reduced runtime if `ObjectiveRFunDt` and a domain without trafo is used.
+* `OptimizerDesignPoints` supports `ParamUty`.
 
 # bbotk 0.2.2
 

@@ -17,6 +17,7 @@
 #' }
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' TerminatorEvals$new()
@@ -31,18 +32,24 @@ TerminatorEvals = R6Class("TerminatorEvals",
       ps = ParamSet$new(list(ParamInt$new("n_evals", lower = 1L, default = 100L,
         tags = "required")))
       ps$values = list(n_evals = 100L)
-
-      super$initialize(param_set = ps, properties = c("single-crit",
-        "multi-crit"))
+      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
+      self$unit = "evaluations"
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       archive$n_evals >= self$param_set$values$n_evals
+    }
+  ),
+
+  private = list(
+    .status = function(archive) {
+      max_steps = self$param_set$values$n_evals
+      current_steps =  archive$n_evals
+      c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
 )
