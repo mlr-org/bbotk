@@ -25,6 +25,14 @@ evaluated in a single batch (c.f. batch size parameter of many optimization
 algorithms). So it is advised to check the size of the returned archive, in
 particular if you are benchmarking multiple optimization algorithms.
 }
+\section{Technical details}{
+
+\code{Terminator} subclasses can overwrite \code{.status()} to support progress bars
+via the package \CRANpkg{progressr}. The method must return the maximum
+number of steps (\code{max_steps}) and the currently achieved number of steps
+(\code{current_steps}) as a named integer vecor.
+}
+
 \seealso{
 Other Terminator: 
 \code{\link{mlr_terminators_clock_time}},
@@ -44,8 +52,11 @@ Other Terminator:
 \item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Set of control parameters for terminator.}
 
-\item{\code{properties}}{\code{character()}\cr
+\item{\code{properties}}{(\code{character()})\cr
 Set of properties.}
+
+\item{\code{unit}}{(\code{character()})\cr
+Unit of steps.}
 }
 \if{html}{\out{</div>}}
 }
@@ -55,6 +66,8 @@ Set of properties.}
 \item \href{#method-new}{\code{Terminator$new()}}
 \item \href{#method-format}{\code{Terminator$format()}}
 \item \href{#method-print}{\code{Terminator$print()}}
+\item \href{#method-status}{\code{Terminator$status()}}
+\item \href{#method-remaining_time}{\code{Terminator$remaining_time()}}
 \item \href{#method-clone}{\code{Terminator$clone()}}
 }
 }
@@ -85,9 +98,17 @@ Set of properties.}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$format()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$format(with_params = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{with_params}}{(\code{logical(1)})\cr
+Add parameter values to format string.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
@@ -104,6 +125,48 @@ Printer.
 \item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-status"></a>}}
+\if{latex}{\out{\hypertarget{method-status}{}}}
+\subsection{Method \code{status()}}{
+Returns how many progression steps are made (\code{current_steps}) and the
+amount steps needed for termination (\code{max_steps}).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$status(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+named \code{integer(2)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-remaining_time"></a>}}
+\if{latex}{\out{\hypertarget{method-remaining_time}{}}}
+\subsection{Method \code{remaining_time()}}{
+Returns remaining runtime in seconds. If the terminator is not
+time-based, the reaming runtime is \code{Inf}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$remaining_time(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{integer(1)}.
 }
 }
 \if{html}{\out{<hr>}}

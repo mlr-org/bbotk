@@ -118,14 +118,15 @@ Returns the best scoring evaluation. For single-crit optimization,
 the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$best(m = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{m}}{(\code{integer()})\cr
-Take only batches \code{m} into account. Default is all batches.}
+\item{\code{batch}}{(\code{integer()})\cr
+The batch number(s) to limit the best results to. Default is
+all batches.}
 }
 \if{html}{\out{</div>}}
 }

@@ -21,6 +21,7 @@
 #' }
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' TerminatorStagnation$new()
@@ -43,9 +44,6 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #'
-    #' @param archive ([Archive]).
-    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
 

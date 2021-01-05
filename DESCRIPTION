@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 0.2.2
+Version: 0.2.2.9000
 Authors@R:
     c(person(given = "Marc",
              family = "Becker",
@@ -52,6 +52,7 @@ Suggests:
     GenSA,
     knitr,
     nloptr,
+    progressr,
     rmarkdown,
     testthat
 Remotes:
@@ -79,6 +80,7 @@ Collate:
     'OptimizerGridSearch.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
+    'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
     'TerminatorClockTime.R'
