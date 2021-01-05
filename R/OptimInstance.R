@@ -12,6 +12,7 @@
 #'
 #' @template param_xdt
 #' @template param_search_space
+#' @template param_keep_evals
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
@@ -44,7 +45,9 @@ OptimInstance = R6Class("OptimInstance",
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
     initialize = function(objective, search_space = NULL, terminator,
-      check_values = TRUE) {
+      keep_evals = "all", check_values = TRUE) {
+
+      assert_choice(keep_evals, c("all", "best"))
       self$objective = assert_r6(objective, "Objective")
       self$search_space = if (is.null(search_space)) {
         self$objective$domain
@@ -52,9 +55,21 @@ OptimInstance = R6Class("OptimInstance",
         assert_param_set(search_space)
       }
       self$terminator = assert_terminator(terminator, self)
+
       assert_flag(check_values)
-      self$archive = Archive$new(search_space = self$search_space,
-        codomain = objective$codomain, check_values = check_values)
+
+      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
+
+      self$archive = if (keep_evals == "all") {
+        Archive$new(search_space = self$search_space,
+          codomain = objective$codomain, check_values = check_values,
+          store_x_domain = !is_rfundt || self$search_space$has_trafo)
+      } else if (keep_evals == "best") {
+        ArchiveBest$new(search_space = self$search_space,
+          codomain = objective$codomain, check_values = check_values,
+          store_x_domain = !is_rfundt || self$search_space$has_trafo) 
+          # only not store xss if we have RFunDT and not trafo
+      }
 
       if (!all(self$search_space$is_number)) {
         private$.objective_function = objective_error
@@ -114,9 +129,24 @@ OptimInstance = R6Class("OptimInstance",
       }
 
       assert_data_table(xdt)
-      xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
-      ydt = self$objective$eval_many(xss_trafoed)
+
+      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
+      # calculate the x as (trafoed) domain only if needed
+      if (self$search_space$has_trafo || self$archive$store_x_domain || !is_rfundt) {
+        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+      } else {
+        xss_trafoed = NULL
+      }
+
+      # if no trafos, and objective evals dt directly we go a shortcut
+      if (is_rfundt && !self$search_space$has_trafo) {
+        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
+      } else {
+        ydt = self$objective$eval_many(xss_trafoed)
+      }
+
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),

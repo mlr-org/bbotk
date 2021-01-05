@@ -22,6 +22,10 @@ Codomain of objective function.}
 
 \item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Contains all performed \link{Objective} function calls.}
+
+\item{\code{store_x_domain}}{(\code{logical(1)})
+Determines if x values, should be stored in \verb{$data$x_domain} as list items. The trafo will be applied if defined in \code{search_space}.
+Changing this value after evals have been added can lead to unexpected behavior.}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,7 +64,7 @@ Column names of codomain parameters.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = TRUE, store_x_domain = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -89,7 +93,7 @@ Search space that is logged into archive.}
 \subsection{Method \code{add_evals()}}{
 Adds function evaluations to the archive table.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(xdt, xss_trafoed, ydt)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(xdt, xss_trafoed = NULL, ydt)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -102,7 +106,8 @@ Column names have to match ids of the \code{search_space}.
 However, \code{xdt} can contain additional columns.}
 
 \item{\code{xss_trafoed}}{(\code{list()})\cr
-Transformed point(s) in the \emph{domain space}.}
+Transformed point(s) in the \emph{domain space}.
+Not stored and needed if \code{store_x_domain = FALSE}.}
 
 \item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Optimal outcome.}
