@@ -16,7 +16,8 @@
 #' \item{`ftol_rel`}{`numeric(1)`}
 #' \item{`ftol_abs`}{`numeric(1)`}
 #' \item{`start_values`}{`character(1)`\cr
-#' Create `random` start values or based on `center` of search space?}
+#' Create `random` start values or based on `center` of search space? In the 
+#' latter case, it is the center of the parameters before a trafo is applied.}
 #' }
 #'
 #' For the meaning of the control parameters, see [nloptr::nloptr()] and

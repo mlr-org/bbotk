@@ -14,7 +14,8 @@
 #' \describe{
 #' \item{`sigma`}{`numeric(1)`}
 #' \item{`start_values`}{`character(1)`\cr
-#' Create `random` start values or based on `center` of search space?}
+#' Create `random` start values or based on `center` of search space? In the 
+#' latter case, it is the center of the parameters before a trafo is applied.}
 #' }
 #'
 #' For the meaning of the control parameters, see [adagio::pureCMAES()]. Note

@@ -5,6 +5,8 @@
   `OptimInstanceMultiCrit`, `ObjectiveRFun` and `ObjectiveRFunDt`.
 * Renamed `m` parameter to `batch` in `Archive$best()`.
 * `OptimizerDesignPoints` supports `ParamUty`.
+* Start values for `OptimizerCmaes` abd `OptimizerNloptr` are created randomly or
+  from center of search space.
 
 # bbotk 0.2.2
 

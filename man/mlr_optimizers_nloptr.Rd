@@ -23,7 +23,8 @@ Johnson, G S (2020).
 \item{\code{ftol_rel}}{\code{numeric(1)}}
 \item{\code{ftol_abs}}{\code{numeric(1)}}
 \item{\code{start_values}}{\code{character(1)}\cr
-Create \code{random} start values or based on \code{center} of search space?}
+Create \code{random} start values or based on \code{center} of search space? In the
+latter case, it is the center of the parameters before a trafo is applied.}
 }
 
 For the meaning of the control parameters, see \code{\link[nloptr:nloptr]{nloptr::nloptr()}} and
