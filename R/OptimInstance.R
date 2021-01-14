@@ -74,12 +74,12 @@ OptimInstance = R6Class("OptimInstance",
           # only not store xss if we have RFunDT and not trafo
       }
 
-      if (!all(self$search_space$is_number)) {
+      if (!self$search_space$all_numeric) {
         private$.objective_function = objective_error
       } else {
         private$.objective_function = objective_function
-        self$objective_multiplicator = mult_max_to_min(self$objective$codomain)
       }
+      self$objective_multiplicator = mult_max_to_min(self$objective$codomain)
 
       self$progressor = Progressor$new()
     },
