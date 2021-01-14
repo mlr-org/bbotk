@@ -30,6 +30,8 @@ user can access the results with active bindings (see below).
 
 \item{\code{progressor}}{(\code{progressor()})\cr
 Stores \code{progressor} function.}
+
+\item{\code{objective_multiplicator}}{(\code{integer()}).}
 }
 \if{html}{\out{</div>}}
 }

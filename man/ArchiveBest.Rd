@@ -21,12 +21,6 @@ Number of evaluations stored in the archive.}
 
 \item{\code{n_batch}}{(\code{integer(1)})\cr
 Number of batches stored in the archive.}
-
-\item{\code{cols_x}}{(\code{character()})\cr
-Column names of search space parameters.}
-
-\item{\code{cols_y}}{(\code{character()})\cr
-Column names of codomain parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -54,7 +48,12 @@ Column names of codomain parameters.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$new(search_space, codomain, check_values = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$new(
+  search_space,
+  codomain,
+  check_values = FALSE,
+  store_x_domain = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -82,7 +81,7 @@ ignored.}
 \subsection{Method \code{add_evals()}}{
 Stores the best result in \code{ydt}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$add_evals(xdt, xss_trafoed, ydt)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$add_evals(xdt, xss_trafoed = NULL, ydt)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

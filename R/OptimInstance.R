@@ -36,6 +36,9 @@ OptimInstance = R6Class("OptimInstance",
     #' Stores `progressor` function.
     progressor = NULL,
 
+    #' @field objective_multiplicator (`integer()`).
+    objective_multiplicator = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -75,7 +78,7 @@ OptimInstance = R6Class("OptimInstance",
         private$.objective_function = objective_error
       } else {
         private$.objective_function = objective_function
-        private$.objective_multiplicator = mult_max_to_min(self$objective$codomain)
+        self$objective_multiplicator = mult_max_to_min(self$objective$codomain)
       }
 
       self$progressor = Progressor$new()
@@ -181,7 +184,7 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @return Objective value as `numeric(1)`, negated for maximization problems.
     objective_function = function(x) {
-      private$.objective_function(x, self, private$.objective_multiplicator)
+      private$.objective_function(x, self, self$objective_multiplicator)
     }
   ),
 
@@ -214,9 +217,7 @@ OptimInstance = R6Class("OptimInstance",
   private = list(
     .result = NULL,
 
-    .objective_function = NULL,
-
-    .objective_multiplicator = NULL
+    .objective_function = NULL
   )
 )
 
