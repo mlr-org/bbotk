@@ -154,7 +154,7 @@ OptimInstance = R6Class("OptimInstance",
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
-      return(invisible(ydt))
+      return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
     },
 
     #' @description

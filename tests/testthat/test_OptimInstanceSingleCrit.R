@@ -16,7 +16,7 @@ test_that("OptimInstanceSingleCrit", {
   expect_output(print(inst), "<Archive>")
 
   xdt = data.table(x1 = -1:1, x2 = list(-1, 0, 1))
-  inst$eval_batch(xdt)
+  expect_named(inst$eval_batch(xdt), "y")
   expect_data_table(inst$archive$data, nrows = 3L)
   expect_equal(inst$archive$data$y, c(2, 0, 2))
   expect_identical(inst$archive$n_evals, 3L)
