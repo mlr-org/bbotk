@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Objective interface for basic R functions. — ObjectiveRFunDt • bbotk</title>
+<title>Minimal logging object for objective function evaluations — ArchiveBest • bbotk</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -47,8 +47,12 @@
 
 
 
-<meta property="og:title" content="Objective interface for basic R functions. — ObjectiveRFunDt" />
-<meta property="og:description" content="Objective interface where user can pass an R function that works on an data.table()." />
+<meta property="og:title" content="Minimal logging object for objective function evaluations — ArchiveBest" />
+<meta property="og:description" content="The ArchiveBest stores no data but records the best scoring evaluation
+passed to $add_evals(). The Archive API is fully implemented but many
+parameters are ignored and some methods do nothing. The archive still works
+with TerminatorClockTime, TerminatorEvals, TerminatorNone and
+TerminatorEvals." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -140,25 +144,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Objective interface for basic R functions.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mlr-org/bbotk/blob/master/R/ObjectiveRFunDt.R'><code>R/ObjectiveRFunDt.R</code></a></small>
-    <div class="hidden name"><code>ObjectiveRFunDt.Rd</code></div>
+    <h1>Minimal logging object for objective function evaluations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mlr-org/bbotk/blob/master/R/ArchiveBest.R'><code>R/ArchiveBest.R</code></a></small>
+    <div class="hidden name"><code>ArchiveBest.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Objective interface where user can pass an R function that works on an <code>data.table()</code>.</p>
+    <p>The ArchiveBest stores no data but records the best scoring evaluation
+passed to <code>$add_evals()</code>. The <a href='Archive.html'>Archive</a> API is fully implemented but many
+parameters are ignored and some methods do nothing. The archive still works
+with <a href='mlr_terminators_clock_time.html'>TerminatorClockTime</a>, <a href='mlr_terminators_evals.html'>TerminatorEvals</a>, <a href='mlr_terminators_none.html'>TerminatorNone</a> and
+<a href='mlr_terminators_evals.html'>TerminatorEvals</a>.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code><a href='Objective.html'>bbotk::Objective</a></code> -&gt; <code>ObjectiveRFunDt</code></p>
+    <p><code><a href='Archive.html'>bbotk::Archive</a></code> -&gt; <code>ArchiveBest</code></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl>
-<dt><code>fun</code></dt><dd><p>(<code>function</code>)<br />
-Objective function.</p></dd>
+<dt><code>n_evals</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+Number of evaluations stored in the archive.</p></dd>
+
+<dt><code>n_batch</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+Number of batches stored in the archive.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -167,81 +178,55 @@ Objective function.</p></dd>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>ObjectiveRFunDt$new()</code></a></p></li>
-<li><p><a href='#method-eval_many'><code>ObjectiveRFunDt$eval_many()</code></a></p></li>
-<li><p><a href='#method-eval_dt'><code>ObjectiveRFunDt$eval_dt()</code></a></p></li>
-<li><p><a href='#method-clone'><code>ObjectiveRFunDt$clone()</code></a></p></li>
+<li><p><a href='#method-new'><code>ArchiveBest$new()</code></a></p></li>
+<li><p><a href='#method-add_evals'><code>ArchiveBest$add_evals()</code></a></p></li>
+<li><p><a href='#method-best'><code>ArchiveBest$best()</code></a></p></li>
+<li><p><a href='#method-clone'><code>ArchiveBest$clone()</code></a></p></li>
 </ul>
 <p><details open ><summary>Inherited methods</summary>
 <ul>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval"><a href='../../bbotk/html/Objective.html#method-eval'><code>bbotk::Objective$eval()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format"><a href='../../bbotk/html/Objective.html#method-format'><code>bbotk::Objective$format()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print"><a href='../../bbotk/html/Objective.html#method-print'><code>bbotk::Objective$print()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="clear"><a href='../../bbotk/html/Archive.html#method-clear'><code>bbotk::Archive$clear()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-format'><code>bbotk::Archive$format()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-print'><code>bbotk::Archive$print()</code></a></span></p></li>
 </ul>
 </details>
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ObjectiveRFunDt</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
-  <span class='va'>fun</span>,
-  <span class='va'>domain</span>,
-  codomain <span class='op'>=</span> <span class='cn'>NULL</span>,
-  id <span class='op'>=</span> <span class='st'>"function"</span>,
-  properties <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='op'>)</span>,
-  constants <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>,
-  check_values <span class='op'>=</span> <span class='cn'>TRUE</span>
+<p><div class="r"></p><pre><span class='va'>ArchiveBest</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  <span class='va'>search_space</span>,
+  <span class='va'>codomain</span>,
+  check_values <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  store_x_domain <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>fun</code></dt><dd><p>(<code>function</code>)<br />
-R function that encodes objective and expects an <code>data.table()</code> as input
-whereas each point is represented by one row.</p></dd>
-
-<dt><code>domain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Specifies domain of function.
-The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a> should describe all possible input parameters of the objective function.
-This includes their <code>id</code>, their types and the possible range.</p></dd>
+<dt><code>search_space</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
+Specifies the search space for the <a href='Optimizer.html'>Optimizer</a>. The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>
+describes either a subset of the <code>domain</code> of the <a href='Objective.html'>Objective</a> or it describes
+a set of parameters together with a <code>trafo</code> function that transforms values
+from the search space to values of the domain. Depending on the context, this
+value defaults to the domain of the objective.</p></dd>
 
 <dt><code>codomain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.</p></dd>
 
-<dt><code>id</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>).</p></dd>
-
-<dt><code>properties</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).</p></dd>
-
-<dt><code>constants</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Changeable constants or parameters that are not subject to tuning can be stored and accessed here.</p></dd>
-
 <dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
-Should points before the evaluation and the results be checked for
-validity?</p></dd>
+ignored.</p></dd>
+
+<dt><code>store_x_domain</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Determines if x values, should be stored in <code>$data$x_domain</code> as list
+items. The trafo will be applied if defined in <code>search_space</code>.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-eval_many"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>eval_many()</code></h3>
-<p>Evaluates multiple input values received as a list, converted to a <code>data.table()</code> on the
-objective function.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ObjectiveRFunDt</span><span class='op'>$</span><span class='fu'>eval_many</span><span class='op'>(</span><span class='va'>xss</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>xss</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>)<br />
-A list of lists that contains multiple x values, e.g.
-<code><a href='https://rdrr.io/r/base/list.html'>list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))</a></code>.</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code> that contains one y-column for single-criteria functions
-and multiple y-columns for multi-criteria functions, e.g.
-<code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.</p>
-<p><hr>
-<a id="method-eval_dt"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>eval_dt()</code></h3>
-<p>Evaluates multiple input values on the objective function supplied by the user.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ObjectiveRFunDt</span><span class='op'>$</span><span class='fu'>eval_dt</span><span class='op'>(</span><span class='va'>xdt</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-add_evals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_evals()</code></h3>
+<p>Stores the best result in <code>ydt</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ArchiveBest</span><span class='op'>$</span><span class='fu'>add_evals</span><span class='op'>(</span><span class='va'>xdt</span>, xss_trafoed <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>ydt</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -251,15 +236,32 @@ One point per row, e.g. <code>data.table(x1 = c(1, 3), x2 = c(2, 4))</code>.
 Column names have to match ids of the <code>search_space</code>.
 However, <code>xdt</code> can contain additional columns.</p></dd>
 
+<dt><code>xss_trafoed</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>)<br />
+Transformed point(s) in the <em>domain space</em>.</p></dd>
+
+<dt><code>ydt</code></dt><dd><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
+Optimal outcome.</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-best"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>best()</code></h3>
+<p>Returns the best scoring evaluation. For single-crit optimization,
+the solution that minimizes / maximizes the objective function.
+For multi-crit optimization, the Pareto set / front.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ArchiveBest</span><span class='op'>$</span><span class='fu'>best</span><span class='op'>(</span>m <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>m</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
+ignored.</p></dd>
+
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>data.table::data.table()] that contains one y-column for single-criteria functions
-and multiple y-columns for multi-criteria functions, e.g.
-<code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.</p>
+<p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code></p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ObjectiveRFunDt</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ArchiveBest</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

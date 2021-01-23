@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculates the transformed x-values — transform_xdt_to_xss • bbotk</title>
+<title>Progressor — Progressor • bbotk</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -47,10 +47,8 @@
 
 
 
-<meta property="og:title" content="Calculates the transformed x-values — transform_xdt_to_xss" />
-<meta property="og:description" content="Transforms a given data.table() to a list with transformed x values.
-If no trafo is defined it will just convert the data.table() to a list.
-Mainly for internal usage." />
+<meta property="og:title" content="Progressor — Progressor" />
+<meta property="og:description" content="Wraps progressr::progressor() function and stores current progress." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -142,44 +140,81 @@ Mainly for internal usage." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculates the transformed x-values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mlr-org/bbotk/blob/master/R/helper.R'><code>R/helper.R</code></a></small>
-    <div class="hidden name"><code>transform_xdt_to_xss.Rd</code></div>
+    <h1>Progressor</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mlr-org/bbotk/blob/master/R/Progressor.R'><code>R/Progressor.R</code></a></small>
+    <div class="hidden name"><code>Progressor.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Transforms a given <code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table()</a></code> to a list with transformed x values.
-If no trafo is defined it will just convert the <code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table()</a></code> to a list.
-Mainly for internal usage.</p>
+    <p>Wraps <code><a href='https://rdrr.io/pkg/progressr/man/progressor.html'>progressr::progressor()</a></code> function and stores current progress.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transform_xdt_to_xss</span><span class='op'>(</span><span class='va'>xdt</span>, <span class='va'>search_space</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>xdt</th>
-      <td><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
-Set of untransformed points / points from the <em>search space</em>.
-One point per row, e.g. <code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table(x1 = c(1, 3), x2 = c(2, 4))</a></code>.
-Column names have to match ids of the <code>search_space</code>.
-However, <code>xdt</code> can contain additional columns.</p></td>
-    </tr>
-    <tr>
-      <th>search_space</th>
-      <td><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Specifies the search space for the <a href='Optimizer.html'>Optimizer</a>. The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>
-describes either a subset of the <code>domain</code> of the <a href='Objective.html'>Objective</a> or it describes
-a set of parameters together with a <code>trafo</code> function that transforms values
-from the search space to values of the domain. Depending on the context, this
-value defaults to the domain of the objective.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
-    <p><code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>.</p>
+    <p><div class="r6-fields"></p><dl>
+<dt><code>progressor</code></dt><dd><p>(<code><a href='https://rdrr.io/pkg/progressr/man/progressor.html'>progressr::progressor()</a></code>).</p></dd>
+
+<dt><code>max_steps</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>).</p></dd>
+
+<dt><code>current_steps</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>).</p></dd>
+
+<dt><code>unit</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>).</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-new'><code>Progressor$new()</code></a></p></li>
+<li><p><a href='#method-setup'><code>Progressor$setup()</code></a></p></li>
+<li><p><a href='#method-update'><code>Progressor$update()</code></a></p></li>
+<li><p><a href='#method-clone'><code>Progressor$clone()</code></a></p></li>
+</ul>
+<p><hr>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Progressor</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<p><hr>
+<a id="method-setup"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>setup()</code></h3>
+<p>Creates <code><a href='https://rdrr.io/pkg/progressr/man/progressor.html'>progressr::progressor()</a></code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Progressor</span><span class='op'>$</span><span class='fu'>setup</span><span class='op'>(</span><span class='va'>terminator</span>, <span class='va'>archive</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>terminator</code></dt><dd><p>(<a href='Terminator.html'>Terminator</a>).</p></dd>
+
+<dt><code>archive</code></dt><dd><p>(<a href='Archive.html'>Archive</a>).</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-update"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/update.html'>update()</a></code></h3>
+<p>Updates <code><a href='https://rdrr.io/pkg/progressr/man/progressor.html'>progressr::progressor()</a></code> with current steps.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Progressor</span><span class='op'>$</span><span class='fu'>update</span><span class='op'>(</span><span class='va'>terminator</span>, <span class='va'>archive</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>terminator</code></dt><dd><p>(<a href='Terminator.html'>Terminator</a>).</p></dd>
+
+<dt><code>archive</code></dt><dd><p>(<a href='Archive.html'>Archive</a>).</p></dd>
+
+</dl><p></div></p>
+<p><hr>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Progressor</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -83,7 +83,7 @@ adagio::pureCMAES() from package adagio." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -167,14 +167,24 @@ adagio::pureCMAES() from package adagio." />
     
 
 <dl>
-<dt><code>par</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code></p></dd>
 <dt><code>sigma</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
+<dt><code>start_values</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
+Create <code>random</code> start values or based on <code>center</code> of search space? In the
+latter case, it is the center of the parameters before a trafo is applied.</p></dd>
 
 </dl>
 
 <p>For the meaning of the control parameters, see <code><a href='https://rdrr.io/pkg/adagio/man/cmaes.html'>adagio::pureCMAES()</a></code>. Note
 that we have removed all control parameters which refer to the termination of
 the algorithm and where our terminators allow to obtain the same behavior.</p>
+    <h2 class="hasAnchor" id="progress-bars"><a class="anchor" href="#progress-bars"></a>Progress Bars</h2>
+
+    
+
+<p><code>$optimize()</code> supports progress bars via the package <a href='https://CRAN.R-project.org/package=progressr'><span class="pkg">progressr</span></a>
+combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the function in
+<code><a href='https://rdrr.io/pkg/progressr/man/with_progress.html'>progressr::with_progress()</a></code> to enable them. We recommend to use package
+<a href='https://CRAN.R-project.org/package=progress'><span class="pkg">progress</span></a> as backend; enable with <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers("progress")</a></code>.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
     <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerCmaes</code></p>
@@ -214,8 +224,8 @@ the algorithm and where our terminators allow to obtain the same behavior.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com'>paradox</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://Rdatatable.gitlab.io/data.table'>data.table</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"adagio"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com'>paradox</a></span><span class='op'>)</span>
 
 <span class='va'>domain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -230,26 +240,35 @@ the algorithm and where our terminators allow to obtain the same behavior.</p>
 <span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>fun <span class='op'>=</span> <span class='va'>objective_function</span>,
                               domain <span class='op'>=</span> <span class='va'>domain</span>,
                               codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
-<span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>objective <span class='op'>=</span> <span class='va'>objective</span>,
-                             search_space <span class='op'>=</span> <span class='va'>search_space</span>,
-                             terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+<span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+ objective <span class='op'>=</span> <span class='va'>objective</span>,
+ search_space <span class='op'>=</span> <span class='va'>search_space</span>,
+ terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
 
-<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"cmaes"</span>, par <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+
+<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"cmaes"</span><span class='op'>)</span>
 
 <span class='co'># Modifies the instance by reference</span>
 <span class='va'>optimizer</span><span class='op'>$</span><span class='fu'>optimize</span><span class='op'>(</span><span class='va'>instance</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             x  x_domain         y
-#&gt; 1: -0.4000435 &lt;list[1]&gt; 0.1600348</div><div class='input'>
+
 <span class='co'># Returns best scoring evaluation</span>
 <span class='va'>instance</span><span class='op'>$</span><span class='va'>result</span>
-</div><div class='output co'>#&gt;             x  x_domain         y
-#&gt; 1: -0.4000435 &lt;list[1]&gt; 0.1600348</div><div class='input'>
+
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
-<span class='fu'><a href='https://paradox.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             x         y           timestamp batch_nr x_domain_x
-#&gt; 1: -0.4000435 0.1600348 2020-12-21 09:56:26        1 -0.4000435
-#&gt; 2:  1.0000000 1.0000000 2020-12-21 09:56:26        2  1.0000000</div></pre>
+<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: adagio</span></div><div class='output co'>#&gt;              x         y  x_domain           timestamp batch_nr
+#&gt;  1:  0.1329308 0.0176706 &lt;list[1]&gt; 2021-01-23 13:22:00        1
+#&gt;  2: -1.0000000 1.0000000 &lt;list[1]&gt; 2021-01-23 13:22:00        2
+#&gt;  3: -0.9228386 0.8516311 &lt;list[1]&gt; 2021-01-23 13:22:00        3
+#&gt;  4: -1.0000000 1.0000000 &lt;list[1]&gt; 2021-01-23 13:22:00        4
+#&gt;  5:  0.6399486 0.4095342 &lt;list[1]&gt; 2021-01-23 13:22:00        5
+#&gt;  6: -0.9668598 0.9348178 &lt;list[1]&gt; 2021-01-23 13:22:00        6
+#&gt;  7: -0.5195898 0.2699736 &lt;list[1]&gt; 2021-01-23 13:22:00        7
+#&gt;  8: -0.8927007 0.7969145 &lt;list[1]&gt; 2021-01-23 13:22:00        8
+#&gt;  9: -1.0000000 1.0000000 &lt;list[1]&gt; 2021-01-23 13:22:00        9
+#&gt; 10:  0.9315356 0.8677585 &lt;list[1]&gt; 2021-01-23 13:22:00       10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

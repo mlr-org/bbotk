@@ -89,7 +89,7 @@ of termination criteria." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -189,6 +189,14 @@ Maximum number of points to try in a batch.</p></dd>
 
 </dl>
 
+    <h2 class="hasAnchor" id="progress-bars"><a class="anchor" href="#progress-bars"></a>Progress Bars</h2>
+
+    
+
+<p><code>$optimize()</code> supports progress bars via the package <a href='https://CRAN.R-project.org/package=progressr'><span class="pkg">progressr</span></a>
+combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the function in
+<code><a href='https://rdrr.io/pkg/progressr/man/with_progress.html'>progressr::with_progress()</a></code> to enable them. We recommend to use package
+<a href='https://CRAN.R-project.org/package=progress'><span class="pkg">progress</span></a> as backend; enable with <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers("progress")</a></code>.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
     <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerGridSearch</code></p>
@@ -244,9 +252,11 @@ Maximum number of points to try in a batch.</p></dd>
                               domain <span class='op'>=</span> <span class='va'>domain</span>,
                               codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
 <span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>objective <span class='op'>=</span> <span class='va'>objective</span>,
-                             search_space <span class='op'>=</span> <span class='va'>search_space</span>,
-                             terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+ objective <span class='op'>=</span> <span class='va'>objective</span>,
+ search_space <span class='op'>=</span> <span class='va'>search_space</span>,
+ terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+
 
 <span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"grid_search"</span><span class='op'>)</span>
 
@@ -259,18 +269,18 @@ Maximum number of points to try in a batch.</p></dd>
 </div><div class='output co'>#&gt;             x  x_domain          y
 #&gt; 1: -0.1111111 &lt;list[1]&gt; 0.01234568</div><div class='input'>
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
-<span class='fu'><a href='https://paradox.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
+<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;              x          y  x_domain           timestamp batch_nr
-#&gt;  1: -0.5555556 0.30864198 &lt;list[1]&gt; 2020-12-21 09:56:27        1
-#&gt;  2:  0.3333333 0.11111111 &lt;list[1]&gt; 2020-12-21 09:56:27        2
-#&gt;  3:  1.0000000 1.00000000 &lt;list[1]&gt; 2020-12-21 09:56:27        3
-#&gt;  4: -1.0000000 1.00000000 &lt;list[1]&gt; 2020-12-21 09:56:27        4
-#&gt;  5: -0.3333333 0.11111111 &lt;list[1]&gt; 2020-12-21 09:56:27        5
-#&gt;  6: -0.7777778 0.60493827 &lt;list[1]&gt; 2020-12-21 09:56:27        6
-#&gt;  7: -0.1111111 0.01234568 &lt;list[1]&gt; 2020-12-21 09:56:27        7
-#&gt;  8:  0.7777778 0.60493827 &lt;list[1]&gt; 2020-12-21 09:56:27        8
-#&gt;  9:  0.1111111 0.01234568 &lt;list[1]&gt; 2020-12-21 09:56:27        9
-#&gt; 10:  0.5555556 0.30864198 &lt;list[1]&gt; 2020-12-21 09:56:27       10</div></pre>
+#&gt;  1: -0.3333333 0.11111111 &lt;list[1]&gt; 2021-01-23 13:22:01        1
+#&gt;  2: -0.5555556 0.30864198 &lt;list[1]&gt; 2021-01-23 13:22:01        2
+#&gt;  3:  1.0000000 1.00000000 &lt;list[1]&gt; 2021-01-23 13:22:01        3
+#&gt;  4: -0.1111111 0.01234568 &lt;list[1]&gt; 2021-01-23 13:22:01        4
+#&gt;  5: -0.7777778 0.60493827 &lt;list[1]&gt; 2021-01-23 13:22:01        5
+#&gt;  6:  0.5555556 0.30864198 &lt;list[1]&gt; 2021-01-23 13:22:01        6
+#&gt;  7:  0.1111111 0.01234568 &lt;list[1]&gt; 2021-01-23 13:22:01        7
+#&gt;  8:  0.3333333 0.11111111 &lt;list[1]&gt; 2021-01-23 13:22:01        8
+#&gt;  9:  0.7777778 0.60493827 &lt;list[1]&gt; 2021-01-23 13:22:01        9
+#&gt; 10: -1.0000000 1.00000000 &lt;list[1]&gt; 2021-01-23 13:22:01       10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

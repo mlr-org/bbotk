@@ -83,7 +83,7 @@ nloptr::nloptr() from package nloptr." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -164,12 +164,14 @@ nloptr::nloptr() from package nloptr." />
 
 <dl>
 <dt><code>algorithm</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code></p></dd>
-<dt><code>x0</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code></p></dd>
 <dt><code>eval_g_ineq</code></dt><dd><p><code>function()</code></p></dd>
 <dt><code>xtol_rel</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
 <dt><code>xtol_abs</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
 <dt><code>ftol_rel</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
 <dt><code>ftol_abs</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code></p></dd>
+<dt><code>start_values</code></dt><dd><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
+Create <code>random</code> start values or based on <code>center</code> of search space? In the
+latter case, it is the center of the parameters before a trafo is applied.</p></dd>
 
 </dl>
 
@@ -181,6 +183,14 @@ subclasses. The x and function value tolerance termination conditions
 (<code>xtol_rel = 10^-4</code>, <code>xtol_abs = rep(0.0, length(x0))</code>, <code>ftol_rel = 0.0</code> and
 <code>ftol_abs = 0.0</code>) are still available and implemented with their package
 defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
+    <h2 class="hasAnchor" id="progress-bars"><a class="anchor" href="#progress-bars"></a>Progress Bars</h2>
+
+    
+
+<p><code>$optimize()</code> supports progress bars via the package <a href='https://CRAN.R-project.org/package=progressr'><span class="pkg">progressr</span></a>
+combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the function in
+<code><a href='https://rdrr.io/pkg/progressr/man/with_progress.html'>progressr::with_progress()</a></code> to enable them. We recommend to use package
+<a href='https://CRAN.R-project.org/package=progress'><span class="pkg">progress</span></a> as backend; enable with <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers("progress")</a></code>.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
     <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerNLoptr</code></p>
@@ -221,8 +231,8 @@ defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"nloptr"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com'>paradox</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://Rdatatable.gitlab.io/data.table'>data.table</a></span><span class='op'>)</span>
 
 <span class='va'>domain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -240,34 +250,36 @@ defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
 
 <span class='co'># We use the internal termination criterion xtol_rel</span>
 <span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"none"</span><span class='op'>)</span>
-<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>objective <span class='op'>=</span> <span class='va'>objective</span>,
-  search_space <span class='op'>=</span> <span class='va'>search_space</span>,
-  terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+ objective <span class='op'>=</span> <span class='va'>objective</span>,
+ search_space <span class='op'>=</span> <span class='va'>search_space</span>,
+ terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
 
-<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"nloptr"</span>, x0 <span class='op'>=</span> <span class='fl'>1</span>, algorithm <span class='op'>=</span> <span class='st'>"NLOPT_LN_BOBYQA"</span><span class='op'>)</span>
+
+<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"nloptr"</span>, algorithm <span class='op'>=</span> <span class='st'>"NLOPT_LN_BOBYQA"</span><span class='op'>)</span>
 
 <span class='co'># Modifies the instance by reference</span>
 <span class='va'>optimizer</span><span class='op'>$</span><span class='fu'>optimize</span><span class='op'>(</span><span class='va'>instance</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    x  x_domain y
-#&gt; 1: 0 &lt;list[1]&gt; 0</div><div class='input'>
+
 <span class='co'># Returns best scoring evaluation</span>
 <span class='va'>instance</span><span class='op'>$</span><span class='va'>result</span>
-</div><div class='output co'>#&gt;    x  x_domain y
-#&gt; 1: 0 &lt;list[1]&gt; 0</div><div class='input'>
+
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
-<span class='fu'><a href='https://paradox.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;          x       y           timestamp batch_nr x_domain_x
-#&gt;  1:  1e+00 1.0e+00 2020-12-21 09:56:28        1      1e+00
-#&gt;  2:  1e+00 1.0e+00 2020-12-21 09:56:28        2      1e+00
-#&gt;  3:  1e+00 1.0e+00 2020-12-21 09:56:28        3      1e+00
-#&gt;  4:  5e-01 2.5e-01 2020-12-21 09:56:28        4      5e-01
-#&gt;  5:  0e+00 0.0e+00 2020-12-21 09:56:28        5      0e+00
-#&gt;  6: -5e-02 2.5e-03 2020-12-21 09:56:28        6     -5e-02
-#&gt;  7:  5e-03 2.5e-05 2020-12-21 09:56:28        7      5e-03
-#&gt;  8: -5e-03 2.5e-05 2020-12-21 09:56:28        8     -5e-03
-#&gt;  9: -5e-04 2.5e-07 2020-12-21 09:56:28        9     -5e-04
-#&gt; 10:  5e-04 2.5e-07 2020-12-21 09:56:28       10      5e-04
-#&gt; 11:  0e+00 0.0e+00 2020-12-21 09:56:28       11      0e+00</div><div class='input'><span class='co'># }</span>
+<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;                 x            y           timestamp batch_nr    x_domain_x
+#&gt;  1:  6.503988e-01 4.230187e-01 2021-01-23 13:22:02        1  6.503988e-01
+#&gt;  2:  6.503988e-01 4.230187e-01 2021-01-23 13:22:02        2  6.503988e-01
+#&gt;  3:  6.503988e-01 4.230187e-01 2021-01-23 13:22:02        3  6.503988e-01
+#&gt;  4:  9.125997e-01 8.328382e-01 2021-01-23 13:22:02        4  9.125997e-01
+#&gt;  5:  3.881980e-01 1.506977e-01 2021-01-23 13:22:02        5  3.881980e-01
+#&gt;  6:  1.259971e-01 1.587527e-02 2021-01-23 13:22:02        6  1.259971e-01
+#&gt;  7:  0.000000e+00 0.000000e+00 2021-01-23 13:22:02        7  0.000000e+00
+#&gt;  8: -2.622009e-02 6.874930e-04 2021-01-23 13:22:02        8 -2.622009e-02
+#&gt;  9:  2.622009e-03 6.874930e-06 2021-01-23 13:22:02        9  2.622009e-03
+#&gt; 10: -2.622009e-04 6.874930e-08 2021-01-23 13:22:02       10 -2.622009e-04
+#&gt; 11:  2.622009e-05 6.874930e-10 2021-01-23 13:22:02       11  2.622009e-05
+#&gt; 12:  0.000000e+00 0.000000e+00 2021-01-23 13:22:02       12  0.000000e+00</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

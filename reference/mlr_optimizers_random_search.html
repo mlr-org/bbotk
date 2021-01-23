@@ -86,7 +86,7 @@ of termination criteria." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -184,6 +184,14 @@ Maximum number of points to try in a batch.</p></dd>
 
 </dl>
 
+    <h2 class="hasAnchor" id="progress-bars"><a class="anchor" href="#progress-bars"></a>Progress Bars</h2>
+
+    
+
+<p><code>$optimize()</code> supports progress bars via the package <a href='https://CRAN.R-project.org/package=progressr'><span class="pkg">progressr</span></a>
+combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the function in
+<code><a href='https://rdrr.io/pkg/progressr/man/with_progress.html'>progressr::with_progress()</a></code> to enable them. We recommend to use package
+<a href='https://CRAN.R-project.org/package=progress'><span class="pkg">progress</span></a> as backend; enable with <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers("progress")</a></code>.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
     <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerRandomSearch</code></p>
@@ -239,33 +247,35 @@ Maximum number of points to try in a batch.</p></dd>
                               domain <span class='op'>=</span> <span class='va'>domain</span>,
                               codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
 <span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>objective <span class='op'>=</span> <span class='va'>objective</span>,
-                             search_space <span class='op'>=</span> <span class='va'>search_space</span>,
-                             terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+ objective <span class='op'>=</span> <span class='va'>objective</span>,
+ search_space <span class='op'>=</span> <span class='va'>search_space</span>,
+ terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+
 
 <span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"random_search"</span><span class='op'>)</span>
 
 <span class='co'># Modifies the instance by reference</span>
 <span class='va'>optimizer</span><span class='op'>$</span><span class='fu'>optimize</span><span class='op'>(</span><span class='va'>instance</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             x  x_domain           y
-#&gt; 1: 0.06042493 &lt;list[1]&gt; 0.003651172</div><div class='input'>
+</div><div class='output co'>#&gt;             x  x_domain          y
+#&gt; 1: 0.08496082 &lt;list[1]&gt; 0.00721834</div><div class='input'>
 <span class='co'># Returns best scoring evaluation</span>
 <span class='va'>instance</span><span class='op'>$</span><span class='va'>result</span>
-</div><div class='output co'>#&gt;             x  x_domain           y
-#&gt; 1: 0.06042493 &lt;list[1]&gt; 0.003651172</div><div class='input'>
+</div><div class='output co'>#&gt;             x  x_domain          y
+#&gt; 1: 0.08496082 &lt;list[1]&gt; 0.00721834</div><div class='input'>
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
-<span class='fu'><a href='https://paradox.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
+<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;               x           y  x_domain           timestamp batch_nr
-#&gt;  1:  0.47063920 0.221501254 &lt;list[1]&gt; 2020-12-21 09:56:28        1
-#&gt;  2: -0.60808653 0.369769233 &lt;list[1]&gt; 2020-12-21 09:56:28        2
-#&gt;  3:  0.96107935 0.923673516 &lt;list[1]&gt; 2020-12-21 09:56:28        3
-#&gt;  4:  0.48304306 0.233330596 &lt;list[1]&gt; 2020-12-21 09:56:28        4
-#&gt;  5: -0.89710745 0.804801772 &lt;list[1]&gt; 2020-12-21 09:56:28        5
-#&gt;  6:  0.06042493 0.003651172 &lt;list[1]&gt; 2020-12-21 09:56:28        6
-#&gt;  7:  0.39164776 0.153387966 &lt;list[1]&gt; 2020-12-21 09:56:28        7
-#&gt;  8:  0.37711201 0.142213466 &lt;list[1]&gt; 2020-12-21 09:56:28        8
-#&gt;  9: -0.93753935 0.878980032 &lt;list[1]&gt; 2020-12-21 09:56:28        9
-#&gt; 10: -0.54887493 0.301263690 &lt;list[1]&gt; 2020-12-21 09:56:28       10</div></pre>
+#&gt;  1: -0.45236351 0.204632745 &lt;list[1]&gt; 2021-01-23 13:22:02        1
+#&gt;  2:  0.14008990 0.019625181 &lt;list[1]&gt; 2021-01-23 13:22:02        2
+#&gt;  3: -0.32856184 0.107952882 &lt;list[1]&gt; 2021-01-23 13:22:02        3
+#&gt;  4:  0.19252558 0.037066098 &lt;list[1]&gt; 2021-01-23 13:22:02        4
+#&gt;  5: -0.61696394 0.380644499 &lt;list[1]&gt; 2021-01-23 13:22:02        5
+#&gt;  6:  0.89552788 0.801970176 &lt;list[1]&gt; 2021-01-23 13:22:02        6
+#&gt;  7:  0.08496082 0.007218340 &lt;list[1]&gt; 2021-01-23 13:22:02        7
+#&gt;  8:  0.08920679 0.007957851 &lt;list[1]&gt; 2021-01-23 13:22:02        8
+#&gt;  9: -0.44280569 0.196076881 &lt;list[1]&gt; 2021-01-23 13:22:02        9
+#&gt; 10: -0.10659506 0.011362507 &lt;list[1]&gt; 2021-01-23 13:22:02       10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

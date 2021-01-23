@@ -83,7 +83,7 @@ function calls of the Objective." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -162,12 +162,19 @@ Search space of objective.</p></dd>
 <dt><code>codomain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
 Codomain of objective function.</p></dd>
 
-<dt><code>start_time</code></dt><dd><p>(<a href='https://rdrr.io/r/base/DateTimeClasses.html'>POSIXct</a>).</p></dd>
+<dt><code>start_time</code></dt><dd><p>(<a href='https://rdrr.io/r/base/DateTimeClasses.html'>POSIXct</a>)<br />
+Time stamp of when the optimization started. The time is set by the
+<a href='Optimizer.html'>Optimizer</a>.</p></dd>
 
-<dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</p></dd>
+<dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Determines if points and results are checked for validity.</p></dd>
 
 <dt><code>data</code></dt><dd><p>(<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>)<br />
 Contains all performed <a href='Objective.html'>Objective</a> function calls.</p></dd>
+
+<dt><code>store_x_domain</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Determines if x values, should be stored in <code>$data$x_domain</code> as list
+items. The trafo will be applied if defined in <code>search_space</code>.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
@@ -179,10 +186,10 @@ Number of evaluations stored in the archive.</p></dd>
 <dt><code>n_batch</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of batches stored in the archive.</p></dd>
 
-<dt><code>cols_x</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).
+<dt><code>cols_x</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
 Column names of search space parameters.</p></dd>
 
-<dt><code>cols_y</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).
+<dt><code>cols_y</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
 Column names of codomain parameters.</p></dd>
 
 </dl><p></div></p>
@@ -203,14 +210,16 @@ Column names of codomain parameters.</p></dd>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>search_space</span>, <span class='va'>codomain</span>, check_values <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>search_space</span>, <span class='va'>codomain</span>, check_values <span class='op'>=</span> <span class='cn'>TRUE</span>, store_x_domain <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>search_space</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Specifies the search space for the <a href='Optimizer.html'>Optimizer</a>.
-The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a> describes either a subset of the <code>domain</code> of the <a href='Objective.html'>Objective</a> or it describes a set of parameters together with a <code>trafo</code> function that transforms values from the search space to values of the domain.
-Depending on the context, this value defaults to the domain of the objective.</p></dd>
+Specifies the search space for the <a href='Optimizer.html'>Optimizer</a>. The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>
+describes either a subset of the <code>domain</code> of the <a href='Objective.html'>Objective</a> or it describes
+a set of parameters together with a <code>trafo</code> function that transforms values
+from the search space to values of the domain. Depending on the context, this
+value defaults to the domain of the objective.</p></dd>
 
 <dt><code>codomain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
 Specifies codomain of function.
@@ -221,11 +230,15 @@ be minimized or maximized.  The default is to minimize each component.</p></dd>
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.</p></dd>
 
+<dt><code>store_x_domain</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Determines if x values, should be stored in <code>$data$x_domain</code> as list
+items. The trafo will be applied if defined in <code>search_space</code>.</p></dd>
+
 </dl><p></div></p>
 <p><hr>
 <a id="method-add_evals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_evals()</code></h3>
 <p>Adds function evaluations to the archive table.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>add_evals</span><span class='op'>(</span><span class='va'>xdt</span>, <span class='va'>xss_trafoed</span>, <span class='va'>ydt</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>add_evals</span><span class='op'>(</span><span class='va'>xdt</span>, xss_trafoed <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>ydt</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -236,7 +249,8 @@ Column names have to match ids of the <code>search_space</code>.
 However, <code>xdt</code> can contain additional columns.</p></dd>
 
 <dt><code>xss_trafoed</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>)<br />
-Transformed point(s) in the <em>domain space</em>.</p></dd>
+Transformed point(s) in the <em>domain space</em>.
+Not stored and needed if <code>store_x_domain = FALSE</code>.</p></dd>
 
 <dt><code>ydt</code></dt><dd><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
 Optimal outcome.</p></dd>
