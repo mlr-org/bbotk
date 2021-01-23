@@ -1,0 +1,1069 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "mlr3tuning"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('mlr3tuning')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("AutoTuner")
+> ### * AutoTuner
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: AutoTuner
+> ### Title: AutoTuner
+> ### Aliases: AutoTuner
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> 
+> task = tsk("iris")
+> search_space = ParamSet$new(
++   params = list(ParamDbl$new("cp", lower = 0.001, upper = 0.1))
++ )
+> 
+> at = AutoTuner$new(
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   terminator = trm("evals", n_evals = 5),
++   tuner = tnr("grid_search"),
++   search_space = search_space,
++   store_tuning_instance = TRUE)
+> 
+> at$train(task)
+INFO  [14:38:48.595] Starting to optimize 1 parameter(s) with '<OptimizerGridSearch>' and '<TerminatorEvals>' 
+INFO  [14:38:48.660] Evaluating 1 configuration(s) 
+INFO  [14:38:48.719] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:48.892] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:48.940] [mlr3]  Finished benchmark 
+INFO  [14:38:49.016] Result of batch 1: 
+INFO  [14:38:49.021]     cp classif.ce                                uhash 
+INFO  [14:38:49.021]  0.012       0.04 5329a37c-aa44-4b9a-9d9f-f7ea969389ea 
+INFO  [14:38:49.023] Evaluating 1 configuration(s) 
+INFO  [14:38:49.050] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:49.059] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:49.083] [mlr3]  Finished benchmark 
+INFO  [14:38:49.143] Result of batch 2: 
+INFO  [14:38:49.145]   cp classif.ce                                uhash 
+INFO  [14:38:49.145]  0.1       0.04 065052e4-bcd5-4ed2-affa-891165b51f1f 
+INFO  [14:38:49.148] Evaluating 1 configuration(s) 
+INFO  [14:38:49.179] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:49.188] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:49.207] [mlr3]  Finished benchmark 
+INFO  [14:38:49.261] Result of batch 3: 
+INFO  [14:38:49.263]     cp classif.ce                                uhash 
+INFO  [14:38:49.263]  0.001       0.04 13ab6c59-77b7-48f0-83bb-641548720845 
+INFO  [14:38:49.266] Evaluating 1 configuration(s) 
+INFO  [14:38:49.291] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:49.300] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:49.324] [mlr3]  Finished benchmark 
+INFO  [14:38:49.382] Result of batch 4: 
+INFO  [14:38:49.384]     cp classif.ce                                uhash 
+INFO  [14:38:49.384]  0.056       0.04 9a15faaa-c95e-4e1c-9e86-2fe85de4344b 
+INFO  [14:38:49.387] Evaluating 1 configuration(s) 
+INFO  [14:38:49.417] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:49.427] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:49.451] [mlr3]  Finished benchmark 
+INFO  [14:38:49.505] Result of batch 5: 
+INFO  [14:38:49.508]     cp classif.ce                                uhash 
+INFO  [14:38:49.508]  0.023       0.04 74689527-398e-4dce-9b1e-b51c55381e6b 
+INFO  [14:38:49.517] Finished optimizing after 5 evaluation(s) 
+INFO  [14:38:49.518] Result: 
+INFO  [14:38:49.521]     cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:49.521]  0.012          <list[2]> <list[1]>       0.04 
+> at$model
+$learner
+<LearnerClassifRpart:classif.rpart>
+* Model: rpart
+* Parameters: xval=0, cp=0.012
+* Packages: rpart
+* Predict Type: response
+* Feature types: logical, integer, numeric, factor, ordered
+* Properties: importance, missings, multiclass, selected_features,
+  twoclass, weights
+
+$tuning_instance
+<TuningInstanceSingleCrit>
+* State:  Optimized
+* Objective: <ObjectiveTuning:classif.rpart_on_iris>
+* Search Space:
+<ParamSet>
+   id    class lower upper levels        default value
+1: cp ParamDbl 0.001   0.1        <NoDefault[3]>      
+* Terminator: <TerminatorEvals>
+* Terminated: TRUE
+* Result:
+      cp learner_param_vals  x_domain classif.ce
+1: 0.012          <list[2]> <list[1]>       0.04
+* Archive:
+<ArchiveTuning>
+      cp classif.ce                                uhash  x_domain
+1: 0.012       0.04 5329a37c-aa44-4b9a-9d9f-f7ea969389ea <list[1]>
+2: 0.100       0.04 065052e4-bcd5-4ed2-affa-891165b51f1f <list[1]>
+3: 0.001       0.04 13ab6c59-77b7-48f0-83bb-641548720845 <list[1]>
+4: 0.056       0.04 9a15faaa-c95e-4e1c-9e86-2fe85de4344b <list[1]>
+5: 0.023       0.04 74689527-398e-4dce-9b1e-b51c55381e6b <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:49        1
+2: 2021-01-23 14:38:49        2
+3: 2021-01-23 14:38:49        3
+4: 2021-01-23 14:38:49        4
+5: 2021-01-23 14:38:49        5
+
+> at$learner
+<LearnerClassifRpart:classif.rpart>
+* Model: rpart
+* Parameters: xval=0, cp=0.012
+* Packages: rpart
+* Predict Type: response
+* Feature types: logical, integer, numeric, factor, ordered
+* Properties: importance, missings, multiclass, selected_features,
+  twoclass, weights
+> 
+> # Nested resampling
+> at = AutoTuner$new(
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   terminator = trm("evals", n_evals = 5),
++   tuner = tnr("grid_search"),
++   search_space = search_space,
++   store_tuning_instance = TRUE)
+> 
+> resampling_outer = rsmp("cv", folds = 2)
+> rr = resample(task, at, resampling_outer, store_models = TRUE)
+INFO  [14:38:49.737] [mlr3]  Applying learner 'classif.rpart.tuned' on task 'iris' (iter 1/2) 
+INFO  [14:38:49.788] Starting to optimize 1 parameter(s) with '<OptimizerGridSearch>' and '<TerminatorEvals>' 
+INFO  [14:38:49.794] Evaluating 1 configuration(s) 
+INFO  [14:38:49.833] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:49.846] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:49.904] [mlr3]  Finished benchmark 
+INFO  [14:38:49.972] Result of batch 1: 
+INFO  [14:38:49.975]     cp classif.ce                                uhash 
+INFO  [14:38:49.975]  0.045       0.08 75f7eda1-271a-4ec9-b03d-e4f51ae57d2f 
+INFO  [14:38:49.978] Evaluating 1 configuration(s) 
+INFO  [14:38:50.024] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:50.036] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:50.064] [mlr3]  Finished benchmark 
+INFO  [14:38:50.149] Result of batch 2: 
+INFO  [14:38:50.152]     cp classif.ce                                uhash 
+INFO  [14:38:50.152]  0.089       0.08 8b066dd7-12fa-4c3c-88ff-949dfffe4884 
+INFO  [14:38:50.155] Evaluating 1 configuration(s) 
+INFO  [14:38:50.195] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:50.209] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:50.236] [mlr3]  Finished benchmark 
+INFO  [14:38:50.326] Result of batch 3: 
+INFO  [14:38:50.329]     cp classif.ce                                uhash 
+INFO  [14:38:50.329]  0.001       0.08 ab928681-c090-4976-ba57-305d2b4f07ff 
+INFO  [14:38:50.332] Evaluating 1 configuration(s) 
+INFO  [14:38:50.379] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:50.392] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:50.419] [mlr3]  Finished benchmark 
+INFO  [14:38:50.503] Result of batch 4: 
+INFO  [14:38:50.506]   cp classif.ce                                uhash 
+INFO  [14:38:50.506]  0.1       0.08 c82de79f-3927-44bc-8983-e65434126399 
+INFO  [14:38:50.510] Evaluating 1 configuration(s) 
+INFO  [14:38:50.548] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:50.562] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:50.594] [mlr3]  Finished benchmark 
+INFO  [14:38:50.675] Result of batch 5: 
+INFO  [14:38:50.678]     cp classif.ce                                uhash 
+INFO  [14:38:50.678]  0.078       0.08 1023eb90-88d7-4b46-bac2-e4050f762fa8 
+INFO  [14:38:50.689] Finished optimizing after 5 evaluation(s) 
+INFO  [14:38:50.691] Result: 
+INFO  [14:38:50.693]     cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:50.693]  0.045          <list[2]> <list[1]>       0.08 
+INFO  [14:38:50.758] [mlr3]  Applying learner 'classif.rpart.tuned' on task 'iris' (iter 2/2) 
+INFO  [14:38:50.806] Starting to optimize 1 parameter(s) with '<OptimizerGridSearch>' and '<TerminatorEvals>' 
+INFO  [14:38:50.817] Evaluating 1 configuration(s) 
+INFO  [14:38:50.857] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:50.869] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:50.896] [mlr3]  Finished benchmark 
+INFO  [14:38:50.973] Result of batch 1: 
+INFO  [14:38:50.976]     cp classif.ce                                uhash 
+INFO  [14:38:50.976]  0.023       0.08 1e4f451c-71b5-43a1-914d-5cc5c8f3442b 
+INFO  [14:38:50.979] Evaluating 1 configuration(s) 
+INFO  [14:38:51.023] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:51.037] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:51.064] [mlr3]  Finished benchmark 
+INFO  [14:38:51.149] Result of batch 2: 
+INFO  [14:38:51.152]   cp classif.ce                                uhash 
+INFO  [14:38:51.152]  0.1       0.08 72f7adc6-20c4-494b-80c2-d38d03b1e166 
+INFO  [14:38:51.156] Evaluating 1 configuration(s) 
+INFO  [14:38:51.194] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:51.208] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:51.241] [mlr3]  Finished benchmark 
+INFO  [14:38:51.327] Result of batch 3: 
+INFO  [14:38:51.330]     cp classif.ce                                uhash 
+INFO  [14:38:51.330]  0.078       0.08 0a2b0e24-dfe5-415c-ab01-2b37f1e8ea9b 
+INFO  [14:38:51.334] Evaluating 1 configuration(s) 
+INFO  [14:38:51.380] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:51.393] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:51.420] [mlr3]  Finished benchmark 
+INFO  [14:38:51.503] Result of batch 4: 
+INFO  [14:38:51.506]     cp classif.ce                                uhash 
+INFO  [14:38:51.506]  0.089       0.08 8c511285-bf1f-4452-86a4-d33d39f12a9b 
+INFO  [14:38:51.510] Evaluating 1 configuration(s) 
+INFO  [14:38:51.549] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:51.570] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:51.598] [mlr3]  Finished benchmark 
+INFO  [14:38:51.682] Result of batch 5: 
+INFO  [14:38:51.685]     cp classif.ce                                uhash 
+INFO  [14:38:51.685]  0.045       0.08 0c8822da-f2c7-4be2-9040-62cfdb41fb88 
+INFO  [14:38:51.696] Finished optimizing after 5 evaluation(s) 
+INFO  [14:38:51.697] Result: 
+INFO  [14:38:51.700]     cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:51.700]  0.023          <list[2]> <list[1]>       0.08 
+> 
+> # Aggregate performance of outer results
+> rr$aggregate()
+classif.ce 
+0.05333333 
+> 
+> # Retrieve inner tuning results.
+> as.data.table(rr)$learner[[1]]$tuning_result
+      cp learner_param_vals  x_domain classif.ce
+1: 0.045          <list[2]> <list[1]>       0.08
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("Tuner")
+> ### * Tuner
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Tuner
+> ### Title: Tuner
+> ### Aliases: Tuner
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> search_space = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1)
++ ))
+> terminator = trm("evals", n_evals = 3)
+> instance = TuningInstanceSingleCrit$new(
++   task = tsk("iris"),
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   search_space = search_space,
++   terminator = terminator
++ )
+> # swap this line to use a different Tuner
+> tt = tnr("random_search")
+> # modifies the instance by reference
+> tt$optimize(instance)
+INFO  [14:38:51.999] Starting to optimize 1 parameter(s) with '<OptimizerRandomSearch>' and '<TerminatorEvals>' 
+INFO  [14:38:52.021] Evaluating 1 configuration(s) 
+INFO  [14:38:52.061] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:52.080] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:52.107] [mlr3]  Finished benchmark 
+INFO  [14:38:52.197] Result of batch 1: 
+INFO  [14:38:52.200]          cp classif.ce                                uhash 
+INFO  [14:38:52.200]  0.05615879       0.04 4c217acb-3140-4bf7-a2f2-2f7ce78f0ab6 
+INFO  [14:38:52.208] Evaluating 1 configuration(s) 
+INFO  [14:38:52.242] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:52.255] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:52.289] [mlr3]  Finished benchmark 
+INFO  [14:38:52.365] Result of batch 2: 
+INFO  [14:38:52.368]          cp classif.ce                                uhash 
+INFO  [14:38:52.368]  0.05054366       0.04 616c3081-6002-4247-b4ee-4d3c27de4800 
+INFO  [14:38:52.374] Evaluating 1 configuration(s) 
+INFO  [14:38:52.409] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:52.419] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:52.439] [mlr3]  Finished benchmark 
+INFO  [14:38:52.524] Result of batch 3: 
+INFO  [14:38:52.527]           cp classif.ce                                uhash 
+INFO  [14:38:52.527]  0.008452299       0.04 af353652-cf7c-4766-b31e-44479f3e85e0 
+INFO  [14:38:52.541] Finished optimizing after 3 evaluation(s) 
+INFO  [14:38:52.542] Result: 
+INFO  [14:38:52.545]          cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:52.545]  0.05615879          <list[2]> <list[1]>       0.04 
+           cp learner_param_vals  x_domain classif.ce
+1: 0.05615879          <list[2]> <list[1]>       0.04
+> # returns best configuration and best performance
+> instance$result
+           cp learner_param_vals  x_domain classif.ce
+1: 0.05615879          <list[2]> <list[1]>       0.04
+> # allows access of data.table / benchmark result of full path of all
+> # evaluations
+> instance$archive
+<ArchiveTuning>
+            cp classif.ce                                uhash  x_domain
+1: 0.056158794       0.04 4c217acb-3140-4bf7-a2f2-2f7ce78f0ab6 <list[1]>
+2: 0.050543656       0.04 616c3081-6002-4247-b4ee-4d3c27de4800 <list[1]>
+3: 0.008452299       0.04 af353652-cf7c-4766-b31e-44479f3e85e0 <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:52        1
+2: 2021-01-23 14:38:52        2
+3: 2021-01-23 14:38:52        3
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("TuningInstanceSingleCrit")
+> ### * TuningInstanceSingleCrit
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TuningInstanceSingleCrit
+> ### Title: Single Criterion Tuning Instance
+> ### Aliases: TuningInstanceSingleCrit
+> 
+> ### ** Examples
+> 
+> library(data.table)
+> library(paradox)
+> library(mlr3)
+> 
+> # Objects required to define the performance evaluator:
+> task = tsk("iris")
+> learner = lrn("classif.rpart")
+> resampling = rsmp("holdout")
+> measure = msr("classif.ce")
+> param_set = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1),
++   ParamInt$new("minsplit", lower = 1, upper = 10))
++ )
+> 
+> terminator = trm("evals", n_evals = 5)
+> inst = TuningInstanceSingleCrit$new(
++   task = task,
++   learner = learner,
++   resampling = resampling,
++   measure = measure,
++   search_space = param_set,
++   terminator = terminator
++ )
+> 
+> # first 4 points as cross product
+> design = CJ(cp = c(0.05, 0.01), minsplit = c(5, 3))
+> inst$eval_batch(design)
+INFO  [14:38:52.720] Evaluating 4 configuration(s) 
+INFO  [14:38:52.854] [mlr3]  Benchmark with 4 resampling iterations 
+INFO  [14:38:52.867] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:52.900] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:52.924] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:52.950] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:52.979] [mlr3]  Finished benchmark 
+INFO  [14:38:53.143] Result of batch 1: 
+INFO  [14:38:53.146]    cp minsplit classif.ce                                uhash 
+INFO  [14:38:53.146]  0.01        3       0.04 c3f412e1-1c96-4c40-b3a4-d9b95b36ce9a 
+INFO  [14:38:53.146]  0.01        5       0.04 f396c9ce-0fbb-4563-b654-0d018d4887f6 
+INFO  [14:38:53.146]  0.05        3       0.04 fdba903c-ad9d-4059-91db-496e6367153f 
+INFO  [14:38:53.146]  0.05        5       0.04 76e7f461-dd9e-4006-852e-c6aa84d00be0 
+> inst$archive
+<ArchiveTuning>
+     cp minsplit classif.ce                                uhash  x_domain
+1: 0.01        3       0.04 c3f412e1-1c96-4c40-b3a4-d9b95b36ce9a <list[2]>
+2: 0.01        5       0.04 f396c9ce-0fbb-4563-b654-0d018d4887f6 <list[2]>
+3: 0.05        3       0.04 fdba903c-ad9d-4059-91db-496e6367153f <list[2]>
+4: 0.05        5       0.04 76e7f461-dd9e-4006-852e-c6aa84d00be0 <list[2]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:53        1
+2: 2021-01-23 14:38:53        1
+3: 2021-01-23 14:38:53        1
+4: 2021-01-23 14:38:53        1
+> 
+> # try more points, catch the raised terminated message
+> tryCatch(
++   inst$eval_batch(data.table(cp = 0.01, minsplit = 7)),
++   terminated_error = function(e) message(as.character(e))
++ )
+INFO  [14:38:53.150] Evaluating 1 configuration(s) 
+INFO  [14:38:53.179] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:53.188] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:53.212] [mlr3]  Finished benchmark 
+INFO  [14:38:53.269] Result of batch 2: 
+INFO  [14:38:53.273]    cp minsplit classif.ce                                uhash 
+INFO  [14:38:53.273]  0.01        7       0.04 fa8fdf20-2495-4d07-8711-419eee7159e4 
+> 
+> # try another point although the budget is now exhausted
+> # -> no extra evaluations
+> tryCatch(
++   inst$eval_batch(data.table(cp = 0.01, minsplit = 9)),
++   terminated_error = function(e) message(as.character(e))
++ )
+Error: Objective (obj:classif.rpart_on_iris, term:<TerminatorEvals>) terminated
+
+> 
+> inst$archive
+<ArchiveTuning>
+     cp minsplit classif.ce                                uhash  x_domain
+1: 0.01        3       0.04 c3f412e1-1c96-4c40-b3a4-d9b95b36ce9a <list[2]>
+2: 0.01        5       0.04 f396c9ce-0fbb-4563-b654-0d018d4887f6 <list[2]>
+3: 0.05        3       0.04 fdba903c-ad9d-4059-91db-496e6367153f <list[2]>
+4: 0.05        5       0.04 76e7f461-dd9e-4006-852e-c6aa84d00be0 <list[2]>
+5: 0.01        7       0.04 fa8fdf20-2495-4d07-8711-419eee7159e4 <list[2]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:53        1
+2: 2021-01-23 14:38:53        1
+3: 2021-01-23 14:38:53        1
+4: 2021-01-23 14:38:53        1
+5: 2021-01-23 14:38:53        2
+> 
+> ### Error handling
+> # get a learner which breaks with 50% probability
+> # set encapsulation + fallback
+> learner = lrn("classif.debug", error_train = 0.5)
+> learner$encapsulate = c(train = "evaluate", predict = "evaluate")
+> learner$fallback = lrn("classif.featureless")
+> 
+> param_set = ParamSet$new(list(
++   ParamDbl$new("x", lower = 0, upper = 1)
++ ))
+> 
+> inst = TuningInstanceSingleCrit$new(
++   task = tsk("wine"),
++   learner = learner,
++   resampling = rsmp("cv", folds = 3),
++   measure = msr("classif.ce"),
++   search_space = param_set,
++   terminator = trm("evals", n_evals = 5)
++ )
+> 
+> tryCatch(
++   inst$eval_batch(data.table(x = 1:5 / 5)),
++   terminated_error = function(e) message(as.character(e))
++ )
+INFO  [14:38:53.424] Evaluating 5 configuration(s) 
+INFO  [14:38:53.566] [mlr3]  Benchmark with 15 resampling iterations 
+INFO  [14:38:53.576] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:38:53.642] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:38:53.679] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:38:53.715] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:38:53.748] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:38:53.779] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:38:53.820] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:38:53.848] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:38:53.890] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:38:53.920] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:38:53.960] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:38:53.995] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:38:54.029] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:38:54.071] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:38:54.098] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:38:54.134] [mlr3]  Finished benchmark 
+INFO  [14:38:54.399] Result of batch 1: 
+INFO  [14:38:54.402]    x classif.ce                                uhash 
+INFO  [14:38:54.402]  0.2  0.6179849 6510f64c-5cd7-4681-bca5-f3ad87757ed2 
+INFO  [14:38:54.402]  0.4  0.6179849 5eb598b3-73fd-4411-b9e6-5b45fd6898db 
+INFO  [14:38:54.402]  0.6  0.6575330 fdcbc707-a41c-4c9e-a794-2139e8a93dd7 
+INFO  [14:38:54.402]  0.8  0.6682674 b52b8b5a-b71b-4364-a11c-49f293689be0 
+INFO  [14:38:54.402]  1.0  0.6179849 21900c61-87f2-44eb-88ed-94e1a9893673 
+> 
+> archive = inst$archive$data()
+> 
+> # column errors: multiple errors recorded
+> print(archive)
+     x classif.ce                                uhash  x_domain
+1: 0.2  0.6179849 6510f64c-5cd7-4681-bca5-f3ad87757ed2 <list[1]>
+2: 0.4  0.6179849 5eb598b3-73fd-4411-b9e6-5b45fd6898db <list[1]>
+3: 0.6  0.6575330 fdcbc707-a41c-4c9e-a794-2139e8a93dd7 <list[1]>
+4: 0.8  0.6682674 b52b8b5a-b71b-4364-a11c-49f293689be0 <list[1]>
+5: 1.0  0.6179849 21900c61-87f2-44eb-88ed-94e1a9893673 <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:54        1
+2: 2021-01-23 14:38:54        1
+3: 2021-01-23 14:38:54        1
+4: 2021-01-23 14:38:54        1
+5: 2021-01-23 14:38:54        1
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:mlr3’, ‘package:paradox’, ‘package:data.table’
+
+> nameEx("mlr_tuners")
+> ### * mlr_tuners
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_tuners
+> ### Title: Dictionary of Tuners
+> ### Aliases: mlr_tuners
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> mlr_tuners$get("grid_search")
+<TunerGridSearch>
+* Parameters: resolution=10, batch_size=1
+* Parameter classes: ParamLgl, ParamInt, ParamDbl, ParamFct
+* Properties: dependencies, single-crit, multi-crit
+* Packages: -
+> tnr("random_search")
+<TunerRandomSearch>
+* Parameters: batch_size=1
+* Parameter classes: ParamLgl, ParamInt, ParamDbl, ParamFct
+* Properties: dependencies, single-crit, multi-crit
+* Packages: -
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mlr_tuners_cmaes")
+> ### * mlr_tuners_cmaes
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_tuners_cmaes
+> ### Title: TunerCmaes
+> ### Aliases: mlr_tuners_cmaes TunerCmaes
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> library(data.table)
+> search_space = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1)
++ ))
+> terminator = trm("evals", n_evals = 10)
+> instance = TuningInstanceSingleCrit$new(
++   task = tsk("iris"),
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   search_space = search_space,
++   terminator = terminator
++ )
+> tt = tnr("cmaes", par = 0.1)
+> # modifies the instance by reference
+> tt$optimize(instance)
+INFO  [14:38:54.595] Starting to optimize 1 parameter(s) with '<OptimizerCmaes>' and '<TerminatorEvals>' 
+INFO  [14:38:54.600] Evaluating 1 configuration(s) 
+INFO  [14:38:54.628] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:54.643] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:54.665] [mlr3]  Finished benchmark 
+INFO  [14:38:54.795] Result of batch 1: 
+INFO  [14:38:54.798]   cp classif.ce                                uhash 
+INFO  [14:38:54.798]  0.1       0.04 cfa9b605-54ff-43f7-8103-5a8566d6e8f5 
+INFO  [14:38:54.802] Evaluating 1 configuration(s) 
+INFO  [14:38:54.834] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:54.848] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:54.877] [mlr3]  Finished benchmark 
+INFO  [14:38:54.961] Result of batch 2: 
+INFO  [14:38:54.964]          cp classif.ce                                uhash 
+INFO  [14:38:54.964]  0.05485262       0.04 1fa36c18-1a08-47b3-bdf7-655be8398040 
+INFO  [14:38:54.969] Evaluating 1 configuration(s) 
+INFO  [14:38:55.014] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:55.029] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:55.059] [mlr3]  Finished benchmark 
+INFO  [14:38:55.128] Result of batch 3: 
+INFO  [14:38:55.130]          cp classif.ce                                uhash 
+INFO  [14:38:55.130]  0.06054407       0.04 b9201add-6837-4336-81cd-655452c0a3c3 
+INFO  [14:38:55.133] Evaluating 1 configuration(s) 
+INFO  [14:38:55.158] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:55.167] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:55.185] [mlr3]  Finished benchmark 
+INFO  [14:38:55.239] Result of batch 4: 
+INFO  [14:38:55.242]   cp classif.ce                                uhash 
+INFO  [14:38:55.242]  0.1       0.04 52254448-993c-4a93-9ffb-317f1563eb03 
+INFO  [14:38:55.247] Evaluating 1 configuration(s) 
+INFO  [14:38:55.273] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:55.281] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:55.301] [mlr3]  Finished benchmark 
+INFO  [14:38:55.368] Result of batch 5: 
+INFO  [14:38:55.371]          cp classif.ce                                uhash 
+INFO  [14:38:55.371]  0.07745014       0.04 28808cdd-571c-410d-8eeb-4f6a0255b67e 
+INFO  [14:38:55.375] Evaluating 1 configuration(s) 
+INFO  [14:38:55.404] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:55.412] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:55.432] [mlr3]  Finished benchmark 
+INFO  [14:38:55.505] Result of batch 6: 
+INFO  [14:38:55.509]   cp classif.ce                                uhash 
+INFO  [14:38:55.509]  0.1       0.04 a3608eb7-2346-4e94-aba4-6b74f53a0d7e 
+INFO  [14:38:55.513] Evaluating 1 configuration(s) 
+INFO  [14:38:55.541] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:55.550] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:55.583] [mlr3]  Finished benchmark 
+INFO  [14:38:55.658] Result of batch 7: 
+INFO  [14:38:55.661]   cp classif.ce                                uhash 
+INFO  [14:38:55.661]  0.1       0.04 5550b813-1ff8-4f87-9fd5-a0984e0104fc 
+INFO  [14:38:55.666] Evaluating 1 configuration(s) 
+INFO  [14:38:55.707] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:55.721] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:55.748] [mlr3]  Finished benchmark 
+INFO  [14:38:55.826] Result of batch 8: 
+INFO  [14:38:55.829]   cp classif.ce                                uhash 
+INFO  [14:38:55.829]  0.1       0.04 b6177303-9b97-458d-8a59-c18e21a6e47d 
+INFO  [14:38:55.833] Evaluating 1 configuration(s) 
+INFO  [14:38:55.872] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:55.889] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:55.916] [mlr3]  Finished benchmark 
+INFO  [14:38:55.993] Result of batch 9: 
+INFO  [14:38:55.996]          cp classif.ce                                uhash 
+INFO  [14:38:55.996]  0.08205878       0.04 90f777de-7a00-4842-8e64-90c5bfbcf4fd 
+INFO  [14:38:56.000] Evaluating 1 configuration(s) 
+INFO  [14:38:56.039] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:56.052] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:56.080] [mlr3]  Finished benchmark 
+INFO  [14:38:56.160] Result of batch 10: 
+INFO  [14:38:56.163]          cp classif.ce                                uhash 
+INFO  [14:38:56.163]  0.09558078       0.04 c6632249-5365-4cb1-9cd2-f815dea9cd8c 
+INFO  [14:38:56.176] Finished optimizing after 10 evaluation(s) 
+INFO  [14:38:56.177] Result: 
+INFO  [14:38:56.179]   cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:56.179]  0.1          <list[2]> <list[1]>       0.04 
+    cp learner_param_vals  x_domain classif.ce
+1: 0.1          <list[2]> <list[1]>       0.04
+> # returns best configuration and best performance
+> instance$result
+    cp learner_param_vals  x_domain classif.ce
+1: 0.1          <list[2]> <list[1]>       0.04
+> # allows access of data.table of full path of all evaluations
+> instance$archive
+<ArchiveTuning>
+            cp classif.ce                                uhash  x_domain
+ 1: 0.10000000       0.04 cfa9b605-54ff-43f7-8103-5a8566d6e8f5 <list[1]>
+ 2: 0.05485262       0.04 1fa36c18-1a08-47b3-bdf7-655be8398040 <list[1]>
+ 3: 0.06054407       0.04 b9201add-6837-4336-81cd-655452c0a3c3 <list[1]>
+ 4: 0.10000000       0.04 52254448-993c-4a93-9ffb-317f1563eb03 <list[1]>
+ 5: 0.07745014       0.04 28808cdd-571c-410d-8eeb-4f6a0255b67e <list[1]>
+ 6: 0.10000000       0.04 a3608eb7-2346-4e94-aba4-6b74f53a0d7e <list[1]>
+ 7: 0.10000000       0.04 5550b813-1ff8-4f87-9fd5-a0984e0104fc <list[1]>
+ 8: 0.10000000       0.04 b6177303-9b97-458d-8a59-c18e21a6e47d <list[1]>
+ 9: 0.08205878       0.04 90f777de-7a00-4842-8e64-90c5bfbcf4fd <list[1]>
+10: 0.09558078       0.04 c6632249-5365-4cb1-9cd2-f815dea9cd8c <list[1]>
+              timestamp batch_nr
+ 1: 2021-01-23 14:38:54        1
+ 2: 2021-01-23 14:38:54        2
+ 3: 2021-01-23 14:38:55        3
+ 4: 2021-01-23 14:38:55        4
+ 5: 2021-01-23 14:38:55        5
+ 6: 2021-01-23 14:38:55        6
+ 7: 2021-01-23 14:38:55        7
+ 8: 2021-01-23 14:38:55        8
+ 9: 2021-01-23 14:38:55        9
+10: 2021-01-23 14:38:56       10
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:data.table’, ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("mlr_tuners_design_points")
+> ### * mlr_tuners_design_points
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_tuners_design_points
+> ### Title: TunerDesignPoints
+> ### Aliases: mlr_tuners_design_points TunerDesignPoints
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> library(data.table)
+> search_space = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1)
++ ))
+> terminator = trm("evals", n_evals = 3)
+> instance = TuningInstanceSingleCrit$new(
++   task = tsk("iris"),
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   search_space = search_space,
++   terminator = terminator
++ )
+> design = data.table(cp = c(0.1, 0.01))
+> tt = tnr("design_points", design = design)
+> # modifies the instance by reference
+> tt$optimize(instance)
+INFO  [14:38:56.364] Starting to optimize 1 parameter(s) with '<OptimizerDesignPoints>' and '<TerminatorEvals>' 
+INFO  [14:38:56.367] Evaluating 1 configuration(s) 
+INFO  [14:38:56.395] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:56.404] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:56.423] [mlr3]  Finished benchmark 
+INFO  [14:38:56.474] Result of batch 1: 
+INFO  [14:38:56.476]   cp classif.ce                                uhash 
+INFO  [14:38:56.476]  0.1       0.04 c0673cb4-ef3d-44ed-b046-d1bbefeed017 
+INFO  [14:38:56.478] Evaluating 1 configuration(s) 
+INFO  [14:38:56.503] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:56.511] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:56.530] [mlr3]  Finished benchmark 
+INFO  [14:38:56.600] Result of batch 2: 
+INFO  [14:38:56.603]    cp classif.ce                                uhash 
+INFO  [14:38:56.603]  0.01       0.04 c43f540f-f886-49b1-8afe-c5dda9064b6b 
+INFO  [14:38:56.614] Finished optimizing after 2 evaluation(s) 
+INFO  [14:38:56.616] Result: 
+INFO  [14:38:56.618]   cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:56.618]  0.1          <list[2]> <list[1]>       0.04 
+    cp learner_param_vals  x_domain classif.ce
+1: 0.1          <list[2]> <list[1]>       0.04
+> # returns best configuration and best performance
+> instance$result
+    cp learner_param_vals  x_domain classif.ce
+1: 0.1          <list[2]> <list[1]>       0.04
+> # allows access of data.table of full path of all evaluations
+> instance$archive
+<ArchiveTuning>
+     cp classif.ce                                uhash  x_domain
+1: 0.10       0.04 c0673cb4-ef3d-44ed-b046-d1bbefeed017 <list[1]>
+2: 0.01       0.04 c43f540f-f886-49b1-8afe-c5dda9064b6b <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:56        1
+2: 2021-01-23 14:38:56        2
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:data.table’, ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("mlr_tuners_gensa")
+> ### * mlr_tuners_gensa
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_tuners_gensa
+> ### Title: TunerGenSA
+> ### Aliases: mlr_tuners_gensa TunerGenSA
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> search_space = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1)
++ ))
+> terminator = trm("evals", n_evals = 3)
+> instance = TuningInstanceSingleCrit$new(
++   task = tsk("iris"),
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   search_space = search_space,
++   terminator = terminator
++ )
+> tt = tnr("gensa")
+> 
+> # modifies the instance by reference
+> tt$optimize(instance)
+INFO  [14:38:56.747] Starting to optimize 1 parameter(s) with '<OptimizerGenSA>' and '<TerminatorEvals>' 
+INFO  [14:38:56.751] Evaluating 1 configuration(s) 
+INFO  [14:38:56.781] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:56.791] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:56.810] [mlr3]  Finished benchmark 
+INFO  [14:38:56.857] Result of batch 1: 
+INFO  [14:38:56.859]          cp classif.ce                                uhash 
+INFO  [14:38:56.859]  0.05615879       0.04 46b9c2f0-6d9f-4c0f-a4a2-7b906ef9709d 
+INFO  [14:38:56.862] Evaluating 1 configuration(s) 
+INFO  [14:38:56.888] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:56.896] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:56.921] [mlr3]  Finished benchmark 
+INFO  [14:38:56.976] Result of batch 2: 
+INFO  [14:38:56.979]          cp classif.ce                                uhash 
+INFO  [14:38:56.979]  0.02062156       0.04 b4858faa-d561-4498-a1fd-6ba7440e7599 
+INFO  [14:38:56.983] Evaluating 1 configuration(s) 
+INFO  [14:38:57.025] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:57.039] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:57.069] [mlr3]  Finished benchmark 
+INFO  [14:38:57.155] Result of batch 3: 
+INFO  [14:38:57.158]         cp classif.ce                                uhash 
+INFO  [14:38:57.158]  0.0356309       0.04 141aef2e-ccbe-457e-9aa4-2d44311f0744 
+INFO  [14:38:57.171] Finished optimizing after 3 evaluation(s) 
+INFO  [14:38:57.172] Result: 
+INFO  [14:38:57.175]          cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:57.175]  0.05615879          <list[2]> <list[1]>       0.04 
+           cp learner_param_vals  x_domain classif.ce
+1: 0.05615879          <list[2]> <list[1]>       0.04
+> 
+> # returns best configuration and best performance
+> instance$result
+           cp learner_param_vals  x_domain classif.ce
+1: 0.05615879          <list[2]> <list[1]>       0.04
+> 
+> # allows access of data.table of full path of all evaluations
+> instance$archive
+<ArchiveTuning>
+           cp classif.ce                                uhash  x_domain
+1: 0.05615879       0.04 46b9c2f0-6d9f-4c0f-a4a2-7b906ef9709d <list[1]>
+2: 0.02062156       0.04 b4858faa-d561-4498-a1fd-6ba7440e7599 <list[1]>
+3: 0.03563090       0.04 141aef2e-ccbe-457e-9aa4-2d44311f0744 <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:56        1
+2: 2021-01-23 14:38:56        2
+3: 2021-01-23 14:38:57        3
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("mlr_tuners_grid_search")
+> ### * mlr_tuners_grid_search
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_tuners_grid_search
+> ### Title: TunerGridSearch
+> ### Aliases: mlr_tuners_grid_search TunerGridSearch
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> search_space = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1)
++ ))
+> terminator = trm("evals", n_evals = 3)
+> instance = TuningInstanceSingleCrit$new(
++   task = tsk("iris"),
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   search_space = search_space,
++   terminator = terminator
++ )
+> tt = tnr("grid_search")
+> 
+> # modifies the instance by reference
+> tt$optimize(instance)
+INFO  [14:38:57.300] Starting to optimize 1 parameter(s) with '<OptimizerGridSearch>' and '<TerminatorEvals>' 
+INFO  [14:38:57.304] Evaluating 1 configuration(s) 
+INFO  [14:38:57.338] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:57.348] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:57.371] [mlr3]  Finished benchmark 
+INFO  [14:38:57.425] Result of batch 1: 
+INFO  [14:38:57.427]     cp classif.ce                                uhash 
+INFO  [14:38:57.427]  0.012       0.04 9666a346-2652-487d-8249-2d3311135625 
+INFO  [14:38:57.429] Evaluating 1 configuration(s) 
+INFO  [14:38:57.454] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:57.462] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:57.482] [mlr3]  Finished benchmark 
+INFO  [14:38:57.536] Result of batch 2: 
+INFO  [14:38:57.539]   cp classif.ce                                uhash 
+INFO  [14:38:57.539]  0.1       0.04 e6696a48-ee27-49ac-8b30-1476e6b5ee80 
+INFO  [14:38:57.541] Evaluating 1 configuration(s) 
+INFO  [14:38:57.569] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:57.579] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:57.601] [mlr3]  Finished benchmark 
+INFO  [14:38:57.660] Result of batch 3: 
+INFO  [14:38:57.662]     cp classif.ce                                uhash 
+INFO  [14:38:57.662]  0.001       0.04 4cf73878-6462-45db-8944-2852137123e6 
+INFO  [14:38:57.670] Finished optimizing after 3 evaluation(s) 
+INFO  [14:38:57.671] Result: 
+INFO  [14:38:57.672]     cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:57.672]  0.012          <list[2]> <list[1]>       0.04 
+      cp learner_param_vals  x_domain classif.ce
+1: 0.012          <list[2]> <list[1]>       0.04
+> 
+> # returns best configuration and best performance
+> instance$result
+      cp learner_param_vals  x_domain classif.ce
+1: 0.012          <list[2]> <list[1]>       0.04
+> 
+> # allows access of data.table of full path of all evaluations
+> instance$archive
+<ArchiveTuning>
+      cp classif.ce                                uhash  x_domain
+1: 0.012       0.04 9666a346-2652-487d-8249-2d3311135625 <list[1]>
+2: 0.100       0.04 e6696a48-ee27-49ac-8b30-1476e6b5ee80 <list[1]>
+3: 0.001       0.04 4cf73878-6462-45db-8944-2852137123e6 <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:57        1
+2: 2021-01-23 14:38:57        2
+3: 2021-01-23 14:38:57        3
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("mlr_tuners_nloptr")
+> ### * mlr_tuners_nloptr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_tuners_nloptr
+> ### Title: TuneNLoptr
+> ### Aliases: mlr_tuners_nloptr TunerNLoptr
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D library(mlr3)
+> ##D library(paradox)
+> ##D library(data.table)
+> ##D search_space = ParamSet$new(list(
+> ##D   ParamDbl$new("cp", lower = 0.001, upper = 0.1)
+> ##D ))
+> ##D # We use the internal termination criterion xtol_rel
+> ##D terminator = trm("none")
+> ##D instance = TuningInstanceSingleCrit$new(
+> ##D   task = tsk("iris"),
+> ##D   learner = lrn("classif.rpart"),
+> ##D   resampling = rsmp("holdout"),
+> ##D   measure = msr("classif.ce"),
+> ##D   search_space = search_space,
+> ##D   terminator = terminator
+> ##D )
+> ##D tt = tnr("nloptr", x0 = 0.1, algorithm = "NLOPT_LN_BOBYQA")
+> ##D # modifies the instance by reference
+> ##D tt$optimize(instance)
+> ##D # returns best configuration and best performance
+> ##D instance$result
+> ##D # allows access of data.table of full path of all evaluations
+> ##D instance$archive
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mlr_tuners_random_search")
+> ### * mlr_tuners_random_search
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mlr_tuners_random_search
+> ### Title: TunerRandomSearch
+> ### Aliases: mlr_tuners_random_search TunerRandomSearch
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> search_space = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1)
++ ))
+> terminator = trm("evals", n_evals = 3)
+> instance = TuningInstanceSingleCrit$new(
++   task = tsk("iris"),
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   search_space = search_space,
++   terminator = terminator
++ )
+> tt = tnr("random_search")
+> 
+> # modifies the instance by reference
+> tt$optimize(instance)
+INFO  [14:38:57.775] Starting to optimize 1 parameter(s) with '<OptimizerRandomSearch>' and '<TerminatorEvals>' 
+INFO  [14:38:57.786] Evaluating 1 configuration(s) 
+INFO  [14:38:57.821] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:57.829] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:57.847] [mlr3]  Finished benchmark 
+INFO  [14:38:57.893] Result of batch 1: 
+INFO  [14:38:57.896]          cp classif.ce                                uhash 
+INFO  [14:38:57.896]  0.05615879       0.04 f069d12e-d6c8-4a36-94c8-3bedb862fb1b 
+INFO  [14:38:57.902] Evaluating 1 configuration(s) 
+INFO  [14:38:57.942] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:57.955] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:57.983] [mlr3]  Finished benchmark 
+INFO  [14:38:58.086] Result of batch 2: 
+INFO  [14:38:58.090]          cp classif.ce                                uhash 
+INFO  [14:38:58.090]  0.05054366       0.04 3e63b604-77d5-4822-8ed4-94502f53a9e7 
+INFO  [14:38:58.097] Evaluating 1 configuration(s) 
+INFO  [14:38:58.141] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:38:58.156] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:38:58.187] [mlr3]  Finished benchmark 
+INFO  [14:38:58.271] Result of batch 3: 
+INFO  [14:38:58.274]           cp classif.ce                                uhash 
+INFO  [14:38:58.274]  0.008452299       0.04 381945b8-06fc-42ab-8ef6-65df986f96d9 
+INFO  [14:38:58.289] Finished optimizing after 3 evaluation(s) 
+INFO  [14:38:58.290] Result: 
+INFO  [14:38:58.293]          cp learner_param_vals  x_domain classif.ce 
+INFO  [14:38:58.293]  0.05615879          <list[2]> <list[1]>       0.04 
+           cp learner_param_vals  x_domain classif.ce
+1: 0.05615879          <list[2]> <list[1]>       0.04
+> 
+> # returns best configuration and best performance
+> instance$result
+           cp learner_param_vals  x_domain classif.ce
+1: 0.05615879          <list[2]> <list[1]>       0.04
+> 
+> # allows access of data.table of full path of all evaluations
+> instance$archive
+<ArchiveTuning>
+            cp classif.ce                                uhash  x_domain
+1: 0.056158794       0.04 f069d12e-d6c8-4a36-94c8-3bedb862fb1b <list[1]>
+2: 0.050543656       0.04 3e63b604-77d5-4822-8ed4-94502f53a9e7 <list[1]>
+3: 0.008452299       0.04 381945b8-06fc-42ab-8ef6-65df986f96d9 <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:38:57        1
+2: 2021-01-23 14:38:58        2
+3: 2021-01-23 14:38:58        3
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("tnr")
+> ### * tnr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tnr
+> ### Title: Syntactic Sugar for Tuner Construction
+> ### Aliases: tnr tnrs
+> 
+> ### ** Examples
+> 
+> tnr("random_search")
+<TunerRandomSearch>
+* Parameters: batch_size=1
+* Parameter classes: ParamLgl, ParamInt, ParamDbl, ParamFct
+* Properties: dependencies, single-crit, multi-crit
+* Packages: -
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  10.76 0.108 10.868 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

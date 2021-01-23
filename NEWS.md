@@ -3,6 +3,7 @@
 * Improved `TerminatorPerfRearched` documentation.
 * Added `check_values` flag in `OptimInstance`, `OptimInstanceSingleCrit`, 
   `OptimInstanceMultiCrit`, `ObjectiveRFun` and `ObjectiveRFunDt`.
+* `Archive$data` is a public field now.
 * Renamed `m` parameter to `batch` in `Archive$best()`.
 * `ArchiveBest` stores no data but records the best scoring evaluation.
 * Reduced runtime if `ObjectiveRFunDt` and a domain without trafo is used.

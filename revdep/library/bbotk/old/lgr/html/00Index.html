@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>R: A Fully Featured Logging Framework</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+<h1> A Fully Featured Logging Framework
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;lgr&rsquo; version 0.4.2</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="EventFilter.html">.obj</a></td>
+<td>Event Filters</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">add_appender</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="get_log_levels.html">add_log_levels</a></td>
+<td>Manage Log Levels</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderBuffer.html">AppenderBuffer</a></td>
+<td>Log to a memory buffer</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderConsole.html">AppenderConsole</a></td>
+<td>Log to the console</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderFile.html">AppenderFile</a></td>
+<td>Log to a file</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderFileRotating.html">AppenderFileRotating</a></td>
+<td>Log to a rotating file</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderFileRotatingDate.html">AppenderFileRotatingDate</a></td>
+<td>Log to a date-stamped rotating file</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderFileRotatingTime.html">AppenderFileRotatingTime</a></td>
+<td>Log to a time-stamped rotating file</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderFile.html">AppenderJson</a></td>
+<td>Log to a file</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderMemory.html">AppenderMemory</a></td>
+<td>Abstract class for logging to memory buffers</td></tr>
+<tr><td style="width: 25%;"><a href="AppenderTable.html">AppenderTable</a></td>
+<td>Abstract class for logging to tabular structures</td></tr>
+<tr><td style="width: 25%;"><a href="event_list.html">as.data.frame.event_list</a></td>
+<td>A List of LogEvents</td></tr>
+<tr><td style="width: 25%;"><a href="as.data.frame.LogEvent.html">as.data.frame.LogEvent</a></td>
+<td>Coerce LogEvents to Data Frames</td></tr>
+<tr><td style="width: 25%;"><a href="event_list.html">as.data.table.event_list</a></td>
+<td>A List of LogEvents</td></tr>
+<tr><td style="width: 25%;"><a href="as.data.frame.LogEvent.html">as.data.table.LogEvent</a></td>
+<td>Coerce LogEvents to Data Frames</td></tr>
+<tr><td style="width: 25%;"><a href="event_list.html">as_event_list</a></td>
+<td>A List of LogEvents</td></tr>
+<tr><td style="width: 25%;"><a href="event_list.html">as_event_list.data.frame</a></td>
+<td>A List of LogEvents</td></tr>
+<tr><td style="width: 25%;"><a href="event_list.html">as_event_list.list</a></td>
+<td>A List of LogEvents</td></tr>
+<tr><td style="width: 25%;"><a href="event_list.html">as_event_list.LogEvent</a></td>
+<td>A List of LogEvents</td></tr>
+<tr><td style="width: 25%;"><a href="logger_config.html">as_logger_config</a></td>
+<td>Logger Configuration Objects</td></tr>
+<tr><td style="width: 25%;"><a href="logger_config.html">as_logger_config.character</a></td>
+<td>Logger Configuration Objects</td></tr>
+<tr><td style="width: 25%;"><a href="logger_config.html">as_logger_config.list</a></td>
+<td>Logger Configuration Objects</td></tr>
+<tr><td style="width: 25%;"><a href="as.data.frame.LogEvent.html">as_tibble.LogEvent</a></td>
+<td>Coerce LogEvents to Data Frames</td></tr>
+<tr><td style="width: 25%;"><a href="basic_config.html">basic_config</a></td>
+<td>Basic Setup for the Logging System</td></tr>
+<tr><td style="width: 25%;"><a href="CannotInitializeAbstractClassError.html">CannotInitializeAbstractClassError</a></td>
+<td>Logger Error Conditions</td></tr>
+<tr><td style="width: 25%;"><a href="colorize_levels.html">colorize_levels</a></td>
+<td>Colorize Levels</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">console_threshold</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="default_exception_handler.html">default_exception_handler</a></td>
+<td>Demote an exception to a warning</td></tr>
+<tr><td style="width: 25%;"><a href="EventFilter.html">EventFilter</a></td>
+<td>Event Filters</td></tr>
+<tr><td style="width: 25%;"><a href="event_list.html">event_list</a></td>
+<td>A List of LogEvents</td></tr>
+<tr><td style="width: 25%;"><a href="EventFilter.html">Filter</a></td>
+<td>Event Filters</td></tr>
+<tr><td style="width: 25%;"><a href="Filterable.html">Filterable</a></td>
+<td>Abstract Class for Filterables</td></tr>
+<tr><td style="width: 25%;"><a href="FilterForceLevel.html">FilterForceLevel</a></td>
+<td>Override the log level of all events processed by a Logger/Appender</td></tr>
+<tr><td style="width: 25%;"><a href="FilterInject.html">FilterInject</a></td>
+<td>Inject values into all events processed by a Logger/Appender</td></tr>
+<tr><td style="width: 25%;"><a href="print.Logger.html">format.ancestry</a></td>
+<td>Print a Logger Object</td></tr>
+<tr><td style="width: 25%;"><a href="print.LogEvent.html">format.LogEvent</a></td>
+<td>Print or Format Logging Data</td></tr>
+<tr><td style="width: 25%;"><a href="print.Logger.html">format.Logger</a></td>
+<td>Print a Logger Object</td></tr>
+<tr><td style="width: 25%;"><a href="print.logger_tree.html">format.logger_tree</a></td>
+<td>Print Logger Trees</td></tr>
+<tr><td style="width: 25%;"><a href="system_infos.html">get_caller</a></td>
+<td>Information About the System</td></tr>
+<tr><td style="width: 25%;"><a href="get_logger.html">get_logger</a></td>
+<td>Get/Create a Logger</td></tr>
+<tr><td style="width: 25%;"><a href="get_logger.html">get_logger_glue</a></td>
+<td>Get/Create a Logger</td></tr>
+<tr><td style="width: 25%;"><a href="get_log_levels.html">get_log_levels</a></td>
+<td>Manage Log Levels</td></tr>
+<tr><td style="width: 25%;"><a href="system_infos.html">get_user</a></td>
+<td>Information About the System</td></tr>
+<tr><td style="width: 25%;"><a href="is_filter.html">is_filter</a></td>
+<td>Check if an R Object is a Filter</td></tr>
+<tr><td style="width: 25%;"><a href="standardize_threshold.html">is_log_level</a></td>
+<td>Standardize User-Input Log Levels to Their Integer Representation</td></tr>
+<tr><td style="width: 25%;"><a href="standardize_threshold.html">is_log_levels</a></td>
+<td>Standardize User-Input Log Levels to Their Integer Representation</td></tr>
+<tr><td style="width: 25%;"><a href="standardize_threshold.html">is_threshold</a></td>
+<td>Standardize User-Input Log Levels to Their Integer Representation</td></tr>
+<tr><td style="width: 25%;"><a href="label_levels.html">label_levels</a></td>
+<td>Label/Unlabel Log Levels</td></tr>
+<tr><td style="width: 25%;"><a href="Layout.html">Layout</a></td>
+<td>Abstract Class for Layouts</td></tr>
+<tr><td style="width: 25%;"><a href="LayoutFormat.html">LayoutFormat</a></td>
+<td>Format Log Events as Text</td></tr>
+<tr><td style="width: 25%;"><a href="LayoutGlue.html">LayoutGlue</a></td>
+<td>Format Log Events as Text via glue</td></tr>
+<tr><td style="width: 25%;"><a href="LayoutJson.html">LayoutJson</a></td>
+<td>Format LogEvents as JSON</td></tr>
+<tr><td style="width: 25%;"><a href="Layout.html">Layouts</a></td>
+<td>Abstract Class for Layouts</td></tr>
+<tr><td style="width: 25%;"><a href="LogEvent.html">LogEvent</a></td>
+<td>LogEvents - The atomic unit of logging</td></tr>
+<tr><td style="width: 25%;"><a href="LogEvent.html">LogEvents</a></td>
+<td>LogEvents - The atomic unit of logging</td></tr>
+<tr><td style="width: 25%;"><a href="Logger.html">Logger</a></td>
+<td>Loggers</td></tr>
+<tr><td style="width: 25%;"><a href="LoggerGlue.html">LoggerGlue</a></td>
+<td>LoggerGlue</td></tr>
+<tr><td style="width: 25%;"><a href="Logger.html">Loggers</a></td>
+<td>Loggers</td></tr>
+<tr><td style="width: 25%;"><a href="logger_config.html">logger_config</a></td>
+<td>Logger Configuration Objects</td></tr>
+<tr><td style="width: 25%;"><a href="logger_tree.html">logger_tree</a></td>
+<td>Logger Tree</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">log_exception</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="get_log_levels.html">log_level</a></td>
+<td>Manage Log Levels</td></tr>
+<tr><td style="width: 25%;"><a href="get_log_levels.html">log_levels</a></td>
+<td>Manage Log Levels</td></tr>
+<tr><td style="width: 25%;"><a href="pad_right.html">pad_left</a></td>
+<td>Pad Character Vectors</td></tr>
+<tr><td style="width: 25%;"><a href="pad_right.html">pad_right</a></td>
+<td>Pad Character Vectors</td></tr>
+<tr><td style="width: 25%;"><a href="print.Logger.html">print.ancestry</a></td>
+<td>Print a Logger Object</td></tr>
+<tr><td style="width: 25%;"><a href="print.Appender.html">print.Appender</a></td>
+<td>Print an Appender object</td></tr>
+<tr><td style="width: 25%;"><a href="print.LogEvent.html">print.LogEvent</a></td>
+<td>Print or Format Logging Data</td></tr>
+<tr><td style="width: 25%;"><a href="print.Logger.html">print.Logger</a></td>
+<td>Print a Logger Object</td></tr>
+<tr><td style="width: 25%;"><a href="print.logger_tree.html">print.logger_tree</a></td>
+<td>Print Logger Trees</td></tr>
+<tr><td style="width: 25%;"><a href="read_json_lines.html">read_json_lines</a></td>
+<td>Read a JSON logfile</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">remove_appender</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="get_log_levels.html">remove_log_levels</a></td>
+<td>Manage Log Levels</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">show_data</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">show_dt</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">show_log</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">simple_logging</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="standardize_threshold.html">standardize_log_level</a></td>
+<td>Standardize User-Input Log Levels to Their Integer Representation</td></tr>
+<tr><td style="width: 25%;"><a href="standardize_threshold.html">standardize_log_levels</a></td>
+<td>Standardize User-Input Log Levels to Their Integer Representation</td></tr>
+<tr><td style="width: 25%;"><a href="standardize_threshold.html">standardize_threshold</a></td>
+<td>Standardize User-Input Log Levels to Their Integer Representation</td></tr>
+<tr><td style="width: 25%;"><a href="suspend_logging.html">suspend_logging</a></td>
+<td>Suspend All Logging</td></tr>
+<tr><td style="width: 25%;"><a href="system_infos.html">system_infos</a></td>
+<td>Information About the System</td></tr>
+<tr><td style="width: 25%;"><a href="simple_logging.html">threshold</a></td>
+<td>Simple Logging</td></tr>
+<tr><td style="width: 25%;"><a href="toString.LogEvent.html">toString.LogEvent</a></td>
+<td>Convert a LogEvent to a character string</td></tr>
+<tr><td style="width: 25%;"><a href="label_levels.html">unlabel_levels</a></td>
+<td>Label/Unlabel Log Levels</td></tr>
+<tr><td style="width: 25%;"><a href="suspend_logging.html">unsuspend_logging</a></td>
+<td>Suspend All Logging</td></tr>
+<tr><td style="width: 25%;"><a href="use_logger.html">use_logger</a></td>
+<td>Setup a Simple Logger for a Package</td></tr>
+<tr><td style="width: 25%;"><a href="suspend_logging.html">without_logging</a></td>
+<td>Suspend All Logging</td></tr>
+<tr><td style="width: 25%;"><a href="suspend_logging.html">with_logging</a></td>
+<td>Suspend All Logging</td></tr>
+<tr><td style="width: 25%;"><a href="with_log_level.html">with_log_level</a></td>
+<td>Inject Values into Logging Calls</td></tr>
+<tr><td style="width: 25%;"><a href="with_log_level.html">with_log_value</a></td>
+<td>Inject Values into Logging Calls</td></tr>
+</table>
+</body></html>

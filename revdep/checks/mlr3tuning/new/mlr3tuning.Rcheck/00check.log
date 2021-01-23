@@ -1,0 +1,220 @@
+* using log directory ‘/home/marc/Repository/bbotk/revdep/checks/mlr3tuning/new/mlr3tuning.Rcheck’
+* using R version 4.0.3 (2020-10-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
+* checking for file ‘mlr3tuning/DESCRIPTION’ ... OK
+* this is package ‘mlr3tuning’ version ‘0.5.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘mlr3tuning’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking examples ... ERROR
+Running examples in ‘mlr3tuning-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: TuningInstanceSingleCrit
+> ### Title: Single Criterion Tuning Instance
+> ### Aliases: TuningInstanceSingleCrit
+> 
+> ### ** Examples
+> 
+> library(data.table)
+> library(paradox)
+> library(mlr3)
+> 
+> # Objects required to define the performance evaluator:
+> task = tsk("iris")
+> learner = lrn("classif.rpart")
+> resampling = rsmp("holdout")
+> measure = msr("classif.ce")
+> param_set = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1),
++   ParamInt$new("minsplit", lower = 1, upper = 10))
++ )
+> 
+> terminator = trm("evals", n_evals = 5)
+> inst = TuningInstanceSingleCrit$new(
++   task = task,
++   learner = learner,
++   resampling = resampling,
++   measure = measure,
++   search_space = param_set,
++   terminator = terminator
++ )
+> 
+> # first 4 points as cross product
+> design = CJ(cp = c(0.05, 0.01), minsplit = c(5, 3))
+> inst$eval_batch(design)
+INFO  [14:39:23.114] [bbotk] Evaluating 4 configuration(s) 
+INFO  [14:39:23.212] [mlr3]  Benchmark with 4 resampling iterations 
+INFO  [14:39:23.222] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.240] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.266] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.287] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.307] [mlr3]  Finished benchmark 
+INFO  [14:39:23.472] [bbotk] Result of batch 1: 
+INFO  [14:39:23.475] [bbotk]    cp minsplit classif.ce                                uhash 
+INFO  [14:39:23.475] [bbotk]  0.01        3       0.04 527127da-e860-4645-9d84-e1ffd7fcf2ba 
+INFO  [14:39:23.475] [bbotk]  0.01        5       0.04 c4ba2aeb-afb4-400d-a637-5f8d1ff7208b 
+INFO  [14:39:23.475] [bbotk]  0.05        3       0.04 fd787a95-b437-457e-8058-b87ff3bed8f2 
+INFO  [14:39:23.475] [bbotk]  0.05        5       0.04 756d700e-b708-4d11-8a1e-36ea504bd34b 
+> inst$archive
+<ArchiveTuning>
+     cp minsplit classif.ce                                uhash  x_domain
+1: 0.01        3       0.04 527127da-e860-4645-9d84-e1ffd7fcf2ba <list[2]>
+2: 0.01        5       0.04 c4ba2aeb-afb4-400d-a637-5f8d1ff7208b <list[2]>
+3: 0.05        3       0.04 fd787a95-b437-457e-8058-b87ff3bed8f2 <list[2]>
+4: 0.05        5       0.04 756d700e-b708-4d11-8a1e-36ea504bd34b <list[2]>
+             timestamp batch_nr
+1: 2021-01-23 14:39:23        1
+2: 2021-01-23 14:39:23        1
+3: 2021-01-23 14:39:23        1
+4: 2021-01-23 14:39:23        1
+> 
+> # try more points, catch the raised terminated message
+> tryCatch(
++   inst$eval_batch(data.table(cp = 0.01, minsplit = 7)),
++   terminated_error = function(e) message(as.character(e))
++ )
+INFO  [14:39:23.480] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:23.515] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:23.525] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.545] [mlr3]  Finished benchmark 
+INFO  [14:39:23.605] [bbotk] Result of batch 2: 
+INFO  [14:39:23.607] [bbotk]    cp minsplit classif.ce                                uhash 
+INFO  [14:39:23.607] [bbotk]  0.01        7       0.04 11834a97-0797-4a29-837b-23143f013d40 
+> 
+> # try another point although the budget is now exhausted
+> # -> no extra evaluations
+> tryCatch(
++   inst$eval_batch(data.table(cp = 0.01, minsplit = 9)),
++   terminated_error = function(e) message(as.character(e))
++ )
+Error: Objective (obj:classif.rpart_on_iris, term:<TerminatorEvals>) terminated
+
+> 
+> inst$archive
+<ArchiveTuning>
+     cp minsplit classif.ce                                uhash  x_domain
+1: 0.01        3       0.04 527127da-e860-4645-9d84-e1ffd7fcf2ba <list[2]>
+2: 0.01        5       0.04 c4ba2aeb-afb4-400d-a637-5f8d1ff7208b <list[2]>
+3: 0.05        3       0.04 fd787a95-b437-457e-8058-b87ff3bed8f2 <list[2]>
+4: 0.05        5       0.04 756d700e-b708-4d11-8a1e-36ea504bd34b <list[2]>
+5: 0.01        7       0.04 11834a97-0797-4a29-837b-23143f013d40 <list[2]>
+             timestamp batch_nr
+1: 2021-01-23 14:39:23        1
+2: 2021-01-23 14:39:23        1
+3: 2021-01-23 14:39:23        1
+4: 2021-01-23 14:39:23        1
+5: 2021-01-23 14:39:23        2
+> 
+> ### Error handling
+> # get a learner which breaks with 50% probability
+> # set encapsulation + fallback
+> learner = lrn("classif.debug", error_train = 0.5)
+> learner$encapsulate = c(train = "evaluate", predict = "evaluate")
+> learner$fallback = lrn("classif.featureless")
+> 
+> param_set = ParamSet$new(list(
++   ParamDbl$new("x", lower = 0, upper = 1)
++ ))
+> 
+> inst = TuningInstanceSingleCrit$new(
++   task = tsk("wine"),
++   learner = learner,
++   resampling = rsmp("cv", folds = 3),
++   measure = msr("classif.ce"),
++   search_space = param_set,
++   terminator = trm("evals", n_evals = 5)
++ )
+> 
+> tryCatch(
++   inst$eval_batch(data.table(x = 1:5 / 5)),
++   terminated_error = function(e) message(as.character(e))
++ )
+INFO  [14:39:23.752] [bbotk] Evaluating 5 configuration(s) 
+INFO  [14:39:23.900] [mlr3]  Benchmark with 15 resampling iterations 
+INFO  [14:39:23.910] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:23.955] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:23.990] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:24.018] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.057] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:24.087] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.122] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:24.155] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:24.193] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:24.228] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:24.258] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.295] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.332] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:24.372] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:24.404] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.433] [mlr3]  Finished benchmark 
+INFO  [14:39:24.688] [bbotk] Result of batch 1: 
+INFO  [14:39:24.691] [bbotk]    x classif.ce                                uhash 
+INFO  [14:39:24.691] [bbotk]  0.2  0.6179849 12be3ad5-5b06-432e-8737-9b670bc56e05 
+INFO  [14:39:24.691] [bbotk]  0.4  0.6179849 840cc2cd-83bc-4cf9-9549-b9c9597edad1 
+INFO  [14:39:24.691] [bbotk]  0.6  0.6575330 a30cf725-feca-436c-8a0a-95bb73ef061a 
+INFO  [14:39:24.691] [bbotk]  0.8  0.6682674 6ffb8839-86cc-4961-8af6-e874f6db10f6 
+INFO  [14:39:24.691] [bbotk]  1.0  0.6179849 ba590a86-0dd2-485b-9c58-2cedaff7e1b5 
+> 
+> archive = inst$archive$data()
+Error: attempt to apply non-function
+Execution halted
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... ERROR
+  Running ‘testthat.R’
+Running the tests in ‘tests/testthat.R’ failed.
+Last 13 lines of output:
+   2.   └─checkmate::checkDataTable(...)
+  ── Error (test_TuningInstanceSingleCrit.R:139:3): store_benchmark_result and store_models flag works ──
+  Error: attempt to apply non-function
+  Backtrace:
+      █
+   1. ├─testthat::expect_true("uhashes" %nin% colnames(inst$archive$data()))
+   2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
+   3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+   4. ├─"uhashes" %nin% colnames(inst$archive$data())
+   5. └─base::colnames(inst$archive$data())
+   6.   └─base::is.data.frame(x)
+  
+  [ FAIL 25 | WARN 0 | SKIP 0 | PASS 196 ]
+  Error: Test failures
+  Execution halted
+* DONE
+Status: 2 ERRORs

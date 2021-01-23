@@ -1,0 +1,94 @@
+* using log directory ‘/home/marc/Repository/bbotk/revdep/checks/mlr3fselect/new/mlr3fselect.Rcheck’
+* using R version 4.0.3 (2020-10-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
+* checking for file ‘mlr3fselect/DESCRIPTION’ ... OK
+* this is package ‘mlr3fselect’ version ‘0.4.1’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘mlr3fselect’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking examples ... ERROR
+Running examples in ‘mlr3fselect-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: AutoFSelector
+> ### Title: AutoFSelector
+> ### Aliases: AutoFSelector
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> 
+> task = tsk("iris")
+> learner = lrn("classif.rpart")
+> resampling = rsmp("holdout")
+> measure = msr("classif.ce")
+> 
+> terminator = trm("evals", n_evals = 3)
+> fselector = fs("exhaustive_search")
+> afs = AutoFSelector$new(learner, resampling, measure, terminator, fselector,
++   store_fselect_instance = TRUE)
+> 
+> afs$train(task)
+Error in private$.objective_multiplicator <- ifelse(self$objective$codomain$tags ==  : 
+  cannot add bindings to a locked environment
+Calls: <Anonymous> ... initialize -> .__FSelectInstanceSingleCrit__initialize
+Execution halted
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... ERROR
+  Running ‘testthat.R’
+Running the tests in ‘tests/testthat.R’ failed.
+Last 13 lines of output:
+   2.   └─FSelectInstanceSingleCrit$new(...) helper.R:60:2
+   3.     └─mlr3fselect:::initialize(...)
+   4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+  ── Error (test_FSelectorRandomSearch.R:13:3): FSelectorRandomSearch works with multi-crit ──
+  Error: cannot add bindings to a locked environment
+  Backtrace:
+      █
+   1. └─mlr3fselect:::test_fselector_2D(...) test_FSelectorRandomSearch.R:13:2
+   2.   └─FSelectInstanceMultiCrit$new(...) helper.R:109:2
+   3.     └─mlr3fselect:::initialize(...)
+   4.       └─mlr3fselect:::.__FSelectInstanceMultiCrit__initialize(...)
+  
+  [ FAIL 16 | WARN 0 | SKIP 8 | PASS 17 ]
+  Error: Test failures
+  Execution halted
+* DONE
+Status: 2 ERRORs

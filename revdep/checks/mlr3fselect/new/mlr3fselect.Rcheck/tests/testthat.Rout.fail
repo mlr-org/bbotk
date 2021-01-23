@@ -1,0 +1,173 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(mlr3)
+> library(mlr3fselect)
+> library(checkmate)
+> 
+> test_check("mlr3fselect")
+══ Skipped tests ═══════════════════════════════════════════════════════════════
+● On CRAN (8)
+
+══ Failed tests ════════════════════════════════════════════════════════════════
+── Error (test_AutoFSelector.R:137:3): AutoFSelector works with GraphLearner ───
+Error: cannot add bindings to a locked environment
+Backtrace:
+     █
+  1. └─at$train(task) test_AutoFSelector.R:137:2
+  2.   └─mlr3:::.__Learner__train(...)
+  3.     └─mlr3:::learner_train(self, task, row_ids)
+  4.       └─mlr3misc::encapsulate(...)
+  5.         ├─mlr3misc::invoke(...)
+  6.         │ └─base::eval.parent(expr, n = 1L)
+  7.         │   └─base::eval(expr, p)
+  8.         │     └─base::eval(expr, p)
+  9.         └─mlr3:::.f(learner = <environment>, task = <environment>)
+ 10.           └─get_private(learner)$.train(task)
+ 11.             └─mlr3fselect:::.__AutoFSelector__.train(...)
+ 12.               ├─mlr3misc::invoke(FSelectInstanceSingleCrit$new, .args = ia)
+ 13.               │ └─base::eval.parent(expr, n = 1L)
+ 14.               │   └─base::eval(expr, p)
+ 15.               │     └─base::eval(expr, p)
+ 16.               └─FSelectInstanceSingleCrit$new(...)
+ 17.                 └─mlr3fselect:::initialize(...)
+ 18.                   └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectInstanceMultiCrit.R:4:3): empty FSelectInstanceMultiCrit works ──
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_2D() test_FSelectInstanceMultiCrit.R:4:2
+ 2.   └─FSelectInstanceMultiCrit$new(...) helper.R:171:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceMultiCrit__initialize(...)
+── Error (test_FSelectInstanceMultiCrit.R:13:3): eval_batch works ──────────────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_2D() test_FSelectInstanceMultiCrit.R:13:2
+ 2.   └─FSelectInstanceMultiCrit$new(...) helper.R:171:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceMultiCrit__initialize(...)
+── Error (test_FSelectInstanceMultiCrit.R:30:3): objective_function works ──────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_2D() test_FSelectInstanceMultiCrit.R:30:2
+ 2.   └─FSelectInstanceMultiCrit$new(...) helper.R:171:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceMultiCrit__initialize(...)
+── Error (test_FSelectInstanceMultiCrit.R:36:3): store_benchmark_result flag works ──
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_2D(store_benchmark_result = FALSE) test_FSelectInstanceMultiCrit.R:36:2
+ 2.   └─FSelectInstanceMultiCrit$new(...) helper.R:171:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceMultiCrit__initialize(...)
+── Error (test_FSelectInstanceMultiCrit.R:51:3): result$features works ─────────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_2D(store_benchmark_result = FALSE) test_FSelectInstanceMultiCrit.R:51:2
+ 2.   └─FSelectInstanceMultiCrit$new(...) helper.R:171:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceMultiCrit__initialize(...)
+── Error (test_FSelectInstanceSingleCrit.R:4:3): empty FSelectInstanceSingleCrit works ──
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_1D() test_FSelectInstanceSingleCrit.R:4:2
+ 2.   └─FSelectInstanceSingleCrit$new(...) helper.R:159:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectInstanceSingleCrit.R:13:3): eval_batch works ─────────────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_1D(store_models = TRUE) test_FSelectInstanceSingleCrit.R:13:2
+ 2.   └─FSelectInstanceSingleCrit$new(...) helper.R:159:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectInstanceSingleCrit.R:41:3): objective_function works ─────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_1D(store_models = TRUE) test_FSelectInstanceSingleCrit.R:41:2
+ 2.   └─FSelectInstanceSingleCrit$new(...) helper.R:159:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectInstanceSingleCrit.R:47:3): store_benchmark_result flag works ──
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_1D(store_benchmark_result = FALSE) test_FSelectInstanceSingleCrit.R:47:2
+ 2.   └─FSelectInstanceSingleCrit$new(...) helper.R:159:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectInstanceSingleCrit.R:63:3): result$features works ────────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::TEST_MAKE_INST_1D(store_benchmark_result = FALSE) test_FSelectInstanceSingleCrit.R:63:2
+ 2.   └─FSelectInstanceSingleCrit$new(...) helper.R:159:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectorDesignPoints.R:10:3): FSelectorDesignPoints ────────────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::test_fselector(...) test_FSelectorDesignPoints.R:10:2
+ 2.   └─FSelectInstanceSingleCrit$new(...) helper.R:60:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectorDesignPoints.R:22:3): FSelectorDesignPoints works with multi-crit ──
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::test_fselector_2D(...) test_FSelectorDesignPoints.R:22:2
+ 2.   └─FSelectInstanceMultiCrit$new(...) helper.R:109:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceMultiCrit__initialize(...)
+── Error (test_FSelectorGeneticSearch.R:4:3): FSelectorGeneticSearch ───────────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::test_fselector(...) test_FSelectorGeneticSearch.R:4:2
+ 2.   └─FSelectInstanceSingleCrit$new(...) helper.R:60:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectorRandomSearch.R:4:3): FSelectorRandomSearch ─────────────
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::test_fselector(...) test_FSelectorRandomSearch.R:4:2
+ 2.   └─FSelectInstanceSingleCrit$new(...) helper.R:60:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceSingleCrit__initialize(...)
+── Error (test_FSelectorRandomSearch.R:13:3): FSelectorRandomSearch works with multi-crit ──
+Error: cannot add bindings to a locked environment
+Backtrace:
+    █
+ 1. └─mlr3fselect:::test_fselector_2D(...) test_FSelectorRandomSearch.R:13:2
+ 2.   └─FSelectInstanceMultiCrit$new(...) helper.R:109:2
+ 3.     └─mlr3fselect:::initialize(...)
+ 4.       └─mlr3fselect:::.__FSelectInstanceMultiCrit__initialize(...)
+
+[ FAIL 16 | WARN 0 | SKIP 8 | PASS 17 ]
+Error: Test failures
+Execution halted

@@ -1,0 +1,490 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "mlr3tuning"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('mlr3tuning')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("AutoTuner")
+> ### * AutoTuner
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: AutoTuner
+> ### Title: AutoTuner
+> ### Aliases: AutoTuner
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> 
+> task = tsk("iris")
+> search_space = ParamSet$new(
++   params = list(ParamDbl$new("cp", lower = 0.001, upper = 0.1))
++ )
+> 
+> at = AutoTuner$new(
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   terminator = trm("evals", n_evals = 5),
++   tuner = tnr("grid_search"),
++   search_space = search_space,
++   store_tuning_instance = TRUE)
+> 
+> at$train(task)
+INFO  [14:39:18.945] [bbotk] Starting to optimize 1 parameter(s) with '<OptimizerGridSearch>' and '<TerminatorEvals> [n_evals=5]' 
+INFO  [14:39:19.015] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:19.084] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:19.281] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:19.337] [mlr3]  Finished benchmark 
+INFO  [14:39:19.438] [bbotk] Result of batch 1: 
+INFO  [14:39:19.445] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:19.445] [bbotk]  0.012       0.04 ae362298-77ea-4c8d-a330-9b85ba918b37 
+INFO  [14:39:19.448] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:19.485] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:19.494] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:19.517] [mlr3]  Finished benchmark 
+INFO  [14:39:19.576] [bbotk] Result of batch 2: 
+INFO  [14:39:19.579] [bbotk]   cp classif.ce                                uhash 
+INFO  [14:39:19.579] [bbotk]  0.1       0.04 96ff8880-ffa1-4ff7-b104-a62ad822081e 
+INFO  [14:39:19.581] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:19.614] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:19.624] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:19.644] [mlr3]  Finished benchmark 
+INFO  [14:39:19.708] [bbotk] Result of batch 3: 
+INFO  [14:39:19.711] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:19.711] [bbotk]  0.001       0.04 13bf9a6c-3579-48c9-ad03-d0d552d0822d 
+INFO  [14:39:19.713] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:19.741] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:19.751] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:19.773] [mlr3]  Finished benchmark 
+INFO  [14:39:19.832] [bbotk] Result of batch 4: 
+INFO  [14:39:19.834] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:19.834] [bbotk]  0.056       0.04 4cef85fd-db90-490b-aeaa-cd2b4c936419 
+INFO  [14:39:19.836] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:19.870] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:19.879] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:19.898] [mlr3]  Finished benchmark 
+INFO  [14:39:19.967] [bbotk] Result of batch 5: 
+INFO  [14:39:19.970] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:19.970] [bbotk]  0.023       0.04 c04c4f27-2eb0-4c1b-aeb7-652098ae9e7c 
+INFO  [14:39:19.985] [bbotk] Finished optimizing after 5 evaluation(s) 
+INFO  [14:39:19.986] [bbotk] Result: 
+INFO  [14:39:19.989] [bbotk]     cp learner_param_vals  x_domain classif.ce 
+INFO  [14:39:19.989] [bbotk]  0.012          <list[2]> <list[1]>       0.04 
+> at$model
+$learner
+<LearnerClassifRpart:classif.rpart>
+* Model: rpart
+* Parameters: xval=0, cp=0.012
+* Packages: rpart
+* Predict Type: response
+* Feature types: logical, integer, numeric, factor, ordered
+* Properties: importance, missings, multiclass, selected_features,
+  twoclass, weights
+
+$tuning_instance
+<TuningInstanceSingleCrit>
+* State:  Optimized
+* Objective: <ObjectiveTuning:classif.rpart_on_iris>
+* Search Space:
+<ParamSet>
+   id    class lower upper levels        default value
+1: cp ParamDbl 0.001   0.1        <NoDefault[3]>      
+* Terminator: <TerminatorEvals>
+* Terminated: TRUE
+* Result:
+      cp learner_param_vals  x_domain classif.ce
+1: 0.012          <list[2]> <list[1]>       0.04
+* Archive:
+<ArchiveTuning>
+      cp classif.ce                                uhash  x_domain
+1: 0.012       0.04 ae362298-77ea-4c8d-a330-9b85ba918b37 <list[1]>
+2: 0.100       0.04 96ff8880-ffa1-4ff7-b104-a62ad822081e <list[1]>
+3: 0.001       0.04 13bf9a6c-3579-48c9-ad03-d0d552d0822d <list[1]>
+4: 0.056       0.04 4cef85fd-db90-490b-aeaa-cd2b4c936419 <list[1]>
+5: 0.023       0.04 c04c4f27-2eb0-4c1b-aeb7-652098ae9e7c <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:39:19        1
+2: 2021-01-23 14:39:19        2
+3: 2021-01-23 14:39:19        3
+4: 2021-01-23 14:39:19        4
+5: 2021-01-23 14:39:19        5
+
+> at$learner
+<LearnerClassifRpart:classif.rpart>
+* Model: rpart
+* Parameters: xval=0, cp=0.012
+* Packages: rpart
+* Predict Type: response
+* Feature types: logical, integer, numeric, factor, ordered
+* Properties: importance, missings, multiclass, selected_features,
+  twoclass, weights
+> 
+> # Nested resampling
+> at = AutoTuner$new(
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   terminator = trm("evals", n_evals = 5),
++   tuner = tnr("grid_search"),
++   search_space = search_space,
++   store_tuning_instance = TRUE)
+> 
+> resampling_outer = rsmp("cv", folds = 2)
+> rr = resample(task, at, resampling_outer, store_models = TRUE)
+INFO  [14:39:20.179] [mlr3]  Applying learner 'classif.rpart.tuned' on task 'iris' (iter 1/2) 
+INFO  [14:39:20.218] [bbotk] Starting to optimize 1 parameter(s) with '<OptimizerGridSearch>' and '<TerminatorEvals> [n_evals=5]' 
+INFO  [14:39:20.222] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:20.264] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:20.275] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:20.334] [mlr3]  Finished benchmark 
+INFO  [14:39:20.387] [bbotk] Result of batch 1: 
+INFO  [14:39:20.389] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:20.389] [bbotk]  0.045       0.08 7b85034c-b9c4-4a0d-9b8d-2c7d314a15ae 
+INFO  [14:39:20.391] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:20.426] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:20.436] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:20.456] [mlr3]  Finished benchmark 
+INFO  [14:39:20.520] [bbotk] Result of batch 2: 
+INFO  [14:39:20.523] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:20.523] [bbotk]  0.089       0.08 13b7a457-d8ac-4509-9e84-bb1806d6e35e 
+INFO  [14:39:20.525] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:20.554] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:20.563] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:20.587] [mlr3]  Finished benchmark 
+INFO  [14:39:20.642] [bbotk] Result of batch 3: 
+INFO  [14:39:20.644] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:20.644] [bbotk]  0.001       0.08 58c19b71-1f94-4098-9b0c-6c8279180339 
+INFO  [14:39:20.646] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:20.686] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:20.696] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:20.725] [mlr3]  Finished benchmark 
+INFO  [14:39:20.796] [bbotk] Result of batch 4: 
+INFO  [14:39:20.799] [bbotk]   cp classif.ce                                uhash 
+INFO  [14:39:20.799] [bbotk]  0.1       0.08 b443be9a-048b-40ad-ac1a-33d7a628082d 
+INFO  [14:39:20.801] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:20.843] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:20.857] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:20.892] [mlr3]  Finished benchmark 
+INFO  [14:39:20.973] [bbotk] Result of batch 5: 
+INFO  [14:39:20.976] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:20.976] [bbotk]  0.078       0.08 f9e56687-443d-4f85-aa04-7c03123f77ce 
+INFO  [14:39:20.989] [bbotk] Finished optimizing after 5 evaluation(s) 
+INFO  [14:39:20.995] [bbotk] Result: 
+INFO  [14:39:20.997] [bbotk]     cp learner_param_vals  x_domain classif.ce 
+INFO  [14:39:20.997] [bbotk]  0.045          <list[2]> <list[1]>       0.08 
+INFO  [14:39:21.061] [mlr3]  Applying learner 'classif.rpart.tuned' on task 'iris' (iter 2/2) 
+INFO  [14:39:21.122] [bbotk] Starting to optimize 1 parameter(s) with '<OptimizerGridSearch>' and '<TerminatorEvals> [n_evals=5]' 
+INFO  [14:39:21.128] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:21.177] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:21.196] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:21.243] [mlr3]  Finished benchmark 
+INFO  [14:39:21.332] [bbotk] Result of batch 1: 
+INFO  [14:39:21.337] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:21.337] [bbotk]  0.023       0.08 1cbeb890-39d8-4bf0-a87d-a98662a7a9f7 
+INFO  [14:39:21.340] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:21.395] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:21.409] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:21.439] [mlr3]  Finished benchmark 
+INFO  [14:39:21.527] [bbotk] Result of batch 2: 
+INFO  [14:39:21.530] [bbotk]   cp classif.ce                                uhash 
+INFO  [14:39:21.530] [bbotk]  0.1       0.08 9549f282-0cf7-4e0a-9dd3-f98b02e2db7b 
+INFO  [14:39:21.533] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:21.579] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:21.600] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:21.629] [mlr3]  Finished benchmark 
+INFO  [14:39:21.718] [bbotk] Result of batch 3: 
+INFO  [14:39:21.721] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:21.721] [bbotk]  0.078       0.08 54b1b76d-f8ac-4dbc-b615-5b9a25888e97 
+INFO  [14:39:21.724] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:21.769] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:21.783] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:21.818] [mlr3]  Finished benchmark 
+INFO  [14:39:21.903] [bbotk] Result of batch 4: 
+INFO  [14:39:21.906] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:21.906] [bbotk]  0.089       0.08 befc34e3-7ca6-41db-b645-caf5e20dd65c 
+INFO  [14:39:21.909] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:21.961] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:21.976] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:22.006] [mlr3]  Finished benchmark 
+INFO  [14:39:22.099] [bbotk] Result of batch 5: 
+INFO  [14:39:22.102] [bbotk]     cp classif.ce                                uhash 
+INFO  [14:39:22.102] [bbotk]  0.045       0.08 0a6a1394-d9d3-4d0d-9ef6-4e7b14d05570 
+INFO  [14:39:22.115] [bbotk] Finished optimizing after 5 evaluation(s) 
+INFO  [14:39:22.117] [bbotk] Result: 
+INFO  [14:39:22.119] [bbotk]     cp learner_param_vals  x_domain classif.ce 
+INFO  [14:39:22.119] [bbotk]  0.023          <list[2]> <list[1]>       0.08 
+> 
+> # Aggregate performance of outer results
+> rr$aggregate()
+classif.ce 
+0.05333333 
+> 
+> # Retrieve inner tuning results.
+> as.data.table(rr)$learner[[1]]$tuning_result
+      cp learner_param_vals  x_domain classif.ce
+1: 0.045          <list[2]> <list[1]>       0.08
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("Tuner")
+> ### * Tuner
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Tuner
+> ### Title: Tuner
+> ### Aliases: Tuner
+> 
+> ### ** Examples
+> 
+> library(mlr3)
+> library(paradox)
+> search_space = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1)
++ ))
+> terminator = trm("evals", n_evals = 3)
+> instance = TuningInstanceSingleCrit$new(
++   task = tsk("iris"),
++   learner = lrn("classif.rpart"),
++   resampling = rsmp("holdout"),
++   measure = msr("classif.ce"),
++   search_space = search_space,
++   terminator = terminator
++ )
+> # swap this line to use a different Tuner
+> tt = tnr("random_search")
+> # modifies the instance by reference
+> tt$optimize(instance)
+INFO  [14:39:22.451] [bbotk] Starting to optimize 1 parameter(s) with '<OptimizerRandomSearch>' and '<TerminatorEvals> [n_evals=3]' 
+INFO  [14:39:22.479] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:22.526] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:22.541] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:22.585] [mlr3]  Finished benchmark 
+INFO  [14:39:22.671] [bbotk] Result of batch 1: 
+INFO  [14:39:22.674] [bbotk]          cp classif.ce                                uhash 
+INFO  [14:39:22.674] [bbotk]  0.05615879       0.04 44102d2d-94aa-4e99-a311-06267c7e4567 
+INFO  [14:39:22.680] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:22.729] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:22.739] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:22.760] [mlr3]  Finished benchmark 
+INFO  [14:39:22.826] [bbotk] Result of batch 2: 
+INFO  [14:39:22.829] [bbotk]          cp classif.ce                                uhash 
+INFO  [14:39:22.829] [bbotk]  0.05054366       0.04 c277f2de-660c-48fc-81f0-258f5668183c 
+INFO  [14:39:22.834] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:22.875] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:22.890] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:22.913] [mlr3]  Finished benchmark 
+INFO  [14:39:22.970] [bbotk] Result of batch 3: 
+INFO  [14:39:22.973] [bbotk]           cp classif.ce                                uhash 
+INFO  [14:39:22.973] [bbotk]  0.008452299       0.04 014119e0-7aed-4b69-a07f-58ae25e5efec 
+INFO  [14:39:22.985] [bbotk] Finished optimizing after 3 evaluation(s) 
+INFO  [14:39:22.987] [bbotk] Result: 
+INFO  [14:39:22.989] [bbotk]          cp learner_param_vals  x_domain classif.ce 
+INFO  [14:39:22.989] [bbotk]  0.05615879          <list[2]> <list[1]>       0.04 
+           cp learner_param_vals  x_domain classif.ce
+1: 0.05615879          <list[2]> <list[1]>       0.04
+> # returns best configuration and best performance
+> instance$result
+           cp learner_param_vals  x_domain classif.ce
+1: 0.05615879          <list[2]> <list[1]>       0.04
+> # allows access of data.table / benchmark result of full path of all
+> # evaluations
+> instance$archive
+<ArchiveTuning>
+            cp classif.ce                                uhash  x_domain
+1: 0.056158794       0.04 44102d2d-94aa-4e99-a311-06267c7e4567 <list[1]>
+2: 0.050543656       0.04 c277f2de-660c-48fc-81f0-258f5668183c <list[1]>
+3: 0.008452299       0.04 014119e0-7aed-4b69-a07f-58ae25e5efec <list[1]>
+             timestamp batch_nr
+1: 2021-01-23 14:39:22        1
+2: 2021-01-23 14:39:22        2
+3: 2021-01-23 14:39:22        3
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:paradox’, ‘package:mlr3’
+
+> nameEx("TuningInstanceSingleCrit")
+> ### * TuningInstanceSingleCrit
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TuningInstanceSingleCrit
+> ### Title: Single Criterion Tuning Instance
+> ### Aliases: TuningInstanceSingleCrit
+> 
+> ### ** Examples
+> 
+> library(data.table)
+> library(paradox)
+> library(mlr3)
+> 
+> # Objects required to define the performance evaluator:
+> task = tsk("iris")
+> learner = lrn("classif.rpart")
+> resampling = rsmp("holdout")
+> measure = msr("classif.ce")
+> param_set = ParamSet$new(list(
++   ParamDbl$new("cp", lower = 0.001, upper = 0.1),
++   ParamInt$new("minsplit", lower = 1, upper = 10))
++ )
+> 
+> terminator = trm("evals", n_evals = 5)
+> inst = TuningInstanceSingleCrit$new(
++   task = task,
++   learner = learner,
++   resampling = resampling,
++   measure = measure,
++   search_space = param_set,
++   terminator = terminator
++ )
+> 
+> # first 4 points as cross product
+> design = CJ(cp = c(0.05, 0.01), minsplit = c(5, 3))
+> inst$eval_batch(design)
+INFO  [14:39:23.114] [bbotk] Evaluating 4 configuration(s) 
+INFO  [14:39:23.212] [mlr3]  Benchmark with 4 resampling iterations 
+INFO  [14:39:23.222] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.240] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.266] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.287] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.307] [mlr3]  Finished benchmark 
+INFO  [14:39:23.472] [bbotk] Result of batch 1: 
+INFO  [14:39:23.475] [bbotk]    cp minsplit classif.ce                                uhash 
+INFO  [14:39:23.475] [bbotk]  0.01        3       0.04 527127da-e860-4645-9d84-e1ffd7fcf2ba 
+INFO  [14:39:23.475] [bbotk]  0.01        5       0.04 c4ba2aeb-afb4-400d-a637-5f8d1ff7208b 
+INFO  [14:39:23.475] [bbotk]  0.05        3       0.04 fd787a95-b437-457e-8058-b87ff3bed8f2 
+INFO  [14:39:23.475] [bbotk]  0.05        5       0.04 756d700e-b708-4d11-8a1e-36ea504bd34b 
+> inst$archive
+<ArchiveTuning>
+     cp minsplit classif.ce                                uhash  x_domain
+1: 0.01        3       0.04 527127da-e860-4645-9d84-e1ffd7fcf2ba <list[2]>
+2: 0.01        5       0.04 c4ba2aeb-afb4-400d-a637-5f8d1ff7208b <list[2]>
+3: 0.05        3       0.04 fd787a95-b437-457e-8058-b87ff3bed8f2 <list[2]>
+4: 0.05        5       0.04 756d700e-b708-4d11-8a1e-36ea504bd34b <list[2]>
+             timestamp batch_nr
+1: 2021-01-23 14:39:23        1
+2: 2021-01-23 14:39:23        1
+3: 2021-01-23 14:39:23        1
+4: 2021-01-23 14:39:23        1
+> 
+> # try more points, catch the raised terminated message
+> tryCatch(
++   inst$eval_batch(data.table(cp = 0.01, minsplit = 7)),
++   terminated_error = function(e) message(as.character(e))
++ )
+INFO  [14:39:23.480] [bbotk] Evaluating 1 configuration(s) 
+INFO  [14:39:23.515] [mlr3]  Benchmark with 1 resampling iterations 
+INFO  [14:39:23.525] [mlr3]  Applying learner 'classif.rpart' on task 'iris' (iter 1/1) 
+INFO  [14:39:23.545] [mlr3]  Finished benchmark 
+INFO  [14:39:23.605] [bbotk] Result of batch 2: 
+INFO  [14:39:23.607] [bbotk]    cp minsplit classif.ce                                uhash 
+INFO  [14:39:23.607] [bbotk]  0.01        7       0.04 11834a97-0797-4a29-837b-23143f013d40 
+> 
+> # try another point although the budget is now exhausted
+> # -> no extra evaluations
+> tryCatch(
++   inst$eval_batch(data.table(cp = 0.01, minsplit = 9)),
++   terminated_error = function(e) message(as.character(e))
++ )
+Error: Objective (obj:classif.rpart_on_iris, term:<TerminatorEvals>) terminated
+
+> 
+> inst$archive
+<ArchiveTuning>
+     cp minsplit classif.ce                                uhash  x_domain
+1: 0.01        3       0.04 527127da-e860-4645-9d84-e1ffd7fcf2ba <list[2]>
+2: 0.01        5       0.04 c4ba2aeb-afb4-400d-a637-5f8d1ff7208b <list[2]>
+3: 0.05        3       0.04 fd787a95-b437-457e-8058-b87ff3bed8f2 <list[2]>
+4: 0.05        5       0.04 756d700e-b708-4d11-8a1e-36ea504bd34b <list[2]>
+5: 0.01        7       0.04 11834a97-0797-4a29-837b-23143f013d40 <list[2]>
+             timestamp batch_nr
+1: 2021-01-23 14:39:23        1
+2: 2021-01-23 14:39:23        1
+3: 2021-01-23 14:39:23        1
+4: 2021-01-23 14:39:23        1
+5: 2021-01-23 14:39:23        2
+> 
+> ### Error handling
+> # get a learner which breaks with 50% probability
+> # set encapsulation + fallback
+> learner = lrn("classif.debug", error_train = 0.5)
+> learner$encapsulate = c(train = "evaluate", predict = "evaluate")
+> learner$fallback = lrn("classif.featureless")
+> 
+> param_set = ParamSet$new(list(
++   ParamDbl$new("x", lower = 0, upper = 1)
++ ))
+> 
+> inst = TuningInstanceSingleCrit$new(
++   task = tsk("wine"),
++   learner = learner,
++   resampling = rsmp("cv", folds = 3),
++   measure = msr("classif.ce"),
++   search_space = param_set,
++   terminator = trm("evals", n_evals = 5)
++ )
+> 
+> tryCatch(
++   inst$eval_batch(data.table(x = 1:5 / 5)),
++   terminated_error = function(e) message(as.character(e))
++ )
+INFO  [14:39:23.752] [bbotk] Evaluating 5 configuration(s) 
+INFO  [14:39:23.900] [mlr3]  Benchmark with 15 resampling iterations 
+INFO  [14:39:23.910] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:23.955] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:23.990] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:24.018] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.057] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:24.087] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.122] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:24.155] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:24.193] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:24.228] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:24.258] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.295] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.332] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 1/3) 
+INFO  [14:39:24.372] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 2/3) 
+INFO  [14:39:24.404] [mlr3]  Applying learner 'classif.debug' on task 'wine' (iter 3/3) 
+INFO  [14:39:24.433] [mlr3]  Finished benchmark 
+INFO  [14:39:24.688] [bbotk] Result of batch 1: 
+INFO  [14:39:24.691] [bbotk]    x classif.ce                                uhash 
+INFO  [14:39:24.691] [bbotk]  0.2  0.6179849 12be3ad5-5b06-432e-8737-9b670bc56e05 
+INFO  [14:39:24.691] [bbotk]  0.4  0.6179849 840cc2cd-83bc-4cf9-9549-b9c9597edad1 
+INFO  [14:39:24.691] [bbotk]  0.6  0.6575330 a30cf725-feca-436c-8a0a-95bb73ef061a 
+INFO  [14:39:24.691] [bbotk]  0.8  0.6682674 6ffb8839-86cc-4961-8af6-e874f6db10f6 
+INFO  [14:39:24.691] [bbotk]  1.0  0.6179849 ba590a86-0dd2-485b-9c58-2cedaff7e1b5 
+> 
+> archive = inst$archive$data()
+Error: attempt to apply non-function
+Execution halted
