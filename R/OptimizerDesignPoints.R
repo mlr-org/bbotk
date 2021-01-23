@@ -23,6 +23,8 @@
 #' \item{`design`}{[data.table::data.table]\cr
 #' Design points to try in search, one per row.}
 #' }
+#' 
+#' @template section_progress_bars
 #'
 #' @export
 #' @examples

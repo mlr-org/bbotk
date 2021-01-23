@@ -21,6 +21,8 @@
 #' For the meaning of the control parameters, see [adagio::pureCMAES()]. Note
 #' that we have removed all control parameters which refer to the termination of
 #' the algorithm and where our terminators allow to obtain the same behavior.
+#' 
+#' @template section_progress_bars
 #'
 #' @export
 #' @examples

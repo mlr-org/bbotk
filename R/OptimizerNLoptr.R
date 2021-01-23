@@ -29,6 +29,8 @@
 #' (`xtol_rel = 10^-4`, `xtol_abs = rep(0.0, length(x0))`, `ftol_rel = 0.0` and
 #' `ftol_abs = 0.0`) are still available and implemented with their package
 #' defaults. To deactivate these conditions, set them to `-1`.
+#' 
+#' @template section_progress_bars
 #'
 #' @source
 #' `r format_bib("johnson_2014")`

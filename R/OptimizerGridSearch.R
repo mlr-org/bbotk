@@ -27,6 +27,8 @@
 #' \item{`batch_size`}{`integer(1)`\cr
 #' Maximum number of points to try in a batch.}
 #' }
+#' 
+#' @template section_progress_bars
 #'
 #' @export
 #' @template example

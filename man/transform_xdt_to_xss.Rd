@@ -14,9 +14,11 @@ Column names have to match ids of the \code{search_space}.
 However, \code{xdt} can contain additional columns.}
 
 \item{search_space}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specifies the search space for the \link{Optimizer}.
-The \link[paradox:ParamSet]{paradox::ParamSet} describes either a subset of the \code{domain} of the \link{Objective} or it describes a set of parameters together with a \code{trafo} function that transforms values from the search space to values of the domain.
-Depending on the context, this value defaults to the domain of the objective.}
+Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
+describes either a subset of the \code{domain} of the \link{Objective} or it describes
+a set of parameters together with a \code{trafo} function that transforms values
+from the search space to values of the domain. Depending on the context, this
+value defaults to the domain of the objective.}
 }
 \value{
 \code{list()}.

@@ -42,6 +42,14 @@ have removed all control parameters which refer to the termination of the
 algorithm and where our terminators allow to obtain the same behavior.
 }
 
+\section{Progress Bars}{
+
+\verb{$optimize()} supports progress bars via the package \CRANpkg{progressr}
+combined with a \link{Terminator}. Simply wrap the function in
+\code{progressr::with_progress()} to enable them. We recommend to use package
+\CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
+}
+
 \examples{
 if(requireNamespace("GenSA")) {
 library(paradox)

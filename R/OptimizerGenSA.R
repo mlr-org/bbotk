@@ -22,6 +22,8 @@
 #' For the meaning of the control parameters, see [GenSA::GenSA()]. Note that we
 #' have removed all control parameters which refer to the termination of the
 #' algorithm and where our terminators allow to obtain the same behavior.
+#' 
+#' @template section_progress_bars
 #'
 #' @source
 #' `r format_bib("tsallis_1996", "xiang_2013")`

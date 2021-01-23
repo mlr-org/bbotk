@@ -38,6 +38,14 @@ subclasses. The x and function value tolerance termination conditions
 defaults. To deactivate these conditions, set them to \code{-1}.
 }
 
+\section{Progress Bars}{
+
+\verb{$optimize()} supports progress bars via the package \CRANpkg{progressr}
+combined with a \link{Terminator}. Simply wrap the function in
+\code{progressr::with_progress()} to enable them. We recommend to use package
+\CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
+}
+
 \examples{
 \donttest{
 if(requireNamespace("nloptr")) {
