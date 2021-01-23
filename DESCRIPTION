@@ -45,7 +45,7 @@ Imports:
     lgr,
     methods,
     mlr3misc (>= 0.7.0),
-    paradox (>= 0.6.0-9000),
+    paradox (>= 0.7.0),
     R6
 Suggests:
     adagio,
@@ -55,8 +55,6 @@ Suggests:
     progressr,
     rmarkdown,
     testthat
-Remotes:
-    mlr-org/paradox
 VignetteBuilder:
     knitr
 Encoding: UTF-8
