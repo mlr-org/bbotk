@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 0.2.2.9000
+Version: 0.3.0
 Authors@R:
     c(person(given = "Marc",
              family = "Becker",
@@ -31,9 +31,9 @@ Authors@R:
              role = "ctb",
              email = "olafm@statistik.tu-dortmund.de"))
 Description: Provides a common framework for optimization of
-    black-box functions for other packages, e.g. 'mlr3tuning' or 'mlr3fselect'.
-    It offers various optimization methods e.g. grid search, random search and
-    generalized simulated annealing.
+    black-box functions for other packages, e.g. 'mlr3tuning' or
+    'mlr3fselect'.  It offers various optimization methods e.g. grid
+    search, random search and generalized simulated annealing.
 License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
@@ -57,9 +57,9 @@ Suggests:
     testthat
 VignetteBuilder:
     knitr
-Encoding: UTF-8
 Config/testthat/edition: 3
 Config/testthat/parallel: false
+Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
