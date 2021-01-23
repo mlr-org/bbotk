@@ -1,5 +1,3 @@
-context("Archive")
-
 test_that("Archive", {
   a = Archive$new(PS_2D, FUN_2D_CODOMAIN)
   expect_output(print(a), "Archive")

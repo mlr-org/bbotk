@@ -1,5 +1,3 @@
-context("TerminatorStagnation")
-
 test_that("TerminatorStagnation works", {
   terminator = TerminatorStagnation$new()
   terminator$param_set$values$iters = 10

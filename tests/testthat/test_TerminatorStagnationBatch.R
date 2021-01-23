@@ -1,5 +1,3 @@
-context("TerminatorStagnationBatch")
-
 test_that("TerminatorStagnationBatch works with single objective and n = 1", {
   terminator = TerminatorStagnationBatch$new()
   terminator$param_set$values$n = 1

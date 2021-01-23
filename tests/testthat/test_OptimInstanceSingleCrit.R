@@ -1,5 +1,3 @@
-context("OptimInstanceSingleCrit")
-
 test_that("OptimInstanceSingleCrit", {
   inst = MAKE_INST_2D(20L)
   expect_r6(inst$archive, "Archive")

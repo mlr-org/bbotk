@@ -11,6 +11,7 @@
 #' @template param_search_space
 #' @template param_xdt
 #' @template param_ydt
+#' @template param_store_x_domain
 #' @export
 ArchiveBest = R6Class("ArchiveBest",
   inherit = Archive,
@@ -21,8 +22,7 @@ ArchiveBest = R6Class("ArchiveBest",
     #'
     #' @param check_values (`logical(1)`)\cr
     #' ignored.
-    initialize = function(search_space, codomain, check_values = FALSE,
-      store_x_domain = FALSE) {
+    initialize = function(search_space, codomain, check_values = FALSE, store_x_domain = FALSE) {
       super$initialize(search_space, codomain, check_values = check_values,
         store_x_domain)
       private$.max_to_min = mult_max_to_min(self$codomain)

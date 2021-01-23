@@ -1,5 +1,3 @@
-context("TerminatorClockTime")
-
 test_that("TerminatorClockTime works", {
   terminator = TerminatorClockTime$new()
   now = Sys.time()

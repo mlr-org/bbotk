@@ -1,5 +1,3 @@
-context("Objective")
-
 test_that("Objective works", {
   ObjectiveTestEval = R6Class("ObjectiveTestEval",
     inherit = Objective,

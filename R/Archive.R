@@ -8,6 +8,7 @@
 #' @template param_search_space
 #' @template param_xdt
 #' @template param_ydt
+#' @template param_store_x_domain
 #' @export
 Archive = R6Class("Archive",
   public = list(
@@ -20,19 +21,22 @@ Archive = R6Class("Archive",
     #' Codomain of objective function.
     codomain = NULL,
 
-    #' @field start_time ([POSIXct]).
+    #' @field start_time ([POSIXct])\cr
+    #' Time stamp of when the optimization started. The time is set by the
+    #' [Optimizer].
     start_time = NULL,
 
-    #' @field check_values (`logical(1)`)
+    #' @field check_values (`logical(1)`)\cr
+    #' Determines if points and results are checked for validity.
     check_values = NULL,
 
     #' @field data ([data.table::data.table])\cr
     #' Contains all performed [Objective] function calls.
     data = NULL,
 
-    #' @field store_x_domain (`logical(1)`)
-    #' Determines if x values, should be stored in `$data$x_domain` as list items. The trafo will be applied if defined in `search_space`.
-    #' Changing this value after evals have been added can lead to unexpected behavior.
+    #' @field store_x_domain (`logical(1)`)\cr
+    #' Determines if x values, should be stored in `$data$x_domain` as list
+    #' items. The trafo will be applied if defined in `search_space`.
     store_x_domain = NULL,
 
     #' @description
@@ -148,11 +152,11 @@ Archive = R6Class("Archive",
       }
     },
 
-    #' @field cols_x (`character()`).
+    #' @field cols_x (`character()`)\cr
     #' Column names of search space parameters.
     cols_x = function() self$search_space$ids(),
 
-    #' @field cols_y (`character()`).
+    #' @field cols_y (`character()`)\cr
     #' Column names of codomain parameters.
     cols_y = function() self$codomain$ids()
   ),

@@ -1,5 +1,3 @@
-context("TerminatorRunTime")
-
 test_that("TerminatorRunTime works", {
   skip_on_cran()
 

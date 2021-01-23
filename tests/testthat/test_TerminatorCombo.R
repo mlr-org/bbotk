@@ -1,5 +1,3 @@
-context("TerminatorCombo")
-
 test_that("TerminatorCombo works", {
   terminators = trms(c("evals", "evals"))
   terminators[[1]]$param_set$values$n_evals = 3L

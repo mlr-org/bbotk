@@ -68,8 +68,7 @@ optimize_default = function(inst, self, private) {
   }, terminated_error = function(cond) {
   })
   private$.assign_result(inst)
-  lg$info("Finished optimizing after %i evaluation(s)",
-    inst$archive$n_evals)
+  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
   lg$info("Result:")
   lg$info(capture.output(print(
     inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))

@@ -1,5 +1,3 @@
-context("TerminatorNone")
-
 test_that("TerminatorNone works", {
   terminators = trms(c("evals", "none"))
   terminators[[1]]$param_set$values$n_evals = 10L

@@ -1,5 +1,3 @@
-context("TerminatorPerfReached")
-
 test_that("TerminatorPerfReached works", {
   terminator = TerminatorPerfReached$new()
   terminator$param_set$values$level = 0.2

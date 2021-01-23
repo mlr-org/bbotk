@@ -1,5 +1,3 @@
-context("TerminatorEvals")
-
 test_that("TerminatorEvals works", {
   inst = MAKE_INST_2D(7L)
   expect_output(print(inst$terminator), "TerminatorEvals")

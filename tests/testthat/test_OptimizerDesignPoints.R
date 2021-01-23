@@ -1,5 +1,3 @@
-context("OptimizerDesignPoints")
-
 test_that("OptimizerDesignPoints", {
   design = data.table(x = c(-1, 0, 1))
   z = test_optimizer("design_points", design = design, n_dim = 1, term_evals = 10L, real_evals = 3)

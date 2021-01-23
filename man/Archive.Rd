@@ -16,16 +16,19 @@ Search space of objective.}
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Codomain of objective function.}
 
-\item{\code{start_time}}{(\link{POSIXct}).}
+\item{\code{start_time}}{(\link{POSIXct})\cr
+Time stamp of when the optimization started. The time is set by the
+\link{Optimizer}.}
 
-\item{\code{check_values}}{(\code{logical(1)})}
+\item{\code{check_values}}{(\code{logical(1)})\cr
+Determines if points and results are checked for validity.}
 
 \item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Contains all performed \link{Objective} function calls.}
 
-\item{\code{store_x_domain}}{(\code{logical(1)})
-Determines if x values, should be stored in \verb{$data$x_domain} as list items. The trafo will be applied if defined in \code{search_space}.
-Changing this value after evals have been added can lead to unexpected behavior.}
+\item{\code{store_x_domain}}{(\code{logical(1)})\cr
+Determines if x values, should be stored in \verb{$data$x_domain} as list
+items. The trafo will be applied if defined in \code{search_space}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -38,10 +41,10 @@ Number of evaluations stored in the archive.}
 \item{\code{n_batch}}{(\code{integer(1)})\cr
 Number of batches stored in the archive.}
 
-\item{\code{cols_x}}{(\code{character()}).
+\item{\code{cols_x}}{(\code{character()})\cr
 Column names of search space parameters.}
 
-\item{\code{cols_y}}{(\code{character()}).
+\item{\code{cols_y}}{(\code{character()})\cr
 Column names of codomain parameters.}
 }
 \if{html}{\out{</div>}}
@@ -83,6 +86,10 @@ be minimized or maximized.  The default is to minimize each component.}
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
+
+\item{\code{store_x_domain}}{(\code{logical(1)})\cr
+Determines if x values, should be stored in \verb{$data$x_domain} as list
+items. The trafo will be applied if defined in \code{search_space}.}
 }
 \if{html}{\out{</div>}}
 }

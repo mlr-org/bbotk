@@ -1,6 +1,3 @@
-context("OptimInstanceMultiCrit")
-
-
 test_that("OptimInstanceMultiCrit", {
   inst = MAKE_INST_2D_2D(20L)
   expect_output(print(inst), "OptimInstanceMultiCrit")

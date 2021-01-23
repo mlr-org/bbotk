@@ -15,9 +15,11 @@
 #'                               domain = domain,
 #'                               codomain = codomain)
 #' terminator = trm("evals", n_evals = 10)
-#' instance = OptimInstanceSingleCrit$new(objective = objective,
-#'                              search_space = search_space,
-#'                              terminator = terminator)
+#' instance = OptimInstanceSingleCrit$new(
+#'  objective = objective,
+#'  search_space = search_space,
+#'  terminator = terminator)
+#'
 #'
 #' optimizer = opt("<%= id %>")
 #'

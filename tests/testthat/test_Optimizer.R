@@ -1,5 +1,3 @@
-context("Optimizer")
-
 test_that("Optimizer assertions work", {
   optimizer = MAKE_OPT()
   terminator = trm("evals")

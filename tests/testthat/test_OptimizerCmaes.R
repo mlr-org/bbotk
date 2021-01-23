@@ -1,6 +1,6 @@
-context("OptimizerCmaes")
-
 test_that("OptimizerCmaes", {
+  skip_if_not_installed("adagio")
+
   z = test_optimizer("cmaes", n_dim = 1, term_evals = 2L)
   expect_class(z$optimizer, "OptimizerCmaes")
   expect_output(print(z$optimizer), "OptimizerCmaes")

@@ -36,8 +36,8 @@
 #' @export
 #' @examples
 #' \donttest{
+#' if(requireNamespace("nloptr")) {
 #' library(paradox)
-#' library(data.table)
 #'
 #' domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
 #'
@@ -55,9 +55,11 @@
 #'
 #' # We use the internal termination criterion xtol_rel
 #' terminator = trm("none")
-#' instance = OptimInstanceSingleCrit$new(objective = objective,
-#'   search_space = search_space,
-#'   terminator = terminator)
+#' instance = OptimInstanceSingleCrit$new(
+#'  objective = objective,
+#'  search_space = search_space,
+#'  terminator = terminator)
+#'
 #'
 #' optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA")
 #'
@@ -69,6 +71,7 @@
 #'
 #' # Allows access of data.table of full path of all evaluations
 #' as.data.table(instance$archive)
+#' }
 #' }
 OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
   public = list(

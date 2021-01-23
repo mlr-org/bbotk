@@ -1,5 +1,3 @@
-context("search_start")
-
 test_that("search_start helper works", {
   ps = ParamSet$new(list(
     ParamDbl$new("x1", lower = -1, upper = 1),

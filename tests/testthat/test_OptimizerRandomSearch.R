@@ -1,5 +1,3 @@
-context("OptimizerRandomSearch")
-
 test_that("OptimizerRandomSearch", {
   z = test_optimizer("random_search", n_dim = 1, term_evals = 10L)
   expect_class(z$optimizer, "OptimizerRandomSearch")
