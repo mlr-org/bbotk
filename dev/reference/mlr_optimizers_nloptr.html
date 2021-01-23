@@ -223,8 +223,8 @@ defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"nloptr"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com'>paradox</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://Rdatatable.gitlab.io/data.table'>data.table</a></span><span class='op'>)</span>
 
 <span class='va'>domain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -242,38 +242,36 @@ defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
 
 <span class='co'># We use the internal termination criterion xtol_rel</span>
 <span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"none"</span><span class='op'>)</span>
-<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>objective <span class='op'>=</span> <span class='va'>objective</span>,
-  search_space <span class='op'>=</span> <span class='va'>search_space</span>,
-  terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+ objective <span class='op'>=</span> <span class='va'>objective</span>,
+ search_space <span class='op'>=</span> <span class='va'>search_space</span>,
+ terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+
 
 <span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"nloptr"</span>, algorithm <span class='op'>=</span> <span class='st'>"NLOPT_LN_BOBYQA"</span><span class='op'>)</span>
 
 <span class='co'># Modifies the instance by reference</span>
 <span class='va'>optimizer</span><span class='op'>$</span><span class='fu'>optimize</span><span class='op'>(</span><span class='va'>instance</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                x  x_domain            y
-#&gt; 1: -2.321947e-22 &lt;list[1]&gt; 5.391439e-44</div><div class='input'>
+
 <span class='co'># Returns best scoring evaluation</span>
 <span class='va'>instance</span><span class='op'>$</span><span class='va'>result</span>
-</div><div class='output co'>#&gt;                x  x_domain            y
-#&gt; 1: -2.321947e-22 &lt;list[1]&gt; 5.391439e-44</div><div class='input'>
+
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
 <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                 x            y           timestamp batch_nr    x_domain_x
-#&gt;  1:  8.971532e-01 8.048838e-01 2021-01-23 12:22:43        1  8.971532e-01
-#&gt;  2:  8.971532e-01 8.048838e-01 2021-01-23 12:22:43        2  8.971532e-01
-#&gt;  3:  8.971532e-01 8.048838e-01 2021-01-23 12:22:43        3  8.971532e-01
-#&gt;  4:  9.742883e-01 9.492377e-01 2021-01-23 12:22:43        4  9.742883e-01
-#&gt;  5:  8.200180e-01 6.724295e-01 2021-01-23 12:22:43        5  8.200180e-01
-#&gt;  6:  7.428829e-01 5.518750e-01 2021-01-23 12:22:43        6  7.428829e-01
-#&gt;  7:  5.886126e-01 3.464648e-01 2021-01-23 12:22:43        7  5.886126e-01
-#&gt;  8:  2.800721e-01 7.844036e-02 2021-01-23 12:22:43        8  2.800721e-01
-#&gt;  9: -1.110223e-16 1.232595e-32 2021-01-23 12:22:43        9 -1.110223e-16
-#&gt; 10: -7.713514e-02 5.949829e-03 2021-01-23 12:22:43       10 -7.713514e-02
-#&gt; 11:  7.713514e-03 5.949829e-05 2021-01-23 12:22:43       11  7.713514e-03
-#&gt; 12: -7.713514e-04 5.949829e-07 2021-01-23 12:22:43       12 -7.713514e-04
-#&gt; 13:  7.713514e-05 5.949829e-09 2021-01-23 12:22:43       13  7.713514e-05
-#&gt; 14: -7.713514e-05 5.949829e-09 2021-01-23 12:22:43       14 -7.713514e-05
-#&gt; 15: -2.321947e-22 5.391439e-44 2021-01-23 12:22:43       15 -2.321947e-22</div><div class='input'><span class='co'># }</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;                 x            y           timestamp batch_nr    x_domain_x
+#&gt;  1:  6.503988e-01 4.230187e-01 2021-01-23 13:08:02        1  6.503988e-01
+#&gt;  2:  6.503988e-01 4.230187e-01 2021-01-23 13:08:02        2  6.503988e-01
+#&gt;  3:  6.503988e-01 4.230187e-01 2021-01-23 13:08:02        3  6.503988e-01
+#&gt;  4:  9.125997e-01 8.328382e-01 2021-01-23 13:08:02        4  9.125997e-01
+#&gt;  5:  3.881980e-01 1.506977e-01 2021-01-23 13:08:02        5  3.881980e-01
+#&gt;  6:  1.259971e-01 1.587527e-02 2021-01-23 13:08:02        6  1.259971e-01
+#&gt;  7:  0.000000e+00 0.000000e+00 2021-01-23 13:08:02        7  0.000000e+00
+#&gt;  8: -2.622009e-02 6.874930e-04 2021-01-23 13:08:02        8 -2.622009e-02
+#&gt;  9:  2.622009e-03 6.874930e-06 2021-01-23 13:08:02        9  2.622009e-03
+#&gt; 10: -2.622009e-04 6.874930e-08 2021-01-23 13:08:02       10 -2.622009e-04
+#&gt; 11:  2.622009e-05 6.874930e-10 2021-01-23 13:08:02       11  2.622009e-05
+#&gt; 12:  0.000000e+00 0.000000e+00 2021-01-23 13:08:02       12  0.000000e+00</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

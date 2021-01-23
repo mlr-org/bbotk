@@ -162,16 +162,19 @@ Search space of objective.</p></dd>
 <dt><code>codomain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
 Codomain of objective function.</p></dd>
 
-<dt><code>start_time</code></dt><dd><p>(<a href='https://rdrr.io/r/base/DateTimeClasses.html'>POSIXct</a>).</p></dd>
+<dt><code>start_time</code></dt><dd><p>(<a href='https://rdrr.io/r/base/DateTimeClasses.html'>POSIXct</a>)<br />
+Time stamp of when the optimization started. The time is set by the
+<a href='Optimizer.html'>Optimizer</a>.</p></dd>
 
-<dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</p></dd>
+<dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Determines if points and results are checked for validity.</p></dd>
 
 <dt><code>data</code></dt><dd><p>(<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>)<br />
 Contains all performed <a href='Objective.html'>Objective</a> function calls.</p></dd>
 
-<dt><code>store_x_domain</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)
-Determines if x values, should be stored in <code>$data$x_domain</code> as list items. The trafo will be applied if defined in <code>search_space</code>.
-Changing this value after evals have been added can lead to unexpected behavior.</p></dd>
+<dt><code>store_x_domain</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Determines if x values, should be stored in <code>$data$x_domain</code> as list
+items. The trafo will be applied if defined in <code>search_space</code>.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
@@ -183,10 +186,10 @@ Number of evaluations stored in the archive.</p></dd>
 <dt><code>n_batch</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
 Number of batches stored in the archive.</p></dd>
 
-<dt><code>cols_x</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).
+<dt><code>cols_x</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
 Column names of search space parameters.</p></dd>
 
-<dt><code>cols_y</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).
+<dt><code>cols_y</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
 Column names of codomain parameters.</p></dd>
 
 </dl><p></div></p>
@@ -224,6 +227,10 @@ be minimized or maximized.  The default is to minimize each component.</p></dd>
 <dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.</p></dd>
+
+<dt><code>store_x_domain</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+Determines if x values, should be stored in <code>$data$x_domain</code> as list
+items. The trafo will be applied if defined in <code>search_space</code>.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
