@@ -83,7 +83,7 @@ nloptr::nloptr() from package nloptr." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2.9000</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.0.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -183,6 +183,14 @@ subclasses. The x and function value tolerance termination conditions
 (<code>xtol_rel = 10^-4</code>, <code>xtol_abs = rep(0.0, length(x0))</code>, <code>ftol_rel = 0.0</code> and
 <code>ftol_abs = 0.0</code>) are still available and implemented with their package
 defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
+    <h2 class="hasAnchor" id="progress-bars"><a class="anchor" href="#progress-bars"></a>Progress Bars</h2>
+
+    
+
+<p><code>$optimize()</code> supports progress bars via the package <a href='https://CRAN.R-project.org/package=progressr'><span class="pkg">progressr</span></a>
+combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the function in
+<code><a href='https://rdrr.io/pkg/progressr/man/with_progress.html'>progressr::with_progress()</a></code> to enable them. We recommend to use package
+<a href='https://CRAN.R-project.org/package=progress'><span class="pkg">progress</span></a> as backend; enable with <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers("progress")</a></code>.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
     <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerNLoptr</code></p>
@@ -260,18 +268,18 @@ defaults. To deactivate these conditions, set them to <code>-1</code>.</p>
 <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;                 x            y           timestamp batch_nr    x_domain_x
-#&gt;  1:  6.503988e-01 4.230187e-01 2021-01-23 13:08:02        1  6.503988e-01
-#&gt;  2:  6.503988e-01 4.230187e-01 2021-01-23 13:08:02        2  6.503988e-01
-#&gt;  3:  6.503988e-01 4.230187e-01 2021-01-23 13:08:02        3  6.503988e-01
-#&gt;  4:  9.125997e-01 8.328382e-01 2021-01-23 13:08:02        4  9.125997e-01
-#&gt;  5:  3.881980e-01 1.506977e-01 2021-01-23 13:08:02        5  3.881980e-01
-#&gt;  6:  1.259971e-01 1.587527e-02 2021-01-23 13:08:02        6  1.259971e-01
-#&gt;  7:  0.000000e+00 0.000000e+00 2021-01-23 13:08:02        7  0.000000e+00
-#&gt;  8: -2.622009e-02 6.874930e-04 2021-01-23 13:08:02        8 -2.622009e-02
-#&gt;  9:  2.622009e-03 6.874930e-06 2021-01-23 13:08:02        9  2.622009e-03
-#&gt; 10: -2.622009e-04 6.874930e-08 2021-01-23 13:08:02       10 -2.622009e-04
-#&gt; 11:  2.622009e-05 6.874930e-10 2021-01-23 13:08:02       11  2.622009e-05
-#&gt; 12:  0.000000e+00 0.000000e+00 2021-01-23 13:08:02       12  0.000000e+00</div><div class='input'><span class='co'># }</span>
+#&gt;  1:  6.503988e-01 4.230187e-01 2021-01-24 16:54:06        1  6.503988e-01
+#&gt;  2:  6.503988e-01 4.230187e-01 2021-01-24 16:54:06        2  6.503988e-01
+#&gt;  3:  6.503988e-01 4.230187e-01 2021-01-24 16:54:06        3  6.503988e-01
+#&gt;  4:  9.125997e-01 8.328382e-01 2021-01-24 16:54:06        4  9.125997e-01
+#&gt;  5:  3.881980e-01 1.506977e-01 2021-01-24 16:54:06        5  3.881980e-01
+#&gt;  6:  1.259971e-01 1.587527e-02 2021-01-24 16:54:06        6  1.259971e-01
+#&gt;  7:  0.000000e+00 0.000000e+00 2021-01-24 16:54:06        7  0.000000e+00
+#&gt;  8: -2.622009e-02 6.874930e-04 2021-01-24 16:54:06        8 -2.622009e-02
+#&gt;  9:  2.622009e-03 6.874930e-06 2021-01-24 16:54:06        9  2.622009e-03
+#&gt; 10: -2.622009e-04 6.874930e-08 2021-01-24 16:54:06       10 -2.622009e-04
+#&gt; 11:  2.622009e-05 6.874930e-10 2021-01-24 16:54:06       11  2.622009e-05
+#&gt; 12:  0.000000e+00 0.000000e+00 2021-01-24 16:54:06       12  0.000000e+00</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -88,7 +88,7 @@ of termination criteria." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2.9000</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.0.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -184,6 +184,14 @@ Design points to try in search, one per row.</p></dd>
 
 </dl>
 
+    <h2 class="hasAnchor" id="progress-bars"><a class="anchor" href="#progress-bars"></a>Progress Bars</h2>
+
+    
+
+<p><code>$optimize()</code> supports progress bars via the package <a href='https://CRAN.R-project.org/package=progressr'><span class="pkg">progressr</span></a>
+combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the function in
+<code><a href='https://rdrr.io/pkg/progressr/man/with_progress.html'>progressr::with_progress()</a></code> to enable them. We recommend to use package
+<a href='https://CRAN.R-project.org/package=progress'><span class="pkg">progress</span></a> as backend; enable with <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers("progress")</a></code>.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
     <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerDesignPoints</code></p>
@@ -261,8 +269,8 @@ Design points to try in search, one per row.</p></dd>
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
 <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    x y           timestamp batch_nr x_domain_x
-#&gt; 1: 0 0 2021-01-23 13:08:01        1          0
-#&gt; 2: 1 1 2021-01-23 13:08:01        2          1</div></pre>
+#&gt; 1: 0 0 2021-01-24 16:54:05        1          0
+#&gt; 2: 1 1 2021-01-24 16:54:05        2          1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

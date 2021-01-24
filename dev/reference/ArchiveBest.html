@@ -86,7 +86,7 @@ TerminatorEvals." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.2.2.9000</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.0.9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -204,9 +204,11 @@ Number of batches stored in the archive.</p></dd>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>search_space</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
-Specifies the search space for the <a href='Optimizer.html'>Optimizer</a>.
-The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a> describes either a subset of the <code>domain</code> of the <a href='Objective.html'>Objective</a> or it describes a set of parameters together with a <code>trafo</code> function that transforms values from the search space to values of the domain.
-Depending on the context, this value defaults to the domain of the objective.</p></dd>
+Specifies the search space for the <a href='Optimizer.html'>Optimizer</a>. The <a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>
+describes either a subset of the <code>domain</code> of the <a href='Objective.html'>Objective</a> or it describes
+a set of parameters together with a <code>trafo</code> function that transforms values
+from the search space to values of the domain. Depending on the context, this
+value defaults to the domain of the objective.</p></dd>
 
 <dt><code>codomain</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
 Specifies codomain of function.
