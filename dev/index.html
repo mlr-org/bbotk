@@ -106,7 +106,7 @@
 <a href="#bbotk---black-box-optimization-toolkit" class="anchor"></a>bbotk - Black-Box Optimization Toolkit</h1></div>
 <p>Package website: <a href="https://bbotk.mlr-org.com/">release</a></p>
 <!-- badges: start -->
-<p><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=master" alt="tic"></a> <a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a> <a href="https://www.codefactor.io/repository/github/mlr-org/bbotk"><img src="https://www.codefactor.io/repository/github/mlr-org/bbotk/badge" alt="CodeFactor"></a> <!-- badges: end --></p>
+<p><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=main" alt="tic"></a> <a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a> <a href="https://www.codefactor.io/repository/github/mlr-org/bbotk"><img src="https://www.codefactor.io/repository/github/mlr-org/bbotk/badge" alt="CodeFactor"></a> <!-- badges: end --></p>
 <p>This package provides a common framework for optimization including</p>
 <ul>
 <li>
@@ -143,7 +143,7 @@
 
 <span class="co"># Set domain</span>
 <span class="va">domain</span> <span class="op">=</span> <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamSet.html">ParamSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamDbl.html">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x1"</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, 
+  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamDbl.html">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x1"</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,
   <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamDbl.html">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x2"</span>, <span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="op">)</span><span class="op">)</span>
 
@@ -156,7 +156,7 @@
 <span class="va">obfun</span> <span class="op">=</span> <span class="va"><a href="reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
   fun <span class="op">=</span> <span class="va">fun</span>,
   domain <span class="op">=</span> <span class="va">domain</span>,
-  codomain <span class="op">=</span> <span class="va">codomain</span>, 
+  codomain <span class="op">=</span> <span class="va">codomain</span>,
   properties <span class="op">=</span> <span class="st">"deterministic"</span>
 <span class="op">)</span>
 
@@ -165,7 +165,7 @@
 
 <span class="co"># Create optimization instance</span>
 <span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="reference/OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  objective <span class="op">=</span> <span class="va">obfun</span>, 
+  objective <span class="op">=</span> <span class="va">obfun</span>,
   terminator <span class="op">=</span> <span class="va">terminator</span>
 <span class="op">)</span>
 
