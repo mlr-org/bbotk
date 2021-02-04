@@ -4,6 +4,12 @@
 #' Container around a [data.table::data.table] which stores all performed
 #' function calls of the Objective.
 #'
+#' @section S3 Methods:
+#' * `as.data.table(archive)`\cr
+#'   [Archive] -> [data.table::data.table()]\cr
+#'   Returns a tabular view of all performed function calls of the
+#'   Objective. The `x_domain` column is unnested to separate columns.
+#'
 #' @template param_codomain
 #' @template param_search_space
 #' @template param_xdt

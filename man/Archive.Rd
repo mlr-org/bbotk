@@ -7,6 +7,16 @@
 Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
 function calls of the Objective.
 }
+\section{S3 Methods}{
+
+\itemize{
+\item \code{as.data.table(archive)}\cr
+\link{Archive} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr
+Returns a tabular view of all performed function calls of the
+Objective. The \code{x_domain} column is unnested to separate columns.
+}
+}
+
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
