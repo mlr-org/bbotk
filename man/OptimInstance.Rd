@@ -61,6 +61,7 @@ Optimal outcome.}
 \item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
 \item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
 \item \href{#method-objective_function}{\code{OptimInstance$objective_function()}}
+\item \href{#method-clear}{\code{OptimInstance$clear()}}
 \item \href{#method-clone}{\code{OptimInstance$clone()}}
 }
 }
@@ -205,6 +206,16 @@ Untransformed points.}
 \subsection{Returns}{
 Objective value as \code{numeric(1)}, negated for maximization problems.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-clear}{}}}
+\subsection{Method \code{clear()}}{
+Reset terminator and lear all evaluation results from archive and results.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$clear()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

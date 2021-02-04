@@ -185,6 +185,15 @@ OptimInstance = R6Class("OptimInstance",
     #' @return Objective value as `numeric(1)`, negated for maximization problems.
     objective_function = function(x) {
       private$.objective_function(x, self, self$objective_multiplicator)
+    },
+
+    #' @description
+    #' Reset terminator and lear all evaluation results from archive and results.
+    clear = function() {
+      self$archive$clear()
+      self$is_terminated = FALSE
+      private$.result = NULL
+      self$progressor = Progressor$new()
     }
   ),
 

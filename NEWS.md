@@ -1,3 +1,7 @@
+# bbotk 0.3.0.9000
+
+* `OptimInstance$clear()` methods resets the instance.
+
 # bbotk 0.3.0
 
 * Improved `TerminatorPerfRearched` documentation.
