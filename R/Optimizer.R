@@ -88,9 +88,9 @@ Optimizer = R6Class("Optimizer",
 
     .assign_result = function(inst) {
       assert_r6(inst, "OptimInstance")
-      assign_result_default(inst),
-      
-    .param_set = NULL  
-    }
+      assign_result_default(inst)
+    },
+
+    .param_set = NULL
   )
 )
