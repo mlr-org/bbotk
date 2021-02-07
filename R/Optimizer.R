@@ -16,9 +16,6 @@
 Optimizer = R6Class("Optimizer",
   public = list(
 
-    #' @field param_set ([paradox::ParamSet]).
-    param_set = NULL,
-
     #' @field param_classes (`character()`).
     param_classes = NULL,
 
@@ -37,7 +34,7 @@ Optimizer = R6Class("Optimizer",
     #' @param packages (`character()`).
     initialize = function(param_set, param_classes, properties,
       packages = character()) {
-      self$param_set = assert_param_set(param_set)
+      private$.param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
       # has to have at least multi-crit or single-crit property
@@ -77,13 +74,23 @@ Optimizer = R6Class("Optimizer",
       optimize_default(inst, self, private)
     }
   ),
-
+  active = list(
+    #' @field param_set ([paradox::ParamSet]).
+    param_set = function(rhs) {
+      if (!missing(rhs) && !identical(rhs, private$.param_set)) {
+        stop("param_set is read-only.")
+      }
+      private$.param_set
+    },
+  ) 
   private = list(
     .optimize = function(inst) stop("abstract"),
 
     .assign_result = function(inst) {
       assert_r6(inst, "OptimInstance")
-      assign_result_default(inst)
+      assign_result_default(inst),
+      
+    .param_set = NULL  
     }
   )
 )
