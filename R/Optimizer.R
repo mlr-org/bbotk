@@ -82,7 +82,7 @@ Optimizer = R6Class("Optimizer",
       }
       private$.param_set
     },
-  ) 
+  ),
   private = list(
     .optimize = function(inst) stop("abstract"),
 
