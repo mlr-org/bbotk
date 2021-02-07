@@ -81,7 +81,7 @@ Optimizer = R6Class("Optimizer",
         stop("param_set is read-only.")
       }
       private$.param_set
-    },
+    }
   ),
   private = list(
     .optimize = function(inst) stop("abstract"),
