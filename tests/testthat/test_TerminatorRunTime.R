@@ -26,9 +26,5 @@ test_that("max and current works", {
 test_that("TerminatorRunTime works with empty archive" ,{
   terminator = TerminatorRunTime$new()
   archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
-  expect_error(terminator$is_terminated(archive), 
-    regexp = "`archive$start_time` must be set.", 
-    fixed = TRUE)
-  archive$start_time = Sys.time()
   expect_false(terminator$is_terminated(archive))
 })
