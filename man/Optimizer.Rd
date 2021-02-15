@@ -23,13 +23,18 @@ combined with a \link{Terminator}. Simply wrap the function in
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
-
 \item{\code{param_classes}}{(\code{character()}).}
 
 \item{\code{properties}}{(\code{character()}).}
 
 \item{\code{packages}}{(\code{character()}).}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 }
 \if{html}{\out{</div>}}
 }

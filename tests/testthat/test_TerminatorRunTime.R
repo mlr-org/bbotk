@@ -22,3 +22,13 @@ test_that("max and current works", {
   expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 1), tolerance = 1)
   expect_equal(inst$terminator$remaining_time(inst$archive), 2, tolerance = 1)
 })
+
+test_that("TerminatorRunTime works with empty archive" ,{
+  terminator = TerminatorRunTime$new()
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  expect_error(terminator$is_terminated(archive), 
+    regexp = "`archive$start_time` must be set.", 
+    fixed = TRUE)
+  archive$start_time = Sys.time()
+  expect_false(terminator$is_terminated(archive))
+})

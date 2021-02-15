@@ -21,3 +21,10 @@ test_that("status method works", {
   expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 1), tolerance = 1)
   expect_equal(inst$terminator$remaining_time(inst$archive), 2, tolerance = 1)
 })
+
+test_that("TerminatorClockTime works with empty archive" ,{
+  terminator = TerminatorClockTime$new()
+  terminator$param_set$values$stop_time = Sys.time() + 2L
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  expect_false(terminator$is_terminated(archive))
+})

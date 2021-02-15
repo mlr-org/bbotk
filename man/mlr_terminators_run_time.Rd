@@ -8,6 +8,10 @@
 Class to terminate the optimization after the optimization process took a
 number of seconds on the clock.
 }
+\note{
+This terminator only works if \code{archive$start_time} is set. This is usually
+done by the \link{Optimizer}.
+}
 \section{Dictionary}{
 
 This \link{Terminator} can be instantiated via the

@@ -34,3 +34,9 @@ test_that("TerminatorStagnationBatch in OptimInstanceMultiCrit throws an error",
   terminator = TerminatorStagnationBatch$new()
   expect_error(MAKE_INST_2D_2D(terminator))
 })
+
+test_that("TerminatorStagnationBatch works with empty archive" ,{
+  terminator = TerminatorStagnationBatch$new()
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  expect_false(terminator$is_terminated(archive))
+})

@@ -15,6 +15,10 @@
 #' \item{`secs`}{`numeric(1)`\cr
 #' Maximum allowed time, in seconds, default is 100.}
 #' }
+#' 
+#' @note
+#' This terminator only works if `archive$start_time` is set. This is usually
+#' done by the [Optimizer].
 #'
 #' @family Terminator
 #' @template param_archive
@@ -40,6 +44,10 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     #' otherwise.
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+      if(is.null(archive$start_time)) {
+        stop("`archive$start_time` must be set.")
+      }
+
       d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
       return(d >= self$param_set$values$secs)
     }
