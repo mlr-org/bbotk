@@ -217,8 +217,7 @@ OptimInstance = R6Class("OptimInstance",
 
     #' @field is_terminated (`logical(1)`).
     is_terminated = function() {
-      # Terminators sometimes don't like empty archives, so check for that first.
-      self$archive$n_evals && self$terminator$is_terminated(self$archive)
+      self$terminator$is_terminated(self$archive)
     }
   ),
 
