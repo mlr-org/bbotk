@@ -226,4 +226,16 @@ test_that("check_values = TRUE with extra output works", {
     list(list(x1 = 0, x2 = 1), list(x1 = 1, x2 = 0))), nrows = 2, ncols = 2)
 })
 
+test_that("assertion on overlapping and reserved names works", {
+  expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
+    regexp = "Assertion on 'self$domain$ids()' failed: Must be disjunct from (x).",
+    fixed = TRUE)
 
+  expect_error(Objective$new(domain = ps(batch_nr = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
+    regexp = "Assertion on 'self$domain$ids()' failed: Must be disjunct from (x_domain,timestamp,batch_nr).",
+    fixed = TRUE)
+
+  expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(timestamp = p_dbl(tags = "maximize"))),
+    regexp = "Assertion on 'self$codomain$ids()' failed: Must be disjunct from (x_domain,timestamp,batch_nr).",
+    fixed = TRUE)
+})
