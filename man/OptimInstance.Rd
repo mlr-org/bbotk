@@ -24,8 +24,6 @@ user can access the results with active bindings (see below).
 
 \item{\code{terminator}}{(\link{Terminator}).}
 
-\item{\code{is_terminated}}{(\code{logical(1)}).}
-
 \item{\code{archive}}{(\link{Archive}).}
 
 \item{\code{progressor}}{(\code{progressor()})\cr
@@ -49,6 +47,8 @@ x part of the result in the \emph{search space}.}
 
 \item{\code{result_y}}{(\code{numeric()})\cr
 Optimal outcome.}
+
+\item{\code{is_terminated}}{(\code{logical(1)}).}
 }
 \if{html}{\out{</div>}}
 }

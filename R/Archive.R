@@ -132,7 +132,7 @@ Archive = R6Class("Archive",
     #' @param ... (ignored).
     print = function() {
       catf(format(self))
-      print(self$data)
+      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits=2)
     },
 
     #' @description
