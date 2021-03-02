@@ -126,6 +126,7 @@ OptimInstance = R6Class("OptimInstance",
       if (self$is_terminated) stop(terminated_error(self))
 
       assert_data_table(xdt, min.rows = 1)
+      assert_names(colnames(xdt), must.include = self$search_space$ids())
 
       lg$info("Evaluating %i configuration(s)", nrow(xdt))
 
