@@ -41,6 +41,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' otherwise.
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+      assert_r6(archive, "Archive")
       archive$n_evals >= self$param_set$values$n_evals
     }
   ),

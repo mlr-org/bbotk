@@ -46,7 +46,7 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
     #' otherwise.
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-
+      assert_r6(archive, "Archive")
       pv = self$param_set$values
       ycol = archive$cols_y
       present_batch = archive$n_batch
