@@ -56,6 +56,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+      assert_r6(archive, "Archive")
       g = if (self$param_set$values$any) any else all
       g(map_lgl(self$terminators, function(t) t$is_terminated(archive)))
     },
@@ -77,6 +78,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' the the remaining runtime is always `Inf`.
     #' @return `integer(1)`.
     remaining_time = function(archive) {
+      assert_r6(archive, "Archive")
       min_max = if(self$param_set$values$any) min else max
       min_max(map_dbl(self$terminators, function(t) t$remaining_time(archive)), na.rm = TRUE)
     },
@@ -85,6 +87,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' Returns `max_steps` and `current_steps` for each terminator.
     #' @return [data.table::data.table].
     status_long = function(archive) {
+      assert_r6(archive, "Archive")
       map_dtr(self$terminators, function(t) {
         cbind(as.data.table(as.list(t$status(archive))), unit = t$unit)
       })

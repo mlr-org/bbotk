@@ -30,6 +30,7 @@ TerminatorNone = R6Class("TerminatorNone",
     #' @param archive ([Archive]).
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+      assert_r6(archive, "Archive")
       return(FALSE)
     }
   )

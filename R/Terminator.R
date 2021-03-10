@@ -96,6 +96,7 @@ Terminator = R6Class("Terminator",
     #' time-based, the reaming runtime is `Inf`.
     #' @return `integer(1)`.
     remaining_time = function(archive) {
+      assert_r6(archive, "Archive")
       if (isTRUE(self$unit == "seconds")) {
         status = self$status(archive)
         unname(status["max_steps"] - status["current_steps"])
