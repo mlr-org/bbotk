@@ -211,7 +211,7 @@ Objective value as \code{numeric(1)}, negated for maximization problems.
 \if{html}{\out{<a id="method-clear"></a>}}
 \if{latex}{\out{\hypertarget{method-clear}{}}}
 \subsection{Method \code{clear()}}{
-Reset terminator and lear all evaluation results from archive and results.
+Reset terminator and clear all evaluation results from archive and results.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$clear()}\if{html}{\out{</div>}}
 }

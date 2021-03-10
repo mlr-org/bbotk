@@ -183,7 +183,7 @@ OptimInstance = R6Class("OptimInstance",
     },
 
     #' @description
-    #' Reset terminator and lear all evaluation results from archive and results.
+    #' Reset terminator and clear all evaluation results from archive and results.
     clear = function() {
       self$archive$clear()
       private$.result = NULL

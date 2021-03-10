@@ -27,7 +27,7 @@
 #' `Terminator` subclasses can overwrite `.status()` to support progress bars
 #' via the package \CRANpkg{progressr}. The method must return the maximum
 #' number of steps (`max_steps`) and the currently achieved number of steps
-#' (`current_steps`) as a named integer vecor.
+#' (`current_steps`) as a named integer vector.
 #'
 #' @family Terminator
 #' @template param_archive
