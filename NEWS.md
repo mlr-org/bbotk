@@ -2,7 +2,7 @@
 
 * `OptimInstance$clear()` methods resets the instance.
 * Prettier printing methods.
-* Assert overlapping and reserved names in domain and codomain
+* Assert overlapping and reserved names in domain and codomain.
 
 # bbotk 0.3.0
 
