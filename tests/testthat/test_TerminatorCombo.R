@@ -27,15 +27,15 @@ test_that("status method works", {
   Sys.sleep(1)
 
   expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 100))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 10), tolerance = 10)
-  expect_equal(inst$terminator$remaining_time(inst$archive), 9, tolerance = 1)
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 10), tolerance = 11)
+  expect_equal(inst$terminator$remaining_time(inst$archive), 9, tolerance = 3)
   expect_data_table(inst$terminator$status_long(inst$archive), nrows = 2, ncols = 3)
   expect_named(inst$terminator$status_long(inst$archive), c("max_steps", "current_steps", "unit"))
 
   Sys.sleep(1)
 
   expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 100))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 20), tolerance = 10)
-  expect_equal(inst$terminator$remaining_time(inst$archive), 8, tolerance = 1)
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 20), tolerance = 11)
+  expect_equal(inst$terminator$remaining_time(inst$archive), 8, tolerance = 3)
 })
 

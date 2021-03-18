@@ -1,4 +1,6 @@
-# bbotk 0.3.1.9000
+# bbotk 0.3.2
+
+* Internal changes.
 
 # bbotk 0.3.1
 
