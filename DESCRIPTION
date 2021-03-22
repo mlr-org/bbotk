@@ -56,7 +56,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder:
-    knitr,
+    knitr
 Remotes:
     mlr-org/paradox@param-init-delay
 Config/testthat/edition: 3
