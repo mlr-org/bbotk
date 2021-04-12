@@ -188,6 +188,7 @@ OptimInstance = R6Class("OptimInstance",
       self$archive$clear()
       private$.result = NULL
       self$progressor = Progressor$new()
+      invisible(self)
     }
   ),
 
