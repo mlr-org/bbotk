@@ -70,7 +70,7 @@ target_runner_default = function(experiment, scenario) { # nolint
     }
   }))
 
-  # change resampling instance
+  # provide experiment instance to objective
   optim_instance$objective$irace_instance = experiment$instance
 
   # add extra info to archive
