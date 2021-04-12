@@ -50,6 +50,7 @@ Imports:
 Suggests:
     adagio,
     GenSA,
+    irace,
     knitr,
     nloptr,
     progressr,
