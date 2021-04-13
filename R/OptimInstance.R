@@ -50,11 +50,12 @@ OptimInstance = R6Class("OptimInstance",
       assert_choice(keep_evals, c("all", "best"))
       self$objective = assert_r6(objective, "Objective")
 
-      self$search_space = if (is.null(search_space) && self$objective$domain$search_space()$length == 0) {
+      domain_search_space  = self$objective$domain$search_space()
+      self$search_space = if (is.null(search_space) && domain_search_space$length == 0) {
         self$objective$domain
-      } else if (is.null(search_space) && self$objective$domain$search_space()$length > 0) {
-        self$objective$domain$search_space()
-      } else if (!is.null(search_space) && self$objective$domain$search_space()$length == 0) {
+      } else if (is.null(search_space) && domain_search_space$length > 0) {
+        domain_search_space
+      } else if (!is.null(search_space) && domain_search_space$length == 0) {
         assert_param_set(search_space)
       } else {
         stop("If the domain contains TuneTokens, you cannot supply a search_space.")
