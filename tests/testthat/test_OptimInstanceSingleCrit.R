@@ -132,3 +132,60 @@ test_that("OptimInstanceSingleCrit$eval_batch() throws and error if columns are 
       regexp = "Assertion on 'colnames(xdt)' failed: Must include the elements {x1,x2}.",
       fixed = TRUE)
 })
+
+test_that("domain, search_space and TuneToken work", {
+  
+  domain = ParamSet$new(list(
+    ParamDbl$new("x1", -10, 10),
+    ParamDbl$new("x2", -5, 5)
+  ))
+
+  codomain = ParamSet$new(list(
+    ParamDbl$new("y", tags = "maximize")
+  ))
+
+  objective = Objective$new(
+    domain = domain,
+    codomain = codomain
+  )
+
+  # only domain
+  instance = OptimInstanceSingleCrit$new(
+    objective = objective,
+    terminator = trm("none")
+  )
+
+  expect_equal(domain, instance$search_space)
+
+  # search_space and domain
+  search_space = ParamSet$new(list(
+    ParamDbl$new("x1", -10, 10)
+  ))
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = objective,
+    terminator = trm("none"),
+    search_space = search_space
+  )
+
+  expect_equal(search_space, instance$search_space)
+
+  # TuneToken
+  domain$values$x1 = to_tune()
+
+  objective = Objective$new(
+    domain = domain,
+    codomain = codomain
+  )
+
+   instance = OptimInstanceSingleCrit$new(
+    objective = objective,
+    terminator = trm("none"),
+  )
+
+  expect_equal(domain$search_space(), instance$search_space)
+
+  # TuneToken and search_space
+  expect_error(OptimInstanceSingleCrit$new(objective = objective, terminator = trm("none"), search_space = search_space),
+    regexp = "If the domain contains TuneTokens, you cannot supply a search_space")
+})
