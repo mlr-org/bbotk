@@ -66,7 +66,8 @@ OptimizerIrace = R6Class("OptimizerIrace",
         ParamDbl$new("boundMax", default = 0),
         ParamInt$new("boundDigits", default = 0),
         ParamDbl$new("boundPar", default = 1),
-        ParamDbl$new("boundAsTimeout", default = 1)
+        ParamDbl$new("boundAsTimeout", default = 1),
+        ParamInt$new("parallel", default = 1)
       ))
 
       ps$values$debugLevel = 0
