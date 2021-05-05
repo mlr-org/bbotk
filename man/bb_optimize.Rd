@@ -2,58 +2,62 @@
 % Please edit documentation in R/sugar.R
 \name{bb_optimize}
 \alias{bb_optimize}
+\alias{bb_optimize.function}
+\alias{bb_optimize.Objective}
 \title{Black-Box Optimization}
 \usage{
-bb_optimize(
-  method,
-  fun = NULL,
-  objective = NULL,
-  term_evals = NULL,
-  term_time = NULL,
-  search_space = NULL,
+bb_optimize(x, method = "random_search", max_evals = 100, max_time = NULL, ...)
+
+\method{bb_optimize}{`function`}(
+  x,
+  method = "random_search",
+  max_evals = 100,
+  max_time = NULL,
   lower = NULL,
   upper = NULL,
-  codomain = NULL,
+  maximize = FALSE,
+  ...
+)
+
+\method{bb_optimize}{Objective}(
+  x,
+  method = "random_search",
+  max_evals = 100,
+  max_time = NULL,
+  search_space = NULL,
   ...
 )
 }
 \arguments{
+\item{x}{(\code{function} | \link{Objective}).}
+
 \item{method}{(\code{character(1)})\cr
 Key to retrieve optimizer from \link{mlr_optimizers} dictionary.}
 
-\item{fun}{(\code{function})\cr
-Objective function to be minimized. If the function should be maximized, a
-\code{codomain} tagged with \code{maximize} must be set. Either \code{fun} or \code{objective}
-must be given.}
-
-\item{objective}{(\link{Objective})\cr
-Objective. Either \code{fun} or \code{objective} must be given.}
-
-\item{term_evals}{(\code{integer(1)})\cr
+\item{max_evals}{(\code{integer(1)})\cr
 Number of allowed evaluations.}
 
-\item{term_time}{(\code{integer(1)})\cr
+\item{max_time}{(\code{integer(1)})\cr
 Maximum allowed time in seconds.}
 
-\item{search_space}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space. If \code{fun} is used, either \code{search_space} or \code{lower} and \code{upper}
-must be given.}
+\item{...}{(named \code{list()})\cr
+Named arguments to be set as parameters of the optimizer.
+
+If both \code{max_evals} and \code{max_time} are not given, \link{TerminatorNone} is set.
+If both are given, \link{TerminatorCombo} is created.}
 
 \item{lower}{(\code{numeric()})\cr
 Lower bounds on the parameters. If named, names are used to create the
-search space. If \code{fun} is used, either \code{search_space} or  \code{lower} and
-\code{upper} must be given.}
+domain.}
 
 \item{upper}{(\code{numeric()})\cr
-Upper bounds on the parameters. If \code{fun} is used, either \code{search_space} or
-\code{lower} and \code{upper} must be given.}
+Upper bounds on the parameters.}
 
-\item{codomain}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Optional codomain. If not given, an unbounded double parameter \code{y} is
-created.}
+\item{maximize}{(\code{logical()})\cr
+Logical vector used to create the codomain e.g. c(TRUE, FALSE) -> ps(y1 = p_dbl(tags = "maximize"), y2 = pd_dbl(tags = "minimize")).
+If named, names are used to create the codomain.}
 
-\item{...}{(named \code{list()})\cr
-Named arguments to be set as parameters of the optimizer.}
+\item{search_space}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 }
 \value{
 list of
@@ -66,60 +70,26 @@ list of
 \description{
 This function optimizes a function or \link{Objective} with a given method.
 }
-\note{
-If both \code{term_evals} and \code{term_time} are not given, \link{TerminatorNone} is set.
-If both a are given, \link{TerminatorCombo} is created.
-}
 \examples{
-library(paradox)
-
-# function and search space bounds
+# function and bounds
 fun = function(xs) {
   - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
 }
 
-bb_optimize(
-  method = "random_search",
-  fun = fun,
-  term_evals = 10,
-  lower = c(-10, -5),
-  upper = c(10, 5))
-
-# function and search space
-fun = function(xs) {
-  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
-}
-
-search_space = ps(
- x1 = p_dbl(-10, 10),
- x2 = p_dbl(-5, 5)
-)
-
-bb_optimize(
-  method = "random_search",
-  fun = fun,
-  term_evals = 10,
-  search_space = search_space)
+bb_optimize(fun, lower = c(-10, -5), upper = c(10, 5), max_evals = 10)
 
 # objective
+library(paradox)
+
 fun = function(xs) {
   c(z = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
-search_space = ps(
- x1 = p_dbl(-10, 10),
- x2 = p_dbl(-5, 5)
-)
+domain = ps(x1 = p_dbl(-10, 10), x2 = p_dbl(-5, 5))
+codomain = ps(z = p_dbl(tags = "minimize"))
+objective = ObjectiveRFun$new(fun, domain, codomain)
 
-codomain = ps(
- z = p_dbl(tags = "minimize")
-)
+bb_optimize(objective, method = "random_search", max_evals = 10)
 
-objective = ObjectiveRFun$new(fun, search_space, codomain)
-
-bb_optimize(
-  method = "random_search",
-  objective = objective,
-  term_evals = 10)
 
 }

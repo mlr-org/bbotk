@@ -67,43 +67,35 @@ opts = function(.keys, ...) {
   dictionary_sugar_mget(mlr_optimizers, .keys, ...)
 }
 
-
 #' @title Black-Box Optimization
 #'
 #' @description
 #' This function optimizes a function or [Objective] with a given method.
-#'
+#' 
+#' @param x (`function` | [Objective]).
 #' @param method (`character(1)`)\cr
 #'  Key to retrieve optimizer from [mlr_optimizers] dictionary.
-#' @param fun (`function`)\cr
-#'  Objective function to be minimized. If the function should be maximized, a
-#'  `codomain` tagged with `maximize` must be set. Either `fun` or `objective`
-#'  must be given.
-#' @param objective ([Objective])\cr
-#'  Objective. Either `fun` or `objective` must be given.
-#' @param term_evals (`integer(1)`)\cr
+#' @param max_evals (`integer(1)`)\cr
 #'  Number of allowed evaluations.
-#' @param term_time (`integer(1)`)\cr
+#' @param max_time (`integer(1)`)\cr
 #'  Maximum allowed time in seconds.
-#' @param search_space ([paradox::ParamSet])\cr
-#'  Search space. If `fun` is used, either `search_space` or `lower` and `upper`
-#'  must be given.
 #' @param lower (`numeric()`)\cr
 #'  Lower bounds on the parameters. If named, names are used to create the
-#'  search space. If `fun` is used, either `search_space` or  `lower` and
-#'  `upper` must be given.
+#'  domain.
 #' @param upper (`numeric()`)\cr
-#'  Upper bounds on the parameters. If `fun` is used, either `search_space` or 
-#' `lower` and `upper` must be given.
-#' @param codomain ([paradox::ParamSet])\cr
-#'  Optional codomain. If not given, an unbounded double parameter `y` is
-#'  created.
+#'  Upper bounds on the parameters.
+#' @param maximize (`logical()`)\cr
+#'  Logical vector used to create the codomain e.g. c(TRUE, FALSE) -> ps(y1 = p_dbl(tags = "maximize"), y2 = pd_dbl(tags = "minimize")).
+#'  If named, names are used to create the codomain.
+#' @param search_space ([paradox::ParamSet]).
 #' @param ... (named `list()`)\cr
 #'  Named arguments to be set as parameters of the optimizer.
-#'
+#' 
 #' @note
-#' If both `term_evals` and `term_time` are not given, [TerminatorNone] is set.
-#' If both a are given, [TerminatorCombo] is created.
+#' If both `max_evals` and `max_time` are `NULL`, [TerminatorNone] is used. 
+#' This is useful if the [Optimizer] can terminate itself. 
+#' If both are given, [TerminatorCombo] is created and the optimization stops
+#' if the time or evaluation budget is exhausted.
 #'
 #' @return list of
 #'  * `par` - Best found parameters
@@ -112,111 +104,71 @@ opts = function(.keys, ...) {
 #'
 #' @export
 #' @examples
-#' library(paradox)
-#'
-#' # function and search space bounds
+#' # function and bounds
 #' fun = function(xs) {
 #'   - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
 #' }
 #'
-#' bb_optimize(
-#'   method = "random_search",
-#'   fun = fun,
-#'   term_evals = 10,
-#'   lower = c(-10, -5),
-#'   upper = c(10, 5))
-#'
-#' # function and search space
-#' fun = function(xs) {
-#'   - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
-#' }
-#'
-#' search_space = ps(
-#'  x1 = p_dbl(-10, 10),
-#'  x2 = p_dbl(-5, 5)
-#' )
-#'
-#' bb_optimize(
-#'   method = "random_search",
-#'   fun = fun,
-#'   term_evals = 10,
-#'   search_space = search_space)
+#' bb_optimize(fun, lower = c(-10, -5), upper = c(10, 5), max_evals = 10)
 #'
 #' # objective
+#' library(paradox)
+#' 
 #' fun = function(xs) {
 #'   c(z = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 #' }
-#'
-#' search_space = ps(
-#'  x1 = p_dbl(-10, 10),
-#'  x2 = p_dbl(-5, 5)
-#' )
-#'
-#' codomain = ps(
-#'  z = p_dbl(tags = "minimize")
-#' )
-#'
-#' objective = ObjectiveRFun$new(fun, search_space, codomain)
-#'
-#' bb_optimize(
-#'   method = "random_search",
-#'   objective = objective,
-#'   term_evals = 10)
 #' 
-bb_optimize = function(method, fun = NULL, objective = NULL, term_evals = NULL, term_time = NULL, search_space = NULL,
-  lower = NULL, upper = NULL, codomain = NULL, ...) {
-
+#' domain = ps(x1 = p_dbl(-10, 10), x2 = p_dbl(-5, 5))
+#' codomain = ps(z = p_dbl(tags = "minimize"))
+#' objective = ObjectiveRFun$new(fun, domain, codomain)
+#'
+#' bb_optimize(objective, method = "random_search", max_evals = 10)
+#' 
+#' 
+bb_optimize = function(x, method = "random_search", max_evals = 100, max_time = NULL, ...) {
+  assert_int(max_time, lower = 0, null.ok = TRUE)
+  assert_int(max_evals, lower = 0, null.ok = TRUE)
   assert_choice(method, mlr_optimizers$keys())
-  optimizer = opt(method, ...)
-  assert_function(fun, null.ok = TRUE)
-  assert_r6(objective, "Objective", null.ok = TRUE)
-  terminator = terminator_selection(term_evals, term_time)
-  if (!is.null(search_space)) assert_param_set(search_space)
-  assert_numeric(lower, null.ok = TRUE)
-  assert_numeric(upper, null.ok = TRUE)
-
-  if (!xor(is.null(fun), is.null(objective))) {
-    stop("Either `fun` or `objective` must be provided.")
-  }
-
-  if (xor(is.null(lower), is.null(upper))) {
-    stop("`lower` and `upper` must be provided.")
-  }
-
-  if (!is.null(fun)) {
-    if(is.null(search_space)) {
-      ids = if (is.null(names(lower))) paste0("x", seq(lower)) else names(lower)
-
-      search_space = ParamSet$new(pmap(list(ids, lower, upper), function(s, lb, ub) {
-        ParamDbl$new(id = s, lower = lb, upper = ub)
-      }))
-    }
-    if (is.null(codomain)) codomain = ps(y = p_dbl(tags = "minimize"))
-    objective = ObjectiveRFun$new(fun, search_space, codomain, check_values = FALSE)
-  }
-
-  instance = OptimInstanceSingleCrit$new(objective, terminator = terminator, check_values = FALSE)
-  optimizer$optimize(instance)
-  par = if (instance$search_space$all_numeric) {
-    set_names(as.numeric(instance$result_x_search_space), instance$search_space$ids()) 
-  } else {
-    instance$result_x_search_space
-  }
-
-  list(par =  par, value = instance$result_y, instance = instance)
+  UseMethod("bb_optimize")
 }
 
-terminator_selection = function(term_evals, term_time) {
-  assert_int(term_evals, null.ok = TRUE)
-  assert_int(term_time, null.ok = TRUE)
+#' @rdname bb_optimize
+#' @export
+bb_optimize.function = function(x, method = "random_search", max_evals = 100, max_time = NULL,  lower = NULL, 
+  upper = NULL, maximize = FALSE, ...) {
+  assert_numeric(lower, finite = TRUE, min.len = 1)
+  assert_numeric(upper, finite = TRUE, len = length(lower))
 
-  if (is.null(term_evals) && is.null(term_time)) {
+  ids_domain = if (is.null(names(lower))) paste0("x", seq_along(lower)) else names(lower)
+  domain = do.call(ps, set_names(pmap(list(lower, upper), p_dbl), ids_domain))
+
+  ids_codomain = if (is.null(names(maximize))) paste0("y", seq_along(maximize)) else names(maximize)
+  codomain =  do.call(ps, set_names(map(maximize, function(x) p_dbl(tags = if (x) "maximize" else "minimize")), ids_codomain))
+
+  objective = ObjectiveRFun$new(x, domain, codomain, check_values = FALSE)
+  bb_optimize(objective, method, max_evals, max_time, ...)
+}
+
+#' @rdname bb_optimize
+#' @export
+bb_optimize.Objective = function(x, method = "random_search",  max_evals = 100, max_time =NULL, search_space = NULL, ...) {
+  optimizer = opt(method, ...)
+  terminator = if (is.null(max_evals) && is.null(max_time)) {
     trm("none")
-  } else if (!is.null(term_evals) && !is.null(term_time)) {
-    trm("combo", list(trm("evals", n_evals = term_evals), trm("run_time", secs = term_time)))
-  } else if (!is.null(term_evals)) {
-    trm("evals", n_evals = term_evals)
-  } else if (!is.null(term_time)) {
-    trm("run_time", secs = term_time)
+  } else if (!is.null(max_evals) && !is.null(max_time)) {
+    trm("combo", list(trm("evals", n_evals = max_evals), trm("run_time", secs = max_time)))
+  } else if (!is.null(max_evals)) {
+    trm("evals", n_evals = max_evals)
+  } else if (!is.null(max_time)) {
+    trm("run_time", secs = max_time)
   }
+  optiminstance = if (x$codomain$length == 1) OptimInstanceSingleCrit else OptimInstanceMultiCrit
+  
+  instance = optiminstance$new(x, terminator = terminator, search_space = search_space, check_values = FALSE)
+  optimizer$optimize(instance)
+
+  list(
+    par = instance$result_x_search_space,
+    value = instance$result_y,
+    instance = instance)
 }
