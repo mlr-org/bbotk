@@ -68,7 +68,101 @@ opts = function(.keys, ...) {
 }
 
 
+#' @title Black-Box Optimization
+#'
+#' @description
+#' This function optimizes a function or [Objective] with a given method.
+#'
+#' @param method (`character(1)`)\cr
+#'  Key to retrieve optimizer from [mlr_optimizers] dictionary.
+#' @param fun (`function`)\cr
+#'  Objective function to be minimized. If the function should be maximized, a
+#'  `codomain` tagged with `maximize` must be set. Either `fun` or `objective`
+#'  must be given.
+#' @param objective ([Objective])\cr
+#'  Objective. Either `fun` or `objective` must be given.
+#' @param term_evals (`integer(1)`)\cr
+#'  Number of allowed evaluations.
+#' @param term_time (`integer(1)`)\cr
+#'  Maximum allowed time in seconds.
+#' @param search_space ([paradox::ParamSet])\cr
+#'  Search space. If `fun` is used, either `search_space` or `lower` and `upper`
+#'  must be given.
+#' @param lower (`numeric()`)\cr
+#'  Lower bounds on the parameters. If named, names are used to create the
+#'  search space. If `fun` is used, either `search_space` or  `lower` and
+#'  `upper` must be given.
+#' @param upper (`numeric()`)\cr
+#'  Upper bounds on the parameters. If `fun` is used, either `search_space` or 
+#' `lower` and `upper` must be given.
+#' @param codomain ([paradox::ParamSet])\cr
+#'  Optional codomain. If not given, an unbounded double parameter `y` is
+#'  created.
+#' @param ... (named `list()`)\cr
+#'  Named arguments to be set as parameters of the optimizer.
+#'
+#' @note
+#' If both `term_evals` and `term_time` are not given, [TerminatorNone] is set.
+#' If both a are given, [TerminatorCombo] is created.
+#'
+#' @return list of
+#'  * `par` - Best found parameters
+#'  * `value` - Optimal outcome
+#'  * `instance` - [OptimInstanceSingleCrit]
+#'
 #' @export
+#' @examples
+#' library(paradox)
+#'
+#' # function and search space bounds
+#' fun = function(xs) {
+#'   - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+#' }
+#'
+#' bb_optimize(
+#'   method = "random_search",
+#'   fun = fun,
+#'   term_evals = 10,
+#'   lower = c(-10, -5),
+#'   upper = c(10, 5))
+#'
+#' # function and search space
+#' fun = function(xs) {
+#'   - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+#' }
+#'
+#' search_space = ps(
+#'  x1 = p_dbl(-10, 10),
+#'  x2 = p_dbl(-5, 5)
+#' )
+#'
+#' bb_optimize(
+#'   method = "random_search",
+#'   fun = fun,
+#'   term_evals = 10,
+#'   search_space = search_space)
+#'
+#' # objective
+#' fun = function(xs) {
+#'   c(z = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+#' }
+#'
+#' search_space = ps(
+#'  x1 = p_dbl(-10, 10),
+#'  x2 = p_dbl(-5, 5)
+#' )
+#'
+#' codomain = ps(
+#'  z = p_dbl(tags = "minimize")
+#' )
+#'
+#' objective = ObjectiveRFun$new(fun, search_space, codomain)
+#'
+#' bb_optimize(
+#'   method = "random_search",
+#'   objective = objective,
+#'   term_evals = 10)
+#' 
 bb_optimize = function(method, fun = NULL, objective = NULL, term_evals = NULL, term_time = NULL, search_space = NULL,
   lower = NULL, upper = NULL, codomain = NULL, ...) {
 
