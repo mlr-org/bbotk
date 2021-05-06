@@ -41,7 +41,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
     initialize = function() {
       ps = ParamSet$new(list(
         ParamUty$new("instances", tags = "required"),
-        ParamUty$new("targetRunner", tags = "required"),
+        ParamUty$new("targetRunnerParallel", tags = "required"),
         ParamInt$new("debugLevel", default = 0, lower = 0),
         ParamUty$new("logFile"),
         ParamInt$new("seed"),
@@ -67,13 +67,12 @@ OptimizerIrace = R6Class("OptimizerIrace",
         ParamInt$new("boundDigits", default = 0),
         ParamDbl$new("boundPar", default = 1),
         ParamDbl$new("boundAsTimeout", default = 1),
-        ParamInt$new("parallel", default = 1),
         ParamLgl$new("deterministic", default = FALSE)
       ))
 
       ps$values$debugLevel = 0
       ps$values$logFile = tempfile()
-      ps$values$targetRunner = target_runner_default
+      ps$values$targetRunnerParallel = target_runner_default
 
       super$initialize(
        param_set = ps,

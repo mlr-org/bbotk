@@ -57,28 +57,33 @@ get_irace_condition = function(ps) {
   return(tab)
 }
 
-target_runner_default = function(experiment, scenario) { # nolint
-  t0 = Sys.time()
+target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) {  # nolint
   optim_instance = scenario$targetRunnerData$inst
 
   # fix logicals
-  config = as.data.table(lapply(experiment$configuration, function(x) {
-    if (x %in% c("TRUE", "FALSE")) {
-      return(as.logical(x))
-    } else {
-      return(x)
-    }
-  }))
+  xdt = map_dtr(experiment, function(e) {
+    as.data.table(lapply(e$configuration, function(x) {
+      if (x %in% c("TRUE", "FALSE")) {
+        return(as.logical(x))
+      } else {
+        return(x)
+      }
+  }))})
 
   # provide experiment instance to objective
-  optim_instance$objective$irace_instance = experiment$instance
+  optim_instance$objective$irace_instance = map(experiment, function(e) e$instance)
 
   # add extra info to archive
-  extra = data.table(id_configuration = experiment$id.configuration, id_instance = experiment$id.instance)
-
+  extra = map_dtr(experiment, function(e) {
+    data.table(id_configuration = e$id.configuration, id_instance = e$id.instance)
+  })
+  
   # evaluate configuration
   # objective_function cannot pass extra information
-  cost = as.numeric(optim_instance$eval_batch(cbind(config, extra))) * optim_instance$objective_multiplicator
+  res = optim_instance$eval_batch(cbind(xdt, extra))
 
-  return(list(cost = cost, time = as.numeric(difftime(Sys.time(), t0, units = "secs"))))
+  res = cbind(res, optim_instance$archive$data[batch_nr == optim_instance$archive$n_batch, list(time)])
+  colnames(res) = c("cost", "time")
+  res[, cost := lapply(cost, function(ct) ct * optim_instance$objective_multiplicator)]
+  transpose_list(res)
 }
