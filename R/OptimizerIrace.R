@@ -111,7 +111,6 @@ OptimizerIrace = R6Class("OptimizerIrace",
     # We store the best performing one.
     # The reported performance value is the average of all resampling iterations.
     .assign_result = function(inst) {
-      tryCatch({
         if(length(private$.result_id) == 0) {
           stop("irace::irace did not return a result. The evaluated configurations are still accessible through the archive.")
         }
@@ -121,9 +120,6 @@ OptimizerIrace = R6Class("OptimizerIrace",
         xdt = res[1, cols, with = FALSE]
         y = set_names(mean(unlist(res[, inst$archive$cols_y, with = FALSE])), inst$archive$cols_y)
         inst$assign_result(xdt, y)
-      }, error = function(cond) {
-        message("No result was written")
-      })
     },
 
     .result_id = NULL
