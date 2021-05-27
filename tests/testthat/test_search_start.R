@@ -15,7 +15,7 @@ test_that("search_start helper works", {
   expect_equal(start_values, c("x1" = 0, "x2" = 30))
 
   expect_error(search_start(search_space = ps, type = "middle"),
-    regpex = "Must be element of set {'random','center'}, but is 'middle'",
+    "Must be element of set {'random','center'}, but is 'middle'",
     fixed = TRUE)
 
    ps = ParamSet$new(list(
@@ -24,6 +24,6 @@ test_that("search_start helper works", {
    ))
 
   expect_error(search_start(search_space = ps, type = "center"),
-    regpex = "Cannot generate center values of non-numeric parameters.",
+    "Cannot generate center values of non-numeric parameters.",
     fixed = TRUE)
 })
