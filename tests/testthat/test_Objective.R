@@ -71,8 +71,8 @@ test_that("Objective specialzations work", {
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_2D_DT, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN)
     ),
     list( #2d x with deps, 1d y
-      rfun = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS),
-      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DEPS_DT, domain = PS_2D_DEPS, check_values = FALSE)
+      rfun = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS, check_values = FALSE), # dont check bc. we get NAs
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DEPS_DT, domain = PS_2D_DEPS, check_values = TRUE) # here NAs can get checked by assert_dt correctly
     )
   )
 
@@ -112,9 +112,9 @@ test_that("Objective specialzations work", {
     expect_equal(res3, fun2$eval_many(xdt1$transpose()))
 
     # multiple x values in one call
-    xdt3 = sampler$sample(3)
+    xdt3 = sampler$sample(10)
     res4 = fun1$eval_dt(xdt3$data)
-    expect_data_table(res4, nrows = 3, ncols = expected_ncols, any.missing = FALSE)
+    expect_data_table(res4, nrows = 10, ncols = expected_ncols, any.missing = FALSE)
     expect_equal(colnames(res4), expected_colnames)
     expect_equal(res4, fun2$eval_dt(xdt3$data))
 
