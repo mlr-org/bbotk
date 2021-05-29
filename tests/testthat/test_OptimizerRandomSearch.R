@@ -1,9 +1,17 @@
 test_that("OptimizerRandomSearch", {
-  z = test_optimizer("random_search", n_dim = 1, term_evals = 10L)
+  z = test_optimizer_1d("random_search", term_evals = 10L)
   expect_class(z$optimizer, "OptimizerRandomSearch")
   expect_output(print(z$optimizer), "OptimizerRandomSearch")
 
-  z = test_optimizer("random_search", n_dim = 2, term_evals = 10L)
+  z = test_optimizer_2d("random_search", term_evals = 10L)
   expect_class(z$optimizer, "OptimizerRandomSearch")
   expect_output(print(z$optimizer), "OptimizerRandomSearch")
+
+  z = test_optimizer_2d("random_search", term_evals = 10L, batch_size = 10)
+  expect_class(z$optimizer, "OptimizerRandomSearch")
+  expect_output(print(z$optimizer), "OptimizerRandomSearch")
+
+  z = test_optimizer_dependencies("random_search", term_evals = 10L, batch_size = 1)
+
+  z = test_optimizer_dependencies("random_search", term_evals = 10L, batch_size = 10L)
 })

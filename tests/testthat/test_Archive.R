@@ -107,7 +107,6 @@ test_that("check_values flag works", {
   xdt = data.table(x1 = c(0, 2), x2 = c(1, 1))
   xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
   ydt = data.table(y = c(1, 0.25))
-  expect_error(a$add_evals(xdt, xss_trafoed, ydt),
-    fixed = "x1: Element 1 is not <= 1.")
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "x1: Element 1 is not <= 1.", fixed = TRUE)
 })
 
