@@ -34,7 +34,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
 
     #' @description
     #' Evaluates multiple input values received as a list, converted to a `data.table()` on the
-    #' objective function.
+    #' objective function. Missing columns in xss are filled with `NA`s in `xdt`.
     #'
     #' @param xss (`list()`)\cr
     #'   A list of lists that contains multiple x values, e.g.
@@ -45,7 +45,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = private$.fun(rbindlist(xss, use.names = TRUE))
+      res = private$.fun(rbindlist(xss, use.names = TRUE, fill = TRUE))
       if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     },
