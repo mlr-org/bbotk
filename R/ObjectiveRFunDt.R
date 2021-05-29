@@ -45,10 +45,8 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = private$.fun(rbindlist(xss))
-      if (self$check_values) {
-        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      }
+      res = private$.fun(rbindlist(xss, use.names = TRUE))
+      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     },
 
@@ -61,9 +59,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     eval_dt = function(xdt) {
       if (self$check_values) self$domain$assert_dt(xdt)
       res = private$.fun(xdt)
-      if (self$check_values) {
-        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      }
+      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     }
   ),

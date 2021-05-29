@@ -239,3 +239,12 @@ test_that("assertion on overlapping and reserved names works", {
     regexp = "Assertion on 'self$codomain$ids()' failed: Must be disjunct from (x_domain,timestamp,batch_nr).",
     fixed = TRUE)
 })
+
+test_that("ObjectiveRFunDt works with a list containing elements with different order", {
+  FUN = function(xdt) data.table(y = xdt$x)
+
+  rfun_dt = ObjectiveRFunDt$new(fun = FUN, domain = ps(x = p_int(), z = p_int()), codomain = ps(y = p_int(tags = "minimize")))
+
+  res = rfun_dt$eval_many(list(list(x = 1, z = 2), list(x = 1, z = 2)))
+  expect_equal(res, data.table(y = c(1, 1)))
+})
