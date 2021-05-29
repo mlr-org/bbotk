@@ -125,7 +125,7 @@ opts = function(.keys, ...) {
 #' bb_optimize(objective, method = "random_search", max_evals = 10)
 #' 
 #' 
-bb_optimize = function(x, method = "random_search", max_evals = 100, max_time = NULL, ...) {
+bb_optimize = function(x, method = "random_search", max_evals = 1000, max_time = NULL, ...) {
   assert_int(max_time, lower = 0, null.ok = TRUE)
   assert_int(max_evals, lower = 0, null.ok = TRUE)
   assert_choice(method, mlr_optimizers$keys())
@@ -134,7 +134,7 @@ bb_optimize = function(x, method = "random_search", max_evals = 100, max_time = 
 
 #' @rdname bb_optimize
 #' @export
-bb_optimize.function = function(x, method = "random_search", max_evals = 100, max_time = NULL,  lower = NULL, 
+bb_optimize.function = function(x, method = "random_search", max_evals = 1000, max_time = NULL,  lower = NULL, 
   upper = NULL, maximize = FALSE, ...) {
   assert_numeric(lower, finite = TRUE, min.len = 1)
   assert_numeric(upper, finite = TRUE, len = length(lower))
@@ -151,7 +151,7 @@ bb_optimize.function = function(x, method = "random_search", max_evals = 100, ma
 
 #' @rdname bb_optimize
 #' @export
-bb_optimize.Objective = function(x, method = "random_search",  max_evals = 100, max_time =NULL, search_space = NULL, ...) {
+bb_optimize.Objective = function(x, method = "random_search",  max_evals = 1000, max_time =NULL, search_space = NULL, ...) {
   optimizer = opt(method, ...)
   terminator = if (is.null(max_evals) && is.null(max_time)) {
     trm("none")
