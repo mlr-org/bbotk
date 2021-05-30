@@ -243,3 +243,24 @@ test_that("ObjectiveRFunDt works with a list containing elements with different 
   res = rfun_dt$eval_many(list(list(x = 1, z = 2), list(x = 1, z = 2)))
   expect_equal(res, data.table(y = c(1, 1)))
 })
+
+test_that("ObjectiveRFunDt works with deps #141", {
+  FUN = function(xdt) {
+    pmap_dtr(xdt, function(x1, x2) {
+      data.table(y = if(is.na(x2)) x1 else x2)
+    })
+  }
+  domain = ps(x1 = p_int(), x2 = p_int())
+  domain$add_dep("x2", "x1", CondEqual$new(-1))
+  codomain = ps(y = p_dbl(tags = "minimize"))
+  rfun_dt = ObjectiveRFunDt$new(fun = FUN, domain = domain, codomain = codomain)
+
+  design = Design$new(
+    domain,
+    data.table(x1 = c(-1, 1), x2 = c(2, 2)),
+    remove_dupl = FALSE
+  )
+  xss = design$transpose(trafo = TRUE, filter_na = TRUE)
+  res = rfun_dt$eval_many(xss)
+  expect_equal(res, data.table(y = c(2, 1)))
+})
