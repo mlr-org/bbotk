@@ -45,7 +45,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = private$.fun(rbindlist(xss))
+      res = private$.fun(rbindlist(xss, use.names = TRUE, fill = TRUE))
       if (self$check_values) {
         self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       }
