@@ -77,6 +77,7 @@ Collate:
     'Optimizer.R'
     'OptimizerCmaes.R'
     'OptimizerDesignPoints.R'
+    'OptimizerFocusSearch.R'
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
     'OptimizerNLoptr.R'
