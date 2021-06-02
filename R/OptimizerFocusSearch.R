@@ -113,7 +113,7 @@ mlr_optimizers$add("focus_search", OptimizerFocusSearch)
 #' @param x ([data.table::data.table])\cr
 #' [data.table::data.table] with one row containing the point to shrink
 #' around.
-#' @param check.feasible ([`logical(1)`])\cr
+#' @param check.feasible (`logical(1)`)\cr
 #' Should feasibility of the parameters be checked?
 #' If feasibility is not checked, and invalid values are present, no shrinking
 #' will be done.
@@ -122,6 +122,8 @@ mlr_optimizers$add("focus_search", OptimizerFocusSearch)
 #' @return [paradox::ParamSet]
 #' @export
 #' @examples
+#' library(paradox)
+#' library(data.table)
 #' param_set = ParamSet$new(list(
 #'   ParamDbl$new("x1", lower = 0, upper = 10),
 #'   ParamInt$new("x2", lower = -10, upper = 10),
@@ -154,7 +156,7 @@ shrink_ps = function(ps, x, check.feasible = FALSE) {
           xdt = copy(x)
           val = tryCatch({
             # find val on the original scale
-            val = uniroot(
+            val = stats::uniroot(
               function(x_rep) {
                 xdt[[param$id]] = x_rep
                 ps$trafo(xdt)[[param$id]] - val

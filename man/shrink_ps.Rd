@@ -14,7 +14,7 @@ The \link[paradox:ParamSet]{paradox::ParamSet} to be shrinked.}
 \link[data.table:data.table]{data.table::data.table} with one row containing the point to shrink
 around.}
 
-\item{check.feasible}{(\code{\link{logical(1)}})\cr
+\item{check.feasible}{(\code{logical(1)})\cr
 Should feasibility of the parameters be checked?
 If feasibility is not checked, and invalid values are present, no shrinking
 will be done.
@@ -36,6 +36,8 @@ If the \link[paradox:ParamSet]{paradox::ParamSet} has a trafo, \code{x} is expec
 transformed values.
 }
 \examples{
+library(paradox)
+library(data.table)
 param_set = ParamSet$new(list(
   ParamDbl$new("x1", lower = 0, upper = 10),
   ParamInt$new("x2", lower = -10, upper = 10),
