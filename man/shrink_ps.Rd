@@ -30,7 +30,9 @@ Boundaries of numeric values are shrinked to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.
 
-\link[paradox:ParamLgl]{paradox::ParamLgl}s are not shrinked.
+Note that for \link[paradox:ParamLgl]{paradox::ParamLgl}s the value to be shrinked around is set as
+the \code{default} value instead of dropping a level. Also, a tag \code{shrinked} is
+added.
 
 If the \link[paradox:ParamSet]{paradox::ParamSet} has a trafo, \code{x} is expected to contain the
 transformed values.

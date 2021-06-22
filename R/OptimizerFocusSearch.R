@@ -39,7 +39,7 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      # FIXME: maybe make range / 2 a hyperparameter
+      # Note: maybe make range / 2 a hyperparameter?
       ps = ParamSet$new(list(
         ParamInt$new("n_points", default = 100L, tags = "required"),
         ParamInt$new("maxit", default = 100L, tags = "required")
@@ -49,7 +49,7 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
       super$initialize(
         param_set = ps,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit")  # FIXME: think about multi-crit variant
+        properties = c("dependencies", "single-crit")  # Note: think about multi-crit variant
       )
     }
   ),
@@ -66,13 +66,26 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
 
       repeat {  # iterate until we have an exception from eval_batch
         ps_local = inst$search_space$clone(deep = TRUE)
+        lgls = ps_local$ids()[ps_local$class == "ParamLgl"]
         sampler = SamplerUnif$new(ps_local)
         inst$eval_batch(sampler$sample(n_points)$data)
         start_batch = (n_repeats * maxit) + n_repeats + 1L
         best = inst$archive$best(batch = start_batch)  # needed for restart to work
 
         for (i in seq_len(maxit)) {
-          inst$eval_batch(sampler$sample(n_points)$data)
+          # ParamLgls have the value to be shrinked around set as a default
+          data = sampler$sample(n_points)$data
+          if (length(lgls)) {
+            data[, (lgls) := imap(.SD, function(param, id) {
+              if ("shrinked" %in% ps_local$params[[id]]$tags) {
+                rep(ps_local$params[[id]]$default, times = length(param))
+              } else {
+                param
+              }
+            }), .SDcols = lgls]
+          }
+
+          inst$eval_batch(data)
           best_i = inst$archive$best(batch = inst$archive$n_batch)
           if (om * best_i[[cols_y]] < om * best[[cols_y]]) {
             lg$info("Shrinking ParamSet")
@@ -103,7 +116,9 @@ mlr_optimizers$add("focus_search", OptimizerFocusSearch)
 #' half of the previous length, while for discrete variables, a random
 #' (currently not chosen) level is dropped.
 #'
-#' [paradox::ParamLgl]s are not shrinked.
+#' Note that for [paradox::ParamLgl]s the value to be shrinked around is set as
+#' the `default` value instead of dropping a level. Also, a tag `shrinked` is
+#' added.
 #'
 #' If the [paradox::ParamSet] has a trafo, `x` is expected to contain the
 #' transformed values.
@@ -139,12 +154,11 @@ shrink_ps = function(ps, x, check.feasible = FALSE) {
   assert_flag(check.feasible)
 
   # shrink each parameter
-  for (i in seq_along(ps$params)) {
+  params_new = map(seq_along(ps$params), function(i) {
     param = ps$params[[i]]
     # only shrink if there is a value
     val = x[[param$id]]
     if (test_atomic(val, any.missing = FALSE, len = 1L)) {
-
       if (check.feasible & !param$test(val)) {
         stop(sprintf("Parameter value %s is not feasible for %s.", val, param$id))
       }
@@ -174,28 +188,48 @@ shrink_ps = function(ps, x, check.feasible = FALSE) {
         # if it is not feasible we do nothing
         if (param$test(val)) {
           # shrink to range / 2, centered at val
-          param$lower = pmax(param$lower, val - (range / 4))
-          param$upper = pmin(param$upper, val + (range / 4))
+          lower = pmax(param$lower, val - (range / 4))
+          upper = pmin(param$upper, val + (range / 4))
           if (test_r6(param, classes = "ParamInt")) {
-            param$lower = as.integer(floor(param$lower))
-            param$upper = as.integer(ceiling(param$upper))
+            lower = as.integer(floor(lower))
+            upper = as.integer(ceiling(upper))
+            ParamInt$new(id = param$id, lower = lower, upper = upper,
+              special_vals = param$special_vals, default = param$default,
+              tags = param$tags)
+          } else {  # it's ParamDbl then
+            ParamDbl$new(id = param$id, lower = lower, upper = upper,
+              special_vals = param$special_vals, default = param$default,
+              tags = param$tags, tolerance = param$tolerance)
           }
         }
-
-      } else if (param$is_categ && !test_r6(param, classes = "ParamLgl")) {
-        # FIXME: cannot shrink ParamLgl due to different $levels active binding
+      } else if (param$is_categ) {
         if (param$test(val)) {
           # randomly drop a level, which is not val
           if (length(param$levels) > 1L) {
-            # remove current val from delete options, should work also for NA
-            val_del = setdiff(param$levels, val)
-            # remove the parameter from param levels
-            param$levels = setdiff(param$levels, sample(val_del, size = 1L))
+            levels = setdiff(param$levels, sample(setdiff(param$levels, val), size = 1L))
+            if (test_r6(param, classes = "ParamFct")) {
+              ParamFct$new(id = param$id, levels = levels,
+                special_vals = param$special_vals, default = param$default,
+                tags = param$tags)
+            } else {
+              # for ParamLgls we cannot specify levels; instead we set a default
+              ParamLgl$new(id = param$id,
+                special_vals = param$special_vals, default = levels,
+                tags = unique(c(param$tags, "shrinked")))
+            }
           }
         }
       }
     }
+  })
+
+  missing = which(map_lgl(params_new, is.null))
+  if (length(missing)) {
+    params_new[missing] = map(ps$params[missing], function(param) param$clone(deep = TRUE))
   }
-  return(ps)
+  ps_new = ParamSet$new(params_new)
+  ps_new$deps = ps$deps
+  ps_new$trafo = ps$trafo
+  ps_new
 }
 
