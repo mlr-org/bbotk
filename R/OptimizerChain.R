@@ -13,7 +13,7 @@
 #' The first [Optimizer] is run on the [OptimInstance] using a [TerminatorCombo]
 #' of the original [Terminator] of the [OptimInstance] and the (optional)
 #' additional [Terminator] as passed during construction.
-#' Once this [TerminatorCombo] indicates terminatation (usually via the
+#' Once this [TerminatorCombo] indicates termination (usually via the
 #' additional [Terminator]), the second [Optimizer] (and so on) is run unless
 #' the original [Terminator] of the [OptimInstance] indicates termination.
 #'

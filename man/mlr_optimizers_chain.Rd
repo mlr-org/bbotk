@@ -14,7 +14,7 @@ The optimization then works as follows:
 The first \link{Optimizer} is run on the \link{OptimInstance} using a \link{TerminatorCombo}
 of the original \link{Terminator} of the \link{OptimInstance} and the (optional)
 additional \link{Terminator} as passed during construction.
-Once this \link{TerminatorCombo} indicates terminatation (usually via the
+Once this \link{TerminatorCombo} indicates termination (usually via the
 additional \link{Terminator}), the second \link{Optimizer} (and so on) is run unless
 the original \link{Terminator} of the \link{OptimInstance} indicates termination.
 
