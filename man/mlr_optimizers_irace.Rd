@@ -22,7 +22,7 @@ A list of instances where the target algorithm is executed on.}
 A function that executes the target algorithm with a specific parameter configuration and instance.}
 }
 }
-\section{TODO: Write example with instances passed to eval_many()}{
+\section{TODO: Write example with instances passed to objective}{
 For the meaning of all other parameters, see \code{\link[irace:defaultScenario]{irace::defaultScenario()}}.
 Note that we have removed all control parameters which refer to the termination of
 the algorithm. Use \link{TerminatorRunTime} or \link{TerminatorEvals} instead. Other
@@ -46,6 +46,58 @@ combined with a \link{Terminator}. Simply wrap the function in
 \CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
 }
 
+\examples{
+library(data.table)
+
+search_space = domain = ps(
+  x1 = p_dbl(-5, 10),
+  x2 = p_dbl(0, 15)
+)
+
+ObjectiveIrace = R6Class("ObjectiveIrace", inherit = Objective,
+  public = list(
+    irace_instance = NULL
+  ),
+
+  private = list(
+    .eval = function(xs) {
+      # branin function with `tau` noise 
+      a = 1
+      b = 5.1 / (4 * (pi ^ 2))
+      c = 5 / pi
+      r = 6
+      s = 10
+      t = 1 / (8 * pi)
+      tau = self$irace_instance
+
+      list(y = a * ((xs$x2 -
+      b * (xs$x1 ^ 2L) +
+      c * xs$x1 - r) ^ 2) +
+      ((s * (1 - t)) * cos(xs$x1)))
+    }
+  )
+)
+
+objective = ObjectiveIrace$new(domain = domain,  codomain = ps(y = p_dbl(tags = "minimize")))
+
+instance = OptimInstanceSingleCrit$new(
+  objective = objective,
+  search_space = search_space,
+  terminator = trm("evals", n_evals = 1000))
+
+# create instances of branin function
+irace_instance = rnorm(10, mean = 0, sd = 0.1)
+optimizer = opt("irace", instances = irace_instance)
+
+ # modifies the instance by reference
+ optimizer$optimize(instance)
+
+ # best scoring evaluation
+ instance$result
+
+ # all evaluations
+ as.data.table(instance$archive)
+}
 \section{Super class}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerIrace}
 }
