@@ -21,15 +21,13 @@ A list of instances where the target algorithm is executed on.}
 \item{\code{targetRunner}}{\verb{function()}\cr
 A function that executes the target algorithm with a specific parameter configuration and instance.}
 }
-}
-\section{TODO: Write example with instances passed to objective}{
+
 For the meaning of all other parameters, see \code{\link[irace:defaultScenario]{irace::defaultScenario()}}.
 Note that we have removed all control parameters which refer to the termination of
 the algorithm. Use \link{TerminatorRunTime} or \link{TerminatorEvals} instead. Other
 terminators do not work with \code{TunerIrace}. We substract 5 seconds from the
 \link{TerminatorRunTime} budget for stability reasons.
 }
-
 \section{Dictionary}{
 
 This \link{Optimizer} can be instantiated via the \link[mlr3misc:Dictionary]{dictionary}

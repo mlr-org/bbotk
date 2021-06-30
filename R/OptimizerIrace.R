@@ -14,8 +14,6 @@
 #' \item{`targetRunner`}{`function()`\cr
 #' A function that executes the target algorithm with a specific parameter configuration and instance.}
 #' }
-#' 
-#' # TODO: Write example with instances passed to objective
 #'
 #' For the meaning of all other parameters, see [irace::defaultScenario()]. 
 #' Note that we have removed all control parameters which refer to the termination of
