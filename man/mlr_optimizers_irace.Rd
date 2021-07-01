@@ -11,10 +11,11 @@ Lopez-Ibanez M, Dubois-Lacoste J, Caceres LP, Birattari M, Stuetzle T (2016).
 \doi{https://doi.org/10.1016/j.orp.2016.09.002}.
 }
 \description{
-\code{OptimizerIrace} class that implements iterated racing.
-Calls \code{\link[irace:irace]{irace::irace()}} from package \CRANpkg{irace}.
+\code{OptimizerIrace} class that implements iterated racing. Calls
+\code{\link[irace:irace]{irace::irace()}} from package \CRANpkg{irace}.
+}
+\section{Parameters}{
 
-#' @section Parameters:
 \describe{
 \item{\code{instances}}{\code{list()}\cr
 A list of instances where the target algorithm is executed on.}
@@ -22,12 +23,47 @@ A list of instances where the target algorithm is executed on.}
 A function that executes the target algorithm with a specific parameter configuration and instance.}
 }
 
-For the meaning of all other parameters, see \code{\link[irace:defaultScenario]{irace::defaultScenario()}}.
-Note that we have removed all control parameters which refer to the termination of
+For the meaning of all other parameters, see \code{\link[irace:defaultScenario]{irace::defaultScenario()}}. Note
+that we have removed all control parameters which refer to the termination of
 the algorithm. Use \link{TerminatorRunTime} or \link{TerminatorEvals} instead. Other
-terminators do not work with \code{TunerIrace}. We substract 5 seconds from the
+terminators do not work with \code{TunerIrace}. We subtract 5 seconds from the
 \link{TerminatorRunTime} budget for stability reasons.
 }
+
+\section{Target Runner and Instances}{
+
+The irace package uses a \code{targetRunner} script or R function to evaluate a
+configuration on a particular instance. Usually it is not necessary to
+specify a \code{targetRunner} function when using \code{OptimizerIrace}. A default
+function is used that forwards several configurations and an instance to the
+user defined objective function. As usual, the configurations are passed in
+\code{xss} to the objective. The instance is passed via the \verb{$irace_instance}
+public field.\preformatted{ObjectiveIrace = R6Class("ObjectiveIrace", inherit = Objective,
+  public = list(
+    irace_instance = NULL
+  ),
+
+  private = list(
+    .eval_many = function(xss) \{
+      # objective function to evaluate configurations in xss
+      # access irace instance via self$irace_instance
+    \}
+  )
+)
+}
+
+Alternatively, \verb{$.eval(xs)} can be implemented which only passes one
+configuration at once. The use of \verb{$.eval_many(xss)} allows us to implement
+a parallelization e.g. with the \CRANpkg{future} package.
+}
+
+\section{Result}{
+
+The optimization result in \code{instance$result} is the best performing elite of
+the final race. The reported performance is the average performance estimated
+on all used instances.
+}
+
 \section{Dictionary}{
 
 This \link{Optimizer} can be instantiated via the \link[mlr3misc:Dictionary]{dictionary}
@@ -58,7 +94,7 @@ ObjectiveIrace = R6Class("ObjectiveIrace", inherit = Objective,
   ),
 
   private = list(
-    .eval = function(xs) {
+    .eval_many = function(xss) {
       # branin function with `tau` noise 
       a = 1
       b = 5.1 / (4 * (pi ^ 2))
@@ -66,17 +102,20 @@ ObjectiveIrace = R6Class("ObjectiveIrace", inherit = Objective,
       r = 6
       s = 10
       t = 1 / (8 * pi)
-      tau = self$irace_instance
-
-      list(y = a * ((xs$x2 -
-      b * (xs$x1 ^ 2L) +
-      c * xs$x1 - r) ^ 2) +
-      ((s * (1 - t)) * cos(xs$x1)))
+ 
+      data.table(y = mapply(function(xs, tau) {
+       a * ((xs$x2 -
+       b * (xs$x1 ^ 2) +
+       c * xs$x1 - r) ^ 2) +
+       ((s * (1 - t)) * cos(xs$x1)) +
+       tau
+      }, xss, self$irace_instance))
     }
   )
 )
 
-objective = ObjectiveIrace$new(domain = domain,  codomain = ps(y = p_dbl(tags = "minimize")))
+codomain = ps(y = p_dbl(tags = "minimize"))
+objective = ObjectiveIrace$new(domain = domain,  codomain = codomain)
 
 instance = OptimInstanceSingleCrit$new(
   objective = objective,
@@ -87,14 +126,14 @@ instance = OptimInstanceSingleCrit$new(
 irace_instance = rnorm(10, mean = 0, sd = 0.1)
 optimizer = opt("irace", instances = irace_instance)
 
- # modifies the instance by reference
- optimizer$optimize(instance)
+# modifies the instance by reference
+optimizer$optimize(instance)
 
- # best scoring evaluation
- instance$result
+# best scoring evaluation
+instance$result
 
- # all evaluations
- as.data.table(instance$archive)
+# all evaluations
+as.data.table(instance$archive)
 }
 \section{Super class}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerIrace}
