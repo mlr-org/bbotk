@@ -76,9 +76,5 @@ target_runner_default = function(experiment, exec.target.runner, scenario, targe
   # evaluate configuration
   # objective_function cannot pass extra information
   res = optim_instance$eval_batch(cbind(xdt, extra))
-
-  res = cbind(res, optim_instance$archive$data[batch_nr == optim_instance$archive$n_batch, list(time)])
-  colnames(res) = c("cost", "time")
-  res[, cost := lapply(cost, function(ct) ct * optim_instance$objective_multiplicator)]
-  transpose_list(res)
+  map(unlist(res), function(cost) list(cost = cost, time = NA_real_))
 }

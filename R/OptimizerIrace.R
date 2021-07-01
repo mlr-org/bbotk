@@ -175,14 +175,13 @@ OptimizerIrace = R6Class("OptimizerIrace",
       objective = inst$objective
 
       # Check terminators 
-      if (!(inherits(terminator, "TerminatorEvals") || inherits(terminator, "TerminatorRunTime"))) {
-        stopf("%s is not supported. Use <TerminatorEvals> or <TerminatorRunTime> instead.", format(inst$terminator))
+      if (!(inherits(terminator, "TerminatorEvals"))) {
+        stopf("%s is not supported. Use <TerminatorEvals> instead.", format(inst$terminator))
       }
 
       # Make scenario
       scenario = c(list(
-        maxExperiments = if (inherits(terminator, "TerminatorEvals")) terminator$param_set$values$n_evals else 0,
-        maxTime = if (inherits(terminator, "TerminatorRunTime")) terminator$param_set$values$secs - 5 else 0,
+        maxExperiments = terminator$param_set$values$n_evals,
         targetRunnerData = list(inst = inst)
       ), pv)
 
