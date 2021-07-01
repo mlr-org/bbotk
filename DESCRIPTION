@@ -38,14 +38,14 @@ License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.1.0),
+    paradox (>= 0.7.0)
 Imports:
     checkmate (>= 2.0.0),
     data.table,
     lgr,
     methods,
     mlr3misc (>= 0.7.0),
-    paradox (>= 0.7.0),
     R6
 Suggests:
     adagio,
