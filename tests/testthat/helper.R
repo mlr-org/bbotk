@@ -41,11 +41,13 @@ PS_2D_TRF$trafo = function(x, param_set) {
 }
 
 # Simple 2D Function with deps
-PS_2D_DEPS = ParamSet$new(list(
-  ParamInt$new("x1", lower = -1, upper = 1),
-  ParamDbl$new("x2", lower = 1, upper = 3)
-))
+FUN_2D_DEPS = function(xs) {
+  y = sum(as.numeric(xs)^2, na.rm = TRUE) # for PS with dependencies we ignore the not present param
+  list(y = y)
+}
+PS_2D_DEPS = PS_2D$clone(deep = TRUE)
 PS_2D_DEPS$add_dep("x2", "x1", CondEqual$new(1))
+OBJ_2D_DEPS = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS, properties = "single-crit")
 
 # Multi-objecitve 2D->2D function
 FUN_2D_2D = function(xs) {
@@ -88,44 +90,51 @@ MAKE_INST_2D_2D = function(terminator) {
     terminator = terminator)
 }
 
-test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_evals) {
+test_optimizer_1d = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
+  instance = OptimInstanceSingleCrit$new(objective = OBJ_1D, search_space = PS_1D, terminator = terminator)
+  res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
 
-  if (n_dim == 1) {
-    search_space =  ParamSet$new(list(
-      ParamDbl$new("x", lower = -1, upper = 1)
-    ))
-    domain = search_space
-    codomain = ParamSet$new(list(
-      ParamDbl$new("y", tags = "minimize")
-    ))
-    objective_function = function(xs) {
-      y = sum(as.numeric(xs)^2)
-      list(y = y)
-    }
-    objective = ObjectiveRFun$new(fun = objective_function, domain = domain,
-      codomain = codomain, properties = "single-crit")
-    instance = OptimInstanceSingleCrit$new(objective = objective,
-      search_space = search_space, terminator = terminator)
-  } else if (n_dim == 2) {
-    search_space = ParamSet$new(list(
-      ParamDbl$new("x1", lower = -1, upper = 1),
-      ParamDbl$new("x2", lower = -1, upper = 1)
-    ))
-    codomain = ParamSet$new(list(
-      ParamDbl$new("y1", tags = c("minimize", "random_tag")),
-      ParamDbl$new("y2", tags = "maximize")
-    ))
-    domain = search_space
-    objective_function = function(xs) {
-      list(y1 = xs[[1]]^2, y2 = -xs[[2]]^2)
-    }
-    objective = ObjectiveRFun$new(fun = objective_function, domain = domain,
-      codomain = codomain, properties = "multi-crit")
-    instance = OptimInstanceMultiCrit$new(objective = objective,
-      search_space = search_space, terminator = terminator)
-  }
+  x_opt = res$instance$result_x_domain
+  y_opt = res$instance$result_y
+  expect_list(x_opt, len = 1)
+  expect_named(x_opt, "x")
+  expect_numeric(y_opt, len = 1)
+  expect_named(y_opt, "y")
 
+  return(res)
+}
+
+test_optimizer_2d = function(key, ..., term_evals = 2L, real_evals = term_evals) {
+  terminator = trm("evals", n_evals = term_evals)
+  instance = OptimInstanceMultiCrit$new(objective = OBJ_2D_2D, search_space = PS_2D, terminator = terminator)
+  res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
+
+  x_opt = res$instance$result_x_domain
+  y_opt = res$instance$result_y
+  expect_list(x_opt[[1]], len = 2)
+  expect_named(x_opt[[1]], c("x1", "x2"))
+  expect_data_table(y_opt)
+  expect_named(y_opt, c("y1", "y2"))
+
+  return(res)
+}
+
+test_optimizer_dependencies = function(key, ..., term_evals = 2L, real_evals = term_evals) {
+  terminator = trm("evals", n_evals = term_evals)
+  instance = OptimInstanceSingleCrit$new(objective = OBJ_2D_DEPS, search_space = PS_2D_DEPS, terminator = terminator)
+  res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
+  x_opt = res$instance$result_x_domain
+  y_opt = res$instance$result_y
+  expect_list(x_opt)
+  expect_names(names(x_opt),  subset.of = c("x1", "x2"))
+  expect_numeric(y_opt, len = 1)
+  expect_named(y_opt, "y")
+
+  return(res)
+}
+
+test_optimizer = function(instance, key, ..., real_evals) {
   optimizer = opt(key, ...)
   expect_class(optimizer, "Optimizer")
   optimizer$optimize(instance)
@@ -133,21 +142,6 @@ test_optimizer = function(key, ..., n_dim, term_evals = 2L, real_evals = term_ev
 
   expect_data_table(archive$data, nrows = real_evals)
   expect_equal(instance$archive$n_evals, real_evals)
-
-  x_opt = instance$result_x_domain
-  y_opt = instance$result_y
-
-  if (n_dim == 1) {
-    expect_list(x_opt, len = n_dim)
-    expect_named(x_opt, "x")
-    expect_numeric(y_opt, len = n_dim)
-    expect_named(y_opt, "y")
-  } else {
-    expect_list(x_opt[[1]], len = n_dim)
-    expect_named(x_opt[[1]], c("x1", "x2"))
-    expect_data_table(y_opt)
-    expect_named(y_opt, c("y1", "y2"))
-  }
 
   list(optimizer = optimizer, instance = instance)
 }

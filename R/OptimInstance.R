@@ -49,10 +49,16 @@ OptimInstance = R6Class("OptimInstance",
 
       assert_choice(keep_evals, c("all", "best"))
       self$objective = assert_r6(objective, "Objective")
-      self$search_space = if (is.null(search_space)) {
+
+      domain_search_space  = self$objective$domain$search_space()
+      self$search_space = if (is.null(search_space) && domain_search_space$length == 0) {
         self$objective$domain
-      } else {
+      } else if (is.null(search_space) && domain_search_space$length > 0) {
+        domain_search_space
+      } else if (!is.null(search_space) && domain_search_space$length == 0) {
         assert_param_set(search_space)
+      } else {
+        stop("If the domain contains TuneTokens, you cannot supply a search_space.")
       }
       self$terminator = assert_terminator(terminator, self)
 
@@ -132,14 +138,14 @@ OptimInstance = R6Class("OptimInstance",
 
       is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
       # calculate the x as (trafoed) domain only if needed
-      if (self$search_space$has_trafo || self$archive$store_x_domain || !is_rfundt) {
+      if (self$search_space$has_trafo || self$search_space$has_deps || self$archive$store_x_domain || !is_rfundt) {
         xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
       } else {
         xss_trafoed = NULL
       }
 
-      # if no trafos, and objective evals dt directly we go a shortcut
-      if (is_rfundt && !self$search_space$has_trafo) {
+      # if no trafos, no deps and objective evals dt directly, we go a shortcut
+      if (is_rfundt && !self$search_space$has_trafo && !self$search_space$has_deps) {
         ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
       } else {
         ydt = self$objective$eval_many(xss_trafoed)
@@ -188,6 +194,7 @@ OptimInstance = R6Class("OptimInstance",
       self$archive$clear()
       private$.result = NULL
       self$progressor = Progressor$new()
+      invisible(self)
     }
   ),
 
