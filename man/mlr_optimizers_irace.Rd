@@ -25,9 +25,8 @@ A function that executes the target algorithm with a specific parameter configur
 
 For the meaning of all other parameters, see \code{\link[irace:defaultScenario]{irace::defaultScenario()}}. Note
 that we have removed all control parameters which refer to the termination of
-the algorithm. Use \link{TerminatorRunTime} or \link{TerminatorEvals} instead. Other
-terminators do not work with \code{TunerIrace}. We subtract 5 seconds from the
-\link{TerminatorRunTime} budget for stability reasons.
+the algorithm. Use \link{TerminatorEvals} instead. Other terminators do not work
+with \code{OptimizerIrace}.
 }
 
 \section{Target Runner and Instances}{
@@ -37,7 +36,7 @@ configuration on a particular instance. Usually it is not necessary to
 specify a \code{targetRunner} function when using \code{OptimizerIrace}. A default
 function is used that forwards several configurations and an instance to the
 user defined objective function. As usual, the configurations are passed in
-\code{xss} to the objective. The instance is passed via the \verb{$irace_instance}
+\code{xss} to the objective. The instance passed via the \verb{$irace_instance}
 public field.\preformatted{ObjectiveIrace = R6Class("ObjectiveIrace", inherit = Objective,
   public = list(
     irace_instance = NULL
@@ -57,9 +56,24 @@ configuration at once. The use of \verb{$.eval_many(xss)} allows us to implement
 a parallelization e.g. with the \CRANpkg{future} package.
 }
 
+\section{Archive}{
+
+The \link{Archive} holds the following additional columns:
+\itemize{
+\item \code{"race"} (\code{integer(1)})\cr
+Race iteration.
+\item \code{"step"} (\code{integer(1)})\cr
+Step number of race.
+\item \code{"instance"} (\code{integer(1)})\cr
+Identifies instances across races and steps.
+\item \code{"configuration"} (\code{integer(1)})\cr
+Identifies configurations across races and steps.
+}
+}
+
 \section{Result}{
 
-The optimization result in \code{instance$result} is the best performing elite of
+The optimization result (\code{instance$result}) is the best performing elite of
 the final race. The reported performance is the average performance estimated
 on all used instances.
 }
@@ -82,6 +96,7 @@ combined with a \link{Terminator}. Simply wrap the function in
 
 \examples{
 library(data.table)
+library(R6)
 
 search_space = domain = ps(
   x1 = p_dbl(-5, 10),

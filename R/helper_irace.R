@@ -70,11 +70,12 @@ target_runner_default = function(experiment, exec.target.runner, scenario, targe
 
   # add extra info to archive
   extra = map_dtr(experiment, function(e) {
-    data.table(id_configuration = e$id.configuration, id_instance = e$id.instance)
+    data.table(configuration = e$id.configuration, instance = e$id.instance)
   })
   
   # evaluate configuration
   # objective_function cannot pass extra information
-  res = optim_instance$eval_batch(cbind(xdt, extra))
-  map(unlist(res), function(cost) list(cost = cost, time = NA_real_))
+  cost = as.numeric(unlist(optim_instance$eval_batch(cbind(xdt, extra)))) * optim_instance$objective_multiplicator
+
+  map(cost, function(cost) list(cost = cost, time = NA_real_))
 }

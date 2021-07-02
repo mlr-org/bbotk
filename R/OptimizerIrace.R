@@ -17,9 +17,8 @@
 #'
 #' For the meaning of all other parameters, see [irace::defaultScenario()]. Note
 #' that we have removed all control parameters which refer to the termination of
-#' the algorithm. Use [TerminatorRunTime] or [TerminatorEvals] instead. Other
-#' terminators do not work with `TunerIrace`. We subtract 5 seconds from the
-#' [TerminatorRunTime] budget for stability reasons.
+#' the algorithm. Use [TerminatorEvals] instead. Other terminators do not work
+#' with `OptimizerIrace`.
 #' 
 #' @section Target Runner and Instances:
 #' The irace package uses a `targetRunner` script or R function to evaluate a
@@ -27,7 +26,7 @@
 #' specify a `targetRunner` function when using `OptimizerIrace`. A default
 #' function is used that forwards several configurations and an instance to the
 #' user defined objective function. As usual, the configurations are passed in
-#' `xss` to the objective. The instance is passed via the `$irace_instance`
+#' `xss` to the objective. The instance passed via the `$irace_instance`
 #' public field. 
 #' 
 #' ```
@@ -49,8 +48,19 @@
 #' configuration at once. The use of `$.eval_many(xss)` allows us to implement
 #' a parallelization e.g. with the \CRANpkg{future} package.
 #' 
+#' @section Archive:
+#' The [Archive] holds the following additional columns:
+#'  * `"race"` (`integer(1)`)\cr
+#'    Race iteration.
+#'  * `"step"` (`integer(1)`)\cr
+#'    Step number of race.
+#'  * `"instance"` (`integer(1)`)\cr
+#'    Identifies instances across races and steps.
+#'  * `"configuration"` (`integer(1)`)\cr
+#'    Identifies configurations across races and steps.
+#' 
 #' @section Result:
-#' The optimization result in `instance$result` is the best performing elite of
+#' The optimization result (`instance$result`) is the best performing elite of
 #' the final race. The reported performance is the average performance estimated
 #' on all used instances.
 #' 
@@ -65,6 +75,7 @@
 #' @export
 #' @examples 
 #' library(data.table)
+#' library(R6)
 #' 
 #' search_space = domain = ps(
 #'   x1 = p_dbl(-5, 10),
@@ -124,43 +135,42 @@ OptimizerIrace = R6Class("OptimizerIrace",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamUty$new("instances", tags = "required"),
-        ParamUty$new("targetRunnerParallel", tags = "required"),
-        ParamInt$new("debugLevel", default = 0, lower = 0),
-        ParamUty$new("logFile"),
-        ParamInt$new("seed"),
-        ParamDbl$new("postselection", default = 0, lower = 0, upper = 1),
-        ParamInt$new("elitist", default = 1, lower = 0, upper = 1),
-        ParamInt$new("elitistLimit", default = 2, lower = 0),
-        ParamInt$new("nbIterations", default = 0, lower = 0),
-        ParamInt$new("nbExperimentsPerIteration", default = 0, lower = 0),
-        ParamInt$new("minNbSurvival", default = 0, lower = 0),
-        ParamInt$new("nbConfigurations", default = 0, lower = 0),
-        ParamInt$new("mu", default = 5, lower = 1),
-        ParamInt$new("softRestart", default = 1, lower = 0, upper = 1),
-        ParamDbl$new("softRestartThreshold"),
-        ParamInt$new("digits", default = 4, lower = 1, upper = 15),
-        ParamFct$new("testType", default = "F-test", levels = c("F-test", "t-test", "t-test-bonferroni", "t-test-holm")),
-        ParamInt$new("firstTest", default = 5, lower = 0),
-        ParamInt$new("eachTest", default = 1, lower = 1),
-        ParamDbl$new("confidence", default = 0.95, lower = 0, upper = 1),
-        ParamInt$new("capping", default = 0, lower = 0, upper = 1),
-        ParamFct$new("cappingType", default = "median", levels = c("median", "mean", "best", "worst")),
-        ParamFct$new("boundType", default = "candidate", levels = c("candidate", "instance")),
-        ParamDbl$new("boundMax", default = 0),
-        ParamInt$new("boundDigits", default = 0),
-        ParamDbl$new("boundPar", default = 1),
-        ParamDbl$new("boundAsTimeout", default = 1),
-        ParamLgl$new("deterministic", default = FALSE)
-      ))
-
-      ps$values$debugLevel = 0
-      ps$values$logFile = tempfile()
-      ps$values$targetRunnerParallel = target_runner_default
+      param_set = ps(
+        instances = p_uty(tags = "required"),
+        targetRunnerParallel = p_uty(tags = "required"),
+        debugLevel = p_int(default = 0, lower = 0),
+        logFile = p_uty(),
+        seed = p_int(),
+        postselection = p_dbl(default = 0, lower = 0, upper = 1),
+        elitist = p_int(default = 1, lower = 0, upper = 1),
+        elitistLimit = p_int(default = 2, lower = 0),
+        nbIterations = p_int(default = 0, lower = 0),
+        nbExperimentsPerIteration = p_int(default = 0, lower = 0),
+        minNbSurvival = p_int(default = 0, lower = 0),
+        nbConfigurations = p_int(default = 0, lower = 0),
+        mu = p_int(default = 5, lower = 1),
+        softRestart = p_int(default = 1, lower = 0, upper = 1),
+        softRestartThreshold = p_dbl(),
+        digits = p_int(default = 4, lower = 1, upper = 15),
+        testType = p_fct(default = "F-test", levels = c("F-test", "t-test", "t-test-bonferroni", "t-test-holm")),
+        firstTest = p_int(default = 5, lower = 0),
+        eachTest = p_int(default = 1, lower = 1),
+        confidence = p_dbl(default = 0.95, lower = 0, upper = 1),
+        capping = p_int(default = 0, lower = 0, upper = 1),
+        cappingType = p_fct(default = "median", levels = c("median", "mean", "best", "worst")),
+        boundType = p_fct(default = "candidate", levels = c("candidate", "instance")),
+        boundMax = p_dbl(default = 0),
+        boundDigits = p_int(default = 0),
+        boundPar = p_dbl(default = 1),
+        boundAsTimeout = p_dbl(default = 1),
+        deterministic = p_lgl(default = FALSE)
+      )
+      param_set$values$debugLevel = 0
+      param_set$values$logFile = tempfile(fileext = ".Rdata")
+      param_set$values$targetRunnerParallel = target_runner_default
 
       super$initialize(
-       param_set = ps,
+       param_set = param_set,
         param_classes = c("ParamDbl", "ParamInt", "ParamFct", "ParamLgl"),
         properties = c("dependencies", "single-crit"),
         packages = "irace"
@@ -172,7 +182,6 @@ OptimizerIrace = R6Class("OptimizerIrace",
     .optimize = function(inst) {
       pv = self$param_set$values
       terminator = inst$terminator
-      objective = inst$objective
 
       # Check terminators 
       if (!(inherits(terminator, "TerminatorEvals"))) {
@@ -186,7 +195,16 @@ OptimizerIrace = R6Class("OptimizerIrace",
       ), pv)
 
       res = irace::irace(scenario = scenario, parameters = paradox_to_irace(inst$search_space))
-      
+
+      # add race and step to archive
+      iraceResults = NULL
+      load(self$param_set$values$logFile) 
+      log = as.data.table(iraceResults$experimentLog)
+      log[, "step" := rleid("instance"), by = "iteration"]
+      set(inst$archive$data, j = "race", value = log$iteration)
+      set(inst$archive$data, j = "step", value = log$step)
+      setcolorder(inst$archive$data, c(inst$archive$cols_x, inst$archive$cols_y, "race", "step", "instance", "configuration"))
+
       # Temporarily store result
       private$.result_id = res$.ID.[1]
     },
@@ -199,8 +217,8 @@ OptimizerIrace = R6Class("OptimizerIrace",
           stop("`irace::irace` did not return a result. The evaluated configurations are still accessible through the archive.")
         }
 
-        res = inst$archive$data[get("id_configuration") == private$.result_id, ]
-        cols = c(inst$archive$cols_x, "id_configuration")
+        res = inst$archive$data[get("configuration") == private$.result_id, ]
+        cols = c(inst$archive$cols_x, "configuration")
         xdt = res[1, cols, with = FALSE]
         y = set_names(mean(unlist(res[, inst$archive$cols_y, with = FALSE])), inst$archive$cols_y)
         inst$assign_result(xdt, y)
