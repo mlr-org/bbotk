@@ -10,9 +10,9 @@
 #' @section Parameters:
 #' \describe{
 #' \item{`instances`}{`list()`\cr
-#' A list of instances where the target algorithm is executed on.}
-#' \item{`targetRunner`}{`function()`\cr
-#' A function that executes the target algorithm with a specific parameter configuration and instance.}
+#' A list of instances where the objective function is executed on.}
+#' \item{`targetRunnerParallel`}{`function()`\cr
+#' A function that executes the objective function with a specific parameter configuration and instance. A default function is provided, see section "Target Runner and Instances".}
 #' }
 #'
 #' For the meaning of all other parameters, see [irace::defaultScenario()]. Note
@@ -123,7 +123,7 @@
 #' # modifies the instance by reference
 #' optimizer$optimize(instance)
 #' 
-#' # best scoring evaluation
+#' # best scoring configuration
 #' instance$result
 #' 
 #' # all evaluations
@@ -198,6 +198,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
 
       # add race and step to archive
       iraceResults = NULL
+
       load(self$param_set$values$logFile) 
       log = as.data.table(iraceResults$experimentLog)
       log[, "step" := rleid("instance"), by = "iteration"]

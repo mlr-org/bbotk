@@ -56,26 +56,23 @@ get_irace_condition = function(param_set) {
 target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) {# nolint
   optim_instance = scenario$targetRunnerData$inst
 
-  # fix logicals
   xdt = map_dtr(experiment, function(e) {
-    as.data.table(lapply(e$configuration, function(x) {
-      if (x %in% c("TRUE", "FALSE")) {
-        return(as.logical(x))
-      } else {
-        return(x)
-      }}))})
+    configuration = as.data.table(e$configuration)
+    # add configuration and instance id to archive
+    set(configuration, j = "configuration", value = e$id.configuration)
+    set(configuration, j = "instance", value = e$id.instance)
+    # fix logicals
+    configuration[, map(.SD, function(x) ifelse(x %in% c("TRUE", "FALSE"), as.logical(x), x))]
+  })
 
   # provide experiment instance to objective
   optim_instance$objective$irace_instance = map(experiment, function(e) e$instance)
 
-  # add extra info to archive
-  extra = map_dtr(experiment, function(e) {
-    data.table(configuration = e$id.configuration, instance = e$id.instance)
-  })
-  
   # evaluate configuration
-  # objective_function cannot pass extra information
-  cost = as.numeric(unlist(optim_instance$eval_batch(cbind(xdt, extra)))) * optim_instance$objective_multiplicator
+  res = optim_instance$eval_batch(xdt)
 
-  map(cost, function(cost) list(cost = cost, time = NA_real_))
+  # return cost (minimize) and dummy time to irace
+  map(transpose_list(res), function(cost) {
+    list(cost = unlist(cost) * optim_instance$objective_multiplicator, time = NA_real_)
+  })
 }

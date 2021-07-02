@@ -49,8 +49,8 @@ test_that("OptimizerIrace works", {
   t = capture.output(optimizer$optimize(instance))
 
   # check archive columns
-  a = instance$archive$data
-  expect_subset(c("race", "step", "configuration", "instance"), names(a))
+  archive = instance$archive$data
+  expect_subset(c("race", "step", "configuration", "instance"), names(archive))
 
   # check optimization direction
   # first elite of the first race should have the lowest average performance
@@ -61,7 +61,7 @@ test_that("OptimizerIrace works", {
 
   # the performance of the best configuration should be the mean performance across all evaluated instances
   configuration_id = instance$result$configuration
-  expect_equal(instance$result$y, mean(a[configuration == configuration_id, ]$y))
+  expect_equal(unname(instance$result_y), mean(archive[configuration == configuration_id, y]))
 
 
   # default maximize
@@ -107,8 +107,8 @@ test_that("OptimizerIrace works", {
   t = capture.output(optimizer$optimize(instance))
 
   # check archive columns
-  a = instance$archive$data
-  expect_subset(c("race", "step", "configuration", "instance"), names(a))
+  archive = instance$archive$data
+  expect_subset(c("race", "step", "configuration", "instance"), names(archive))
 
   # check optimization direction
   # first elite of the first race should have the highest average performance
@@ -118,8 +118,8 @@ test_that("OptimizerIrace works", {
   expect_equal(aggr[which.max(y), configuration], elites[[1]][1])
 
   # the performance of the best configuration should be the mean performance across all evaluated instances
-    configuration_id = instance$result$configuration
-  expect_equal(instance$result$y, mean(a[configuration == configuration_id, ]$y))
+  configuration_id = instance$result$configuration
+  expect_equal(unname(instance$result_y), mean(archive[configuration == configuration_id, y]))
 
   # unsupported terminators
   instance = OptimInstanceSingleCrit$new(
