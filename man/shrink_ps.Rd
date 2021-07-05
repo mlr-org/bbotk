@@ -4,10 +4,10 @@
 \alias{shrink_ps}
 \title{Shrink a ParamSet towards a point.}
 \usage{
-shrink_ps(ps, x, check.feasible = FALSE)
+shrink_ps(param_set, x, check.feasible = FALSE)
 }
 \arguments{
-\item{ps}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+\item{param_set}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 The \link[paradox:ParamSet]{paradox::ParamSet} to be shrinked.}
 
 \item{x}{(\link[data.table:data.table]{data.table::data.table})\cr

@@ -40,14 +40,14 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       # Note: maybe make range / 2 a hyperparameter?
-      ps = ParamSet$new(list(
-        ParamInt$new("n_points", default = 100L, tags = "required"),
-        ParamInt$new("maxit", default = 100L, tags = "required")
-      ))
-      ps$values = list(n_points = 100L, maxit = 100L)
+      param_set = ps(
+        n_points = p_int(default = 100L, tags = "required"),
+        maxit = p_int(default = 100L, tags = "required")
+      )
+      param_set$values = list(n_points = 100L, maxit = 100L)
 
       super$initialize(
-        param_set = ps,
+        param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
         properties = c("dependencies", "single-crit")  # Note: think about multi-crit variant
       )
@@ -65,9 +65,9 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
 
 
       repeat {  # iterate until we have an exception from eval_batch
-        ps_local = inst$search_space$clone(deep = TRUE)
-        lgls = ps_local$ids()[ps_local$class == "ParamLgl"]
-        sampler = SamplerUnif$new(ps_local)
+        param_set_local = inst$search_space$clone(deep = TRUE)
+        lgls = param_set_local$ids()[param_set_local$class == "ParamLgl"]
+        sampler = SamplerUnif$new(param_set_local)
         inst$eval_batch(sampler$sample(n_points)$data)
         start_batch = (n_repeats * maxit) + n_repeats + 1L
         best = inst$archive$best(batch = start_batch)  # needed for restart to work
@@ -77,8 +77,8 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
           data = sampler$sample(n_points)$data
           if (length(lgls)) {
             data[, (lgls) := imap(.SD, function(param, id) {
-              if ("shrinked" %in% ps_local$params[[id]]$tags) {
-                rep(ps_local$params[[id]]$default, times = length(param))
+              if ("shrinked" %in% param_set_local$params[[id]]$tags) {
+                rep(param_set_local$params[[id]]$default, times = length(param))
               } else {
                 param
               }
@@ -89,8 +89,8 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
           best_i = inst$archive$best(batch = inst$archive$n_batch)
           if (om * best_i[[cols_y]] < om * best[[cols_y]]) {
             lg$info("Shrinking ParamSet")
-            ps_local = shrink_ps(ps_local, x = best[, cols_x, with = FALSE])
-            sampler = SamplerUnif$new(ps_local)
+            param_set_local = shrink_ps(param_set_local, x = best[, cols_x, with = FALSE])
+            sampler = SamplerUnif$new(param_set_local)
           }
           # always update the incumbent after each batch
           # respect potential restarts
@@ -123,7 +123,7 @@ mlr_optimizers$add("focus_search", OptimizerFocusSearch)
 #' If the [paradox::ParamSet] has a trafo, `x` is expected to contain the
 #' transformed values.
 #'
-#' @param ps ([paradox::ParamSet])\cr
+#' @param param_set ([paradox::ParamSet])\cr
 #' The [paradox::ParamSet] to be shrinked.
 #' @param x ([data.table::data.table])\cr
 #' [data.table::data.table] with one row containing the point to shrink
@@ -147,15 +147,15 @@ mlr_optimizers$add("focus_search", OptimizerFocusSearch)
 #' )
 #' x = data.table(x1 = 5, x2 = 0, x3 = "b", x4 = FALSE)
 #' shrink_ps(param_set, x = x)
-shrink_ps = function(ps, x, check.feasible = FALSE) {
-  ps = ps$clone(deep = TRUE)  # avoid unwanted side effects
-  assert_param_set(ps)
+shrink_ps = function(param_set, x, check.feasible = FALSE) {
+  param_set = param_set$clone(deep = TRUE)  # avoid unwanted side effects
+  assert_param_set(param_set)
   assert_data_table(x, nrows = 1L, min.cols = 1L)
   assert_flag(check.feasible)
 
   # shrink each parameter
-  params_new = map(seq_along(ps$params), function(i) {
-    param = ps$params[[i]]
+  params_new = map(seq_along(param_set$params), function(i) {
+    param = param_set$params[[i]]
     # only shrink if there is a value
     val = x[[param$id]]
     if (test_atomic(val, any.missing = FALSE, len = 1L)) {
@@ -166,14 +166,14 @@ shrink_ps = function(ps, x, check.feasible = FALSE) {
       if (param$is_number) {
         range = param$upper - param$lower
 
-        if (ps$has_trafo) {
+        if (param_set$has_trafo) {
           xdt = copy(x)
           val = tryCatch({
             # find val on the original scale
             val = stats::uniroot(
               function(x_rep) {
                 xdt[[param$id]] = x_rep
-                ps$trafo(xdt)[[param$id]] - val
+                param_set$trafo(xdt)[[param$id]] - val
               },
               interval = c(param$lower, param$upper),
               extendInt = "yes",
@@ -225,11 +225,11 @@ shrink_ps = function(ps, x, check.feasible = FALSE) {
 
   missing = which(map_lgl(params_new, is.null))
   if (length(missing)) {
-    params_new[missing] = map(ps$params[missing], function(param) param$clone(deep = TRUE))
+    params_new[missing] = map(param_set$params[missing], function(param) param$clone(deep = TRUE))
   }
-  ps_new = ParamSet$new(params_new)
-  ps_new$deps = ps$deps
-  ps_new$trafo = ps$trafo
-  ps_new
+  param_set_new = ParamSet$new(params_new)
+  param_set_new$deps = param_set$deps
+  param_set_new$trafo = param_set$trafo
+  param_set_new
 }
 
