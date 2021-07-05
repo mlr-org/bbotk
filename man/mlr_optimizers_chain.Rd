@@ -49,11 +49,11 @@ combined with a \link{Terminator}. Simply wrap the function in
 \examples{
 library(paradox)
 
-domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+domain = ps(x = p_dbl(lower = -1, upper = 1))
 
-search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+search_space = ps(x = p_dbl(lower = -1, upper = 1))
 
-codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+codomain = ps(y = p_dbl(tags = "minimize"))
 
 objective_function = function(xs) {
  list(y = as.numeric(xs)^2)
