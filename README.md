@@ -37,7 +37,6 @@ remotes::install_github("mlr-org/bbotk")
 
 ```r
 library(bbotk)
-library(paradox)
 
 # Define objective function
 fun = function(xs) {
@@ -45,15 +44,15 @@ fun = function(xs) {
 }
 
 # Set domain
-domain = ParamSet$new(list(
-  ParamDbl$new("x1", -10, 10),
-  ParamDbl$new("x2", -5, 5)
-))
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
 
 # Set codomain
-codomain = ParamSet$new(list(
-  ParamDbl$new("y", tags = "maximize")
-))
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
 
 # Create Objective object
 obfun = ObjectiveRFun$new(

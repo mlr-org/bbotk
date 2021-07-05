@@ -33,12 +33,12 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamInt$new("iters", lower = 1L, default = 10, tags = "required"),
-        ParamDbl$new("threshold", lower = 0, default = 0, tags = "required")
-      ))
-      ps$values = list(iters = 10, threshold = 0)
-      super$initialize(param_set = ps, properties = "single-crit")
+      param_set = ps(
+        iters = p_int(lower = 1L, default = 10, tags = "required"),
+        threshold = p_dbl(lower = 0, default = 0, tags = "required")
+      )
+      param_set$values = list(iters = 10, threshold = 0)
+      super$initialize(param_set = param_set, properties = "single-crit")
     },
 
     #' @description

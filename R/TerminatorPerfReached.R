@@ -30,11 +30,11 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamDbl$new("level", tags = "required", default = 0.1)
-      ))
-      ps$values = list(level = 0.1)
-      super$initialize(param_set = ps, "single-crit")
+      param_set = ps(
+        level = p_dbl(tags = "required", default = 0.1)
+      )
+      param_set$values = list(level = 0.1)
+      super$initialize(param_set = param_set, "single-crit")
     },
 
     #' @description

@@ -22,9 +22,9 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(fun, domain, codomain = NULL, id = "function",
-      properties = character(), constants = ParamSet$new(), check_values = TRUE) {
+      properties = character(), constants = ps(), check_values = TRUE) {
       if (is.null(codomain)) {
-        codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+        codomain = ps(y = p_dbl(tags = "minimize"))
       }
       private$.fun = assert_function(fun, "xdt")
       # asserts id, domain, codomain, properties

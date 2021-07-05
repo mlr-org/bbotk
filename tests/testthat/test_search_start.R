@@ -1,8 +1,8 @@
 test_that("search_start helper works", {
-  ps = ParamSet$new(list(
-    ParamDbl$new("x1", lower = -1, upper = 1),
-    ParamDbl$new("x2", lower = 10, upper = 50)
-  ))
+  ps = ps(
+    x1 = p_dbl(lower = -1, upper = 1),
+    x2 = p_dbl(lower = 10, upper = 50)
+  )
 
   start_values = search_start(search_space = ps, type = "random")
   expect_named(start_values, c("x1", "x2"))
@@ -15,15 +15,12 @@ test_that("search_start helper works", {
   expect_equal(start_values, c("x1" = 0, "x2" = 30))
 
   expect_error(search_start(search_space = ps, type = "middle"),
-    "Must be element of set {'random','center'}, but is 'middle'",
+    regexp = "Must be element of set {'random','center'}, but is 'middle'",
     fixed = TRUE)
 
-   ps = ParamSet$new(list(
-    ParamDbl$new("x1", lower = -1, upper = 1),
-    ParamInt$new("x2", lower = 10, upper = 50)
-   ))
+  ps = ps(x1 = p_dbl(lower = -1, upper = 1), x2 = p_lgl())
 
   expect_error(search_start(search_space = ps, type = "center"),
-    "Cannot generate center values of non-numeric parameters.",
+    regexp = "Cannot generate center values of non-numeric parameters.",
     fixed = TRUE)
 })

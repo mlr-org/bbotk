@@ -47,7 +47,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   codomain = NULL,
   id = "function",
   properties = character(),
-  constants = ParamSet$new(),
+  constants = ps(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }

@@ -1,24 +1,21 @@
 #' @examples
-#' library(paradox)
+#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#' domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+#' codomain = ps(y = p_dbl(tags = "minimize"))
 #'
 #' objective_function = function(xs) {
 #'   list(y = as.numeric(xs)^2)
 #' }
 #'
-#' objective = ObjectiveRFun$new(fun = objective_function,
-#'                               domain = domain,
-#'                               codomain = codomain)
-#' terminator = trm("evals", n_evals = 10)
+#' objective = ObjectiveRFun$new(
+#'  fun = objective_function,
+#'  domain = domain,
+#'  codomain = codomain)
+#'
 #' instance = OptimInstanceSingleCrit$new(
 #'  objective = objective,
 #'  search_space = search_space,
-#'  terminator = terminator)
+#'  terminator = trm("evals", n_evals = 10))
 #'
 #'
 #' optimizer = opt("<%= id %>")

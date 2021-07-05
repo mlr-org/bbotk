@@ -45,8 +45,8 @@ Objective = R6Class("Objective",
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(id = "f", properties = character(), domain,
-      codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
-      constants = ParamSet$new(), check_values = TRUE) {
+      codomain = ps(y = p_dbl(tags = "minimize")),
+      constants = ps(), check_values = TRUE) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
       self$codomain = assert_codomain(codomain)

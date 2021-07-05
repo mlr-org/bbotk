@@ -27,27 +27,24 @@
 #' @export
 #' @examples
 #' if(requireNamespace("adagio")) {
-#' library(paradox)
 #'
-#' domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#' search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+#' codomain = ps(y = p_dbl(tags = "minimize"))
 #'
 #' objective_function = function(xs) {
 #'   list(y = as.numeric(xs)^2)
 #' }
 #'
-#' objective = ObjectiveRFun$new(fun = objective_function,
-#'                               domain = domain,
-#'                               codomain = codomain)
-#' terminator = trm("evals", n_evals = 10)
+#' objective = ObjectiveRFun$new(
+#'  fun = objective_function,
+#'  domain = domain,
+#'  codomain = codomain)
+#'
 #' instance = OptimInstanceSingleCrit$new(
 #'  objective = objective,
 #'  search_space = search_space,
-#'  terminator = terminator)
-#'
+#'  terminator = trm("evals", n_evals = 10))
 #'
 #' optimizer = opt("cmaes")
 #'
@@ -67,13 +64,13 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamDbl$new("sigma", default = 0.5),
-        ParamFct$new("start_values", default = "random", levels = c("random", "center"))
-      ))
-      ps$values$start_values = "random"
+      param_set = ps(
+        sigma = p_dbl(default = 0.5),
+        start_values = p_fct(default = "random", levels = c("random", "center"))
+      )
+      param_set$values$start_values = "random"
       super$initialize(
-        param_set = ps,
+        param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
         packages = "adagio"
