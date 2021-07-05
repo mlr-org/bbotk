@@ -1,40 +1,54 @@
-# bbotk - Black-Box Optimization Toolkit
 
-Package website: [release](https://bbotk.mlr-org.com/) | [dev](https://bbotk.mlr-org.com/dev/)
+Package website: [release](https://bbotk.mlr-org.com/) |
+[dev](https://bbotk.mlr-org.com/dev/)
 
 <!-- badges: start -->
+
 [![tic](https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/bbotk/actions)
-[![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/bbotk)](https://cran.r-project.org/package=bbotk)
+[![CRAN Status
+Badge](https://www.r-pkg.org/badges/version-ago/bbotk)](https://cran.r-project.org/package=bbotk)
 <!-- badges: end -->
 
 This package provides a common framework for optimization including
 
-* `Optimizer`: Objects of this class allow you to optimize an object of the class `OptimInstance`.
-* `OptimInstance`: Defines the optimization problem, consisting of an `Objective`, the `search_space` and a `Terminator`.
-   All evaluations on the `OptimInstance` will be automatically stored in its own `Archive`.
-* `Objective`: Objects of this class contain the objective function.
-   The class ensures that the objective function is called in the right way and defines, whether the function should be minimized or maximized.
-* `Terminator`: Objects of this class control the termination of the optimization independent of the optimizer.
+  - `Optimizer`: Objects of this class allow you to optimize an object
+    of the class `OptimInstance`.
+  - `OptimInstance`: Defines the optimization problem, consisting of an
+    `Objective`, the `search_space` and a `Terminator`. All evaluations
+    on the `OptimInstance` will be automatically stored in its own
+    `Archive`.
+  - `Objective`: Objects of this class contain the objective function.
+    The class ensures that the objective function is called in the right
+    way and defines, whether the function should be minimized or
+    maximized.
+  - `Terminator`: Objects of this class control the termination of the
+    optimization independent of the optimizer.
 
-Various optimization methods are already implemented e.g. grid search, random search and generalized simulated annealing.
+Various optimization methods are already implemented e.g. grid search,
+random search and generalized simulated annealing.
+
+## Resources
+
+  - Package
+    [vignette](https://cran.r-project.org/web/packages/bbotk/vignettes/bbotk.html)
 
 ## Installation
 
-CRAN version
+Install the last release from CRAN:
 
-```r
+``` r
 install.packages("bbotk")
 ```
 
-Development version
+Install the development version from GitHub:
 
-```r
+``` r
 remotes::install_github("mlr-org/bbotk")
 ```
 
 ## Example
 
-```r
+``` r
 library(bbotk)
 
 # Define objective function
@@ -75,7 +89,7 @@ optimizer = opt("gensa")
 
 # Trigger optimization
 optimizer$optimize(instance)
-
-# View results
-instance$result
 ```
+
+    ##    x1 x2  x_domain  y
+    ## 1:  2 -3 <list[2]> 10
