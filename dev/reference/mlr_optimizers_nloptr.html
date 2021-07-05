@@ -232,21 +232,20 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"nloptr"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com'>paradox</a></span><span class='op'>)</span>
 
-<span class='va'>domain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>search_space</span> <span class='op'>=</span> <span class='va'>domain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>search_space</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>codomain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"y"</span>, tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>objective_function</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='op'>}</span>
 
-<span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>fun <span class='op'>=</span> <span class='va'>objective_function</span>,
-  domain <span class='op'>=</span> <span class='va'>domain</span>,
-  codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
+<span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+ fun <span class='op'>=</span> <span class='va'>objective_function</span>,
+ domain <span class='op'>=</span> <span class='va'>domain</span>,
+ codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
+
 
 <span class='co'># We use the internal termination criterion xtol_rel</span>
 <span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"none"</span><span class='op'>)</span>
@@ -266,21 +265,20 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
 <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;              x          y           timestamp batch_nr x_domain_x
-#&gt;  1:  0.1523748 0.02321809 2021-07-05 08:01:56        1  0.1523748
-#&gt;  2:  0.1523748 0.02321809 2021-07-05 08:01:56        2  0.1523748
-#&gt;  3:  0.1523748 0.02321809 2021-07-05 08:01:56        3  0.1523748
-#&gt;  4:  0.6523748 0.42559293 2021-07-05 08:01:56        4  0.6523748
-#&gt;  5: -0.3476252 0.12084325 2021-07-05 08:01:56        5 -0.3476252
-#&gt;  6:  0.0000000 0.00000000 2021-07-05 08:01:56        6  0.0000000
-#&gt;  7:  0.0500000 0.00250000 2021-07-05 08:01:56        7  0.0500000
-#&gt;  8: -0.0050000 0.00002500 2021-07-05 08:01:56        8 -0.0050000
-#&gt;  9:  0.0050000 0.00002500 2021-07-05 08:01:56        9  0.0050000
-#&gt; 10: -0.0005000 0.00000025 2021-07-05 08:01:56       10 -0.0005000
-#&gt; 11:  0.0005000 0.00000025 2021-07-05 08:01:56       11  0.0005000
-#&gt; 12:  0.0000000 0.00000000 2021-07-05 08:01:56       12  0.0000000</div><div class='input'><span class='co'># }</span>
-</div></pre>
+<span class='op'>}</span><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;                 x            y           timestamp batch_nr    x_domain_x
+#&gt;  1:  6.503988e-01 4.230187e-01 2021-07-05 14:19:05        1  6.503988e-01
+#&gt;  2:  6.503988e-01 4.230187e-01 2021-07-05 14:19:05        2  6.503988e-01
+#&gt;  3:  6.503988e-01 4.230187e-01 2021-07-05 14:19:05        3  6.503988e-01
+#&gt;  4:  9.125997e-01 8.328382e-01 2021-07-05 14:19:05        4  9.125997e-01
+#&gt;  5:  3.881980e-01 1.506977e-01 2021-07-05 14:19:05        5  3.881980e-01
+#&gt;  6:  1.259971e-01 1.587527e-02 2021-07-05 14:19:05        6  1.259971e-01
+#&gt;  7:  0.000000e+00 0.000000e+00 2021-07-05 14:19:05        7  0.000000e+00
+#&gt;  8: -2.622009e-02 6.874930e-04 2021-07-05 14:19:05        8 -2.622009e-02
+#&gt;  9:  2.622009e-03 6.874930e-06 2021-07-05 14:19:05        9  2.622009e-03
+#&gt; 10: -2.622009e-04 6.874930e-08 2021-07-05 14:19:05       10 -2.622009e-04
+#&gt; 11:  2.622009e-05 6.874930e-10 2021-07-05 14:19:05       11  2.622009e-05
+#&gt; 12:  0.000000e+00 0.000000e+00 2021-07-05 14:19:05       12  0.000000e+00</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

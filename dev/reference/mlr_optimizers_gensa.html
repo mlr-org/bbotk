@@ -238,26 +238,24 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"GenSA"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com'>paradox</a></span><span class='op'>)</span>
 
-<span class='va'>domain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>search_space</span> <span class='op'>=</span> <span class='va'>domain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>search_space</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>codomain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"y"</span>, tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>objective_function</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='op'>}</span>
 
-<span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>fun <span class='op'>=</span> <span class='va'>objective_function</span>,
-                              domain <span class='op'>=</span> <span class='va'>domain</span>,
-                              codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
-<span class='va'>terminator</span> <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+ fun <span class='op'>=</span> <span class='va'>objective_function</span>,
+ domain <span class='op'>=</span> <span class='va'>domain</span>,
+ codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
+
 <span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
  objective <span class='op'>=</span> <span class='va'>objective</span>,
  search_space <span class='op'>=</span> <span class='va'>search_space</span>,
- terminator <span class='op'>=</span> <span class='va'>terminator</span><span class='op'>)</span>
+ terminator <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"cmaes"</span><span class='op'>)</span>
 
@@ -270,17 +268,17 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
 <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: GenSA</span></div><div class='output co'>#&gt;              x          y  x_domain           timestamp batch_nr
-#&gt;  1:  0.5705025 0.32547315 &lt;list[1]&gt; 2021-07-05 08:01:55        1
-#&gt;  2: -0.1298342 0.01685692 &lt;list[1]&gt; 2021-07-05 08:01:55        2
-#&gt;  3:  0.8805651 0.77539492 &lt;list[1]&gt; 2021-07-05 08:01:55        3
-#&gt;  4:  1.0000000 1.00000000 &lt;list[1]&gt; 2021-07-05 08:01:55        4
-#&gt;  5:  0.3037979 0.09229317 &lt;list[1]&gt; 2021-07-05 08:01:55        5
-#&gt;  6: -1.0000000 1.00000000 &lt;list[1]&gt; 2021-07-05 08:01:55        6
-#&gt;  7:  0.1813585 0.03289090 &lt;list[1]&gt; 2021-07-05 08:01:55        7
-#&gt;  8:  0.7559795 0.57150501 &lt;list[1]&gt; 2021-07-05 08:01:55        8
-#&gt;  9:  1.0000000 1.00000000 &lt;list[1]&gt; 2021-07-05 08:01:55        9
-#&gt; 10:  0.4011174 0.16089517 &lt;list[1]&gt; 2021-07-05 08:01:55       10</div></pre>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: GenSA</span></div><div class='output co'>#&gt;               x           y  x_domain           timestamp batch_nr
+#&gt;  1:  1.00000000 1.000000000 &lt;list[1]&gt; 2021-07-05 14:19:04        1
+#&gt;  2: -1.00000000 1.000000000 &lt;list[1]&gt; 2021-07-05 14:19:04        2
+#&gt;  3: -0.09565958 0.009150756 &lt;list[1]&gt; 2021-07-05 14:19:04        3
+#&gt;  4: -1.00000000 1.000000000 &lt;list[1]&gt; 2021-07-05 14:19:04        4
+#&gt;  5: -0.36603397 0.133980864 &lt;list[1]&gt; 2021-07-05 14:19:04        5
+#&gt;  6:  0.07004452 0.004906235 &lt;list[1]&gt; 2021-07-05 14:19:04        6
+#&gt;  7:  0.62335028 0.388565566 &lt;list[1]&gt; 2021-07-05 14:19:04        7
+#&gt;  8: -0.73025654 0.533274622 &lt;list[1]&gt; 2021-07-05 14:19:04        8
+#&gt;  9:  0.27423165 0.075202996 &lt;list[1]&gt; 2021-07-05 14:19:04        9
+#&gt; 10:  0.20915585 0.043746171 &lt;list[1]&gt; 2021-07-05 14:19:04       10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

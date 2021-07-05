@@ -189,7 +189,7 @@ Objective function.</p></dd>
   codomain <span class='op'>=</span> <span class='cn'>NULL</span>,
   id <span class='op'>=</span> <span class='st'>"function"</span>,
   properties <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='op'>)</span>,
-  constants <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>,
+  constants <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span><span class='op'>)</span>,
   check_values <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre><p></div></p>
 
@@ -247,31 +247,27 @@ supplied by the user.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' 
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://paradox.mlr-org.com'>paradox</a></span><span class='op'>)</span>
-<span class='co'># Define objective function</span>
+    <pre class="examples"><div class='input'><span class='co'># define objective function</span>
 <span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='fl'>10</span>
 <span class='op'>}</span>
 
-<span class='co'># Set domain</span>
-<span class='va'>domain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x1"</span>, <span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span>,
-  <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"x2"</span>, <span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>
-<span class='op'>)</span><span class='op'>)</span>
+<span class='co'># set domain</span>
+<span class='va'>domain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>
+  x1 <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span>,
+  x2 <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='co'># Set codomain</span>
-<span class='va'>codomain</span> <span class='op'>=</span> <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamSet.html'>ParamSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  <span class='va'><a href='https://paradox.mlr-org.com/reference/ParamDbl.html'>ParamDbl</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"y"</span>, tags <span class='op'>=</span> <span class='st'>"maximize"</span><span class='op'>)</span>
-<span class='op'>)</span><span class='op'>)</span>
+<span class='co'># set codomain</span>
+<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"maximize"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='co'># Create Objective object</span>
+<span class='co'># create Objective object</span>
 <span class='va'>obfun</span> <span class='op'>=</span> <span class='va'>ObjectiveRFun</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
   fun <span class='op'>=</span> <span class='va'>fun</span>,
   domain <span class='op'>=</span> <span class='va'>domain</span>,
   codomain <span class='op'>=</span> <span class='va'>codomain</span>,
   properties <span class='op'>=</span> <span class='st'>"deterministic"</span>
 <span class='op'>)</span>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
