@@ -53,9 +53,6 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
-</li>
-<li>
   <a href="https://mlr3book.mlr-org.com">
     <span class="fa fa-link"></span>
      
@@ -101,9 +98,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="bbotk---black-box-optimization-toolkit" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#bbotk---black-box-optimization-toolkit" class="anchor"></a>bbotk - Black-Box Optimization Toolkit</h1></div>
+
 <p>Package website: <a href="https://bbotk.mlr-org.com/">release</a> | <a href="https://bbotk.mlr-org.com/dev/">dev</a></p>
 <!-- badges: start -->
 <p><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=main" alt="tic"></a> <a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a> <!-- badges: end --></p>
@@ -119,13 +114,21 @@
 <code>Terminator</code>: Objects of this class control the termination of the optimization independent of the optimizer.</li>
 </ul>
 <p>Various optimization methods are already implemented e.g. grid search, random search and generalized simulated annealing.</p>
+<div id="resources" class="section level2">
+<h2 class="hasAnchor">
+<a href="#resources" class="anchor"></a>Resources</h2>
+<ul>
+<li>Package <a href="https://cran.r-project.org/web/packages/bbotk/vignettes/bbotk.html">vignette</a>
+</li>
+</ul>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>CRAN version</p>
+<p>Install the last release from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"bbotk"</span><span class="op">)</span></code></pre></div>
-<p>Development version</p>
+<p>Install the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/bbotk"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -172,12 +175,11 @@
 <span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span>
 
 <span class="co"># Trigger optimization</span>
-<span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span>
+<span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">##    x1 x2  x_domain  y</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## 1:  2 -3 &lt;list[2]&gt; 10</span></span></code></pre></div>
+</div>
 
-<span class="co"># View results</span>
-<span class="va">instance</span><span class="op">$</span><span class="va">result</span></code></pre></div>
-</div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
