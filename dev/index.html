@@ -98,9 +98,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="bbotk---black-box-optimization-toolkit" class="section level1">
+<div id="bbotk" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#bbotk---black-box-optimization-toolkit" class="anchor"></a>bbotk - Black-Box Optimization Toolkit</h1></div>
+<a href="#bbotk" class="anchor"></a>bbotk</h1></div>
 <p>Package website: <a href="https://bbotk.mlr-org.com/">release</a> | <a href="https://bbotk.mlr-org.com/dev/">dev</a></p>
 <!-- badges: start -->
 <p><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=main" alt="tic"></a> <a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a> <!-- badges: end --></p>
@@ -134,56 +134,31 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/bbotk"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="examples" class="section level2">
+<div id="example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h2>
-<div id="quick-optimization-with-bb_optimize" class="section level3">
-<h3 class="hasAnchor">
-<a href="#quick-optimization-with-bb_optimize" class="anchor"></a>Quick optimization with <code>bb_optimize</code>
-</h3>
+<a href="#example" class="anchor"></a>Example</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bbotk.mlr-org.com">bbotk</a></span><span class="op">)</span>
-
-<span class="co"># define objective function</span>
-<span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="co"># optimize function with random search</span>
-<span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="reference/bb_optimize.html">bb_optimize</a></span><span class="op">(</span><span class="va">fun</span>, method <span class="op">=</span> <span class="st">"random_search"</span>, lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, max_evals <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-
-<span class="co"># optimized parameters</span>
-<span class="va">result</span><span class="op">$</span><span class="va">par</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">##           x1       x2</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## 1: -7.982537 4.273021</span></span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bbotk.mlr-org.com">bbotk</a></span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## Loading required package: paradox</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># optimal outcome</span>
-<span class="va">result</span><span class="op">$</span><span class="va">value</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">##        y1 </span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## -142.5479</span></span></code></pre></div>
-</div>
-<div id="advanced-optimization" class="section level3">
-<h3 class="hasAnchor">
-<a href="#advanced-optimization" class="anchor"></a>Advanced optimization</h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># define objective function</span>
+<code class="sourceCode R"><span class="co"># Define objective function</span>
 <span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="co"># set domain</span>
+<span class="co"># Set domain</span>
 <span class="va">domain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>
   x1 <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,
   x2 <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="co"># set codomain</span>
+<span class="co"># Set codomain</span>
 <span class="va">codomain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>
   y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="co"># create Objective object</span>
-<span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+<span class="co"># Create Objective object</span>
+<span class="va">obfun</span> <span class="op">=</span> <span class="va"><a href="reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
   fun <span class="op">=</span> <span class="va">fun</span>,
   domain <span class="op">=</span> <span class="va">domain</span>,
   codomain <span class="op">=</span> <span class="va">codomain</span>,
@@ -191,41 +166,21 @@
 <span class="op">)</span>
 
 <span class="co"># Define termination criterion</span>
-<span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
 
-<span class="co"># create optimization instance</span>
+<span class="co"># Create optimization instance</span>
 <span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="reference/OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  objective <span class="op">=</span> <span class="va">objective</span>,
+  objective <span class="op">=</span> <span class="va">obfun</span>,
   terminator <span class="op">=</span> <span class="va">terminator</span>
 <span class="op">)</span>
 
-<span class="co"># load optimizer</span>
+<span class="co"># Load optimizer</span>
 <span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span>
 
-<span class="co"># trigger optimization</span>
+<span class="co"># Trigger optimization</span>
 <span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">##           x1        x2  x_domain        y</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">## 1: 0.3359377 -2.310494 &lt;list[2]&gt; 6.755478</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># best performing configuration</span>
-<span class="va">instance</span><span class="op">$</span><span class="va">result</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">##           x1        x2  x_domain        y</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="co">## 1: 0.3359377 -2.310494 &lt;list[2]&gt; 6.755478</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># all evaluated configuration</span>
-<span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">##             x1        x2          y           timestamp batch_nr x_domain_x1 x_domain_x2</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="co">##  1:  0.3359367 -2.310494   6.755475 2021-07-06 16:19:57        1   0.3359367   -2.310494</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="co">##  2: -0.9046005  4.567793 -55.708198 2021-07-06 16:19:57        2  -0.9046005    4.567793</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co">##  3: -7.8034191 -2.551681 -86.308016 2021-07-06 16:19:57        3  -7.8034191   -2.551681</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co">##  4: -8.3482136 -2.551681 -97.286514 2021-07-06 16:19:57        4  -8.3482136   -2.551681</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="co">##  5: -8.3482136 -1.985619 -98.114492 2021-07-06 16:19:57        5  -8.3482136   -1.985619</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">##  6:  0.3359367 -2.310494   6.755475 2021-07-06 16:19:57        6   0.3359367   -2.310494</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co">##  7:  0.3359377 -2.310494   6.755478 2021-07-06 16:19:57        7   0.3359377   -2.310494</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">##  8:  0.3359357 -2.310494   6.755472 2021-07-06 16:19:57        8   0.3359357   -2.310494</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="co">##  9:  0.3359367 -2.310493   6.755474 2021-07-06 16:19:57        9   0.3359367   -2.310493</span></span>
-<span id="cb12-11"><a href="#cb12-11"></a><span class="co">## 10:  0.3359367 -2.310495   6.755476 2021-07-06 16:19:57       10   0.3359367   -2.310495</span></span></code></pre></div>
-</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">##    x1 x2  x_domain  y</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## 1:  2 -3 &lt;list[2]&gt; 10</span></span></code></pre></div>
 </div>
 </div>
   </div>
