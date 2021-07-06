@@ -93,6 +93,7 @@ Collate:
     'TerminatorStagnation.R'
     'TerminatorStagnationBatch.R'
     'assertions.R'
+    'bb_optimize.R'
     'bbotk_reflections.R'
     'bibentries.R'
     'helper.R'

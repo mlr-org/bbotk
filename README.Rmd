@@ -46,33 +46,54 @@ Install the development version from GitHub:
 remotes::install_github("mlr-org/bbotk")
 ```
 
-## Example
+## Examples
+
+```{r, include = FALSE}
+# mute load messages
+library(bbotk)
+```
+
+### Quick optimization with `bb_optimize`
 
 ```{r}
 library(bbotk)
 
-
-
-
-
-# Define objective function
+# define objective function
 fun = function(xs) {
   c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
-# Set domain
+# optimize function with random search
+result = bb_optimize(fun, method = "random_search", lower = c(-10, -5), upper = c(10, 5), max_evals = 100)
+
+# optimized parameters
+result$par
+
+# optimal outcome
+result$value
+```
+
+### Advanced optimization
+
+```{r}
+# define objective function
+fun = function(xs) {
+  c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+}
+
+# set domain
 domain = ps(
   x1 = p_dbl(-10, 10),
   x2 = p_dbl(-5, 5)
 )
 
-# Set codomain
+# set codomain
 codomain = ps(
   y = p_dbl(tags = "maximize")
 )
 
-# Create Objective object
-obfun = ObjectiveRFun$new(
+# create Objective object
+objective = ObjectiveRFun$new(
   fun = fun,
   domain = domain,
   codomain = codomain,
@@ -80,17 +101,23 @@ obfun = ObjectiveRFun$new(
 )
 
 # Define termination criterion
-terminator = trm("evals", n_evals = 20)
+terminator = trm("evals", n_evals = 10)
 
-# Create optimization instance
+# create optimization instance
 instance = OptimInstanceSingleCrit$new(
-  objective = obfun,
+  objective = objective,
   terminator = terminator
 )
 
-# Load optimizer
+# load optimizer
 optimizer = opt("gensa")
 
-# Trigger optimization
+# trigger optimization
 optimizer$optimize(instance)
+
+# best performing configuration
+instance$result
+
+# all evaluated configuration
+as.data.table(instance$archive)
 ```
