@@ -1,4 +1,6 @@
 
+# bbotk
+
 Package website: [release](https://bbotk.mlr-org.com/) |
 [dev](https://bbotk.mlr-org.com/dev/)
 
@@ -50,7 +52,11 @@ remotes::install_github("mlr-org/bbotk")
 
 ``` r
 library(bbotk)
+```
 
+    ## Loading required package: paradox
+
+``` r
 # Define objective function
 fun = function(xs) {
   c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
