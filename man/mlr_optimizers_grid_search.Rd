@@ -66,13 +66,13 @@ instance = OptimInstanceSingleCrit$new(
 
 optimizer = opt("grid_search")
 
-# Modifies the instance by reference
+# modifies the instance by reference
 optimizer$optimize(instance)
 
-# Returns best scoring evaluation
+# returns best scoring evaluation
 instance$result
 
-# Allows access of data.table of full path of all evaluations
+# allows access of data.table of full path of all evaluations
 as.data.table(instance$archive$data)
 }
 \section{Super class}{

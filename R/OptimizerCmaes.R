@@ -4,8 +4,10 @@
 #' @name mlr_optimizers_cmaes
 #'
 #' @description
-#' `OptimizerCmaes` class that implements CMA-ES. Calls
-#' [adagio::pureCMAES()] from package \CRANpkg{adagio}.
+#' `OptimizerCmaes` class that implements CMA-ES. Calls [adagio::pureCMAES()]
+#' from package \CRANpkg{adagio}. The algorithm is typically applied to search
+#' space dimensions between three and fifty. Lower search space dimensions might
+#' crash.
 #'
 #' @templateVar id cmaes
 #' @template section_dictionary_optimizers
@@ -27,34 +29,36 @@
 #' @export
 #' @examples
 #' if(requireNamespace("adagio")) {
-#'
-#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
-#'
-#' codomain = ps(y = p_dbl(tags = "minimize"))
-#'
+#' search_space = domain = ps(
+#'   x1 = p_dbl(-10, 10),
+#'   x2 = p_dbl(-5, 5)
+#' )
+#' 
+#' codomain = ps(y = p_dbl(tags = "maximize"))
+#' 
 #' objective_function = function(xs) {
-#'   list(y = as.numeric(xs)^2)
+#'   c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 #' }
-#'
+#' 
 #' objective = ObjectiveRFun$new(
-#'  fun = objective_function,
-#'  domain = domain,
-#'  codomain = codomain)
-#'
+#'   fun = objective_function,
+#'   domain = domain,
+#'   codomain = codomain)
+#' 
 #' instance = OptimInstanceSingleCrit$new(
-#'  objective = objective,
-#'  search_space = search_space,
-#'  terminator = trm("evals", n_evals = 10))
-#'
+#'   objective = objective,
+#'   search_space = search_space,
+#'   terminator = trm("evals", n_evals = 10))
+#' 
 #' optimizer = opt("cmaes")
-#'
-#' # Modifies the instance by reference
+#' 
+#' # modifies the instance by reference
 #' optimizer$optimize(instance)
-#'
-#' # Returns best scoring evaluation
+#' 
+#' # returns best scoring evaluation
 #' instance$result
-#'
-#' # Allows access of data.table of full path of all evaluations
+#' 
+#' # allows access of data.table of full path of all evaluations
 #' as.data.table(instance$archive$data)
 #' }
 OptimizerCmaes = R6Class("OptimizerCmaes",
@@ -86,9 +90,10 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
       pv$stopeval = .Machine$integer.max # make sure pureCMAES does not stop
       pv$stopfitness = -Inf
 
-      invoke(adagio::pureCMAES, fun = inst$objective_function,
-             lower = inst$search_space$lower, upper = inst$search_space$upper,
-             .args = pv)
+      if (length(pv$par) < 2) warning("CMA-ES is typically applied to search space dimensions between three and fifty. A lower search space dimension might crash.")
+
+      invoke(adagio::pureCMAES, fun = inst$objective_function, lower = inst$search_space$lower, 
+        upper = inst$search_space$upper, .args = pv)
     }
   )
 )
