@@ -98,7 +98,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
+<div id="bbotk" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#bbotk" class="anchor"></a>bbotk</h1></div>
 <p>Package website: <a href="https://bbotk.mlr-org.com/">release</a> | <a href="https://bbotk.mlr-org.com/dev/">dev</a></p>
 <!-- badges: start -->
 <p><a href="https://github.com/mlr-org/bbotk/actions"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=main" alt="tic"></a> <a href="https://cran.r-project.org/package=bbotk"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a> <!-- badges: end --></p>
@@ -136,9 +138,10 @@
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bbotk.mlr-org.com">bbotk</a></span><span class="op">)</span>
-
-<span class="co"># Define objective function</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bbotk.mlr-org.com">bbotk</a></span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## Loading required package: paradox</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Define objective function</span>
 <span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span>
 <span class="op">}</span>
@@ -176,10 +179,10 @@
 
 <span class="co"># Trigger optimization</span>
 <span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">##    x1 x2  x_domain  y</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## 1:  2 -3 &lt;list[2]&gt; 10</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">##    x1 x2  x_domain  y</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## 1:  2 -3 &lt;list[2]&gt; 10</span></span></code></pre></div>
 </div>
-
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
