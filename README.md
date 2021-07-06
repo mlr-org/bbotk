@@ -29,15 +29,20 @@ This package provides a common framework for optimization including
 Various optimization methods are already implemented e.g. grid search,
 random search and generalized simulated annealing.
 
+## Resources
+
+  - Package
+    [vignette](https://cran.r-project.org/web/packages/bbotk/vignettes/bbotk.html)
+
 ## Installation
 
-CRAN version
+Install the last release from CRAN:
 
 ``` r
 install.packages("bbotk")
 ```
 
-Development version
+Install the development version from GitHub:
 
 ``` r
 remotes::install_github("mlr-org/bbotk")
@@ -47,23 +52,26 @@ remotes::install_github("mlr-org/bbotk")
 
 ``` r
 library(bbotk)
-library(paradox)
+```
 
+    ## Loading required package: paradox
+
+``` r
 # Define objective function
 fun = function(xs) {
   c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
 # Set domain
-domain = ParamSet$new(list(
-  ParamDbl$new("x1", -10, 10),
-  ParamDbl$new("x2", -5, 5)
-))
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
 
 # Set codomain
-codomain = ParamSet$new(list(
-  ParamDbl$new("y", tags = "maximize")
-))
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
 
 # Create Objective object
 obfun = ObjectiveRFun$new(

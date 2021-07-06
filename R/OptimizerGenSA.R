@@ -31,26 +31,24 @@
 #' @export
 #' @examples
 #' if(requireNamespace("GenSA")) {
-#' library(paradox)
 #'
-#' domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#' search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+#' codomain = ps(y = p_dbl(tags = "minimize"))
 #'
 #' objective_function = function(xs) {
 #'   list(y = as.numeric(xs)^2)
 #' }
 #'
-#' objective = ObjectiveRFun$new(fun = objective_function,
-#'                               domain = domain,
-#'                               codomain = codomain)
-#' terminator = trm("evals", n_evals = 10)
+#' objective = ObjectiveRFun$new(
+#'  fun = objective_function,
+#'  domain = domain,
+#'  codomain = codomain)
+#' 
 #' instance = OptimInstanceSingleCrit$new(
 #'  objective = objective,
 #'  search_space = search_space,
-#'  terminator = terminator)
+#'  terminator = trm("evals", n_evals = 10))
 #'
 #' optimizer = opt("cmaes")
 #'
@@ -69,15 +67,15 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamLgl$new("smooth", default = TRUE),
-        ParamDbl$new("temperature", default = 5230),
-        ParamDbl$new("acceptance.param", default = -5),
-        ParamLgl$new("verbose", default = FALSE),
-        ParamLgl$new("trace.mat", default = TRUE)
-      ))
+      param_set = ps(
+        smooth = p_lgl(default = TRUE),
+        temperature = p_dbl(default = 5230),
+        acceptance.param = p_dbl(default = -5),
+        verbose = p_lgl(default = FALSE),
+        trace.mat = p_lgl(default = TRUE)
+      )
       super$initialize(
-        param_set = ps,
+        param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
         packages = "GenSA"

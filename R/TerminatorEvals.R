@@ -29,10 +29,11 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(ParamInt$new("n_evals", lower = 1L, default = 100L,
-        tags = "required")))
-      ps$values = list(n_evals = 100L)
-      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
+      param_set = ps(
+        n_evals = p_int(lower = 1L, default = 100L, tags = "required")
+      )
+      param_set$values = list(n_evals = 100L)
+      super$initialize(param_set = param_set, properties = c("single-crit", "multi-crit"))
       self$unit = "evaluations"
     },
 

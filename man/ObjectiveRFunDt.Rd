@@ -47,7 +47,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   codomain = NULL,
   id = "function",
   properties = character(),
-  constants = ParamSet$new(),
+  constants = ps(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
@@ -88,7 +88,7 @@ validity?}
 \if{latex}{\out{\hypertarget{method-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
 Evaluates multiple input values received as a list, converted to a \code{data.table()} on the
-objective function.
+objective function. Missing columns in xss are filled with \code{NA}s in \code{xdt}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFunDt$eval_many(xss)}\if{html}{\out{</div>}}
 }

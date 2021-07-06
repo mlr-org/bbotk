@@ -22,9 +22,9 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(fun, domain, codomain = NULL, id = "function",
-      properties = character(), constants = ParamSet$new(), check_values = TRUE) {
+      properties = character(), constants = ps(), check_values = TRUE) {
       if (is.null(codomain)) {
-        codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+        codomain = ps(y = p_dbl(tags = "minimize"))
       }
       private$.fun = assert_function(fun, "xdt")
       # asserts id, domain, codomain, properties
@@ -34,7 +34,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
 
     #' @description
     #' Evaluates multiple input values received as a list, converted to a `data.table()` on the
-    #' objective function.
+    #' objective function. Missing columns in xss are filled with `NA`s in `xdt`.
     #'
     #' @param xss (`list()`)\cr
     #'   A list of lists that contains multiple x values, e.g.
@@ -45,10 +45,8 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = private$.fun(rbindlist(xss))
-      if (self$check_values) {
-        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      }
+      res = private$.fun(rbindlist(xss, use.names = TRUE, fill = TRUE))
+      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     },
 
@@ -61,9 +59,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     eval_dt = function(xdt) {
       if (self$check_values) self$domain$assert_dt(xdt)
       res = private$.fun(xdt)
-      if (self$check_values) {
-        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      }
+      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     }
   ),

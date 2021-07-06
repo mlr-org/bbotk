@@ -67,8 +67,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   id = "f",
   properties = character(),
   domain,
-  codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
-  constants = ParamSet$new(),
+  codomain = ps(y = p_dbl(tags = "minimize")),
+  constants = ps(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }

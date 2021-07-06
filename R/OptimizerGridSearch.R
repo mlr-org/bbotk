@@ -38,14 +38,14 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamInt$new("batch_size", lower = 1L, tags = "required"),
-        ParamInt$new("resolution", lower = 1L),
-        ParamUty$new("param_resolutions")
-      ))
-      ps$values = list(resolution = 10L, batch_size = 1L)
+      param_set = ps(
+        batch_size = p_int(lower = 1L, tags = "required"),
+        resolution = p_int(lower = 1L),
+        param_resolutions = p_uty()
+      )
+      param_set$values = list(resolution = 10L, batch_size = 1L)
       super$initialize(
-        param_set = ps,
+        param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
         properties = c("dependencies", "single-crit", "multi-crit")
       )
