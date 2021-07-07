@@ -50,6 +50,7 @@ Imports:
 Suggests:
     adagio,
     GenSA,
+    irace,
     knitr,
     nloptr,
     progressr,
@@ -79,6 +80,7 @@ Collate:
     'OptimizerDesignPoints.R'
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
+    'OptimizerIrace.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
     'Progressor.R'
@@ -97,5 +99,6 @@ Collate:
     'bbotk_reflections.R'
     'bibentries.R'
     'helper.R'
+    'helper_irace.R'
     'sugar.R'
     'zzz.R'
