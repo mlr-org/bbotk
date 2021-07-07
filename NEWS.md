@@ -1,6 +1,7 @@
 # bbotk 0.3.2.9000
 
-- Adds `bb_optimize()` function for quick optimization.
+* Adds `bb_optimize()` function for quick optimization.
+* Adds `OptimizerIrace` from irace package.
 
 # bbotk 0.3.2
 
