@@ -1,7 +1,6 @@
 # bbotk 0.3.2.9000
 
-- Same as previous version.
-
+- Adds `bb_optimize()` function for quick optimization.
 
 # bbotk 0.3.2
 
@@ -43,4 +42,3 @@
 # bbotk 0.2
 
 * First version of the Black-Box Optimization Toolkit
-

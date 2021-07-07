@@ -33,7 +33,9 @@ Objective = R6Class("Objective",
     codomain = NULL,
 
     #' @field constants ([paradox::ParamSet]).\cr
-    #' Changeable constants or parameters that are not subject to tuning can be stored and accessed here.
+    #' Changeable constants or parameters that are not subject to tuning can be
+    #' stored and accessed here. Set constant values are passed to `$.eval()`
+    #' and `$.eval_many()` as named arguments.
     constants = NULL,
 
     #' @field check_values (`logical(1)`)\cr
@@ -45,8 +47,8 @@ Objective = R6Class("Objective",
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
     initialize = function(id = "f", properties = character(), domain,
-      codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
-      constants = ParamSet$new(), check_values = TRUE) {
+      codomain = ps(y = p_dbl(tags = "minimize")),
+      constants = ps(), check_values = TRUE) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
       self$codomain = assert_codomain(codomain)
@@ -94,7 +96,7 @@ Objective = R6Class("Objective",
     #' These extra entries are referred to as *extras*.
     eval = function(xs) {
       if (self$check_values) self$domain$assert(xs)
-      res = private$.eval(xs)
+      res = invoke(private$.eval, xs, .args = self$constants$values)
       if (self$check_values) self$codomain$assert(res[self$codomain$ids()])
       return(res)
     },
@@ -119,7 +121,7 @@ Objective = R6Class("Objective",
     #' These extra columns are referred to as *extras*.
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = private$.eval_many(xss)
+      res = invoke(private$.eval_many, xss, .args = self$constants$values)
       if (self$check_values) {
         self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       }
@@ -148,11 +150,11 @@ Objective = R6Class("Objective",
   ),
 
   private = list(
-    .eval = function(xs) {
+    .eval = function(xs, ...) { # ... allows constants
       as.list(self$eval_many(list(xs)))
     },
 
-    .eval_many = function(xss) {
+    .eval_many = function(xss, ...) {
       res = map_dtr(xss, function(xs) {
         ys = self$eval(xs)
         as.data.table(lapply(ys, function(y) if (is.list(y)) list(y) else y))

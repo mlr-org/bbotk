@@ -28,28 +28,24 @@
 #'
 #' @export
 #' @examples
-#' library(paradox)
 #' library(data.table)
+#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#' domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+#' codomain = ps(y = p_dbl(tags = "minimize"))
 #'
 #' objective_function = function(xs) {
 #'   list(y = as.numeric(xs)^2)
 #' }
 #'
-#' objective = ObjectiveRFun$new(fun = objective_function,
-#'   domain = domain,
-#'   codomain = codomain)
-#' terminator = trm("evals", n_evals = 10)
+#' objective = ObjectiveRFun$new(
+#'  fun = objective_function,
+#'  domain = domain,
+#'  codomain = codomain)
+#' 
 #' instance = OptimInstanceSingleCrit$new(
 #'  objective = objective,
 #'  search_space = search_space,
-#'  terminator = terminator)
-#'
+#'  terminator = trm("evals", n_evals = 10))
 #'
 #' design = data.table(x = c(0, 1))
 #'
@@ -69,15 +65,14 @@ OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamInt$new("batch_size", lower = 1L, tags = "required"),
-        ParamUty$new("design", tags = "required", custom_check = function(x) {
-          check_data_table(x, min.rows = 1, min.cols = 1, null.ok = TRUE)
-        })
-      ))
-      ps$values = list(batch_size = 1L, design = NULL)
+      param_set = ps(
+        batch_size = p_int(lower = 1L, tags = "required"),
+        design = p_uty(tags = "required", custom_check = function(x) {
+          check_data_table(x, min.rows = 1, min.cols = 1, null.ok = TRUE)})
+      )
+      param_set$values = list(batch_size = 1L, design = NULL)
       super$initialize(
-        param_set = ps,
+        param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"),
         properties = c("dependencies", "single-crit", "multi-crit")
       )

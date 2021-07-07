@@ -7,31 +7,27 @@
 Objective interface where the user can pass a custom R function that expects a list as input.
 }
 \examples{
-library(paradox)
-# Define objective function
+# define objective function
 fun = function(xs) {
   - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
 }
 
-# Set domain
-domain = ParamSet$new(list(
-  ParamDbl$new("x1", -10, 10),
-  ParamDbl$new("x2", -5, 5)
-))
+# set domain
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
 
-# Set codomain
-codomain = ParamSet$new(list(
-  ParamDbl$new("y", tags = "maximize")
-))
+# set codomain
+codomain = ps(y = p_dbl(tags = "maximize"))
 
-# Create Objective object
+# create Objective object
 obfun = ObjectiveRFun$new(
   fun = fun,
   domain = domain,
   codomain = codomain,
   properties = "deterministic"
 )
-
 }
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFun}
@@ -74,7 +70,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   codomain = NULL,
   id = "function",
   properties = character(),
-  constants = ParamSet$new(),
+  constants = ps(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }

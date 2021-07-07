@@ -39,21 +39,20 @@
 #' @examples
 #' \donttest{
 #' if(requireNamespace("nloptr")) {
-#' library(paradox)
 #'
-#' domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#' search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-#'
-#' codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+#' codomain = ps(y = p_dbl(tags = "minimize"))
 #'
 #' objective_function = function(xs) {
 #'   list(y = as.numeric(xs)^2)
 #' }
 #'
-#' objective = ObjectiveRFun$new(fun = objective_function,
-#'   domain = domain,
-#'   codomain = codomain)
+#' objective = ObjectiveRFun$new(
+#'  fun = objective_function,
+#'  domain = domain,
+#'  codomain = codomain)
+#'
 #'
 #' # We use the internal termination criterion xtol_rel
 #' terminator = trm("none")
@@ -73,45 +72,38 @@
 #'
 #' # Allows access of data.table of full path of all evaluations
 #' as.data.table(instance$archive)
-#' }
-#' }
+#' }}
 OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
   public = list(
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamFct$new("algorithm", levels =
-          c("NLOPT_GN_DIRECT", "NLOPT_GN_DIRECT_L", "NLOPT_GN_DIRECT_L_RAND",
-            "NLOPT_GN_DIRECT_NOSCAL", "NLOPT_GN_DIRECT_L_NOSCAL",
-            "NLOPT_GN_DIRECT_L_RAND_NOSCAL", "NLOPT_GN_ORIG_DIRECT",
-            "NLOPT_GN_ORIG_DIRECT_L", "NLOPT_GD_STOGO", "NLOPT_GD_STOGO_RAND",
-            "NLOPT_LD_SLSQP", "NLOPT_LD_LBFGS_NOCEDAL", "NLOPT_LD_LBFGS",
-            "NLOPT_LN_PRAXIS", "NLOPT_LD_VAR1", "NLOPT_LD_VAR2",
-            "NLOPT_LD_TNEWTON", "NLOPT_LD_TNEWTON_RESTART",
-            "NLOPT_LD_TNEWTON_PRECOND", "NLOPT_LD_TNEWTON_PRECOND_RESTART",
-            "NLOPT_GN_CRS2_LM", "NLOPT_GN_MLSL", "NLOPT_GD_MLSL",
-            "NLOPT_GN_MLSL_LDS", "NLOPT_GD_MLSL_LDS", "NLOPT_LD_MMA",
-            "NLOPT_LD_CCSAQ", "NLOPT_LN_COBYLA", "NLOPT_LN_NEWUOA",
-            "NLOPT_LN_NEWUOA_BOUND", "NLOPT_LN_NELDERMEAD", "NLOPT_LN_SBPLX",
-            "NLOPT_LN_AUGLAG", "NLOPT_LD_AUGLAG", "NLOPT_LN_AUGLAG_EQ",
-            "NLOPT_LD_AUGLAG_EQ", "NLOPT_LN_BOBYQA", "NLOPT_GN_ISRES"),
-        tags = "required"),
-        ParamUty$new("eval_g_ineq", default = NULL),
-        ParamDbl$new("xtol_rel", default = 10^-4, lower = 0, upper = Inf,
-          special_vals = list(-1)),
-        ParamDbl$new("xtol_abs", default = 0, lower = 0, upper = Inf,
-          special_vals = list(-1)),
-        ParamDbl$new("ftol_rel", default = 0, lower = 0, upper = Inf,
-          special_vals = list(-1)),
-        ParamDbl$new("ftol_abs", default = 0, lower = 0, upper = Inf,
-          special_vals = list(-1)),
-        ParamFct$new("start_values", default = "random", levels = c("random", "center"))
-      ))
-      ps$values$start_values = "random"
-      super$initialize(param_set = ps, param_classes = "ParamDbl",
-        properties = "single-crit", packages = "nloptr")
+      param_set = ps(
+        algorithm = p_fct(levels = c(
+          "NLOPT_GN_DIRECT_L", "NLOPT_GN_DIRECT_L_RAND", "NLOPT_GN_DIRECT_NOSCAL", "NLOPT_GN_DIRECT_L_NOSCAL",
+          "NLOPT_GN_DIRECT_L_RAND_NOSCAL", "NLOPT_GN_ORIG_DIRECT", "NLOPT_GN_ORIG_DIRECT_L", "NLOPT_GD_STOGO",
+          "NLOPT_GD_STOGO_RAND", "NLOPT_LD_SLSQP", "NLOPT_LD_LBFGS_NOCEDAL", "NLOPT_LD_LBFGS", "NLOPT_LN_PRAXIS", 
+          "NLOPT_LD_VAR1", "NLOPT_LD_VAR2", "NLOPT_LD_TNEWTON", "NLOPT_LD_TNEWTON_RESTART", "NLOPT_LD_TNEWTON_PRECOND",
+          "NLOPT_LD_TNEWTON_PRECOND_RESTART", "NLOPT_GN_CRS2_LM", "NLOPT_GN_MLSL", "NLOPT_GD_MLSL", "NLOPT_GN_MLSL_LDS",
+          "NLOPT_GD_MLSL_LDS", "NLOPT_LD_MMA", "NLOPT_LD_CCSAQ", "NLOPT_LN_COBYLA", "NLOPT_LN_NEWUOA", 
+          "NLOPT_LN_NEWUOA_BOUND", "NLOPT_LN_NELDERMEAD", "NLOPT_LN_SBPLX", "NLOPT_LN_AUGLAG", "NLOPT_LD_AUGLAG",
+          "NLOPT_LN_AUGLAG_EQ", "NLOPT_LD_AUGLAG_EQ", "NLOPT_LN_BOBYQA", "NLOPT_GN_ISRES"), 
+          tags = "required"),
+        eval_g_ineq = p_uty(default = NULL),
+        xtol_rel = p_dbl(default = 10^-4, lower = 0, upper = Inf, special_vals = list(-1)),
+        xtol_abs = p_dbl(default = 0, lower = 0, upper = Inf, special_vals = list(-1)),
+        ftol_rel = p_dbl(default = 0, lower = 0, upper = Inf, special_vals = list(-1)),
+        ftol_abs = p_dbl(default = 0, lower = 0, upper = Inf, special_vals = list(-1)),
+        start_values = p_fct(default = "random", levels = c("random", "center"))
+      )
+      param_set$values$start_values = "random"
+
+      super$initialize(
+        param_set = param_set,
+        param_classes = "ParamDbl",
+        properties = "single-crit",
+        packages = "nloptr")
     }
   ),
 

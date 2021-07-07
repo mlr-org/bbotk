@@ -104,8 +104,7 @@ Archive = R6Class("Archive",
       } else {
         assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
       }
-      batch_nr = NULL # CRAN check
-      tab = self$data[batch_nr %in% batch]
+      tab = self$data[get("batch_nr") %in% batch, ]
 
       max_to_min = mult_max_to_min(self$codomain)
       if (self$codomain$length == 1L) {

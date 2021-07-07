@@ -5,8 +5,10 @@
 \alias{OptimizerCmaes}
 \title{Optimization via Covariance Matrix Adaptation Evolution Strategy}
 \description{
-\code{OptimizerCmaes} class that implements CMA-ES. Calls
-\code{\link[adagio:cmaes]{adagio::pureCMAES()}} from package \CRANpkg{adagio}.
+\code{OptimizerCmaes} class that implements CMA-ES. Calls \code{\link[adagio:cmaes]{adagio::pureCMAES()}}
+from package \CRANpkg{adagio}. The algorithm is typically applied to search
+space dimensions between three and fifty. Lower search space dimensions might
+crash.
 }
 \section{Dictionary}{
 
@@ -40,37 +42,36 @@ combined with a \link{Terminator}. Simply wrap the function in
 
 \examples{
 if(requireNamespace("adagio")) {
-library(paradox)
+search_space = domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
 
-domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-
-search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-
-codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+codomain = ps(y = p_dbl(tags = "maximize"))
 
 objective_function = function(xs) {
-  list(y = as.numeric(xs)^2)
+  c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
-objective = ObjectiveRFun$new(fun = objective_function,
-                              domain = domain,
-                              codomain = codomain)
-terminator = trm("evals", n_evals = 10)
-instance = OptimInstanceSingleCrit$new(
- objective = objective,
- search_space = search_space,
- terminator = terminator)
+objective = ObjectiveRFun$new(
+  fun = objective_function,
+  domain = domain,
+  codomain = codomain)
 
+instance = OptimInstanceSingleCrit$new(
+  objective = objective,
+  search_space = search_space,
+  terminator = trm("evals", n_evals = 10))
 
 optimizer = opt("cmaes")
 
-# Modifies the instance by reference
+# modifies the instance by reference
 optimizer$optimize(instance)
 
-# Returns best scoring evaluation
+# returns best scoring evaluation
 instance$result
 
-# Allows access of data.table of full path of all evaluations
+# allows access of data.table of full path of all evaluations
 as.data.table(instance$archive$data)
 }
 }

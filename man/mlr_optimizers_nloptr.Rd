@@ -49,21 +49,20 @@ combined with a \link{Terminator}. Simply wrap the function in
 \examples{
 \donttest{
 if(requireNamespace("nloptr")) {
-library(paradox)
 
-domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
+search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 
-search_space = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-
-codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+codomain = ps(y = p_dbl(tags = "minimize"))
 
 objective_function = function(xs) {
   list(y = as.numeric(xs)^2)
 }
 
-objective = ObjectiveRFun$new(fun = objective_function,
-  domain = domain,
-  codomain = codomain)
+objective = ObjectiveRFun$new(
+ fun = objective_function,
+ domain = domain,
+ codomain = codomain)
+
 
 # We use the internal termination criterion xtol_rel
 terminator = trm("none")
@@ -83,8 +82,7 @@ instance$result
 
 # Allows access of data.table of full path of all evaluations
 as.data.table(instance$archive)
-}
-}
+}}
 }
 \section{Super class}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerNLoptr}

@@ -125,38 +125,38 @@ test_that("Objective specialzations work", {
 })
 
 test_that("codomain assertions work", {
-  domain = ParamSet$new(list(ParamDbl$new("x", lower = -1, upper = 1)))
-  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize")))
+  domain = ps(x = p_dbl(lower = -1, upper = 1))
+  codomain = ps(y1 = p_dbl(tags = "minimize"))
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
-  codomain = ParamSet$new(list(ParamDbl$new("y1")))
+  codomain = ps(y1 = p_dbl())
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
 
-  codomain = ParamSet$new(list(ParamLgl$new("y1")))
+  codomain = ps(y1 = p_lgl())
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
 
-  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = c("minimize", "maximize"))))
+  codomain = ps(y1 = p_dbl(tags = c("minimize", "maximize")))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
 
-  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2", tags = "maximize")))
+  codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_dbl(tags = "maximize"))
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
-  codomain = ParamSet$new(list(ParamDbl$new("y1"), ParamDbl$new("y2")))
+  codomain = ps(y1 = p_dbl(), y2 = p_dbl())
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
 
-  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2")))
+  codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_dbl())
   expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains no 'minimize' or 'maximize' tag")
 
-  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamLgl$new("y2", tags = "maximize")))
+  codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_lgl(tags = "maximize"))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain is not numeric")
 
-  codomain = ParamSet$new(list(ParamLgl$new("y1", tags = "minimize"), ParamLgl$new("y2", tags = "maximize")))
+  codomain = ps(y1 = p_lgl(tags = "minimize"), y2 = p_lgl(tags = "maximize"))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
 
-  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = "minimize"), ParamDbl$new("y2", tags = c("minimize", "maximize"))))
+  codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_dbl(tags = c("minimize", "maximize")))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains a 'minimize' and 'maximize' tag")
 
-  codomain = ParamSet$new(list(ParamDbl$new("y1", tags = c("minimize", "maximize")), ParamDbl$new("y2", tags = c("minimize", "maximize"))))
+  codomain = ps(y1 = p_dbl(tags = c("minimize", "maximize")), y2 = p_dbl(tags = c("minimize", "maximize")))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
 })
 
@@ -263,4 +263,59 @@ test_that("ObjectiveRFunDt works with deps #141", {
   xss = design$transpose(trafo = TRUE, filter_na = TRUE)
   res = rfun_dt$eval_many(xss)
   expect_equal(res, data.table(y = c(2, 1)))
+})
+
+test_that("Objective works with constants", {
+
+  # .eval implemented
+  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+    inherit = Objective,
+    private = list(
+      .eval = function(xs, c) list(y = xs[["x"]]^2 + c)
+    )
+  )
+
+  objective = ObjectiveTestEval$new(domain = PS_1D, constants = ps(c = p_dbl()))
+  objective$constants$values$c = 1
+
+  expect_equal(objective$eval(list(x = 1)), list(y = 2))
+  expect_equal(objective$eval(list(x = 0)), list(y = 1))
+  expect_equal(objective$eval_many(list(list(x = 1), list(x = 0))), data.table(y = c(2, 1)))
+  expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))
+
+  # .eval_many implemented
+  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+    inherit = Objective,
+    private = list(
+      .eval_many = function(xss, c) data.table(y = map_dbl(xss, function(xs) xs[["x"]]^2 + c))
+    )
+  )
+
+  objective = ObjectiveTestEval$new(domain = PS_1D, constants = ps(c = p_dbl()))
+  objective$constants$values$c = 1
+
+  expect_equal(objective$eval(list(x = 1)), list(y = 2))
+  expect_equal(objective$eval(list(x = 0)), list(y = 1))
+  expect_equal(objective$eval_many(list(list(x = 1), list(x = 0))), data.table(y = c(2, 1)))
+  expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))
+
+  # ObjectiveRFun
+  fun = function(xs, c) list(y = xs[["x"]]^2 + c)
+  objective = ObjectiveRFun$new(fun = fun, domain = PS_1D, constants = ps(c = p_dbl()))
+  objective$constants$values$c = 1
+
+  expect_equal(objective$eval(list(x = 1)), list(y = 2))
+  expect_equal(objective$eval(list(x = 0)), list(y = 1))
+  expect_equal(objective$eval_many(list(list(x = 1), list(x = 0))), data.table(y = c(2, 1)))
+  expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))
+
+  # ObjectiveRFunDt
+  fun = function(xdt, c) data.table(y = xdt[["x"]]^2 + c)
+  objective = ObjectiveRFunDt$new(fun = fun, domain = PS_1D, constants = ps(c = p_dbl()))
+  objective$constants$values$c = 1
+
+  expect_equal(objective$eval(list(x = 1)), list(y = 2))
+  expect_equal(objective$eval(list(x = 0)), list(y = 1))
+  expect_equal(objective$eval_many(list(list(x = 1), list(x = 0))), data.table(y = c(2, 1)))
+  expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))  
 })

@@ -66,13 +66,13 @@ Such spaces are defined using the package [`paradox`](https://cran.r-project.org
 ```{r}
 library(paradox)
 
-domain = ParamSet$new(list(
-  ParamDbl$new("x1", -10, 10),
-  ParamDbl$new("x2", -5, 5)
-))
-codomain = ParamSet$new(list(
-  ParamDbl$new("y", tags = "maximize")
-))
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
 obfun = ObjectiveRFun$new(
   fun = fun,
   domain = domain,
@@ -177,11 +177,11 @@ For simplicity we define our problem as a minimization problem.
 fun_volume = function(xs) {
   c(y = - (xs$h * xs$w * xs$d))
 }
-domain = ParamSet$new(list(
-  ParamDbl$new("h", lower = 0),
-  ParamDbl$new("w", lower = 0),
-  ParamDbl$new("d", lower = 0)
-))
+domain = ps(
+  h = p_dbl(lower = 0),
+  w = p_dbl(lower = 0),
+  d = p_dbl(lower = 0)
+)
 obj = ObjectiveRFun$new(
   fun = fun_volume,
   domain = domain
@@ -192,16 +192,16 @@ We notice, that our optimization problem has three parameters but due to the res
 Therefore we only need to optimize two parameters and calculate `h`, `w`, `d` accordingly.
 
 ```{r}
-search_space = ParamSet$new(list(
-  ParamDbl$new("h", lower = 0, upper = 1),
-  ParamDbl$new("w", lower = 0, upper = 1)
-))
-search_space$trafo = function(x, param_set){
-  x = unlist(x)
-  x["d"] = 2 - sum(x) # model d in dependence of h, w
-  x = x/sum(x) # ensure that h+w+d = 1
-  as.list(x)
-}
+search_space = ps(
+  h = p_dbl(lower = 0, upper = 1),
+  w = p_dbl(lower = 0, upper = 1),
+  .extra_trafo = function(x, param_set){
+    x = unlist(x)
+    x["d"] = 2 - sum(x) # model d in dependence of h, w
+    x = x/sum(x) # ensure that h+w+d = 1
+    as.list(x)
+  }
+)
 ```
 
 Instead of the domain of the `Objective` we now use our constructed `search_space` that includes the `trafo` for the `OptimInstance`.
