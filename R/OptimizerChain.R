@@ -8,6 +8,8 @@
 #'
 #' For each [Optimizer] an (optional) additional [Terminator] can be specified
 #' during construction.
+#' While the initial [Terminator] guards the optimization process as a whole,
+#' the additional [Terminator]s guard each individual [Optimizer].
 #'
 #' The optimization then works as follows:
 #' The first [Optimizer] is run on the [OptimInstance] using a [TerminatorCombo]
@@ -89,6 +91,9 @@ OptimizerChain = R6Class("OptimizerChain", inherit = Optimizer,
 
       param_sets = list()
       ids_taken = character(0L)
+      # for each optimizer check whether the id of the param_set
+      # (decuded from the optimizer class) is already taken;
+      # if necessary postfix the id
       for (i_opt in seq_along(optimizers)) {
         opt = optimizers[[i_opt]]
         ps = opt$param_set$clone(deep = TRUE)

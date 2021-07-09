@@ -9,6 +9,8 @@
 
 For each \link{Optimizer} an (optional) additional \link{Terminator} can be specified
 during construction.
+While the initial \link{Terminator} guards the optimization process as a whole,
+the additional \link{Terminator}s guard each individual \link{Optimizer}.
 
 The optimization then works as follows:
 The first \link{Optimizer} is run on the \link{OptimInstance} using a \link{TerminatorCombo}
