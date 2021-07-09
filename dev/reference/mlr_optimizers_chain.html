@@ -51,6 +51,8 @@
 <meta property="og:description" content="OptimizerChain allows to run different Optimizers sequentially.
 For each Optimizer an (optional) additional Terminator can be specified
 during construction.
+While the initial Terminator guards the optimization process as a whole,
+the additional Terminators guard each individual Optimizer.
 The optimization then works as follows:
 The first Optimizer is run on the OptimInstance using a TerminatorCombo
 of the original Terminator of the OptimInstance and the (optional)
@@ -161,7 +163,9 @@ construction." />
     <div class="ref-description">
     <p><code>OptimizerChain</code> allows to run different <a href='Optimizer.html'>Optimizer</a>s sequentially.</p>
 <p>For each <a href='Optimizer.html'>Optimizer</a> an (optional) additional <a href='Terminator.html'>Terminator</a> can be specified
-during construction.</p>
+during construction.
+While the initial <a href='Terminator.html'>Terminator</a> guards the optimization process as a whole,
+the additional <a href='Terminator.html'>Terminator</a>s guard each individual <a href='Optimizer.html'>Optimizer</a>.</p>
 <p>The optimization then works as follows:
 The first <a href='Optimizer.html'>Optimizer</a> is run on the <a href='OptimInstance.html'>OptimInstance</a> using a <a href='mlr_terminators_combo.html'>TerminatorCombo</a>
 of the original <a href='Terminator.html'>Terminator</a> of the <a href='OptimInstance.html'>OptimInstance</a> and the (optional)
