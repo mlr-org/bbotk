@@ -87,7 +87,7 @@ OptimizerChain = R6Class("OptimizerChain", inherit = Optimizer,
       assert_list(optimizers, types = "Optimizer", any.missing = FALSE)
       assert_list(terminators, types = c("Terminator", "NULL"), len = length(optimizers))
 
-      param_sets = list()
+      param_sets = vector(mode = "list", length = length(optimizers))
       ids_taken = character(0L)
       for (i_opt in seq_along(optimizers)) {
         opt = optimizers[[i_opt]]
@@ -156,4 +156,3 @@ OptimizerChain = R6Class("OptimizerChain", inherit = Optimizer,
 )
 
 mlr_optimizers$add("chain", OptimizerChain)
-
