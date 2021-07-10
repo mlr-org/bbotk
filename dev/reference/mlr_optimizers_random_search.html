@@ -231,9 +231,9 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>search_space</span> <span class='op'>=</span> <span class='va'>domain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span>lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>search_space</span> <span class='op'>=</span> <span class='va'>domain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>objective_function</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
@@ -263,16 +263,16 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 <span class='co'># allows access of data.table of full path of all evaluations</span>
 <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;               x           y  x_domain           timestamp batch_nr
-#&gt;  1: -0.08753960 0.007663182 &lt;list[1]&gt; 2021-07-09 16:50:54        1
-#&gt;  2: -0.33440048 0.111823683 &lt;list[1]&gt; 2021-07-09 16:50:54        2
-#&gt;  3:  0.13670534 0.018688349 &lt;list[1]&gt; 2021-07-09 16:50:54        3
-#&gt;  4: -0.49558855 0.245608011 &lt;list[1]&gt; 2021-07-09 16:50:54        4
-#&gt;  5: -0.07197287 0.005180094 &lt;list[1]&gt; 2021-07-09 16:50:54        5
-#&gt;  6:  0.83532101 0.697761196 &lt;list[1]&gt; 2021-07-09 16:50:54        6
-#&gt;  7:  0.94568844 0.894326618 &lt;list[1]&gt; 2021-07-09 16:50:54        7
-#&gt;  8:  0.63816489 0.407254431 &lt;list[1]&gt; 2021-07-09 16:50:54        8
-#&gt;  9:  0.80584760 0.649390349 &lt;list[1]&gt; 2021-07-09 16:50:54        9
-#&gt; 10:  0.16273209 0.026481732 &lt;list[1]&gt; 2021-07-09 16:50:54       10</div></pre>
+#&gt;  1: -0.55999934 0.313599263 &lt;list[1]&gt; 2021-07-10 04:15:48        1
+#&gt;  2:  0.45598188 0.207919472 &lt;list[1]&gt; 2021-07-10 04:15:48        2
+#&gt;  3: -0.56583108 0.320164806 &lt;list[1]&gt; 2021-07-10 04:15:48        3
+#&gt;  4: -0.08753960 0.007663182 &lt;list[1]&gt; 2021-07-10 04:15:48        4
+#&gt;  5: -0.33440048 0.111823683 &lt;list[1]&gt; 2021-07-10 04:15:48        5
+#&gt;  6:  0.13670534 0.018688349 &lt;list[1]&gt; 2021-07-10 04:15:48        6
+#&gt;  7: -0.49558855 0.245608011 &lt;list[1]&gt; 2021-07-10 04:15:48        7
+#&gt;  8: -0.07197287 0.005180094 &lt;list[1]&gt; 2021-07-10 04:15:48        8
+#&gt;  9:  0.83532101 0.697761196 &lt;list[1]&gt; 2021-07-10 04:15:48        9
+#&gt; 10:  0.94568844 0.894326618 &lt;list[1]&gt; 2021-07-10 04:15:48       10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
