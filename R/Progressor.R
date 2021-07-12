@@ -21,6 +21,10 @@ Progressor = R6Class("Progressor",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #' @param progressor (`progressr::progressor()`)\cr
+    #'   Progressor function.
+    #' @param unit (`character(1)`)\cr
+    #'   Unit of progress.
     initialize = function(progressor, unit) {
       self$progressor = progressor
       self$unit = unit

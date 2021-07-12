@@ -57,9 +57,18 @@ transform_xdt_to_xss = function(xdt, search_space) {
 #' @keywords internal
 #' @export
 optimize_default = function(inst, self, private) {
-
   assert_instance_properties(self, inst)
   inst$archive$start_time = Sys.time()
+  if (isNamespaceLoaded("progressr")) {
+    # initialize progressor
+    # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
+    max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
+    unit = assert_character(inst$terminator$unit)
+    progressor = progressr::progressor(steps = max_steps)
+    inst$progressor = Progressor$new(progressor, unit)
+    inst$progressor$max_steps = max_steps
+  }
+
   # start optimization
   lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
     inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))

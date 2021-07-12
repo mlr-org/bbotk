@@ -126,7 +126,7 @@ OptimInstance = R6Class("OptimInstance",
     #' columns for extra information.
     eval_batch = function(xdt) {
       # update progressor
-      if (isNamespaceLoaded("progressr")) self$progressor$update(self$terminator, self$archive)
+      if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
 
       if (self$is_terminated) stop(terminated_error(self))
 
