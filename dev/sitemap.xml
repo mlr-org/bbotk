@@ -64,6 +64,9 @@
     <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_design_points.html</loc>
   </url>
   <url>
+    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_focus_search.html</loc>
+  </url>
+  <url>
     <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_gensa.html</loc>
   </url>
   <url>
@@ -113,6 +116,9 @@
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/search_start.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/shrink_ps.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/transform_xdt_to_xss.html</loc>

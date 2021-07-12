@@ -233,9 +233,9 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"nloptr"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
-<span class='va'>search_space</span> <span class='op'>=</span> <span class='va'>domain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>search_space</span> <span class='op'>=</span> <span class='va'>domain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span>lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>objective_function</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
@@ -266,18 +266,20 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
 <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
 <span class='op'>}</span><span class='co'># }</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;              x          y           timestamp batch_nr x_domain_x
-#&gt;  1:  0.3996587 0.15972709 2021-07-12 04:15:20        1  0.3996587
-#&gt;  2:  0.3996587 0.15972709 2021-07-12 04:15:20        2  0.3996587
-#&gt;  3:  0.3996587 0.15972709 2021-07-12 04:15:20        3  0.3996587
-#&gt;  4:  0.8996587 0.80938580 2021-07-12 04:15:20        4  0.8996587
-#&gt;  5: -0.1003413 0.01006837 2021-07-12 04:15:20        5 -0.1003413
-#&gt;  6:  0.0000000 0.00000000 2021-07-12 04:15:20        6  0.0000000
-#&gt;  7:  0.0050000 0.00002500 2021-07-12 04:15:20        7  0.0050000
-#&gt;  8: -0.0050000 0.00002500 2021-07-12 04:15:20        8 -0.0050000
-#&gt;  9: -0.0005000 0.00000025 2021-07-12 04:15:20        9 -0.0005000
-#&gt; 10:  0.0005000 0.00000025 2021-07-12 04:15:20       10  0.0005000
-#&gt; 11:  0.0000000 0.00000000 2021-07-12 04:15:20       11  0.0000000</div></pre>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;                 x            y           timestamp batch_nr    x_domain_x
+#&gt;  1: -7.427948e-01 5.517442e-01 2021-07-12 08:35:35        1 -7.427948e-01
+#&gt;  2: -7.427948e-01 5.517442e-01 2021-07-12 08:35:35        2 -7.427948e-01
+#&gt;  3: -7.427948e-01 5.517442e-01 2021-07-12 08:35:35        3 -7.427948e-01
+#&gt;  4: -5.498910e-01 3.023801e-01 2021-07-12 08:35:35        4 -5.498910e-01
+#&gt;  5: -9.356987e-01 8.755321e-01 2021-07-12 08:35:35        5 -9.356987e-01
+#&gt;  6: -3.569871e-01 1.274398e-01 2021-07-12 08:35:35        6 -3.569871e-01
+#&gt;  7:  4.440892e-16 1.972152e-31 2021-07-12 08:35:35        7  4.440892e-16
+#&gt;  8:  1.929039e-02 3.721190e-04 2021-07-12 08:35:35        8  1.929039e-02
+#&gt;  9: -1.929039e-02 3.721190e-04 2021-07-12 08:35:35        9 -1.929039e-02
+#&gt; 10: -1.929039e-04 3.721190e-08 2021-07-12 08:35:35       10 -1.929039e-04
+#&gt; 11:  1.929039e-04 3.721190e-08 2021-07-12 08:35:35       11  1.929039e-04
+#&gt; 12: -1.929039e-05 3.721190e-10 2021-07-12 08:35:35       12 -1.929039e-05
+#&gt; 13:  2.514466e-22 6.322538e-44 2021-07-12 08:35:35       13  2.514466e-22</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
