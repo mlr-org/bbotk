@@ -230,6 +230,7 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
   param_set_new = ParamSet$new(params_new)
   param_set_new$deps = param_set$deps
   param_set_new$trafo = param_set$trafo
+  param_set_new$values = param_set$values  # needed for handling constants
   param_set_new
 }
 
