@@ -34,13 +34,13 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      ps = ParamSet$new(list(
-        ParamInt$new("batch_size", default = 1L, tags = "required")
-      ))
-      ps$values = list(batch_size = 1L)
+      param_set = ps(
+        batch_size = p_int(default = 1L, tags = "required")
+      )
+      param_set$values = list(batch_size = 1L)
 
       super$initialize(
-        param_set = ps,
+        param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
         properties = c("dependencies", "single-crit", "multi-crit")
       )

@@ -1,44 +1,45 @@
 # Simple 1D Function
-PS_1D_domain = ParamSet$new(list(
-  ParamDbl$new("x", lower = -1, upper = 1),
-  ParamUty$new("foo") # the domain of the function should not matter.
-))
-PS_1D = ParamSet$new(list(
-  ParamDbl$new("x", lower = -1, upper = 1)
-))
+PS_1D_domain = ps(
+  x = p_dbl(lower = -1, upper = 1),
+  foo = p_uty() # the domain of the function should not matter.
+)
+PS_1D = ps(
+  x = p_dbl(lower = -1, upper = 1)
+)
 FUN_1D = function(xs) {
   list(y = as.numeric(xs)^2)
 }
-FUN_1D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = c("minimize", "random_tag"))))
+FUN_1D_CODOMAIN = ps(y = p_dbl(tags = c("minimize", "random_tag")))
 OBJ_1D = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain, properties = "single-crit")
 
 # Simple 2D Function
-PS_2D_domain = ParamSet$new(list(
-  ParamDbl$new("x1", lower = -1, upper = 1),
-  ParamDbl$new("x2", lower = -1, upper = 1),
-  ParamUty$new("foo") # the domain of the function should not matter.
-))
-PS_2D = ParamSet$new(list(
-  ParamDbl$new("x1", lower = -1, upper = 1),
-  ParamDbl$new("x2", lower = -1, upper = 1)
-))
+PS_2D_domain = ps(
+  x1 = p_dbl(lower = -1, upper = 1),
+  x2 = p_dbl(lower = -1, upper = 1),
+  foo = p_uty() # the domain of the function should not matter.
+)
+PS_2D = ps(
+  x1 = p_dbl(lower = -1, upper = 1),
+  x2 = p_dbl(lower = -1, upper = 1)
+)
 FUN_2D = function(xs) {
   y = sum(as.numeric(xs)^2)
   list(y = y)
 }
-FUN_2D_CODOMAIN = ParamSet$new(list(ParamDbl$new("y", tags = c("minimize", "random_tag"))))
+FUN_2D_CODOMAIN = ps(y = p_dbl(tags = c("minimize", "random_tag")))
 OBJ_2D = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D_domain, properties = "single-crit")
 
 
 # Simple 2D Function with trafo
-PS_2D_TRF = ParamSet$new(list(
-  ParamDbl$new("x1", lower = -1, upper = 1),
-  ParamDbl$new("x2", lower = 1, upper = 3)
-))
-PS_2D_TRF$trafo = function(x, param_set) {
-  x$x2 = x$x2 - 2
-  return(x)
+PS_2D_TRF = ps(
+  x1 = p_dbl(lower = -1, upper = 1),
+  x2 = p_dbl(lower = 1, upper = 3),
+  .extra_trafo = function(x, param_set) {
+    x$x2 = x$x2 - 2
+    return(x)
 }
+)
+
 
 # Simple 2D Function with deps
 FUN_2D_DEPS = function(xs) {
@@ -53,10 +54,10 @@ OBJ_2D_DEPS = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS, properti
 FUN_2D_2D = function(xs) {
   list(y1 = xs[[1]]^2, y2 = -xs[[2]]^2)
 }
-FUN_2D_2D_CODOMAIN = ParamSet$new(list(
-  ParamDbl$new("y1", tags = "minimize"),
-  ParamDbl$new("y2", tags = "maximize")
-))
+FUN_2D_2D_CODOMAIN = ps(
+  y1 = p_dbl(tags = "minimize"),
+  y2 = p_dbl(tags = "maximize")
+)
 
 OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D,
   codomain = FUN_2D_2D_CODOMAIN, properties = "multi-crit")
@@ -146,7 +147,7 @@ test_optimizer = function(instance, key, ..., real_evals) {
   list(optimizer = optimizer, instance = instance)
 }
 
-MAKE_OPT = function(param_set = ParamSet$new(), param_classes = c("ParamDbl", "ParamInt"),
+MAKE_OPT = function(param_set = ps(), param_classes = c("ParamDbl", "ParamInt"),
   properties = "single-crit", packages = character(0)) {
   Optimizer$new(param_set = param_set,
     param_classes = param_classes,

@@ -39,14 +39,16 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' @param terminators (`list()`)\cr
     #'   List of objects of class [Terminator].
     initialize = function(terminators = list(TerminatorNone$new())) {
-      self$terminators = assert_list(terminators, types = "Terminator",
-        min.len = 1L)
-      ps = ParamSet$new(list(ParamLgl$new("any", default = TRUE,
-        tags = "required")))
-      ps$values = list(any = TRUE)
+      self$terminators = assert_list(terminators, types = "Terminator", min.len = 1L)
+      param_set = ps(
+        any = p_lgl(default = TRUE, tags = "required")
+      )
+      param_set$values = list(any = TRUE)
+
       properties = Reduce(intersect, map(terminators, "properties"))
       properties = properties[properties != "progressr"]
-      super$initialize(param_set = ps, properties = properties)
+      
+      super$initialize(param_set = param_set, properties = properties)
       self$unit = "percent"
     },
 

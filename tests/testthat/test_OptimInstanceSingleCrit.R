@@ -99,7 +99,7 @@ test_that("objective_function works", {
   y = inst$objective_function(1)
   expect_equal(y, c(y = 1))
 
-  obj = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain, codomain = ParamSet$new(list(ParamDbl$new("y", tags = "maximize"))))
+  obj = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain, codomain = ps(y = p_dbl(tags = "maximize")))
   inst = MAKE_INST(objective = obj, search_space = PS_1D, terminator = terminator)
   y = inst$objective_function(1)
   expect_equal(y, c(y = -1))
@@ -108,10 +108,10 @@ test_that("objective_function works", {
     upper = inst$search_space$upper)
   expect_list(z, any.missing = FALSE, names = "named", len = 2L)
 
-  search_space = ParamSet$new(list(
-    ParamLgl$new("x1"),
-    ParamDbl$new("x2", lower = -1, upper = 1)
-  ))
+  search_space = ps(
+    x1 = p_lgl(),
+    x2 = p_dbl(lower = -1, upper = 1)
+  )
   inst = MAKE_INST(objective = obj, search_space = search_space, terminator = terminator)
   expect_error(inst$objective_function(1), "objective_function can only")
 })
@@ -135,14 +135,14 @@ test_that("OptimInstanceSingleCrit$eval_batch() throws and error if columns are 
 
 test_that("domain, search_space and TuneToken work", {
   
-  domain = ParamSet$new(list(
-    ParamDbl$new("x1", -10, 10),
-    ParamDbl$new("x2", -5, 5)
-  ))
+  domain = ps(
+    x1 = p_dbl(-10, 10),
+    x2 = p_dbl(-5, 5)
+  )
 
-  codomain = ParamSet$new(list(
-    ParamDbl$new("y", tags = "maximize")
-  ))
+  codomain = ps(
+   y = p_dbl(tags = "maximize")
+  )
 
   objective = Objective$new(
     domain = domain,
@@ -158,9 +158,9 @@ test_that("domain, search_space and TuneToken work", {
   expect_equal(domain, instance$search_space)
 
   # search_space and domain
-  search_space = ParamSet$new(list(
-    ParamDbl$new("x1", -10, 10)
-  ))
+  search_space = ps(
+    x1 = p_dbl(-10, 10) 
+  )
 
   instance = OptimInstanceSingleCrit$new(
     objective = objective,

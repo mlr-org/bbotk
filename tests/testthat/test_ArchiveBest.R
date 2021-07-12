@@ -29,7 +29,7 @@ test_that("Archive best works", {
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$best(), data.table(x1 = 1, x2 = 1, y = 0))
 
-  codomain = ParamSet$new(list(ParamDbl$new("y", tags = "maximize")))
+  codomain = ps(y = p_dbl(tags = "maximize"))
   
   a = ArchiveBest$new(PS_2D, codomain)
   expect_error(a$best(), "No results stored in archive")

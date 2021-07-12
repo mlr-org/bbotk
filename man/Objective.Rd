@@ -28,7 +28,9 @@ and ranges.}
 Specifies codomain of function, hence its feasible values.}
 
 \item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet}).\cr
-Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
+Changeable constants or parameters that are not subject to tuning can be
+stored and accessed here. Set constant values are passed to \verb{$.eval()}
+and \verb{$.eval_many()} as named arguments.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr}
 }
@@ -67,8 +69,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   id = "f",
   properties = character(),
   domain,
-  codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
-  constants = ParamSet$new(),
+  codomain = ps(y = p_dbl(tags = "minimize")),
+  constants = ps(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
