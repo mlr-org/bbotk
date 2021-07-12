@@ -71,6 +71,14 @@ Optimizer = R6Class("Optimizer",
     #' @param inst ([OptimInstance]).
     #' @return [data.table::data.table].
     optimize = function(inst) {
+       if (isNamespaceLoaded("progressr")) {
+        # initialize progressor
+        max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
+        unit = assert_character(inst$terminator$unit)
+        progressor = progressr::progressor(steps = max_steps)
+        inst$progressor = Progressor$new(progressor, unit)
+       }
+
       optimize_default(inst, self, private)
     }
   ),
