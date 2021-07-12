@@ -73,6 +73,7 @@ Optimizer = R6Class("Optimizer",
     optimize = function(inst) {
        if (isNamespaceLoaded("progressr")) {
         # initialize progressor
+        # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
         max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
         unit = assert_character(inst$terminator$unit)
         progressor = progressr::progressor(steps = max_steps)
