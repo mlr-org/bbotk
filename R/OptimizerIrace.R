@@ -175,7 +175,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
       # make scenario
       scenario = c(list(maxExperiments = terminator$param_set$values$n_evals, targetRunnerData = list(inst = inst)), pv)
 
-      # extent objective constants with instances parameter
+      # extend objective constants with instances parameter
       inst$objective$constants$add(self$param_set$params[["instances"]])
 
       # run irace
