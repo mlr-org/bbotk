@@ -31,7 +31,7 @@ Authors@R:
              role = "ctb",
              email = "olafm@statistik.tu-dortmund.de"))
 Description: Provides a common framework for optimization of black-box
-    functions for other packages, e.g. 'mlr3tuning' or 'mlr3fselect'.  It
+    functions for other packages, e.g. 'mlr3tuning' or 'mlr3fselect'. It
     offers various optimization methods e.g. grid search, random search,
     generalized simulated annealing and iterated racing.
 License: LGPL-3
