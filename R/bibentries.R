@@ -42,5 +42,15 @@ bibentries = c(
     author       = "Johnson, Steven G",
     url          = "https://github.com/stevengj/nlopt",
     year         = "2020"
+  ),
+
+  lopez_2016 = bibentry("article",
+    title        = "The irace package: Iterated racing for automatic algorithm configuration",
+    author       = "Manuel Lopez-Ibanez and Jeremie Dubois-Lacoste and Leslie Perez Caceres and Mauro Birattari and Thomas Stuetzle",
+    year         = "2016",
+    journal      = "Operations Research Perspectives",
+    volume       = "3",
+    pages        = "43--58",
+    doi          = "https://doi.org/10.1016/j.orp.2016.09.002"
   )
 )

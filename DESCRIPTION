@@ -30,10 +30,10 @@ Authors@R:
              family = "Mersmann",
              role = "ctb",
              email = "olafm@statistik.tu-dortmund.de"))
-Description: Provides a common framework for optimization of
-    black-box functions for other packages, e.g. 'mlr3tuning' or
-    'mlr3fselect'.  It offers various optimization methods e.g. grid
-    search, random search and generalized simulated annealing.
+Description: Provides a common framework for optimization of black-box
+    functions for other packages, e.g. 'mlr3tuning' or 'mlr3fselect'.  It
+    offers various optimization methods e.g. grid search, random search,
+    generalized simulated annealing and iterated racing.
 License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
@@ -50,6 +50,7 @@ Imports:
 Suggests:
     adagio,
     GenSA,
+    irace,
     knitr,
     nloptr,
     progressr,
@@ -79,6 +80,7 @@ Collate:
     'OptimizerDesignPoints.R'
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
+    'OptimizerIrace.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
     'Progressor.R'
@@ -97,5 +99,6 @@ Collate:
     'bbotk_reflections.R'
     'bibentries.R'
     'helper.R'
+    'helper_irace.R'
     'sugar.R'
     'zzz.R'
