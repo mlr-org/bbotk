@@ -76,6 +76,7 @@ Collate:
     'OptimInstanceSingleCrit.R'
     'mlr_optimizers.R'
     'Optimizer.R'
+    'OptimizerChain.R'
     'OptimizerCmaes.R'
     'OptimizerDesignPoints.R'
     'OptimizerGenSA.R'
