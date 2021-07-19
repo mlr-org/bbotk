@@ -1,5 +1,6 @@
 # bbotk 0.3.2.9000
 
+* Allows empty search space and domain.
 * Extended `TerminatorEvals` with an additional hyperparameter `k` to define the
   budget depending on the dimension of the search space.
 * Adds `bb_optimize()` function for quick optimization.
