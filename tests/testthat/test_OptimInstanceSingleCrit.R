@@ -61,7 +61,7 @@ test_that("OptimInstance works with extras input", {
   expect_data_table(inst$archive$data, nrows = 6L)
   expect_equal(inst$archive$data$y, c(2, 0, 2, 2, 0, 2))
   expect_equal(xdt, inst$archive$data[4:6, colnames(xdt), with = FALSE])
-  expect_equal(inst$archive$data$extra3[1:3], list(NULL, NULL, NULL))
+  expect_equal(inst$archive$data$extra3[1:3], list(NA, NA, NA))
   expect_equal(inst$archive$data$extra1[4:6], rep(NA_character_, 3))
 })
 

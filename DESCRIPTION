@@ -102,3 +102,4 @@ Collate:
     'helper_irace.R'
     'sugar.R'
     'zzz.R'
+Remotes: Rdatatable/data.table@fix-missing-list-column-na-rm
