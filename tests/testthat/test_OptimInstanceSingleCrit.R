@@ -211,4 +211,5 @@ test_that("OptimInstanceSingleCrit works with empty search space", {
   optimizer = opt("random_search")
   optimizer$optimize(instance)
   expect_data_table(instance$archive$data, nrows = 20)
+  expect_equal(instance$result$x_domain[[1]], list())
 })
