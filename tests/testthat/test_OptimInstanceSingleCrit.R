@@ -189,3 +189,27 @@ test_that("domain, search_space and TuneToken work", {
   expect_error(OptimInstanceSingleCrit$new(objective = objective, terminator = trm("none"), search_space = search_space),
     regexp = "If the domain contains TuneTokens, you cannot supply a search_space")
 })
+
+test_that("OptimInstanceSingleCrit works with empty search space", {
+  fun = function(xs) {
+    c(y = 10 + rnorm(1))
+  }
+  domain = ps()
+  codomain = ps(y = p_dbl(tags = "minimize"))
+
+  # objective
+  objective = ObjectiveRFun$new(fun, domain, codomain)
+  expect_numeric(objective$eval(list()))
+
+  # instance
+  instance = OptimInstanceSingleCrit$new(objective, terminator = trm("evals", n_evals = 20))
+  instance$eval_batch(data.table())
+  expect_data_table(instance$archive$data, nrows = 1)
+
+  # optimizer
+  instance = OptimInstanceSingleCrit$new(objective, terminator = trm("evals", n_evals = 20))
+  optimizer = opt("random_search")
+  optimizer$optimize(instance)
+  expect_data_table(instance$archive$data, nrows = 20)
+  expect_equal(instance$result$x_domain[[1]], list())
+})

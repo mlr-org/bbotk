@@ -129,11 +129,10 @@ OptimInstance = R6Class("OptimInstance",
       if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
 
       if (self$is_terminated) stop(terminated_error(self))
-
-      assert_data_table(xdt, min.rows = 1)
+      assert_data_table(xdt)
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 
-      lg$info("Evaluating %i configuration(s)", nrow(xdt))
+      lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
 
       is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
       # calculate the x as (trafoed) domain only if needed
@@ -142,9 +141,12 @@ OptimInstance = R6Class("OptimInstance",
       } else {
         xss_trafoed = NULL
       }
-
+      
+      # eval if search space is empty
+      if (nrow(xdt) == 0) {
+        ydt = self$objective$eval_many(list(list()))
       # if no trafos, no deps and objective evals dt directly, we go a shortcut
-      if (is_rfundt && !self$search_space$has_trafo && !self$search_space$has_deps) {
+      } else if (is_rfundt && !self$search_space$has_trafo && !self$search_space$has_deps) {
         ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
       } else {
         ydt = self$objective$eval_many(xss_trafoed)

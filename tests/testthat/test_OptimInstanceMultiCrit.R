@@ -44,3 +44,37 @@ test_that("objective_function works", {
   y = inst$objective_function(c(1,1))
   expect_equal(y, c(y1 = 1, y2 = 1))
 })
+
+test_that("OptimInstanceMultiCrit works with empty search space", {
+  fun = function(xs) {
+    c(y = 10 + sample(c(0,1), 1), z = 20 + sample(c(0,1), 1))
+  }
+  domain = ps()
+  codomain = ps(y = p_dbl(tags = "minimize"), z = p_dbl(tags = "maximize"))
+
+  # objective
+  objective = ObjectiveRFun$new(fun, domain, codomain)
+  expect_numeric(objective$eval(list()))
+
+  # instance
+  instance = OptimInstanceMultiCrit$new(objective, terminator = trm("evals", n_evals = 20))
+  instance$eval_batch(data.table())
+  expect_data_table(instance$archive$data, nrows = 1)
+
+  # optimizer lenght(y) > 1
+  instance = OptimInstanceMultiCrit$new(objective, terminator = trm("evals", n_evals = 20))
+  optimizer = opt("random_search")
+  optimizer$optimize(instance)
+  expect_data_table(instance$archive$data, nrows = 20)
+  expect_equal(instance$result$x_domain[[1]], list())
+
+
+  # optimizer lenght(y) == 1
+  instance = OptimInstanceMultiCrit$new(objective, terminator = trm("evals", n_evals = 1))
+  optimizer = opt("random_search")
+  optimizer$optimize(instance)
+
+  expect_data_table(instance$archive$data, nrows = 1)
+  expect_equal(instance$result$x_domain[[1]], list())
+})
+

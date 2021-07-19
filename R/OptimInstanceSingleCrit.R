@@ -43,11 +43,12 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
     #' Optimal outcome.
     assign_result = function(xdt, y) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
-      assert_data_table(xdt, nrows = 1L)
+      assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_number(y)
       assert_names(names(y), permutation.of = self$objective$codomain$ids())
-      x_domain = transform_xdt_to_xss(xdt, self$search_space)[[1L]]
+      x_domain = unlist(transform_xdt_to_xss(xdt, self$search_space), recursive = FALSE)
+      if (is.null(x_domain)) x_domain = list()
       private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
     }
   )
