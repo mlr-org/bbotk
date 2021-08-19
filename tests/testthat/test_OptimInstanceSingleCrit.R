@@ -129,12 +129,12 @@ test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
 test_that("OptimInstanceSingleCrit$eval_batch() throws and error if columns are missing", {
     inst = MAKE_INST_2D(20L)
     expect_error(inst$eval_batch(data.table(x1= 0)),
-      regexp = "Assertion on 'colnames(xdt)' failed: Must include the elements {x1,x2}.",
+      regexp = "include the elements {x1,x2}.",
       fixed = TRUE)
 })
 
 test_that("domain, search_space and TuneToken work", {
-  
+
   domain = ps(
     x1 = p_dbl(-10, 10),
     x2 = p_dbl(-5, 5)
@@ -159,7 +159,7 @@ test_that("domain, search_space and TuneToken work", {
 
   # search_space and domain
   search_space = ps(
-    x1 = p_dbl(-10, 10) 
+    x1 = p_dbl(-10, 10)
   )
 
   instance = OptimInstanceSingleCrit$new(
