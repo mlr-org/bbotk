@@ -223,15 +223,15 @@ test_that("check_values = TRUE with extra output works", {
 
 test_that("assertion on overlapping and reserved names works", {
   expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
-    regexp = "Assertion on 'self$domain$ids()' failed: Must be disjunct from (x).",
+    regexp = "disjunct from (x).",
     fixed = TRUE)
 
   expect_error(Objective$new(domain = ps(batch_nr = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
-    regexp = "Assertion on 'self$domain$ids()' failed: Must be disjunct from (x_domain,timestamp,batch_nr).",
+    regexp = "disjunct from (x_domain,timestamp,batch_nr).",
     fixed = TRUE)
 
   expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(timestamp = p_dbl(tags = "maximize"))),
-    regexp = "Assertion on 'self$codomain$ids()' failed: Must be disjunct from (x_domain,timestamp,batch_nr).",
+    regexp = "disjunct from (x_domain,timestamp,batch_nr).",
     fixed = TRUE)
 })
 
@@ -317,5 +317,5 @@ test_that("Objective works with constants", {
   expect_equal(objective$eval(list(x = 1)), list(y = 2))
   expect_equal(objective$eval(list(x = 0)), list(y = 1))
   expect_equal(objective$eval_many(list(list(x = 1), list(x = 0))), data.table(y = c(2, 1)))
-  expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))  
+  expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))
 })
