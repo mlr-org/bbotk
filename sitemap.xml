@@ -40,6 +40,9 @@
     <loc>https://bbotk.mlr-org.com/reference/assign_result_default.html</loc>
   </url>
   <url>
+    <loc>https://bbotk.mlr-org.com/reference/bb_optimize.html</loc>
+  </url>
+  <url>
     <loc>https://bbotk.mlr-org.com/reference/bbotk-package.html</loc>
   </url>
   <url>
@@ -65,6 +68,9 @@
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_grid_search.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_irace.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_nloptr.html</loc>

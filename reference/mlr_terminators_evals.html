@@ -49,7 +49,12 @@
 
 <meta property="og:title" content="Terminator that stops after a number of evaluations — mlr_terminators_evals" />
 <meta property="og:description" content="Class to terminate the optimization depending on the number of evaluations.
-An evaluation is defined by one resampling of a parameter value." />
+An evaluation is defined by one resampling of a parameter value.
+The total number of evaluations \(B\) is defined as
+$$
+   B = \mathrm{n_evals} + k * D
+$$
+where \(D\) is the dimension of the search space." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -83,7 +88,7 @@ An evaluation is defined by one resampling of a parameter value." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">bbotk <small>v0.3.2</small></a>
+        <a class="navbar-brand" href="../index.html">bbotk <small>v0.4.0</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -96,7 +101,7 @@ An evaluation is defined by one resampling of a parameter value." />
 </li>
 <li>
   <a href="https://mlr3book.mlr-org.com">
-    <span class="fa fa fa fa-link"></span>
+    <span class="fa fa-link"></span>
      
     mlr3book
   </a>
@@ -112,7 +117,7 @@ An evaluation is defined by one resampling of a parameter value." />
 </li>
 <li>
   <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
-    <span class="fa fa fa fa-comments"></span>
+    <span class="fa fa-comments"></span>
      
   </a>
 </li>
@@ -124,7 +129,7 @@ An evaluation is defined by one resampling of a parameter value." />
 </li>
 <li>
   <a href="https://mlr-org.com/">
-    <span class="fas fa-rss"></span>
+    <span class="fa fa-rss"></span>
      
   </a>
 </li>
@@ -148,7 +153,12 @@ An evaluation is defined by one resampling of a parameter value." />
 
     <div class="ref-description">
     <p>Class to terminate the optimization depending on the number of evaluations.
-An evaluation is defined by one resampling of a parameter value.</p>
+An evaluation is defined by one resampling of a parameter value.
+The total number of evaluations \(B\) is defined as</p>
+<p>$$
+   B = \mathrm{n_evals} + k * D
+$$
+where \(D\) is the dimension of the search space.</p>
     </div>
 
 
@@ -169,7 +179,9 @@ sugar function <code><a href='trm.html'>trm()</a></code>:</p><pre><span class='v
 
 <dl>
 <dt><code>n_evals</code></dt><dd><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code><br />
-Number of allowed evaluations, default is 100L.</p></dd>
+See formula above. Default is 100.</p></dd>
+<dt><code>k</code></dt><dd><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code><br />
+See formula above. Default is 0.</p></dd>
 
 </dl>
 
@@ -241,9 +253,19 @@ otherwise.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#argu
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>TerminatorEvals</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;TerminatorEvals&gt;
-#&gt; * Parameters: n_evals=100</div><div class='input'><span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+#&gt; * Parameters: n_evals=100, k=0</div><div class='input'>
+<span class='co'># 5 evaluations in total</span>
+<span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;TerminatorEvals&gt;
-#&gt; * Parameters: n_evals=5</div></pre>
+#&gt; * Parameters: n_evals=5, k=0</div><div class='input'>
+<span class='co'># 3 * [dimension of search space] evaluations in total</span>
+<span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>0</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;TerminatorEvals&gt;
+#&gt; * Parameters: n_evals=0, k=3</div><div class='input'>
+<span class='co'># (3 * [dimension of search space] + 1) evaluations in total</span>
+<span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>1</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;TerminatorEvals&gt;
+#&gt; * Parameters: n_evals=1, k=3</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
