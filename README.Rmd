@@ -30,7 +30,7 @@ Various optimization methods are already implemented e.g. grid search, random se
 
 ## Resources
 
-* Package [vignette](https://cran.r-project.org/web/packages/bbotk/vignettes/bbotk.html) 
+* Package [vignette](https://CRAN.R-project.org/package=bbotk/vignettes/bbotk.html)
 
 ## Installation
 
