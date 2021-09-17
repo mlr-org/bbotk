@@ -1,3 +1,5 @@
+# bbotk 0.4.0.9000
+
 # bbotk 0.4.0
 
 * Allows empty search space and domain.
