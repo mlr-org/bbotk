@@ -15,7 +15,7 @@
     event$msg = paste("[bbotk]", event$msg)
     TRUE
   }
-  lg$add_filter(f)
+  lg$set_filters(f)
 
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
