@@ -167,7 +167,11 @@ Archive = R6Class("Archive",
   ),
 
   private = list(
-    .data = NULL
+    .data = NULL,
+
+    deep_clone = function(name, value) {
+      if (name == "data") copy(value) else value
+    }
   )
 )
 
