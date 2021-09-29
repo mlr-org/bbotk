@@ -12,26 +12,26 @@ does not improve more than \code{threshold} over the last \code{n} batches.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("stagnation")
-term("stagnation")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("stagnation_batch")
+trm("stagnation_batch")
 }
 }
 
 \section{Parameters}{
 
-\itemize{
-\item \code{n} \code{integer(1)}\cr
+\describe{
+\item{\code{n}}{\code{integer(1)}\cr
 Number of batches to evaluate the performance improvement on, default
-is 1.
-\item \code{threshold} \code{numeric(1)}\cr
+is 1.}
+\item{\code{threshold}}{\code{numeric(1)}\cr
 If the improvement is less than \code{threshold}, optimization is stopped,
-default is \code{0}.
+default is \code{0}.}
 }
 }
 
 \examples{
 TerminatorStagnationBatch$new()
-term("stagnation_batch", n = 1, threshold = 1e-5)
+trm("stagnation_batch", n = 1, threshold = 1e-5)
 }
 \seealso{
 Other Terminator: 
@@ -62,6 +62,8 @@ Other Terminator:
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time">}\href{../../bbotk/html/Terminator.html#method-remaining_time}{\code{bbotk::Terminator$remaining_time()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status">}\href{../../bbotk/html/Terminator.html#method-status}{\code{bbotk::Terminator$status()}}\out{</span>}
 }
 \out{</details>}
 }

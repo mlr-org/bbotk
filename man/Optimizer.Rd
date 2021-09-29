@@ -12,27 +12,29 @@ A \code{Optimizer} object must write its result to the \verb{$assign_result()} m
 of the \link{OptimInstance} at the end in order to store the best point  and its
 estimated performance vector.
 }
-\section{Technical details}{
+\section{Progress Bars}{
 
-
-In order to replace the default logging messages with custom logging, the
-\verb{.log_*} private methods can be overwritten in an \code{Optimizer} subclass:
-\itemize{
-\item \verb{$.log_optimize_start()} Called at the beginning of \verb{$optimize()}
-\item \verb{$.log_optimize_finish()} Called at the end of \verb{$optimize()}
-}
+\verb{$optimize()} supports progress bars via the package \CRANpkg{progressr}
+combined with a \link{Terminator}. Simply wrap the function in
+\code{progressr::with_progress()} to enable them. We recommend to use package
+\CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
 }
 
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
-
 \item{\code{param_classes}}{(\code{character()}).}
 
 \item{\code{properties}}{(\code{character()}).}
 
 \item{\code{packages}}{(\code{character()}).}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -52,7 +54,7 @@ In order to replace the default logging messages with custom logging, the
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$new(param_set, param_classes, properties, packages = character(0))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Optimizer$new(param_set, param_classes, properties, packages = character())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -96,7 +98,9 @@ Print method.
 \if{html}{\out{<a id="method-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-optimize}{}}}
 \subsection{Method \code{optimize()}}{
-Performs the optimization and writes optimization result into \link{OptimInstance}.
+Performs the optimization and writes optimization result into
+\link{OptimInstance}. The optimization result is returned but the complete
+optimization path is stored in \link{Archive} of \link{OptimInstance}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize(inst)}\if{html}{\out{</div>}}
 }
@@ -109,7 +113,7 @@ Performs the optimization and writes optimization result into \link{OptimInstanc
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-NULL
+\link[data.table:data.table]{data.table::data.table}.
 }
 }
 \if{html}{\out{<hr>}}

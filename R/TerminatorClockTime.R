@@ -11,40 +11,47 @@
 #' @template section_dictionary_terminator
 #'
 #' @section Parameters:
-#' * `stop_time` `POSIXct(1)`\cr
-#'   Terminator stops after this point in time.
-#'   Mutually exclusive with argument `secs`.
+#' \describe{
+#' \item{`stop_time`}{`POSIXct(1)`\cr
+#' Terminator stops after this point in time.}
+#' }
 #'
 #' @family Terminator
+#' @template param_archive
 #' @export
 #' @examples
 #' stop_time = as.POSIXct("2030-01-01 00:00:00")
-#' term("clock_time", stop_time = stop_time)
+#' trm("clock_time", stop_time = stop_time)
 TerminatorClockTime = R6Class("TerminatorClockTime",
   inherit = Terminator,
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      custom_check = function(x) {
-        check_class(x, "POSIXct")
-      }
-      ps = ParamSet$new(list(
-        ParamUty$new("stop_time", tags = "required",
-          custom_check = custom_check)
-      ))
-      super$initialize(param_set = ps, properties = c("single-crit", "multi-crit"))
+      param_set = ps(
+        stop_time = p_uty(tags = "required", custom_check = function(x) check_class(x, "POSIXct"))
+      )
+      super$initialize(param_set = param_set, properties = c("single-crit", "multi-crit"))
+      self$unit = "seconds"
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
-    #'
-    #' @param archive ([Archive]).
-    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
+      assert_r6(archive, "Archive")
       return(Sys.time() >= self$param_set$values$stop_time)
+    }
+  ),
+
+  private = list(
+    .status = function(archive) {
+      max_steps =  as.integer(ceiling(difftime(self$param_set$values$stop_time,
+        archive$start_time, units = "secs")))
+      current_steps =  as.integer(difftime(Sys.time(), archive$start_time),
+        units = "secs")
+      c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
 )

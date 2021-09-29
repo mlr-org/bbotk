@@ -1,4 +1,6 @@
-library(testthat)
-library(checkmate)
+if (requireNamespace("testthat", quietly = TRUE)) {
+  library(testthat)
+  library(checkmate)
 
-test_check("bbotk")
+  test_check("bbotk")
+}

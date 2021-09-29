@@ -4,7 +4,7 @@
 \alias{ObjectiveRFunDt}
 \title{Objective interface for basic R functions.}
 \description{
-Objective interface where user can pass an R function that works on an \code{data.table}.
+Objective interface where user can pass an R function that works on an \code{data.table()}.
 }
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFunDt}
@@ -30,8 +30,6 @@ Objective function.}
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval">}\href{../../bbotk/html/Objective.html#method-eval}{\code{bbotk::Objective$eval()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_checked">}\href{../../bbotk/html/Objective.html#method-eval_checked}{\code{bbotk::Objective$eval_checked()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many_checked">}\href{../../bbotk/html/Objective.html#method-eval_many_checked}{\code{bbotk::Objective$eval_many_checked()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format">}\href{../../bbotk/html/Objective.html#method-format}{\code{bbotk::Objective$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print">}\href{../../bbotk/html/Objective.html#method-print}{\code{bbotk::Objective$print()}}\out{</span>}
 }
@@ -48,7 +46,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   domain,
   codomain = NULL,
   id = "function",
-  properties = character(0)
+  properties = character(),
+  constants = ps(),
+  check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
 
@@ -56,19 +56,29 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{fun}}{(\code{function})\cr
-R function that encodes objective and expects an \code{data.table} as input
+R function that encodes objective and expects an \code{data.table()} as input
 whereas each point is represented by one row.}
 
 \item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specifies domain of function, hence its input parameters, their types
-and ranges.}
+Specifies domain of function.
+The \link[paradox:ParamSet]{paradox::ParamSet} should describe all possible input parameters of the objective function.
+This includes their \code{id}, their types and the possible range.}
 
 \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specifies codomain of function, hence its feasible values.}
+Specifies codomain of function.
+Most importantly the tags of each output "Parameter" define whether it should
+be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{id}}{(\code{character(1)}).}
 
 \item{\code{properties}}{(\code{character()}).}
+
+\item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
+
+\item{\code{check_values}}{(\code{logical(1)})\cr
+Should points before the evaluation and the results be checked for
+validity?}
 }
 \if{html}{\out{</div>}}
 }
@@ -77,8 +87,8 @@ Specifies codomain of function, hence its feasible values.}
 \if{html}{\out{<a id="method-eval_many"></a>}}
 \if{latex}{\out{\hypertarget{method-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
-Evaluates multiple input values received as a list, converted to a \code{data.table} on the
-objective function.
+Evaluates multiple input values received as a list, converted to a \code{data.table()} on the
+objective function. Missing columns in xss are filled with \code{NA}s in \code{xdt}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFunDt$eval_many(xss)}\if{html}{\out{</div>}}
 }
@@ -93,9 +103,8 @@ A list of lists that contains multiple x values, e.g.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-criteria functions and multiple
-y-columns for multi-criteria functions, e.g.
+\code{\link[data.table:data.table]{data.table::data.table()}} that contains one y-column for single-criteria functions
+and multiple y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }
@@ -113,14 +122,15 @@ Evaluates multiple input values on the objective function supplied by the user.
 \describe{
 \item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.}
+One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
+Column names have to match ids of the \code{search_space}.
+However, \code{xdt} can contain additional columns.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{data.table()}\cr
-A \code{data.table} that contains one y-column for single-criteria functions and multiple
-y-columns for multi-criteria functions, e.g.
+data.table::data.table()] that contains one y-column for single-criteria functions
+and multiple y-columns for multi-criteria functions, e.g.
 \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 }
 }

@@ -7,6 +7,7 @@
 \alias{assert_set}
 \alias{assert_optimizer}
 \alias{assert_instance_properties}
+\alias{assert_codomain}
 \title{Assertion for bbotk objects}
 \usage{
 assert_terminator(terminator, instance = NULL)
@@ -18,6 +19,8 @@ assert_set(x, empty = TRUE, .var.name = vname(x))
 assert_optimizer(optimizer)
 
 assert_instance_properties(optimizer, inst)
+
+assert_codomain(codomain)
 }
 \arguments{
 \item{terminator}{(\link{Terminator}).}
@@ -31,6 +34,8 @@ assert_instance_properties(optimizer, inst)
 \item{.var.name}{(\code{character(1)})}
 
 \item{optimizer}{(\link{Optimizer}).}
+
+\item{codomain}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
 }
 \description{
 Most assertion functions ensure the right class attribute, and optionally

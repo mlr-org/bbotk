@@ -15,7 +15,7 @@ This dictionary can get populated with additional terminators by add-on
 packages.
 
 For a more convenient way to retrieve and construct terminator, see
-\code{\link[=term]{term()}}/\code{\link[=terms]{terms()}}.
+\code{\link[=trm]{trm()}}/\code{\link[=trms]{trms()}}.
 }
 \section{Methods}{
 
@@ -23,10 +23,10 @@ See \link[mlr3misc:Dictionary]{mlr3misc::Dictionary}.
 }
 
 \examples{
-term("evals", n_evals = 10)
+trm("evals", n_evals = 10)
 }
 \seealso{
-Sugar functions: \code{\link[=term]{term()}}, \code{\link[=terms]{terms()}}
+Sugar functions: \code{\link[=trm]{trm()}}, \code{\link[=trms]{trms()}}
 
 Other Terminator: 
 \code{\link{Terminator}},

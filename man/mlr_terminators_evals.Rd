@@ -7,27 +7,45 @@
 \description{
 Class to terminate the optimization depending on the number of evaluations.
 An evaluation is defined by one resampling of a parameter value.
+The total number of evaluations \eqn{B} is defined as
+
+\deqn{
+   B = \mathrm{n_evals} + k * D
+}{
+   B = n_evals + k * D
+}
+where \eqn{D} is the dimension of the search space.
 }
 \section{Dictionary}{
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("evals")
-term("evals")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("evals")
+trm("evals")
 }
 }
 
 \section{Parameters}{
 
-\itemize{
-\item \code{n_evals} \code{integer(1)}\cr
-Number of allowed evaluations, default is 100L
+\describe{
+\item{\code{n_evals}}{\code{integer(1)}\cr
+See formula above. Default is 100.}
+\item{\code{k}}{\code{integer(1)}\cr
+See formula above. Default is 0.}
 }
 }
 
 \examples{
 TerminatorEvals$new()
-term("evals", n_evals = 5)
+
+# 5 evaluations in total
+trm("evals", n_evals = 5)
+
+# 3 * [dimension of search space] evaluations in total
+trm("evals", n_evals = 0, k = 3)
+
+# (3 * [dimension of search space] + 1) evaluations in total
+trm("evals", n_evals = 1, k = 3)
 }
 \seealso{
 Other Terminator: 
@@ -58,6 +76,8 @@ Other Terminator:
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time">}\href{../../bbotk/html/Terminator.html#method-remaining_time}{\code{bbotk::Terminator$remaining_time()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status">}\href{../../bbotk/html/Terminator.html#method-status}{\code{bbotk::Terminator$status()}}\out{</span>}
 }
 \out{</details>}
 }

@@ -20,22 +20,25 @@ nds_selection = function(points, n_select, ref_point = NULL, minimize = TRUE) {
   # check input for correctness
   assert_matrix(points, mode = "numeric")
   assert_int(n_select, lower = 1, upper = ncol(points))
-  if (length(minimize) == 1) {
-    minimize = rep(minimize, times = nrow(points))
-  }
-  assert_logical(minimize, len = nrow(points), any.missing = FALSE)
+  assert_logical(
+    minimize, min.len = 1, max.len = nrow(points), any.missing = FALSE
+  )
   assert_numeric(ref_point, len = nrow(points), null.ok = TRUE)
+  assert_logical(minimize)
 
-  # maximize/minimize preprocessing: switch sign in each dim to maximize
+  # maximize/minimize preprocessing: switch sign in each dim to minimize
   points = points * (minimize * 2 - 1)
+
+  # also switch sign for the reference point if reference point is given
+  # otherwise use the maximum values in each dimension
+  if (!is.null(ref_point)) {
+    ref_point = ref_point * (minimize * 2 - 1)
+  } else {
+    ref_point = apply(points, 1, max)
+  }
 
   # init output indices
   survivors = seq_col(points)
-
-  # if no reference point is defined, use maximum of each dimensions
-  if (is.null(ref_point)) {
-    ref_point = apply(points, 1, max)
-  }
 
   # front indices of every point
   front_ranks = emoa::nds_rank(points)
@@ -52,25 +55,16 @@ nds_selection = function(points, n_select, ref_point = NULL, minimize = TRUE) {
   # remove tied indices/points as long as we are bigger than n_select
   while (length(tie_surv) + length(sel_surv) > n_select) {
 
-    # tie points extended with the reference point to never end up with a two
-    # point matrix (this would break the following sapply)
-    tie_points_ext = cbind(tie_points, ref_point)
-
-    # calculate the hypervolume with each point excluded separately
-    hypervolumes = map_dbl(
-      seq_len(ncol(tie_points_ext) - 1L),
-      function(i) {
-        emoa::dominated_hypervolume(
-          tie_points_ext[, -i, drop = FALSE],
-          ref = ref_point
-        )
-      }
-    )
+    # compute hypervolume contribution
+    hv_contrib = emoa::hypervolume_contribution(tie_points, ref_point)
 
     # index of the tied case with the lowest hypervolume contribution
-    to_remove = which(hypervolumes == max(hypervolumes))
-    # sample the index as tie breaker
-    to_remove = sample(to_remove, 1)
+    to_remove = which(hv_contrib == min(hv_contrib))
+
+    # if two points have the exact same hypervolume contribution, the point is sampled
+    if (length(to_remove) > 1)
+      to_remove = sample(to_remove, 1)
+
     tie_points = tie_points[, -to_remove, drop = FALSE]
     tie_surv = tie_surv[-to_remove]
   }

@@ -12,23 +12,24 @@ of the included terminators are positive.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=term]{term()}}:\preformatted{mlr_terminators$get("combo")
-term("combo")
+sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("combo")
+trm("combo")
 }
 }
 
 \section{Parameters}{
 
-\itemize{
-\item \code{any} (\code{logical(1)})\cr
-Terminate iff any included terminator is positive? (not all), default is `TRUE.
+\describe{
+\item{\code{any}}{\code{logical(1)}\cr
+Terminate iff any included terminator is positive? (not all), default is
+\code{TRUE}.}
 }
 }
 
 \examples{
-term("combo",
-  list(term("clock_time", stop_time = Sys.time() + 60), term("evals", n_evals = 10)),
-  any = FALSE
+trm("combo",
+  list(trm("clock_time", stop_time = Sys.time() + 60),
+    trm("evals", n_evals = 10)), any = FALSE
 )
 }
 \seealso{
@@ -61,6 +62,8 @@ List of objects of class \link{Terminator}.}
 \item \href{#method-new}{\code{TerminatorCombo$new()}}
 \item \href{#method-is_terminated}{\code{TerminatorCombo$is_terminated()}}
 \item \href{#method-print}{\code{TerminatorCombo$print()}}
+\item \href{#method-remaining_time}{\code{TerminatorCombo$remaining_time()}}
+\item \href{#method-status_long}{\code{TerminatorCombo$status_long()}}
 \item \href{#method-clone}{\code{TerminatorCombo$clone()}}
 }
 }
@@ -68,6 +71,7 @@ List of objects of class \link{Terminator}.}
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status">}\href{../../bbotk/html/Terminator.html#method-status}{\code{bbotk::Terminator$status()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -93,7 +97,8 @@ List of objects of class \link{Terminator}.}
 \if{html}{\out{<a id="method-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE} otherwise.
+Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+otherwise.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$is_terminated(archive)}\if{html}{\out{</div>}}
 }
@@ -124,6 +129,49 @@ Printer.
 \item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-remaining_time"></a>}}
+\if{latex}{\out{\hypertarget{method-remaining_time}{}}}
+\subsection{Method \code{remaining_time()}}{
+Returns the remaining runtime in seconds. If \code{any = TRUE}, the remaining
+runtime is determined by the time-based terminator with the shortest time
+remaining. If non-time-based terminators are used and \code{any = FALSE},
+the the remaining runtime is always \code{Inf}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$remaining_time(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{integer(1)}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-status_long"></a>}}
+\if{latex}{\out{\hypertarget{method-status_long}{}}}
+\subsection{Method \code{status_long()}}{
+Returns \code{max_steps} and \code{current_steps} for each terminator.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$status_long(archive)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{archive}}{(\link{Archive}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\link[data.table:data.table]{data.table::data.table}.
 }
 }
 \if{html}{\out{<hr>}}

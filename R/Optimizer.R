@@ -11,20 +11,10 @@
 #' of the [OptimInstance] at the end in order to store the best point  and its
 #' estimated performance vector.
 #'
-#' @section Technical details:
-#'
-#' In order to replace the default logging messages with custom logging, the
-#' `.log_*` private methods can be overwritten in an `Optimizer` subclass:
-#'
-#' * `$.log_optimize_start()` Called at the beginning of `$optimize()`
-#' * `$.log_optimize_finish()` Called at the end of `$optimize()`
-#'
+#' @template section_progress_bars
 #' @export
 Optimizer = R6Class("Optimizer",
   public = list(
-
-    #' @field param_set ([paradox::ParamSet]).
-    param_set = NULL,
 
     #' @field param_classes (`character()`).
     param_classes = NULL,
@@ -43,12 +33,16 @@ Optimizer = R6Class("Optimizer",
     #' @param properties (`character()`).
     #' @param packages (`character()`).
     initialize = function(param_set, param_classes, properties,
-      packages = character(0)) {
-      self$param_set = assert_param_set(param_set)
+      packages = character()) {
+      private$.param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
-      self$properties = assert_subset(properties, bbotk_reflections$optimizer_properties, empty.ok = FALSE) #has to have at least multi-crit or single-crit property
+      # has to have at least multi-crit or single-crit property
+      self$properties = assert_subset(properties,
+        bbotk_reflections$optimizer_properties, empty.ok = FALSE)
       self$packages = assert_set(packages)
+
+      check_packages_installed(self$packages, msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self)))
     },
 
     #' @description
@@ -59,6 +53,7 @@ Optimizer = R6Class("Optimizer",
 
     #' @description
     #' Print method.
+    #'
     #' @return (`character()`).
     print = function() {
       catf(format(self))
@@ -69,54 +64,33 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @description
-    #' Performs the optimization and writes optimization result into [OptimInstance].
+    #' Performs the optimization and writes optimization result into
+    #' [OptimInstance]. The optimization result is returned but the complete
+    #' optimization path is stored in [Archive] of [OptimInstance].
     #'
     #' @param inst ([OptimInstance]).
-    #' @return NULL
+    #' @return [data.table::data.table].
     optimize = function(inst) {
-      assert_instance_properties(self, inst)
-      # start optimization
-      private$.log_optimize_start(inst)
-      tryCatch({
-        private$.optimize(inst)
-      }, terminated_error = function(cond) { })
-      private$.assign_result(inst)
-      private$.log_optimize_finish(inst)
-      invisible(NULL)
+      optimize_default(inst, self, private)
     }
   ),
-
+  active = list(
+    #' @field param_set ([paradox::ParamSet]).
+    param_set = function(rhs) {
+      if (!missing(rhs) && !identical(rhs, private$.param_set)) {
+        stop("param_set is read-only.")
+      }
+      private$.param_set
+    }
+  ),
   private = list(
     .optimize = function(inst) stop("abstract"),
 
     .assign_result = function(inst) {
       assert_r6(inst, "OptimInstance")
-      res = inst$archive$best()
-
-      xdt = res[, inst$search_space$ids(), with = FALSE]
-
-      if (inherits(inst, "OptimInstanceMulticrit")) {
-        ydt = res[, inst$objective$codomain$ids(), with = FALSE]
-        inst$assign_result(xdt, ydt)
-      } else {
-        y = unlist(res[, inst$objective$codomain$ids(), with = FALSE]) # unlist keeps name!
-        inst$assign_result(xdt, y)
-      }
-
-      invisible(NULL)
+      assign_result_default(inst)
     },
 
-    .log_optimize_start = function(inst) {
-      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-        inst$search_space$length, self$format(), inst$terminator$format())
-    },
-
-    .log_optimize_finish = function(inst) {
-      lg$info("Finished optimizing after %i evaluation(s)",
-        inst$archive$n_evals)
-      lg$info("Result:")
-      lg$info(capture.output(print(
-        inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-    }
+    .param_set = NULL
   )
 )

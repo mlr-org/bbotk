@@ -1,67 +1,59 @@
-context("nds_selection")
-
-data_matrix = matrix(
+test_that("nds_selection works", {
+  points = matrix(
     c( # front 1
-      1, 4,
-      2, 3,
-      4, 1,
+      # emoa puts always Inf weight on boundary points, so they always survive 
+      # points 1 and points 4 have the highest hypervolume contributions 
+      1, 4, 
+      2, 2, 
+      3.9, 1.1, 
+      4, 1, 
       # front 2
-      2.2, 3.2,
+      # points 5 and points 7 have the highest hypervolume contributions as boundary points
+      2.2, 3.2, 
       4, 3,
       4.2, 1,
       # front 3
-      3, 5,
-      3.2, 4.7,
-      6, 2,
-      # front 4
       6, 6
     ), byrow = FALSE, nrow = 2L
   )
 
-test_that("nds_selection works from archive", {
-  tt = term("evals", n_evals = 10)
-  inst = OptimInstanceMulticrit$new(objective = OBJ_2D_2D, search_space = PS_2D, terminator = tt)
-  optimizer = OptimizerRandomSearch$new()
-  optimizer$optimize(inst)
-  expect_data_table(inst$result_y, ncols = 2)
-  expect_data_table(inst$result_x_search_space)
-  expect_data_table(inst$archive$nds_selection(1))
-
-  a = Archive$new(PS_2D, FUN_2D_2D_CODOMAIN)
-  ydt = as.data.table(t(data_matrix))
-  colnames(ydt) = FUN_2D_2D_CODOMAIN$ids()
-  sampler = SamplerUnif$new(param_set = PS_2D)
-  xdt = sampler$sample(nrow(ydt))$data
-  a$add_evals(xdt, transpose_list(xdt), ydt)
-  res = replicate(n = 100, merge(a$nds_selection(1), ydt)$ind)
-  expect_set_equal(res, c(1,7,10))
-})
-
-test_that("nds_selection basics", {
-
-  # only the hypervolume contribution of the first front elements was manually
-  # calculated, so we can only check for membership in each front, but not for
-  # the exact truth
-
   # list of possible results for each n_select value
   results = list(
-    "1" = c("1", "2", "3"),
-    "2" = c("13", "23"),
-    "3" = c("123"),
-    "4" = c("1234", "1236"),
-    "5" = c("12346", "12356"),
-    "6" = c("123456"),
-    "7" = c('1234568','1234567','1234569'),
-    "8" = c('12345679','12345689','12345678'),
-    "9" = c('123456789'),
-    "10" = c('12345678910')
-  )
-  for (i in 1:10) {
+    # Point 3 is ommitted first, followed by point 2. Then, 1 or 4 survives randomly.
+    "1" = c("1", "4"), 
+    # Point 3 is ommitted first, followed by point 2. 1 and 4 survive both.
+    "2" = "14",
+    # Point 3 is ommited first, so points 1, 2, and 4 survive
+    "3" = "124",
+    # All points out of front 1 survive
+    "4" = "1234",
+    # Out of front 2, points 5 is ommitted first, then, either 5 or 7 are sampled randomly
+    "5" = c("12345", "12347"),
+    # Out of front 2, points 5 is ommitted first, and 5 and 7 survive
+    "6" = "123457",
+    # Whole front 2 survives
+    "7" = "1234567",
+    # all candidates survive
+    "8" = "12345678"
+    )
+
+  for (i in 1:8) {
     for (j in c(-1, 1)) {
-      res = replicate(100, nds_selection(j * data_matrix, i, minimize = (j == 1)), simplify = FALSE)
-      res = unique(res)
+      res = replicate(100, nds_selection(j * points, i, minimize = (j == 1)), simplify = FALSE)
       res = sapply(res, paste, collapse = "")
+      res = unique(res)
       expect_set_equal(res, results[[i]])
     }
+  }
+
+  # changing the sign in one objective will not change the result 
+  to_minimize = c(TRUE, FALSE) 
+  points_max2d = points * (to_minimize * 2 - 1)
+
+  for (i in 1:8) {
+      res = replicate(100, nds_selection(points_max2d, i, minimize = to_minimize), simplify = FALSE)
+      res = sapply(res, paste, collapse = "")
+      res = unique(res)
+      expect_set_equal(res, results[[i]])
   }
 })
