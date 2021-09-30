@@ -1,5 +1,7 @@
 # bbotk 0.4.0.9000
 
+* Adds non dominated sorting with hypervolume contribution to `Archive`.
+
 # bbotk 0.4.0
 
 * Allows empty search space and domain.
