@@ -11,10 +11,10 @@ nds_selection(points, n_select, ref_point = NULL, minimize = TRUE)
 Numeric matrix with each column corresponding to a point}
 
 \item{n_select}{(\code{integer(1L)})\cr
-Amount of points to select}
+Amount of points to select.}
 
 \item{ref_point}{(\code{numeric()})\cr
-Reference point for hypervolume}
+Reference point for hypervolume.}
 
 \item{minimize}{('logical()')\cr
 Should the ranking be based on minimization?
@@ -29,3 +29,4 @@ Select best subset of points by non dominated sorting with
 hypervolume contribution for tie breaking. Works on an arbitrary dimension
 of size two or higher.
 }
+\keyword{internal}

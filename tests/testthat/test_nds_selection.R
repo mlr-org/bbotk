@@ -71,7 +71,7 @@ test_that("nds_selection works", {
   })
 })
 
-expect_that("nds_selection in Archive works", {
+test_that("nds_selection in Archive works", {
   domain = ps(x1 = p_dbl())
   codomain = ps(
     y1 = p_dbl(tags = "minimize"),
