@@ -213,6 +213,7 @@ Column names of codomain parameters.</p></dd>
 <li><p><a href='#method-new'><code>Archive$new()</code></a></p></li>
 <li><p><a href='#method-add_evals'><code>Archive$add_evals()</code></a></p></li>
 <li><p><a href='#method-best'><code>Archive$best()</code></a></p></li>
+<li><p><a href='#method-nds_selection'><code>Archive$nds_selection()</code></a></p></li>
 <li><p><a href='#method-format'><code>Archive$format()</code></a></p></li>
 <li><p><a href='#method-print'><code>Archive$print()</code></a></p></li>
 <li><p><a href='#method-clear'><code>Archive$clear()</code></a></p></li>
@@ -269,10 +270,10 @@ Optimal outcome.</p></dd>
 </dl><p></div></p>
 <p><hr>
 <a id="method-best"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>best()</code></h3>
-<p>Returns the best scoring evaluation. For single-crit optimization,
+<p>Returns the best scoring evaluation(s). For single-crit optimization,
 the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>best</span><span class='op'>(</span>batch <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>best</span><span class='op'>(</span>batch <span class='op'>=</span> <span class='cn'>NULL</span>, n_select <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -280,9 +281,33 @@ For multi-crit optimization, the Pareto set / front.</p><h4 class='hasAnchor' id
 The batch number(s) to limit the best results to. Default is
 all batches.</p></dd>
 
+<dt><code>n_select</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1L)</a></code>)<br />
+Amount of points to select. Ignored for multi-crit optimization.</p></dd>
+
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>.</p>
+<p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code></p>
+<p><hr>
+<a id="method-nds_selection"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='nds_selection.html'>nds_selection()</a></code></h3>
+<p>Calculate best points w.r.t. non dominated sorting with hypervolume
+contribution.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>nds_selection</span><span class='op'>(</span>batch <span class='op'>=</span> <span class='cn'>NULL</span>, n_select <span class='op'>=</span> <span class='fl'>1</span>, ref_point <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>batch</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
+The batch number(s) to limit the best points to. Default is
+all batches.</p></dd>
+
+<dt><code>n_select</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1L)</a></code>)<br />
+Amount of points to select.</p></dd>
+
+<dt><code>ref_point</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code>)<br />
+Reference point for hypervolume.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code></p>
 <p><hr>
 <a id="method-format"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/format.html'>format()</a></code></h3>
 <p>Helper for print outputs.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
