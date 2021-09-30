@@ -216,7 +216,6 @@ Column names of codomain parameters.</p></dd>
 <li><p><a href='#method-format'><code>Archive$format()</code></a></p></li>
 <li><p><a href='#method-print'><code>Archive$print()</code></a></p></li>
 <li><p><a href='#method-clear'><code>Archive$clear()</code></a></p></li>
-<li><p><a href='#method-nds_selection'><code>Archive$nds_selection()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Archive$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -304,20 +303,6 @@ all batches.</p></dd>
 <p>Clear all evaluation results from archive.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>clear</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<p><hr>
-<a id="method-nds_selection"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='nds_selection.html'>nds_selection()</a></code></h3>
-<p>Calculate best points w.r.t. non domainated sortin with hypervolume contribution.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>nds_selection</span><span class='op'>(</span><span class='va'>n_select</span>, ref_point <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>n_select</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1L)</a></code>)<br />
-Amount of points to select</p></dd>
-
-<dt><code>ref_point</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code>)<br />
-Reference point for hypervolume</p></dd>
-
-</dl><p></div></p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
