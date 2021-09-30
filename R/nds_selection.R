@@ -3,6 +3,7 @@
 #' @description Select best subset of points by non dominated sorting with
 #'   hypervolume contribution for tie breaking. Works on an arbitrary dimension
 #'   of size two or higher.
+#' 
 #' @param points (`matrix()`)\cr
 #'   Numeric matrix with each column corresponding to a point
 #' @template param_n_select
@@ -11,7 +12,9 @@
 #'  Should the ranking be based on minimization?
 #'  Can be specified for each dimension or for all.
 #'  Default is `TRUE` for each dimension.
+#' 
 #' @return Vector of indices of selected points
+#' @keywords internal
 #' @export
 nds_selection = function(points, n_select, ref_point = NULL, minimize = TRUE) {
 

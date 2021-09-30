@@ -139,11 +139,11 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-best"></a>}}
 \if{latex}{\out{\hypertarget{method-best}{}}}
 \subsection{Method \code{best()}}{
-Returns the best scoring evaluation. For single-crit optimization,
+Returns the best scoring evaluation(s). For single-crit optimization,
 the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL, n_select = 1)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -152,6 +152,9 @@ For multi-crit optimization, the Pareto set / front.
 \item{\code{batch}}{(\code{integer()})\cr
 The batch number(s) to limit the best results to. Default is
 all batches.}
+
+\item{\code{n_select}}{(\code{integer(1L)})\cr
+Amount of points to select}
 }
 \if{html}{\out{</div>}}
 }
@@ -202,7 +205,7 @@ Clear all evaluation results from archive.
 \subsection{Method \code{nds_selection()}}{
 Calculate best points w.r.t. non domainated sortin with hypervolume contribution.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$nds_selection(n_select, ref_point = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$nds_selection(batch = NULL, n_select = 1, ref_point = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

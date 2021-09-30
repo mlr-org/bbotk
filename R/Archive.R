@@ -87,31 +87,29 @@ Archive = R6Class("Archive",
     },
 
     #' @description
-    #' Returns the best scoring evaluation. For single-crit optimization,
+    #' Returns the best scoring evaluation(s). For single-crit optimization,
     #' the solution that minimizes / maximizes the objective function.
     #' For multi-crit optimization, the Pareto set / front.
     #'
     #' @param batch (`integer()`)\cr
-    #' The batch number(s) to limit the best results to. Default is
-    #' all batches.
+    #'  The batch number(s) to limit the best results to. Default is
+    #'  all batches.
+    #' @param n_select (`integer(1L)`)\cr
+    #'   Amount of points to select. Ignored for multi-crit optimization.
     #'
-    #' @return [data.table::data.table()].
-    best = function(batch = NULL) {
-      if (self$n_batch == 0L) {
-        stop("No results stored in archive")
-      }
+    #' @return [data.table::data.table()]
+    best = function(batch = NULL, n_select = 1) {
+      if (self$n_batch == 0L) stop("No results stored in archive")
+      if (is.null(batch)) batch = seq_len(self$n_batch)
+      assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
 
-      batch = if (is.null(batch)) {
-        seq_len(self$n_batch)
-      } else {
-        assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
-      }
       tab = self$data[get("batch_nr") %in% batch, ]
+      assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       max_to_min = mult_max_to_min(self$codomain)
       if (self$codomain$length == 1L) {
         setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
-        res = tab[1, ]
+        res = tab[seq_len(n_select), ]
       } else {
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
         ymat = max_to_min * ymat
@@ -119,6 +117,29 @@ Archive = R6Class("Archive",
       }
 
       return(res)
+    },
+
+    #' @description
+    #' Calculate best points w.r.t. non dominated sorting with hypervolume
+    #' contribution.
+    #'
+    #' @param batch (`integer()`)\cr
+    #'   The batch number(s) to limit the best points to. Default is
+    #'   all batches.
+    #'
+    #' @return [data.table::data.table()]
+    nds_selection = function(batch = NULL, n_select = 1, ref_point = NULL) {
+      if (self$n_batch == 0L) stop("No results stored in archive")
+      if (is.null(batch)) batch = seq_len(self$n_batch)
+      assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
+
+      tab = self$data[get("batch_nr") %in% batch, ]
+      assert_int(n_select, lower = 1L, upper = nrow(tab))
+
+      points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
+      minimize = map_lgl(self$codomain$tags, has_element, "minimize")
+      inds = nds_selection(points, n_select, ref_point, minimize)
+      tab[inds, ]
     },
 
     #' @description
@@ -140,15 +161,6 @@ Archive = R6Class("Archive",
     #' Clear all evaluation results from archive.
     clear = function() {
       self$data = data.table()
-    },
-
-    #' @description
-    #' Calculate best points w.r.t. non domainated sortin with hypervolume contribution.
-    nds_selection = function(n_select, ref_point = NULL) {
-      points = t(as.matrix(self$data[, self$cols_y, with = FALSE]))
-      minimize = map_lgl(self$codomain$tags, has_element, "minimize")
-      inds = nds_selection(points, n_select, ref_point, minimize)
-      self$data[inds, ]
     }
   ),
 

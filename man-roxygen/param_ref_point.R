@@ -1,3 +1,2 @@
 #' @param ref_point (`numeric()`)\cr
-#'   Reference point for hypervolume
-#'
+#'   Reference point for hypervolume.
