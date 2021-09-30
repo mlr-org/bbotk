@@ -45,10 +45,11 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.7.0),
+    mlr3misc (>= 0.9.4),
     R6
 Suggests:
     adagio,
+    emoa,
     GenSA,
     irace,
     knitr,
@@ -100,5 +101,6 @@ Collate:
     'bibentries.R'
     'helper.R'
     'helper_irace.R'
+    'nds_selection.R'
     'sugar.R'
     'zzz.R'

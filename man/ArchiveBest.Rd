@@ -38,6 +38,7 @@ Number of batches stored in the archive.}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="clear">}\href{../../bbotk/html/Archive.html#method-clear}{\code{bbotk::Archive$clear()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format">}\href{../../bbotk/html/Archive.html#method-format}{\code{bbotk::Archive$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="nds_selection">}\href{../../bbotk/html/Archive.html#method-nds_selection}{\code{bbotk::Archive$nds_selection()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print">}\href{../../bbotk/html/Archive.html#method-print}{\code{bbotk::Archive$print()}}\out{</span>}
 }
 \out{</details>}
