@@ -80,6 +80,7 @@ test_that("nds_selection in Archive works", {
   )
   a = Archive$new(domain, codomain)
 
+  # misuse x1 to identify the points
   xdt = data.table(x1 = seq_len(8))
   ydt = data.table(
     y1 = c(1, 2, 3.9, 4, 2.2, 4, 4.2, 6),
