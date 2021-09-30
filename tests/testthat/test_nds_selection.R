@@ -108,7 +108,7 @@ test_that("nds_selection in Archive works", {
   )
 
   # default
-  s2 = map(map(seq_len(8),function(i) replicate(100, a$nds_selection(n_select = i)$x1,simplify = FALSE)), unique)
+  s2 = map(map(seq_len(8),function(i) replicate(100, a$nds_selection(n_select = i)$x1, simplify = FALSE)), unique)
 
   pmap_lgl(list(s1, s2), function(ss1, ss2) {
     expect_true(all(map_lgl(ss2, function(sss2) {
