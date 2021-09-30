@@ -64,7 +64,8 @@ fun = function(xs) {
 }
 
 # optimize function with random search
-result = bb_optimize(fun, method = "random_search", lower = c(-10, -5), upper = c(10, 5), max_evals = 100)
+result = bb_optimize(fun, method = "random_search", lower = c(-10, -5), upper = c(10, 5),
+  max_evals = 100)
 
 # optimized parameters
 result$par
