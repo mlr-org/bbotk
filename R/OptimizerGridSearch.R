@@ -55,7 +55,7 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
-      allow_hotstart = inst$objective$allow_hotstart
+      allow_hotstart = inst$objective$allow_hotstart %??% FALSE
       data = generate_design_grid(inst$search_space, resolution = pv$resolution,
         param_resolutions = pv$param_resolutions)$data
 
