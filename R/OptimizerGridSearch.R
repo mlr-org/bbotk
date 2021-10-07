@@ -27,7 +27,7 @@
 #' \item{`batch_size`}{`integer(1)`\cr
 #' Maximum number of points to try in a batch.}
 #' }
-#' 
+#'
 #' @template section_progress_bars
 #'
 #' @export
@@ -55,12 +55,18 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
-      g = generate_design_grid(inst$search_space, resolution = pv$resolution,
-        param_resolutions = pv$param_resolutions)
-      ch = chunk_vector(seq_row(g$data), chunk_size = pv$batch_size,
-        shuffle = TRUE)
+      allow_hotstart = inst$objective$allow_hotstart
+      data = generate_design_grid(inst$search_space, resolution = pv$resolution,
+        param_resolutions = pv$param_resolutions)$data
+
+      if (allow_hotstart) {
+        hotstart_id = inst$objective$learner$param_set$ids(tags = "hotstart")
+        setorderv(data, hotstart_id)
+      }
+
+      ch = chunk_vector(seq_row(data), chunk_size = pv$batch_size, shuffle = !allow_hotstart)
       for (inds in ch) {
-        inst$eval_batch(g$data[inds])
+        inst$eval_batch(data[inds])
       }
     }
   )
