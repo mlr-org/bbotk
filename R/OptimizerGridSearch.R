@@ -61,7 +61,9 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
 
       if (allow_hotstart) {
         hotstart_id = inst$objective$learner$param_set$ids(tags = "hotstart")
-        setorderv(data, hotstart_id)
+        if ("hotstart_forward" %in% inst$objective$learner$properties) order = 1L
+        if ("hotstart_backward" %in% inst$objective$learner$properties) order = -1L
+        setorderv(data, hotstart_id, order = order)
       }
 
       ch = chunk_vector(seq_row(data), chunk_size = pv$batch_size, shuffle = !allow_hotstart)
