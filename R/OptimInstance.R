@@ -73,7 +73,7 @@ OptimInstance = R6Class("OptimInstance",
       } else if (keep_evals == "best") {
         ArchiveBest$new(search_space = self$search_space,
           codomain = objective$codomain, check_values = check_values,
-          store_x_domain = !is_rfundt || self$search_space$has_trafo) 
+          store_x_domain = !is_rfundt || self$search_space$has_trafo)
           # only not store xss if we have RFunDT and not trafo
       }
 
@@ -141,7 +141,7 @@ OptimInstance = R6Class("OptimInstance",
       } else {
         xss_trafoed = NULL
       }
-      
+
       # eval if search space is empty
       if (nrow(xdt) == 0) {
         ydt = self$objective$eval_many(list(list()))
@@ -157,6 +157,23 @@ OptimInstance = R6Class("OptimInstance",
       lg$info(capture.output(print(cbind(xdt, ydt),
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
+    },
+
+    eval_async = function(xdt) {
+
+      if (self$is_terminated) stop(terminated_error(self))
+
+      xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+
+
+
+
+            # evlaute configuration in background process with callr
+      p = r_bg(eval, list(xs = job$xs, task = task, learner = learner, resampling = resampling, measure = measure))
+      # add to schedule
+      schedule$add_configuration(job$xs, job$rung, p, job$id)
+
+
     },
 
     #' @description
