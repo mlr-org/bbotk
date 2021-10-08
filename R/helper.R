@@ -102,7 +102,7 @@ assign_result_default = function(inst) {
     inst$assign_result(xdt, ydt)
   } else {
     # unlist keeps name!
-    y = unlist(res[, inst$objective$codomain$ids(), with = FALSE])
+    y = unlist(res[, target_codomain_ids(inst$objective$codomain), with = FALSE])
     inst$assign_result(xdt, y)
   }
 
@@ -121,7 +121,7 @@ assign_result_default = function(inst) {
 #' @keywords internal
 #' @export
 mult_max_to_min = function(codomain) {
-  ifelse(map_lgl(codomain$tags, has_element, "minimize"), 1, -1)
+  ifelse(map_lgl(codomain$tags[names(codomain$tags) %in% target_codomain_ids(codomain)], has_element, "minimize"), 1, -1)
 }
 
 
@@ -151,4 +151,20 @@ search_start = function(search_space, type = "random") {
     }
     (search_space$upper + search_space$lower) / 2
   }
+}
+
+is_target_codomain = function(codomain) {
+  map_lgl(codomain$tags, has_element, "minimize") | map_lgl(codomain$tags, has_element, "maximize")
+}
+
+target_codomain_len = function(codomain) {
+  sum(is_target_codomain(codomain))
+}
+
+target_codomain_ids = function(codomain) {
+  codomain$ids()[is_target_codomain(codomain)]
+}
+
+target_codomain_tags = function(codomain) {
+  codomain$tags[is_target_codomain(codomain)]
 }

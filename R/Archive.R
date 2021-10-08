@@ -107,8 +107,8 @@ Archive = R6Class("Archive",
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       max_to_min = mult_max_to_min(self$codomain)
-      if (self$codomain$length == 1L) {
-        setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
+      if (target_codomain_len(self$codomain) == 1L) {
+        setorderv(tab, self$cols_y, order = max_to_min, na.last = TRUE)
         res = tab[seq_len(n_select), ]
       } else {
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
@@ -137,7 +137,7 @@ Archive = R6Class("Archive",
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-      minimize = map_lgl(self$codomain$tags, has_element, "minimize")
+      minimize = map_lgl(target_codomain_tags(self$codomain), has_element, "minimize")
       inds = nds_selection(points, n_select, ref_point, minimize)
       tab[inds, ]
     },
@@ -186,7 +186,7 @@ Archive = R6Class("Archive",
 
     #' @field cols_y (`character()`)\cr
     #' Column names of codomain parameters.
-    cols_y = function() self$codomain$ids()
+    cols_y = function() target_codomain_ids(self$codomain)
   ),
 
   private = list(

@@ -73,7 +73,7 @@ OptimInstance = R6Class("OptimInstance",
       } else if (keep_evals == "best") {
         ArchiveBest$new(search_space = self$search_space,
           codomain = objective$codomain, check_values = check_values,
-          store_x_domain = !is_rfundt || self$search_space$has_trafo) 
+          store_x_domain = !is_rfundt || self$search_space$has_trafo)
           # only not store xss if we have RFunDT and not trafo
       }
 
@@ -141,7 +141,7 @@ OptimInstance = R6Class("OptimInstance",
       } else {
         xss_trafoed = NULL
       }
-      
+
       # eval if search space is empty
       if (nrow(xdt) == 0) {
         ydt = self$objective$eval_many(list(list()))
@@ -242,7 +242,7 @@ objective_function = function(x, inst, multiplicator) {
   inst$search_space$assert(xs)
   xdt = as.data.table(xs)
   res = inst$eval_batch(xdt)
-  y = as.numeric(res[, inst$objective$codomain$ids(), with = FALSE])
+  y = as.numeric(res[, target_codomain_ids(inst$objective$codomain), with = FALSE])
   y * multiplicator
 }
 

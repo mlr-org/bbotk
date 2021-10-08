@@ -146,7 +146,7 @@ Objective = R6Class("Objective",
 
     #' @field ydim (`integer(1)`)\cr
     #' Dimension of codomain.
-    ydim = function() self$codomain$length
+    ydim = function() target_codomain_len(self$codomain)
   ),
 
   private = list(
