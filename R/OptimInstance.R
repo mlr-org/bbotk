@@ -159,21 +159,14 @@ OptimInstance = R6Class("OptimInstance",
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
     },
 
-    eval_async = function(xdt) {
-
+    eval_batch_async = function(xdt) {
       if (self$is_terminated) stop(terminated_error(self))
 
       xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
 
+      p = future::future({self$objective$eval_many(xss_trafoed)}, packages = "data.table")
 
-
-
-            # evlaute configuration in background process with callr
-      p = r_bg(eval, list(xs = job$xs, task = task, learner = learner, resampling = resampling, measure = measure))
-      # add to schedule
-      schedule$add_configuration(job$xs, job$rung, p, job$id)
-
-
+      self$archive$add_promise(xdt, xss_trafoed, p)
     },
 
     #' @description

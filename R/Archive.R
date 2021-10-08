@@ -86,6 +86,40 @@ Archive = R6Class("Archive",
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
+    add_promise = function(xdt, xss_trafoed = NULL, p) {
+      assert_data_table(xdt)
+      assert_class(p, "Future")
+
+      set(xdt, j = "promise", value = list(p))
+      i = if (nrow(self$data) == 0) seq(nrow(xdt)) else self$data$evaluation[nrow(self$data)] + nrow(xdt)
+      set(xdt, j = "evaluation", value = i)
+      set(xdt, j = "evaluated", value = FALSE)
+      set(xdt, j = "x_domain", value = list(xss_trafoed))
+      set(xdt, j = "timestamp", value = Sys.time())
+
+      self$data = rbindlist(list(self$data, xdt), fill = TRUE, use.names = TRUE)
+      print(self)
+      print(self$active_futures())
+    },
+
+    resolve_promise = function() {
+      data = self$data[.(FALSE), on = c("evaluated")]
+
+      for(i in seq(nrow(data))) {
+        p = data$promise[[i]]
+        if (resolved(p)) {
+          set(self$data, i = data$evaluation[[i]], j = self$codomain$ids(), value = value(p))
+          set(self$data, i = data$evaluation[[i]], j = "evaluated", value = TRUE)
+          lg$info("Promise %i evaluated.", data$evaluation[[i]])
+        }
+      }
+    },
+
+    active_futures = function() {
+      if (nrow(self$data) == 0) return(0)
+      sum(!self$data[.(FALSE), evaluated, on = c("evaluated")])
+    },
+
     #' @description
     #' Returns the best scoring evaluation(s). For single-crit optimization,
     #' the solution that minimizes / maximizes the objective function.
