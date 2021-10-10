@@ -53,28 +53,7 @@ remotes::install_github("mlr-org/bbotk")
 library(bbotk)
 ```
 
-### Quick optimization with `bb_optimize`
-
-```{r}
-library(bbotk)
-
-# define objective function
-fun = function(xs) {
-  c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
-}
-
-# optimize function with random search
-result = bb_optimize(fun, method = "random_search", lower = c(-10, -5), upper = c(10, 5),
-  max_evals = 100)
-
-# optimized parameters
-result$par
-
-# optimal outcome
-result$value
-```
-
-### Advanced optimization
+### Optimization
 
 ```{r}
 # define objective function
@@ -121,4 +100,25 @@ instance$result
 
 # all evaluated configuration
 as.data.table(instance$archive)
+```
+
+### Quick optimization with `bb_optimize`
+
+```{r}
+library(bbotk)
+
+# define objective function
+fun = function(xs) {
+  c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+}
+
+# optimize function with random search
+result = bb_optimize(fun, method = "random_search", lower = c(-10, -5), upper = c(10, 5),
+  max_evals = 100)
+
+# optimized parameters
+result$par
+
+# optimal outcome
+result$value
 ```
