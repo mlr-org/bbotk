@@ -10,6 +10,9 @@
     <loc>https://bbotk.mlr-org.com/reference/ArchiveBest.html</loc>
   </url>
   <url>
+    <loc>https://bbotk.mlr-org.com/reference/Codomain.html</loc>
+  </url>
+  <url>
     <loc>https://bbotk.mlr-org.com/reference/Objective.html</loc>
   </url>
   <url>
@@ -104,9 +107,6 @@
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation_batch.html</loc>
-  </url>
-  <url>
-    <loc>https://bbotk.mlr-org.com/reference/mult_max_to_min.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/nds_selection.html</loc>
