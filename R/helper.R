@@ -98,32 +98,16 @@ assign_result_default = function(inst) {
   xdt = res[, inst$search_space$ids(), with = FALSE]
 
   if (inherits(inst, "OptimInstanceMultiCrit")) {
-    ydt = res[, inst$objective$codomain$ids(), with = FALSE]
+    ydt = res[, inst$archive$cols_y, with = FALSE]
     inst$assign_result(xdt, ydt)
   } else {
     # unlist keeps name!
-    y = unlist(res[, inst$objective$codomain$ids(), with = FALSE])
+    y = unlist(res[, inst$archive$cols_y, with = FALSE])
     inst$assign_result(xdt, y)
   }
 
   invisible(NULL)
 }
-
-#' @title Multiplication vector for output
-#' @description
-#' Returns a numeric vector with values -1 and 1.
-#' If you multiply this vector with an outcome of `codomain` it will be turned into a minimization problem.
-#'
-#' @param codomain [ParamSet]
-#'
-#' @return 'numeric()'
-#'
-#' @keywords internal
-#' @export
-mult_max_to_min = function(codomain) {
-  ifelse(map_lgl(codomain$tags, has_element, "minimize"), 1, -1)
-}
-
 
 get_private = function(x) {
     x[[".__enclos_env__"]][["private"]]

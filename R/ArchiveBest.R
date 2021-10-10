@@ -25,7 +25,7 @@ ArchiveBest = R6Class("ArchiveBest",
     initialize = function(search_space, codomain, check_values = FALSE, store_x_domain = FALSE) {
       super$initialize(search_space, codomain, check_values = check_values,
         store_x_domain)
-      private$.max_to_min = mult_max_to_min(self$codomain)
+      private$.max_to_min = self$codomain$maximization_to_minimization
       if(self$codomain$length == 1) {
         private$.best_y = if(private$.max_to_min == -1) -Inf else Inf
       }

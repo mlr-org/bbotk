@@ -25,6 +25,6 @@ test_that("status method works", {
 test_that("TerminatorClockTime works with empty archive" ,{
   terminator = TerminatorClockTime$new()
   terminator$param_set$values$stop_time = Sys.time() + 2L
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })

@@ -130,9 +130,9 @@ test_that("codomain assertions work", {
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize' or 'maximize'")
 
-  codomain = ps(y1 = p_lgl())
+  codomain = ps(y1 = p_lgl(tags = "minimize"))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
 
   codomain = ps(y1 = p_dbl(tags = c("minimize", "maximize")))
@@ -142,10 +142,10 @@ test_that("codomain assertions work", {
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl(), y2 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize' or 'maximize'")
 
-  codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains no 'minimize' or 'maximize' tag")
+  codomain = ps(y1 = p_dbl(tags = "minimize"), time = p_dbl())
+  expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_lgl(tags = "maximize"))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain is not numeric")
