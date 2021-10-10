@@ -54,7 +54,7 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
   private = list(
     .status = function(archive) {
       max_steps = self$param_set$values$secs
-      current_steps =  as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
+      current_steps = as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
       c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
