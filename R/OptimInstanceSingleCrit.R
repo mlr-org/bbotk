@@ -29,7 +29,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
     #' Search space that is logged into archive.
     initialize = function(objective, search_space = NULL, terminator,
       keep_evals = "all", check_values = TRUE) {
-      if (target_codomain_len(objective$codomain) > 1) {
+      if (objective$codomain$target_length > 1) {
         stop("Codomain > 1")
       }
       super$initialize(objective, search_space, terminator, keep_evals, check_values)
@@ -46,7 +46,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
       assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_number(y)
-      assert_names(names(y), permutation.of = target_codomain_ids(self$objective$codomain))
+      assert_names(names(y), permutation.of = self$objective$codomain$target_ids)
       x_domain = unlist(transform_xdt_to_xss(xdt, self$search_space), recursive = FALSE)
       if (is.null(x_domain)) x_domain = list()
       private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays

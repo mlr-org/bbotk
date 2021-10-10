@@ -46,12 +46,11 @@ Objective = R6Class("Objective",
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
-    initialize = function(id = "f", properties = character(), domain,
-      codomain = ps(y = p_dbl(tags = "minimize")),
+    initialize = function(id = "f", properties = character(), domain, codomain = ps(y = p_dbl(tags = "minimize")),
       constants = ps(), check_values = TRUE) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
-      self$codomain = assert_codomain(codomain)
+      self$codomain = Codomain$new(assert_param_set(codomain)$params)
       assert_names(self$domain$ids(), disjunct.from = self$codomain$ids())
       assert_names(self$domain$ids(), disjunct.from = c("x_domain", "timestamp", "batch_nr"))
       assert_names(self$codomain$ids(), disjunct.from = c("x_domain", "timestamp", "batch_nr"))
@@ -146,7 +145,7 @@ Objective = R6Class("Objective",
 
     #' @field ydim (`integer(1)`)\cr
     #' Dimension of codomain.
-    ydim = function() target_codomain_len(self$codomain)
+    ydim = function() self$codomain$target_length
   ),
 
   private = list(

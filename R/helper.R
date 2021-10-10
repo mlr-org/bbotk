@@ -98,32 +98,16 @@ assign_result_default = function(inst) {
   xdt = res[, inst$search_space$ids(), with = FALSE]
 
   if (inherits(inst, "OptimInstanceMultiCrit")) {
-    ydt = res[, inst$objective$codomain$ids(), with = FALSE]
+    ydt = res[, inst$archive$cols_y, with = FALSE]
     inst$assign_result(xdt, ydt)
   } else {
     # unlist keeps name!
-    y = unlist(res[, target_codomain_ids(inst$objective$codomain), with = FALSE])
+    y = unlist(res[, inst$archive$cols_y, with = FALSE])
     inst$assign_result(xdt, y)
   }
 
   invisible(NULL)
 }
-
-#' @title Multiplication vector for output
-#' @description
-#' Returns a numeric vector with values -1 and 1.
-#' If you multiply this vector with an outcome of `codomain` it will be turned into a minimization problem.
-#'
-#' @param codomain [ParamSet]
-#'
-#' @return 'numeric()'
-#'
-#' @keywords internal
-#' @export
-mult_max_to_min = function(codomain) {
-  ifelse(map_lgl(codomain$tags[names(codomain$tags) %in% target_codomain_ids(codomain)], has_element, "minimize"), 1, -1)
-}
-
 
 get_private = function(x) {
     x[[".__enclos_env__"]][["private"]]
@@ -151,20 +135,4 @@ search_start = function(search_space, type = "random") {
     }
     (search_space$upper + search_space$lower) / 2
   }
-}
-
-is_target_codomain = function(codomain) {
-  map_lgl(codomain$tags, has_element, "minimize") | map_lgl(codomain$tags, has_element, "maximize")
-}
-
-target_codomain_len = function(codomain) {
-  sum(is_target_codomain(codomain))
-}
-
-target_codomain_ids = function(codomain) {
-  codomain$ids()[is_target_codomain(codomain)]
-}
-
-target_codomain_tags = function(codomain) {
-  codomain$tags[is_target_codomain(codomain)]
 }

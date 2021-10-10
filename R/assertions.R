@@ -107,28 +107,3 @@ assert_instance_properties = function(optimizer, inst) {
       paste0(not_supported_pclasses, collapse = ","))
   }
 }
-
-#' @export
-#' @param codomain ([paradox::ParamSet]).
-#' @rdname bbotk_assertions
-assert_codomain = function(codomain) {
-  assert_param_set(codomain)
-
-  for (y in codomain$params) {
-    # only check for codomain parameters tagged with minimize or maximize
-    if (any(c("minimize", "maximize") %in% y$tags)) {
-      # (1) all numeric
-      if (!y$is_number) {
-        stopf("%s in codomain is not numeric", y$id)
-      }
-
-      # (2) every parameter's tags contain at most one of 'minimize' or 'maximize'
-      if (sum(y$tags %in% c("minimize", "maximize")) > 1) {
-        stopf("%s in codomain contains a 'minimize' and 'maximize' tag", y$id)
-      }
-    }
-
-
-  }
-  return(codomain)
-}

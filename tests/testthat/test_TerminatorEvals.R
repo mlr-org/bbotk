@@ -41,7 +41,7 @@ test_that("status method works", {
   expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 2))
   expect_equal(inst$terminator$remaining_time(inst$archive), Inf)
 
-  # n_evals k 
+  # n_evals k
   terminator = trm("evals", n_evals = 10, k = 5)
   inst = MAKE_INST_1D(terminator = terminator)
   xdt = data.table(x = 1)
@@ -58,7 +58,7 @@ test_that("status method works", {
   expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 2))
   expect_equal(inst$terminator$remaining_time(inst$archive), Inf)
 
-  # only k 
+  # only k
   terminator = trm("evals", n_evals = 0, k = 5)
   inst = MAKE_INST_1D(terminator = terminator)
   xdt = data.table(x = 1)
@@ -78,6 +78,6 @@ test_that("status method works", {
 
 test_that("TerminatorEvals works with empty archive" ,{
   terminator = TerminatorEvals$new()
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })

@@ -25,7 +25,7 @@ Archive = R6Class("Archive",
     #' Search space of objective.
     search_space = NULL,
 
-    #' @field codomain ([paradox::ParamSet])\cr
+    #' @field codomain ([Codomain])\cr
     #' Codomain of objective function.
     codomain = NULL,
 
@@ -55,7 +55,7 @@ Archive = R6Class("Archive",
     #' Search space that is logged into archive.
     initialize = function(search_space, codomain, check_values = TRUE, store_x_domain = TRUE) {
       self$search_space = assert_param_set(search_space)
-      self$codomain = assert_param_set(codomain)
+      self$codomain = Codomain$new(assert_param_set(codomain)$params)
       self$check_values = assert_flag(check_values)
       self$data = data.table()
       self$store_x_domain = assert_flag(store_x_domain)
@@ -106,8 +106,8 @@ Archive = R6Class("Archive",
       tab = self$data[get("batch_nr") %in% batch, ]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
-      max_to_min = mult_max_to_min(self$codomain)
-      if (target_codomain_len(self$codomain) == 1L) {
+      max_to_min = self$codomain$maximization_to_minimization
+      if (self$codomain$target_length == 1L) {
         setorderv(tab, self$cols_y, order = max_to_min, na.last = TRUE)
         res = tab[seq_len(n_select), ]
       } else {
@@ -137,7 +137,7 @@ Archive = R6Class("Archive",
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-      minimize = map_lgl(target_codomain_tags(self$codomain), has_element, "minimize")
+      minimize = map_lgl(self$codomain$target_tags, has_element, "minimize")
       inds = nds_selection(points, n_select, ref_point, minimize)
       tab[inds, ]
     },
@@ -185,8 +185,8 @@ Archive = R6Class("Archive",
     cols_x = function() self$search_space$ids(),
 
     #' @field cols_y (`character()`)\cr
-    #' Column names of codomain parameters.
-    cols_y = function() target_codomain_ids(self$codomain)
+    #' Column names of codomain target parameters.
+    cols_y = function() self$codomain$target_ids
   ),
 
   private = list(

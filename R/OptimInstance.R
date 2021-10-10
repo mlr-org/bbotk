@@ -82,7 +82,7 @@ OptimInstance = R6Class("OptimInstance",
       } else {
         private$.objective_function = objective_function
       }
-      self$objective_multiplicator = mult_max_to_min(self$objective$codomain)
+      self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
     },
 
     #' @description
@@ -237,16 +237,16 @@ OptimInstance = R6Class("OptimInstance",
   )
 )
 
-objective_function = function(x, inst, multiplicator) {
+objective_function = function(x, inst, maximization_to_minimization) {
   xs = set_names(as.list(x), inst$search_space$ids())
   inst$search_space$assert(xs)
   xdt = as.data.table(xs)
   res = inst$eval_batch(xdt)
-  y = as.numeric(res[, target_codomain_ids(inst$objective$codomain), with = FALSE])
-  y * multiplicator
+  y = as.numeric(res[, inst$objective$codomain$target_ids, with = FALSE])
+  y * maximization_to_minimization
 }
 
-objective_error = function(x, inst, multiplicator) {
+objective_error = function(x, inst, maximization_to_minimization) {
   stop("$objective_function can only be called if search_space only
     contains numeric values")
 }

@@ -15,6 +15,6 @@ test_that("TerminatorPerfReached in OptimInstanceMultiCrit throws an error", {
 
 test_that("TerminatorPerfReached works with empty archive" ,{
   terminator = TerminatorPerfReached$new()
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })

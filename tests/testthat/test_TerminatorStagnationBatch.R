@@ -37,6 +37,6 @@ test_that("TerminatorStagnationBatch in OptimInstanceMultiCrit throws an error",
 
 test_that("TerminatorStagnationBatch works with empty archive" ,{
   terminator = TerminatorStagnationBatch$new()
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })
