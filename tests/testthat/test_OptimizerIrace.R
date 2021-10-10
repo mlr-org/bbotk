@@ -8,18 +8,18 @@ test_that("OptimizerIrace works", {
 
   fun = function(xdt, instances) {
     a = 1
-    b = 5.1 / (4 * (pi ^ 2))
+    b = 5.1 / (4 * (pi^2))
     c = 5 / pi
     r = 6
     s = 10
     t = 1 / (8 * pi)
 
     data.table(y = (
-      a * ((xdt[["x2"]] - 
-      b * (xdt[["x1"]] ^ 2L) + 
-      c * xdt[["x1"]] - r) ^ 2) + 
-      ((s * (1 - t)) * cos(xdt[["x1"]])) + 
-      unlist(instances)))
+      a * ((xdt[["x2"]] -
+        b * (xdt[["x1"]]^2L) +
+        c * xdt[["x1"]] - r)^2) +
+        ((s * (1 - t)) * cos(xdt[["x1"]])) +
+        unlist(instances)))
   }
 
   objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
@@ -58,30 +58,30 @@ test_that("OptimizerIrace works", {
 
   fun = function(xdt, instances) {
     a = 1
-    b = 5.1 / (4 * (pi ^ 2))
+    b = 5.1 / (4 * (pi^2))
     c = 5 / pi
     r = 6
     s = 10
     t = 1 / (8 * pi)
 
     data.table(y = -(
-      a * ((xdt[["x2"]] - 
-      b * (xdt[["x1"]] ^ 2L) + 
-      c * xdt[["x1"]] - r) ^ 2) + 
-      ((s * (1 - t)) * cos(xdt[["x1"]])) + 
-      unlist(instances)))
+      a * ((xdt[["x2"]] -
+        b * (xdt[["x1"]]^2L) +
+        c * xdt[["x1"]] - r)^2) +
+        ((s * (1 - t)) * cos(xdt[["x1"]])) +
+        unlist(instances)))
   }
 
   codomain = ps(y = p_dbl(tags = "maximize"))
-  objective = ObjectiveRFunDt$new(fun = fun, domain = domain,  codomain = codomain)
-  
+  objective = ObjectiveRFunDt$new(fun = fun, domain = domain, codomain = codomain)
+
   instance = OptimInstanceSingleCrit$new(
     objective = objective,
     search_space = search_space,
     terminator = trm("evals", n_evals = 96))
-  
+
   optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
-  
+
   x = capture.output(optimizer$optimize(instance))
 
   # check archive columns
@@ -113,9 +113,9 @@ test_that("OptimizerIrace works", {
 test_that("paradox_to_irace without dependencies", {
   # only ParamLgl
   pps = ps(lgl = p_lgl())
-  expect_irace_parameters(parameters = paradox_to_irace(pps), names = "lgl", types = "c", 
+  expect_irace_parameters(parameters = paradox_to_irace(pps), names = "lgl", types = "c",
     domain = list(lgl = c("TRUE", "FALSE")), conditions = list(lgl = TRUE))
-  
+
   # only ParamUty
   pps = ps(uty = p_uty())
   expect_error(paradox_to_irace(pps), regex = "<ParamUty> not supported by <TunerIrace>", fixed = TRUE)
@@ -145,7 +145,7 @@ test_that("paradox_to_irace without dependencies", {
     parameters = paradox_to_irace(pps),
     names = c("fct", "int1", "dbl", "int2", "lgl"),
     types = c("c", "i", "r", "i", "c"),
-    domain = list(fct = c("a", "b", "c"), int1 = c(1, 9), dbl = c(0.1, 0.3), int2 = c(10, 90), 
+    domain = list(fct = c("a", "b", "c"), int1 = c(1, 9), dbl = c(0.1, 0.3), int2 = c(10, 90),
       lgl = c("TRUE", "FALSE")))
 })
 
@@ -162,7 +162,7 @@ test_that("paradox_to_irace with dependencies", {
     depends = list(a = character(0), b = "a"),
     hierarchy = c(1, 2))
 
- # two dependencies
+  # two dependencies
   pps = ps(
     a = p_lgl(),
     c = p_fct(levels = c("lvl1", "lvl2"), depends = b %in% c(2, 5, 7)),

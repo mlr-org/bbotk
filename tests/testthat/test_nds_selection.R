@@ -1,15 +1,15 @@
 test_that("nds_selection works", {
   points = matrix(
-    c(# front 1
-      # emoa puts always Inf weight on boundary points, so they always survive 
-      # points 1 and points 4 have the highest hypervolume contributions 
-      1, 4, 
-      2, 2, 
-      3.9, 1.1, 
-      4, 1, 
+    c( # front 1
+      # emoa puts always Inf weight on boundary points, so they always survive
+      # points 1 and points 4 have the highest hypervolume contributions
+      1, 4,
+      2, 2,
+      3.9, 1.1,
+      4, 1,
       # front 2
       # points 5 and points 7 have the highest hypervolume contributions as boundary points
-      2.2, 3.2, 
+      2.2, 3.2,
       4, 3,
       4.2, 1,
       # front 3
@@ -37,37 +37,37 @@ test_that("nds_selection works", {
   )
 
   # default
-  s2 = map(map(seq_len(8),function(i) replicate(100, nds_selection(points, n_select = i), simplify = FALSE)), unique)
+  s2 = map(map(seq_len(8), function(i) replicate(100, nds_selection(points, n_select = i), simplify = FALSE)), unique)
 
   pmap_lgl(list(s1, s2), function(ss1, ss2) {
     expect_true(all(map_lgl(ss2, function(sss2) {
       any(map_lgl(ss1, function(sss1) {
         identical(sss1, sss2)
-    }))
+      }))
     })))
   })
 
   # change sign
-  s2 = map(map(seq_len(8),function(i) replicate(100, nds_selection(-1 * points, n_select = i, minimize = FALSE), simplify = FALSE)), unique)
+  s2 = map(map(seq_len(8), function(i) replicate(100, nds_selection(-1 * points, n_select = i, minimize = FALSE), simplify = FALSE)), unique)
 
   pmap_lgl(list(s1, s2), function(ss1, ss2) {
     expect_true(all(map_lgl(ss2, function(sss2) {
       any(map_lgl(ss1, function(sss1) {
         identical(sss1, sss2)
-    }))
+      }))
     })))
   })
 
-  # changing the sign in one objective will not change the result 
+  # changing the sign in one objective will not change the result
   to_minimize = c(TRUE, FALSE)
   points_max2d = points * (to_minimize * 2 - 1)
-  s2 = map(map(seq_len(8),function(i) replicate(100, nds_selection(points_max2d, n_select = i, minimize = to_minimize), simplify = FALSE)), unique)
+  s2 = map(map(seq_len(8), function(i) replicate(100, nds_selection(points_max2d, n_select = i, minimize = to_minimize), simplify = FALSE)), unique)
 
   pmap_lgl(list(s1, s2), function(ss1, ss2) {
     expect_true(all(map_lgl(ss2, function(sss2) {
       any(map_lgl(ss1, function(sss1) {
         identical(sss1, sss2)
-    }))
+      }))
     })))
   })
 })
@@ -109,13 +109,13 @@ test_that("nds_selection in Archive works", {
   )
 
   # default
-  s2 = map(map(seq_len(8),function(i) replicate(100, a$nds_selection(n_select = i)$x1, simplify = FALSE)), unique)
+  s2 = map(map(seq_len(8), function(i) replicate(100, a$nds_selection(n_select = i)$x1, simplify = FALSE)), unique)
 
   pmap_lgl(list(s1, s2), function(ss1, ss2) {
     expect_true(all(map_lgl(ss2, function(sss2) {
       any(map_lgl(ss1, function(sss1) {
         identical(sss1, sss2)
-    }))
+      }))
     })))
   })
 })

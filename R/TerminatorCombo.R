@@ -47,7 +47,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
 
       properties = Reduce(intersect, map(terminators, "properties"))
       properties = properties[properties != "progressr"]
-      
+
       super$initialize(param_set = param_set, properties = properties)
       self$unit = "percent"
     },
@@ -81,7 +81,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' @return `integer(1)`.
     remaining_time = function(archive) {
       assert_r6(archive, "Archive")
-      min_max = if(self$param_set$values$any) min else max
+      min_max = if (self$param_set$values$any) min else max
       min_max(map_dbl(self$terminators, function(t) t$remaining_time(archive)), na.rm = TRUE)
     },
 
@@ -99,11 +99,11 @@ TerminatorCombo = R6Class("TerminatorCombo",
   private = list(
     .status = function(archive) {
       max_steps = 100
-      min_max = if(self$param_set$values$any) max else min
+      min_max = if (self$param_set$values$any) max else min
       current_steps = min_max(map_int(self$terminators, function(t) {
         status = t$status(archive)
-        as.integer(status["current_steps"]/status["max_steps"]*100)
-        }))
+        as.integer(status["current_steps"] / status["max_steps"] * 100)
+      }))
       c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )

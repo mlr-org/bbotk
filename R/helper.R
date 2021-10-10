@@ -110,7 +110,7 @@ assign_result_default = function(inst) {
 }
 
 get_private = function(x) {
-    x[[".__enclos_env__"]][["private"]]
+  x[[".__enclos_env__"]][["private"]]
 }
 
 #' @title Get start values for optimizers.
@@ -127,10 +127,10 @@ get_private = function(x) {
 #' @keywords internal
 search_start = function(search_space, type = "random") {
   assert_choice(type, c("random", "center"))
-  if(type == "random") {
-    unlist(generate_design_random(search_space, 1)$data[1,])
+  if (type == "random") {
+    unlist(generate_design_random(search_space, 1)$data[1, ])
   } else if (type == "center") {
-    if(!all(search_space$storage_type == "numeric")) {
+    if (!all(search_space$storage_type == "numeric")) {
       stop("Cannot generate center values of non-numeric parameters.")
     }
     (search_space$upper + search_space$lower) / 2

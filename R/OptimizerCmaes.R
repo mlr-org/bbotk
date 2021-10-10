@@ -16,50 +16,50 @@
 #' \describe{
 #' \item{`sigma`}{`numeric(1)`}
 #' \item{`start_values`}{`character(1)`\cr
-#' Create `random` start values or based on `center` of search space? In the 
+#' Create `random` start values or based on `center` of search space? In the
 #' latter case, it is the center of the parameters before a trafo is applied.}
 #' }
 #'
 #' For the meaning of the control parameters, see [adagio::pureCMAES()]. Note
 #' that we have removed all control parameters which refer to the termination of
 #' the algorithm and where our terminators allow to obtain the same behavior.
-#' 
+#'
 #' @template section_progress_bars
 #'
 #' @export
 #' @examples
-#' if(requireNamespace("adagio")) {
-#' search_space = domain = ps(
-#'   x1 = p_dbl(-10, 10),
-#'   x2 = p_dbl(-5, 5)
-#' )
-#' 
-#' codomain = ps(y = p_dbl(tags = "maximize"))
-#' 
-#' objective_function = function(xs) {
-#'   c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
-#' }
-#' 
-#' objective = ObjectiveRFun$new(
-#'   fun = objective_function,
-#'   domain = domain,
-#'   codomain = codomain)
-#' 
-#' instance = OptimInstanceSingleCrit$new(
-#'   objective = objective,
-#'   search_space = search_space,
-#'   terminator = trm("evals", n_evals = 10))
-#' 
-#' optimizer = opt("cmaes")
-#' 
-#' # modifies the instance by reference
-#' optimizer$optimize(instance)
-#' 
-#' # returns best scoring evaluation
-#' instance$result
-#' 
-#' # allows access of data.table of full path of all evaluations
-#' as.data.table(instance$archive$data)
+#' if (requireNamespace("adagio")) {
+#'   search_space = domain = ps(
+#'     x1 = p_dbl(-10, 10),
+#'     x2 = p_dbl(-5, 5)
+#'   )
+#'
+#'   codomain = ps(y = p_dbl(tags = "maximize"))
+#'
+#'   objective_function = function(xs) {
+#'     c(y = -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+#'   }
+#'
+#'   objective = ObjectiveRFun$new(
+#'     fun = objective_function,
+#'     domain = domain,
+#'     codomain = codomain)
+#'
+#'   instance = OptimInstanceSingleCrit$new(
+#'     objective = objective,
+#'     search_space = search_space,
+#'     terminator = trm("evals", n_evals = 10))
+#'
+#'   optimizer = opt("cmaes")
+#'
+#'   # modifies the instance by reference
+#'   optimizer$optimize(instance)
+#'
+#'   # returns best scoring evaluation
+#'   instance$result
+#'
+#'   # allows access of data.table of full path of all evaluations
+#'   as.data.table(instance$archive$data)
 #' }
 OptimizerCmaes = R6Class("OptimizerCmaes",
   inherit = Optimizer,
@@ -92,7 +92,7 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
 
       if (length(pv$par) < 2) warning("CMA-ES is typically applied to search space dimensions between three and fifty. A lower search space dimension might crash.")
 
-      invoke(adagio::pureCMAES, fun = inst$objective_function, lower = inst$search_space$lower, 
+      invoke(adagio::pureCMAES, fun = inst$objective_function, lower = inst$search_space$lower,
         upper = inst$search_space$upper, .args = pv)
     }
   )

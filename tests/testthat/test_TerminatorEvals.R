@@ -30,15 +30,15 @@ test_that("status method works", {
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 10))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 1))
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 10))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 1))
   expect_equal(inst$terminator$remaining_time(inst$archive), Inf)
 
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 10))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 2))
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 10))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 2))
   expect_equal(inst$terminator$remaining_time(inst$archive), Inf)
 
   # n_evals k
@@ -47,15 +47,15 @@ test_that("status method works", {
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 15))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 1))
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 15))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 1))
   expect_equal(inst$terminator$remaining_time(inst$archive), Inf)
 
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 15))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 2))
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 15))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 2))
   expect_equal(inst$terminator$remaining_time(inst$archive), Inf)
 
   # only k
@@ -64,19 +64,19 @@ test_that("status method works", {
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 5))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 1))
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 5))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 1))
   expect_equal(inst$terminator$remaining_time(inst$archive), Inf)
 
   xdt = data.table(x = 1)
   inst$eval_batch(xdt)
 
-  expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 5))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 2))
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 5))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 2))
   expect_equal(inst$terminator$remaining_time(inst$archive), Inf)
 })
 
-test_that("TerminatorEvals works with empty archive" ,{
+test_that("TerminatorEvals works with empty archive", {
   terminator = TerminatorEvals$new()
   archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))

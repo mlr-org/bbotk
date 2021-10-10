@@ -154,7 +154,7 @@ Archive = R6Class("Archive",
     #' @param ... (ignored).
     print = function() {
       catf(format(self))
-      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits=2)
+      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits = 2)
     },
 
     #' @description
@@ -200,7 +200,7 @@ Archive = R6Class("Archive",
 
 #' @export
 as.data.table.Archive = function(x, ...) { # nolint
-  if (!x$store_x_domain || nrow(x$data)==0) {
+  if (!x$store_x_domain || nrow(x$data) == 0) {
     copy(x$data)
   } else {
     unnest(copy(x$data), "x_domain", prefix = "{col}_")

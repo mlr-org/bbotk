@@ -9,7 +9,9 @@ test_that("Optimizer assertions work", {
   instance = MAKE_INST_2D(terminator = terminator)
   expect_error(optimizer$optimize(instance), "does not support single-crit objectives")
 
-  expect_warning({ optimizer = MAKE_OPT(packages = "foo") }, "'foo' required but not installed")
+  expect_warning({
+    optimizer = MAKE_OPT(packages = "foo")
+  }, "'foo' required but not installed")
   terminator = trm("evals")
   instance = MAKE_INST_2D(terminator = terminator)
   expect_error(optimizer$optimize(instance), class = "packageNotFoundError")

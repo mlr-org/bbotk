@@ -37,7 +37,7 @@ PS_2D_TRF = ps(
   .extra_trafo = function(x, param_set) {
     x$x2 = x$x2 - 2
     return(x)
-}
+  }
 )
 
 
@@ -128,7 +128,7 @@ test_optimizer_dependencies = function(key, ..., term_evals = 2L, real_evals = t
   x_opt = res$instance$result_x_domain
   y_opt = res$instance$result_y
   expect_list(x_opt)
-  expect_names(names(x_opt),  subset.of = c("x1", "x2"))
+  expect_names(names(x_opt), subset.of = c("x1", "x2"))
   expect_numeric(y_opt, len = 1)
   expect_named(y_opt, "y")
 
@@ -157,7 +157,7 @@ MAKE_OPT = function(param_set = ps(), param_classes = c("ParamDbl", "ParamInt"),
 
 expect_irace_parameters = function(parameters, names, types, domain, conditions, depends, hierarchy) {
   expect_list(parameters, len = 12, any.missing = FALSE)
-  expect_equal(names(parameters), c("names", "types", "switches", "domain", "conditions", "isFixed", "transform", 
+  expect_equal(names(parameters), c("names", "types", "switches", "domain", "conditions", "isFixed", "transform",
     "depends", "hierarchy", "nbParameters", "nbFixed", "nbVariable"))
   expect_equal(parameters$names, names)
   expect_equal(parameters$types, set_names(types, names))
@@ -187,11 +187,11 @@ expect_irace_parameters = function(parameters, names, types, domain, conditions,
 }
 
 expect_irace_parameters = function(parameters, names, types, domain, conditions, depends,
-                                   hierarchy) {
+  hierarchy) {
   expect_list(parameters, len = 12, any.missing = FALSE)
   expect_equal(names(parameters), c("names", "types", "switches", "domain", "conditions", "isFixed",
-                                    "transform", "depends", "hierarchy", "nbParameters", "nbFixed",
-                                    "nbVariable"))
+    "transform", "depends", "hierarchy", "nbParameters", "nbFixed",
+    "nbVariable"))
   expect_equal(parameters$names, names)
   expect_equal(parameters$types, set_names(types, names))
   expect_equal(parameters$switches, named_vector(names, ""))

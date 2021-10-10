@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Wraps `progressr::progressor()` function and stores current progress.
-#' 
+#'
 #' @template param_archive
 Progressor = R6Class("Progressor",
   public = list(
@@ -36,15 +36,15 @@ Progressor = R6Class("Progressor",
     #'
     #' @param terminator ([Terminator]).
     update = function(terminator, archive) {
-      if(archive$n_evals != 0) {
+      if (archive$n_evals != 0) {
         current_steps = assert_int(terminator$status(archive)["current_steps"])
-        ydt = archive$best()[, archive$cols_y, with=FALSE]
+        ydt = archive$best()[, archive$cols_y, with = FALSE]
 
         amount = current_steps - self$current_steps
         self$current_steps = current_steps
         best_y = map_chr(as.list(ydt), function(x) str_collapse(signif(x, 2)))
 
-        if(self$unit == "percent") {
+        if (self$unit == "percent") {
           message = sprintf("Best: %s", str_collapse(paste0(names(best_y), ": ", best_y)))
         } else {
           message = sprintf("%i/%i %s. Best: %s", self$current_steps, self$max_steps, self$unit, str_collapse(paste0(names(best_y), ": ", best_y)))

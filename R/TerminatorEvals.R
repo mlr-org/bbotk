@@ -71,7 +71,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
     .status = function(archive) {
       pv = self$param_set$values
       max_steps = pv$n_evals + pv$k * archive$search_space$length
-      current_steps =  archive$n_evals
+      current_steps = archive$n_evals
       c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )

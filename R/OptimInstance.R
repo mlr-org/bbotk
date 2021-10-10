@@ -50,7 +50,7 @@ OptimInstance = R6Class("OptimInstance",
       assert_choice(keep_evals, c("all", "best"))
       self$objective = assert_r6(objective, "Objective")
 
-      domain_search_space  = self$objective$domain$search_space()
+      domain_search_space = self$objective$domain$search_space()
       self$search_space = if (is.null(search_space) && domain_search_space$length == 0) {
         self$objective$domain
       } else if (is.null(search_space) && domain_search_space$length > 0) {
@@ -74,7 +74,7 @@ OptimInstance = R6Class("OptimInstance",
         ArchiveBest$new(search_space = self$search_space,
           codomain = objective$codomain, check_values = check_values,
           store_x_domain = !is_rfundt || self$search_space$has_trafo)
-          # only not store xss if we have RFunDT and not trafo
+        # only not store xss if we have RFunDT and not trafo
       }
 
       if (!self$search_space$all_numeric) {
@@ -145,7 +145,7 @@ OptimInstance = R6Class("OptimInstance",
       # eval if search space is empty
       if (nrow(xdt) == 0) {
         ydt = self$objective$eval_many(list(list()))
-      # if no trafos, no deps and objective evals dt directly, we go a shortcut
+        # if no trafos, no deps and objective evals dt directly, we go a shortcut
       } else if (is_rfundt && !self$search_space$has_trafo && !self$search_space$has_deps) {
         ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
       } else {

@@ -3,7 +3,7 @@
 #' @description Select best subset of points by non dominated sorting with
 #'   hypervolume contribution for tie breaking. Works on an arbitrary dimension
 #'   of size two or higher.
-#' 
+#'
 #' @param points (`matrix()`)\cr
 #'   Numeric matrix with each column corresponding to a point
 #' @template param_n_select
@@ -12,7 +12,7 @@
 #'  Should the ranking be based on minimization?
 #'  Can be specified for each dimension or for all.
 #'  Default is `TRUE` for each dimension.
-#' 
+#'
 #' @return Vector of indices of selected points
 #' @keywords internal
 #' @export
@@ -65,8 +65,9 @@ nds_selection = function(points, n_select, ref_point = NULL, minimize = TRUE) {
     to_remove = which(hv_contrib == min(hv_contrib))
 
     # if two points have the exact same hypervolume contribution, the point is sampled
-    if (length(to_remove) > 1)
+    if (length(to_remove) > 1) {
       to_remove = sample(to_remove, 1)
+    }
 
     tie_points = tie_points[, -to_remove, drop = FALSE]
     tie_surv = tie_surv[-to_remove]
