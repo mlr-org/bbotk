@@ -241,14 +241,14 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 <span class='op'>}</span>
 
 <span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
- fun <span class='op'>=</span> <span class='va'>objective_function</span>,
- domain <span class='op'>=</span> <span class='va'>domain</span>,
- codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
+  fun <span class='op'>=</span> <span class='va'>objective_function</span>,
+  domain <span class='op'>=</span> <span class='va'>domain</span>,
+  codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
 
 <span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
- objective <span class='op'>=</span> <span class='va'>objective</span>,
- search_space <span class='op'>=</span> <span class='va'>search_space</span>,
- terminator <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+  objective <span class='op'>=</span> <span class='va'>objective</span>,
+  search_space <span class='op'>=</span> <span class='va'>search_space</span>,
+  terminator <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>design</span> <span class='op'>=</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -265,8 +265,8 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 <span class='co'># Allows access of data.table of full path of all evaluations</span>
 <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    x y           timestamp batch_nr x_domain_x
-#&gt; 1: 0 0 2021-10-10 16:07:30        1          0
-#&gt; 2: 1 1 2021-10-10 16:07:30        2          1</div></pre>
+#&gt; 1: 0 0 2021-10-10 16:12:25        1          0
+#&gt; 2: 1 1 2021-10-10 16:12:25        2          1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
