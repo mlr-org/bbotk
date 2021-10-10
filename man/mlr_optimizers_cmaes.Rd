@@ -41,38 +41,38 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-if(requireNamespace("adagio")) {
-search_space = domain = ps(
-  x1 = p_dbl(-10, 10),
-  x2 = p_dbl(-5, 5)
-)
+if (requireNamespace("adagio")) {
+  search_space = domain = ps(
+    x1 = p_dbl(-10, 10),
+    x2 = p_dbl(-5, 5)
+  )
 
-codomain = ps(y = p_dbl(tags = "maximize"))
+  codomain = ps(y = p_dbl(tags = "maximize"))
 
-objective_function = function(xs) {
-  c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
-}
+  objective_function = function(xs) {
+    c(y = -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+  }
 
-objective = ObjectiveRFun$new(
-  fun = objective_function,
-  domain = domain,
-  codomain = codomain)
+  objective = ObjectiveRFun$new(
+    fun = objective_function,
+    domain = domain,
+    codomain = codomain)
 
-instance = OptimInstanceSingleCrit$new(
-  objective = objective,
-  search_space = search_space,
-  terminator = trm("evals", n_evals = 10))
+  instance = OptimInstanceSingleCrit$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = trm("evals", n_evals = 10))
 
-optimizer = opt("cmaes")
+  optimizer = opt("cmaes")
 
-# modifies the instance by reference
-optimizer$optimize(instance)
+  # modifies the instance by reference
+  optimizer$optimize(instance)
 
-# returns best scoring evaluation
-instance$result
+  # returns best scoring evaluation
+  instance$result
 
-# allows access of data.table of full path of all evaluations
-as.data.table(instance$archive$data)
+  # allows access of data.table of full path of all evaluations
+  as.data.table(instance$archive$data)
 }
 }
 \section{Super class}{

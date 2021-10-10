@@ -48,41 +48,43 @@ combined with a \link{Terminator}. Simply wrap the function in
 
 \examples{
 \donttest{
-if(requireNamespace("nloptr")) {
+if (requireNamespace("nloptr")) {
 
-search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
+  search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 
-codomain = ps(y = p_dbl(tags = "minimize"))
+  codomain = ps(y = p_dbl(tags = "minimize"))
 
-objective_function = function(xs) {
-  list(y = as.numeric(xs)^2)
+  objective_function = function(xs) {
+    list(y = as.numeric(xs)^2)
+  }
+
+  objective = ObjectiveRFun$new(
+    fun = objective_function,
+    domain = domain,
+    codomain = codomain)
+
+
+  # We use the internal termination criterion xtol_rel
+  terminator = trm("none")
+  instance = OptimInstanceSingleCrit$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = terminator)
+
+
+  optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA")
+
+  # Modifies the instance by reference
+  optimizer$optimize(instance)
+
+  # Returns best scoring evaluation
+  instance$result
+
+  # Allows access of data.table of full path of all evaluations
+  as.data.table(instance$archive)
+}
 }
 
-objective = ObjectiveRFun$new(
- fun = objective_function,
- domain = domain,
- codomain = codomain)
-
-
-# We use the internal termination criterion xtol_rel
-terminator = trm("none")
-instance = OptimInstanceSingleCrit$new(
- objective = objective,
- search_space = search_space,
- terminator = terminator)
-
-
-optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA")
-
-# Modifies the instance by reference
-optimizer$optimize(instance)
-
-# Returns best scoring evaluation
-instance$result
-
-# Allows access of data.table of full path of all evaluations
-as.data.table(instance$archive)
-}}
 }
 \section{Super class}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerNLoptr}

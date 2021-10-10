@@ -51,14 +51,14 @@ objective_function = function(xs) {
 }
 
 objective = ObjectiveRFun$new(
- fun = objective_function,
- domain = domain,
- codomain = codomain)
+  fun = objective_function,
+  domain = domain,
+  codomain = codomain)
 
 instance = OptimInstanceSingleCrit$new(
- objective = objective,
- search_space = search_space,
- terminator = trm("evals", n_evals = 10))
+  objective = objective,
+  search_space = search_space,
+  terminator = trm("evals", n_evals = 10))
 
 design = data.table(x = c(0, 1))
 

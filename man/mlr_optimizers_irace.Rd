@@ -93,26 +93,26 @@ search_space = domain = ps(
 
 codomain = ps(y = p_dbl(tags = "minimize"))
 
-# branin function with noise 
+# branin function with noise
 # the noise generates different instances of the branin function
 # the noise values are passed via the `instances` parameter
 fun = function(xdt, instances) {
   a = 1
-  b = 5.1 / (4 * (pi ^ 2))
+  b = 5.1 / (4 * (pi^2))
   c = 5 / pi
   r = 6
   s = 10
   t = 1 / (8 * pi)
 
   data.table(y = (
-    a * ((xdt[["x2"]] - 
-    b * (xdt[["x1"]] ^ 2L) + 
-    c * xdt[["x1"]] - r) ^ 2) + 
-    ((s * (1 - t)) * cos(xdt[["x1"]])) + 
-    unlist(instances)))
+    a * ((xdt[["x2"]] -
+      b * (xdt[["x1"]]^2L) +
+      c * xdt[["x1"]] - r)^2) +
+      ((s * (1 - t)) * cos(xdt[["x1"]])) +
+      unlist(instances)))
 }
 
-objective = ObjectiveRFunDt$new(fun = fun, domain = domain,  codomain = codomain)
+objective = ObjectiveRFunDt$new(fun = fun, domain = domain, codomain = codomain)
 
 instance = OptimInstanceSingleCrit$new(
   objective = objective,

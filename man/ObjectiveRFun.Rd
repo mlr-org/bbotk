@@ -9,7 +9,7 @@ Objective interface where the user can pass a custom R function that expects a l
 \examples{
 # define objective function
 fun = function(xs) {
-  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+  -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
 }
 
 # set domain

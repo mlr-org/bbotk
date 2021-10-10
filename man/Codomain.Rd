@@ -15,7 +15,7 @@ when calling the \link{Archive} methods \verb{$best()}, \verb{$nds_selection()} 
 
 # define objective function
 fun = function(xs) {
-  c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+  c(y = -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
 # set domain
