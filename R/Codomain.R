@@ -45,7 +45,6 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #'   List of [Param], named with their respective ID.
     #'   Parameters are cloned.
     initialize = function(params = named_list()) {
-
       # assert parameters
       for (param in params) {
         # only check for codomain parameters tagged with minimize or maximize
@@ -61,7 +60,6 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
           }
         }
       }
-
       super$initialize(params)
 
       # assert at least one target parameter
