@@ -16,7 +16,7 @@
 #' \item{`ftol_rel`}{`numeric(1)`}
 #' \item{`ftol_abs`}{`numeric(1)`}
 #' \item{`start_values`}{`character(1)`\cr
-#' Create `random` start values or based on `center` of search space? In the 
+#' Create `random` start values or based on `center` of search space? In the
 #' latter case, it is the center of the parameters before a trafo is applied.}
 #' }
 #'
@@ -29,7 +29,7 @@
 #' (`xtol_rel = 10^-4`, `xtol_abs = rep(0.0, length(x0))`, `ftol_rel = 0.0` and
 #' `ftol_abs = 0.0`) are still available and implemented with their package
 #' defaults. To deactivate these conditions, set them to `-1`.
-#' 
+#'
 #' @template section_progress_bars
 #'
 #' @source
@@ -38,41 +38,43 @@
 #' @export
 #' @examples
 #' \donttest{
-#' if(requireNamespace("nloptr")) {
+#' if (requireNamespace("nloptr")) {
 #'
-#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
+#'   search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#' codomain = ps(y = p_dbl(tags = "minimize"))
+#'   codomain = ps(y = p_dbl(tags = "minimize"))
 #'
-#' objective_function = function(xs) {
-#'   list(y = as.numeric(xs)^2)
+#'   objective_function = function(xs) {
+#'     list(y = as.numeric(xs)^2)
+#'   }
+#'
+#'   objective = ObjectiveRFun$new(
+#'     fun = objective_function,
+#'     domain = domain,
+#'     codomain = codomain)
+#'
+#'
+#'   # We use the internal termination criterion xtol_rel
+#'   terminator = trm("none")
+#'   instance = OptimInstanceSingleCrit$new(
+#'     objective = objective,
+#'     search_space = search_space,
+#'     terminator = terminator)
+#'
+#'
+#'   optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA")
+#'
+#'   # Modifies the instance by reference
+#'   optimizer$optimize(instance)
+#'
+#'   # Returns best scoring evaluation
+#'   instance$result
+#'
+#'   # Allows access of data.table of full path of all evaluations
+#'   as.data.table(instance$archive)
+#' }
 #' }
 #'
-#' objective = ObjectiveRFun$new(
-#'  fun = objective_function,
-#'  domain = domain,
-#'  codomain = codomain)
-#'
-#'
-#' # We use the internal termination criterion xtol_rel
-#' terminator = trm("none")
-#' instance = OptimInstanceSingleCrit$new(
-#'  objective = objective,
-#'  search_space = search_space,
-#'  terminator = terminator)
-#'
-#'
-#' optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA")
-#'
-#' # Modifies the instance by reference
-#' optimizer$optimize(instance)
-#'
-#' # Returns best scoring evaluation
-#' instance$result
-#'
-#' # Allows access of data.table of full path of all evaluations
-#' as.data.table(instance$archive)
-#' }}
 OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
   public = list(
 
@@ -83,13 +85,13 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
         algorithm = p_fct(levels = c(
           "NLOPT_GN_DIRECT_L", "NLOPT_GN_DIRECT_L_RAND", "NLOPT_GN_DIRECT_NOSCAL", "NLOPT_GN_DIRECT_L_NOSCAL",
           "NLOPT_GN_DIRECT_L_RAND_NOSCAL", "NLOPT_GN_ORIG_DIRECT", "NLOPT_GN_ORIG_DIRECT_L", "NLOPT_GD_STOGO",
-          "NLOPT_GD_STOGO_RAND", "NLOPT_LD_SLSQP", "NLOPT_LD_LBFGS_NOCEDAL", "NLOPT_LD_LBFGS", "NLOPT_LN_PRAXIS", 
+          "NLOPT_GD_STOGO_RAND", "NLOPT_LD_SLSQP", "NLOPT_LD_LBFGS_NOCEDAL", "NLOPT_LD_LBFGS", "NLOPT_LN_PRAXIS",
           "NLOPT_LD_VAR1", "NLOPT_LD_VAR2", "NLOPT_LD_TNEWTON", "NLOPT_LD_TNEWTON_RESTART", "NLOPT_LD_TNEWTON_PRECOND",
           "NLOPT_LD_TNEWTON_PRECOND_RESTART", "NLOPT_GN_CRS2_LM", "NLOPT_GN_MLSL", "NLOPT_GD_MLSL", "NLOPT_GN_MLSL_LDS",
-          "NLOPT_GD_MLSL_LDS", "NLOPT_LD_MMA", "NLOPT_LD_CCSAQ", "NLOPT_LN_COBYLA", "NLOPT_LN_NEWUOA", 
+          "NLOPT_GD_MLSL_LDS", "NLOPT_LD_MMA", "NLOPT_LD_CCSAQ", "NLOPT_LN_COBYLA", "NLOPT_LN_NEWUOA",
           "NLOPT_LN_NEWUOA_BOUND", "NLOPT_LN_NELDERMEAD", "NLOPT_LN_SBPLX", "NLOPT_LN_AUGLAG", "NLOPT_LD_AUGLAG",
-          "NLOPT_LN_AUGLAG_EQ", "NLOPT_LD_AUGLAG_EQ", "NLOPT_LN_BOBYQA", "NLOPT_GN_ISRES"), 
-          tags = "required"),
+          "NLOPT_LN_AUGLAG_EQ", "NLOPT_LD_AUGLAG_EQ", "NLOPT_LN_BOBYQA", "NLOPT_GN_ISRES"),
+        tags = "required"),
         eval_g_ineq = p_uty(default = NULL),
         xtol_rel = p_dbl(default = 10^-4, lower = 0, upper = Inf, special_vals = list(-1)),
         xtol_abs = p_dbl(default = 0, lower = 0, upper = Inf, special_vals = list(-1)),

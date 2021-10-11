@@ -3,7 +3,7 @@ test_that("bb_optimize works with function and bounds", {
   upper = c(10, 5)
 
   fun = function(xs) {
-    - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+    -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
   }
 
   res = bb_optimize(fun, lower = lower, upper = upper, max_evals = 10)
@@ -20,7 +20,7 @@ test_that("bb_optimize works with passed arguments to objective function", {
   upper = c(10, 5)
 
   fun = function(xs, c) {
-    - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + c
+    -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + c
   }
 
   res = bb_optimize(fun, lower = lower, upper = upper, max_evals = 10, c = 1)
@@ -37,7 +37,7 @@ test_that("bb_optimize works with optimizer object", {
   upper = c(10, 5)
 
   fun = function(xs) {
-    - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+    -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
   }
 
   res = bb_optimize(fun, method = opt("random_search"), lower = lower, upper = upper, max_evals = 10)
@@ -54,7 +54,7 @@ test_that("bb_optimize works with function and named bounds", {
   upper = c(z1 = 10, z2 = 5)
 
   fun = function(xs) {
-    - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+    -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
   }
 
   res = bb_optimize(fun, method = "random_search", lower = lower, upper = upper, max_evals = 10)
@@ -71,7 +71,7 @@ test_that("bb_optimize works with named codomain", {
   upper = c(10, 5)
 
   fun = function(xs) {
-    - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+    -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
   }
 
   res = bb_optimize(fun, method = "random_search", lower = lower, upper = upper, max_evals = 10, maximize = c(z = FALSE))
@@ -85,14 +85,14 @@ test_that("bb_optimize works with named codomain", {
 
 test_that("bb_optimize works with objective", {
   fun = function(xs) {
-    c(z = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+    c(z = -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
   }
   search_space = ps(
     x1 = p_dbl(-10, 10),
     x2 = p_dbl(-5, 5)
   )
   codomain = ps(z = p_dbl(tags = "minimize"))
-  objective = ObjectiveRFun$new(fun, search_space, codomain) 
+  objective = ObjectiveRFun$new(fun, search_space, codomain)
 
   res = bb_optimize(objective, method = "random_search", max_evals = 10)
   expect_list(res)
@@ -109,7 +109,7 @@ test_that("bb_optimize works with function and bounds", {
   upper = c(10, 5)
 
   fun = function(xs, c) {
-    - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + c
+    -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + c
   }
 
   res = bb_optimize(fun, lower = lower, upper = upper, max_evals = 1000, c = 10)
@@ -125,14 +125,14 @@ test_that("bb_optimize works with function and bounds", {
 
 test_that("bb_optimize works with objective", {
   fun = function(xs, c) {
-    c(z = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10 + c) 
+    c(z = -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10 + c)
   }
   search_space = ps(
     x1 = p_dbl(-10, 10),
     x2 = p_dbl(-5, 5)
   )
   codomain = ps(z = p_dbl(tags = "minimize"))
-  objective = ObjectiveRFun$new(fun, search_space, codomain) 
+  objective = ObjectiveRFun$new(fun, search_space, codomain)
   objective$constants = ps(c = p_dbl())
   objective$constants$values$c = 1
 

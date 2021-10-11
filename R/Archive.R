@@ -25,7 +25,7 @@ Archive = R6Class("Archive",
     #' Search space of objective.
     search_space = NULL,
 
-    #' @field codomain ([paradox::ParamSet])\cr
+    #' @field codomain ([Codomain])\cr
     #' Codomain of objective function.
     codomain = NULL,
 
@@ -55,7 +55,7 @@ Archive = R6Class("Archive",
     #' Search space that is logged into archive.
     initialize = function(search_space, codomain, check_values = TRUE, store_x_domain = TRUE) {
       self$search_space = assert_param_set(search_space)
-      self$codomain = assert_param_set(codomain)
+      self$codomain = Codomain$new(assert_param_set(codomain)$params)
       self$check_values = assert_flag(check_values)
       self$data = data.table()
       self$store_x_domain = assert_flag(store_x_domain)
@@ -133,9 +133,9 @@ Archive = R6Class("Archive",
       tab = self$data[.(batch, "evaluated"), on = c("batch_nr", "status")]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
-      max_to_min = mult_max_to_min(self$codomain)
-      if (self$codomain$length == 1L) {
-        setorderv(tab, self$codomain$ids(), order = max_to_min, na.last = TRUE)
+      max_to_min = self$codomain$maximization_to_minimization
+      if (self$codomain$target_length == 1L) {
+        setorderv(tab, self$cols_y, order = max_to_min, na.last = TRUE)
         res = tab[seq_len(n_select), ]
       } else {
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
@@ -164,7 +164,7 @@ Archive = R6Class("Archive",
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-      minimize = map_lgl(self$codomain$tags, has_element, "minimize")
+      minimize = map_lgl(self$codomain$target_tags, has_element, "minimize")
       inds = nds_selection(points, n_select, ref_point, minimize)
       tab[inds, ]
     },
@@ -181,7 +181,7 @@ Archive = R6Class("Archive",
     #' @param ... (ignored).
     print = function() {
       catf(format(self))
-      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits=2)
+      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits = 2)
     },
 
     #' @description
@@ -212,8 +212,8 @@ Archive = R6Class("Archive",
     cols_x = function() self$search_space$ids(),
 
     #' @field cols_y (`character()`)\cr
-    #' Column names of codomain parameters.
-    cols_y = function() self$codomain$ids(),
+    #' Column names of codomain target parameters.
+    cols_y = function() self$codomain$target_ids,
 
     #' @field n_in_progress (`integer(1)`)\cr
     #' Number of points with status `"in_progress"`.
@@ -234,7 +234,7 @@ Archive = R6Class("Archive",
 
 #' @export
 as.data.table.Archive = function(x, ...) { # nolint
-  if (!x$store_x_domain || nrow(x$data)==0) {
+  if (!x$store_x_domain || nrow(x$data) == 0) {
     copy(x$data)
   } else {
     unnest(copy(x$data), "x_domain", prefix = "{col}_")

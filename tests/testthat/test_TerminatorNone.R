@@ -8,8 +8,8 @@ test_that("TerminatorNone works", {
   expect_equal(a$n_evals, 10L, info = mode)
 })
 
-test_that("TerminatorNone works with empty archive" ,{
+test_that("TerminatorNone works with empty archive", {
   terminator = TerminatorNone$new()
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })

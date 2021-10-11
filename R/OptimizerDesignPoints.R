@@ -23,7 +23,7 @@
 #' \item{`design`}{[data.table::data.table]\cr
 #' Design points to try in search, one per row.}
 #' }
-#' 
+#'
 #' @template section_progress_bars
 #'
 #' @export
@@ -38,14 +38,14 @@
 #' }
 #'
 #' objective = ObjectiveRFun$new(
-#'  fun = objective_function,
-#'  domain = domain,
-#'  codomain = codomain)
-#' 
+#'   fun = objective_function,
+#'   domain = domain,
+#'   codomain = codomain)
+#'
 #' instance = OptimInstanceSingleCrit$new(
-#'  objective = objective,
-#'  search_space = search_space,
-#'  terminator = trm("evals", n_evals = 10))
+#'   objective = objective,
+#'   search_space = search_space,
+#'   terminator = trm("evals", n_evals = 10))
 #'
 #' design = data.table(x = c(0, 1))
 #'
@@ -68,7 +68,8 @@ OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
       param_set = ps(
         batch_size = p_int(lower = 1L, tags = "required"),
         design = p_uty(tags = "required", custom_check = function(x) {
-          check_data_table(x, min.rows = 1, min.cols = 1, null.ok = TRUE)})
+          check_data_table(x, min.rows = 1, min.cols = 1, null.ok = TRUE)
+        })
       )
       param_set$values = list(batch_size = 1L, design = NULL)
       super$initialize(

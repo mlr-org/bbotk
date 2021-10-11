@@ -23,7 +23,7 @@ Objective. The \code{x_domain} column is unnested to separate columns.
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Search space of objective.}
 
-\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+\item{\code{codomain}}{(\link{Codomain})\cr
 Codomain of objective function.}
 
 \item{\code{start_time}}{(\link{POSIXct})\cr
@@ -55,7 +55,7 @@ Number of batches stored in the archive.}
 Column names of search space parameters.}
 
 \item{\code{cols_y}}{(\code{character()})\cr
-Column names of codomain parameters.}
+Column names of codomain target parameters.}
 
 \item{\code{n_in_progress}}{(\code{integer(1)})\cr
 Number of points with status \code{"in_progress"}.}

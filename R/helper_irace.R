@@ -1,6 +1,6 @@
 paradox_to_irace = function(param_set) {
   assertClass(param_set, "ParamSet")
-  if("ParamUty" %in% param_set$class) stop("<ParamUty> not supported by <TunerIrace>")
+  if ("ParamUty" %in% param_set$class) stop("<ParamUty> not supported by <TunerIrace>")
 
   class_lookup = data.table(
     paradox = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
@@ -53,7 +53,7 @@ get_irace_condition = function(param_set) {
   return(tab)
 }
 
-target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) {# nolint
+target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) { # nolint
   optim_instance = scenario$targetRunnerData$inst
 
   xdt = map_dtr(experiment, function(e) {

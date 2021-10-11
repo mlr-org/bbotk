@@ -98,35 +98,19 @@ assign_result_default = function(inst) {
   xdt = res[, inst$search_space$ids(), with = FALSE]
 
   if (inherits(inst, "OptimInstanceMultiCrit")) {
-    ydt = res[, inst$objective$codomain$ids(), with = FALSE]
+    ydt = res[, inst$archive$cols_y, with = FALSE]
     inst$assign_result(xdt, ydt)
   } else {
     # unlist keeps name!
-    y = unlist(res[, inst$objective$codomain$ids(), with = FALSE])
+    y = unlist(res[, inst$archive$cols_y, with = FALSE])
     inst$assign_result(xdt, y)
   }
 
   invisible(NULL)
 }
 
-#' @title Multiplication vector for output
-#' @description
-#' Returns a numeric vector with values -1 and 1.
-#' If you multiply this vector with an outcome of `codomain` it will be turned into a minimization problem.
-#'
-#' @param codomain [ParamSet]
-#'
-#' @return 'numeric()'
-#'
-#' @keywords internal
-#' @export
-mult_max_to_min = function(codomain) {
-  ifelse(map_lgl(codomain$tags, has_element, "minimize"), 1, -1)
-}
-
-
 get_private = function(x) {
-    x[[".__enclos_env__"]][["private"]]
+  x[[".__enclos_env__"]][["private"]]
 }
 
 #' @title Get start values for optimizers.
@@ -143,10 +127,10 @@ get_private = function(x) {
 #' @keywords internal
 search_start = function(search_space, type = "random") {
   assert_choice(type, c("random", "center"))
-  if(type == "random") {
-    unlist(generate_design_random(search_space, 1)$data[1,])
+  if (type == "random") {
+    unlist(generate_design_random(search_space, 1)$data[1, ])
   } else if (type == "center") {
-    if(!all(search_space$storage_type == "numeric")) {
+    if (!all(search_space$storage_type == "numeric")) {
       stop("Cannot generate center values of non-numeric parameters.")
     }
     (search_space$upper + search_space$lower) / 2
