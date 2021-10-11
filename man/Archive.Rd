@@ -56,6 +56,9 @@ Column names of search space parameters.}
 
 \item{\code{cols_y}}{(\code{character()})\cr
 Column names of codomain parameters.}
+
+\item{\code{n_in_progress}}{(\code{integer(1)})\cr
+Number of points with status \code{"in_progress"}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -64,6 +67,7 @@ Column names of codomain parameters.}
 \itemize{
 \item \href{#method-new}{\code{Archive$new()}}
 \item \href{#method-add_evals}{\code{Archive$add_evals()}}
+\item \href{#method-resolve_promise}{\code{Archive$resolve_promise()}}
 \item \href{#method-best}{\code{Archive$best()}}
 \item \href{#method-nds_selection}{\code{Archive$nds_selection()}}
 \item \href{#method-format}{\code{Archive$format()}}
@@ -113,7 +117,12 @@ items. The trafo will be applied if defined in \code{search_space}.}
 \subsection{Method \code{add_evals()}}{
 Adds function evaluations to the archive table.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(xdt, xss_trafoed = NULL, ydt)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(
+  xdt,
+  xss_trafoed = NULL,
+  ydt = data.table(),
+  status = "evaluated"
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -131,6 +140,28 @@ Not stored and needed if \code{store_x_domain = FALSE}.}
 
 \item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Optimal outcome.}
+
+\item{\code{status}}{(\code{character()})\cr
+\code{"proposed"}, \code{"in_progress"} or \code{"evaluated"}.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-resolve_promise"></a>}}
+\if{latex}{\out{\hypertarget{method-resolve_promise}{}}}
+\subsection{Method \code{resolve_promise()}}{
+Retrieve values of resolved futures and add them to the archive table.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$resolve_promise(i = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{i}}{(\code{integer()})\cr
+Row ids of archive table for which values are retrieved. If \code{NULL}
+(default), retrieve values from all futures which are resolved.}
 }
 \if{html}{\out{</div>}}
 }

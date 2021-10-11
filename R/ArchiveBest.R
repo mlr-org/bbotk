@@ -36,7 +36,9 @@ ArchiveBest = R6Class("ArchiveBest",
     #'
     #' @param xss_trafoed (`list()`)\cr
     #' Transformed point(s) in the *domain space*.
-    add_evals = function(xdt, xss_trafoed = NULL, ydt) {
+    #' @param status (`character()`)\cr
+    #' Ignored.
+    add_evals = function(xdt, xss_trafoed = NULL, ydt, status = "evaluated") {
       private$.n_evals = private$.n_evals+nrow(xdt)
 
       if(self$codomain$length == 1) {

@@ -36,8 +36,10 @@ library(future)
 plan(multisession)
 
 repeat({
-  while (instance$archive$active_futures() < 8) {
+  while (instance$archive$n_in_progress < 8) {
     xdt = generate_design_random(domain, 1)$data
+    instance$archive$add_eval(xdt, status = "proposed")
+
     instance$eval_batch_async(xdt)
   }
   instance$archive$resolve_promise()

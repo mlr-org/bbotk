@@ -59,6 +59,7 @@ Optimal outcome.}
 \item \href{#method-format}{\code{OptimInstance$format()}}
 \item \href{#method-print}{\code{OptimInstance$print()}}
 \item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
+\item \href{#method-eval_proposed}{\code{OptimInstance$eval_proposed()}}
 \item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
 \item \href{#method-objective_function}{\code{OptimInstance$objective_function()}}
 \item \href{#method-clear}{\code{OptimInstance$clear()}}
@@ -155,6 +156,40 @@ the \emph{search space} of the \link{OptimInstance} object. Can contain addition
 columns for extra information.}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-eval_proposed"></a>}}
+\if{latex}{\out{\hypertarget{method-eval_proposed}{}}}
+\subsection{Method \code{eval_proposed()}}{
+Evaluates points in archive with status \code{"proposed"} by calling
+the \link{Objective} (asynchronously).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_proposed(i = NULL, async = FALSE, single_worker = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{i}}{(\code{integer()})\cr
+Row ids of archive table for which values are evaluated. If \code{NULL}
+(default), evaluate all values with status \code{"proposed"}.}
+
+\item{\code{async}}{(\code{logical(1)})\cr
+Determines if points are evaluated asynchronously with the future
+\CRANpkg{future}.}
+
+\item{\code{single_worker}}{(\code{logical(1)})\cr
+Determines if all points of a batch are evaluated in a single worker or
+in one worker per point.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+If \code{async = TRUE}, \code{data.table::data.table()} with columns
+\code{"promise"}, \code{"status"} and \code{"resolve_id"}, otherwise outcome. If \code{i} is
+not specified, all points with status \code{"in_progress"} (async) or
+\code{"evaluated"} (sync) are returned.
 }
 }
 \if{html}{\out{<hr>}}

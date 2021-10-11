@@ -44,39 +44,41 @@ OptimInstance = R6Class("OptimInstance",
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator,
-      keep_evals = "all", check_values = TRUE) {
-
+    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE) {
       assert_choice(keep_evals, c("all", "best"))
+      assert_flag(check_values)
       self$objective = assert_r6(objective, "Objective")
+      self$terminator = assert_terminator(terminator, self)
 
-      domain_search_space  = self$objective$domain$search_space()
+      # set search space
+      domain_search_space = self$objective$domain$search_space()
       self$search_space = if (is.null(search_space) && domain_search_space$length == 0) {
+        # use whole domain as search space
         self$objective$domain
       } else if (is.null(search_space) && domain_search_space$length > 0) {
+        # create search space from tune token in domain
         domain_search_space
       } else if (!is.null(search_space) && domain_search_space$length == 0) {
+        # use supplied search space
         assert_param_set(search_space)
       } else {
         stop("If the domain contains TuneTokens, you cannot supply a search_space.")
       }
-      self$terminator = assert_terminator(terminator, self)
 
-      assert_flag(check_values)
+      # if search space has no trafo function and dependencies, and the objective works on a data table
+      # use shortcut to skip conversion between data table and list
+      private$.shortcut = !self$search_space$has_trafo && !self$search_space$has_deps && inherits(self$objective, "ObjectiveRFunDt")
 
-      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
-
+      # use minimal archive if only best points are needed
       self$archive = if (keep_evals == "all") {
-        Archive$new(search_space = self$search_space,
-          codomain = objective$codomain, check_values = check_values,
-          store_x_domain = !is_rfundt || self$search_space$has_trafo)
+        Archive$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values,
+          store_x_domain = !private$.shortcut)
       } else if (keep_evals == "best") {
-        ArchiveBest$new(search_space = self$search_space,
-          codomain = objective$codomain, check_values = check_values,
-          store_x_domain = !is_rfundt || self$search_space$has_trafo)
-          # only not store xss if we have RFunDT and not trafo
+        ArchiveBest$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values,
+          store_x_domain = !private$.shortcut)
       }
 
+      # disable objective function if search space is not all numeric
       if (!self$search_space$all_numeric) {
         private$.objective_function = objective_error
       } else {
@@ -134,19 +136,13 @@ OptimInstance = R6Class("OptimInstance",
 
       lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
 
-      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
       # calculate the x as (trafoed) domain only if needed
-      if (self$search_space$has_trafo || self$search_space$has_deps || self$archive$store_x_domain || !is_rfundt) {
-        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
-      } else {
-        xss_trafoed = NULL
-      }
+      xss_trafoed = if (private$.shortcut) NULL else transform_xdt_to_xss(xdt, self$search_space)
 
       # eval if search space is empty
       if (nrow(xdt) == 0) {
         ydt = self$objective$eval_many(list(list()))
-      # if no trafos, no deps and objective evals dt directly, we go a shortcut
-      } else if (is_rfundt && !self$search_space$has_trafo && !self$search_space$has_deps) {
+      } else if (private$.shortcut) {
         ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
       } else {
         ydt = self$objective$eval_many(xss_trafoed)
@@ -159,14 +155,91 @@ OptimInstance = R6Class("OptimInstance",
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
     },
 
-    eval_batch_async = function(xdt) {
+    #' @description
+    #' Evaluates points in archive with status `"proposed"` by calling
+    #' the [Objective] (asynchronously).
+    #'
+    #' @param i (`integer()`)\cr
+    #'   Row ids of archive table for which values are evaluated. If `NULL`
+    #'   (default), evaluate all values with status `"proposed"`.
+    #' @param async (`logical(1)`)\cr
+    #'   Determines if points are evaluated asynchronously with the future
+    #'   \CRANpkg{future}.
+    #' @param single_worker (`logical(1)`)\cr
+    #'   Determines if all points of a batch are evaluated in a single worker or
+    #'   in one worker per point.
+    #'
+    #' @return If `async = TRUE`, `data.table::data.table()` with columns
+    #' `"promise"`, `"status"` and `"resolve_id"`, otherwise outcome. If `i` is
+    #' not specified, all points with status `"in_progress"` (async) or
+    #' `"evaluated"` (sync) are returned.
+    eval_proposed = function(i = NULL, async = FALSE, single_worker = FALSE) {
+      assert_subset(i, seq(nrow(self$archive$data)))
+      assert_flag(async)
+      assert_flag(single_worker)
+      data = self$archive$data
+
+      if (nrow(self$archive$data) == 0) return(invisible(data.table()))
+
       if (self$is_terminated) stop(terminated_error(self))
 
-      xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+      # calculate the x as (trafoed) domain only if needed
+      if (!private$.shortcut) {
+        data["proposed", "x_domain" := transform_xdt_to_xss(.SD, self$search_space), .SDcols = self$archive$cols_x, on = c("status")]
+      }
+      cols_x = if (private$.shortcut) self$archive$cols_x else "x_domain"
 
-      p = future::future({self$objective$eval_many(xss_trafoed)}, packages = "data.table")
+      # async eval
+      if (async) {
+        fun = if (single_worker && !private$.shortcut) {
+          # eval all points in single worker
+          function(xss_trafoed) {
+            promise = list(future::future(self$objective$eval_many(xss_trafoed[[1]]), seed=TRUE))
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_along(xss_trafoed[[1]]))
+          }
+        } else if (single_worker && private$.shortcut) {
+          # eval all points in single worker with shortcut
+          function(xdt) {
+            promise = list(future::future(self$objective$eval_dt(xdt), seed=TRUE))
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_len(nrow(xdt)))
+          }
+        } else if (!single_worker && !private$.shortcut) {
+          # eval each point in separate worker
+          function(xss_trafoed, n) {
+            promise = map(xss_trafoed[[1]], function(xs_trafoed) future::future(self$objective$eval_many(list(xs_trafoed)), seed=TRUE))
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
+          }
+        } else if (!single_worker && private$.shortcut) {
+          # eval each point in separate worker with shortcut
+          function(xdt, n) {
+            promise = map(seq(nrow(xdt)), function(n) future::future(self$objective$eval_dt(xdt[n]), seed=TRUE))
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
+          }
+        }
+        # fun result is written to
+        cols_y = c("promise", "status", "resolve_id")
 
-      self$archive$add_promise(xdt, xss_trafoed, p)
+      # sync eval
+      } else {
+        fun = if (private$.shortcut) {
+          self$objective$eval_many(xss_trafoed[[1]])
+        } else {
+          self$objective$eval_dt(xdt)
+        }
+        # fun result is written to
+        cols_y = self$archive$cols_y
+      }
+
+      # start worker and add promise or evaluate
+      if (is.null(i)) {
+        # all proposed points
+        data["proposed", (cols_y) := fun(.SD), .SDcols = cols_x, by = "batch_nr", on = "status"]
+        return(invisible(data["in_progress", ..cols_y, on = "status"]))
+      } else {
+        # or subset i
+        data[i, (cols_y) := fun(.SD), .SDcols = cols_x, by = "batch_nr"]
+        return(invisible(data[i, ..cols_y]))
+      }
     },
 
     #' @description
@@ -243,7 +316,9 @@ OptimInstance = R6Class("OptimInstance",
   private = list(
     .result = NULL,
 
-    .objective_function = NULL
+    .objective_function = NULL,
+
+    .shortcut = FALSE
   )
 )
 

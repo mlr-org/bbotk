@@ -40,6 +40,7 @@ Number of batches stored in the archive.}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format">}\href{../../bbotk/html/Archive.html#method-format}{\code{bbotk::Archive$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="nds_selection">}\href{../../bbotk/html/Archive.html#method-nds_selection}{\code{bbotk::Archive$nds_selection()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print">}\href{../../bbotk/html/Archive.html#method-print}{\code{bbotk::Archive$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="resolve_promise">}\href{../../bbotk/html/Archive.html#method-resolve_promise}{\code{bbotk::Archive$resolve_promise()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -88,7 +89,7 @@ items. The trafo will be applied if defined in \code{search_space}.}
 \subsection{Method \code{add_evals()}}{
 Stores the best result in \code{ydt}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$add_evals(xdt, xss_trafoed = NULL, ydt)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$add_evals(xdt, xss_trafoed = NULL, ydt, status = "evaluated")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -105,6 +106,9 @@ Transformed point(s) in the \emph{domain space}.}
 
 \item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Optimal outcome.}
+
+\item{\code{status}}{(\code{character()})\cr
+Ignored.}
 }
 \if{html}{\out{</div>}}
 }

@@ -67,57 +67,50 @@ Archive = R6Class("Archive",
     #' @param xss_trafoed (`list()`)\cr
     #' Transformed point(s) in the *domain space*.
     #' Not stored and needed if `store_x_domain = FALSE`.
-    add_evals = function(xdt, xss_trafoed = NULL, ydt) {
+    #' @param status (`character()`)\cr
+    #' `"proposed"`, `"in_progress"` or `"evaluated"`.
+    add_evals = function(xdt, xss_trafoed = NULL, ydt = data.table(), status = "evaluated") {
       assert_data_table(xdt)
       assert_data_table(ydt)
-      assert_list(xss_trafoed, null.ok = !self$store_x_domain)
-      assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
+      assert_list(xss_trafoed, null.ok = TRUE)
+      # assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
+      assert_choice(status, c("proposed", "in_progress", "evaluated"))
       if (self$check_values) {
         self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
       }
+
       xydt = cbind(xdt, ydt)
-      assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
+      assert_subset(c(self$search_space$ids()), colnames(xydt)) # self$codomain$ids()
       batch_nr = self$data$batch_nr
-      if (self$store_x_domain) {
+      if (self$store_x_domain && !is.null(xss_trafoed)) {
         set(xydt, j = "x_domain", value = list(xss_trafoed))
       }
       set(xydt, j = "timestamp", value = Sys.time())
       set(xydt, j = "batch_nr", value = if (length(batch_nr)) max(batch_nr) + 1L else 1L)
+      set(xydt, j = "status", value = status)
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
-    add_promise = function(xdt, xss_trafoed = NULL, p) {
-      assert_data_table(xdt)
-      assert_class(p, "Future")
+    #' @description
+    #' Retrieve values of resolved futures and add them to the archive table.
+    #'
+    #' @param i (`integer()`)\cr
+    #'   Row ids of archive table for which values are retrieved. If `NULL`
+    #'   (default), retrieve values from all futures which are resolved.
+    resolve_promise = function(i = NULL) {
+      assert_subset(i, seq(nrow(self$data)))
 
-      set(xdt, j = "promise", value = list(p))
-      i = if (nrow(self$data) == 0) seq(nrow(xdt)) else self$data$evaluation[nrow(self$data)] + nrow(xdt)
-      set(xdt, j = "evaluation", value = i)
-      set(xdt, j = "evaluated", value = FALSE)
-      set(xdt, j = "x_domain", value = list(xss_trafoed))
-      set(xdt, j = "timestamp", value = Sys.time())
+      # mark resolved points
+      fun_resolved = function(p) if (future::resolved(p)) "resolved" else "in_progress"
+      self$data["in_progress", "status" := map_chr(promise, fun_resolved), , on = c("status")]
 
-      self$data = rbindlist(list(self$data, xdt), fill = TRUE, use.names = TRUE)
-      print(self)
-      print(self$active_futures())
-    },
-
-    resolve_promise = function() {
-      data = self$data[.(FALSE), on = c("evaluated")]
-
-      for(i in seq(nrow(data))) {
-        p = data$promise[[i]]
-        if (resolved(p)) {
-          set(self$data, i = data$evaluation[[i]], j = self$codomain$ids(), value = value(p))
-          set(self$data, i = data$evaluation[[i]], j = "evaluated", value = TRUE)
-          lg$info("Promise %i evaluated.", data$evaluation[[i]])
-        }
+      # resolve points
+      fun_value = function(promise, resolve_id) {
+        ydt = pmap_dtr(list(promise, resolve_id), function(p, id) future::value(p)[id])
+        set(ydt, j = "status", value = "evaluated")
+        ydt
       }
-    },
-
-    active_futures = function() {
-      if (nrow(self$data) == 0) return(0)
-      sum(!self$data[.(FALSE), evaluated, on = c("evaluated")])
+      self$data["resolved", c(self$cols_y, "status") := fun_value(promise, resolve_id), by = "batch_nr", on = c("status")]
     },
 
     #' @description
@@ -133,11 +126,11 @@ Archive = R6Class("Archive",
     #'
     #' @return [data.table::data.table()]
     best = function(batch = NULL, n_select = 1) {
-      if (self$n_batch == 0L) stop("No results stored in archive")
+      if (self$n_batch == 0L) data.table()
       if (is.null(batch)) batch = seq_len(self$n_batch)
-      assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
+      assert_subset(batch, seq_len(self$n_batch))
 
-      tab = self$data[get("batch_nr") %in% batch, ]
+      tab = self$data[.(batch, "evaluated"), on = c("batch_nr", "status")]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       max_to_min = mult_max_to_min(self$codomain)
@@ -167,7 +160,7 @@ Archive = R6Class("Archive",
       if (is.null(batch)) batch = seq_len(self$n_batch)
       assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
 
-      tab = self$data[get("batch_nr") %in% batch, ]
+      tab = self$data[.(batch, "evaluated"), on = c("batch_nr", "status")]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
@@ -220,7 +213,14 @@ Archive = R6Class("Archive",
 
     #' @field cols_y (`character()`)\cr
     #' Column names of codomain parameters.
-    cols_y = function() self$codomain$ids()
+    cols_y = function() self$codomain$ids(),
+
+    #' @field n_in_progress (`integer(1)`)\cr
+    #' Number of points with status `"in_progress"`.
+    n_in_progress = function() {
+      if (nrow(self$data) == 0) return(0)
+      nrow(self$data["in_progress", on = c("status")])
+    }
   ),
 
   private = list(
