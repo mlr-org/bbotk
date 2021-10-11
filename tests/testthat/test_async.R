@@ -102,7 +102,7 @@ test_that("async with batch on single worker", {
     permutation.of = c("x1", "x2", "y", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, c(rep(NA, 10), seq_len(10)))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
-  expect_equal(archive$data$status, c(rep("evaluated", 10),rep("in_progress", 10)))
+  expect_equal(archive$data$status, c(rep("evaluated", 10), rep("in_progress", 10)))
 
   instance$archive$resolve_promise()
 

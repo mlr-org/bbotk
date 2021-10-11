@@ -179,7 +179,9 @@ OptimInstance = R6Class("OptimInstance",
       assert_flag(single_worker)
       data = self$archive$data
 
-      if (nrow(self$archive$data) == 0) return(invisible(data.table()))
+      if (nrow(self$archive$data) == 0) {
+        return(invisible(data.table()))
+      }
 
       if (self$is_terminated) stop(terminated_error(self))
 
@@ -194,32 +196,32 @@ OptimInstance = R6Class("OptimInstance",
         fun = if (single_worker && !private$.shortcut) {
           # eval all points in single worker
           function(xss_trafoed) {
-            promise = list(future::future(self$objective$eval_many(xss_trafoed[[1]]), seed=TRUE))
+            promise = list(future::future(self$objective$eval_many(xss_trafoed[[1]]), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_along(xss_trafoed[[1]]))
           }
         } else if (single_worker && private$.shortcut) {
           # eval all points in single worker with shortcut
           function(xdt) {
-            promise = list(future::future(self$objective$eval_dt(xdt), seed=TRUE))
+            promise = list(future::future(self$objective$eval_dt(xdt), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_len(nrow(xdt)))
           }
         } else if (!single_worker && !private$.shortcut) {
           # eval each point in separate worker
           function(xss_trafoed, n) {
-            promise = map(xss_trafoed[[1]], function(xs_trafoed) future::future(self$objective$eval_many(list(xs_trafoed)), seed=TRUE))
+            promise = map(xss_trafoed[[1]], function(xs_trafoed) future::future(self$objective$eval_many(list(xs_trafoed)), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
           }
         } else if (!single_worker && private$.shortcut) {
           # eval each point in separate worker with shortcut
           function(xdt, n) {
-            promise = map(seq(nrow(xdt)), function(n) future::future(self$objective$eval_dt(xdt[n]), seed=TRUE))
+            promise = map(seq(nrow(xdt)), function(n) future::future(self$objective$eval_dt(xdt[n]), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
           }
         }
         # fun result is written to
         cols_y = c("promise", "status", "resolve_id")
 
-      # sync eval
+        # sync eval
       } else {
         fun = if (private$.shortcut) {
           self$objective$eval_many(xss_trafoed[[1]])
