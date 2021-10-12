@@ -73,19 +73,18 @@ Archive = R6Class("Archive",
       assert_data_table(xdt)
       assert_data_table(ydt)
       assert_list(xss_trafoed, null.ok = TRUE)
-      # assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
       assert_choice(status, c("proposed", "evaluated"))
-
+      assert_names(names(xdt), must.include = self$search_space$ids())
+      if (status == "evaluated") assert_names(names(ydt), must.include = self$codomain$ids())
+      if (self$check_values) self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
 
       xydt = cbind(xdt, ydt)
-      assert_subset(c(self$search_space$ids()), colnames(xydt)) # self$codomain$ids()
-      batch_nr = self$data$batch_nr
-      if (self$store_x_domain && !is.null(xss_trafoed)) {
-        set(xydt, j = "x_domain", value = list(xss_trafoed))
-      }
+      if (self$store_x_domain && !is.null(xss_trafoed)) set(xydt, j = "x_domain", value = list(xss_trafoed))
       set(xydt, j = "timestamp", value = Sys.time())
+      batch_nr = self$data$batch_nr
       set(xydt, j = "batch_nr", value = if (length(batch_nr)) max(batch_nr) + 1L else 1L)
       set(xydt, j = "status", value = status)
+
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
 
@@ -124,7 +123,7 @@ Archive = R6Class("Archive",
     #'
     #' @return [data.table::data.table()]
     best = function(batch = NULL, n_select = 1) {
-      if (self$n_batch == 0L) data.table()
+      if (self$n_batch == 0L) return(data.table())
       if (is.null(batch)) batch = seq_len(self$n_batch)
       assert_subset(batch, seq_len(self$n_batch))
 

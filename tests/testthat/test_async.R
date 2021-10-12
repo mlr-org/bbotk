@@ -115,7 +115,7 @@ test_that("mixed asynchronous and sequential evaluation works", {
   expect_numeric(archive$data$y, any.missing = FALSE)
 })
 
-test_that("eval_proposed works if no proposed points are available" {
+test_that("eval_proposed works if no proposed points are available", {
   instance = MAKE_INST(objective = OBJ_1D, search_space = PS_1D, terminator = 100L)
   xdt = generate_design_random(PS_1D, 10)$data
   archive = instance$archive
@@ -239,7 +239,7 @@ test_that("asynchronous evaluation of selected points works", {
   expect_names(colnames(archive$data),
     permutation.of = c("x", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, c(seq_len(5), rep(NA, 5)))
-  expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[5]]))
+  expect_identical(archive$data$promise[[1]], archive$data$promise[[5]])
   expect_equal(archive$data$status, c(rep("in_progress", 5), rep("proposed", 5)))
 
   instance$archive$resolve_promise(i = seq(5))

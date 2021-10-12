@@ -12,7 +12,7 @@ test_that("Archive", {
   expect_equal(a$data$x_domain, xss_trafoed)
   adt = as.data.table(a)
   expect_data_table(adt, nrows = 1)
-  expect_names(colnames(adt), identical.to = c("x1", "x2", "y", "timestamp", "batch_nr", "x_domain_x1", "x_domain_x2"))
+  expect_names(colnames(adt), identical.to = c("x1", "x2", "y", "timestamp", "batch_nr", "status", "x_domain_x1", "x_domain_x2"))
   a$clear()
   expect_data_table(a$data, nrows = 0)
   adt = as.data.table(a)
@@ -23,12 +23,12 @@ test_that("Archive", {
   a$add_evals(xdt, NULL, ydt)
   adt = as.data.table(a)
   expect_data_table(adt, nrows = 1)
-  expect_names(colnames(adt), identical.to = c("x1", "x2", "y", "timestamp", "batch_nr"))
+  expect_names(colnames(adt), identical.to = c("x1", "x2", "y", "timestamp", "batch_nr", "status"))
 })
 
 test_that("Archive best works", {
   a = Archive$new(PS_2D, FUN_2D_CODOMAIN)
-  expect_error(a$best(), "No results stored in archive")
+  expect_data_table(a$best(), nrows = 0)
   xdt = data.table(x1 = c(0, 0.5), x2 = c(1, 1))
   xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
   ydt = data.table(y = c(1, 0.25))
@@ -70,21 +70,13 @@ test_that("Unnest columns", {
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
   adt = as.data.table(a)
-  expect_names(colnames(adt), identical.to = c("x1", "x2", "y", "timestamp", "batch_nr", "x_domain_x1", "x_domain_x2"))
+  expect_names(colnames(adt), identical.to = c("x1", "x2", "y", "timestamp", "batch_nr", "status", "x_domain_x1", "x_domain_x2"))
   expect_equal(adt$x_domain_x1, 1)
   expect_equal(adt$x_domain_x2, 2)
 
   # checks
   xdt = data.table(x1 = 0.5, x2 = 2)
   expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Element 1 is not")
-})
-
-test_that("NAs in ydt throw an error", {
-  a = Archive$new(PS_1D, FUN_1D_CODOMAIN)
-  xdt = data.table(x = 1)
-  xss_trafoed = list(list(x = 1))
-  ydt = data.table(y = NA)
-  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Contains missing values")
 })
 
 test_that("start_time is set by Optimizer", {
