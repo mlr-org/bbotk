@@ -78,6 +78,8 @@ Archive = R6Class("Archive",
       if (status == "evaluated") assert_names(names(ydt), must.include = self$codomain$ids())
       if (self$check_values) self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
 
+      if (status == "proposed") lg$info("Proposing %i configuration(s)", max(1, nrow(xdt)))
+
       xydt = cbind(xdt, ydt)
       if (self$store_x_domain && !is.null(xss_trafoed)) set(xydt, j = "x_domain", value = list(xss_trafoed))
       set(xydt, j = "timestamp", value = Sys.time())
@@ -99,7 +101,10 @@ Archive = R6Class("Archive",
 
       # mark resolved points
       fun_resolved = function(p) if (future::resolved(p)) "resolved" else "in_progress"
-      self$data["in_progress", "status" := map_chr(promise, fun_resolved), , on = c("status")]
+      self$data["in_progress", "status" := map_chr(get("promise"), fun_resolved), , on = c("status")]
+
+      n_resolved = nrow(self$data["resolved", on = c("status"), nomatch = NULL])
+      if (n_resolved > 0) lg$info("Retrieve values from %i future(s)", n_resolved)
 
       # resolve points
       fun_value = function(promise, resolve_id) {
@@ -107,7 +112,7 @@ Archive = R6Class("Archive",
         set(ydt, j = "status", value = "evaluated")
         ydt
       }
-      self$data["resolved", c(self$cols_y, "status") := fun_value(promise, resolve_id), by = "batch_nr", on = c("status")]
+      self$data["resolved", c(self$cols_y, "status") := fun_value(get("promise"), get("resolve_id")), by = "batch_nr", on = c("status")]
     },
 
     #' @description
@@ -127,7 +132,7 @@ Archive = R6Class("Archive",
       if (is.null(batch)) batch = seq_len(self$n_batch)
       assert_subset(batch, seq_len(self$n_batch))
 
-      tab = self$data[.(batch, "evaluated"), on = c("batch_nr", "status")]
+      tab = self$data[list(batch, "evaluated"), on = c("batch_nr", "status")]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       max_to_min = self$codomain$maximization_to_minimization
@@ -157,7 +162,7 @@ Archive = R6Class("Archive",
       if (is.null(batch)) batch = seq_len(self$n_batch)
       assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
 
-      tab = self$data[.(batch, "evaluated"), on = c("batch_nr", "status")]
+      tab = self$data[list(batch, "evaluated"), on = c("batch_nr", "status")]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))

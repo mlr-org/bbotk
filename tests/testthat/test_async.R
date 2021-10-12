@@ -9,7 +9,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 1D function
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 7)
   expect_names(colnames(archive$data),
@@ -37,7 +37,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 2D function
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -67,7 +67,7 @@ test_that("asynchronous evaluation on single worker of a multi-crit 2D function 
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -98,7 +98,7 @@ test_that("mixed asynchronous and sequential evaluation works", {
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "y", "x_domain", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, c(rep("evaluated", 10), rep("proposed", 10)))
 
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
   expect_data_table(archive$data, nrows = 20, ncols = 9)
   expect_names(colnames(archive$data),
@@ -146,7 +146,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 1D funct
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = FALSE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 7)
   expect_names(colnames(archive$data),
@@ -174,7 +174,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 2D funct
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = FALSE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -202,7 +202,7 @@ test_that("asynchronous evaluation on separate workers of a multi-crit 2D functi
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = FALSE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -266,7 +266,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 1D function
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 6)
   expect_names(colnames(archive$data),
@@ -298,7 +298,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 2D function
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 7)
   expect_names(colnames(archive$data),
@@ -330,7 +330,7 @@ test_that("asynchronous evaluation on single worker of a multi-crit 2D function 
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 7)
   expect_names(colnames(archive$data),
@@ -364,7 +364,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 1D funct
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = FALSE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 6)
   expect_names(colnames(archive$data),
@@ -396,7 +396,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 2D funct
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = FALSE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 7)
   expect_names(colnames(archive$data),
@@ -428,7 +428,7 @@ test_that("asynchronous evaluation on separate workers of a multi-crit 2D functi
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
   expect_equal(archive$data$status, rep("proposed", 10))
 
-  instance$eval_proposed(async = TRUE, single_worker = FALSE)
+  expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 7)
   expect_names(colnames(archive$data),
@@ -451,7 +451,7 @@ test_that("asynchronous and sequential evaluations results are consistent", {
   xdt = generate_design_random(PS_1D, 10)$data
   archive = instance$archive
   archive$add_evals(xdt, status = "proposed")
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+    expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
   instance$archive$resolve_promise()
 
   res_async = instance$archive$data$y
@@ -475,7 +475,7 @@ test_that("asynchronous and sequential evaluations with shortcut results are con
   xdt = generate_design_random(PS_1D, 10)$data
   archive = instance$archive
   archive$add_evals(xdt, status = "proposed")
-  instance$eval_proposed(async = TRUE, single_worker = TRUE)
+    expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
   instance$archive$resolve_promise()
 
   res_async = instance$archive$data$y

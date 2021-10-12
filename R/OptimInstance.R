@@ -238,11 +238,11 @@ OptimInstance = R6Class("OptimInstance",
       if (is.null(i)) {
         # all proposed points
         data["proposed", (cols_y) := fun(.SD), .SDcols = cols_x, by = "batch_nr", on = "status"]
-        return(invisible(data["in_progress", ..cols_y, on = "status"]))
+        return(invisible(data["in_progress", cols_y, on = "status", with = FALSE]))
       } else {
         # or subset i
         data[i, (cols_y) := fun(.SD), .SDcols = cols_x, by = "batch_nr"]
-        return(invisible(data[i, ..cols_y]))
+        return(invisible(data[i, cols_y, with = FALSE]))
       }
     },
 
