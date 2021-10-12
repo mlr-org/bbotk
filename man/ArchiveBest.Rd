@@ -89,7 +89,7 @@ items. The trafo will be applied if defined in \code{search_space}.}
 \subsection{Method \code{add_evals()}}{
 Stores the best result in \code{ydt}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$add_evals(xdt, xss_trafoed = NULL, ydt, status = "evaluated")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$add_evals(xdt, xss_trafoed = NULL, ydt)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -106,9 +106,6 @@ Transformed point(s) in the \emph{domain space}.}
 
 \item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Optimal outcome.}
-
-\item{\code{status}}{(\code{character()})\cr
-Ignored.}
 }
 \if{html}{\out{</div>}}
 }

@@ -40,7 +40,6 @@ PS_2D_TRF = ps(
   }
 )
 
-
 # Simple 2D Function with deps
 FUN_2D_DEPS = function(xs) {
   y = sum(as.numeric(xs)^2, na.rm = TRUE) # for PS with dependencies we ignore the not present param

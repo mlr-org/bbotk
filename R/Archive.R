@@ -68,16 +68,14 @@ Archive = R6Class("Archive",
     #' Transformed point(s) in the *domain space*.
     #' Not stored and needed if `store_x_domain = FALSE`.
     #' @param status (`character()`)\cr
-    #' `"proposed"`, `"in_progress"` or `"evaluated"`.
+    #' `"proposed"` or `"evaluated"`.
     add_evals = function(xdt, xss_trafoed = NULL, ydt = data.table(), status = "evaluated") {
       assert_data_table(xdt)
       assert_data_table(ydt)
       assert_list(xss_trafoed, null.ok = TRUE)
       # assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
-      assert_choice(status, c("proposed", "in_progress", "evaluated"))
-      if (self$check_values) {
-        self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
-      }
+      assert_choice(status, c("proposed", "evaluated"))
+
 
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids()), colnames(xydt)) # self$codomain$ids()

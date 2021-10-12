@@ -200,7 +200,7 @@ OptimInstance = R6Class("OptimInstance",
             list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_along(xss_trafoed[[1]]))
           }
         } else if (single_worker && private$.shortcut) {
-          # eval all points in single worker with shortcut
+          # eval all points in single worker with dt shortcut
           function(xdt) {
             promise = list(future::future(self$objective$eval_dt(xdt), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_len(nrow(xdt)))
@@ -212,7 +212,7 @@ OptimInstance = R6Class("OptimInstance",
             list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
           }
         } else if (!single_worker && private$.shortcut) {
-          # eval each point in separate worker with shortcut
+          # eval each point in separate worker with dt shortcut
           function(xdt, n) {
             promise = map(seq(nrow(xdt)), function(n) future::future(self$objective$eval_dt(xdt[n]), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
@@ -223,10 +223,12 @@ OptimInstance = R6Class("OptimInstance",
 
         # sync eval
       } else {
-        fun = if (private$.shortcut) {
-          self$objective$eval_many(xss_trafoed[[1]])
+        fun = if (!private$.shortcut) {
+          function(xss_trafoed) self$objective$eval_many(xss_trafoed[[1]])
         } else {
-          self$objective$eval_dt(xdt)
+          function(xdt) {
+            self$objective$eval_dt(xdt)
+          }
         }
         # fun result is written to
         cols_y = self$archive$cols_y

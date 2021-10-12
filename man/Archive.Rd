@@ -142,7 +142,7 @@ Not stored and needed if \code{store_x_domain = FALSE}.}
 Optimal outcome.}
 
 \item{\code{status}}{(\code{character()})\cr
-\code{"proposed"}, \code{"in_progress"} or \code{"evaluated"}.}
+\code{"proposed"} or \code{"evaluated"}.}
 }
 \if{html}{\out{</div>}}
 }
