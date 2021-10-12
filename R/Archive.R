@@ -103,9 +103,6 @@ Archive = R6Class("Archive",
       fun_resolved = function(p) if (future::resolved(p)) "resolved" else "in_progress"
       self$data["in_progress", "status" := map_chr(get("promise"), fun_resolved), , on = c("status")]
 
-      n_resolved = nrow(self$data["resolved", on = c("status"), nomatch = NULL])
-      if (n_resolved > 0) lg$info("Retrieve values from %i future(s)", n_resolved)
-
       # resolve points
       fun_value = function(promise, resolve_id) {
         ydt = pmap_dtr(list(promise, resolve_id), function(p, id) future::value(p)[id])

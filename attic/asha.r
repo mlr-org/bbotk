@@ -5,7 +5,7 @@
 top_rung = function(archive, k, eta) {
   if(nrow(archive$data) == 0) return(data.table())
   # evaluated configurations of rung
-  data = archive$data[rung == k & (evaluated)]
+  data = archive$data[rung == k & status == "evaluated"]
   if(nrow(data) > 0) {
     n = floor(nrow(data) / eta)
     head(setorderv(data, archive$cols_y), n)
@@ -113,7 +113,7 @@ fun = function(xdt) {
   r = 6
   s = 10
   t = 1 / (8 * pi)
-  data.table(y =
+  data.table::data.table(y =
     (a * ((xdt[["x2"]] -
     b * (xdt[["x1"]] ^ 2L) +
     c * xdt[["x1"]] - r) ^ 2) +
@@ -153,12 +153,15 @@ s = 0
 #archive = instance$archive
 
 repeat({
-  replicate(4 - instance$archive$active_futures(), {
+  replicate(4 - instance$archive$n_in_progress, {
     xdt = get_job(eta, s, search_space, instance$archive)
+
+    print(instance$archive$data)
 
     if (is.null(xdt$asha_id)) set(xdt, j = "asha_id", value = n_rung(instance$archive, 0) + 1)
 
-    instance$eval_batch_async(xdt)
+    instance$archive$add_evals(xdt, status = "proposed")
+    instance$eval_proposed(async = TRUE, single_worker = FALSE)
   })
 
 instance$archive$resolve_promise()
