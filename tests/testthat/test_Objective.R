@@ -319,3 +319,9 @@ test_that("Objective works with constants", {
   expect_equal(objective$eval_many(list(list(x = 1), list(x = 0))), data.table(y = c(2, 1)))
   expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))
 })
+
+test_that("objective can be initialized with empty codomain", {
+  domain = ps(x = p_dbl(lower = -1, upper = 1))
+  codomain = ps()
+  Objective$new(domain = domain, codomain = codomain)
+})
