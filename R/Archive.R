@@ -97,19 +97,17 @@ Archive = R6Class("Archive",
     #'   Row ids of archive table for which values are retrieved. If `NULL`
     #'   (default), retrieve values from all futures which are resolved.
     resolve_promise = function(i = NULL) {
-      assert_subset(i, seq(nrow(self$data)))
+    assert_subset(i, seq(nrow(self$data)))
 
-      # mark resolved points
-      fun_resolved = function(p) if (future::resolved(p)) "resolved" else "in_progress"
-      self$data["in_progress", "status" := map_chr(get("promise"), fun_resolved), , on = c("status")]
+    # mark resolved points
+    fun_resolved = function(p) if (future::resolved(p)) "resolved" else "in_progress"
+    self$data["in_progress", "status" := map_chr(get("promise"), fun_resolved), , on = "status"]
 
-      # resolve points
-      fun_value = function(promise, resolve_id) {
-        ydt = pmap_dtr(list(promise, resolve_id), function(p, id) future::value(p)[id])
-        set(ydt, j = "status", value = "evaluated")
-        ydt
-      }
-      self$data["resolved", c(self$cols_y, "status") := fun_value(get("promise"), get("resolve_id")), by = "batch_nr", on = c("status")]
+    # when multiple points are evaluated in a single worker,
+    fun_value = function(promise, resolve_id) pmap_dtr(list(promise, resolve_id), function(p, id) future::value(p)[id])
+    ydt = self$data["resolved", fun_value(get("promise"), get("resolve_id")), on = "status"]
+    id = self$data["resolved", on = "status", which = TRUE]
+    set(self$data, i = id, j = names(ydt), value = ydt)
     },
 
     #' @description
