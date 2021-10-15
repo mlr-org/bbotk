@@ -103,11 +103,11 @@ Archive = R6Class("Archive",
     fun_resolved = function(p) if (future::resolved(p)) "resolved" else "in_progress"
     self$data["in_progress", "status" := map_chr(get("promise"), fun_resolved), , on = "status"]
 
-    # when multiple points are evaluated in a single worker,
+    # ...
     fun_value = function(promise, resolve_id) pmap_dtr(list(promise, resolve_id), function(p, id) future::value(p)[id])
-    ydt = self$data["resolved", fun_value(get("promise"), get("resolve_id")), on = "status"]
-    id = self$data["resolved", on = "status", which = TRUE]
-    set(self$data, i = id, j = names(ydt), value = ydt)
+    ydt = self$data["resolved", fun_value(get("promise"), get("resolve_id")), on = "status", nomatch = NULL]
+    id = self$data["resolved", on = "status", which = TRUE, nomatch = NULL]
+    if (length(id)) set(self$data, i = id, j = names(ydt), value = ydt)
     },
 
     #' @description
