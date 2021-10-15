@@ -195,7 +195,7 @@ OptimInstance = R6Class("OptimInstance",
       if (async) {
 
         # decouple objective from instance
-        assign("objective_async", self$objective, envir = .GlobalEnv)
+        objective_async = self$objective$clone()
 
         fun = if (single_worker && !private$.shortcut) {
           # eval all points in single worker
