@@ -63,7 +63,7 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
       super$initialize(params)
 
       # assert at least one target parameter
-      if (!any(self$is_target)) stop("Codomain contains no parameter tagged with 'minimize' or 'maximize'")
+      if (!any(self$is_target) && length(params)) stop("Codomain contains no parameter tagged with 'minimize' or 'maximize'")
     }
   ),
 
