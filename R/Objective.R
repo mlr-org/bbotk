@@ -156,7 +156,7 @@ Objective = R6Class("Objective",
     .eval_many = function(xss, ...) {
       res = map_dtr(xss, function(xs) {
         ys = self$eval(xs)
-        as.data.table(lapply(ys, function(y) if (is.list(y)) list(y) else y))
+        as.data.table(lapply(ys, function(y) if (is.list(y) && length(y) > 1) list(y) else y))
       })
       # to keep it simple we expect the order of the results to be right. extras keep their names
       colnames(res)[seq_len(self$codomain$length)] = self$codomain$ids()

@@ -323,5 +323,6 @@ test_that("Objective works with constants", {
 test_that("objective can be initialized with empty codomain", {
   domain = ps(x = p_dbl(lower = -1, upper = 1))
   codomain = ps()
-  Objective$new(domain = domain, codomain = codomain)
+  obj = Objective$new(domain = domain, codomain = codomain)
+  assert_r6(obj, "Objective")
 })
