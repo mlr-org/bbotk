@@ -176,7 +176,7 @@ Row ids of archive table for which values are evaluated. If \code{NULL}
 (default), evaluate all values with status \code{"proposed"}.}
 
 \item{\code{async}}{(\code{logical(1)})\cr
-Determines if points are evaluated asynchronously with the future
+Determines if points are evaluated asynchronously with the package
 \CRANpkg{future}.}
 
 \item{\code{single_worker}}{(\code{logical(1)})\cr

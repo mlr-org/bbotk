@@ -163,7 +163,7 @@ OptimInstance = R6Class("OptimInstance",
     #'   Row ids of archive table for which values are evaluated. If `NULL`
     #'   (default), evaluate all values with status `"proposed"`.
     #' @param async (`logical(1)`)\cr
-    #'   Determines if points are evaluated asynchronously with the future
+    #'   Determines if points are evaluated asynchronously with the package
     #'   \CRANpkg{future}.
     #' @param single_worker (`logical(1)`)\cr
     #'   Determines if all points of a batch are evaluated in a single worker or
