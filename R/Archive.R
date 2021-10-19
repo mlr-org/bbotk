@@ -107,7 +107,10 @@ Archive = R6Class("Archive",
       fun_value = function(promise, resolve_id) pmap_dtr(list(promise, resolve_id), function(p, id) future::value(p)[id])
       ydt = self$data["resolved", fun_value(get("promise"), get("resolve_id")), on = "status", nomatch = NULL]
       id = self$data["resolved", on = "status", which = TRUE, nomatch = NULL]
-      if (length(id)) set(self$data, i = id, j = names(ydt), value = ydt)
+      if (length(id)) {
+        set(self$data, i = id, j = names(ydt), value = ydt)
+        set(self$data, i = id, j = "status", value = "evaluated")
+      }
     },
 
     #' @description
