@@ -55,12 +55,20 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
-      g = generate_design_grid(inst$search_space, resolution = pv$resolution,
-        param_resolutions = pv$param_resolutions)
-      ch = chunk_vector(seq_row(g$data), chunk_size = pv$batch_size,
-        shuffle = TRUE)
+      allow_hotstart = inst$objective$allow_hotstart %??% FALSE
+      data = generate_design_grid(inst$search_space, resolution = pv$resolution,
+        param_resolutions = pv$param_resolutions)$data
+
+      if (allow_hotstart) {
+        hotstart_id = inst$objective$learner$param_set$ids(tags = "hotstart")
+        if ("hotstart_forward" %in% inst$objective$learner$properties) order = 1L
+        if ("hotstart_backward" %in% inst$objective$learner$properties) order = -1L
+        setorderv(data, hotstart_id, order = order)
+      }
+
+      ch = chunk_vector(seq_row(data), chunk_size = pv$batch_size, shuffle = !allow_hotstart)
       for (inds in ch) {
-        inst$eval_batch(g$data[inds])
+        inst$eval_batch(data[inds])
       }
     }
   )
