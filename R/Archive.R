@@ -96,6 +96,8 @@ Archive = R6Class("Archive",
     #' @param i (`integer()`)\cr
     #'   Row ids of archive table for which values are retrieved. If `NULL`
     #'   (default), retrieve values from all futures which are resolved.
+    #'
+    #' @return [`data.table::data.table()`] (invisibly).
     resolve_promise = function(i = NULL) {
       assert_subset(i, seq(nrow(self$data)))
 
@@ -111,6 +113,8 @@ Archive = R6Class("Archive",
         set(self$data, i = id, j = names(ydt), value = ydt)
         set(self$data, i = id, j = "status", value = "evaluated")
       }
+
+      invisible(ydt)
     },
 
     #' @description
