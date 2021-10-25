@@ -41,7 +41,7 @@ Depends:
     paradox (>= 0.7.0),
     R (>= 3.1.0)
 Imports:
-    checkmate (>= 2.0.0),
+    checkmate (>= 2.1.0),
     data.table,
     lgr,
     methods,
@@ -57,6 +57,8 @@ Suggests:
     progressr,
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes:
+    mllg/checkmate
 VignetteBuilder:
     knitr
 Config/testthat/edition: 3
