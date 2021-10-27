@@ -19,7 +19,6 @@ test_that("Archive", {
   expect_data_table(adt, nrows = 0)
 
   # with no xss_trafoed
-  a$store_x_domain = FALSE
   a$add_evals(xdt, NULL, ydt)
   adt = as.data.table(a)
   expect_data_table(adt, nrows = 1)
