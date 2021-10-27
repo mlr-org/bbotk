@@ -49,12 +49,7 @@ Number of batches stored in the archive.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$new(
-  search_space,
-  codomain,
-  check_values = FALSE,
-  store_x_domain = FALSE
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$new(search_space, codomain, check_values = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -74,10 +69,6 @@ be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 ignored.}
-
-\item{\code{store_x_domain}}{(\code{logical(1)})\cr
-Determines if x values, should be stored in \verb{$data$x_domain} as list
-items. The trafo will be applied if defined in \code{search_space}.}
 }
 \if{html}{\out{</div>}}
 }

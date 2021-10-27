@@ -16,7 +16,6 @@
 #' @template param_ydt
 #' @template param_n_select
 #' @template param_ref_point
-#' @template param_store_x_domain
 #' @export
 Archive = R6Class("Archive",
   public = list(
@@ -42,46 +41,37 @@ Archive = R6Class("Archive",
     #' Contains all performed [Objective] function calls.
     data = NULL,
 
-    #' @field store_x_domain (`logical(1)`)\cr
-    #' Determines if x values, should be stored in `$data$x_domain` as list
-    #' items. The trafo will be applied if defined in `search_space`.
-    store_x_domain = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(search_space, codomain, check_values = TRUE, store_x_domain = TRUE) {
+    initialize = function(search_space, codomain, check_values = TRUE) {
       self$search_space = assert_param_set(search_space)
       self$codomain = Codomain$new(assert_param_set(codomain)$params)
       self$check_values = assert_flag(check_values)
       self$data = data.table()
-      self$store_x_domain = assert_flag(store_x_domain)
     },
 
     #' @description
     #' Adds function evaluations to the archive table.
     #'
     #' @param xss_trafoed (`list()`)\cr
-    #' Transformed point(s) in the *domain space*.
-    #' Not stored and needed if `store_x_domain = FALSE`.
+    #'   Transformed point(s) in the *domain space*.
     add_evals = function(xdt, xss_trafoed = NULL, ydt) {
       assert_data_table(xdt)
       assert_data_table(ydt)
-      assert_list(xss_trafoed, null.ok = !self$store_x_domain)
+      assert_list(xss_trafoed, null.ok = TRUE)
       assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
       if (self$check_values) {
         self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
       }
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
-      batch_nr = self$data$batch_nr
-      if (self$store_x_domain) {
-        set(xydt, j = "x_domain", value = list(xss_trafoed))
-      }
+      if (!is.null(xss_trafoed)) set(xydt, j = "x_domain", value = list(xss_trafoed))
       set(xydt, j = "timestamp", value = Sys.time())
+      batch_nr = self$data$batch_nr
       set(xydt, j = "batch_nr", value = if (length(batch_nr)) max(batch_nr) + 1L else 1L)
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
@@ -99,9 +89,9 @@ Archive = R6Class("Archive",
     #'
     #' @return [data.table::data.table()]
     best = function(batch = NULL, n_select = 1) {
-      if (self$n_batch == 0L) stop("No results stored in archive")
+      if (self$n_batch == 0L) return(data.table())
       if (is.null(batch)) batch = seq_len(self$n_batch)
-      assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
+      assert_subset(batch, seq_len(self$n_batch))
 
       tab = self$data[get("batch_nr") %in% batch, ]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
@@ -200,7 +190,7 @@ Archive = R6Class("Archive",
 
 #' @export
 as.data.table.Archive = function(x, ...) { # nolint
-  if (!x$store_x_domain || nrow(x$data) == 0) {
+  if (is.null(x$data$x_domain) || !nrow(x$data)) {
     copy(x$data)
   } else {
     unnest(copy(x$data), "x_domain", prefix = "{col}_")
