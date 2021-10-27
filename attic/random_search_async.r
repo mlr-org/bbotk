@@ -41,5 +41,5 @@ repeat({
     instance$archive$add_evals(xdt, status = "proposed")
     instance$eval_proposed(async = TRUE, single_worker = FALSE)
   }
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 })

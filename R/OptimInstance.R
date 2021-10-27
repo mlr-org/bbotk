@@ -266,6 +266,9 @@ OptimInstance = R6Class("OptimInstance",
       if (length(id)) {
         set(archive$data, i = id, j = names(ydt), value = ydt)
         set(archive$data, i = id, j = "status", value = "evaluated")
+
+        lg$info("Result of evaluating %i configuration(s):", length(id))
+        lg$info(capture.output(print(archive$data[id], class = FALSE, row.names = FALSE, print.keys = FALSE)))
       }
 
       invisible(ydt)

@@ -70,7 +70,7 @@ Archive = R6Class("Archive",
       if (status == "evaluated") assert_names(names(ydt), must.include = self$codomain$ids())
       if (self$check_values) self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
 
-      if (status == "proposed") lg$info("Proposing %i configuration(s)", nrow(xdt))
+      if (status == "proposed") lg$info("Proposing %i configuration(s).", nrow(xdt))
 
       xydt = cbind(xdt, ydt)
       if (!is.null(xss_trafoed)) set(xydt, j = "x_domain", value = list(xss_trafoed))
