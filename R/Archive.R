@@ -73,7 +73,6 @@ Archive = R6Class("Archive",
       if (status == "proposed") lg$info("Proposing %i configuration(s)", nrow(xdt))
 
       xydt = cbind(xdt, ydt)
-      assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
       if (!is.null(xss_trafoed)) set(xydt, j = "x_domain", value = list(xss_trafoed))
       set(xydt, j = "timestamp", value = Sys.time())
       batch_nr = self$data$batch_nr

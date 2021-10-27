@@ -168,71 +168,70 @@ OptimInstance = R6Class("OptimInstance",
     #' not specified, all points with status `"in_progress"` (async) or
     #' `"evaluated"` (sync) are returned.
     eval_proposed = function(i = NULL, async = FALSE, single_worker = FALSE) {
-      assert_subset(i, seq(nrow(self$archive$data)))
+      data = self$archive$data
+      assert_subset(i, seq(nrow(data)))
       assert_flag(async)
       assert_flag(single_worker)
-      data = self$archive$data
-
-      if (nrow(self$archive$data) == 0) {
-        return(invisible(data.table()))
-      }
+      if (!nrow(data)) return(invisible(data.table()))
 
       if (self$is_terminated) stop(terminated_error(self))
 
-      # calculate the x as (trafoed) domain only if needed
-      if (!private$.shortcut) {
+      # if search space has no transformation function and dependencies, and the objective takes a data table
+      # use shortcut to skip conversion between data table and list
+      dt_shortcut = !self$search_space$has_trafo && !self$search_space$has_deps && inherits(self$objective, "ObjectiveRFunDt")
+
+      # transform values
+      if (!dt_shortcut) {
         data["proposed", "x_domain" := transform_xdt_to_xss(.SD, self$search_space), .SDcols = self$archive$cols_x, on = c("status")]
       }
-      cols_x = if (private$.shortcut) self$archive$cols_x else "x_domain"
+      # columns send to worker
+      cols_x = if (dt_shortcut) self$archive$cols_x else "x_domain"
 
-      # async eval
+      # asynchronous evaluation
       if (async) {
-
-        # decouple objective from instance
+        # decouple objective from instance so that only objective is send to workers
         objective_async = self$objective
 
-        fun = if (single_worker && !private$.shortcut) {
+        fun = if (single_worker && !dt_shortcut) {
           # eval all points in single worker
           function(xss_trafoed) {
             promise = list(future::future(objective_async$eval_many(xss_trafoed[[1]]), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_along(xss_trafoed[[1]]))
           }
-        } else if (single_worker && private$.shortcut) {
+        } else if (single_worker && dt_shortcut) {
           # eval all points in single worker with dt shortcut
           function(xdt) {
             promise = list(future::future(objective_async$eval_dt(xdt), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_len(nrow(xdt)))
           }
-        } else if (!single_worker && !private$.shortcut) {
+        } else if (!single_worker && !dt_shortcut) {
           # eval each point in separate worker
           function(xss_trafoed, n) {
             promise = map(xss_trafoed[[1]], function(xs_trafoed) future::future(objective_async$eval_many(list(xs_trafoed)), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
           }
-        } else if (!single_worker && private$.shortcut) {
+        } else if (!single_worker && dt_shortcut) {
           # eval each point in separate worker with dt shortcut
           function(xdt, n) {
             promise = map(seq(nrow(xdt)), function(n) future::future(objective_async$eval_dt(xdt[n]), seed = TRUE))
             list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
           }
         }
-        # fun result is written to
+        # columns returned by worker
         cols_y = c("promise", "status", "resolve_id")
 
-        # sync eval
+      # sequential evaluation
       } else {
-        fun = if (!private$.shortcut) {
+        fun = if (!dt_shortcut) {
           function(xss_trafoed) self$objective$eval_many(xss_trafoed[[1]])
         } else {
-          function(xdt) {
-            self$objective$eval_dt(xdt)
-          }
+          function(xdt) self$objective$eval_dt(xdt)
         }
-        # fun result is written to
+        # columns returned by worker
         cols_y = self$archive$cols_y
       }
 
-      # start worker and add promise or evaluate
+      # start worker and add promise, or evaluate
       if (is.null(i)) {
         # all proposed points
         data["proposed", (cols_y) := fun(.SD), .SDcols = cols_x, by = "batch_nr", on = "status"]
