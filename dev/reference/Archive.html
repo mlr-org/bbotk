@@ -183,10 +183,6 @@ Determines if points and results are checked for validity.</p></dd>
 <dt><code>data</code></dt><dd><p>(<a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table</a>)<br />
 Contains all performed <a href='Objective.html'>Objective</a> function calls.</p></dd>
 
-<dt><code>store_x_domain</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
-Determines if x values, should be stored in <code>$data$x_domain</code> as list
-items. The trafo will be applied if defined in <code>search_space</code>.</p></dd>
-
 </dl><p></div></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
@@ -222,7 +218,7 @@ Column names of codomain target parameters.</p></dd>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>search_space</span>, <span class='va'>codomain</span>, check_values <span class='op'>=</span> <span class='cn'>TRUE</span>, store_x_domain <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>search_space</span>, <span class='va'>codomain</span>, check_values <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -242,10 +238,6 @@ be minimized or maximized.  The default is to minimize each component.</p></dd>
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.</p></dd>
 
-<dt><code>store_x_domain</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
-Determines if x values, should be stored in <code>$data$x_domain</code> as list
-items. The trafo will be applied if defined in <code>search_space</code>.</p></dd>
-
 </dl><p></div></p>
 <p><hr>
 <a id="method-add_evals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_evals()</code></h3>
@@ -261,8 +253,7 @@ Column names have to match ids of the <code>search_space</code>.
 However, <code>xdt</code> can contain additional columns.</p></dd>
 
 <dt><code>xss_trafoed</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>)<br />
-Transformed point(s) in the <em>domain space</em>.
-Not stored and needed if <code>store_x_domain = FALSE</code>.</p></dd>
+Transformed point(s) in the <em>domain space</em>.</p></dd>
 
 <dt><code>ydt</code></dt><dd><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
 Optimal outcome.</p></dd>
