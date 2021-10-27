@@ -223,15 +223,15 @@ test_that("check_values = TRUE with extra output works", {
 
 test_that("assertion on overlapping and reserved names works", {
   expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
-    regexp = "disjunct from (x).",
+    regexp = "disjunct from",
     fixed = TRUE)
 
   expect_error(Objective$new(domain = ps(batch_nr = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
-    regexp = "disjunct from (x_domain,timestamp,batch_nr).",
+    regexp = "disjunct from",
     fixed = TRUE)
 
   expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(timestamp = p_dbl(tags = "maximize"))),
-    regexp = "disjunct from (x_domain,timestamp,batch_nr).",
+    regexp = "disjunct from",
     fixed = TRUE)
 })
 
@@ -324,5 +324,5 @@ test_that("objective can be initialized with empty codomain", {
   domain = ps(x = p_dbl(lower = -1, upper = 1))
   codomain = ps()
   obj = Objective$new(domain = domain, codomain = codomain)
-  assert_r6(obj, "Objective")
+  expect_r6(obj, "Objective")
 })
