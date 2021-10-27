@@ -18,7 +18,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 1D function
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -46,7 +46,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 2D function
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 9)
   expect_names(colnames(archive$data),
@@ -76,7 +76,7 @@ test_that("asynchronous evaluation on single worker of a multi-crit 2D function 
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 10)
   expect_names(colnames(archive$data),
@@ -107,7 +107,7 @@ test_that("mixed asynchronous and sequential evaluation works", {
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
   expect_equal(archive$data$status, c(rep("evaluated", 10), rep("in_progress", 10)))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, nrows = 20, ncols = 9)
   expect_names(colnames(archive$data),
@@ -155,7 +155,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 1D funct
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -183,7 +183,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 2D funct
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 9)
   expect_names(colnames(archive$data),
@@ -211,7 +211,7 @@ test_that("asynchronous evaluation on separate workers of a multi-crit 2D functi
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 10)
   expect_names(colnames(archive$data),
@@ -242,7 +242,7 @@ test_that("asynchronous evaluation of selected points works", {
   expect_identical(archive$data$promise[[1]], archive$data$promise[[5]])
   expect_equal(archive$data$status, c(rep("in_progress", 5), rep("proposed", 5)))
 
-  instance$archive$resolve_promise(i = seq(5))
+  instance$resolve_promise(i = seq(5))
 
   expect_data_table(archive$data, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -275,7 +275,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 1D function
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 7)
   expect_names(colnames(archive$data),
@@ -307,7 +307,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 2D function
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -339,7 +339,7 @@ test_that("asynchronous evaluation on single worker of a multi-crit 2D function 
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 9)
   expect_names(colnames(archive$data),
@@ -373,7 +373,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 1D funct
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 7)
   expect_names(colnames(archive$data),
@@ -405,7 +405,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 2D funct
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 8)
   expect_names(colnames(archive$data),
@@ -437,7 +437,7 @@ test_that("asynchronous evaluation on separate workers of a multi-crit 2D functi
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
   expect_equal(archive$data$status, rep("in_progress", 10))
 
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 9)
   expect_names(colnames(archive$data),
@@ -452,7 +452,7 @@ test_that("asynchronous and sequential evaluations results are consistent", {
   archive = instance$archive
   archive$add_evals(xdt, status = "proposed")
     expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   res_async = instance$archive$data$y
 
@@ -476,7 +476,7 @@ test_that("asynchronous and sequential evaluations with shortcut results are con
   archive = instance$archive
   archive$add_evals(xdt, status = "proposed")
     expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
-  instance$archive$resolve_promise()
+  instance$resolve_promise()
 
   res_async = instance$archive$data$y
 

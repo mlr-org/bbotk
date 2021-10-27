@@ -244,6 +244,34 @@ OptimInstance = R6Class("OptimInstance",
     },
 
     #' @description
+    #' Retrieve values of resolved futures and add them to the archive table.
+    #'
+    #' @param i (`integer()`)\cr
+    #'   Row ids of archive table for which values are retrieved. If `NULL`
+    #'   (default), retrieve values from all futures which are resolved.
+    #'
+    #' @return [`data.table::data.table()`] (invisibly).
+    resolve_promise = function(i = NULL) {
+      archive = self$archive
+      assert_subset(i, seq(nrow(archive$data)))
+
+      # mark resolved points
+      fun_resolved = function(p) if (future::resolved(p)) "resolved" else "in_progress"
+      archive$data["in_progress", "status" := map_chr(get("promise"), fun_resolved), , on = "status"]
+
+      # get values and set status
+      fun_value = function(promise, resolve_id) pmap_dtr(list(promise, resolve_id), function(p, id) future::value(p)[id])
+      ydt = archive$data["resolved", fun_value(get("promise"), get("resolve_id")), on = "status", nomatch = NULL]
+      id = archive$data["resolved", on = "status", which = TRUE, nomatch = NULL]
+      if (length(id)) {
+        set(archive$data, i = id, j = names(ydt), value = ydt)
+        set(archive$data, i = id, j = "status", value = "evaluated")
+      }
+
+      invisible(ydt)
+    },
+
+    #' @description
     #' The [Optimizer] object writes the best found point
     #' and estimated performance value here. For internal use.
     #'

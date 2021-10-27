@@ -60,6 +60,7 @@ Optimal outcome.}
 \item \href{#method-print}{\code{OptimInstance$print()}}
 \item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
 \item \href{#method-eval_proposed}{\code{OptimInstance$eval_proposed()}}
+\item \href{#method-resolve_promise}{\code{OptimInstance$resolve_promise()}}
 \item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
 \item \href{#method-objective_function}{\code{OptimInstance$objective_function()}}
 \item \href{#method-clear}{\code{OptimInstance$clear()}}
@@ -190,6 +191,28 @@ If \code{async = TRUE}, \code{data.table::data.table()} with columns
 \code{"promise"}, \code{"status"} and \code{"resolve_id"}, otherwise outcome. If \code{i} is
 not specified, all points with status \code{"in_progress"} (async) or
 \code{"evaluated"} (sync) are returned.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-resolve_promise"></a>}}
+\if{latex}{\out{\hypertarget{method-resolve_promise}{}}}
+\subsection{Method \code{resolve_promise()}}{
+Retrieve values of resolved futures and add them to the archive table.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$resolve_promise(i = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{i}}{(\code{integer()})\cr
+Row ids of archive table for which values are retrieved. If \code{NULL}
+(default), retrieve values from all futures which are resolved.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{\link[data.table:data.table]{data.table::data.table()}} (invisibly).
 }
 }
 \if{html}{\out{<hr>}}

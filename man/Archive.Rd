@@ -63,7 +63,6 @@ Number of points with status \code{"in_progress"}.}
 \itemize{
 \item \href{#method-new}{\code{Archive$new()}}
 \item \href{#method-add_evals}{\code{Archive$add_evals()}}
-\item \href{#method-resolve_promise}{\code{Archive$resolve_promise()}}
 \item \href{#method-best}{\code{Archive$best()}}
 \item \href{#method-nds_selection}{\code{Archive$nds_selection()}}
 \item \href{#method-format}{\code{Archive$format()}}
@@ -133,26 +132,7 @@ Transformed point(s) in the \emph{domain space}.}
 Optimal outcome.}
 
 \item{\code{status}}{(\code{character()})\cr
-\code{"proposed"} or \code{"evaluated"}.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-resolve_promise"></a>}}
-\if{latex}{\out{\hypertarget{method-resolve_promise}{}}}
-\subsection{Method \code{resolve_promise()}}{
-Retrieve values of resolved futures and add them to the archive table.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$resolve_promise(i = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{i}}{(\code{integer()})\cr
-Row ids of archive table for which values are retrieved. If \code{NULL}
-(default), retrieve values from all futures which are resolved.}
+Status (\code{"proposed"} | \code{"evaluated"}) of points in \code{xdt}.}
 }
 \if{html}{\out{</div>}}
 }
