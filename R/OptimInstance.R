@@ -217,7 +217,7 @@ OptimInstance = R6Class("OptimInstance",
             list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
           }
         }
-        # columns returned by worker
+        # columns returned by fun
         cols_y = c("promise", "status", "resolve_id")
 
       # sequential evaluation
@@ -227,7 +227,7 @@ OptimInstance = R6Class("OptimInstance",
         } else {
           function(xdt) self$objective$eval_dt(xdt)
         }
-        # columns returned by worker
+        # columns returned by fun
         cols_y = self$archive$cols_y
       }
 
