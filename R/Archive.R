@@ -163,8 +163,11 @@ Archive = R6Class("Archive",
   active = list(
 
     #' @field n_evals (`integer(1)`)\cr
-    #' Number of evaluations stored in the archive.
-    n_evals = function() nrow(self$data),
+    #' Number of finished evaluations stored in the archive.
+    n_evals = function() {
+      if (!nrow(self$data)) return(0L)
+      nrow(self$data["evaluated", on = "status", nomatch = NULL])
+    },
 
     #' @field n_batch (`integer(1)`)\cr
     #' Number of batches stored in the archive.
@@ -190,7 +193,7 @@ Archive = R6Class("Archive",
       if (nrow(self$data) == 0) {
         return(0)
       }
-      nrow(self$data["in_progress", on = c("status")])
+      nrow(self$data["in_progress", on = "status"])
     }
   ),
 

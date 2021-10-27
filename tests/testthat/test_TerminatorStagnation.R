@@ -18,3 +18,10 @@ test_that("TerminatorStagnation works with empty archive", {
   archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })
+
+test_that("TerminatorStagnation works with only unevaluated points", {
+  terminator = TerminatorStagnation$new()
+  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
+  archive$add_evals(xdt = data.table(x = 1), xss_trafoed = NULL, ydt = data.table(), status = "proposed")
+  expect_false(terminator$is_terminated(archive))
+})

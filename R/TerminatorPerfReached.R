@@ -44,14 +44,11 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     is_terminated = function(archive) {
       assert_r6(archive, "Archive")
       level = self$param_set$values$level
-      ycol = archive$cols_y
       minimize = "minimize" %in% archive$codomain$tags
 
-      if (archive$n_evals == 0L) {
-        return(FALSE)
-      }
+      if (archive$n_evals == 0L)  return(FALSE)
 
-      ydata = archive$data[[ycol]]
+      ydata = archive$data["evaluated", archive$cols_y, on = "status", with = FALSE][[1]]
       if (minimize) {
         any(ydata <= level)
       } else {

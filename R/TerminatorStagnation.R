@@ -49,7 +49,6 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
       assert_r6(archive, "Archive")
       pv = self$param_set$values
       iters = pv$iters
-      ycol = archive$cols_y
       minimize = "minimize" %in% archive$codomain$tags
 
       # we cannot terminate until we have enough observations
@@ -57,7 +56,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
         return(FALSE)
       }
 
-      ydata = archive$data[, ycol, , drop = FALSE, with = FALSE]
+      ydata = archive$data["evaluated", archive$cols_y, on = "status", with = FALSE][[1]]
       perf_before = head(ydata, -iters)
       perf_window = tail(ydata, iters)
       if (minimize) {
