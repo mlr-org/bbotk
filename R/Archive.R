@@ -77,11 +77,9 @@ Archive = R6Class("Archive",
       }
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
-      batch_nr = self$data$batch_nr
-      if (self$store_x_domain) {
-        set(xydt, j = "x_domain", value = list(xss_trafoed))
-      }
+      if (self$store_x_domain && !is.null(xss_trafoed)) set(xydt, j = "x_domain", value = list(xss_trafoed))
       set(xydt, j = "timestamp", value = Sys.time())
+      batch_nr = self$data$batch_nr
       set(xydt, j = "batch_nr", value = if (length(batch_nr)) max(batch_nr) + 1L else 1L)
       self$data = rbindlist(list(self$data, xydt), fill = TRUE, use.names = TRUE)
     },
@@ -99,9 +97,9 @@ Archive = R6Class("Archive",
     #'
     #' @return [data.table::data.table()]
     best = function(batch = NULL, n_select = 1) {
-      if (self$n_batch == 0L) stop("No results stored in archive")
+      if (self$n_batch == 0L) return(data.table())
       if (is.null(batch)) batch = seq_len(self$n_batch)
-      assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
+      assert_subset(batch, seq_len(self$n_batch))
 
       tab = self$data[get("batch_nr") %in% batch, ]
       assert_int(n_select, lower = 1L, upper = nrow(tab))

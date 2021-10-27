@@ -28,7 +28,6 @@ test_that("Archive", {
 
 test_that("Archive best works", {
   a = Archive$new(PS_2D, FUN_2D_CODOMAIN)
-  expect_error(a$best(), "No results stored in archive")
   xdt = data.table(x1 = c(0, 0.5), x2 = c(1, 1))
   xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
   ydt = data.table(y = c(1, 0.25))

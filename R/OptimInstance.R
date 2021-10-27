@@ -44,39 +44,42 @@ OptimInstance = R6Class("OptimInstance",
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator,
-      keep_evals = "all", check_values = TRUE) {
-
-      assert_choice(keep_evals, c("all", "best"))
+    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE) {
       self$objective = assert_r6(objective, "Objective")
+      self$terminator = assert_terminator(terminator, self)
+      assert_choice(keep_evals, c("all", "best"))
+      assert_flag(check_values)
 
+      # set search space
       domain_search_space = self$objective$domain$search_space()
       self$search_space = if (is.null(search_space) && domain_search_space$length == 0) {
+        # use whole domain as search space
         self$objective$domain
       } else if (is.null(search_space) && domain_search_space$length > 0) {
+        # create search space from tune token in domain
         domain_search_space
       } else if (!is.null(search_space) && domain_search_space$length == 0) {
+        # use supplied search space
         assert_param_set(search_space)
       } else {
         stop("If the domain contains TuneTokens, you cannot supply a search_space.")
       }
-      self$terminator = assert_terminator(terminator, self)
 
-      assert_flag(check_values)
+      # if search space has no transformation function and dependencies, and the objective operates on a data table
+      # use shortcut to skip conversion between data table and list
+      private$.shortcut = !self$search_space$has_trafo && !self$search_space$has_deps && inherits(self$objective, "ObjectiveRFunDt")
 
-      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
-
+      # use minimal archive if only best points are needed
       self$archive = if (keep_evals == "all") {
-        Archive$new(search_space = self$search_space,
-          codomain = objective$codomain, check_values = check_values,
-          store_x_domain = !is_rfundt || self$search_space$has_trafo)
+        Archive$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values,
+          store_x_domain = !private$.shortcut)
       } else if (keep_evals == "best") {
-        ArchiveBest$new(search_space = self$search_space,
-          codomain = objective$codomain, check_values = check_values,
-          store_x_domain = !is_rfundt || self$search_space$has_trafo)
+        ArchiveBest$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values,
+          store_x_domain = !private$.shortcut)
         # only not store xss if we have RFunDT and not trafo
       }
 
+      # disable objective function if search space is not all numeric
       if (!self$search_space$all_numeric) {
         private$.objective_function = objective_error
       } else {
@@ -134,19 +137,13 @@ OptimInstance = R6Class("OptimInstance",
 
       lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
 
-      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
-      # calculate the x as (trafoed) domain only if needed
-      if (self$search_space$has_trafo || self$search_space$has_deps || self$archive$store_x_domain || !is_rfundt) {
-        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
-      } else {
-        xss_trafoed = NULL
-      }
+      xss_trafoed = if (private$.shortcut) NULL else transform_xdt_to_xss(xdt, self$search_space)
 
       # eval if search space is empty
       if (nrow(xdt) == 0) {
         ydt = self$objective$eval_many(list(list()))
         # if no trafos, no deps and objective evals dt directly, we go a shortcut
-      } else if (is_rfundt && !self$search_space$has_trafo && !self$search_space$has_deps) {
+      } else if (private$.shortcut) {
         ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
       } else {
         ydt = self$objective$eval_many(xss_trafoed)
@@ -232,8 +229,8 @@ OptimInstance = R6Class("OptimInstance",
 
   private = list(
     .result = NULL,
-
-    .objective_function = NULL
+    .objective_function = NULL,
+    .shortcut = FALSE
   )
 )
 
