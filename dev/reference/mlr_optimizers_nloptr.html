@@ -213,7 +213,7 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Creates a new instance of this <a href='https://r6.r-lib.org/reference/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Creates a new instance of this <a href='https://rdrr.io/pkg/R6/man/R6Class.html'>R6</a> class.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>OptimizerNLoptr</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
@@ -266,34 +266,20 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
   <span class='co'># Allows access of data.table of full path of all evaluations</span>
   <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;                x            y           timestamp batch_nr    status
-#&gt;  1: -0.494359142 2.443910e-01 2021-10-27 17:53:01        1 evaluated
-#&gt;  2: -0.494359142 2.443910e-01 2021-10-27 17:53:01        2 evaluated
-#&gt;  3: -0.494359142 2.443910e-01 2021-10-27 17:53:01        3 evaluated
-#&gt;  4:  0.005640858 3.181928e-05 2021-10-27 17:53:01        4 evaluated
-#&gt;  5: -0.994359142 9.887501e-01 2021-10-27 17:53:01        5 evaluated
-#&gt;  6:  0.055640858 3.095905e-03 2021-10-27 17:53:01        6 evaluated
-#&gt;  7:  0.000000000 0.000000e+00 2021-10-27 17:53:01        7 evaluated
-#&gt;  8: -0.005000000 2.500000e-05 2021-10-27 17:53:01        8 evaluated
-#&gt;  9:  0.000500000 2.500000e-07 2021-10-27 17:53:01        9 evaluated
-#&gt; 10: -0.000500000 2.500000e-07 2021-10-27 17:53:01       10 evaluated
-#&gt; 11: -0.000050000 2.500000e-09 2021-10-27 17:53:01       11 evaluated
-#&gt; 12:  0.000050000 2.500000e-09 2021-10-27 17:53:01       12 evaluated
-#&gt; 13:  0.000000000 0.000000e+00 2021-10-27 17:53:01       13 evaluated
-#&gt;       x_domain_x
-#&gt;  1: -0.494359142
-#&gt;  2: -0.494359142
-#&gt;  3: -0.494359142
-#&gt;  4:  0.005640858
-#&gt;  5: -0.994359142
-#&gt;  6:  0.055640858
-#&gt;  7:  0.000000000
-#&gt;  8: -0.005000000
-#&gt;  9:  0.000500000
-#&gt; 10: -0.000500000
-#&gt; 11: -0.000050000
-#&gt; 12:  0.000050000
-#&gt; 13:  0.000000000</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: nloptr</span></div><div class='output co'>#&gt;                x            y           timestamp batch_nr   x_domain_x
+#&gt;  1: -0.494359142 2.443910e-01 2021-10-28 04:11:34        1 -0.494359142
+#&gt;  2: -0.494359142 2.443910e-01 2021-10-28 04:11:34        2 -0.494359142
+#&gt;  3: -0.494359142 2.443910e-01 2021-10-28 04:11:34        3 -0.494359142
+#&gt;  4:  0.005640858 3.181928e-05 2021-10-28 04:11:34        4  0.005640858
+#&gt;  5: -0.994359142 9.887501e-01 2021-10-28 04:11:34        5 -0.994359142
+#&gt;  6:  0.055640858 3.095905e-03 2021-10-28 04:11:34        6  0.055640858
+#&gt;  7:  0.000000000 0.000000e+00 2021-10-28 04:11:34        7  0.000000000
+#&gt;  8: -0.005000000 2.500000e-05 2021-10-28 04:11:34        8 -0.005000000
+#&gt;  9:  0.000500000 2.500000e-07 2021-10-28 04:11:34        9  0.000500000
+#&gt; 10: -0.000500000 2.500000e-07 2021-10-28 04:11:34       10 -0.000500000
+#&gt; 11: -0.000050000 2.500000e-09 2021-10-28 04:11:34       11 -0.000050000
+#&gt; 12:  0.000050000 2.500000e-09 2021-10-28 04:11:34       12  0.000050000
+#&gt; 13:  0.000000000 0.000000e+00 2021-10-28 04:11:34       13  0.000000000</div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>
