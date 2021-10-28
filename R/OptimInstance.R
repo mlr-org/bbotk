@@ -208,13 +208,13 @@ OptimInstance = R6Class("OptimInstance",
           # eval each point in separate worker
           function(xss_trafoed, n) {
             promise = map(xss_trafoed[[1]], function(xs_trafoed) future::future(objective_async$eval_many(list(xs_trafoed)), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L)
           }
         } else if (!single_worker && dt_shortcut) {
           # eval each point in separate worker with dt shortcut
           function(xdt, n) {
             promise = map(seq(nrow(xdt)), function(n) future::future(objective_async$eval_dt(xdt[n]), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1)
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L)
           }
         }
         # columns returned by fun

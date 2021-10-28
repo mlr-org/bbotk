@@ -1,6 +1,6 @@
 # define objective function
 fun = function(xs) {
-  Sys.sleep(sample(10:20, 1))
+  #Sys.sleep(sample(10:20, 1))
   c(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
