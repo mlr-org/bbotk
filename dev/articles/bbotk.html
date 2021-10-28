@@ -246,48 +246,48 @@
 <p>You can also access the whole history of evaluated points.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span>
-<span class="co">#&gt;            x1        x2          y           timestamp batch_nr x_domain_x1</span>
-<span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 2021-10-28 04:11:39        1   -4.689827</span>
-<span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 2021-10-28 04:11:39        2   -5.930364</span>
-<span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 2021-10-28 04:11:39        3    7.170817</span>
-<span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 2021-10-28 04:11:39        4    2.045200</span>
-<span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 2021-10-28 04:11:39        5    2.045200</span>
-<span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 2021-10-28 04:11:39        6    2.045200</span>
-<span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 2021-10-28 04:11:39        7    2.045201</span>
-<span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 2021-10-28 04:11:39        8    2.045199</span>
-<span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 2021-10-28 04:11:39        9    2.045200</span>
-<span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 2021-10-28 04:11:39       10    2.045200</span>
-<span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 2021-10-28 04:11:39       11    1.954800</span>
-<span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 2021-10-28 04:11:39       12    1.954801</span>
-<span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 2021-10-28 04:11:39       13    1.954799</span>
-<span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 2021-10-28 04:11:39       14    1.954800</span>
-<span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 2021-10-28 04:11:39       15    1.954800</span>
-<span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 2021-10-28 04:11:39       16    2.000000</span>
-<span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 2021-10-28 04:11:39       17    2.000001</span>
-<span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 2021-10-28 04:11:39       18    1.999999</span>
-<span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 2021-10-28 04:11:39       19    2.000000</span>
-<span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 2021-10-28 04:11:39       20    2.000000</span>
-<span class="co">#&gt;     x_domain_x2</span>
-<span class="co">#&gt;  1:   -1.278761</span>
-<span class="co">#&gt;  2:   -4.400474</span>
-<span class="co">#&gt;  3:   -1.519948</span>
-<span class="co">#&gt;  4:   -1.519948</span>
-<span class="co">#&gt;  5:   -2.064742</span>
-<span class="co">#&gt;  6:   -2.064742</span>
-<span class="co">#&gt;  7:   -2.064742</span>
-<span class="co">#&gt;  8:   -2.064742</span>
-<span class="co">#&gt;  9:   -2.064741</span>
-<span class="co">#&gt; 10:   -2.064743</span>
-<span class="co">#&gt; 11:   -3.935258</span>
-<span class="co">#&gt; 12:   -3.935258</span>
-<span class="co">#&gt; 13:   -3.935258</span>
-<span class="co">#&gt; 14:   -3.935257</span>
-<span class="co">#&gt; 15:   -3.935259</span>
-<span class="co">#&gt; 16:   -3.000000</span>
-<span class="co">#&gt; 17:   -3.000000</span>
-<span class="co">#&gt; 18:   -3.000000</span>
-<span class="co">#&gt; 19:   -2.999999</span>
-<span class="co">#&gt; 20:   -3.000001</span></code></pre></div>
+<span class="co">#&gt;            x1        x2          y           timestamp batch_nr    status</span>
+<span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 2021-10-28 14:49:41        1 evaluated</span>
+<span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 2021-10-28 14:49:41        2 evaluated</span>
+<span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 2021-10-28 14:49:41        3 evaluated</span>
+<span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 2021-10-28 14:49:41        4 evaluated</span>
+<span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 2021-10-28 14:49:41        5 evaluated</span>
+<span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 2021-10-28 14:49:41        6 evaluated</span>
+<span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 2021-10-28 14:49:41        7 evaluated</span>
+<span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 2021-10-28 14:49:41        8 evaluated</span>
+<span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 2021-10-28 14:49:41        9 evaluated</span>
+<span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 2021-10-28 14:49:41       10 evaluated</span>
+<span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 2021-10-28 14:49:41       11 evaluated</span>
+<span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 2021-10-28 14:49:41       12 evaluated</span>
+<span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 2021-10-28 14:49:41       13 evaluated</span>
+<span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 2021-10-28 14:49:41       14 evaluated</span>
+<span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 2021-10-28 14:49:41       15 evaluated</span>
+<span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 2021-10-28 14:49:41       16 evaluated</span>
+<span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 2021-10-28 14:49:41       17 evaluated</span>
+<span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 2021-10-28 14:49:41       18 evaluated</span>
+<span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 2021-10-28 14:49:41       19 evaluated</span>
+<span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 2021-10-28 14:49:41       20 evaluated</span>
+<span class="co">#&gt;     x_domain_x1 x_domain_x2</span>
+<span class="co">#&gt;  1:   -4.689827   -1.278761</span>
+<span class="co">#&gt;  2:   -5.930364   -4.400474</span>
+<span class="co">#&gt;  3:    7.170817   -1.519948</span>
+<span class="co">#&gt;  4:    2.045200   -1.519948</span>
+<span class="co">#&gt;  5:    2.045200   -2.064742</span>
+<span class="co">#&gt;  6:    2.045200   -2.064742</span>
+<span class="co">#&gt;  7:    2.045201   -2.064742</span>
+<span class="co">#&gt;  8:    2.045199   -2.064742</span>
+<span class="co">#&gt;  9:    2.045200   -2.064741</span>
+<span class="co">#&gt; 10:    2.045200   -2.064743</span>
+<span class="co">#&gt; 11:    1.954800   -3.935258</span>
+<span class="co">#&gt; 12:    1.954801   -3.935258</span>
+<span class="co">#&gt; 13:    1.954799   -3.935258</span>
+<span class="co">#&gt; 14:    1.954800   -3.935257</span>
+<span class="co">#&gt; 15:    1.954800   -3.935259</span>
+<span class="co">#&gt; 16:    2.000000   -3.000000</span>
+<span class="co">#&gt; 17:    2.000001   -3.000000</span>
+<span class="co">#&gt; 18:    1.999999   -3.000000</span>
+<span class="co">#&gt; 19:    2.000000   -2.999999</span>
+<span class="co">#&gt; 20:    2.000000   -3.000001</span></code></pre></div>
 <div id="search-space-transformations" class="section level3">
 <h3 class="hasAnchor">
 <a href="#search-space-transformations" class="anchor"></a>Search Space Transformations</h3>
@@ -368,31 +368,31 @@
 <span class="va">inst</span><span class="op">$</span><span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span>
 <span class="va">xvals</span> <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html">data.table</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span>, w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span><span class="op">)</span>
 <span class="va">inst</span><span class="op">$</span><span class="fu">eval_batch</span><span class="op">(</span>xdt <span class="op">=</span> <span class="va">xvals</span><span class="op">)</span>
-<span class="co">#&gt; INFO  [04:11:40.633] [bbotk] Evaluating 2 configuration(s) </span>
-<span class="co">#&gt; INFO  [04:11:40.675] [bbotk] Result of batch 31: </span>
-<span class="co">#&gt; INFO  [04:11:40.684] [bbotk]       h      w           y </span>
-<span class="co">#&gt; INFO  [04:11:40.684] [bbotk]  0.6666 0.6666 -0.03703704 </span>
-<span class="co">#&gt; INFO  [04:11:40.684] [bbotk]  0.6667 0.6667 -0.03703704</span>
+<span class="co">#&gt; INFO  [14:49:42.641] [bbotk] Evaluating 2 configuration(s) </span>
+<span class="co">#&gt; INFO  [14:49:42.684] [bbotk] Result of batch 31: </span>
+<span class="co">#&gt; INFO  [14:49:42.694] [bbotk]       h      w           y </span>
+<span class="co">#&gt; INFO  [14:49:42.694] [bbotk]  0.6666 0.6666 -0.03703704 </span>
+<span class="co">#&gt; INFO  [14:49:42.694] [bbotk]  0.6667 0.6667 -0.03703704</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;          x1        x2         y           timestamp batch_nr x_domain_x1</span>
-<span class="co">#&gt; 1: 1.954800 -3.935259  9.123248 2021-10-28 04:11:39       15    1.954800</span>
-<span class="co">#&gt; 2: 2.000000 -3.000000 10.000000 2021-10-28 04:11:39       16    2.000000</span>
-<span class="co">#&gt; 3: 2.000001 -3.000000 10.000000 2021-10-28 04:11:39       17    2.000001</span>
-<span class="co">#&gt; 4: 1.999999 -3.000000 10.000000 2021-10-28 04:11:39       18    1.999999</span>
-<span class="co">#&gt; 5: 2.000000 -2.999999 10.000000 2021-10-28 04:11:39       19    2.000000</span>
-<span class="co">#&gt; 6: 2.000000 -3.000001 10.000000 2021-10-28 04:11:39       20    2.000000</span>
-<span class="co">#&gt;    x_domain_x2</span>
-<span class="co">#&gt; 1:   -3.935259</span>
-<span class="co">#&gt; 2:   -3.000000</span>
-<span class="co">#&gt; 3:   -3.000000</span>
-<span class="co">#&gt; 4:   -3.000000</span>
-<span class="co">#&gt; 5:   -2.999999</span>
-<span class="co">#&gt; 6:   -3.000001</span></code></pre></div>
+<span class="co">#&gt;          x1        x2         y           timestamp batch_nr    status</span>
+<span class="co">#&gt; 1: 1.954800 -3.935259  9.123248 2021-10-28 14:49:41       15 evaluated</span>
+<span class="co">#&gt; 2: 2.000000 -3.000000 10.000000 2021-10-28 14:49:41       16 evaluated</span>
+<span class="co">#&gt; 3: 2.000001 -3.000000 10.000000 2021-10-28 14:49:41       17 evaluated</span>
+<span class="co">#&gt; 4: 1.999999 -3.000000 10.000000 2021-10-28 14:49:41       18 evaluated</span>
+<span class="co">#&gt; 5: 2.000000 -2.999999 10.000000 2021-10-28 14:49:41       19 evaluated</span>
+<span class="co">#&gt; 6: 2.000000 -3.000001 10.000000 2021-10-28 14:49:41       20 evaluated</span>
+<span class="co">#&gt;    x_domain_x1 x_domain_x2</span>
+<span class="co">#&gt; 1:    1.954800   -3.935259</span>
+<span class="co">#&gt; 2:    2.000000   -3.000000</span>
+<span class="co">#&gt; 3:    2.000001   -3.000000</span>
+<span class="co">#&gt; 4:    1.999999   -3.000000</span>
+<span class="co">#&gt; 5:    2.000000   -2.999999</span>
+<span class="co">#&gt; 6:    2.000000   -3.000001</span></code></pre></div>
 <p>However, this does not update the result. You could set the result by calling <code>inst$assign_result()</code> but this should be handled by the optimizer. Another way to get the best point is the following:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">inst</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;         h      w           y  x_domain           timestamp batch_nr</span>
-<span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2021-10-28 04:11:40       31</span></code></pre></div>
+<span class="co">#&gt;         h      w           y  x_domain           timestamp batch_nr    status</span>
+<span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2021-10-28 14:49:42       31 evaluated</span></code></pre></div>
 <p>Note, that this method just looks for the best outcome and returns the according row from the archive. For stochastic optimization problems this is overly optimistic and leads to biased results. For this reason the optimizer can use advanced methods to determine the result and set it itself.</p>
 </div>
 </div>
