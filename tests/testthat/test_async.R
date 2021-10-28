@@ -7,7 +7,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 1D function
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 4)
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
@@ -16,7 +16,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 1D function
     permutation.of = c("x", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, seq_len(10))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -35,7 +35,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 2D function
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 5)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
@@ -44,7 +44,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 2D function
     permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, seq_len(10))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -65,7 +65,7 @@ test_that("asynchronous evaluation on single worker of a multi-crit 2D function 
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 5)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
@@ -74,7 +74,7 @@ test_that("asynchronous evaluation on single worker of a multi-crit 2D function 
     permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, seq_len(10))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -96,7 +96,7 @@ test_that("mixed asynchronous and sequential evaluation works", {
 
   expect_data_table(archive$data, nrows = 20, ncols = 7)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "y", "x_domain", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, c(rep("evaluated", 10), rep("proposed", 10)))
+  expect_equal(archive$data$status, ordered(c(rep("evaluated", 10), rep("proposed", 10)), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
@@ -105,7 +105,7 @@ test_that("mixed asynchronous and sequential evaluation works", {
     permutation.of = c("x1", "x2", "y", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, c(rep(NA, 10), seq_len(10)))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
-  expect_equal(archive$data$status, c(rep("evaluated", 10), rep("in_progress", 10)))
+  expect_equal(archive$data$status, ordered(c(rep("evaluated", 10), rep("in_progress", 10)), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -144,7 +144,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 1D funct
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 4)
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
@@ -153,7 +153,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 1D funct
     permutation.of = c("x", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, rep(1, 10))
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -172,7 +172,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 2D funct
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 5)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
@@ -181,7 +181,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 2D funct
     permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, rep(1, 10))
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -200,7 +200,7 @@ test_that("asynchronous evaluation on separate workers of a multi-crit 2D functi
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 5)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
@@ -209,7 +209,7 @@ test_that("asynchronous evaluation on separate workers of a multi-crit 2D functi
     permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, rep(1, 10))
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -229,7 +229,7 @@ test_that("asynchronous evaluation of selected points works", {
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 4)
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$eval_proposed(i = seq(5), async = TRUE, single_worker = TRUE)
   expect_error(instance$eval_proposed(i = 20:30, async = TRUE, single_worker = TRUE),
@@ -240,7 +240,7 @@ test_that("asynchronous evaluation of selected points works", {
     permutation.of = c("x", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, c(seq_len(5), rep(NA, 5)))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[5]])
-  expect_equal(archive$data$status, c(rep("in_progress", 5), rep("proposed", 5)))
+  expect_equal(archive$data$status, ordered(c(rep("in_progress", 5), rep("proposed", 5)), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise(i = seq(5))
 
@@ -248,7 +248,7 @@ test_that("asynchronous evaluation of selected points works", {
   expect_names(colnames(archive$data),
     permutation.of = c("x", "timestamp", "batch_nr", "status", "x_domain", "promise", "resolve_id", "y"))
   expect_numeric(archive$data$y)
-  expect_equal(archive$data$status, c(rep("evaluated", 5), rep("proposed", 5)))
+  expect_equal(archive$data$status, ordered(c(rep("evaluated", 5), rep("proposed", 5)), c("proposed", "in_progress", "resolved", "evaluated")))
 })
 
 test_that("asynchronous evaluation on single worker of a single-crit 1D function with dt shortcut works", {
@@ -264,7 +264,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 1D function
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 4)
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
@@ -273,7 +273,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 1D function
     permutation.of = c("x", "timestamp", "batch_nr", "status", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, seq_len(10))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -296,7 +296,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 2D function
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 5)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
@@ -305,7 +305,7 @@ test_that("asynchronous evaluation on single worker of a single-crit 2D function
     permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, seq_len(10))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -328,7 +328,7 @@ test_that("asynchronous evaluation on single worker of a multi-crit 2D function 
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 5)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = TRUE), nrows = 10)
 
@@ -337,7 +337,7 @@ test_that("asynchronous evaluation on single worker of a multi-crit 2D function 
     permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, seq_len(10))
   expect_identical(archive$data$promise[[1]], archive$data$promise[[10]])
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -362,7 +362,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 1D funct
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 4)
   expect_names(colnames(archive$data), permutation.of = c("x", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
@@ -371,7 +371,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 1D funct
     permutation.of = c("x", "timestamp", "batch_nr", "status", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, rep(1, 10))
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -394,7 +394,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 2D funct
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 5)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
@@ -403,7 +403,7 @@ test_that("asynchronous evaluation on separate workers of a single-crit 2D funct
     permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, rep(1, 10))
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
@@ -426,7 +426,7 @@ test_that("asynchronous evaluation on separate workers of a multi-crit 2D functi
 
   expect_data_table(archive$data, any.missing = FALSE, nrows = 10, ncols = 5)
   expect_names(colnames(archive$data), permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status"))
-  expect_equal(archive$data$status, rep("proposed", 10))
+  expect_equal(archive$data$status, ordered(rep("proposed", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   expect_data_table(instance$eval_proposed(async = TRUE, single_worker = FALSE), nrows = 10)
 
@@ -435,7 +435,7 @@ test_that("asynchronous evaluation on separate workers of a multi-crit 2D functi
     permutation.of = c("x1", "x2", "timestamp", "batch_nr", "status", "promise", "resolve_id"))
   expect_equal(archive$data$resolve_id, rep(1, 10))
   expect_true(!identical(archive$data$promise[[1]], archive$data$promise[[10]]))
-  expect_equal(archive$data$status, rep("in_progress", 10))
+  expect_equal(archive$data$status, ordered(rep("in_progress", 10), c("proposed", "in_progress", "resolved", "evaluated")))
 
   instance$resolve_promise()
 
