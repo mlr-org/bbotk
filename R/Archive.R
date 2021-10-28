@@ -65,7 +65,7 @@ Archive = R6Class("Archive",
       assert_data_table(xdt)
       assert_data_table(ydt)
       assert_list(xss_trafoed, null.ok = TRUE)
-      assert_choice(status, c("proposed", "evaluated"))
+      status = ordered(assert_choice(status, c("proposed", "evaluated")), c("proposed", "in_progress", "resolved", "evaluated"))
       assert_names(names(xdt), must.include = self$search_space$ids())
       if (status == "evaluated") assert_names(names(ydt), must.include = self$codomain$ids())
       if (self$check_values) self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])
