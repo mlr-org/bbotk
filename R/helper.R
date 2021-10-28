@@ -76,6 +76,10 @@ optimize_default = function(inst, self, private) {
   }, terminated_error = function(cond) {
   })
   private$.assign_result(inst)
+
+  # null promise column
+  if (!is.null(inst$archive$data$promise)) inst$archive$data[, "promise" := NULL]
+
   lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
   lg$info("Result:")
   lg$info(capture.output(print(
