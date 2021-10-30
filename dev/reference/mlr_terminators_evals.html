@@ -178,9 +178,9 @@ sugar function <code><a href='trm.html'>trm()</a></code>:</p><pre><span class='v
     
 
 <dl>
-<dt><code>n_evals</code></dt><dd><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code><br />
+<dt><code>n_evals</code></dt><dd><p><code>integer(1)</code><br />
 See formula above. Default is 100.</p></dd>
-<dt><code>k</code></dt><dd><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code><br />
+<dt><code>k</code></dt><dd><p><code>integer(1)</code><br />
 See formula above. Default is 0.</p></dd>
 
 </dl>
@@ -236,7 +236,7 @@ otherwise.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#argu
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.</p>
+<p><code>logical(1)</code>.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -251,21 +251,25 @@ otherwise.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#argu
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>TerminatorEvals</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;TerminatorEvals&gt;
-#&gt; * Parameters: n_evals=100, k=0</div><div class='input'>
-<span class='co'># 5 evaluations in total</span>
-<span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;TerminatorEvals&gt;
-#&gt; * Parameters: n_evals=5, k=0</div><div class='input'>
-<span class='co'># 3 * [dimension of search space] evaluations in total</span>
-<span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>0</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;TerminatorEvals&gt;
-#&gt; * Parameters: n_evals=0, k=3</div><div class='input'>
-<span class='co'># (3 * [dimension of search space] + 1) evaluations in total</span>
-<span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>1</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;TerminatorEvals&gt;
-#&gt; * Parameters: n_evals=1, k=3</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>TerminatorEvals</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;TerminatorEvals&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Parameters: n_evals=100, k=0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># 5 evaluations in total</span></span>
+<span class='r-in'><span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;TerminatorEvals&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Parameters: n_evals=5, k=0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># 3 * [dimension of search space] evaluations in total</span></span>
+<span class='r-in'><span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>0</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;TerminatorEvals&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Parameters: n_evals=0, k=3</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># (3 * [dimension of search space] + 1) evaluations in total</span></span>
+<span class='r-in'><span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>1</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;TerminatorEvals&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Parameters: n_evals=1, k=3</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -198,13 +198,13 @@ For irace, the function needs an additional <code>instances</code> parameter.</p
     
 
 <p>The <a href='Archive.html'>Archive</a> holds the following additional columns:</p><ul>
-<li><p><code>"race"</code> (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<li><p><code>"race"</code> (<code>integer(1)</code>)<br />
 Race iteration.</p></li>
-<li><p><code>"step"</code> (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<li><p><code>"step"</code> (<code>integer(1)</code>)<br />
 Step number of race.</p></li>
-<li><p><code>"instance"</code> (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<li><p><code>"instance"</code> (<code>integer(1)</code>)<br />
 Identifies instances across races and steps.</p></li>
-<li><p><code>"configuration"</code> (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<li><p><code>"configuration"</code> (<code>integer(1)</code>)<br />
 Identifies configurations across races and steps.</p></li>
 </ul>
 
@@ -231,7 +231,7 @@ on all used instances.</p>
 <p><code>$optimize()</code> supports progress bars via the package <a href='https://CRAN.R-project.org/package=progressr'><span class="pkg">progressr</span></a>
 combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the function in
 <code><a href='https://progressr.futureverse.org/reference/with_progress.html'>progressr::with_progress()</a></code> to enable them. We recommend to use package
-<a href='https://CRAN.R-project.org/package=progress'><span class="pkg">progress</span></a> as backend; enable with <code><a href='https://progressr.futureverse.org/reference/handlers.html'>progressr::handlers("progress")</a></code>.</p>
+<a href='https://CRAN.R-project.org/package=progress'><span class="pkg">progress</span></a> as backend; enable with <code>progressr::handlers("progress")</code>.</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
     <p><code><a href='Optimizer.html'>bbotk::Optimizer</a></code> -&gt; <code>OptimizerIrace</code></p>
@@ -271,293 +271,297 @@ combined with a <a href='Terminator.html'>Terminator</a>. Simply wrap the functi
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-datatable.com'>data.table</a></span><span class='op'>)</span>
-
-<span class='va'>search_space</span> <span class='op'>=</span> <span class='va'>domain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>
-  x1 <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>10</span><span class='op'>)</span>,
-  x2 <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>15</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># branin function with noise</span>
-<span class='co'># the noise generates different instances of the branin function</span>
-<span class='co'># the noise values are passed via the `instances` parameter</span>
-<span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xdt</span>, <span class='va'>instances</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>a</span> <span class='op'>=</span> <span class='fl'>1</span>
-  <span class='va'>b</span> <span class='op'>=</span> <span class='fl'>5.1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>4</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>pi</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='va'>c</span> <span class='op'>=</span> <span class='fl'>5</span> <span class='op'>/</span> <span class='va'>pi</span>
-  <span class='va'>r</span> <span class='op'>=</span> <span class='fl'>6</span>
-  <span class='va'>s</span> <span class='op'>=</span> <span class='fl'>10</span>
-  <span class='va'>t</span> <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>8</span> <span class='op'>*</span> <span class='va'>pi</span><span class='op'>)</span>
-
-  <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='op'>(</span>
-    <span class='va'>a</span> <span class='op'>*</span> <span class='op'>(</span><span class='op'>(</span><span class='va'>xdt</span><span class='op'>[[</span><span class='st'>"x2"</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span>
-      <span class='va'>b</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>xdt</span><span class='op'>[[</span><span class='st'>"x1"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>^</span><span class='fl'>2L</span><span class='op'>)</span> <span class='op'>+</span>
-      <span class='va'>c</span> <span class='op'>*</span> <span class='va'>xdt</span><span class='op'>[[</span><span class='st'>"x1"</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='va'>r</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
-      <span class='op'>(</span><span class='op'>(</span><span class='va'>s</span> <span class='op'>*</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>t</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>xdt</span><span class='op'>[[</span><span class='st'>"x1"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-      <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>instances</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFunDt.html'>ObjectiveRFunDt</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>fun <span class='op'>=</span> <span class='va'>fun</span>, domain <span class='op'>=</span> <span class='va'>domain</span>, codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span>
-
-<span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
-  objective <span class='op'>=</span> <span class='va'>objective</span>,
-  search_space <span class='op'>=</span> <span class='va'>search_space</span>,
-  terminator <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># create instances of branin function</span>
-<span class='va'>instances</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, mean <span class='op'>=</span> <span class='fl'>0</span>, sd <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
-
-<span class='co'># load optimizer irace and set branin instances</span>
-<span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"irace"</span>, instances <span class='op'>=</span> <span class='va'>instances</span><span class='op'>)</span>
-
-<span class='co'># modifies the instance by reference</span>
-<span class='va'>optimizer</span><span class='op'>$</span><span class='fu'>optimize</span><span class='op'>(</span><span class='va'>instance</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; # 2021-10-29 04:11:51 UTC: Initialization
-#&gt; # Elitist race
-#&gt; # Elitist new instances: 1
-#&gt; # Elitist limit: 2
-#&gt; # nbIterations: 3
-#&gt; # minNbSurvival: 3
-#&gt; # nbParameters: 2
-#&gt; # seed: 1861043051
-#&gt; # confidence level: 0.95
-#&gt; # budget: 1000
-#&gt; # mu: 5
-#&gt; # deterministic: FALSE
-#&gt; 
-#&gt; # 2021-10-29 04:11:51 UTC: Iteration 1 of 3
-#&gt; # experimentsUsedSoFar: 0
-#&gt; # remainingBudget: 1000
-#&gt; # currentBudget: 333
-#&gt; # nbConfigurations: 55
-#&gt; # Markers:
-#&gt;      x No test is performed.
-#&gt;      c Configurations are discarded only due to capping.
-#&gt;      - The test is performed and some configurations are discarded.
-#&gt;      = The test is performed but no configuration is discarded.
-#&gt;      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#&gt;      . All alive configurations are elite and nothing is discarded
-#&gt; 
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; |x|          1|         55|         25|   -9.417354508|         55|00:00:00|   NA|  NA|    NA|
-#&gt; |x|          2|         55|         25|   -9.374418161|        110|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          3|         55|         25|   -9.341785995|        165|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          4|         55|         25|   -9.342761030|        220|00:00:00|+1.00|1.00|0.0000|
-#&gt; |-|          5|          1|         25|   -9.344356526|        275|00:00:00|   NA|  NA|    NA|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; Best-so-far configuration:          25    mean value:    -9.344356526
-#&gt; Description of the best-so-far configuration:
-#&gt;    .ID.     x1     x2 .PARENT.
-#&gt; 25   25 2.9398 2.4074       NA
-#&gt; 
-#&gt; # 2021-10-29 04:11:51 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#&gt;        x1     x2
-#&gt; 25 2.9398 2.4074
-#&gt; # 2021-10-29 04:11:51 UTC: Iteration 2 of 3
-#&gt; # experimentsUsedSoFar: 275
-#&gt; # remainingBudget: 725
-#&gt; # currentBudget: 362
-#&gt; # nbConfigurations: 52
-#&gt; # Markers:
-#&gt;      x No test is performed.
-#&gt;      c Configurations are discarded only due to capping.
-#&gt;      - The test is performed and some configurations are discarded.
-#&gt;      = The test is performed but no configuration is discarded.
-#&gt;      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#&gt;      . All alive configurations are elite and nothing is discarded
-#&gt; 
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; |x|          6|         52|         25|   -9.389142769|         52|00:00:00|   NA|  NA|    NA|
-#&gt; |x|          5|         52|         25|   -9.369940638|        103|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          1|         52|         25|   -9.385745261|        154|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          2|         52|         25|   -9.372179399|        205|00:00:00|+1.00|1.00|0.0000|
-#&gt; |-|          3|          1|         25|   -9.353047852|        256|00:00:00|   NA|  NA|    NA|
-#&gt; |.|          4|          1|         25|   -9.351820900|        256|00:00:00|   NA|  NA|    NA|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; Best-so-far configuration:          25    mean value:    -9.351820900
-#&gt; Description of the best-so-far configuration:
-#&gt;    .ID.     x1     x2 .PARENT.
-#&gt; 25   25 2.9398 2.4074       NA
-#&gt; 
-#&gt; # 2021-10-29 04:11:52 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#&gt;        x1     x2
-#&gt; 25 2.9398 2.4074
-#&gt; # 2021-10-29 04:11:52 UTC: Iteration 3 of 3
-#&gt; # experimentsUsedSoFar: 531
-#&gt; # remainingBudget: 469
-#&gt; # currentBudget: 469
-#&gt; # nbConfigurations: 59
-#&gt; # Markers:
-#&gt;      x No test is performed.
-#&gt;      c Configurations are discarded only due to capping.
-#&gt;      - The test is performed and some configurations are discarded.
-#&gt;      = The test is performed but no configuration is discarded.
-#&gt;      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#&gt;      . All alive configurations are elite and nothing is discarded
-#&gt; 
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; |x|          7|         59|        157|   -9.409114006|         59|00:00:00|   NA|  NA|    NA|
-#&gt; |x|          4|         59|        157|   -9.474993771|        117|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          3|         59|        157|   -9.473898869|        175|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          1|         59|        157|   -9.508559629|        233|00:00:00|+1.00|1.00|0.0000|
-#&gt; |-|          2|          2|        157|   -9.512181546|        291|00:00:00|+1.00|1.00|0.0000|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; Best-so-far configuration:          25    mean value:    -9.332121715
-#&gt; Description of the best-so-far configuration:
-#&gt;    .ID.     x1     x2 .PARENT.
-#&gt; 25   25 2.9398 2.4074       NA
-#&gt; 
-#&gt; # 2021-10-29 04:11:53 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#&gt;         x1     x2
-#&gt; 25  2.9398 2.4074
-#&gt; 157 3.1322 2.2942
-#&gt; # 2021-10-29 04:11:53 UTC: Iteration 4 of 4
-#&gt; # experimentsUsedSoFar: 822
-#&gt; # remainingBudget: 178
-#&gt; # currentBudget: 178
-#&gt; # nbConfigurations: 21
-#&gt; # Markers:
-#&gt;      x No test is performed.
-#&gt;      c Configurations are discarded only due to capping.
-#&gt;      - The test is performed and some configurations are discarded.
-#&gt;      = The test is performed but no configuration is discarded.
-#&gt;      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#&gt;      . All alive configurations are elite and nothing is discarded
-#&gt; 
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; |x|          8|         21|        157|   -9.656374067|         21|00:00:00|   NA|  NA|    NA|
-#&gt; |x|          7|         21|        157|   -9.532744037|         40|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          2|         21|        157|   -9.530719096|         59|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          5|         21|        157|   -9.534520799|         79|00:00:00|+1.00|1.00|0.0000|
-#&gt; |-|          3|          2|        157|   -9.521958452|         98|00:00:00|+1.00|1.00|0.0000|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; Best-so-far configuration:          25    mean value:    -9.348254834
-#&gt; Description of the best-so-far configuration:
-#&gt;    .ID.     x1     x2 .PARENT.
-#&gt; 25   25 2.9398 2.4074       NA
-#&gt; 
-#&gt; # 2021-10-29 04:11:53 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#&gt;         x1     x2
-#&gt; 25  2.9398 2.4074
-#&gt; 157 3.1322 2.2942
-#&gt; # 2021-10-29 04:11:53 UTC: Iteration 5 of 5
-#&gt; # experimentsUsedSoFar: 920
-#&gt; # remainingBudget: 80
-#&gt; # currentBudget: 80
-#&gt; # nbConfigurations: 9
-#&gt; # Markers:
-#&gt;      x No test is performed.
-#&gt;      c Configurations are discarded only due to capping.
-#&gt;      - The test is performed and some configurations are discarded.
-#&gt;      = The test is performed but no configuration is discarded.
-#&gt;      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#&gt;      . All alive configurations are elite and nothing is discarded
-#&gt; 
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; |x|          9|          9|        187|   -9.549485794|          9|00:00:00|   NA|  NA|    NA|
-#&gt; |x|          4|          9|        187|   -9.545343881|         16|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          6|          9|        187|   -9.558448788|         24|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          5|          9|        187|   -9.555400176|         31|00:00:00|+1.00|1.00|0.0000|
-#&gt; |-|          1|          3|        187|   -9.566894209|         38|00:00:00|+1.00|1.00|0.0000|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; Best-so-far configuration:         157    mean value:    -9.544077248
-#&gt; Description of the best-so-far configuration:
-#&gt;     .ID.     x1     x2 .PARENT.
-#&gt; 157  157 3.1322 2.2942       25
-#&gt; 
-#&gt; # 2021-10-29 04:11:53 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#&gt;         x1     x2
-#&gt; 157 3.1322 2.2942
-#&gt; 25  2.9398 2.4074
-#&gt; 187 3.1363 2.2892
-#&gt; # 2021-10-29 04:11:53 UTC: Iteration 6 of 6
-#&gt; # experimentsUsedSoFar: 958
-#&gt; # remainingBudget: 42
-#&gt; # currentBudget: 42
-#&gt; # nbConfigurations: 6
-#&gt; # Markers:
-#&gt;      x No test is performed.
-#&gt;      c Configurations are discarded only due to capping.
-#&gt;      - The test is performed and some configurations are discarded.
-#&gt;      = The test is performed but no configuration is discarded.
-#&gt;      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#&gt;      . All alive configurations are elite and nothing is discarded
-#&gt; 
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; |x|         10|          6|        191|   -9.611075413|          6|00:00:00|   NA|  NA|    NA|
-#&gt; |x|          6|          6|        191|   -9.597949963|          9|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          3|          6|        191|   -9.556034445|         13|00:00:00|+1.00|1.00|0.0000|
-#&gt; |x|          4|          6|        191|   -9.552367804|         16|00:00:00|+1.00|1.00|0.0000|
-#&gt; |-|          2|          4|        191|   -9.547326955|         20|00:00:00|+1.00|1.00|0.0000|
-#&gt; |!|          7|          4|        191|   -9.524373854|         22|00:00:00|+1.00|1.00|0.0000|
-#&gt; |!|          8|          4|        191|   -9.543301648|         24|00:00:00|+1.00|1.00|0.0000|
-#&gt; |!|          1|          4|        191|   -9.552018473|         25|00:00:00|+1.00|1.00|0.0000|
-#&gt; |!|          5|          4|        191|   -9.551396449|         26|00:00:00|+1.00|1.00|0.0000|
-#&gt; |-|          9|          1|        191|   -9.551221974|         27|00:00:00|   NA|  NA|    NA|
-#&gt; +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+
-#&gt; Best-so-far configuration:         191    mean value:    -9.551221974
-#&gt; Description of the best-so-far configuration:
-#&gt;     .ID.     x1     x2 .PARENT.
-#&gt; 191  191 3.1408 2.2838      187
-#&gt; 
-#&gt; # 2021-10-29 04:11:53 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#&gt;         x1     x2
-#&gt; 191 3.1408 2.2838
-#&gt; # 2021-10-29 04:11:53 UTC: Stopped because there is not enough budget left to race more than the minimum (3)
-#&gt; # You may either increase the budget or set 'minNbSurvival' to a lower value
-#&gt; # Iteration: 7
-#&gt; # nbIterations: 7
-#&gt; # experimentsUsedSoFar: 985
-#&gt; # timeUsed: 0
-#&gt; # remainingBudget: 15
-#&gt; # currentBudget: 15
-#&gt; # number of elites: 1
-#&gt; # nbConfigurations: 2</div><div class='output co'>#&gt;        x1     x2 configuration  x_domain         y
-#&gt; 1: 3.1408 2.2838           191 &lt;list[2]&gt; -9.551222</div><div class='input'>
-<span class='co'># best scoring configuration</span>
-<span class='va'>instance</span><span class='op'>$</span><span class='va'>result</span>
-</div><div class='output co'>#&gt;        x1     x2 configuration  x_domain         y
-#&gt; 1: 3.1408 2.2838           191 &lt;list[2]&gt; -9.551222</div><div class='input'>
-<span class='co'># all evaluations</span>
-<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           x1      x2          y race step instance configuration
-#&gt;   1:  1.0000 14.7843 110.171192    1    1        3             1
-#&gt;   2: -3.3739 13.3046  -9.139562    1    1        3             2
-#&gt;   3:  2.4583 14.0913 118.500854    1    1        3             3
-#&gt;   4: -3.5824  3.9054  80.684179    1    1        3             4
-#&gt;   5:  5.8117 10.1007  89.309472    1    1        3             5
-#&gt;  ---                                                            
-#&gt; 981:  3.1363  2.2892  -9.656702    6    1       10           187
-#&gt; 982:  3.1408  2.2838  -9.656868    6    1       10           191
-#&gt; 983:  3.1408  2.2838  -9.613036    6    1        3           191
-#&gt; 984:  3.1408  2.2838  -9.546420    6    1        9           191
-#&gt; 985:  3.1408  2.2838  -9.549652    6    1        1           191
-#&gt;                timestamp batch_nr
-#&gt;   1: 2021-10-29 04:11:51        1
-#&gt;   2: 2021-10-29 04:11:51        1
-#&gt;   3: 2021-10-29 04:11:51        1
-#&gt;   4: 2021-10-29 04:11:51        1
-#&gt;   5: 2021-10-29 04:11:51        1
-#&gt;  ---                             
-#&gt; 981: 2021-10-29 04:11:53       32
-#&gt; 982: 2021-10-29 04:11:53       32
-#&gt; 983: 2021-10-29 04:11:53       33
-#&gt; 984: 2021-10-29 04:11:53       34
-#&gt; 985: 2021-10-29 04:11:53       35</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-datatable.com'>data.table</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>search_space</span> <span class='op'>=</span> <span class='va'>domain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span></span>
+<span class='r-in'>  x1 <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>10</span><span class='op'>)</span>,</span>
+<span class='r-in'>  x2 <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>15</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># branin function with noise</span></span>
+<span class='r-in'><span class='co'># the noise generates different instances of the branin function</span></span>
+<span class='r-in'><span class='co'># the noise values are passed via the `instances` parameter</span></span>
+<span class='r-in'><span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xdt</span>, <span class='va'>instances</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>a</span> <span class='op'>=</span> <span class='fl'>1</span></span>
+<span class='r-in'>  <span class='va'>b</span> <span class='op'>=</span> <span class='fl'>5.1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>4</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>pi</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>c</span> <span class='op'>=</span> <span class='fl'>5</span> <span class='op'>/</span> <span class='va'>pi</span></span>
+<span class='r-in'>  <span class='va'>r</span> <span class='op'>=</span> <span class='fl'>6</span></span>
+<span class='r-in'>  <span class='va'>s</span> <span class='op'>=</span> <span class='fl'>10</span></span>
+<span class='r-in'>  <span class='va'>t</span> <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>8</span> <span class='op'>*</span> <span class='va'>pi</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>a</span> <span class='op'>*</span> <span class='op'>(</span><span class='op'>(</span><span class='va'>xdt</span><span class='op'>[[</span><span class='st'>"x2"</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span></span>
+<span class='r-in'>      <span class='va'>b</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>xdt</span><span class='op'>[[</span><span class='st'>"x1"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>^</span><span class='fl'>2L</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>      <span class='va'>c</span> <span class='op'>*</span> <span class='va'>xdt</span><span class='op'>[[</span><span class='st'>"x1"</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='va'>r</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>      <span class='op'>(</span><span class='op'>(</span><span class='va'>s</span> <span class='op'>*</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>t</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='va'>xdt</span><span class='op'>[[</span><span class='st'>"x1"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>      <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>instances</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFunDt.html'>ObjectiveRFunDt</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>fun <span class='op'>=</span> <span class='va'>fun</span>, domain <span class='op'>=</span> <span class='va'>domain</span>, codomain <span class='op'>=</span> <span class='va'>codomain</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>instance</span> <span class='op'>=</span> <span class='va'><a href='OptimInstanceSingleCrit.html'>OptimInstanceSingleCrit</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span></span>
+<span class='r-in'>  objective <span class='op'>=</span> <span class='va'>objective</span>,</span>
+<span class='r-in'>  search_space <span class='op'>=</span> <span class='va'>search_space</span>,</span>
+<span class='r-in'>  terminator <span class='op'>=</span> <span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"evals"</span>, n_evals <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># create instances of branin function</span></span>
+<span class='r-in'><span class='va'>instances</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, mean <span class='op'>=</span> <span class='fl'>0</span>, sd <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># load optimizer irace and set branin instances</span></span>
+<span class='r-in'><span class='va'>optimizer</span> <span class='op'>=</span> <span class='fu'><a href='opt.html'>opt</a></span><span class='op'>(</span><span class='st'>"irace"</span>, instances <span class='op'>=</span> <span class='va'>instances</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># modifies the instance by reference</span></span>
+<span class='r-in'><span class='va'>optimizer</span><span class='op'>$</span><span class='fu'>optimize</span><span class='op'>(</span><span class='va'>instance</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:10 UTC: Initialization</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Elitist race</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Elitist new instances: 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Elitist limit: 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbIterations: 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # minNbSurvival: 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbParameters: 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # seed: 1861043051</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # confidence level: 0.95</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # budget: 1000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # mu: 5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # deterministic: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:10 UTC: Iteration 1 of 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # experimentsUsedSoFar: 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # remainingBudget: 1000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # currentBudget: 333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbConfigurations: 55</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Markers:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      x No test is performed.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      c Configurations are discarded only due to capping.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      - The test is performed and some configurations are discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      = The test is performed but no configuration is discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      . All alive configurations are elite and nothing is discarded</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          1|         55|         25|   -9.417354508|         55|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          2|         55|         25|   -9.374418161|        110|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          3|         55|         25|   -9.341785995|        165|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          4|         55|         25|   -9.342761030|        220|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |-|          5|          1|         25|   -9.344356526|        275|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Best-so-far configuration:          25    mean value:    -9.344356526</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Description of the best-so-far configuration:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    .ID.     x1     x2 .PARENT.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25   25 2.9398 2.4074       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:11 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        x1     x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 2.9398 2.4074</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:11 UTC: Iteration 2 of 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # experimentsUsedSoFar: 275</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # remainingBudget: 725</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # currentBudget: 362</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbConfigurations: 52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Markers:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      x No test is performed.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      c Configurations are discarded only due to capping.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      - The test is performed and some configurations are discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      = The test is performed but no configuration is discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      . All alive configurations are elite and nothing is discarded</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          6|         52|         25|   -9.389142769|         52|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          5|         52|         25|   -9.369940638|        103|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          1|         52|         25|   -9.385745261|        154|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          2|         52|         25|   -9.372179399|        205|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |-|          3|          1|         25|   -9.353047852|        256|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |.|          4|          1|         25|   -9.351820900|        256|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Best-so-far configuration:          25    mean value:    -9.351820900</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Description of the best-so-far configuration:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    .ID.     x1     x2 .PARENT.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25   25 2.9398 2.4074       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:11 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        x1     x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 2.9398 2.4074</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:11 UTC: Iteration 3 of 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # experimentsUsedSoFar: 531</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # remainingBudget: 469</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # currentBudget: 469</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbConfigurations: 59</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Markers:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      x No test is performed.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      c Configurations are discarded only due to capping.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      - The test is performed and some configurations are discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      = The test is performed but no configuration is discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      . All alive configurations are elite and nothing is discarded</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          7|         59|        157|   -9.409114006|         59|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          4|         59|        157|   -9.474993771|        117|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          3|         59|        157|   -9.473898869|        175|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          1|         59|        157|   -9.508559629|        233|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |-|          2|          2|        157|   -9.512181546|        291|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Best-so-far configuration:          25    mean value:    -9.332121715</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Description of the best-so-far configuration:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    .ID.     x1     x2 .PARENT.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25   25 2.9398 2.4074       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:12 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         x1     x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25  2.9398 2.4074</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 157 3.1322 2.2942</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:12 UTC: Iteration 4 of 4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # experimentsUsedSoFar: 822</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # remainingBudget: 178</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # currentBudget: 178</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbConfigurations: 21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Markers:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      x No test is performed.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      c Configurations are discarded only due to capping.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      - The test is performed and some configurations are discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      = The test is performed but no configuration is discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      . All alive configurations are elite and nothing is discarded</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          8|         21|        157|   -9.656374067|         21|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          7|         21|        157|   -9.532744037|         40|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          2|         21|        157|   -9.530719096|         59|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          5|         21|        157|   -9.534520799|         79|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |-|          3|          2|        157|   -9.521958452|         98|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Best-so-far configuration:          25    mean value:    -9.348254834</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Description of the best-so-far configuration:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    .ID.     x1     x2 .PARENT.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25   25 2.9398 2.4074       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:12 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         x1     x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25  2.9398 2.4074</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 157 3.1322 2.2942</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:12 UTC: Iteration 5 of 5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # experimentsUsedSoFar: 920</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # remainingBudget: 80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # currentBudget: 80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbConfigurations: 9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Markers:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      x No test is performed.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      c Configurations are discarded only due to capping.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      - The test is performed and some configurations are discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      = The test is performed but no configuration is discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      . All alive configurations are elite and nothing is discarded</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          9|          9|        187|   -9.549485794|          9|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          4|          9|        187|   -9.545343881|         16|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          6|          9|        187|   -9.558448788|         24|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          5|          9|        187|   -9.555400176|         31|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |-|          1|          3|        187|   -9.566894209|         38|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Best-so-far configuration:         157    mean value:    -9.544077248</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Description of the best-so-far configuration:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     .ID.     x1     x2 .PARENT.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 157  157 3.1322 2.2942       25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:12 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         x1     x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 157 3.1322 2.2942</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25  2.9398 2.4074</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 187 3.1363 2.2892</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:12 UTC: Iteration 6 of 6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # experimentsUsedSoFar: 958</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # remainingBudget: 42</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # currentBudget: 42</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbConfigurations: 6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Markers:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      x No test is performed.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      c Configurations are discarded only due to capping.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      - The test is performed and some configurations are discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      = The test is performed but no configuration is discarded.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      . All alive configurations are elite and nothing is discarded</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> | |   Instance|      Alive|       Best|      Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|         10|          6|        191|   -9.611075413|          6|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          6|          6|        191|   -9.597949963|          9|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          3|          6|        191|   -9.556034445|         13|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |x|          4|          6|        191|   -9.552367804|         16|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |-|          2|          4|        191|   -9.547326955|         20|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |!|          7|          4|        191|   -9.524373854|         22|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |!|          8|          4|        191|   -9.543301648|         24|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |!|          1|          4|        191|   -9.552018473|         25|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |!|          5|          4|        191|   -9.551396449|         26|00:00:00|+1.00|1.00|0.0000|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |-|          9|          1|        191|   -9.551221974|         27|00:00:00|   NA|  NA|    NA|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> +-+-----------+-----------+-----------+---------------+-----------+--------+-----+----+------+</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Best-so-far configuration:         191    mean value:    -9.551221974</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Description of the best-so-far configuration:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     .ID.     x1     x2 .PARENT.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 191  191 3.1408 2.2838      187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:13 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         x1     x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 191 3.1408 2.2838</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # 2021-10-30 04:12:13 UTC: Stopped because there is not enough budget left to race more than the minimum (3)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # You may either increase the budget or set 'minNbSurvival' to a lower value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Iteration: 7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbIterations: 7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # experimentsUsedSoFar: 985</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # timeUsed: 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # remainingBudget: 15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # currentBudget: 15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # number of elites: 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # nbConfigurations: 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        x1     x2 configuration  x_domain         y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: 3.1408 2.2838           191 &lt;list[2]&gt; -9.551222</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># best scoring configuration</span></span>
+<span class='r-in'><span class='va'>instance</span><span class='op'>$</span><span class='va'>result</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        x1     x2 configuration  x_domain         y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: 3.1408 2.2838           191 &lt;list[2]&gt; -9.551222</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># all evaluations</span></span>
+<span class='r-in'><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>instance</span><span class='op'>$</span><span class='va'>archive</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           x1      x2          y race step instance configuration</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1:  1.0000 14.7843 110.171192    1    1        3             1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2: -3.3739 13.3046  -9.139562    1    1        3             2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3:  2.4583 14.0913 118.500854    1    1        3             3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4: -3.5824  3.9054  80.684179    1    1        3             4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5:  5.8117 10.1007  89.309472    1    1        3             5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  ---                                                            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 981:  3.1363  2.2892  -9.656702    6    1       10           187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 982:  3.1408  2.2838  -9.656868    6    1       10           191</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 983:  3.1408  2.2838  -9.613036    6    1        3           191</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 984:  3.1408  2.2838  -9.546420    6    1        9           191</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 985:  3.1408  2.2838  -9.549652    6    1        1           191</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                timestamp batch_nr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1: 2021-10-30 04:12:10        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2: 2021-10-30 04:12:10        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3: 2021-10-30 04:12:10        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4: 2021-10-30 04:12:10        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5: 2021-10-30 04:12:10        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  ---                             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 981: 2021-10-30 04:12:13       32</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 982: 2021-10-30 04:12:13       32</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 983: 2021-10-30 04:12:13       33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 984: 2021-10-30 04:12:13       34</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 985: 2021-10-30 04:12:13       35</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

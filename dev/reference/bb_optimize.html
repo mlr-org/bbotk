@@ -188,17 +188,17 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <a href='Optimizer.html'>Optimizer</a>)<br />
+      <td><p>(<code>character(1)</code> | <a href='Optimizer.html'>Optimizer</a>)<br />
 Key to retrieve optimizer from <a href='mlr_optimizers.html'>mlr_optimizers</a> dictionary or <a href='Optimizer.html'>Optimizer</a>.</p></td>
     </tr>
     <tr>
       <th>max_evals</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Number of allowed evaluations.</p></td>
     </tr>
     <tr>
       <th>max_time</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Maximum allowed time in seconds.</p></td>
     </tr>
     <tr>
@@ -246,137 +246,140 @@ is useful if the <a href='Optimizer.html'>Optimizer</a> can terminate itself. If
 evaluation budget is exhausted.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># function and bounds</span>
-<span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='op'>-</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='fl'>10</span>
-<span class='op'>}</span>
-
-<span class='fu'>bb_optimize</span><span class='op'>(</span><span class='va'>fun</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span>, max_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $par
-#&gt;           x1      x2
-#&gt; 1: -8.384997 3.34333
-#&gt; 
-#&gt; $value
-#&gt;       y1 
-#&gt; -138.086 
-#&gt; 
-#&gt; $instance
-#&gt; &lt;OptimInstanceSingleCrit&gt;
-#&gt; * State:  Optimized
-#&gt; * Objective: &lt;ObjectiveRFun:function&gt;
-#&gt; * Search Space:
-#&gt; &lt;ParamSet&gt;
-#&gt;    id    class lower upper nlevels        default value
-#&gt; 1: x1 ParamDbl   -10    10     Inf &lt;NoDefault[3]&gt;      
-#&gt; 2: x2 ParamDbl    -5     5     Inf &lt;NoDefault[3]&gt;      
-#&gt; * Terminator: &lt;TerminatorEvals&gt;
-#&gt; * Terminated: TRUE
-#&gt; * Result:
-#&gt;           x1      x2  x_domain       y1
-#&gt; 1: -8.384997 3.34333 &lt;list[2]&gt; -138.086
-#&gt; * Archive:
-#&gt; &lt;Archive&gt;
-#&gt;         x1    x2     y1           timestamp batch_nr
-#&gt;  1: -8.385  3.34 -138.1 2021-10-29 04:11:45        1
-#&gt;  2:  2.015 -3.43    9.8 2021-10-29 04:11:45        2
-#&gt;  3: -9.852 -0.34 -137.6 2021-10-29 04:11:45        3
-#&gt;  4: -0.044 -2.10    5.0 2021-10-29 04:11:45        4
-#&gt;  5:  4.658  2.73  -29.8 2021-10-29 04:11:45        5
-#&gt;  6:  7.492 -3.25  -20.2 2021-10-29 04:11:45        6
-#&gt;  7: -9.315 -1.80 -119.5 2021-10-29 04:11:45        7
-#&gt;  8: -1.953 -3.04   -5.6 2021-10-29 04:11:45        8
-#&gt;  9: -1.929 -4.36   -7.3 2021-10-29 04:11:45        9
-#&gt; 10: -2.226  4.76  -68.0 2021-10-29 04:11:45       10
-#&gt; </div><div class='input'>
-<span class='co'># function and constant</span>
-<span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span>, <span class='va'>c</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='op'>-</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='va'>c</span>
-<span class='op'>}</span>
-
-<span class='fu'>bb_optimize</span><span class='op'>(</span><span class='va'>fun</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span>, max_evals <span class='op'>=</span> <span class='fl'>10</span>, c <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $par
-#&gt;           x1        x2
-#&gt; 1: -8.971074 0.3021246
-#&gt; 
-#&gt; $value
-#&gt;        y1 
-#&gt; -130.2685 
-#&gt; 
-#&gt; $instance
-#&gt; &lt;OptimInstanceSingleCrit&gt;
-#&gt; * State:  Optimized
-#&gt; * Objective: &lt;ObjectiveRFun:function&gt;
-#&gt; * Search Space:
-#&gt; &lt;ParamSet&gt;
-#&gt;    id    class lower upper nlevels        default value
-#&gt; 1: x1 ParamDbl   -10    10     Inf &lt;NoDefault[3]&gt;      
-#&gt; 2: x2 ParamDbl    -5     5     Inf &lt;NoDefault[3]&gt;      
-#&gt; * Terminator: &lt;TerminatorEvals&gt;
-#&gt; * Terminated: TRUE
-#&gt; * Result:
-#&gt;           x1        x2  x_domain        y1
-#&gt; 1: -8.971074 0.3021246 &lt;list[2]&gt; -130.2685
-#&gt; * Archive:
-#&gt; &lt;Archive&gt;
-#&gt;        x1     x2     y1           timestamp batch_nr
-#&gt;  1:  4.71 -3.040   -6.3 2021-10-29 04:11:45        1
-#&gt;  2:  9.61  2.415  -86.2 2021-10-29 04:11:45        2
-#&gt;  3: -8.97  0.302 -130.3 2021-10-29 04:11:45        3
-#&gt;  4:  3.92  1.886  -26.5 2021-10-29 04:11:45        4
-#&gt;  5: -9.38 -2.744 -128.5 2021-10-29 04:11:45        5
-#&gt;  6: -3.98  1.365  -53.9 2021-10-29 04:11:45        6
-#&gt;  7: -0.42 -0.678  -10.2 2021-10-29 04:11:45        7
-#&gt;  8:  4.13  4.486  -59.6 2021-10-29 04:11:45        8
-#&gt;  9: -6.39 -2.831  -69.5 2021-10-29 04:11:45        9
-#&gt; 10:  3.60 -0.012  -10.5 2021-10-29 04:11:45       10
-#&gt; </div><div class='input'>
-<span class='co'># objective</span>
-<span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='op'>-</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='co'># define domain and codomain using a `ParamSet` from paradox</span>
-<span class='va'>domain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span>, x2 <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>fun</span>, <span class='va'>domain</span>, <span class='va'>codomain</span><span class='op'>)</span>
-
-<span class='fu'>bb_optimize</span><span class='op'>(</span><span class='va'>objective</span>, method <span class='op'>=</span> <span class='st'>"random_search"</span>, max_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $par
-#&gt;           x1       x2
-#&gt; 1: -8.079517 2.656002
-#&gt; 
-#&gt; $value
-#&gt;        z 
-#&gt; -123.587 
-#&gt; 
-#&gt; $instance
-#&gt; &lt;OptimInstanceSingleCrit&gt;
-#&gt; * State:  Optimized
-#&gt; * Objective: &lt;ObjectiveRFun:function&gt;
-#&gt; * Search Space:
-#&gt; &lt;ParamSet&gt;
-#&gt;    id    class lower upper nlevels        default value
-#&gt; 1: x1 ParamDbl   -10    10     Inf &lt;NoDefault[3]&gt;      
-#&gt; 2: x2 ParamDbl    -5     5     Inf &lt;NoDefault[3]&gt;      
-#&gt; * Terminator: &lt;TerminatorEvals&gt;
-#&gt; * Terminated: TRUE
-#&gt; * Result:
-#&gt;           x1       x2  x_domain        z
-#&gt; 1: -8.079517 2.656002 &lt;list[2]&gt; -123.587
-#&gt; * Archive:
-#&gt; &lt;Archive&gt;
-#&gt;        x1    x2       z           timestamp batch_nr
-#&gt;  1: -8.08  2.66 -123.59 2021-10-29 04:11:45        1
-#&gt;  2:  5.39  4.91  -64.04 2021-10-29 04:11:45        2
-#&gt;  3:  9.41 -1.11  -48.49 2021-10-29 04:11:45        3
-#&gt;  4: -0.78 -1.85    0.96 2021-10-29 04:11:45        4
-#&gt;  5: -6.51  0.32  -73.35 2021-10-29 04:11:45        5
-#&gt;  6: -0.13  2.79  -28.09 2021-10-29 04:11:45        6
-#&gt;  7: -5.92  2.13  -79.03 2021-10-29 04:11:45        7
-#&gt;  8: -8.70 -1.46 -106.78 2021-10-29 04:11:45        8
-#&gt;  9:  6.50 -2.26  -10.83 2021-10-29 04:11:45        9
-#&gt; 10:  1.40 -1.64    7.80 2021-10-29 04:11:45       10
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># function and bounds</span></span>
+<span class='r-in'><span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='op'>-</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='fl'>10</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>bb_optimize</span><span class='op'>(</span><span class='va'>fun</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span>, max_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $par</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           x1      x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: -8.384997 3.34333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       y1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -138.086 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $instance</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * State:  Optimized</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Objective: &lt;ObjectiveRFun:function&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Search Space:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;ParamSet&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    id    class lower upper nlevels        default value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: x1 ParamDbl   -10    10     Inf &lt;NoDefault[3]&gt;      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2: x2 ParamDbl    -5     5     Inf &lt;NoDefault[3]&gt;      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Terminator: &lt;TerminatorEvals&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Terminated: TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Result:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           x1      x2  x_domain       y1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: -8.384997 3.34333 &lt;list[2]&gt; -138.086</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Archive:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;Archive&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         x1    x2     y1           timestamp batch_nr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: -8.385  3.34 -138.1 2021-10-30 04:12:05        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:  2.015 -3.43    9.8 2021-10-30 04:12:05        2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: -9.852 -0.34 -137.6 2021-10-30 04:12:05        3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: -0.044 -2.10    5.0 2021-10-30 04:12:05        4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:  4.658  2.73  -29.8 2021-10-30 04:12:05        5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:  7.492 -3.25  -20.2 2021-10-30 04:12:05        6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: -9.315 -1.80 -119.5 2021-10-30 04:12:05        7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: -1.953 -3.04   -5.6 2021-10-30 04:12:05        8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: -1.929 -4.36   -7.3 2021-10-30 04:12:05        9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10: -2.226  4.76  -68.0 2021-10-30 04:12:05       10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># function and constant</span></span>
+<span class='r-in'><span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span>, <span class='va'>c</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='op'>-</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='va'>c</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>bb_optimize</span><span class='op'>(</span><span class='va'>fun</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span>, max_evals <span class='op'>=</span> <span class='fl'>10</span>, c <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $par</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           x1        x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: -8.971074 0.3021246</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        y1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -130.2685 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $instance</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * State:  Optimized</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Objective: &lt;ObjectiveRFun:function&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Search Space:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;ParamSet&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    id    class lower upper nlevels        default value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: x1 ParamDbl   -10    10     Inf &lt;NoDefault[3]&gt;      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2: x2 ParamDbl    -5     5     Inf &lt;NoDefault[3]&gt;      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Terminator: &lt;TerminatorEvals&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Terminated: TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Result:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           x1        x2  x_domain        y1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: -8.971074 0.3021246 &lt;list[2]&gt; -130.2685</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Archive:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;Archive&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        x1     x2     y1           timestamp batch_nr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:  4.71 -3.040   -6.3 2021-10-30 04:12:05        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:  9.61  2.415  -86.2 2021-10-30 04:12:05        2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3: -8.97  0.302 -130.3 2021-10-30 04:12:05        3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:  3.92  1.886  -26.5 2021-10-30 04:12:05        4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: -9.38 -2.744 -128.5 2021-10-30 04:12:05        5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: -3.98  1.365  -53.9 2021-10-30 04:12:05        6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: -0.42 -0.678  -10.2 2021-10-30 04:12:05        7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:  4.13  4.486  -59.6 2021-10-30 04:12:05        8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9: -6.39 -2.831  -69.5 2021-10-30 04:12:05        9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:  3.60 -0.012  -10.5 2021-10-30 04:12:05       10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># objective</span></span>
+<span class='r-in'><span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='op'>-</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># define domain and codomain using a `ParamSet` from paradox</span></span>
+<span class='r-in'><span class='va'>domain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span>, x2 <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>fun</span>, <span class='va'>domain</span>, <span class='va'>codomain</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>bb_optimize</span><span class='op'>(</span><span class='va'>objective</span>, method <span class='op'>=</span> <span class='st'>"random_search"</span>, max_evals <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $par</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           x1       x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: -8.079517 2.656002</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        z </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -123.587 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $instance</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * State:  Optimized</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Objective: &lt;ObjectiveRFun:function&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Search Space:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;ParamSet&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    id    class lower upper nlevels        default value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: x1 ParamDbl   -10    10     Inf &lt;NoDefault[3]&gt;      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2: x2 ParamDbl    -5     5     Inf &lt;NoDefault[3]&gt;      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Terminator: &lt;TerminatorEvals&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Terminated: TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Result:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           x1       x2  x_domain        z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1: -8.079517 2.656002 &lt;list[2]&gt; -123.587</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Archive:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;Archive&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        x1    x2       z           timestamp batch_nr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1: -8.08  2.66 -123.59 2021-10-30 04:12:05        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:  5.39  4.91  -64.04 2021-10-30 04:12:05        2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:  9.41 -1.11  -48.49 2021-10-30 04:12:05        3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4: -0.78 -1.85    0.96 2021-10-30 04:12:05        4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5: -6.51  0.32  -73.35 2021-10-30 04:12:05        5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6: -0.13  2.79  -28.09 2021-10-30 04:12:05        6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7: -5.92  2.13  -79.03 2021-10-30 04:12:05        7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8: -8.70 -1.46 -106.78 2021-10-30 04:12:05        8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:  6.50 -2.26  -10.83 2021-10-30 04:12:05        9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:  1.40 -1.64    7.80 2021-10-30 04:12:05       10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

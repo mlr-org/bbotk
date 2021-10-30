@@ -162,7 +162,7 @@ numerical codomain.</p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
-<dt><code>id</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)).</p></dd>
+<dt><code>id</code></dt><dd><p>(<code>character(1)</code>)).</p></dd>
 
 <dt><code>properties</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).</p></dd>
 
@@ -178,16 +178,16 @@ Changeable constants or parameters that are not subject to tuning can be
 stored and accessed here. Set constant values are passed to <code>$.eval()</code>
 and <code>$.eval_many()</code> as named arguments.</p></dd>
 
-<dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br /></p></dd>
+<dt><code>check_values</code></dt><dd><p>(<code>logical(1)</code>)<br /></p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl>
-<dt><code>xdim</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<dt><code>xdim</code></dt><dd><p>(<code>integer(1)</code>)<br />
 Dimension of domain.</p></dd>
 
-<dt><code>ydim</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<dt><code>ydim</code></dt><dd><p>(<code>integer(1)</code>)<br />
 Dimension of codomain.</p></dd>
 
 </dl><p></div></p>
@@ -212,14 +212,14 @@ Dimension of codomain.</p></dd>
   id <span class='op'>=</span> <span class='st'>"f"</span>,
   properties <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>domain</span>,
-  codomain <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>,
-  constants <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span><span class='op'>)</span>,
+  codomain <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"minimize"</span><span class='op'>)</span><span class='op'>)</span>,
+  constants <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span><span class='op'>)</span>,
   check_values <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>id</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>).</p></dd>
+<dt><code>id</code></dt><dd><p>(<code>character(1)</code>).</p></dd>
 
 <dt><code>properties</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>).</p></dd>
 
@@ -236,7 +236,7 @@ be minimized or maximized.  The default is to minimize each component.</p></dd>
 <dt><code>constants</code></dt><dd><p>(<a href='https://paradox.mlr-org.com/reference/ParamSet.html'>paradox::ParamSet</a>)<br />
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.</p></dd>
 
-<dt><code>check_values</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+<dt><code>check_values</code></dt><dd><p>(<code>logical(1)</code>)<br />
 Should points before the evaluation and the results be checked for
 validity?</p></dd>
 
@@ -265,11 +265,11 @@ of the result is checked.</p><h4 class='hasAnchor' id='arguments'><a class='anch
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>xs</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>)<br />
-A list that contains a single x value, e.g. <code><a href='https://rdrr.io/r/base/list.html'>list(x1 = 1, x2 = 2)</a></code>.</p></dd>
+A list that contains a single x value, e.g. <code>list(x1 = 1, x2 = 2)</code>.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p><code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> that contains the result of the evaluation, e.g. <code><a href='https://rdrr.io/r/base/list.html'>list(y = 1)</a></code>.
+<p><code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> that contains the result of the evaluation, e.g. <code>list(y = 1)</code>.
 The list can also contain additional <em>named</em> entries that will be stored in the
 archive if called through the <a href='OptimInstance.html'>OptimInstance</a>.
 These extra entries are referred to as <em>extras</em>.</p>
@@ -287,7 +287,7 @@ function.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#argum
 <p><div class="arguments"></p><dl>
 <dt><code>xss</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>)<br />
 A list of lists that contains multiple x values, e.g.
-<code><a href='https://rdrr.io/r/base/list.html'>list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))</a></code>.</p></dd>
+<code>list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))</code>.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>

@@ -168,10 +168,10 @@ sugar function <code><a href='trm.html'>trm()</a></code>:</p><pre><span class='v
     
 
 <dl>
-<dt><code>iters</code></dt><dd><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code><br />
+<dt><code>iters</code></dt><dd><p><code>integer(1)</code><br />
 Number of iterations to evaluate the performance improvement on, default
 is 10.</p></dd>
-<dt><code>threshold</code></dt><dd><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code><br />
+<dt><code>threshold</code></dt><dd><p><code>numeric(1)</code><br />
 If the improvement is less than <code>threshold</code>, optimization is stopped,
 default is <code>0</code>.</p></dd>
 
@@ -228,7 +228,7 @@ otherwise.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#argu
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.</p>
+<p><code>logical(1)</code>.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -243,11 +243,13 @@ otherwise.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#argu
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>TerminatorStagnation</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;TerminatorStagnation&gt;
-#&gt; * Parameters: iters=10, threshold=0</div><div class='input'><span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"stagnation"</span>, iters <span class='op'>=</span> <span class='fl'>5</span>, threshold <span class='op'>=</span> <span class='fl'>1e-5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;TerminatorStagnation&gt;
-#&gt; * Parameters: iters=5, threshold=1e-05</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>TerminatorStagnation</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;TerminatorStagnation&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Parameters: iters=10, threshold=0</span>
+<span class='r-in'><span class='fu'><a href='trm.html'>trm</a></span><span class='op'>(</span><span class='st'>"stagnation"</span>, iters <span class='op'>=</span> <span class='fl'>5</span>, threshold <span class='op'>=</span> <span class='fl'>1e-5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;TerminatorStagnation&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Parameters: iters=5, threshold=1e-05</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

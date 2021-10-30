@@ -151,7 +151,7 @@ paradox::ParamSet when Objective is initialized." />
     </div>
 
     <div class="ref-description">
-    <p>A set of Param objects defining the codomain of a function. The parameter
+    <p>A set of <a href='https://paradox.mlr-org.com/reference/Param.html'>Param</a> objects defining the codomain of a function. The parameter
 set must contain at least one target parameter tagged with <code>"minimize"</code> or
 <code>"maximize"</code>. The codomain may contain extra parameters which are ignored
 when calling the <a href='Archive.html'>Archive</a> methods <code>$best()</code>, <code>$nds_selection()</code> and
@@ -168,16 +168,16 @@ when calling the <a href='Archive.html'>Archive</a> methods <code>$best()</code>
 
     <p><div class="r6-active-bindings"></p><dl>
 <dt><code>is_target</code></dt><dd><p>(named <code><a href='https://rdrr.io/r/base/logical.html'>logical()</a></code>)<br />
-Position is <code>TRUE</code> for target Params.</p></dd>
+Position is <code>TRUE</code> for target <a href='https://paradox.mlr-org.com/reference/Param.html'>Param</a>s.</p></dd>
 
 <dt><code>target_length</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
-Returns number of target Params.</p></dd>
+Returns number of target <a href='https://paradox.mlr-org.com/reference/Param.html'>Param</a>s.</p></dd>
 
 <dt><code>target_ids</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
-Number of contained target Params.</p></dd>
+Number of contained target <a href='https://paradox.mlr-org.com/reference/Param.html'>Param</a>s.</p></dd>
 
 <dt><code>target_tags</code></dt><dd><p>(named <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> of <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
-Tags of target Params.</p></dd>
+Tags of target <a href='https://paradox.mlr-org.com/reference/Param.html'>Param</a>s.</p></dd>
 
 <dt><code>maximization_to_minimization</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
 Returns a numeric vector with values -1 and 1. Multiply with the outcome
@@ -220,7 +220,7 @@ of a maximization problem to turn it into a minimization problem.</p></dd>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>params</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>)<br />
-List of Param, named with their respective ID.
+List of <a href='https://paradox.mlr-org.com/reference/Param.html'>Param</a>, named with their respective ID.
 Parameters are cloned.</p></dd>
 
 </dl><p></div></p>
@@ -238,32 +238,32 @@ Parameters are cloned.</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># define objective function</span>
-<span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='op'>-</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='co'># set domain</span>
-<span class='va'>domain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>
-  x1 <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span>,
-  x2 <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># set codomain</span>
-<span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'>ps</span><span class='op'>(</span>
-  y <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"maximize"</span><span class='op'>)</span>,
-  time <span class='op'>=</span> <span class='fu'>p_dbl</span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># create Objective object</span>
-<span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
-  fun <span class='op'>=</span> <span class='va'>fun</span>,
-  domain <span class='op'>=</span> <span class='va'>domain</span>,
-  codomain <span class='op'>=</span> <span class='va'>codomain</span>,
-  properties <span class='op'>=</span> <span class='st'>"deterministic"</span>
-<span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'># define objective function</span></span>
+<span class='r-in'><span class='va'>fun</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='op'>-</span><span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>-</span> <span class='op'>(</span><span class='va'>xs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>+</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># set domain</span></span>
+<span class='r-in'><span class='va'>domain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span></span>
+<span class='r-in'>  x1 <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span>,</span>
+<span class='r-in'>  x2 <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># set codomain</span></span>
+<span class='r-in'><span class='va'>codomain</span> <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/ps.html'>ps</a></span><span class='op'>(</span></span>
+<span class='r-in'>  y <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span>tags <span class='op'>=</span> <span class='st'>"maximize"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  time <span class='op'>=</span> <span class='fu'><a href='https://paradox.mlr-org.com/reference/Domain.html'>p_dbl</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># create Objective object</span></span>
+<span class='r-in'><span class='va'>objective</span> <span class='op'>=</span> <span class='va'><a href='ObjectiveRFun.html'>ObjectiveRFun</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span></span>
+<span class='r-in'>  fun <span class='op'>=</span> <span class='va'>fun</span>,</span>
+<span class='r-in'>  domain <span class='op'>=</span> <span class='va'>domain</span>,</span>
+<span class='r-in'>  codomain <span class='op'>=</span> <span class='va'>codomain</span>,</span>
+<span class='r-in'>  properties <span class='op'>=</span> <span class='st'>"deterministic"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
