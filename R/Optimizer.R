@@ -32,15 +32,14 @@ Optimizer = R6Class("Optimizer",
     #' @param param_classes (`character()`).
     #' @param properties (`character()`).
     #' @param packages (`character()`).
-    initialize = function(param_set, param_classes, properties,
-      packages = character()) {
+    initialize = function(param_set, param_classes, properties, packages = character()) {
       private$.param_set = assert_param_set(param_set)
       self$param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
       # has to have at least multi-crit or single-crit property
       self$properties = assert_subset(properties,
         bbotk_reflections$optimizer_properties, empty.ok = FALSE)
-      self$packages = assert_set(packages)
+      self$packages = union("bbotk", assert_character(packages, any.missing = FALSE, min.chars = 1L))
 
       check_packages_installed(self$packages, msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self)))
     },
