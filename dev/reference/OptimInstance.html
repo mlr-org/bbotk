@@ -205,6 +205,8 @@ Optimal outcome.</p></dd>
 <li><p><a href='#method-format'><code>OptimInstance$format()</code></a></p></li>
 <li><p><a href='#method-print'><code>OptimInstance$print()</code></a></p></li>
 <li><p><a href='#method-eval_batch'><code>OptimInstance$eval_batch()</code></a></p></li>
+<li><p><a href='#method-eval_proposed'><code>OptimInstance$eval_proposed()</code></a></p></li>
+<li><p><a href='#method-resolve_promise'><code>OptimInstance$resolve_promise()</code></a></p></li>
 <li><p><a href='#method-assign_result'><code>OptimInstance$assign_result()</code></a></p></li>
 <li><p><a href='#method-objective_function'><code>OptimInstance$objective_function()</code></a></p></li>
 <li><p><a href='#method-clear'><code>OptimInstance$clear()</code></a></p></li>
@@ -275,6 +277,46 @@ the <em>search space</em> of the OptimInstance object. Can contain additional
 columns for extra information.</p></dd>
 
 </dl><p></div></p>
+<p><hr>
+<a id="method-eval_proposed"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>eval_proposed()</code></h3>
+<p>Evaluates points in archive with status <code>"proposed"</code> by calling
+the <a href='Objective.html'>Objective</a> (asynchronously).</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>OptimInstance</span><span class='op'>$</span><span class='fu'>eval_proposed</span><span class='op'>(</span>i <span class='op'>=</span> <span class='cn'>NULL</span>, async <span class='op'>=</span> <span class='cn'>FALSE</span>, single_worker <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>i</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
+Row ids of archive table for which values are evaluated. If <code>NULL</code>
+(default), evaluate all values with status <code>"proposed"</code>.</p></dd>
+
+<dt><code>async</code></dt><dd><p>(<code>logical(1)</code>)<br />
+Determines if points are evaluated asynchronously with the package
+<a href='https://CRAN.R-project.org/package=future'><span class="pkg">future</span></a>.</p></dd>
+
+<dt><code>single_worker</code></dt><dd><p>(<code>logical(1)</code>)<br />
+Determines if all points of a batch are evaluated in a single worker or
+in one worker per point.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>If <code>async = TRUE</code>, <code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code> with columns
+<code>"promise"</code>, <code>"status"</code> and <code>"resolve_id"</code>, otherwise outcome. If <code>i</code> is
+not specified, all points with status <code>"in_progress"</code> (async) or
+<code>"evaluated"</code> (sync) are returned.</p>
+<p><hr>
+<a id="method-resolve_promise"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>resolve_promise()</code></h3>
+<p>Retrieve values of resolved futures and add them to the archive table.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>OptimInstance</span><span class='op'>$</span><span class='fu'>resolve_promise</span><span class='op'>(</span>i <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>i</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
+Row ids of archive table for which values are retrieved. If <code>NULL</code>
+(default), retrieve values from all futures which are resolved.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code> (invisibly).</p>
 <p><hr>
 <a id="method-assign_result"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>assign_result()</code></h3>
 <p>The <a href='Optimizer.html'>Optimizer</a> object writes the best found point
