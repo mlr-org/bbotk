@@ -35,6 +35,7 @@ number of steps (\code{max_steps}) and the currently achieved number of steps
 
 \seealso{
 Other Terminator: 
+\code{\link{mlr_terminators_budget}},
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},

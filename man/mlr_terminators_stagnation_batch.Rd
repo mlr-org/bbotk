@@ -36,6 +36,7 @@ trm("stagnation_batch", n = 1, threshold = 1e-5)
 \seealso{
 Other Terminator: 
 \code{\link{Terminator}},
+\code{\link{mlr_terminators_budget}},
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},

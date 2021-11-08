@@ -89,6 +89,7 @@ Collate:
     'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
+    'TerminatorBudget.R'
     'TerminatorClockTime.R'
     'TerminatorCombo.R'
     'TerminatorEvals.R'

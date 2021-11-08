@@ -33,6 +33,7 @@ trm("perf_reached")
 \seealso{
 Other Terminator: 
 \code{\link{Terminator}},
+\code{\link{mlr_terminators_budget}},
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},

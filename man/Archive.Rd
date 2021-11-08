@@ -42,7 +42,7 @@ Contains all performed \link{Objective} function calls.}
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{n_evals}}{(\code{integer(1)})\cr
-Number of evaluations stored in the archive.}
+Number of finished evaluations stored in the archive.}
 
 \item{\code{n_batch}}{(\code{integer(1)})\cr
 Number of batches stored in the archive.}

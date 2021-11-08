@@ -32,6 +32,7 @@ trm("clock_time", stop_time = stop_time)
 \seealso{
 Other Terminator: 
 \code{\link{Terminator}},
+\code{\link{mlr_terminators_budget}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},
 \code{\link{mlr_terminators_none}},
