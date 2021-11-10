@@ -188,7 +188,7 @@ Contains all performed <a href='Objective.html'>Objective</a> function calls.</p
 
     <p><div class="r6-active-bindings"></p><dl>
 <dt><code>n_evals</code></dt><dd><p>(<code>integer(1)</code>)<br />
-Number of evaluations stored in the archive.</p></dd>
+Number of finished evaluations stored in the archive.</p></dd>
 
 <dt><code>n_batch</code></dt><dd><p>(<code>integer(1)</code>)<br />
 Number of batches stored in the archive.</p></dd>
@@ -198,6 +198,9 @@ Column names of search space parameters.</p></dd>
 
 <dt><code>cols_y</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
 Column names of codomain target parameters.</p></dd>
+
+<dt><code>n_in_progress</code></dt><dd><p>(<code>integer(1)</code>)<br />
+Number of points with status <code>"in_progress"</code>.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -242,7 +245,12 @@ Search space that is logged into archive.</p></dd>
 <p><hr>
 <a id="method-add_evals"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_evals()</code></h3>
 <p>Adds function evaluations to the archive table.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>add_evals</span><span class='op'>(</span><span class='va'>xdt</span>, xss_trafoed <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>ydt</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Archive</span><span class='op'>$</span><span class='fu'>add_evals</span><span class='op'>(</span>
+  <span class='va'>xdt</span>,
+  xss_trafoed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ydt <span class='op'>=</span> <span class='fu'>data.table</span><span class='op'>(</span><span class='op'>)</span>,
+  status <span class='op'>=</span> <span class='st'>"evaluated"</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -257,6 +265,9 @@ Transformed point(s) in the <em>domain space</em>.</p></dd>
 
 <dt><code>ydt</code></dt><dd><p>(<code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table::data.table()</a></code>)<br />
 Optimal outcome.</p></dd>
+
+<dt><code>status</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
+Status (<code>"proposed"</code> | <code>"evaluated"</code>) of points in <code>xdt</code>.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
