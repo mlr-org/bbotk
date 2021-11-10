@@ -77,8 +77,11 @@ optimize_default = function(inst, self, private) {
   })
   private$.assign_result(inst)
 
-  # null promise column
-  if (!is.null(inst$archive$data$promise)) inst$archive$data[, "promise" := NULL]
+  # null promise and resolve_id column
+  if (!is.null(inst$archive$data$promise)) {
+    inst$archive$data[, "resolve_id" := NULL]
+    inst$archive$data[, "promise" := NULL]
+  }
 
   lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
   lg$info("Result:")
