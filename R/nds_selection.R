@@ -17,12 +17,12 @@
 #' @keywords internal
 #' @export
 nds_selection = function(points, n_select, ref_point = NULL, minimize = TRUE) {
-
   require_namespaces("emoa")
 
   # check input for correctness
   assert_matrix(points, mode = "numeric")
-  assert_int(n_select, lower = 1, upper = ncol(points))
+  assert_int(n_select, upper = ncol(points))
+  if (!n_select) return(integer(0))
   assert_logical(
     minimize, min.len = 1, max.len = nrow(points), any.missing = FALSE
   )

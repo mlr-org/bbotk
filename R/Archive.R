@@ -190,10 +190,8 @@ Archive = R6Class("Archive",
     #' @field n_in_progress (`integer(1)`)\cr
     #' Number of points with status `"in_progress"`.
     n_in_progress = function() {
-      if (nrow(self$data) == 0) {
-        return(0)
-      }
-      nrow(self$data["in_progress", on = "status"])
+      if (!nrow(self$data)) return(0L)
+      nrow(self$data["in_progress", on = "status", nomatch = NULL])
     }
   ),
 
