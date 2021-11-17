@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   bbotk: bbotk.html
-last_built: 2021-11-16T04:12Z
+last_built: 2021-11-17T04:13Z
 urls:
   reference: https://bbotk.mlr-org.com/reference
   article: https://bbotk.mlr-org.com/articles
