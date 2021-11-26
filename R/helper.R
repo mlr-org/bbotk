@@ -158,6 +158,8 @@ search_start = function(search_space, type = "random") {
 #'   (e.g. `list(x1 = 1, x2 = 2, fidelity = 0.5)`).
 #'
 #' @return `list(1)`
+#'
+#' @export
 #' @examples
 #' branin(list(x1 = 12, x2 = 2, fidelity = 1))
 branin = function(xs) {
