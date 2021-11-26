@@ -52,5 +52,14 @@ bibentries = c(
     volume       = "3",
     pages        = "43--58",
     doi          = "https://doi.org/10.1016/j.orp.2016.09.002"
+  ),
+
+  wu_2019 = bibentry("misc",
+    title        = "Practical Multi-fidelity Bayesian Optimization for Hyperparameter Tuning",
+    author       = "Jian Wu and Saul Toscano-Palmerin and Peter I. Frazier and Andrew Gordon Wilson",
+    year         = "2019",
+    eprint        = "1903.04703",
+    archivePrefix = "arXiv",
+    primaryClass  = "cs.LG"
   )
 )
