@@ -120,7 +120,8 @@ get_private = function(x) {
   x[[".__enclos_env__"]][["private"]]
 }
 
-#' @title Get start values for optimizers.
+#' @title Get start values for optimizers
+#'
 #' @description
 #' Returns a named numeric vector with start
 #' values for optimizers.
@@ -142,4 +143,23 @@ search_start = function(search_space, type = "random") {
     }
     (search_space$upper + search_space$lower) / 2
   }
+}
+
+#' @title Branin Function
+#'
+#' @description
+#' Augmented 2-D Branin function with fidelity parameter.
+#'
+#' @source
+#' `r format_bib("wu_2019")`
+#'
+#' @param xs
+#'   List with the input for a single point
+#'   (e.g. `list(x1 = 1, x2 = 2, fidelity = 0.5)`).
+#'
+#' @return `list(1)`
+#' @examples
+#' branin(list(x1 = 12, x2 = 2, fidelity = 1))
+branin = function(xs) {
+  list(y = (xs[["x2"]] - ((5.1 / (4 * pi^2)) - 0.1 * (1 - xs[["fidelity"]])) * xs[["x1"]]^2 + (5 / pi) * xs[["x1"]] - 6) ^ 2 +  10 * (1 - (1 / (8 * pi))) * cos(xs[["x1"]]) + 10)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper.R
 \name{search_start}
 \alias{search_start}
-\title{Get start values for optimizers.}
+\title{Get start values for optimizers}
 \usage{
 search_start(search_space, type = "random")
 }

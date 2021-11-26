@@ -17,6 +17,11 @@
   }
   lg$set_filters(f)
 
+  register_namespace_callback("bbotk", "mlr3", function(pkgname, pkgpath) {
+    x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
+    x$loggers = c(x$loggers, list("bbotk" = lg))
+  })
+
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
   }
