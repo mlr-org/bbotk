@@ -20,7 +20,7 @@
   register_namespace_callback("bbotk", "mlr3", function(pkgname, pkgpath) {
     x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
     if (is.list(x$loggers)) { # be backward compatible with mlr3 <= 0.13.0
-      x$loggers = insert_named(x$loggers, list("bbotk" = lg))
+      x$loggers[["bbotk"]] = lg
     }
   })
 
