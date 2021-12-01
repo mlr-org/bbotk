@@ -41,12 +41,13 @@ reference:
   - title: Objective
     contents:
       - starts_with("Objective")
+      - Codomain
   - title: Terminator
     contents:
       - starts_with("Terminator")
       - mlr_terminators
-      - term
-      - terms
+      - trm
+      - trms
   - title: Optimization Instance
     contents:
       - starts_with("OptimInstance")
@@ -62,3 +63,7 @@ reference:
   - title: Misc
     contents:
       - is_dominated
+      - Progressor
+      - branin
+      - bb_optimize
+
