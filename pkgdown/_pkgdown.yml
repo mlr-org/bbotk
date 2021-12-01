@@ -41,7 +41,6 @@ reference:
   - title: Objective
     contents:
       - starts_with("Objective")
-      - Codomain
   - title: Terminator
     contents:
       - starts_with("Terminator")
@@ -60,6 +59,8 @@ reference:
   - title: Archive
     contents:
       - Archive
+      - ArchiveBest
+      - Codomain
   - title: Misc
     contents:
       - is_dominated
