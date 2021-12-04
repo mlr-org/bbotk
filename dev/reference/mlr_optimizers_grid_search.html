@@ -24,7 +24,7 @@ of termination criteria."><meta name="twitter:card" content="summary"><meta name
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../index.html">bbotk <small>v0.4.0.9000</small></a>
       </div>
     </div>
@@ -91,7 +91,6 @@ we can parallelize more, smaller batches imply a more fine-grained checking
 of termination criteria.</p>
     </div>
 
-    <div id="ref-usage">Usage,NULL</div>
 
     <div id="dictionary">
     <h2>Dictionary</h2>
@@ -198,27 +197,27 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># modifies the instance by reference</span></span>
 <span class="r-in"><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             x  x_domain          y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.1111111 &lt;list[1]&gt; 0.01234568</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x  x_domain          y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.1111111 &lt;list[1]&gt; 0.01234568</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># returns best scoring evaluation</span></span>
 <span class="r-in"><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             x  x_domain          y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.1111111 &lt;list[1]&gt; 0.01234568</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x  x_domain          y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.1111111 &lt;list[1]&gt; 0.01234568</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># allows access of data.table of full path of all evaluations</span></span>
 <span class="r-in"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              x          y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.7777778 0.60493827 &lt;list[1]&gt; 2021-12-03 04:13:49        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.3333333 0.11111111 &lt;list[1]&gt; 2021-12-03 04:13:49        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -0.3333333 0.11111111 &lt;list[1]&gt; 2021-12-03 04:13:49        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -0.1111111 0.01234568 &lt;list[1]&gt; 2021-12-03 04:13:49        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -1.0000000 1.00000000 &lt;list[1]&gt; 2021-12-03 04:13:49        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.5555556 0.30864198 &lt;list[1]&gt; 2021-12-03 04:13:49        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  0.1111111 0.01234568 &lt;list[1]&gt; 2021-12-03 04:13:49        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  1.0000000 1.00000000 &lt;list[1]&gt; 2021-12-03 04:13:49        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -0.7777778 0.60493827 &lt;list[1]&gt; 2021-12-03 04:13:49        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  0.5555556 0.30864198 &lt;list[1]&gt; 2021-12-03 04:13:49       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.5555556 0.30864198 &lt;list[1]&gt; 2021-12-04 04:14:13        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.1111111 0.01234568 &lt;list[1]&gt; 2021-12-04 04:14:13        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -0.1111111 0.01234568 &lt;list[1]&gt; 2021-12-04 04:14:13        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -0.7777778 0.60493827 &lt;list[1]&gt; 2021-12-04 04:14:13        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.3333333 0.11111111 &lt;list[1]&gt; 2021-12-04 04:14:14        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.5555556 0.30864198 &lt;list[1]&gt; 2021-12-04 04:14:14        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  0.7777778 0.60493827 &lt;list[1]&gt; 2021-12-04 04:14:14        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  1.0000000 1.00000000 &lt;list[1]&gt; 2021-12-04 04:14:14        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  0.3333333 0.11111111 &lt;list[1]&gt; 2021-12-04 04:14:14        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -1.0000000 1.00000000 &lt;list[1]&gt; 2021-12-04 04:14:14       10</span>
 </code></pre></div>
     </div>
   </div>
@@ -233,7 +232,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer></div>
