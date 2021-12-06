@@ -46,7 +46,8 @@ Imports:
     lgr,
     methods,
     mlr3misc (>= 0.9.4),
-    R6
+    R6,
+    reticulate
 Suggests:
     adagio,
     emoa,
@@ -84,6 +85,7 @@ Collate:
     'OptimizerGridSearch.R'
     'OptimizerIrace.R'
     'OptimizerNLoptr.R'
+    'OptimizerOptuna.R'
     'OptimizerRandomSearch.R'
     'Progressor.R'
     'mlr_terminators.R'
