@@ -1,150 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bbotk.mlr-org.com/LICENSE-text.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/articles/bbotk.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/articles/bbotk.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/articles/index.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/authors.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/authors.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/index.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/index.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/news/index.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/news/index.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/Archive.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/Archive.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/ArchiveBest.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/ArchiveBest.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/Codomain.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/Codomain.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/Objective.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/Objective.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/ObjectiveRFun.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/ObjectiveRFun.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/ObjectiveRFunDt.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/ObjectiveRFunDt.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/OptimInstance.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/OptimInstance.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/OptimInstanceMultiCrit.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/OptimInstanceMultiCrit.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/OptimInstanceSingleCrit.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/OptimInstanceSingleCrit.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/Optimizer.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/Optimizer.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/Progressor.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/Progressor.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/Terminator.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/Terminator.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/assign_result_default.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/assign_result_default.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/bb_optimize.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/bb_optimize.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/bbotk-package.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/bbotk-package.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/bbotk_assertions.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/bbotk_assertions.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/bbotk_reflections.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/bbotk_reflections.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/branin.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/branin.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/index.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/is_dominated.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/is_dominated.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_cmaes.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_cmaes.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_design_points.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_design_points.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_gensa.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_gensa.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_grid_search.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_grid_search.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_irace.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_irace.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_nloptr.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_nloptr.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_random_search.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_random_search.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_clock_time.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_clock_time.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_combo.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_combo.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_evals.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_evals.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_none.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_none.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_perf_reached.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_perf_reached.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_run_time.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_run_time.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_stagnation.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation_batch.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_stagnation_batch.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/nds_selection.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/nds_selection.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/opt.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/opt.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/optimize_default.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/optimize_default.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/search_start.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/search_start.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/transform_xdt_to_xss.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/transform_xdt_to_xss.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/trm.html</loc>
+    <loc>https://bbotk.mlr-org.com/dev/reference/trm.html</loc>
   </url>
 </urlset>
