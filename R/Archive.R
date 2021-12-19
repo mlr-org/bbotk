@@ -99,7 +99,8 @@ Archive = R6Class("Archive",
       if (is.null(batch)) batch = seq_len(self$n_batch)
       assert_subset(batch, seq_len(self$n_batch))
 
-      tab = self$data[list(batch, "evaluated"), on = c("batch_nr", "status")]
+      tab = self$data[list(batch, "evaluated"), on = c("batch_nr", "status"), nomatch = NULL]
+      if (!nrow(tab)) return(data.table())
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       max_to_min = self$codomain$maximization_to_minimization

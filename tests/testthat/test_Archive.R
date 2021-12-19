@@ -111,3 +111,10 @@ test_that("data.table deep clone works", {
 
   expect_true(address(a1$data) != address(a2$data))
 })
+
+test_that("Archive best method works with no evaluated points", {
+  archive = Archive$new(PS_2D, FUN_2D_CODOMAIN)
+  xdt = data.table(x1 = 0, x2 = 1)
+  ydt = data.table(y = 1)
+  archive$add_evals(xdt = xdt, ydt = ydt, status = "proposed")
+})
