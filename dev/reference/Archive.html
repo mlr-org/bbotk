@@ -121,7 +121,7 @@ Contains all performed <a href="Objective.html">Objective</a> function calls.</p
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
     <p></p><div class="r6-active-bindings"><dl><dt><code>n_evals</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
-Number of finished evaluations stored in the archive.</p></dd>
+Number of evaluations stored in the archive.</p></dd>
 
 
 <dt><code>n_batch</code></dt>
@@ -137,11 +137,6 @@ Column names of search space parameters.</p></dd>
 <dt><code>cols_y</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Column names of codomain target parameters.</p></dd>
-
-
-<dt><code>n_in_progress</code></dt>
-<dd><p>(<code>integer(1)</code>)<br>
-Number of points with status <code>"in_progress"</code>.</p></dd>
 
 
 </dl><p></p></div>
@@ -198,12 +193,7 @@ Search space that is logged into archive.</p></dd>
 <h3 id="method-add-evals-">Method <code>add_evals()</code><a class="anchor" aria-label="anchor" href="#method-add-evals-"></a></h3>
 <p>Adds function evaluations to the archive table.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Archive</span><span class="op">$</span><span class="fu">add_evals</span><span class="op">(</span>
-  <span class="va">xdt</span>,
-  xss_trafoed <span class="op">=</span> <span class="cn">NULL</span>,
-  ydt <span class="op">=</span> <span class="fu">data.table</span><span class="op">(</span><span class="op">)</span>,
-  status <span class="op">=</span> <span class="st">"evaluated"</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Archive</span><span class="op">$</span><span class="fu">add_evals</span><span class="op">(</span><span class="va">xdt</span>, xss_trafoed <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">ydt</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -224,11 +214,6 @@ Transformed point(s) in the <em>domain space</em>.</p></dd>
 <dt><code>ydt</code></dt>
 <dd><p>(<code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
 Optimal outcome.</p></dd>
-
-
-<dt><code>status</code></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
-Status (<code>"proposed"</code> | <code>"evaluated"</code>) of points in <code>xdt</code>.</p></dd>
 
 
 </dl><p></p></div>
