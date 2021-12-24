@@ -62,6 +62,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     eval = function(xs) {
       if (self$check_values) self$domain$assert(xs)
       res = invoke(private$.fun, xs, .args = self$constants$values)
+      if (!test_named(res)) names(res)[seq_len(self$codomain$length)] = self$codomain$ids()
       if (self$check_values) self$codomain$assert(as.list(res)[self$codomain$ids()])
       return(res)
     }
