@@ -62,7 +62,6 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
       cols_y = inst$archive$cols_y
       om = inst$objective_multiplicator
       n_repeats = 0L
-      browser()
 
       repeat {  # iterate until we have an exception from eval_batch
         param_set_local = inst$search_space$clone(deep = TRUE)
