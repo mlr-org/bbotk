@@ -38,6 +38,7 @@ Number of batches stored in the archive.}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="clear">}\href{../../bbotk/html/Archive.html#method-clear}{\code{bbotk::Archive$clear()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format">}\href{../../bbotk/html/Archive.html#method-format}{\code{bbotk::Archive$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="nds_selection">}\href{../../bbotk/html/Archive.html#method-nds_selection}{\code{bbotk::Archive$nds_selection()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print">}\href{../../bbotk/html/Archive.html#method-print}{\code{bbotk::Archive$print()}}\out{</span>}
 }
 \out{</details>}
@@ -48,12 +49,7 @@ Number of batches stored in the archive.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$new(
-  search_space,
-  codomain,
-  check_values = FALSE,
-  store_x_domain = FALSE
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveBest$new(search_space, codomain, check_values = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -73,10 +69,6 @@ be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 ignored.}
-
-\item{\code{store_x_domain}}{(\code{logical(1)})\cr
-Determines if x values, should be stored in \verb{$data$x_domain} as list
-items. The trafo will be applied if defined in \code{search_space}.}
 }
 \if{html}{\out{</div>}}
 }

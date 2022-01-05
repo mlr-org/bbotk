@@ -62,15 +62,15 @@ test_that("Objective specialzations work", {
       rfun = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DT, domain = PS_2D)
     ),
-    list( #2d x, 1d y + extra
+    list( # 2d x, 1d y + extra
       rfun = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"), id = "function_extras"),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_2D_DT, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"), , id = "function_extras")
     ),
-    list( #2d x, 2d y
+    list( # 2d x, 2d y
       rfun = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_2D_DT, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN)
     ),
-    list( #2d x with deps, 1d y
+    list( # 2d x with deps, 1d y
       rfun = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS, check_values = FALSE), # dont check bc. we get NAs
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DEPS_DT, domain = PS_2D_DEPS, check_values = TRUE) # here NAs can get checked by assert_dt correctly
     )
@@ -80,7 +80,7 @@ test_that("Objective specialzations work", {
     fun1 = fun_pairs$rfun
     fun2 = fun_pairs$rfun_dt
 
-    expect_function(fun1$fun) #check AB
+    expect_function(fun1$fun) # check AB
     expect_function(fun2$fun)
 
     expect_output(print(fun1), "ObjectiveRFun:function")
@@ -130,9 +130,9 @@ test_that("codomain assertions work", {
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize' or 'maximize'")
 
-  codomain = ps(y1 = p_lgl())
+  codomain = ps(y1 = p_lgl(tags = "minimize"))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
 
   codomain = ps(y1 = p_dbl(tags = c("minimize", "maximize")))
@@ -142,10 +142,10 @@ test_that("codomain assertions work", {
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl(), y2 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains no 'minimize' or 'maximize' tag")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize' or 'maximize'")
 
-  codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains no 'minimize' or 'maximize' tag")
+  codomain = ps(y1 = p_dbl(tags = "minimize"), time = p_dbl())
+  expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_lgl(tags = "maximize"))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain is not numeric")
@@ -175,7 +175,7 @@ test_that("check_values flag works", {
   obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN,
     check_values = TRUE)
   expect_error(obj$eval(list(x1 = 2, x2 = 1)),
-              "Assertion on 'xs' failed: x1: Element 1 is not <= 1.", fixed = TRUE)
+    "<= 1.", fixed = TRUE)
 
   ObjectiveTestEvalMany = R6Class("ObjectiveTestEvalMany",
     inherit = Objective,
@@ -193,7 +193,7 @@ test_that("check_values flag works", {
   obj = ObjectiveTestEvalMany$new(domain = PS_2D, check_values = TRUE)
   xs = list(x1 = 2, x2 = 1)
   expect_error(obj$eval(list(x1 = 2, x2 = 1)),
-    "Assertion on 'xs' failed: x1: Element 1 is not <= 1.", fixed = TRUE)
+    "<= 1.", fixed = TRUE)
 })
 
 test_that("check_values = TRUE with extra output works", {
@@ -223,15 +223,15 @@ test_that("check_values = TRUE with extra output works", {
 
 test_that("assertion on overlapping and reserved names works", {
   expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
-    regexp = "Assertion on 'self$domain$ids()' failed: Must be disjunct from (x).",
+    regexp = "disjunct from",
     fixed = TRUE)
 
   expect_error(Objective$new(domain = ps(batch_nr = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
-    regexp = "Assertion on 'self$domain$ids()' failed: Must be disjunct from (x_domain,timestamp,batch_nr).",
+    regexp = "disjunct from",
     fixed = TRUE)
 
   expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(timestamp = p_dbl(tags = "maximize"))),
-    regexp = "Assertion on 'self$codomain$ids()' failed: Must be disjunct from (x_domain,timestamp,batch_nr).",
+    regexp = "disjunct from",
     fixed = TRUE)
 })
 
@@ -247,7 +247,7 @@ test_that("ObjectiveRFunDt works with a list containing elements with different 
 test_that("ObjectiveRFunDt works with deps #141", {
   FUN = function(xdt) {
     pmap_dtr(xdt, function(x1, x2) {
-      data.table(y = if(is.na(x2)) x1 else x2)
+      data.table(y = if (is.na(x2)) x1 else x2)
     })
   }
   domain = ps(x1 = p_int(), x2 = p_int())
@@ -317,5 +317,12 @@ test_that("Objective works with constants", {
   expect_equal(objective$eval(list(x = 1)), list(y = 2))
   expect_equal(objective$eval(list(x = 0)), list(y = 1))
   expect_equal(objective$eval_many(list(list(x = 1), list(x = 0))), data.table(y = c(2, 1)))
-  expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))  
+  expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))
+})
+
+test_that("objective can be initialized with empty codomain", {
+  domain = ps(x = p_dbl(lower = -1, upper = 1))
+  codomain = ps()
+  obj = Objective$new(domain = domain, codomain = codomain)
+  expect_r6(obj, "Objective")
 })

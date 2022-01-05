@@ -83,21 +83,21 @@ evaluation budget is exhausted.
 \examples{
 # function and bounds
 fun = function(xs) {
-  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+  -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
 }
 
 bb_optimize(fun, lower = c(-10, -5), upper = c(10, 5), max_evals = 10)
 
 # function and constant
 fun = function(xs, c) {
-  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + c
+  -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + c
 }
 
 bb_optimize(fun, lower = c(-10, -5), upper = c(10, 5), max_evals = 10, c = 1)
 
 # objective
 fun = function(xs) {
-  c(z = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+  c(z = -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
 # define domain and codomain using a `ParamSet` from paradox

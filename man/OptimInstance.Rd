@@ -171,9 +171,9 @@ and estimated performance value here. For internal use.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{xdt}}{(\code{data.table::data.table()})\cr
-x values as \code{data.table()} with one row. Contains the value in the \emph{search
-space} of the \link{OptimInstance} object. Can contain additional columns for
-extra information.}
+x values as \code{data.table::data.table()} with one row. Contains the value in the
+\emph{search space} of the \link{OptimInstance} object. Can contain additional
+columns for extra information.}
 
 \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}

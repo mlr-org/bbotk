@@ -11,7 +11,6 @@
 #' @template param_search_space
 #' @template param_xdt
 #' @template param_ydt
-#' @template param_store_x_domain
 #' @export
 ArchiveBest = R6Class("ArchiveBest",
   inherit = Archive,
@@ -21,14 +20,11 @@ ArchiveBest = R6Class("ArchiveBest",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param check_values (`logical(1)`)\cr
-    #' ignored.
-    initialize = function(search_space, codomain, check_values = FALSE, store_x_domain = FALSE) {
-      super$initialize(search_space, codomain, check_values = check_values,
-        store_x_domain)
-      private$.max_to_min = mult_max_to_min(self$codomain)
-      if(self$codomain$length == 1) {
-        private$.best_y = if(private$.max_to_min == -1) -Inf else Inf
-      }
+    #'   ignored.
+    initialize = function(search_space, codomain, check_values = FALSE) {
+      super$initialize(search_space, codomain, check_values = check_values)
+      private$.max_to_min = self$codomain$maximization_to_minimization
+      if (self$codomain$length == 1) private$.best_y = if (private$.max_to_min == -1) -Inf else Inf
     },
 
     #' @description
@@ -37,15 +33,15 @@ ArchiveBest = R6Class("ArchiveBest",
     #' @param xss_trafoed (`list()`)\cr
     #' Transformed point(s) in the *domain space*.
     add_evals = function(xdt, xss_trafoed = NULL, ydt) {
-      private$.n_evals = private$.n_evals+nrow(xdt)
+      private$.n_evals = private$.n_evals + nrow(xdt)
 
-      if(self$codomain$length == 1) {
-        y = ydt[[1]]*private$.max_to_min
+      if (self$codomain$length == 1) {
+        y = ydt[[1]] * private$.max_to_min
         id = which_min(y)
-        if(y[id] < private$.best_y*private$.max_to_min) {
-          private$.best_y = ydt[id,]
-          private$.best_x = xdt[id,]
-          private$.best_x_trafoed = if(self$store_x_domain) xss_trafoed[id]
+        if (y[id] < private$.best_y * private$.max_to_min) {
+          private$.best_y = ydt[id, ]
+          private$.best_x = xdt[id, ]
+          private$.best_x_trafoed = if (!is.null(xss_trafoed)) xss_trafoed[id]
         }
       } else {
         y = rbindlist(list(ydt, private$.best_y))
@@ -55,9 +51,9 @@ ArchiveBest = R6Class("ArchiveBest",
         ymat = private$.max_to_min * ymat
         id = !is_dominated(ymat)
 
-        private$.best_y = y[id,]
-        private$.best_x = x[id,]
-        private$.best_x_trafoed = if(self$store_x_domain) xss_trafoed[id]
+        private$.best_y = y[id, ]
+        private$.best_x = x[id, ]
+        private$.best_x_trafoed = if (!is.null(xss_trafoed)) xss_trafoed[id]
       }
     },
 
@@ -71,7 +67,7 @@ ArchiveBest = R6Class("ArchiveBest",
     #'
     #' @return [data.table::data.table()]
     best = function(m = NULL) {
-      if(self$n_evals == 0) {
+      if (self$n_evals == 0) {
         stop("No results stored in archive")
       } else {
         cbind(private$.best_x, private$.best_y)

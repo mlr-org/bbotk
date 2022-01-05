@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 0.3.2.9000
+Version: 0.4.0.9000
 Authors@R:
     c(person(given = "Marc",
              family = "Becker",
@@ -30,10 +30,10 @@ Authors@R:
              family = "Mersmann",
              role = "ctb",
              email = "olafm@statistik.tu-dortmund.de"))
-Description: Provides a common framework for optimization of
-    black-box functions for other packages, e.g. 'mlr3tuning' or
-    'mlr3fselect'.  It offers various optimization methods e.g. grid
-    search, random search and generalized simulated annealing.
+Description: Provides a common framework for optimization of black-box
+    functions for other packages, e.g. 'mlr3tuning' or 'mlr3fselect'. It
+    offers various optimization methods e.g. grid search, random search,
+    generalized simulated annealing and iterated racing.
 License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
@@ -45,11 +45,13 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.7.0),
+    mlr3misc (>= 0.9.4),
     R6
 Suggests:
     adagio,
+    emoa,
     GenSA,
+    irace,
     knitr,
     nloptr,
     progressr,
@@ -63,10 +65,11 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Collate:
     'Archive.R'
     'ArchiveBest.R'
+    'Codomain.R'
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'
@@ -80,6 +83,7 @@ Collate:
     'OptimizerFocusSearch.R'
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
+    'OptimizerIrace.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
     'Progressor.R'
@@ -98,5 +102,7 @@ Collate:
     'bbotk_reflections.R'
     'bibentries.R'
     'helper.R'
+    'helper_irace.R'
+    'nds_selection.R'
     'sugar.R'
     'zzz.R'

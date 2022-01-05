@@ -11,5 +11,5 @@ test_that("progressr works", {
   expect_class(inst$progressor$progressor, "progressor")
   expect_equal(inst$progressor$unit, "evaluations")
   expect_equal(inst$progressor$max_steps, c("max_steps" = 10))
-  expect_equal(inst$progressor$current_steps, c("current_steps"= 10))
+  expect_equal(inst$progressor$current_steps, c("current_steps" = 10))
 })

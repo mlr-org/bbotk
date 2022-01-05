@@ -34,3 +34,5 @@ docs/
 /src/*.o
 doc
 Meta
+README.html
+.Rprofile

@@ -1,6 +1,15 @@
-# bbotk 0.3.2.9000
+# bbotk 0.4.0.9000
 
-- Adds `bb_optimize()` function for quick optimization.
+* Adds non dominated sorting with hypervolume contribution to `Archive`.
+* New `Codomain` class which allows extra parameters.
+
+# bbotk 0.4.0
+
+* Allows empty search space and domain.
+* Extended `TerminatorEvals` with an additional hyperparameter `k` to define the
+  budget depending on the dimension of the search space.
+* Adds `bb_optimize()` function for quick optimization.
+* Adds `OptimizerIrace` from irace package.
 
 # bbotk 0.3.2
 
@@ -15,7 +24,7 @@
 # bbotk 0.3.0
 
 * Improved `TerminatorPerfRearched` documentation.
-* Added `check_values` flag in `OptimInstance`, `OptimInstanceSingleCrit`, 
+* Added `check_values` flag in `OptimInstance`, `OptimInstanceSingleCrit`,
   `OptimInstanceMultiCrit`, `ObjectiveRFun` and `ObjectiveRFunDt`.
 * `Archive$data` is a public field now.
 * Renamed `m` parameter to `batch` in `Archive$best()`.

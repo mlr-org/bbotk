@@ -34,5 +34,5 @@ bbotk_reflections$objective_properties = c(
 
 ### terminator_properties
 bbotk_reflections$terminator_properties = c(
-    "single-crit", "multi-crit"
+  "single-crit", "multi-crit"
 )

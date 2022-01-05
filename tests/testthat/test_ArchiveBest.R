@@ -9,7 +9,7 @@ test_that("ArchiveBest", {
   ydt = data.table(y = 1)
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$n_evals, 1)
-  expect_data_table(a$data, nrows=0)
+  expect_data_table(a$data, nrows = 0)
   a$clear()
   expect_data_table(a$data, nrows = 0)
 })
@@ -30,7 +30,7 @@ test_that("Archive best works", {
   expect_equal(a$best(), data.table(x1 = 1, x2 = 1, y = 0))
 
   codomain = ps(y = p_dbl(tags = "maximize"))
-  
+
   a = ArchiveBest$new(PS_2D, codomain)
   expect_error(a$best(), "No results stored in archive")
   xdt = data.table(x1 = c(0, 0.5), x2 = c(1, 1))
@@ -57,7 +57,7 @@ test_that("ArchiveBest multi-crit works", {
   ydt = data.table(y1 = c(0, 1), y2 = c(1, 0))
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$n_evals, 2)
-  expect_data_table(a$data, nrows=0)
+  expect_data_table(a$data, nrows = 0)
 
   expect_equal(a$best(), data.table(x1 = 0, x2 = 1, y1 = 0, y2 = 1))
 

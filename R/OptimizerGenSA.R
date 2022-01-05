@@ -22,7 +22,7 @@
 #' For the meaning of the control parameters, see [GenSA::GenSA()]. Note that we
 #' have removed all control parameters which refer to the termination of the
 #' algorithm and where our terminators allow to obtain the same behavior.
-#' 
+#'
 #' @template section_progress_bars
 #'
 #' @source
@@ -30,36 +30,36 @@
 #'
 #' @export
 #' @examples
-#' if(requireNamespace("GenSA")) {
+#' if (requireNamespace("GenSA")) {
 #'
-#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
+#'   search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#' codomain = ps(y = p_dbl(tags = "minimize"))
+#'   codomain = ps(y = p_dbl(tags = "minimize"))
 #'
-#' objective_function = function(xs) {
-#'   list(y = as.numeric(xs)^2)
-#' }
+#'   objective_function = function(xs) {
+#'     list(y = as.numeric(xs)^2)
+#'   }
 #'
-#' objective = ObjectiveRFun$new(
-#'  fun = objective_function,
-#'  domain = domain,
-#'  codomain = codomain)
-#' 
-#' instance = OptimInstanceSingleCrit$new(
-#'  objective = objective,
-#'  search_space = search_space,
-#'  terminator = trm("evals", n_evals = 10))
+#'   objective = ObjectiveRFun$new(
+#'     fun = objective_function,
+#'     domain = domain,
+#'     codomain = codomain)
 #'
-#' optimizer = opt("cmaes")
+#'   instance = OptimInstanceSingleCrit$new(
+#'     objective = objective,
+#'     search_space = search_space,
+#'     terminator = trm("evals", n_evals = 10))
 #'
-#' # Modifies the instance by reference
-#' optimizer$optimize(instance)
+#'   optimizer = opt("cmaes")
 #'
-#' # Returns best scoring evaluation
-#' instance$result
+#'   # Modifies the instance by reference
+#'   optimizer$optimize(instance)
 #'
-#' # Allows access of data.table of full path of all evaluations
-#' as.data.table(instance$archive$data)
+#'   # Returns best scoring evaluation
+#'   instance$result
+#'
+#'   # Allows access of data.table of full path of all evaluations
+#'   as.data.table(instance$archive$data)
 #' }
 OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
   public = list(

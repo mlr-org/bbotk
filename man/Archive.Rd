@@ -23,7 +23,7 @@ Objective. The \code{x_domain} column is unnested to separate columns.
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Search space of objective.}
 
-\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+\item{\code{codomain}}{(\link{Codomain})\cr
 Codomain of objective function.}
 
 \item{\code{start_time}}{(\link{POSIXct})\cr
@@ -35,10 +35,6 @@ Determines if points and results are checked for validity.}
 
 \item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Contains all performed \link{Objective} function calls.}
-
-\item{\code{store_x_domain}}{(\code{logical(1)})\cr
-Determines if x values, should be stored in \verb{$data$x_domain} as list
-items. The trafo will be applied if defined in \code{search_space}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -55,7 +51,7 @@ Number of batches stored in the archive.}
 Column names of search space parameters.}
 
 \item{\code{cols_y}}{(\code{character()})\cr
-Column names of codomain parameters.}
+Column names of codomain target parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -65,6 +61,7 @@ Column names of codomain parameters.}
 \item \href{#method-new}{\code{Archive$new()}}
 \item \href{#method-add_evals}{\code{Archive$add_evals()}}
 \item \href{#method-best}{\code{Archive$best()}}
+\item \href{#method-nds_selection}{\code{Archive$nds_selection()}}
 \item \href{#method-format}{\code{Archive$format()}}
 \item \href{#method-print}{\code{Archive$print()}}
 \item \href{#method-clear}{\code{Archive$clear()}}
@@ -77,7 +74,7 @@ Column names of codomain parameters.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = TRUE, store_x_domain = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -98,10 +95,6 @@ be minimized or maximized.  The default is to minimize each component.}
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
-
-\item{\code{store_x_domain}}{(\code{logical(1)})\cr
-Determines if x values, should be stored in \verb{$data$x_domain} as list
-items. The trafo will be applied if defined in \code{search_space}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -125,8 +118,7 @@ Column names have to match ids of the \code{search_space}.
 However, \code{xdt} can contain additional columns.}
 
 \item{\code{xss_trafoed}}{(\code{list()})\cr
-Transformed point(s) in the \emph{domain space}.
-Not stored and needed if \code{store_x_domain = FALSE}.}
+Transformed point(s) in the \emph{domain space}.}
 
 \item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Optimal outcome.}
@@ -138,11 +130,11 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-best"></a>}}
 \if{latex}{\out{\hypertarget{method-best}{}}}
 \subsection{Method \code{best()}}{
-Returns the best scoring evaluation. For single-crit optimization,
+Returns the best scoring evaluation(s). For single-crit optimization,
 the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL, n_select = 1)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -151,11 +143,43 @@ For multi-crit optimization, the Pareto set / front.
 \item{\code{batch}}{(\code{integer()})\cr
 The batch number(s) to limit the best results to. Default is
 all batches.}
+
+\item{\code{n_select}}{(\code{integer(1L)})\cr
+Amount of points to select. Ignored for multi-crit optimization.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}}.
+\code{\link[data.table:data.table]{data.table::data.table()}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-nds_selection"></a>}}
+\if{latex}{\out{\hypertarget{method-nds_selection}{}}}
+\subsection{Method \code{nds_selection()}}{
+Calculate best points w.r.t. non dominated sorting with hypervolume
+contribution.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$nds_selection(batch = NULL, n_select = 1, ref_point = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{batch}}{(\code{integer()})\cr
+The batch number(s) to limit the best points to. Default is
+all batches.}
+
+\item{\code{n_select}}{(\code{integer(1L)})\cr
+Amount of points to select.}
+
+\item{\code{ref_point}}{(\code{numeric()})\cr
+Reference point for hypervolume.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{\link[data.table:data.table]{data.table::data.table()}}
 }
 }
 \if{html}{\out{<hr>}}

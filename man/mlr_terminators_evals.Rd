@@ -7,6 +7,14 @@
 \description{
 Class to terminate the optimization depending on the number of evaluations.
 An evaluation is defined by one resampling of a parameter value.
+The total number of evaluations \eqn{B} is defined as
+
+\deqn{
+   B = \mathrm{n_evals} + k * D
+}{
+   B = n_evals + k * D
+}
+where \eqn{D} is the dimension of the search space.
 }
 \section{Dictionary}{
 
@@ -21,13 +29,23 @@ trm("evals")
 
 \describe{
 \item{\code{n_evals}}{\code{integer(1)}\cr
-Number of allowed evaluations, default is 100L.}
+See formula above. Default is 100.}
+\item{\code{k}}{\code{integer(1)}\cr
+See formula above. Default is 0.}
 }
 }
 
 \examples{
 TerminatorEvals$new()
+
+# 5 evaluations in total
 trm("evals", n_evals = 5)
+
+# 3 * [dimension of search space] evaluations in total
+trm("evals", n_evals = 0, k = 3)
+
+# (3 * [dimension of search space] + 1) evaluations in total
+trm("evals", n_evals = 1, k = 3)
 }
 \seealso{
 Other Terminator: 

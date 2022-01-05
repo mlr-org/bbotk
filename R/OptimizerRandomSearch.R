@@ -21,7 +21,7 @@
 #' }
 #'
 #' @template section_progress_bars
-#' 
+#'
 #' @source
 #' `r format_bib("bergstra_2012")`
 #'

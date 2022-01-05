@@ -15,7 +15,14 @@
     event$msg = paste("[bbotk]", event$msg)
     TRUE
   }
-  lg$add_filter(f)
+  lg$set_filters(f)
+
+  register_namespace_callback("bbotk", "mlr3", function(pkgname, pkgpath) {
+    x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
+    if (is.list(x$loggers)) { # be backward compatible with mlr3 <= 0.13.0
+      x$loggers[["bbotk"]] = lg
+    }
+  })
 
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
