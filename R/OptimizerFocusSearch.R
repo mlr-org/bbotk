@@ -62,7 +62,7 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
       cols_y = inst$archive$cols_y
       om = inst$objective_multiplicator
       n_repeats = 0L
-
+      browser()
 
       repeat {  # iterate until we have an exception from eval_batch
         param_set_local = inst$search_space$clone(deep = TRUE)
@@ -89,7 +89,7 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
           best_i = inst$archive$best(batch = inst$archive$n_batch)
           if (om * best_i[[cols_y]] < om * best[[cols_y]]) {
             lg$info("Shrinking ParamSet")
-            param_set_local = shrink_ps(param_set_local, x = best[, cols_x, with = FALSE])
+            param_set_local = shrink_ps(param_set_local, x = best_i[, cols_x, with = FALSE])
             sampler = SamplerUnif$new(param_set_local)
           }
           # always update the incumbent after each batch
