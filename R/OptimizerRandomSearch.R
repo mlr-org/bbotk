@@ -35,9 +35,10 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        batch_size = p_int(default = 1L, tags = "required")
+        batch_size = p_int(default = 1L, tags = "required"),
+        async      = p_lgl(default = FALSE)
       )
-      param_set$values = list(batch_size = 1L)
+      param_set$values = list(batch_size = 1L, async = FALSE)
 
       super$initialize(
         param_set = param_set,
@@ -49,11 +50,20 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
 
   private = list(
     .optimize = function(inst) {
-      batch_size = self$param_set$values$batch_size
+      pars = self$param_set$values
+      batch_size = pars$batch_size
       sampler = SamplerUnif$new(inst$search_space)
       repeat { # iterate until we have an exception from eval_batch
         design = sampler$sample(batch_size)
-        inst$eval_batch(design$data)
+
+        if (pars$async) {
+          inst$archive$add_evals(xdt, status = "proposed")
+          res = inst$eval_proposed(async = TRUE, single_worker = FALSE)
+          future::resolve(res$promise, result = FALSE)
+          inst$resolve_promise()
+        } else {
+          inst$eval_batch(xdt)
+        }
       }
     }
   )
