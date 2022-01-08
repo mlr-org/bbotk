@@ -49,7 +49,7 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
       assert_names(names(ydt), permutation.of = self$objective$codomain$ids())
       x_domain = transform_xdt_to_xss(xdt, self$search_space)
       if (length(x_domain) == 0) x_domain = list(list())
-      private$.result = cbind(xdt, x_domain = x_domain, ydt)
+      private$.result = cbind(ydt, xdt, x_domain = x_domain)
     }
   ),
 
