@@ -270,9 +270,11 @@ OptimInstance = R6Class("OptimInstance",
         set(archive$data, i = id, j = "status", value = "evaluated")
 
         lg$info("Result of evaluating %i configuration(s):", length(id))
-        lg$info(capture.output(print(archive$data[id], class = FALSE, row.names = FALSE, print.keys = FALSE)))
+        cols_x_extra = setdiff(names(archive$data), c(self$archive$cols_x, self$archive$cols_y, "x_domain"))
+        lg$info(capture.output(print(
+          archive$data[id, c(self$archive$cols_y, cols_x_extra, self$archive$cols_x), with = FALSE],
+          class = FALSE, row.names = FALSE, print.keys = FALSE)))
       }
-
       invisible(ydt)
     },
 
