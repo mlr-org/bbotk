@@ -151,7 +151,7 @@ Archive = R6Class("Archive",
     #' @param ... (ignored).
     print = function() {
       catf(format(self))
-      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits = 2)
+      print(as.data.table(self, unnest = NULL), digits = 2)
     },
 
     #' @description
@@ -206,10 +206,23 @@ Archive = R6Class("Archive",
 )
 
 #' @export
-as.data.table.Archive = function(x, ...) { # nolint
-  if (is.null(x$data$x_domain) || !nrow(x$data)) {
-    copy(x$data)
-  } else {
-    unnest(copy(x$data), "x_domain", prefix = "{col}_")
-  }
+as.data.table.Archive = function(x, ..., unnest = "x_domain", exclude_columns = character()) { # nolint
+  if (nrow(x$data) == 0) return(data.table())
+  if ("x_domain" %nin% names(x$data)) unnest = setdiff(unnest, "x_domain")
+  assert_subset(unnest, names(x$data))
+
+  # unnest data
+  tab = unnest(copy(x$data), unnest, prefix = "{col}_")
+
+  cols_x_domain =  if ("x_domain" %in% unnest) {
+    # get all ids of x_domain
+    # trafo could add unknown ids
+    x_domain_ids = paste0("x_domain_", unique(unlist(map(x$data$x_domain, names))))
+    setdiff(x_domain_ids, exclude_columns)
+  } else NULL
+
+  cols_x_extra = setdiff(names(tab), c(x$cols_x, x$cols_y, cols_x_domain))
+
+  setcolorder(tab, c(x$cols_y, cols_x_extra, x$cols_x, cols_x_domain))
+  tab
 }

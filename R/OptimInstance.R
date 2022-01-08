@@ -144,8 +144,10 @@ OptimInstance = R6Class("OptimInstance",
 
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
-      lg$info(capture.output(print(cbind(ydt, setcolorder(xdt, c(setdiff(colnames(xdt), self$search_space$ids()), self$search_space$ids()))),
-        class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      xydt = cbind(xdt, ydt)
+      cols_x_extra = setdiff(names(xydt), c(self$archive$cols_x, self$archive$cols_y))
+      setcolorder(xydt, c(self$archive$cols_y, cols_x_extra, self$archive$cols_x))
+      lg$info(capture.output(print(xydt, class = FALSE, row.names = FALSE, print.keys = FALSE)))
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
     },
 

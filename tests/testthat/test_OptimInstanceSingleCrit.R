@@ -21,7 +21,7 @@ test_that("OptimInstanceSingleCrit", {
   expect_identical(inst$archive$n_batch, 1L)
   expect_null(inst$result)
   inst$assign_result(xdt = xdt[2, ], y = c(y = -10))
-  expect_equal(inst$result, cbind(xdt[2, ], x_domain = list(list(x1 = 0, x2 = 0)), y = -10))
+  expect_equal(inst$result, cbind(y = -10, xdt[2, ], x_domain = list(list(x1 = 0, x2 = 0))))
 
   inst = MAKE_INST_2D(20L)
   optimizer = opt("random_search")

@@ -1,10 +1,8 @@
 url: https://bbotk.mlr-org.com
 
 template:
+  bootstrap: 5
   package: mlr3pkgdowntemplate
-  params:
-    bootswatch: journal
-  default_assets: false
 
 development:
   mode: auto
@@ -45,8 +43,8 @@ reference:
     contents:
       - starts_with("Terminator")
       - mlr_terminators
-      - term
-      - terms
+      - trm
+      - trms
   - title: Optimization Instance
     contents:
       - starts_with("OptimInstance")
@@ -59,6 +57,12 @@ reference:
   - title: Archive
     contents:
       - Archive
+      - ArchiveBest
+      - Codomain
   - title: Misc
     contents:
       - is_dominated
+      - Progressor
+      - branin
+      - bb_optimize
+
