@@ -54,7 +54,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
       batch_size = pars$batch_size
       sampler = SamplerUnif$new(inst$search_space)
       repeat { # iterate until we have an exception from eval_batch
-        design = sampler$sample(batch_size)
+        xdt = sampler$sample(batch_size)$data
 
         if (pars$async) {
           inst$archive$add_evals(xdt, status = "proposed")
