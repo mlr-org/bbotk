@@ -43,7 +43,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
@@ -94,12 +94,15 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="bbotk_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="" class="logo" alt=""><h1>bbotk: A brief introduction</h1>
                         <h4 data-toc-skip class="author">Jakob Richter</h4>
             
-            <h4 data-toc-skip class="date">2022-01-13</h4>
+            <h4 data-toc-skip class="date">2022-01-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlr-org/bbotk/blob/HEAD/vignettes/bbotk.Rmd" class="external-link"><code>vignettes/bbotk.Rmd</code></a></small>
       <div class="d-none name"><code>bbotk.Rmd</code></div>
@@ -107,9 +110,9 @@
 
     
     
-<div class="section level1">
-<h1 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h1>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p>The main goal of the <em>black box optimization toolkit</em> (<code>bbotk</code>) is to provide a common framework for optimization for other packages. Therefore <code>bbotk</code> includes the following <em>R6</em> classes that can be used in a variety of optimization scenarios.</p>
 <ul>
 <li>
@@ -138,9 +141,9 @@
 <li>define the logging threshold.</li>
 <li>access the <code>Archive</code> of evaluated function calls.</li>
 </ul>
-<div class="section level2">
-<h2 id="use-bbotk-to-optimize-a-function">Use <code>bbotk</code> to optimize a function<a class="anchor" aria-label="anchor" href="#use-bbotk-to-optimize-a-function"></a>
-</h2>
+<div class="section level3">
+<h3 id="use-bbotk-to-optimize-a-function">Use <code>bbotk</code> to optimize a function<a class="anchor" aria-label="anchor" href="#use-bbotk-to-optimize-a-function"></a>
+</h3>
 <p>In the following we will use <code>bbotk</code> to minimize this function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
@@ -243,26 +246,26 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span>
 <span class="co">#&gt;            x1        x2          y           timestamp batch_nr x_domain_x1</span>
-<span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 2022-01-13 04:14:20        1   -4.689827</span>
-<span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 2022-01-13 04:14:20        2   -5.930364</span>
-<span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 2022-01-13 04:14:20        3    7.170817</span>
-<span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 2022-01-13 04:14:20        4    2.045200</span>
-<span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 2022-01-13 04:14:20        5    2.045200</span>
-<span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 2022-01-13 04:14:20        6    2.045200</span>
-<span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 2022-01-13 04:14:20        7    2.045201</span>
-<span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 2022-01-13 04:14:20        8    2.045199</span>
-<span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 2022-01-13 04:14:20        9    2.045200</span>
-<span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 2022-01-13 04:14:20       10    2.045200</span>
-<span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 2022-01-13 04:14:20       11    1.954800</span>
-<span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 2022-01-13 04:14:20       12    1.954801</span>
-<span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 2022-01-13 04:14:20       13    1.954799</span>
-<span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 2022-01-13 04:14:20       14    1.954800</span>
-<span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 2022-01-13 04:14:20       15    1.954800</span>
-<span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 2022-01-13 04:14:20       16    2.000000</span>
-<span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 2022-01-13 04:14:20       17    2.000001</span>
-<span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 2022-01-13 04:14:20       18    1.999999</span>
-<span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 2022-01-13 04:14:20       19    2.000000</span>
-<span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 2022-01-13 04:14:20       20    2.000000</span>
+<span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 2022-01-14 04:14:39        1   -4.689827</span>
+<span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 2022-01-14 04:14:39        2   -5.930364</span>
+<span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 2022-01-14 04:14:39        3    7.170817</span>
+<span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 2022-01-14 04:14:39        4    2.045200</span>
+<span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 2022-01-14 04:14:39        5    2.045200</span>
+<span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 2022-01-14 04:14:39        6    2.045200</span>
+<span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 2022-01-14 04:14:39        7    2.045201</span>
+<span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 2022-01-14 04:14:39        8    2.045199</span>
+<span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 2022-01-14 04:14:39        9    2.045200</span>
+<span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 2022-01-14 04:14:39       10    2.045200</span>
+<span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 2022-01-14 04:14:39       11    1.954800</span>
+<span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 2022-01-14 04:14:39       12    1.954801</span>
+<span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 2022-01-14 04:14:39       13    1.954799</span>
+<span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 2022-01-14 04:14:39       14    1.954800</span>
+<span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 2022-01-14 04:14:39       15    1.954800</span>
+<span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 2022-01-14 04:14:40       16    2.000000</span>
+<span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 2022-01-14 04:14:40       17    2.000001</span>
+<span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 2022-01-14 04:14:40       18    1.999999</span>
+<span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 2022-01-14 04:14:40       19    2.000000</span>
+<span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 2022-01-14 04:14:40       20    2.000000</span>
 <span class="co">#&gt;     x_domain_x2</span>
 <span class="co">#&gt;  1:   -1.278761</span>
 <span class="co">#&gt;  2:   -4.400474</span>
@@ -284,9 +287,9 @@
 <span class="co">#&gt; 18:   -3.000000</span>
 <span class="co">#&gt; 19:   -2.999999</span>
 <span class="co">#&gt; 20:   -3.000001</span></code></pre></div>
-<div class="section level3">
-<h3 id="search-space-transformations">Search Space Transformations<a class="anchor" aria-label="anchor" href="#search-space-transformations"></a>
-</h3>
+<div class="section level4">
+<h4 id="search-space-transformations">Search Space Transformations<a class="anchor" aria-label="anchor" href="#search-space-transformations"></a>
+</h4>
 <p>If the domain of the <code>Objective</code> is complex, it is often necessary to define a simpler <em>search space</em> that can be handled by the <code>Optimizer</code> and to define a transformation that transforms the value suggested by the optimizer to a value of the <em>domain</em> of the <code>Objective</code>.</p>
 <p>Reasons for transformations can be:</p>
 <ol style="list-style-type: decimal">
@@ -354,9 +357,9 @@
 <span class="co">#&gt;          y </span>
 <span class="co">#&gt; -0.0370368</span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="notes-on-the-optimization-archive">Notes on the optimization archive<a class="anchor" aria-label="anchor" href="#notes-on-the-optimization-archive"></a>
-</h3>
+<div class="section level4">
+<h4 id="notes-on-the-optimization-archive">Notes on the optimization archive<a class="anchor" aria-label="anchor" href="#notes-on-the-optimization-archive"></a>
+</h4>
 <p>The following is just meant for <em>advanced</em> readers. If you want to evaluate the function outside of the optimization but have the result stored in the <code>Archive</code> you can do so by resetting the termination and call <code>$eval_batch()</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
@@ -364,19 +367,19 @@
 <span class="va">inst</span><span class="op">$</span><span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span>
 <span class="va">xvals</span> <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span>, w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span><span class="op">)</span>
 <span class="va">inst</span><span class="op">$</span><span class="fu">eval_batch</span><span class="op">(</span>xdt <span class="op">=</span> <span class="va">xvals</span><span class="op">)</span>
-<span class="co">#&gt; INFO  [04:14:21.786] [bbotk] Evaluating 2 configuration(s) </span>
-<span class="co">#&gt; INFO  [04:14:21.835] [bbotk] Result of batch 31: </span>
-<span class="co">#&gt; INFO  [04:14:21.853] [bbotk]       h      w           y </span>
-<span class="co">#&gt; INFO  [04:14:21.853] [bbotk]  0.6666 0.6666 -0.03703704 </span>
-<span class="co">#&gt; INFO  [04:14:21.853] [bbotk]  0.6667 0.6667 -0.03703704</span>
+<span class="co">#&gt; INFO  [04:14:41.021] [bbotk] Evaluating 2 configuration(s) </span>
+<span class="co">#&gt; INFO  [04:14:41.073] [bbotk] Result of batch 31: </span>
+<span class="co">#&gt; INFO  [04:14:41.092] [bbotk]       h      w           y </span>
+<span class="co">#&gt; INFO  [04:14:41.092] [bbotk]  0.6666 0.6666 -0.03703704 </span>
+<span class="co">#&gt; INFO  [04:14:41.092] [bbotk]  0.6667 0.6667 -0.03703704</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;          x1        x2         y           timestamp batch_nr x_domain_x1</span>
-<span class="co">#&gt; 1: 1.954800 -3.935259  9.123248 2022-01-13 04:14:20       15    1.954800</span>
-<span class="co">#&gt; 2: 2.000000 -3.000000 10.000000 2022-01-13 04:14:20       16    2.000000</span>
-<span class="co">#&gt; 3: 2.000001 -3.000000 10.000000 2022-01-13 04:14:20       17    2.000001</span>
-<span class="co">#&gt; 4: 1.999999 -3.000000 10.000000 2022-01-13 04:14:20       18    1.999999</span>
-<span class="co">#&gt; 5: 2.000000 -2.999999 10.000000 2022-01-13 04:14:20       19    2.000000</span>
-<span class="co">#&gt; 6: 2.000000 -3.000001 10.000000 2022-01-13 04:14:20       20    2.000000</span>
+<span class="co">#&gt; 1: 1.954800 -3.935259  9.123248 2022-01-14 04:14:39       15    1.954800</span>
+<span class="co">#&gt; 2: 2.000000 -3.000000 10.000000 2022-01-14 04:14:40       16    2.000000</span>
+<span class="co">#&gt; 3: 2.000001 -3.000000 10.000000 2022-01-14 04:14:40       17    2.000001</span>
+<span class="co">#&gt; 4: 1.999999 -3.000000 10.000000 2022-01-14 04:14:40       18    1.999999</span>
+<span class="co">#&gt; 5: 2.000000 -2.999999 10.000000 2022-01-14 04:14:40       19    2.000000</span>
+<span class="co">#&gt; 6: 2.000000 -3.000001 10.000000 2022-01-14 04:14:40       20    2.000000</span>
 <span class="co">#&gt;    x_domain_x2</span>
 <span class="co">#&gt; 1:   -3.935259</span>
 <span class="co">#&gt; 2:   -3.000000</span>
@@ -388,7 +391,7 @@
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">inst</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;         h      w           y  x_domain           timestamp batch_nr</span>
-<span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2022-01-13 04:14:21       31</span></code></pre></div>
+<span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2022-01-14 04:14:41       31</span></code></pre></div>
 <p>Note, that this method just looks for the best outcome and returns the according row from the archive. For stochastic optimization problems this is overly optimistic and leads to biased results. For this reason the optimizer can use advanced methods to determine the result and set it itself.</p>
 </div>
 </div>
@@ -406,7 +409,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>
