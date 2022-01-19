@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://bbotk.mlr-org.com/404.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/articles/bbotk.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/authors.html</loc>
+  </url>
+  <url>
     <loc>https://bbotk.mlr-org.com/index.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/news/index.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/Archive.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/ArchiveBest.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/Codomain.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/Objective.html</loc>
@@ -50,6 +71,12 @@
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/bbotk_reflections.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/branin.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/index.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/is_dominated.html</loc>
@@ -106,7 +133,7 @@
     <loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation_batch.html</loc>
   </url>
   <url>
-    <loc>https://bbotk.mlr-org.com/reference/mult_max_to_min.html</loc>
+    <loc>https://bbotk.mlr-org.com/reference/nds_selection.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/opt.html</loc>
@@ -122,8 +149,5 @@
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/trm.html</loc>
-  </url>
-  <url>
-    <loc>https://bbotk.mlr-org.com/articles/bbotk.html</loc>
   </url>
 </urlset>
