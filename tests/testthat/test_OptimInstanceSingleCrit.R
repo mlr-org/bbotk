@@ -213,3 +213,13 @@ test_that("OptimInstanceSingleCrit works with empty search space", {
   expect_data_table(instance$archive$data, nrows = 20)
   expect_equal(instance$result$x_domain[[1]], list())
 })
+
+test_that("deep clone works", {
+  inst = MAKE_INST_2D(20L)
+  inst_2 = inst$clone(deep = TRUE)
+
+  expect_different_address(inst$objective, inst_2$objective)
+  expect_different_address(inst$search_space, inst_2$search_space)
+  expect_different_address(inst$archive, inst_2$archive)
+  expect_different_address(inst$terminator, inst_2$terminator)
+})
