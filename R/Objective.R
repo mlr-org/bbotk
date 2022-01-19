@@ -161,6 +161,15 @@ Objective = R6Class("Objective",
       # to keep it simple we expect the order of the results to be right. extras keep their names
       colnames(res)[seq_len(self$codomain$length)] = self$codomain$ids()
       return(res)
+    },
+
+    deep_clone = function(name, value) {
+      switch(name,
+        domain = value$clone(deep = TRUE),
+        codomain = value$clone(deep = TRUE),
+        constants = value$clone(deep = TRUE),
+        value
+      )
     }
   )
 )

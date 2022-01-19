@@ -116,5 +116,5 @@ test_that("data.table deep clone works", {
   a1$add_evals(xdt, xss_trafoed, ydt)
   a2 = a1$clone(deep = TRUE)
 
-  expect_true(address(a1$data) != address(a2$data))
+  expect_different_address(a1$data, a2$data)
 })
