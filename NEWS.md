@@ -1,4 +1,4 @@
-# bbotk 0.4.0.9000
+# bbotk 0.5.0
 
 * Adds non dominated sorting with hypervolume contribution to `Archive`.
 * New `Codomain` class which allows extra parameters.
