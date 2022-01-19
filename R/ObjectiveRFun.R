@@ -2,6 +2,7 @@
 #'
 #' @description
 #' Objective interface where the user can pass a custom R function that expects a list as input.
+#' If the return of the function is unnamed, it is named with the ids of the codomain.
 #'
 #' @template param_domain
 #' @template param_codomain
