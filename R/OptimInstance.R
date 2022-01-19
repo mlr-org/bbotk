@@ -222,7 +222,17 @@ OptimInstance = R6Class("OptimInstance",
 
   private = list(
     .result = NULL,
-    .objective_function = NULL
+    .objective_function = NULL,
+
+    deep_clone = function(name, value) {
+      switch(name,
+        objective = value$clone(deep = TRUE),
+        search_space = value$clone(deep = TRUE),
+        terminator = value$clone(deep = TRUE),
+        archive = value$clone(deep = TRUE),
+        value
+      )
+    }
   )
 )
 
