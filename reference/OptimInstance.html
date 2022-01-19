@@ -80,7 +80,7 @@
     
 
 <p>The <a href="Optimizer.html">Optimizer</a> writes the final result to the <code>.result</code> field by using
-the <code>$assign_result()</code> method. <code>.result</code> stores a <a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>
+the <code>$assign_result()</code> method. <code>.result</code> stores a <a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>
 consisting of x values in the <em>search space</em>, (transformed) x values in the
 <em>domain space</em> and y values in the <em>codomain space</em> of the <a href="Objective.html">Objective</a>. The
 user can access the results with active bindings (see below).</p>
@@ -117,12 +117,12 @@ Stores <code>progressor</code> function.</p></dd>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
     <p></p><div class="r6-active-bindings"><dl><dt><code>result</code></dt>
-<dd><p>(<a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
+<dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 Get result</p></dd>
 
 
 <dt><code>result_x_search_space</code></dt>
-<dd><p>(<a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
+<dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 x part of the result in the <em>search space</em>.</p></dd>
 
 
@@ -241,7 +241,7 @@ function should be internally called by the <a href="Optimizer.html">Optimizer</
 <div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xdt</code></dt>
-<dd><p>(<code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
+<dd><p>(<code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
 x values as <code>data.table()</code> with one point per row. Contains the value in
 the <em>search space</em> of the OptimInstance object. Can contain additional
 columns for extra information.</p></dd>
@@ -261,8 +261,8 @@ and estimated performance value here. For internal use.</p><div class="section">
 <div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xdt</code></dt>
-<dd><p>(<code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
-x values as <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code> with one row. Contains the value in the
+<dd><p>(<code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
+x values as <code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code> with one row. Contains the value in the
 <em>search space</em> of the OptimInstance object. Can contain additional
 columns for extra information.</p></dd>
 
