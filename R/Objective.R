@@ -157,6 +157,15 @@ Objective = R6Class("Objective",
         as.data.table(lapply(ys, function(y) if (is.list(y) && length(y) > 1) list(y) else y))
       })
       return(res)
+    },
+
+    deep_clone = function(name, value) {
+      switch(name,
+        domain = value$clone(deep = TRUE),
+        codomain = value$clone(deep = TRUE),
+        constants = value$clone(deep = TRUE),
+        value
+      )
     }
   )
 )

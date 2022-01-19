@@ -326,3 +326,14 @@ test_that("objective can be initialized with empty codomain", {
   obj = Objective$new(domain = domain, codomain = codomain)
   expect_r6(obj, "Objective")
 })
+
+test_that("deep cloning works", {
+  domain = ps(x = p_dbl(lower = -1, upper = 1))
+  codomain = ps(y1 = p_dbl(tags = "minimize"))
+  objective = Objective$new(domain = domain, codomain = codomain)
+
+  objective_2 = objective$clone(deep = TRUE)
+  expect_different_address(objective$domain, objective_2$domain)
+  expect_different_address(objective$codomain, objective_2$codomain)
+  expect_different_address(objective$constants, objective_2$constants)
+})
