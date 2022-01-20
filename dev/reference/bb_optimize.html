@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.0.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,11 +162,11 @@ evaluation budget is exhausted.</p>
 <span class="r-in"><span class="fu">bb_optimize</span><span class="op">(</span><span class="va">fun</span>, lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, max_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           x1       x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -8.569409 1.209536</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -7.714539 2.747684</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        y1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -119.4326 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -117.4081 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $instance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
@@ -181,20 +181,20 @@ evaluation budget is exhausted.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Terminated: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Result:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           x1       x2  x_domain        y1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -8.569409 1.209536 &lt;list[2]&gt; -119.4326</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -7.714539 2.747684 &lt;list[2]&gt; -117.4081</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Archive:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Archive&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        x1    x2     y1           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -7.68 -2.67  -83.9 2022-01-19 15:48:22        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -8.57  1.21 -119.4 2022-01-19 15:48:22        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -3.80  0.16  -33.7 2022-01-19 15:48:22        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  2.49 -4.15    8.4 2022-01-19 15:48:22        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  8.88 -0.53  -43.5 2022-01-19 15:48:22        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.94  4.60  -56.3 2022-01-19 15:48:22        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  9.01  2.43  -68.6 2022-01-19 15:48:22        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  8.89  4.82  -98.6 2022-01-19 15:48:22        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -5.53  4.84 -108.2 2022-01-19 15:48:22        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -5.71 -4.55  -51.8 2022-01-19 15:48:22       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       x1    x2      y1           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  5.0 -4.29   -0.45 2022-01-20 18:57:17        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -8.1  0.72 -106.35 2022-01-20 18:57:17        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  1.8 -1.37    7.33 2022-01-20 18:57:17        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -2.0 -3.67   -6.42 2022-01-20 18:57:17        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  4.5  4.22  -48.20 2022-01-20 18:57:17        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  7.6 -0.30  -29.15 2022-01-20 18:57:17        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -3.5 -3.19  -20.26 2022-01-20 18:57:17        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -7.7  2.75 -117.41 2022-01-20 18:57:17        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  8.4 -1.99  -32.37 2022-01-20 18:57:17        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  5.2  0.46  -12.46 2022-01-20 18:57:17       10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># function and constant</span></span>
@@ -204,12 +204,12 @@ evaluation budget is exhausted.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">bb_optimize</span><span class="op">(</span><span class="va">fun</span>, lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, max_evals <span class="op">=</span> <span class="fl">10</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -5.934952 -3.044097</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x1       x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -7.423923 4.073072</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        y1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -61.96541 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -137.8387 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $instance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
@@ -223,21 +223,21 @@ evaluation budget is exhausted.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Terminator: &lt;TerminatorEvals&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Terminated: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Result:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2  x_domain        y1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -5.934952 -3.044097 &lt;list[2]&gt; -61.96541</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x1       x2  x_domain        y1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -7.423923 4.073072 &lt;list[2]&gt; -137.8387</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Archive:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Archive&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        x1    x2    y1           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  2.92  1.67 -21.6 2022-01-19 15:48:22        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  4.92 -0.74 -12.7 2022-01-19 15:48:22        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  0.32  3.49 -44.0 2022-01-19 15:48:22        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -5.93 -3.04 -62.0 2022-01-19 15:48:22        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -1.99 -1.47 -17.3 2022-01-19 15:48:22        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  6.84  3.16 -60.4 2022-01-19 15:48:22        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  2.24 -0.80  -3.9 2022-01-19 15:48:22        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  4.44  3.08 -41.9 2022-01-19 15:48:22        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  4.84 -3.39  -7.2 2022-01-19 15:48:22        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  1.93  1.65 -20.6 2022-01-19 15:48:22       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        x1    x2      y1           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  1.41 -4.15   -0.68 2022-01-20 18:57:17        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  6.81 -0.57  -28.05 2022-01-20 18:57:17        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -6.57 -2.38  -72.87 2022-01-20 18:57:17        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  9.16 -4.20  -51.65 2022-01-20 18:57:17        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.81  4.54  -63.71 2022-01-20 18:57:17        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  5.28  4.08  -59.89 2022-01-20 18:57:17        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  2.77  1.66  -21.29 2022-01-20 18:57:17        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  6.32 -3.45  -17.91 2022-01-20 18:57:17        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -7.42  4.07 -137.84 2022-01-20 18:57:17        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  8.94  4.48 -103.16 2022-01-20 18:57:17       10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># objective</span></span>
@@ -253,11 +253,11 @@ evaluation budget is exhausted.</p>
 <span class="r-in"><span class="fu">bb_optimize</span><span class="op">(</span><span class="va">objective</span>, method <span class="op">=</span> <span class="st">"random_search"</span>, max_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -8.438487 -4.730774</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -7.762974 -1.296797</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         z </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -101.9576 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -88.21657 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $instance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
@@ -272,20 +272,20 @@ evaluation budget is exhausted.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Terminated: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Result:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2  x_domain         z</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -8.438487 -4.730774 &lt;list[2]&gt; -101.9576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -7.762974 -1.296797 &lt;list[2]&gt; -88.21657</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Archive:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Archive&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        x1    x2      z           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  9.59 -1.91  -48.8 2022-01-19 15:48:22        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.77 -3.89    1.5 2022-01-19 15:48:22        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -0.17 -3.44    5.1 2022-01-19 15:48:22        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  8.89 -1.44  -39.9 2022-01-19 15:48:22        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  6.87 -0.76  -18.8 2022-01-19 15:48:22        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  4.27 -2.88    4.8 2022-01-19 15:48:22        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -2.11 -0.31  -14.1 2022-01-19 15:48:22        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -8.44 -4.73 -102.0 2022-01-19 15:48:22        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  1.35 -4.16    8.2 2022-01-19 15:48:22        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  8.81 -0.44  -43.0 2022-01-19 15:48:22       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        x1    x2     z           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -7.76 -1.30 -88.2 2022-01-20 18:57:17        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -6.39 -4.04 -61.5 2022-01-20 18:57:17        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  5.96 -0.55 -11.7 2022-01-20 18:57:17        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  9.79 -2.15 -51.4 2022-01-20 18:57:17        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  6.16  3.33 -47.4 2022-01-20 18:57:17        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.14 -2.52   5.2 2022-01-20 18:57:17        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  3.42  1.02  -8.2 2022-01-20 18:57:17        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  6.56  4.71 -70.2 2022-01-20 18:57:17        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  9.00  3.71 -84.1 2022-01-20 18:57:17        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  9.56  0.67 -60.6 2022-01-20 18:57:17       10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
