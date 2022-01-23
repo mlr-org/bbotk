@@ -128,7 +128,7 @@ OptimInstance = R6Class("OptimInstance",
       assert_data_table(xdt)
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 
-      lg$info("Evaluating %i configuration(s)", nrow(xdt))
+      lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
       xss_trafoed = NULL
       if (!nrow(xdt)) {
         # eval if search space is empty
@@ -222,7 +222,17 @@ OptimInstance = R6Class("OptimInstance",
 
   private = list(
     .result = NULL,
-    .objective_function = NULL
+    .objective_function = NULL,
+
+    deep_clone = function(name, value) {
+      switch(name,
+        objective = value$clone(deep = TRUE),
+        search_space = value$clone(deep = TRUE),
+        terminator = value$clone(deep = TRUE),
+        archive = value$clone(deep = TRUE),
+        value
+      )
+    }
   )
 )
 

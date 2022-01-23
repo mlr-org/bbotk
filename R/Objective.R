@@ -121,9 +121,7 @@ Objective = R6Class("Objective",
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
       res = invoke(private$.eval_many, xss, .args = self$constants$values)
-      if (self$check_values) {
-        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      }
+      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     },
 
@@ -158,9 +156,16 @@ Objective = R6Class("Objective",
         ys = self$eval(xs)
         as.data.table(lapply(ys, function(y) if (is.list(y) && length(y) > 1) list(y) else y))
       })
-      # to keep it simple we expect the order of the results to be right. extras keep their names
-      colnames(res)[seq_len(self$codomain$length)] = self$codomain$ids()
       return(res)
+    },
+
+    deep_clone = function(name, value) {
+      switch(name,
+        domain = value$clone(deep = TRUE),
+        codomain = value$clone(deep = TRUE),
+        constants = value$clone(deep = TRUE),
+        value
+      )
     }
   )
 )

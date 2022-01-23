@@ -118,7 +118,7 @@ instance = OptimInstanceSingleCrit$new(objective = obfun, terminator = term_comb
 instance
 ```
 
-Note, that `OptimInstance(SingleCrit/MultiCirt)$new()` also has an optional `search_space` argument.
+Note, that `OptimInstance(SingleCrit/MultiCrit)$new()` also has an optional `search_space` argument.
 It can be used if the `search_space` is only a subset of `obfun$domain` or if you want to apply transformations.
 More on that later.
 
