@@ -1,7 +1,13 @@
-# bbotk 0.4.0.9000
+# bbotk 0.5.0
 
 * Adds non dominated sorting with hypervolume contribution to `Archive`.
 * New `Codomain` class which allows extra parameters.
+* Objective values are not automatically named anymore, with the exception of
+  an unnamed return in `ObjectiveRFun`.
+* Fix deep clone in OptimInstance, Archive and Objective
+* `param_classes`, `properties` and `packages` in Optimizer are read-only
+  fields.
+* Exported branin function.
 
 # bbotk 0.4.0
 

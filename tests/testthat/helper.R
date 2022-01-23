@@ -218,3 +218,8 @@ expect_irace_parameters = function(parameters, names, types, domain, conditions,
   expect_equal(parameters$nbFixed, 0)
   expect_equal(parameters$nbVariable, length(names))
 }
+
+expect_different_address = function(x, y) {
+  requireNamespace("data.table")
+  testthat::expect_false(identical(data.table::address(x), data.table::address(y)))
+}

@@ -109,10 +109,6 @@ assign_result_default = function(inst) {
   invisible(NULL)
 }
 
-get_private = function(x) {
-  x[[".__enclos_env__"]][["private"]]
-}
-
 #' @title Get start values for optimizers
 #'
 #' @description
