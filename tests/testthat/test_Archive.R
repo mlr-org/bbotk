@@ -101,7 +101,7 @@ test_that("check_values flag works", {
   expect_error(a$add_evals(xdt, xss_trafoed, ydt), "x1: Element 1 is not <= 1.", fixed = TRUE)
 })
 
-test_that("data.table deep clone works", {
+test_that("deep clone works", {
   a1 = Archive$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = 0, x2 = 1)
   xss_trafoed = list(list(x1 = 0, x2 = 1))
@@ -109,7 +109,9 @@ test_that("data.table deep clone works", {
   a1$add_evals(xdt, xss_trafoed, ydt)
   a2 = a1$clone(deep = TRUE)
 
-  expect_true(address(a1$data) != address(a2$data))
+  expect_different_address(a1$data, a2$data)
+  expect_different_address(a1$search_space, a2$search_space)
+  expect_different_address(a1$codomain, a2$codomain)
 })
 
 test_that("Archive best method works with no evaluated points", {
