@@ -200,7 +200,12 @@ Archive = R6Class("Archive",
     .data = NULL,
 
     deep_clone = function(name, value) {
-      if (name == "data") copy(value) else value
+      switch(name,
+        search_space = value$clone(deep = TRUE),
+        codomain = value$clone(deep = TRUE),
+        data = copy(value),
+        value
+      )
     }
   )
 )

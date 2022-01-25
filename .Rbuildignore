@@ -24,3 +24,4 @@
 ^CRAN-RELEASE$
 ^README\.Rmd$
 ^README\.html$
+^revdep$

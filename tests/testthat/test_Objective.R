@@ -326,3 +326,36 @@ test_that("objective can be initialized with empty codomain", {
   obj = Objective$new(domain = domain, codomain = codomain)
   expect_r6(obj, "Objective")
 })
+
+test_that("deep cloning works", {
+  domain = ps(x = p_dbl(lower = -1, upper = 1))
+  codomain = ps(y1 = p_dbl(tags = "minimize"))
+  objective = Objective$new(domain = domain, codomain = codomain)
+
+  objective_2 = objective$clone(deep = TRUE)
+  expect_different_address(objective$domain, objective_2$domain)
+  expect_different_address(objective$codomain, objective_2$codomain)
+  expect_different_address(objective$constants, objective_2$constants)
+})
+
+test_that("unnamed objective value works", {
+  fun = function(xs) {
+    xs$x^2
+  }
+
+  objective = ObjectiveRFun$new(fun = fun, domain = PS_1D_domain)
+
+  expect_named(objective$eval(list(x = 1)), "y")
+  expect_named(objective$eval_many(list(list(x = 1), list(x = 0))), "y")
+})
+
+test_that("named objective value works", {
+  fun = function(xs) {
+    c(y = xs$x^2)
+  }
+
+  objective = ObjectiveRFun$new(fun = fun, domain = PS_1D_domain)
+
+  expect_named(objective$eval(list(x = 1)), "y")
+  expect_named(objective$eval_many(list(list(x = 1), list(x = 0))), "y")
+})
