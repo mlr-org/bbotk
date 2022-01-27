@@ -74,7 +74,7 @@ Archive = R6Class("Archive",
 
       xydt = cbind(xdt, ydt)
       if (!is.null(xss_trafoed)) set(xydt, j = "x_domain", value = list(xss_trafoed))
-      set(xydt, j = "timestamp", value = Sys.time())
+      if (status == "evaluated") set(xydt, j = "timestamp", value = Sys.time())
       batch_nr = self$data$batch_nr
       set(xydt, j = "batch_nr", value = if (length(batch_nr)) max(batch_nr) + 1L else 1L)
       set(xydt, j = "status", value = status)

@@ -268,6 +268,7 @@ OptimInstance = R6Class("OptimInstance",
       if (length(id)) {
         set(archive$data, i = id, j = names(ydt), value = ydt)
         set(archive$data, i = id, j = "status", value = "evaluated")
+        set(archive$data, i = id, j = "timestamp", value = Sys.time())
 
         lg$info("Result of evaluating %i configuration(s):", length(id))
         cols_x_extra = setdiff(names(archive$data), c(self$archive$cols_x, self$archive$cols_y, "x_domain"))
