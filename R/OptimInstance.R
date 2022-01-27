@@ -130,7 +130,6 @@ OptimInstance = R6Class("OptimInstance",
 
       lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
       xss_trafoed = NULL
-      set(xdt, j = "timestamp_batch_start", value = Sys.time())
       if (!nrow(xdt)) {
         # eval if search space is empty
         ydt = self$objective$eval_many(list(list()))
@@ -142,7 +141,6 @@ OptimInstance = R6Class("OptimInstance",
         xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
         ydt = self$objective$eval_many(xss_trafoed)
       }
-      set(xdt, j = "timestamp_batch_end", value = Sys.time())
 
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
@@ -200,29 +198,29 @@ OptimInstance = R6Class("OptimInstance",
           # eval all points in single worker
           function(xss_trafoed) {
             promise = list(future::future(objective_async$eval_many(xss_trafoed[[1]]), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_along(xss_trafoed[[1]]), "timestamp_batch_start" = Sys.time())
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_along(xss_trafoed[[1]]))
           }
         } else if (single_worker && dt_shortcut) {
           # eval all points in single worker with dt shortcut
           function(xdt) {
             promise = list(future::future(objective_async$eval_dt(xdt), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_len(nrow(xdt)), "timestamp_batch_start" = Sys.time())
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_len(nrow(xdt)))
           }
         } else if (!single_worker && !dt_shortcut) {
           # eval each point in separate worker
           function(xss_trafoed, n) {
             promise = map(xss_trafoed[[1]], function(xs_trafoed) future::future(objective_async$eval_many(list(xs_trafoed)), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L, "timestamp_batch_start" = Sys.time())
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L)
           }
         } else if (!single_worker && dt_shortcut) {
           # eval each point in separate worker with dt shortcut
           function(xdt, n) {
             promise = map(seq(nrow(xdt)), function(n) future::future(objective_async$eval_dt(xdt[n]), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L, "timestamp_batch_start" = Sys.time())
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L)
           }
         }
         # columns returned by fun
-        cols_y = c("promise", "status", "resolve_id", "timestamp_batch_start")
+        cols_y = c("promise", "status", "resolve_id")
 
       # sequential evaluation
       } else {
@@ -270,7 +268,6 @@ OptimInstance = R6Class("OptimInstance",
       if (length(id)) {
         set(archive$data, i = id, j = names(ydt), value = ydt)
         set(archive$data, i = id, j = "status", value = "evaluated")
-        set(archive$data, i = id, j = "timestamp_batch_end", value = Sys.time())
 
         lg$info("Result of evaluating %i configuration(s):", length(id))
         cols_x_extra = setdiff(names(archive$data), c(self$archive$cols_x, self$archive$cols_y, "x_domain"))
