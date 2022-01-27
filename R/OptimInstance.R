@@ -199,30 +199,26 @@ OptimInstance = R6Class("OptimInstance",
         fun = if (single_worker && !dt_shortcut) {
           # eval all points in single worker
           function(xss_trafoed) {
-            timestamp_batch_start = Sys.time()
             promise = list(future::future(objective_async$eval_many(xss_trafoed[[1]]), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_along(xss_trafoed[[1]]), "timestamp_batch_start" = timestamp_batch_start)
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_along(xss_trafoed[[1]]), "timestamp_batch_start" = Sys.time())
           }
         } else if (single_worker && dt_shortcut) {
           # eval all points in single worker with dt shortcut
           function(xdt) {
-            timestamp_batch_start = Sys.time()
             promise = list(future::future(objective_async$eval_dt(xdt), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_len(nrow(xdt)), "timestamp_batch_start" = timestamp_batch_start)
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = seq_len(nrow(xdt)), "timestamp_batch_start" = Sys.time())
           }
         } else if (!single_worker && !dt_shortcut) {
           # eval each point in separate worker
           function(xss_trafoed, n) {
-            timestamp_batch_start = Sys.time()
             promise = map(xss_trafoed[[1]], function(xs_trafoed) future::future(objective_async$eval_many(list(xs_trafoed)), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L, "timestamp_batch_start" = timestamp_batch_start)
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L, "timestamp_batch_start" = Sys.time())
           }
         } else if (!single_worker && dt_shortcut) {
           # eval each point in separate worker with dt shortcut
           function(xdt, n) {
-            timestamp_batch_start = Sys.time()
             promise = map(seq(nrow(xdt)), function(n) future::future(objective_async$eval_dt(xdt[n]), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L, "timestamp_batch_start" = timestamp_batch_start)
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L, "timestamp_batch_start" = Sys.time())
           }
         }
         # columns returned by fun
