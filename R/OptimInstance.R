@@ -182,7 +182,7 @@ OptimInstance = R6Class("OptimInstance",
 
       # transform values
       if (!dt_shortcut) {
-        data["proposed", "x_domain" := transform_xdt_to_xss(.SD, self$search_space), .SDcols = self$archive$cols_x, on = c("status")]
+        data["proposed", "x_domain" := list(transform_xdt_to_xss(.SD, self$search_space)), .SDcols = self$archive$cols_x, on = c("status")]
       }
       # columns send to worker
       cols_x = if (dt_shortcut) self$archive$cols_x else "x_domain"
