@@ -268,11 +268,9 @@ OptimInstance = R6Class("OptimInstance",
       fun_global_size = function(promise) attributes(promise$globals)$total_size
 
       ydt = archive$data["resolved", fun_value(get("promise"), get("resolve_id")), on = "status", nomatch = NULL]
-      global_size = archive$data["resolved", map_dbl(promise, fun_global_size), on = "status", nomatch = NULL]
       id = archive$data["resolved", on = "status", which = TRUE, nomatch = NULL]
       if (length(id)) {
         set(archive$data, i = id, j = names(ydt), value = ydt)
-        set(archive$data, i = id, j = "global_size", value = global_size)
         set(archive$data, i = id, j = "status", value = "evaluated")
         set(archive$data, i = id, j = "timestamp_resolve_promise_start", value = timestamp_resolve_promise_start)
         set(archive$data, i = id, j = "timestamp", value = Sys.time())
