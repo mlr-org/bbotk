@@ -48,6 +48,7 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
       repeat({
         replicate(n_workers - inst$archive$n_in_progress, {
           xdt = sampler$sample(1)$data
+          set(xdt, j = "timestamp_optimize_proposed", value = Sys.time())
           inst$archive$add_evals(xdt, status = "proposed")
           inst$eval_proposed(async = TRUE, single_worker = FALSE)
         })

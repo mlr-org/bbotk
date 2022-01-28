@@ -209,8 +209,9 @@ OptimInstance = R6Class("OptimInstance",
         } else if (!single_worker && !dt_shortcut) {
           # eval each point in separate worker
           function(xss_trafoed, n) {
+            timestamp_eval_proposed_start = Sys.time()
             promise = map(xss_trafoed[[1]], function(xs_trafoed) future::future(objective_async$eval_many(list(xs_trafoed)), seed = TRUE))
-            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L)
+            list("promise" = promise, "status" = "in_progress", "resolve_id" = 1L, "timestamp_eval_proposed_start" = timestamp_eval_proposed_start)
           }
         } else if (!single_worker && dt_shortcut) {
           # eval each point in separate worker with dt shortcut
@@ -220,7 +221,7 @@ OptimInstance = R6Class("OptimInstance",
           }
         }
         # columns returned by fun
-        cols_y = c("promise", "status", "resolve_id")
+        cols_y = c("promise", "status", "resolve_id", "timestamp_eval_proposed_start")
 
       # sequential evaluation
       } else {
@@ -254,6 +255,7 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @return [`data.table::data.table()`] (invisibly).
     resolve_promise = function(i = NULL) {
+      timestamp_resolve_promise_start = Sys.time()
       archive = self$archive
       assert_subset(i, seq(nrow(archive$data)))
 
@@ -268,6 +270,7 @@ OptimInstance = R6Class("OptimInstance",
       if (length(id)) {
         set(archive$data, i = id, j = names(ydt), value = ydt)
         set(archive$data, i = id, j = "status", value = "evaluated")
+        set(archive$data, i = id, j = "timestamp_resolve_promise_start", value = timestamp_resolve_promise_start)
         set(archive$data, i = id, j = "timestamp", value = Sys.time())
 
         lg$info("Result of evaluating %i configuration(s):", length(id))
