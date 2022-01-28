@@ -147,10 +147,11 @@ OptimInstance = R6Class("OptimInstance",
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
       xydt = cbind(xdt, ydt)
-      cols_x_extra = setdiff(names(xydt), c(self$archive$cols_x, self$archive$cols_y, "x_domain",
-          "timestamp_proposed", "timestamp_promise", "timestamp_eval_start", "timestamp_eval_end", "timestamp_resolved", "timestamp_evaluated"))
+      cols_x_extra = setdiff(names(xydt), c(self$archive$cols_x, self$archive$cols_y, "uhash", "x_domain",
+        "timestamp_proposed", "timestamp_promise", "timestamp_eval_start", "timestamp_eval_end", "timestamp_resolved",
+        "timestamp_evaluated"))
       setcolorder(xydt, c(self$archive$cols_y, cols_x_extra, self$archive$cols_x))
-      lg$info(capture.output(print(xydt, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      lg$info(capture.output(print(xydt[, c(self$archive$cols_y, cols_x_extra, self$archive$cols_x), with = FALSE], class = FALSE, row.names = FALSE, print.keys = FALSE)))
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
     },
 
@@ -280,7 +281,8 @@ OptimInstance = R6Class("OptimInstance",
 
         lg$info("Result of evaluating %i configuration(s):", length(id))
         cols_x_extra = setdiff(names(archive$data), c(self$archive$cols_x, self$archive$cols_y, "x_domain",
-          "timestamp_proposed", "timestamp_promise", "timestamp_eval_start", "timestamp_eval_end", "timestamp_resolved", "timestamp_evaluated"))
+          "timestamp_proposed", "timestamp_promise", "timestamp_eval_start", "timestamp_eval_end", "timestamp_resolved",
+          "timestamp_evaluated"))
         lg$info(capture.output(print(
           archive$data[id, c(self$archive$cols_y, cols_x_extra, self$archive$cols_x), with = FALSE],
           class = FALSE, row.names = FALSE, print.keys = FALSE)))
