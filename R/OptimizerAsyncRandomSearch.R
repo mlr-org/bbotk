@@ -44,16 +44,15 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
     .optimize = function(inst) {
       sampler = SamplerUnif$new(inst$search_space)
       n_workers = future::nbrOfWorkers()
-
-      repeat({
-        replicate(n_workers - inst$archive$n_in_progress, {
+      repeat {
+        while (inst$archive$n_in_progress < n_workers)  {
           xdt = sampler$sample(1)$data
           set(xdt, j = "timestamp_optimize_proposed", value = Sys.time())
           inst$archive$add_evals(xdt, status = "proposed")
           inst$eval_proposed(async = TRUE, single_worker = FALSE)
-        })
+        }
       inst$resolve_promise()
-      })
+      }
     }
   )
 )
