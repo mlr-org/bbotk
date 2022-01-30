@@ -72,6 +72,8 @@ optimize_default = function(inst, self, private) {
   lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
     inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
   tryCatch({
+    # evaluate start points
+    if (!is.null(inst$start_points)) inst$eval_batch(inst$start_points)
     private$.optimize(inst)
   }, terminated_error = function(cond) {
   })

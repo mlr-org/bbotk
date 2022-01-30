@@ -36,6 +36,9 @@ OptimInstance = R6Class("OptimInstance",
     #' @field objective_multiplicator (`integer()`).
     objective_multiplicator = NULL,
 
+    #' @field start_points (`list()`)\cr
+    start_points = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
