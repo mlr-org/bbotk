@@ -1,5 +1,6 @@
 # bbotk 0.5.0.9000
 
+* fix: `$.status()` of `TerminatorRunTime` and `TerminatorClockTime` is always returned in seconds now.
 * fix: Number of evaluations in log messages when search space is empty.
 
 # bbotk 0.5.0
