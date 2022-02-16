@@ -128,7 +128,7 @@ OptimInstance = R6Class("OptimInstance",
       assert_data_table(xdt)
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 
-      lg$info("Evaluating %i configuration(s)", nrow(xdt))
+      lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
       xss_trafoed = NULL
       if (!nrow(xdt)) {
         # eval if search space is empty

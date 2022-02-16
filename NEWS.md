@@ -1,3 +1,7 @@
+# bbotk 0.5.0.9000
+
+* fix: Number of evaluations in log messages when search space is empty.
+
 # bbotk 0.5.0
 
 * Adds non dominated sorting with hypervolume contribution to `Archive`.
