@@ -100,6 +100,7 @@ if (requireNamespace("nloptr")) {
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format">}\href{../../bbotk/html/Optimizer.html#method-format}{\code{bbotk::Optimizer$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help">}\href{../../bbotk/html/Optimizer.html#method-help}{\code{bbotk::Optimizer$help()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize">}\href{../../bbotk/html/Optimizer.html#method-optimize}{\code{bbotk::Optimizer$optimize()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print">}\href{../../bbotk/html/Optimizer.html#method-print}{\code{bbotk::Optimizer$print()}}\out{</span>}
 }

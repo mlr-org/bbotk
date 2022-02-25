@@ -77,7 +77,8 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
-        packages = "adagio"
+        packages = "adagio",
+        man = "bbotk::mlr_optimizers_cmaes"
       )
     }
   ),

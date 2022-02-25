@@ -42,7 +42,8 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
       super$initialize(
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit", "multi-crit")
+        properties = c("dependencies", "single-crit", "multi-crit"),
+        man = "bbotk::mlr_optimizers_random_search"
       )
     }
   ),

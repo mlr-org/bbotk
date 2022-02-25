@@ -157,7 +157,8 @@ OptimizerIrace = R6Class("OptimizerIrace",
         param_set = param_set,
         param_classes = c("ParamDbl", "ParamInt", "ParamFct", "ParamLgl"),
         properties = c("dependencies", "single-crit"),
-        packages = "irace"
+        packages = "irace",
+        man = "bbotk::mlr_optimizers_irace"
       )
     }
   ),

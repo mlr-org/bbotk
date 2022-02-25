@@ -138,6 +138,7 @@ test_optimizer_dependencies = function(key, ..., term_evals = 2L, real_evals = t
 test_optimizer = function(instance, key, ..., real_evals) {
   optimizer = opt(key, ...)
   expect_class(optimizer, "Optimizer")
+  expect_man_exists(optimizer$man)
   optimizer$optimize(instance)
   archive = instance$archive
 
@@ -222,4 +223,13 @@ expect_irace_parameters = function(parameters, names, types, domain, conditions,
 expect_different_address = function(x, y) {
   requireNamespace("data.table")
   testthat::expect_false(identical(data.table::address(x), data.table::address(y)))
+}
+
+expect_man_exists = function(man) {
+  checkmate::expect_string(man, na.ok = TRUE, fixed = "::")
+  if (!is.na(man)) {
+    parts = strsplit(man, "::", fixed = TRUE)[[1L]]
+    matches = help.search(parts[2L], package = parts[1L], ignore.case = FALSE)
+    checkmate::expect_data_frame(matches$matches, min.rows = 1L, info = "man page lookup")
+  }
 }
