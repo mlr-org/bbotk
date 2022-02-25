@@ -143,6 +143,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <ul><li><p><a href="#method-new"><code>OptimizerNLoptr$new()</code></a></p></li>
 <li><p><a href="#method-clone"><code>OptimizerNLoptr$clone()</code></a></p></li>
 </ul></div><p><details open><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>bbotk::Optimizer$format()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>bbotk::Optimizer$help()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize"><a href="Optimizer.html#method-optimize"><code>bbotk::Optimizer$optimize()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>bbotk::Optimizer$print()</code></a></span></p></li>
 </ul></details></p><hr><a id="method-new"></a><div class="section">
@@ -213,18 +214,19 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: nloptr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 x            y           timestamp batch_nr    x_domain_x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  5.026191e-01 2.526259e-01 2022-02-25 10:16:41        1  5.026191e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  5.026191e-01 2.526259e-01 2022-02-25 10:16:41        2  5.026191e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  5.026191e-01 2.526259e-01 2022-02-25 10:16:41        3  5.026191e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  8.756548e-01 7.667713e-01 2022-02-25 10:16:41        4  8.756548e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  1.295834e-01 1.679185e-02 2022-02-25 10:16:41        5  1.295834e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -2.220446e-16 4.930381e-32 2022-02-25 10:16:41        6 -2.220446e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -3.730357e-02 1.391556e-03 2022-02-25 10:16:41        7 -3.730357e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  3.730357e-03 1.391556e-05 2022-02-25 10:16:41        8  3.730357e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -3.730357e-03 1.391556e-05 2022-02-25 10:16:41        9 -3.730357e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  3.730357e-05 1.391556e-09 2022-02-25 10:16:41       10  3.730357e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: -3.730357e-05 1.391556e-09 2022-02-25 10:16:41       11 -3.730357e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  1.902782e-21 3.620581e-42 2022-02-25 10:16:41       12  1.902782e-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -7.914665e-01 6.264193e-01 2022-02-25 12:40:23        1 -7.914665e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -7.914665e-01 6.264193e-01 2022-02-25 12:40:23        2 -7.914665e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -7.914665e-01 6.264193e-01 2022-02-25 12:40:23        3 -7.914665e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -6.350664e-01 4.033094e-01 2022-02-25 12:40:23        4 -6.350664e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -9.478666e-01 8.984512e-01 2022-02-25 12:40:23        5 -9.478666e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -4.786663e-01 2.291215e-01 2022-02-25 12:40:23        6 -4.786663e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -1.658661e-01 2.751157e-02 2022-02-25 12:40:23        7 -1.658661e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  0.000000e+00 0.000000e+00 2022-02-25 12:40:23        8  0.000000e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  1.564001e-02 2.446099e-04 2022-02-25 12:40:23        9  1.564001e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -1.564001e-02 2.446099e-04 2022-02-25 12:40:23       10 -1.564001e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: -1.564001e-04 2.446099e-08 2022-02-25 12:40:23       11 -1.564001e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  1.564001e-04 2.446099e-08 2022-02-25 12:40:23       12  1.564001e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: -6.466595e-23 4.181685e-45 2022-02-25 12:40:23       13 -6.466595e-23</span>
 <span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 </code></pre></div>
