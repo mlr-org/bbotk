@@ -20,7 +20,7 @@ estimated performance vector."><!-- mathjax --><script src="https://cdnjs.cloudf
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,6 +117,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>).</p></dd>
 
 
+<dt><code>man</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>).</p></dd>
+
+
 </dl><p></p></div>
     </div>
     <div class="section level2">
@@ -128,13 +132,20 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <ul><li><p><a href="#method-new"><code>Optimizer$new()</code></a></p></li>
 <li><p><a href="#method-format"><code>Optimizer$format()</code></a></p></li>
 <li><p><a href="#method-print"><code>Optimizer$print()</code></a></p></li>
+<li><p><a href="#method-help"><code>Optimizer$help()</code></a></p></li>
 <li><p><a href="#method-optimize"><code>Optimizer$optimize()</code></a></p></li>
 <li><p><a href="#method-clone"><code>Optimizer$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/Optimizer.html">Optimizer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">param_set</span>, <span class="va">param_classes</span>, <span class="va">properties</span>, packages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/Optimizer.html">Optimizer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  <span class="va">param_set</span>,
+  <span class="va">param_classes</span>,
+  <span class="va">properties</span>,
+  packages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,
+  man <span class="op">=</span> <span class="cn">NA_character_</span>
+<span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -153,6 +164,12 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 
 <dt><code>packages</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>).</p></dd>
+
+
+<dt><code>man</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
+The referenced help package can be opened via method <code>$help()</code>.</p></dd>
 
 
 </dl><p></p></div>
@@ -178,12 +195,20 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>).</p>
 </div>
 
+</div><p></p><hr><a id="method-help"></a><div class="section">
+<h3 id="method-help-">Method <code>help()</code><a class="anchor" aria-label="anchor" href="#method-help-"></a></h3>
+<p>Opens the corresponding help page referenced by field <code>$man</code>.</p><div class="section">
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Optimizer</span><span class="op">$</span><span class="fu">help</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+
 </div><p></p><hr><a id="method-optimize"></a><div class="section">
 <h3 id="method-optimize-">Method <code><a href="https://rdrr.io/r/stats/optimize.html" class="external-link">optimize()</a></code><a class="anchor" aria-label="anchor" href="#method-optimize-"></a></h3>
 <p>Performs the optimization and writes optimization result into
 <a href="OptimInstance.html">OptimInstance</a>. The optimization result is returned but the complete
 optimization path is stored in <a href="Archive.html">Archive</a> of <a href="OptimInstance.html">OptimInstance</a>.</p><div class="section">
-<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">inst</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -203,7 +228,7 @@ optimization path is stored in <a href="Archive.html">Archive</a> of <a href="Op
 </div><p></p><hr><a id="method-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Optimizer</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 

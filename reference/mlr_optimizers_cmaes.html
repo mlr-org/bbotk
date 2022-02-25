@@ -16,7 +16,7 @@ crash."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,6 +132,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <ul><li><p><a href="#method-new"><code>OptimizerCmaes$new()</code></a></p></li>
 <li><p><a href="#method-clone"><code>OptimizerCmaes$clone()</code></a></p></li>
 </ul></div><p><details open><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>bbotk::Optimizer$format()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>bbotk::Optimizer$help()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize"><a href="Optimizer.html#method-optimize"><code>bbotk::Optimizer$optimize()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>bbotk::Optimizer$print()</code></a></span></p></li>
 </ul></details></p><hr><a id="method-new"></a><div class="section">
@@ -198,17 +199,17 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in">  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: adagio</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             x1         x2          y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 10.0000000 -2.9177247 -54.006769 &lt;list[2]&gt; 2022-01-20 04:11:44        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.4986136  5.0000000 -60.243070 &lt;list[2]&gt; 2022-01-20 04:11:44        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  2.6533816  2.6555792 -22.412484 &lt;list[2]&gt; 2022-01-20 04:11:44        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.8845450 -5.0000000   4.755760 &lt;list[2]&gt; 2022-01-20 04:11:44        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  3.1852584 -5.0000000   4.595162 &lt;list[2]&gt; 2022-01-20 04:11:44        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 10.0000000 -2.5849266 -54.172286 &lt;list[2]&gt; 2022-01-20 04:11:44        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -0.4046489  0.5188559  -8.164683 &lt;list[2]&gt; 2022-01-20 04:11:44        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -8.1518808 -5.0000000 -97.060685 &lt;list[2]&gt; 2022-01-20 04:11:44        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  5.0662608 -5.0000000  -3.401955 &lt;list[2]&gt; 2022-01-20 04:11:44        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  8.1185144 -5.0000000 -31.436218 &lt;list[2]&gt; 2022-01-20 04:11:44       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x1         x2           y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -10.0000000 -5.0000000 -138.000000 &lt;list[2]&gt; 2022-02-25 13:58:36        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -10.0000000 -2.5912874 -134.167046 &lt;list[2]&gt; 2022-02-25 13:58:36        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  -7.9059787 -5.0000000  -92.128414 &lt;list[2]&gt; 2022-02-25 13:58:36        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  -5.9206434 -5.0000000  -56.736592 &lt;list[2]&gt; 2022-02-25 13:58:36        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:   1.4362192 -5.0000000    5.682151 &lt;list[2]&gt; 2022-02-25 13:58:36        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:   6.1942869 -0.3133947  -14.809891 &lt;list[2]&gt; 2022-02-25 13:58:36        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  -0.3259487 -2.3230596    4.131715 &lt;list[2]&gt; 2022-02-25 13:58:36        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  -2.5095817 -2.2258586  -10.935622 &lt;list[2]&gt; 2022-02-25 13:58:36        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  -5.6878317 -2.8310591  -49.131298 &lt;list[2]&gt; 2022-02-25 13:58:36        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  10.0000000 -5.0000000  -58.000000 &lt;list[2]&gt; 2022-02-25 13:58:36       10</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -12,7 +12,7 @@ nloptr::nloptr() from package nloptr."><!-- mathjax --><script src="https://cdnj
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,6 +143,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <ul><li><p><a href="#method-new"><code>OptimizerNLoptr$new()</code></a></p></li>
 <li><p><a href="#method-clone"><code>OptimizerNLoptr$clone()</code></a></p></li>
 </ul></div><p><details open><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>bbotk::Optimizer$format()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>bbotk::Optimizer$help()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize"><a href="Optimizer.html#method-optimize"><code>bbotk::Optimizer$optimize()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>bbotk::Optimizer$print()</code></a></span></p></li>
 </ul></details></p><hr><a id="method-new"></a><div class="section">
@@ -213,17 +214,19 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: nloptr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 x            y           timestamp batch_nr    x_domain_x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -5.913730e-01 3.497220e-01 2022-01-20 04:11:49        1 -5.913730e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -5.913730e-01 3.497220e-01 2022-01-20 04:11:49        2 -5.913730e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -5.913730e-01 3.497220e-01 2022-01-20 04:11:49        3 -5.913730e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -2.849027e-01 8.116954e-02 2022-01-20 04:11:49        4 -2.849027e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -8.978432e-01 8.061225e-01 2022-01-20 04:11:49        5 -8.978432e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -1.110223e-16 1.232595e-32 2022-01-20 04:11:49        6 -1.110223e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  3.064703e-02 9.392403e-04 2022-01-20 04:11:49        7  3.064703e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -3.064703e-03 9.392403e-06 2022-01-20 04:11:49        8 -3.064703e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  3.064703e-04 9.392403e-08 2022-01-20 04:11:49        9  3.064703e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -3.064703e-05 9.392403e-10 2022-01-20 04:11:49       10 -3.064703e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: -1.893202e-21 3.584212e-42 2022-01-20 04:11:49       11 -1.893202e-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  8.114728e-01 6.584882e-01 2022-02-25 13:58:42        1  8.114728e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  8.114728e-01 6.584882e-01 2022-02-25 13:58:42        2  8.114728e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  8.114728e-01 6.584882e-01 2022-02-25 13:58:42        3  8.114728e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  9.528682e-01 9.079578e-01 2022-02-25 13:58:42        4  9.528682e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  6.700775e-01 4.490038e-01 2022-02-25 13:58:42        5  6.700775e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  5.286821e-01 2.795048e-01 2022-02-25 13:58:42        6  5.286821e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  2.458914e-01 6.046258e-02 2022-02-25 13:58:42        7  2.458914e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -1.110223e-16 1.232595e-32 2022-02-25 13:58:42        8 -1.110223e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -1.413954e-02 1.999265e-04 2022-02-25 13:58:42        9 -1.413954e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  1.413954e-02 1.999265e-04 2022-02-25 13:58:42       10  1.413954e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  1.413954e-04 1.999265e-08 2022-02-25 13:58:42       11  1.413954e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: -1.413954e-04 1.999265e-08 2022-02-25 13:58:42       12 -1.413954e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: -9.327119e-21 8.699515e-41 2022-02-25 13:58:42       13 -9.327119e-21</span>
 <span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 </code></pre></div>
