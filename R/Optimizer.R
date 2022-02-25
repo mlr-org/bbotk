@@ -23,13 +23,17 @@ Optimizer = R6Class("Optimizer",
     #' @param param_classes (`character()`).
     #' @param properties (`character()`).
     #' @param packages (`character()`).
-    initialize = function(param_set, param_classes, properties, packages = character()) {
+    #' @param man (`character(1)`)\cr
+    #'   String in the format `[pkg]::[topic]` pointing to a manual page for this object.
+    #'   The referenced help package can be opened via method `$help()`.
+    initialize = function(param_set, param_classes, properties, packages = character(), man = NA_character_) {
       private$.param_set = assert_param_set(param_set)
       private$.param_classes = assert_subset(param_classes,
         c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
       # has to have at least multi-crit or single-crit property
       private$.properties = assert_subset(properties, bbotk_reflections$optimizer_properties, empty.ok = FALSE)
       private$.packages = union("bbotk", assert_character(packages, any.missing = FALSE, min.chars = 1L))
+      private$.man = assert_string(man, na.ok = TRUE)
 
       check_packages_installed(self$packages,
         msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self)))
@@ -51,6 +55,12 @@ Optimizer = R6Class("Optimizer",
       catf(str_indent("* Parameter classes:", self$param_classes))
       catf(str_indent("* Properties:", self$properties))
       catf(str_indent("* Packages:", self$packages))
+    },
+
+    #' @description
+    #' Opens the corresponding help page referenced by field `$man`.
+    help = function() {
+      open_help(self$man)
     },
 
     #' @description
@@ -97,6 +107,14 @@ Optimizer = R6Class("Optimizer",
         stop("$packages is read-only.")
       }
       private$.packages
+    },
+
+    #' @field man (`character()`).
+    man = function(rhs) {
+      if (!missing(rhs) && !identical(rhs, private$.man)) {
+        stop("$man is read-only.")
+      }
+      private$.man
     }
   ),
 
@@ -111,6 +129,7 @@ Optimizer = R6Class("Optimizer",
     .param_set = NULL,
     .param_classes = NULL,
     .properties = NULL,
-    .packages = NULL
+    .packages = NULL,
+    .man = NULL
   )
 )

@@ -23,3 +23,22 @@
 #' @examples
 #' opt("random_search", batch_size = 10)
 mlr_optimizers = R6Class("DictionaryOptimizer", inherit = Dictionary, cloneable = FALSE)$new()
+
+#' @export
+as.data.table.DictionaryOptimizer = function(x, ...) {
+  setkeyv(map_dtr(x$keys(), function(key) {
+    t = tryCatch(x$get(key),
+      missingDefaultError = function(e) NULL)
+    if (is.null(t)) {
+      return(list(key = key))
+    }
+
+    list(
+      key = key,
+      param_classes = list(t$param_classes),
+      properties = list(t$properties),
+      packages = list(t$packages),
+      man = t$man
+    )
+  }, .fill = TRUE), "key")[]
+}

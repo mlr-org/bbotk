@@ -78,7 +78,8 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
-        packages = "GenSA"
+        packages = "GenSA",
+        man = "bbotk::mlr_optimizers_gensa"
       )
     }
   ),

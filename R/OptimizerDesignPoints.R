@@ -75,7 +75,8 @@ OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
       super$initialize(
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"),
-        properties = c("dependencies", "single-crit", "multi-crit")
+        properties = c("dependencies", "single-crit", "multi-crit"),
+        man = "bbotk::mlr_optimizers_design_points"
       )
     }
   ),
