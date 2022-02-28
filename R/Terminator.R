@@ -42,10 +42,10 @@ Terminator = R6Class("Terminator",
     #'
     #' @param unit (`character()`)\cr
     #'   Unit of steps.
-    initialize = function(param_set = ps(), properties = character(), unit = NA_character_, label = NA_character_, man = NA_character_) {
+    initialize = function(param_set = ps(), properties = character(), unit = "percent", label = NA_character_, man = NA_character_) {
       private$.param_set = assert_param_set(param_set)
       private$.properties = assert_subset(properties, bbotk_reflections$terminator_properties)
-      private$.unit = assert_string(unit, na.ok = TRUE)
+      private$.unit = assert_string(unit)
       private$.label = assert_string(label, na.ok = TRUE)
       private$.man = assert_string(man, na.ok = TRUE)
     },
