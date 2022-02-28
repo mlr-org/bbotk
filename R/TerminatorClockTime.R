@@ -56,7 +56,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
   private = list(
     .status = function(archive) {
       max_steps = as.integer(ceiling(difftime(self$param_set$values$stop_time, archive$start_time, units = "secs")))
-      current_steps = as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
+      current_steps = as.integer(difftime(Sys.time(), archive$start_time, units = "secs"))
       c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )

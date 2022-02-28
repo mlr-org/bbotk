@@ -4,6 +4,7 @@
 
 # bbotk 0.5.1
 
+* fix: `$.status()` of `TerminatorRunTime` and `TerminatorClockTime` is always returned in seconds now.
 * fix: Number of evaluations in log messages when search space is empty.
 * feat: Added a `as.data.table.DictionaryOptimizer` method.
 * feat: `$help()` method which opens manual page of an `Optimizer`.

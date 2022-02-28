@@ -53,7 +53,7 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     is_terminated = function(archive) {
       assert_r6(archive, "Archive")
       if (is.null(archive$start_time)) return(FALSE)
-      d = as.numeric(difftime(Sys.time(), archive$start_time), units = "secs")
+      d = as.numeric(difftime(Sys.time(), archive$start_time, units = "secs"))
       return(d >= self$param_set$values$secs)
     }
   ),
@@ -61,7 +61,7 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
   private = list(
     .status = function(archive) {
       max_steps = self$param_set$values$secs
-      current_steps = as.integer(difftime(Sys.time(), archive$start_time), units = "secs")
+      current_steps = as.integer(difftime(Sys.time(), archive$start_time, units = "secs"))
       c("max_steps" = max_steps, "current_steps" = current_steps)
     }
   )
