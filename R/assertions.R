@@ -98,12 +98,8 @@ assert_instance_properties = function(optimizer, inst) {
   }
 
   # check supported parameter class
-  not_supported_pclasses = setdiff(
-    unique(inst$search_space$class),
-    optimizer$param_classes)
+  not_supported_pclasses = setdiff(unique(inst$search_space$class), get_private(optimizer)$.param_classes)
   if (length(not_supported_pclasses) > 0L) {
-    stopf(
-      "'%s' does not support param types: '%s'", class(optimizer)[1L],
-      paste0(not_supported_pclasses, collapse = ","))
+    stopf("'%s' does not support param types: '%s'", class(optimizer)[1L], paste0(not_supported_pclasses, collapse = ","))
   }
 }
