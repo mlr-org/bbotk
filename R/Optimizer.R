@@ -10,7 +10,6 @@
 #' @template section_progress_bars
 #'
 #' @template field_param_set
-#' @template field_properties
 #' @template field_label
 #' @template field_man
 #'
