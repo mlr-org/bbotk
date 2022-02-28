@@ -22,9 +22,6 @@ combined with a \link{Terminator}. Simply wrap the function in
 \item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Set of control parameters.}
 
-\item{\code{properties}}{(\code{character()})\cr
-Set of properties.}
-
 \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
@@ -34,12 +31,16 @@ String in the format \verb{[pkg]::[topic]} pointing to a manual page for this ob
 The referenced help package can be opened via method \verb{$help()}.}
 
 \item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes.}
+Supported parameter classes that the optimizer can optimize.
+Subclasses of \link[paradox:Param]{paradox::Param}.}
+
+\item{\code{properties}}{(\code{character()})\cr
+Set of properties of the optimizer.
+Must be a subset of \code{\link[mlr3:mlr_reflections]{mlr_reflections$optimizer_properties}}.}
 
 \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.
-A warning is signaled by the constructor if at least one of the packages is not installed,
-but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
+A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -74,18 +75,19 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Set of control parameters for terminator.}
+Set of control parameters.}
 
 \item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes.}
+Supported parameter classes that the optimizer can optimize.
+Subclasses of \link[paradox:Param]{paradox::Param}.}
 
 \item{\code{properties}}{(\code{character()})\cr
-Set of properties.}
+Set of properties of the optimizer.
+Must be a subset of \code{\link[mlr3:mlr_reflections]{mlr_reflections$optimizer_properties}}.}
 
 \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.
-A warning is signaled by the constructor if at least one of the packages is not installed,
-but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
+A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
 
 \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.

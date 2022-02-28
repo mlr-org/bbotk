@@ -32,7 +32,7 @@ mlr_terminators = R6Class("DictionaryTerminator", inherit = Dictionary,
   cloneable = FALSE)$new()
 
 #' @export
-as.data.table.DictionaryTerminator = function(x, extra_cols = character(), ...) {
+as.data.table.DictionaryTerminator = function(x, ...,extra_cols = character()) {
   assert_character(extra_cols, any.missing = FALSE)
 
   setkeyv(map_dtr(x$keys(), function(key) {

@@ -15,9 +15,6 @@
 #' @template field_man
 #'
 #' @template param_param_set
-#' @template param_classes
-#' @template param_properties
-#' @template param_packages
 #' @template param_label
 #' @template param_man
 #'
@@ -27,6 +24,18 @@ Optimizer = R6Class("Optimizer",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @param param_classes (`character()`)\cr
+    #'   Supported parameter classes that the optimizer can optimize.
+    #'   Subclasses of [paradox::Param].
+    #'
+    #' @param properties (`character()`)\cr
+    #'   Set of properties of the optimizer.
+    #'   Must be a subset of [`mlr_reflections$optimizer_properties`][mlr3::mlr_reflections].
+    #'
+     #' @param packages (`character()`)\cr
+    #'   Set of required packages.
+    #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
     initialize = function(param_set, param_classes, properties, packages = character(), label = NA_character_, man = NA_character_) {
       private$.param_set = assert_param_set(param_set)
       private$.param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
@@ -85,7 +94,8 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @field param_classes (`character()`)\cr
-    #'   Supported parameter classes.
+    #'   Supported parameter classes that the optimizer can optimize.
+    #'   Subclasses of [paradox::Param].
     param_classes = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.param_classes)) {
         stop("$param_classes is read-only.")
@@ -93,6 +103,9 @@ Optimizer = R6Class("Optimizer",
       private$.param_classes
     },
 
+    #' @field properties (`character()`)\cr
+    #'   Set of properties of the optimizer.
+    #'   Must be a subset of [`mlr_reflections$optimizer_properties`][mlr3::mlr_reflections].
     properties = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.properties)) {
         stop("$properties is read-only.")
@@ -102,8 +115,7 @@ Optimizer = R6Class("Optimizer",
 
     #' @field packages (`character()`)\cr
     #'   Set of required packages.
-    #'   A warning is signaled by the constructor if at least one of the packages is not installed,
-    #'   but loaded (not attached) later on-demand via [requireNamespace()].
+    #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
     packages = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.packages)) {
         stop("$packages is read-only.")

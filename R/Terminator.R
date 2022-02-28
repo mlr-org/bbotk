@@ -23,12 +23,10 @@
 #' @family Terminator
 #'
 #' @template field_param_set
-#' @template field_properties
 #' @template field_label
 #' @template field_man
 #'
 #' @template param_param_set
-#' @template param_properties
 #' @template param_label
 #' @template param_man
 #' @template param_archive
@@ -39,6 +37,10 @@ Terminator = R6Class("Terminator",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @param properties (`character()`)\cr
+    #'   Set of properties of the terminator.
+    #'   Must be a subset of [`mlr_reflections$terminator_properties`][mlr3::mlr_reflections].
     #'
     #' @param unit (`character()`)\cr
     #'   Unit of steps.
@@ -106,6 +108,9 @@ Terminator = R6Class("Terminator",
       private$.param_set
     },
 
+    #' @field properties (`character()`)\cr
+    #'   Set of properties of the terminator.
+    #'   Must be a subset of [`mlr_reflections$terminator_properties`][mlr3::mlr_reflections].
     properties = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.properties)) {
         stop("$properties is read-only.")

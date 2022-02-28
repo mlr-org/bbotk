@@ -1,2 +1,2 @@
 #' @param param_set ([paradox::ParamSet])\cr
-#'   Set of control parameters for terminator.
+#'   Set of control parameters.

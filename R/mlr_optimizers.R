@@ -32,7 +32,7 @@
 mlr_optimizers = R6Class("DictionaryOptimizer", inherit = Dictionary, cloneable = FALSE)$new()
 
 #' @export
-as.data.table.DictionaryOptimizer = function(x, extra_cols = character(), ...) {
+as.data.table.DictionaryOptimizer = function(x, ..., extra_cols = character()) {
   assert_character(extra_cols, any.missing = FALSE)
 
   setkeyv(map_dtr(x$keys(), function(key) {

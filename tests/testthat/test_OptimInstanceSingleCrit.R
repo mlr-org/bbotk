@@ -88,9 +88,8 @@ test_that("OptimInstance works with extras output", {
 })
 
 test_that("Terminator assertions work", {
-  terminator = Terminator$new()
-  terminator$properties = "multi-crit"
-  expect_error(MAKE_INST(terminator = terminator))
+  terminator = trm("perf_reached")
+  expect_error(MAKE_INST_2D_2D(terminator = terminator), "does not support multi-crit optimization")
 })
 
 test_that("objective_function works", {
