@@ -70,7 +70,7 @@ Terminator = R6Class("Terminator",
     #' @param ... (ignored).
     print = function(...) {
       catn(format(self), if (is.na(self$label)) "" else paste0(": ", self$label))
-      catf(str_indent("* Parameters:", as_short_string(self$param_set$values)))
+      catn(str_indent("* Parameters:", as_short_string(self$param_set$values)))
     },
 
     #' @description
