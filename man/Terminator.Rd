@@ -79,6 +79,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{Terminator$new(
   param_set = ps(),
   properties = character(),
+  unit = NA_character_,
   label = NA_character_,
   man = NA_character_
 )}\if{html}{\out{</div>}}
@@ -92,6 +93,9 @@ Set of control parameters for terminator.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties.}
+
+\item{\code{unit}}{(\code{character()})\cr
+Unit of steps.}
 
 \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.

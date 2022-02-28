@@ -39,10 +39,13 @@ Terminator = R6Class("Terminator",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(param_set = ps(), properties = character(), label = NA_character_, man = NA_character_) {
+    #'
+    #' @param unit (`character()`)\cr
+    #'   Unit of steps.
+    initialize = function(param_set = ps(), properties = character(), unit = NA_character_, label = NA_character_, man = NA_character_) {
       private$.param_set = assert_param_set(param_set)
       private$.properties = assert_subset(properties, bbotk_reflections$terminator_properties)
-      private$.unit = "percent"
+      private$.unit = assert_string(unit, na.ok = TRUE)
       private$.label = assert_string(label, na.ok = TRUE)
       private$.man = assert_string(man, na.ok = TRUE)
     },
@@ -50,7 +53,7 @@ Terminator = R6Class("Terminator",
     #' @description
     #' Helper for print outputs.
     #' @param with_params (`logical(1)`)\cr
-    #' Add parameter values to format string.
+    #'   Add parameter values to format string.
     format = function(with_params = FALSE) {
       if (with_params) {
         sprintf("<%s> [%s]", class(self)[1L], as_short_string(self$param_set$values))
@@ -71,6 +74,7 @@ Terminator = R6Class("Terminator",
     #' @description
     #' Returns how many progression steps are made (`current_steps`) and the
     #' amount steps needed for termination (`max_steps`).
+    #'
     #' @return named `integer(2)`.
     status = function(archive) {
       assert_r6(archive, "Archive")
@@ -80,6 +84,7 @@ Terminator = R6Class("Terminator",
     #' @description
     #' Returns remaining runtime in seconds. If the terminator is not
     #' time-based, the reaming runtime is `Inf`.
+    #'
     #' @return `integer(1)`.
     remaining_time = function(archive) {
       assert_r6(archive, "Archive")

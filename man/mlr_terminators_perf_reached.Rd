@@ -3,7 +3,7 @@
 \name{mlr_terminators_perf_reached}
 \alias{mlr_terminators_perf_reached}
 \alias{TerminatorPerfReached}
-\title{Terminator that stops when a performance level has been reached}
+\title{Performance Level Terminator}
 \description{
 Class to terminate the optimization after a performance level has been hit.
 }
@@ -20,9 +20,9 @@ trm("perf_reached")
 
 \describe{
 \item{\code{level}}{\code{numeric(1)}\cr
-Performance level that needs to be reached, default is 0. Terminates if the
-performance exceeds (respective measure has to be maximized) or falls below
-(respective measure has to be minimized) this value.}
+Performance level that needs to be reached.
+Default is 0.
+Terminates if the performance exceeds (respective measure has to be maximized) or falls below (respective measure has to be minimized) this value.}
 }
 }
 

@@ -38,3 +38,8 @@ test_that("status method works", {
   expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 20), tolerance = 11)
   expect_equal(inst$terminator$remaining_time(inst$archive), 8, tolerance = 3)
 })
+
+test_that("man exists", {
+  terminator = trm("combo")
+  expect_man_exists(terminator$man)
+})
