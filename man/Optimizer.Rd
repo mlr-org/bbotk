@@ -4,13 +4,9 @@
 \alias{Optimizer}
 \title{Optimizer}
 \description{
-Abstract \code{Optimizer} class that implements the base functionality each
-\code{Optimizer} subclass must provide. A \code{Optimizer} object describes the
-optimization strategy.
-
-A \code{Optimizer} object must write its result to the \verb{$assign_result()} method
-of the \link{OptimInstance} at the end in order to store the best point  and its
-estimated performance vector.
+Abstract \code{Optimizer} class that implements the base functionality each \code{Optimizer} subclass must provide.
+A \code{Optimizer} object describes the optimization strategy.
+A \code{Optimizer} object must write its result to the \verb{$assign_result()} method of the \link{OptimInstance} at the end in order to store the best point and its estimated performance vector.
 }
 \section{Progress Bars}{
 
@@ -23,15 +19,28 @@ combined with a \link{Terminator}. Simply wrap the function in
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
+\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+Set of control parameters.}
 
-\item{\code{param_classes}}{(\code{character()}).}
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
 
-\item{\code{properties}}{(\code{character()}).}
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
 
-\item{\code{packages}}{(\code{character()}).}
+\item{\code{param_classes}}{(\code{character()})\cr
+Supported parameter classes that the optimizer can optimize.
+Subclasses of \link[paradox:Param]{paradox::Param}.}
 
-\item{\code{man}}{(\code{character()}).}
+\item{\code{properties}}{(\code{character()})\cr
+Set of properties of the optimizer.
+Must be a subset of \code{\link[mlr3:mlr_reflections]{mlr_reflections$optimizer_properties}}.}
+
+\item{\code{packages}}{(\code{character()})\cr
+Set of required packages.
+A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -57,6 +66,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   param_classes,
   properties,
   packages = character(),
+  label = NA_character_,
   man = NA_character_
 )}\if{html}{\out{</div>}}
 }
@@ -64,13 +74,24 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
+\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Set of control parameters.}
 
-\item{\code{param_classes}}{(\code{character()}).}
+\item{\code{param_classes}}{(\code{character()})\cr
+Supported parameter classes that the optimizer can optimize.
+Subclasses of \link[paradox:Param]{paradox::Param}.}
 
-\item{\code{properties}}{(\code{character()}).}
+\item{\code{properties}}{(\code{character()})\cr
+Set of properties of the optimizer.
+Must be a subset of \code{\link[mlr3:mlr_reflections]{mlr_reflections$optimizer_properties}}.}
 
-\item{\code{packages}}{(\code{character()}).}
+\item{\code{packages}}{(\code{character()})\cr
+Set of required packages.
+A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
+
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
 
 \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.

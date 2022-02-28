@@ -3,10 +3,9 @@
 \name{mlr_terminators_none}
 \alias{mlr_terminators_none}
 \alias{TerminatorNone}
-\title{Terminator that never stops.}
+\title{None Terminator}
 \description{
-Mainly useful for optimization algorithms where the stopping is inherently
-controlled by the algorithm itself (e.g. \link{OptimizerGridSearch}).
+Mainly useful for optimization algorithms where the stopping is inherently controlled by the algorithm itself (e.g. \link{OptimizerGridSearch}).
 }
 \section{Dictionary}{
 

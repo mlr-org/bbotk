@@ -1,5 +1,7 @@
 # bbotk 0.5.1.9000
 
+* feat: Added `$label` to `Optimizer`s and `Terminators`.
+
 # bbotk 0.5.1
 
 * fix: `$.status()` of `TerminatorRunTime` and `TerminatorClockTime` is always returned in seconds now.

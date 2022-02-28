@@ -21,13 +21,15 @@
 #' @section Parameters:
 #' \describe{
 #' \item{`n_evals`}{`integer(1)`\cr
-#' See formula above. Default is 100.}
+#'   See formula above. Default is 100.}
 #' \item{`k`}{`integer(1)`\cr
-#' See formula above. Default is 0.}
+#'   See formula above. Default is 0.}
 #' }
 #'
 #' @family Terminator
+#'
 #' @template param_archive
+#'
 #' @export
 #' @examples
 #' TerminatorEvals$new()
@@ -52,13 +54,18 @@ TerminatorEvals = R6Class("TerminatorEvals",
         k = p_int(lower = 0L, default = 0L, tags = "required")
       )
       param_set$values = list(n_evals = 100L, k = 0L)
-      super$initialize(param_set = param_set, properties = c("single-crit", "multi-crit"))
-      self$unit = "evaluations"
+      super$initialize(
+        param_set = param_set,
+        properties = c("single-crit", "multi-crit"),
+        unit = "evaluations",
+        label = "Number of Evaluation",
+        man = "bbotk::mlr_terminators_evals")
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
+    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       assert_r6(archive, "Archive")

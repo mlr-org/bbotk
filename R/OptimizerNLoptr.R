@@ -106,6 +106,7 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
         param_classes = "ParamDbl",
         properties = "single-crit",
         packages = "nloptr",
+        label = "Non-linear Optimization",
         man = "bbotk::mlr_optimizers_nloptr"
       )
     }
