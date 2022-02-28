@@ -79,6 +79,7 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
         param_classes = "ParamDbl",
         properties = "single-crit",
         packages = "GenSA",
+        label = "Generalized Simulated Annealing",
         man = "bbotk::mlr_optimizers_gensa"
       )
     }

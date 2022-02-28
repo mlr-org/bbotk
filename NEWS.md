@@ -1,3 +1,7 @@
+# bbotk 0.5.1.9000
+
+* feat: Added `$label` to `Optimizer`s and `Terminators`.
+
 # bbotk 0.5.1
 
 * fix: Number of evaluations in log messages when search space is empty.

@@ -158,6 +158,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
         param_classes = c("ParamDbl", "ParamInt", "ParamFct", "ParamLgl"),
         properties = c("dependencies", "single-crit"),
         packages = "irace",
+        label = "Iterated Racing",
         man = "bbotk::mlr_optimizers_irace"
       )
     }

@@ -139,6 +139,7 @@ test_optimizer = function(instance, key, ..., real_evals) {
   optimizer = opt(key, ...)
   expect_class(optimizer, "Optimizer")
   expect_man_exists(optimizer$man)
+  expect_string(optimizer$label)
   optimizer$optimize(instance)
   archive = instance$archive
 
