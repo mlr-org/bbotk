@@ -98,8 +98,9 @@ Each optimizer has an associated help page, see <code>mlr_optimizer_[id]</code>.
     <h2 id="s-methods">S3 methods<a class="anchor" aria-label="anchor" href="#s-methods"></a></h2>
     
 
-<ul><li><p><code>as.data.table(dict)</code><br><a href="https://mlr3misc.mlr-org.com/reference/Dictionary.html" class="external-link">mlr3misc::Dictionary</a> -&gt; <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code><br>
-Returns a <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code> with fields "key", "param_classes", "properties" and "packages" as columns.</p></li>
+<ul><li><p><code>as.data.table(dict, ..., objects = FALSE)</code><br><a href="https://mlr3misc.mlr-org.com/reference/Dictionary.html" class="external-link">mlr3misc::Dictionary</a> -&gt; <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code><br>
+Returns a <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code> with fields "key", "label", "param_classes", "properties" and "packages" as columns.
+If <code>objects</code> is set to <code>TRUE</code>, the constructed objects are returned in the list column named <code>object</code>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -109,14 +110,22 @@ Returns a <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mlr_optimizers</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              key                                param_classes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:         cmaes                                     ParamDbl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: design_points ParamLgl,ParamInt,ParamDbl,ParamFct,ParamUty</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:         gensa                                     ParamDbl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:   grid_search          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:         irace          ParamDbl,ParamInt,ParamFct,ParamLgl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:        nloptr                                     ParamDbl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7: random_search          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              key                                           label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:         cmaes Covariance Matrix Adaptation Evolution Strategy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: design_points                                   Design Points</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:         gensa                 Generalized Simulated Annealing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:   grid_search                                     Grid Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:         irace                                 Iterated Racing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:        nloptr                         Non-linear Optimization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7: random_search                                   Random Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   param_classes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:                                     ParamDbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ParamLgl,ParamInt,ParamDbl,ParamFct,ParamUty</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:                                     ParamDbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:          ParamDbl,ParamInt,ParamFct,ParamLgl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:                                     ParamDbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             properties     packages</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                         single-crit bbotk,adagio</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: dependencies,single-crit,multi-crit        bbotk</span>

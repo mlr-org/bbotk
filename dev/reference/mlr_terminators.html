@@ -98,8 +98,9 @@ Each terminator has an associated help page, see <code>mlr_terminators_[id]</cod
     <h2 id="s-methods">S3 methods<a class="anchor" aria-label="anchor" href="#s-methods"></a></h2>
     
 
-<ul><li><p><code>as.data.table(dict)</code><br><a href="https://mlr3misc.mlr-org.com/reference/Dictionary.html" class="external-link">mlr3misc::Dictionary</a> -&gt; <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code><br>
-Returns a <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code> with fields "key", "param_classes", "properties" and "packages" as columns.</p></li>
+<ul><li><p><code>as.data.table(dict, ..., objects = FALSE)</code><br><a href="https://mlr3misc.mlr-org.com/reference/Dictionary.html" class="external-link">mlr3misc::Dictionary</a> -&gt; <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code><br>
+Returns a <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code> with fields "key", "label", "properties" and "unit" as columns.
+If <code>objects</code> is set to <code>TRUE</code>, the constructed objects are returned in the list column named <code>object</code>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -119,15 +120,15 @@ Returns a <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mlr_terminators</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 key             properties        unit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:       clock_time single-crit,multi-crit     seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:            combo single-crit,multi-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:            evals single-crit,multi-crit evaluations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:             none single-crit,multi-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:     perf_reached            single-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:         run_time single-crit,multi-crit     seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:       stagnation            single-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8: stagnation_batch            single-crit     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 key                label             properties        unit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:       clock_time           Clock Time single-crit,multi-crit     seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:            combo          Combination single-crit,multi-crit     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:            evals Number of Evaluation single-crit,multi-crit evaluations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:             none                 None single-crit,multi-crit     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:     perf_reached    Performance Level            single-crit     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:         run_time             Run Time single-crit,multi-crit     seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:       stagnation           Stagnation            single-crit     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8: stagnation_batch     Stagnation Batch            single-crit     percent</span>
 <span class="r-in"><span class="va">mlr_terminators</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"evals"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;TerminatorEvals&gt;: Number of Evaluation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: n_evals=100, k=0</span>
