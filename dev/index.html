@@ -182,27 +182,27 @@
 
 <span class="co"># trigger optimization</span>
 <span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">##        x1        x2  x_domain        y</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## 1: 2.0452 -2.064743 &lt;list[2]&gt; 9.123252</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">##        x1        x2  x_domain        y</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1: 2.0452 -2.064743 &lt;list[2]&gt; 9.123252</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># best performing configuration</span>
 <span class="va">instance</span><span class="op">$</span><span class="va">result</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">##        x1        x2  x_domain        y</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## 1: 2.0452 -2.064743 &lt;list[2]&gt; 9.123252</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">##        x1        x2  x_domain        y</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1: 2.0452 -2.064743 &lt;list[2]&gt; 9.123252</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># all evaluated configuration</span>
 <span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">##            x1        x2          y           timestamp batch_nr x_domain_x1 x_domain_x2</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">##  1: -4.689827 -1.278761 -37.716445 2021-10-10 18:03:01        1   -4.689827   -1.278761</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">##  2: -5.930364 -4.400474 -54.851999 2021-10-10 18:03:01        2   -5.930364   -4.400474</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co">##  3:  7.170817 -1.519948 -18.927907 2021-10-10 18:03:01        3    7.170817   -1.519948</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="co">##  4:  2.045200 -1.519948   7.807403 2021-10-10 18:03:01        4    2.045200   -1.519948</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">##  5:  2.045200 -2.064742   9.123250 2021-10-10 18:03:01        5    2.045200   -2.064742</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">##  6:  2.045200 -2.064742   9.123250 2021-10-10 18:03:01        6    2.045200   -2.064742</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">##  7:  2.045201 -2.064742   9.123250 2021-10-10 18:03:01        7    2.045201   -2.064742</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">##  8:  2.045199 -2.064742   9.123250 2021-10-10 18:03:01        8    2.045199   -2.064742</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">##  9:  2.045200 -2.064741   9.123248 2021-10-10 18:03:01        9    2.045200   -2.064741</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 10:  2.045200 -2.064743   9.123252 2021-10-10 18:03:01       10    2.045200   -2.064743</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">##            x1        x2          y           timestamp batch_nr x_domain_x1 x_domain_x2</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  1: -4.689827 -1.278761 -37.716445 2021-10-10 18:03:01        1   -4.689827   -1.278761</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  2: -5.930364 -4.400474 -54.851999 2021-10-10 18:03:01        2   -5.930364   -4.400474</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  3:  7.170817 -1.519948 -18.927907 2021-10-10 18:03:01        3    7.170817   -1.519948</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  4:  2.045200 -1.519948   7.807403 2021-10-10 18:03:01        4    2.045200   -1.519948</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  5:  2.045200 -2.064742   9.123250 2021-10-10 18:03:01        5    2.045200   -2.064742</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  6:  2.045200 -2.064742   9.123250 2021-10-10 18:03:01        6    2.045200   -2.064742</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  7:  2.045201 -2.064742   9.123250 2021-10-10 18:03:01        7    2.045201   -2.064742</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  8:  2.045199 -2.064742   9.123250 2021-10-10 18:03:01        8    2.045199   -2.064742</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  9:  2.045200 -2.064741   9.123248 2021-10-10 18:03:01        9    2.045200   -2.064741</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10:  2.045200 -2.064743   9.123252 2021-10-10 18:03:01       10    2.045200   -2.064743</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="quick-optimization-with-bb_optimize">Quick optimization with <code>bb_optimize</code>
@@ -222,13 +222,13 @@
 
 <span class="co"># optimized parameters</span>
 <span class="va">result</span><span class="op">$</span><span class="va">par</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">##           x1       x2</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="co">## 1: -7.982537 4.273021</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">##           x1       x2</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1: -7.982537 4.273021</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># optimal outcome</span>
 <span class="va">result</span><span class="op">$</span><span class="va">value</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">##        y1 </span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="co">## -142.5479</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">##        y1 </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">## -142.5479</span></span></code></pre></div>
 </div>
 </div>
 </div>
