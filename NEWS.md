@@ -1,5 +1,7 @@
-# bbotk 0.5.2
+# bbotk 0.5.1.9000
 
+* fix: The `$clear()` method of `OptimInstance` raised an error.
+* fix: The `$clear()` method of `Archive` missed to reset the `$start_time` field.
 * feat: `Optimizer` and `Terminator` objects have the optional field `$label` now.
 * feat: `as.data.table()` functions for objects of class `Dictionary` have been extended with additional columns.
 * feat: Add a `as.data.table.DictionaryTerminator()` function.
