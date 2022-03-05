@@ -1,7 +1,7 @@
 # bbotk 0.5.2
 
 * feat: `Optimizer` and `Terminator` objects have the optional field `$label` now.
-* feat: `as.data.table()` functions for objects of class `Dictonary` have been extended with additional columns.
+* feat: `as.data.table()` functions for objects of class `Dictionary` have been extended with additional columns.
 * feat: Add a `as.data.table.DictionaryTerminator()` function.
 
 # bbotk 0.5.1
