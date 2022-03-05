@@ -222,3 +222,13 @@ test_that("deep clone works", {
   expect_different_address(inst$archive, inst_2$archive)
   expect_different_address(inst$terminator, inst_2$terminator)
 })
+
+test_that("$clear() method works", {
+  inst = MAKE_INST_2D(1L)
+  inst_copy = inst$clone(deep = TRUE)
+  optimizer = opt("random_search")
+
+  optimizer$optimize(inst)
+  inst$clear()
+  expect_equal(inst, inst_copy)
+})
