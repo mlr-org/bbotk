@@ -71,73 +71,69 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.1.9000" id="bbotk-0519000">bbotk 0.5.1.9000<a class="anchor" aria-label="anchor" href="#bbotk-0519000"></a></h2>
-<ul><li>feat: Added <code>$label</code> to <code>Optimizer</code>s and <code>Terminator</code>s.</li>
+<ul><li>fix: The <code>$clear()</code> method of <code>OptimInstance</code> raised an error.</li>
+<li>fix: The <code>$clear()</code> method of <code>Archive</code> missed to reset the <code>$start_time</code> field.</li>
+<li>feat: <code>Optimizer</code> and <code>Terminator</code> objects have the optional field <code>$label</code> now.</li>
+<li>feat: <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table()</a></code> functions for objects of class <code>Dictionary</code> have been extended with additional columns.</li>
+<li>feat: Add a <code>as.data.table.DictionaryTerminator()</code> function.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.1" id="bbotk-051">bbotk 0.5.1<a class="anchor" aria-label="anchor" href="#bbotk-051"></a></h2><p class="text-muted">CRAN release: 2022-02-25</p>
-<ul><li>fix: <code>$.status()</code> of <code>TerminatorRunTime</code> and <code>TerminatorClockTime</code> is always returned in seconds now.</li>
-<li>fix: Number of evaluations in log messages when search space is empty.</li>
-<li>feat: Added a <code>as.data.table.DictionaryOptimizer</code> method.</li>
-<li>feat: <code>$help()</code> method which opens manual page of an <code>Optimizer</code>.</li>
+<ul><li>fix: The return of the <code>$.status()</code> method of <code>TerminatorRunTime</code> and <code>TerminatorClockTime</code> was not in a consistent unit. The return is in seconds from now on.</li>
+<li>fix: The number of evaluations was recorded as 0 in the log messages when the search space was empty.</li>
+<li>feat: Add a <code>as.data.table.DictionaryOptimizer()</code> function.</li>
+<li>feat: New <code>$help()</code> method which opens the manual page of an <code>Optimizer</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.0" id="bbotk-050">bbotk 0.5.0<a class="anchor" aria-label="anchor" href="#bbotk-050"></a></h2><p class="text-muted">CRAN release: 2022-01-19</p>
-<ul><li>Adds non dominated sorting with hypervolume contribution to <code>Archive</code>.</li>
-<li>New <code>Codomain</code> class which allows extra parameters.</li>
-<li>Objective values are not automatically named anymore, with the exception of an unnamed return in <code>ObjectiveRFun</code>.</li>
-<li>Fix deep clone in OptimInstance, Archive and Objective</li>
-<li>
-<code>param_classes</code>, <code>properties</code> and <code>packages</code> in Optimizer are read-only fields.</li>
-<li>Exported branin function.</li>
+<ul><li>feat: Add <code>$nds_selection()</code> method to <code>Archive</code>.</li>
+<li>feat: New <code>Codomain</code> class that allows extra parameters.</li>
+<li>refactor: Objective values were automatically named. From now on, only unnamed returns of <code>ObjectiveRFun</code> are named.</li>
+<li>fix: <code>OptimInstance</code>, <code>Archive</code> and <code>Objective</code> objects were not cloned properly.</li>
+<li>refactor: The fields <code>$param_classes</code>, <code>$properties</code> and <code>$packages</code> of <code>Optimizer</code> objects are read-only now.</li>
+<li>feat: The <code><a href="../reference/branin.html">branin()</a></code> function is exported now.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="bbotk-040">bbotk 0.4.0<a class="anchor" aria-label="anchor" href="#bbotk-040"></a></h2><p class="text-muted">CRAN release: 2021-09-13</p>
-<ul><li>Allows empty search space and domain.</li>
-<li>Extended <code>TerminatorEvals</code> with an additional hyperparameter <code>k</code> to define the budget depending on the dimension of the search space.</li>
-<li>Adds <code><a href="../reference/bb_optimize.html">bb_optimize()</a></code> function for quick optimization.</li>
-<li>Adds <code>OptimizerIrace</code> from irace package.</li>
+<ul><li>feat: The search space and domain can now be empty.</li>
+<li>feat: The budget of <code>TerminatorEvals</code> can now be changed depending on the dimension of the search space with the parameter <code>k</code>.</li>
+<li>feat: Add <code><a href="../reference/bb_optimize.html">bb_optimize()</a></code> function.</li>
+<li>feat: Add <code>OptimizerIrace</code> which calls <code><a href="https://rdrr.io/pkg/irace/man/irace.html" class="external-link">irace::irace</a></code> from the <code>irace</code> package.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2" id="bbotk-032">bbotk 0.3.2<a class="anchor" aria-label="anchor" href="#bbotk-032"></a></h2><p class="text-muted">CRAN release: 2021-03-18</p>
-<ul><li>Internal changes.</li>
+<ul><li>refactor: Internal changes.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.1" id="bbotk-031">bbotk 0.3.1<a class="anchor" aria-label="anchor" href="#bbotk-031"></a></h2><p class="text-muted">CRAN release: 2021-03-12</p>
-<ul><li>
-<code>OptimInstance$clear()</code> methods resets the instance.</li>
-<li>Prettier printing methods.</li>
-<li>Assert overlapping and reserved names in domain and codomain.</li>
+<ul><li>feat: Add <code>$clear()</code> method to <code>OptimInstance</code> to reset the instance.</li>
+<li>refactor: Prettier <code>$print()</code> methods.</li>
+<li>feat: Assertions on overlapping and reserved names in domain and codomain.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="bbotk-030">bbotk 0.3.0<a class="anchor" aria-label="anchor" href="#bbotk-030"></a></h2><p class="text-muted">CRAN release: 2021-01-23</p>
-<ul><li>Improved <code>TerminatorPerfRearched</code> documentation.</li>
-<li>Added <code>check_values</code> flag in <code>OptimInstance</code>, <code>OptimInstanceSingleCrit</code>, <code>OptimInstanceMultiCrit</code>, <code>ObjectiveRFun</code> and <code>ObjectiveRFunDt</code>.</li>
-<li>
-<code>Archive$data</code> is a public field now.</li>
-<li>Renamed <code>m</code> parameter to <code>batch</code> in <code>Archive$best()</code>.</li>
-<li>
-<code>ArchiveBest</code> stores no data but records the best scoring evaluation.</li>
-<li>Reduced runtime if <code>ObjectiveRFunDt</code> and a domain without trafo is used.</li>
-<li>
-<code>OptimizerDesignPoints</code> supports <code>ParamUty</code>.</li>
-<li>Start values for <code>OptimizerCmaes</code> and <code>OptimizerNloptr</code> are created randomly or from center of search space.</li>
-<li>
-<code>Optimizer$optimize()</code> supports progress bars via the package <code>progressr</code>.</li>
+<ul><li>feat: The check of points and results can now be disables with the <code>check_values</code> flag in <code>OptimInstance</code>, <code>OptimInstanceSingleCrit</code>, <code>OptimInstanceMultiCrit</code>, <code>ObjectiveRFun</code> and <code>ObjectiveRFunDt</code>.</li>
+<li>refactor: The <code>data.table</code> within the <code>Archive</code> can now be accessed with <code>$data</code>.</li>
+<li>refactor: The <code>m</code> parameter of <code>Archive$best()</code> is renamed to <code>batch</code>.</li>
+<li>feat: New <code>ArchiveBest</code> class which only stores best scoring evaluation instead of all evaluations</li>
+<li>refactor: The runtime is reduced when <code>ObjectiveRFunDt</code> is used with a domain without trafo.</li>
+<li>fix: Add support for <code>ParamUty</code> in <code>OptimizerDesignPoints</code>.</li>
+<li>feat: The start points for <code>OptimizerCmaes</code> and <code>OptimizerNloptr</code> can now be randomly created or from center of the search space.</li>
+<li>feat: The <code>$optimize()</code> method supports progress bars via the package <code>progressr</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.2" id="bbotk-022">bbotk 0.2.2<a class="anchor" aria-label="anchor" href="#bbotk-022"></a></h2><p class="text-muted">CRAN release: 2020-10-08</p>
-<ul><li>Removed dependency on orphaned package <code>bibtex</code>.</li>
-<li>Improved documentation.</li>
-<li>Added <code>OptimizerCmaes</code> from adagio package.</li>
+<ul><li>refactor: Remove dependency on orphaned package <code>bibtex</code>.</li>
+<li>feat: Add <code>OptimizerCmaes</code> which calls <code><a href="https://rdrr.io/pkg/adagio/man/cmaes.html" class="external-link">adagio::pureCMAES</a></code> from the <code>adagio</code> package.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="bbotk-021">bbotk 0.2.1<a class="anchor" aria-label="anchor" href="#bbotk-021"></a></h2><p class="text-muted">CRAN release: 2020-09-05</p>
-<ul><li>Compact in-memory representation of R6 objects to save space when saving mlr3 objects via saveRDS(), serialize() etc.</li>
-<li>Warning and error messages if external package for optimization is not installed.</li>
+<ul><li>refactor: Compact in-memory representation of R6 objects to save space when saving mlr3 objects via saveRDS(), serialize() etc.</li>
+<li>refactor: Warning and error messages when upstream package of <code>Optimizer</code> is not installed.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2" id="bbotk-02">bbotk 0.2<a class="anchor" aria-label="anchor" href="#bbotk-02"></a></h2>
-<ul><li>First version of the Black-Box Optimization Toolkit</li>
+<ul><li>feat: First version of the Black-Box Optimization Toolkit</li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
