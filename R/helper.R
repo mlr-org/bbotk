@@ -158,3 +158,9 @@ branin = function(xs) {
 catn = function(..., file = "") {
   cat(paste0(..., collapse = "\n"), "\n", sep = "", file = file)
 }
+
+allow_partial_matching = list(
+  warnPartialMatchArgs = FALSE,
+  warnPartialMatchAttr = FALSE,
+  warnPartialMatchDollar = FALSE
+)
