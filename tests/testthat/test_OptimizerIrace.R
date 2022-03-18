@@ -106,7 +106,7 @@ test_that("OptimizerIrace works", {
     terminator = trm("perf_reached", level = 0.1))
 
   expect_error(optimizer$optimize(instance),
-    regex = "<TerminatorPerfReached> is not supported. Use <TerminatorEvals> instead",
+    regexp = "<TerminatorPerfReached> is not supported. Use <TerminatorEvals> instead",
     fixed = TRUE)
 })
 
@@ -118,7 +118,7 @@ test_that("paradox_to_irace without dependencies", {
 
   # only ParamUty
   pps = ps(uty = p_uty())
-  expect_error(paradox_to_irace(pps), regex = "<ParamUty> not supported by <TunerIrace>", fixed = TRUE)
+  expect_error(paradox_to_irace(pps), regexp = "<ParamUty> not supported by <TunerIrace>", fixed = TRUE)
 
   # mixed set
   pps = ps(

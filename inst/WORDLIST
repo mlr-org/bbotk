@@ -24,6 +24,7 @@ Physica
 Progressor
 Stariolo
 Stuetzle
+Subclasses
 Suomela
 TerminatorClockTime
 TerminatorEvals
@@ -32,7 +33,6 @@ Tsallis
 Untransformed
 Xiang
 benchmarking
-branin
 cloneable
 codomain
 crit
@@ -44,6 +44,7 @@ mlr
 optimizers
 parallelization
 parallelize
+param
 ps
 saveRDS
 subclasses

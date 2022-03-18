@@ -21,8 +21,8 @@ trm("combo")
 
 \describe{
 \item{\code{any}}{\code{logical(1)}\cr
-Terminate iff any included terminator is positive? (not all), default is
-\code{TRUE}.}
+Terminate iff any included terminator is positive? (not all).
+Default is \code{TRUE}.}
 }
 }
 

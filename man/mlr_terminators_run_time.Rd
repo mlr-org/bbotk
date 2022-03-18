@@ -3,10 +3,9 @@
 \name{mlr_terminators_run_time}
 \alias{mlr_terminators_run_time}
 \alias{TerminatorRunTime}
-\title{Terminator that stops according to the run time}
+\title{Run Time Terminator}
 \description{
-Class to terminate the optimization after the optimization process took a
-number of seconds on the clock.
+Class to terminate the optimization after the optimization process took a number of seconds on the clock.
 }
 \note{
 This terminator only works if \code{archive$start_time} is set. This is usually

@@ -18,3 +18,8 @@ test_that("TerminatorPerfReached works with empty archive", {
   archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })
+
+test_that("man exists", {
+  terminator = trm("perf_reached")
+  expect_man_exists(terminator$man)
+})

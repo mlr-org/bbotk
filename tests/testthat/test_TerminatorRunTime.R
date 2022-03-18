@@ -26,3 +26,8 @@ test_that("TerminatorRunTime works with empty archive", {
   archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })
+
+test_that("man exists", {
+  terminator = trm("run_time")
+  expect_man_exists(terminator$man)
+})

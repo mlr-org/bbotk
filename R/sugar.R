@@ -23,7 +23,7 @@
 #' @examples
 #' trm("evals", n_evals = 10)
 trm = function(.key, ...) {
-  dictionary_sugar(mlr_terminators, .key, ...)
+  dictionary_sugar_get(mlr_terminators, .key, ...)
 }
 
 #' @rdname trm
@@ -58,7 +58,7 @@ trms = function(.keys, ...) {
 #' opt("random_search", batch_size = 10)
 #' @export
 opt = function(.key, ...) {
-  dictionary_sugar(mlr_optimizers, .key, ...)
+  dictionary_sugar_get(mlr_optimizers, .key, ...)
 }
 
 #' @rdname opt

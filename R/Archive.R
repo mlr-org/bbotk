@@ -151,6 +151,7 @@ Archive = R6Class("Archive",
     #' Clear all evaluation results from archive.
     clear = function() {
       self$data = data.table()
+      self$start_time = NULL
     }
   ),
 

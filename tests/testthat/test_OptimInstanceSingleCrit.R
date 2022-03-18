@@ -88,9 +88,8 @@ test_that("OptimInstance works with extras output", {
 })
 
 test_that("Terminator assertions work", {
-  terminator = Terminator$new()
-  terminator$properties = "multi-crit"
-  expect_error(MAKE_INST(terminator = terminator))
+  terminator = trm("perf_reached")
+  expect_error(MAKE_INST_2D_2D(terminator = terminator), "does not support multi-crit optimization")
 })
 
 test_that("objective_function works", {
@@ -222,4 +221,14 @@ test_that("deep clone works", {
   expect_different_address(inst$search_space, inst_2$search_space)
   expect_different_address(inst$archive, inst_2$archive)
   expect_different_address(inst$terminator, inst_2$terminator)
+})
+
+test_that("$clear() method works", {
+  inst = MAKE_INST_2D(1L)
+  inst_copy = inst$clone(deep = TRUE)
+  optimizer = opt("random_search")
+
+  optimizer$optimize(inst)
+  inst$clear()
+  expect_equal(inst, inst_copy)
 })

@@ -3,10 +3,9 @@
 \name{mlr_terminators_clock_time}
 \alias{mlr_terminators_clock_time}
 \alias{TerminatorClockTime}
-\title{Terminator that stops according to the clock time}
+\title{Clock Time Terminator}
 \description{
-Class to terminate the optimization after a fixed time point has been reached
-(as reported by \code{\link[=Sys.time]{Sys.time()}}).
+Class to terminate the optimization after a fixed time point has been reached (as reported by \code{\link[=Sys.time]{Sys.time()}}).
 }
 \section{Dictionary}{
 
