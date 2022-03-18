@@ -39,7 +39,7 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
-      # Note: maybe make range / 2 a hyperparameter?
+      # NOTE: maybe make range / 2 a hyperparameter?
       param_set = ps(
         n_points = p_int(default = 100L, tags = "required"),
         maxit = p_int(default = 100L, tags = "required")
@@ -49,9 +49,9 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
       super$initialize(
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit")  # Note: think about multi-crit variant,
-        label = "Focussearch",
-        man = "mlr3mbo::OptimizerFocusSearch"
+        properties = c("dependencies", "single-crit"),  # NOTE: think about multi-crit variant
+        label = "Focus Search",
+        man = "bbotk::mlr_optimizers_focus_search"
       )
     }
   ),
