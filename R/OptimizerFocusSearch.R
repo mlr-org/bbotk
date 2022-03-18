@@ -49,7 +49,9 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
       super$initialize(
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit")  # Note: think about multi-crit variant
+        properties = c("dependencies", "single-crit")  # Note: think about multi-crit variant,
+        label = "Focussearch",
+        man = "mlr3mbo::OptimizerFocusSearch"
       )
     }
   ),
