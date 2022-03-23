@@ -7,11 +7,8 @@ test_that("OptimInstanceSingleCrit", {
   expect_null(inst$result)
   expect_output(print(inst), "Not optimized")
   expect_output(print(inst), "ObjectiveRFun:function")
-  expect_output(print(inst), "<ParamSet>")
   expect_output(print(inst), "^(?s)(?!.*Result).*$", perl = TRUE)
   expect_output(print(inst), "<TerminatorEvals>")
-  expect_output(print(inst), "Terminated: FALSE")
-  expect_output(print(inst), "<Archive>")
 
   xdt = data.table(x1 = -1:1, x2 = list(-1, 0, 1))
   expect_named(inst$eval_batch(xdt), "y")
@@ -28,11 +25,8 @@ test_that("OptimInstanceSingleCrit", {
   optimizer$optimize(inst)
   expect_output(print(inst), "Optimized")
   expect_output(print(inst), "ObjectiveRFun:function")
-  expect_output(print(inst), "<ParamSet>")
   expect_output(print(inst), "<TerminatorEvals>")
-  expect_output(print(inst), "Terminated: TRUE")
   expect_output(print(inst), "Result")
-  expect_output(print(inst), "<Archive>")
 })
 
 test_that("OptimInstance works with trafos", {
