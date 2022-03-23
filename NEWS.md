@@ -1,5 +1,6 @@
 # bbotk 0.5.1.9000
 
+* refactor: The `$print()` method of `OptimInstance` omits unnecessary columns now.
 * fix: The `$clear()` method of `OptimInstance` raised an error.
 * fix: The `$clear()` method of `Archive` missed to reset the `$start_time` field.
 * feat: `Optimizer` and `Terminator` objects have the optional field `$label` now.
