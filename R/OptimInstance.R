@@ -97,13 +97,13 @@ OptimInstance = R6Class("OptimInstance",
       catf(str_indent("* State: ", if (is.null(private$.result)) "Not optimized" else "Optimized"))
       catf(str_indent("* Objective:", format(self$objective)))
       catf("* Search Space:")
-      print(as.data.table(instance$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
+      print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
       catf(str_indent("* Terminator:", format(self$terminator)))
       if (!is.null(private$.result)) {
         catf("* Result:")
         print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
         catf("* Archive:")
-        print(as.data.table(instance$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
+        print(as.data.table(self$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
       }
     },
 
