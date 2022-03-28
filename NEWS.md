@@ -1,4 +1,4 @@
-# bbotk 0.5.1.9000
+# bbotk 0.5.2
 
 * refactor: The `$print()` method of `OptimInstance` omits unnecessary columns now.
 * fix: The `$clear()` method of `OptimInstance` raised an error.
