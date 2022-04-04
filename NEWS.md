@@ -65,4 +65,4 @@
 
 # bbotk 0.2
 
-* feat: First version of the Black-Box Optimization Toolkit
+* First version of the Black-Box Optimization Toolkit
