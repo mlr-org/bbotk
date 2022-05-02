@@ -42,6 +42,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
       param_set$values = list(iters = 10, threshold = 0)
 
       super$initialize(
+        id = "stagnation",
         param_set = param_set,
         properties = "single-crit",
         label = "Stagnation",

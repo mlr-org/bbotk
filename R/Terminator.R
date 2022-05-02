@@ -34,6 +34,8 @@
 #' @export
 Terminator = R6Class("Terminator",
   public = list(
+    #' @template field_id
+    id = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -44,7 +46,8 @@ Terminator = R6Class("Terminator",
     #'
     #' @param unit (`character()`)\cr
     #'   Unit of steps.
-    initialize = function(param_set = ps(), properties = character(), unit = "percent", label = NA_character_, man = NA_character_) {
+    initialize = function(id, param_set = ps(), properties = character(), unit = "percent", label = NA_character_, man = NA_character_) {
+      self$id = assert_string(id, min.chars = 1L)
       private$.param_set = assert_param_set(param_set)
       private$.properties = assert_subset(properties, bbotk_reflections$terminator_properties)
       private$.unit = assert_string(unit)

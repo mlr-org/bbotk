@@ -55,6 +55,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
       )
       param_set$values = list(n_evals = 100L, k = 0L)
       super$initialize(
+        id = "evals",
         param_set = param_set,
         properties = c("single-crit", "multi-crit"),
         unit = "evaluations",

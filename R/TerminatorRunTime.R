@@ -38,6 +38,7 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
       )
       param_set$values$secs = 30
       super$initialize(
+        id = "run_time",
         param_set = param_set,
         properties = c("single-crit", "multi-crit"),
         unit = "seconds",

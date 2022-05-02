@@ -102,6 +102,7 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
       param_set$values$start_values = "random"
 
       super$initialize(
+        id = "nloptr",
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",

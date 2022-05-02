@@ -40,6 +40,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
       param_set$values = list(batch_size = 1L)
 
       super$initialize(
+        id = "random_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
         properties = c("dependencies", "single-crit", "multi-crit"),

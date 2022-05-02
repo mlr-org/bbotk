@@ -151,7 +151,8 @@ test_optimizer = function(instance, key, ..., real_evals) {
 
 MAKE_OPT = function(param_set = ps(), param_classes = c("ParamDbl", "ParamInt"),
   properties = "single-crit", packages = character(0)) {
-  Optimizer$new(param_set = param_set,
+  Optimizer$new(id = "optimizer",
+    param_set = param_set,
     param_classes = param_classes,
     properties = properties,
     packages = packages)
