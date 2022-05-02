@@ -51,6 +51,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
       properties = properties[properties != "progressr"]
 
       super$initialize(
+        id = "combo",
         param_set = param_set,
         properties = properties,
         unit = "percent",

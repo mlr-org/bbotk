@@ -22,6 +22,7 @@ TerminatorNone = R6Class("TerminatorNone",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       super$initialize(
+        id = "none",
         properties = c("single-crit", "multi-crit"),
         label = "None",
         man = "bbotk::mlr_terminators_none"

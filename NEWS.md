@@ -1,3 +1,7 @@
+# bbotk 0.5.2.9000
+
+* feat: `Optimizer` and `Terminator` objects have the field `$id` now.
+
 # bbotk 0.5.2
 
 * refactor: The `$print()` method of `OptimInstance` omits unnecessary columns now.

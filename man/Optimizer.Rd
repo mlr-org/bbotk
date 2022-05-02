@@ -16,6 +16,15 @@ combined with a \link{Terminator}. Simply wrap the function in
 \CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
 }
 
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{id}}{(\code{character(1)})\cr
+Identifier of the object.
+Used in tables, plot and text output.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -62,6 +71,7 @@ A warning is signaled by the constructor if at least one of the packages is not 
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Optimizer$new(
+  id,
   param_set,
   param_classes,
   properties,
@@ -74,6 +84,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{id}}{(\code{character(1)})\cr
+Identifier for the new instance.}
+
 \item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Set of control parameters.}
 
