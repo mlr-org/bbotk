@@ -38,7 +38,7 @@ Optimizer = R6Class("Optimizer",
      #' @param packages (`character()`)\cr
     #'   Set of required packages.
     #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
-    initialize = function(id, param_set, param_classes, properties, packages = character(), label = NA_character_, man = NA_character_) {
+    initialize = function(id = "optimizer", param_set, param_classes, properties, packages = character(), label = NA_character_, man = NA_character_) {
       self$id = assert_string(id, min.chars = 1L)
       private$.param_set = assert_param_set(param_set)
       private$.param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
