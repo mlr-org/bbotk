@@ -1,4 +1,4 @@
-# bbotk 0.5.2.9000
+# bbotk 0.5.3
 
 * feat: `Optimizer` and `Terminator` objects have the field `$id` now.
 
