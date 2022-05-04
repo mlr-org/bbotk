@@ -33,7 +33,7 @@ Optimizer = R6Class("Optimizer",
     #'
     #' @param properties (`character()`)\cr
     #'   Set of properties of the optimizer.
-    #'   Must be a subset of [`mlr_reflections$optimizer_properties`][mlr3::mlr_reflections].
+    #'   Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
     #'
      #' @param packages (`character()`)\cr
     #'   Set of required packages.
@@ -108,7 +108,7 @@ Optimizer = R6Class("Optimizer",
 
     #' @field properties (`character()`)\cr
     #'   Set of properties of the optimizer.
-    #'   Must be a subset of [`mlr_reflections$optimizer_properties`][mlr3::mlr_reflections].
+    #'   Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
     properties = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.properties)) {
         stop("$properties is read-only.")

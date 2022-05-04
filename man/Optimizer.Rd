@@ -45,7 +45,7 @@ Subclasses of \link[paradox:Param]{paradox::Param}.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the optimizer.
-Must be a subset of \code{\link[mlr3:mlr_reflections]{mlr_reflections$optimizer_properties}}.}
+Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$optimizer_properties}}.}
 
 \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.
@@ -71,7 +71,7 @@ A warning is signaled by the constructor if at least one of the packages is not 
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Optimizer$new(
-  id,
+  id = "optimizer",
   param_set,
   param_classes,
   properties,
@@ -96,7 +96,7 @@ Subclasses of \link[paradox:Param]{paradox::Param}.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the optimizer.
-Must be a subset of \code{\link[mlr3:mlr_reflections]{mlr_reflections$optimizer_properties}}.}
+Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$optimizer_properties}}.}
 
 \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.

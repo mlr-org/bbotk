@@ -62,7 +62,7 @@ The referenced help package can be opened via method \verb{$help()}.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the terminator.
-Must be a subset of \code{\link[mlr3:mlr_reflections]{mlr_reflections$terminator_properties}}.}
+Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$terminator_properties}}.}
 
 \item{\code{unit}}{(\code{character()})\cr
 Unit of steps.}
@@ -107,7 +107,7 @@ Set of control parameters.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the terminator.
-Must be a subset of \code{\link[mlr3:mlr_reflections]{mlr_reflections$terminator_properties}}.}
+Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$terminator_properties}}.}
 
 \item{\code{unit}}{(\code{character()})\cr
 Unit of steps.}

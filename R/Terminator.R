@@ -43,7 +43,7 @@ Terminator = R6Class("Terminator",
     #'
     #' @param properties (`character()`)\cr
     #'   Set of properties of the terminator.
-    #'   Must be a subset of [`mlr_reflections$terminator_properties`][mlr3::mlr_reflections].
+    #'   Must be a subset of [`bbotk_reflections$terminator_properties`][bbotk_reflections].
     #'
     #' @param unit (`character()`)\cr
     #'   Unit of steps.
@@ -114,7 +114,7 @@ Terminator = R6Class("Terminator",
 
     #' @field properties (`character()`)\cr
     #'   Set of properties of the terminator.
-    #'   Must be a subset of [`mlr_reflections$terminator_properties`][mlr3::mlr_reflections].
+    #'   Must be a subset of [`bbotk_reflections$terminator_properties`][bbotk_reflections].
     properties = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.properties)) {
         stop("$properties is read-only.")
