@@ -113,27 +113,30 @@ If <code>objects</code> is set to <code>TRUE</code>, the constructed objects are
 <span class="r-out co"><span class="r-pr">#&gt;</span>              key                                           label</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:         cmaes Covariance Matrix Adaptation Evolution Strategy</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: design_points                                   Design Points</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:         gensa                 Generalized Simulated Annealing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:   grid_search                                     Grid Search</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:         irace                                 Iterated Racing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:        nloptr                         Non-linear Optimization</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7: random_search                                   Random Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  focus_search                                    Focus Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:         gensa                 Generalized Simulated Annealing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:   grid_search                                     Grid Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:         irace                                 Iterated Racing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:        nloptr                         Non-linear Optimization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8: random_search                                   Random Search</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   param_classes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                                     ParamDbl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: ParamLgl,ParamInt,ParamDbl,ParamFct,ParamUty</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:                                     ParamDbl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:          ParamDbl,ParamInt,ParamFct,ParamLgl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:                                     ParamDbl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:                                     ParamDbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:          ParamDbl,ParamInt,ParamFct,ParamLgl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:                                     ParamDbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             properties     packages</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                         single-crit bbotk,adagio</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: dependencies,single-crit,multi-crit        bbotk</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:                         single-crit  bbotk,GenSA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: dependencies,single-crit,multi-crit        bbotk</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:            dependencies,single-crit  bbotk,irace</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:                         single-crit bbotk,nloptr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7: dependencies,single-crit,multi-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:            dependencies,single-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:                         single-crit  bbotk,GenSA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: dependencies,single-crit,multi-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:            dependencies,single-crit  bbotk,irace</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:                         single-crit bbotk,nloptr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8: dependencies,single-crit,multi-crit        bbotk</span>
 <span class="r-in"><span class="va">mlr_optimizers</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"random_search"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OptimizerRandomSearch&gt;: Random Search</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: batch_size=1</span>
