@@ -1,5 +1,10 @@
-# bbotk 0.5.1.9000
+# bbotk 0.5.3
 
+* feat: `Optimizer` and `Terminator` objects have the field `$id` now.
+
+# bbotk 0.5.2
+
+* refactor: The `$print()` method of `OptimInstance` omits unnecessary columns now.
 * fix: The `$clear()` method of `OptimInstance` raised an error.
 * fix: The `$clear()` method of `Archive` missed to reset the `$start_time` field.
 * feat: `Optimizer` and `Terminator` objects have the optional field `$label` now.
@@ -64,4 +69,4 @@
 
 # bbotk 0.2
 
-* feat: First version of the Black-Box Optimization Toolkit
+* First version of the Black-Box Optimization Toolkit

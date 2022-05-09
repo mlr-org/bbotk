@@ -37,6 +37,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
       )
       param_set$values = list(level = 0.1)
       super$initialize(
+        id = "perf_reached",
         param_set = param_set,
         properties = "single-crit",
         label = "Performance Level",

@@ -18,8 +18,6 @@ test_that("status method works", {
   Sys.sleep(1)
 
   expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 3))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 1), tolerance = 1)
-  expect_equal(inst$terminator$remaining_time(inst$archive), 2, tolerance = 1)
 })
 
 test_that("TerminatorClockTime works with empty archive", {

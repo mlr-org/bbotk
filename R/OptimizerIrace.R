@@ -154,6 +154,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
       param_set$values$targetRunnerParallel = target_runner_default
 
       super$initialize(
+        id = "irace",
         param_set = param_set,
         param_classes = c("ParamDbl", "ParamInt", "ParamFct", "ParamLgl"),
         properties = c("dependencies", "single-crit"),

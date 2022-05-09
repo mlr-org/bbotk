@@ -42,6 +42,7 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
       param_set$values = list(n = 1, threshold = 0)
 
       super$initialize(
+        id = "stagnation_batch",
         param_set = param_set,
         properties = "single-crit",
         label = "Stagnation Batch",

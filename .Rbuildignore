@@ -25,3 +25,4 @@
 ^README\.Rmd$
 ^README\.html$
 ^revdep$
+^CRAN-SUBMISSION$

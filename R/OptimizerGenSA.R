@@ -75,6 +75,7 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
         trace.mat = p_lgl(default = TRUE)
       )
       super$initialize(
+        id = "gensa",
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",

@@ -13,6 +13,7 @@
 #' @template field_label
 #' @template field_man
 #'
+#' @template param_id
 #' @template param_param_set
 #' @template param_label
 #' @template param_man
@@ -20,6 +21,8 @@
 #' @export
 Optimizer = R6Class("Optimizer",
   public = list(
+    #' @template field_id
+    id = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -30,12 +33,13 @@ Optimizer = R6Class("Optimizer",
     #'
     #' @param properties (`character()`)\cr
     #'   Set of properties of the optimizer.
-    #'   Must be a subset of [`mlr_reflections$optimizer_properties`][mlr3::mlr_reflections].
+    #'   Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
     #'
      #' @param packages (`character()`)\cr
     #'   Set of required packages.
     #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
-    initialize = function(param_set, param_classes, properties, packages = character(), label = NA_character_, man = NA_character_) {
+    initialize = function(id = "optimizer", param_set, param_classes, properties, packages = character(), label = NA_character_, man = NA_character_) {
+      self$id = assert_string(id, min.chars = 1L)
       private$.param_set = assert_param_set(param_set)
       private$.param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
       # has to have at least multi-crit or single-crit property
@@ -104,7 +108,7 @@ Optimizer = R6Class("Optimizer",
 
     #' @field properties (`character()`)\cr
     #'   Set of properties of the optimizer.
-    #'   Must be a subset of [`mlr_reflections$optimizer_properties`][mlr3::mlr_reflections].
+    #'   Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
     properties = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.properties)) {
         stop("$properties is read-only.")
