@@ -1,3 +1,7 @@
+# bbotk 0.5.4
+
+* feat: Add `OptimizerFocusSearch` that peforms a focusing random search.
+
 # bbotk 0.5.3
 
 * feat: `Optimizer` and `Terminator` objects have the field `$id` now.
