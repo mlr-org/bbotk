@@ -27,21 +27,13 @@ Callback = R6::R6Class("Callback",
     #'
     #' @param step (`character(1)`)\cr
     #'   Step.
-    #' @param context ([Context])\cr
+    #' @param context (`Context`)\cr
     #'   Context.
     call = function(step, context) {
       self[[step]](context)
     }
   )
 )
-
-#' @title Context
-#'
-#' @description
-#' ABC for Context. Contexts must inherit from this class.
-#'
-#' @export
-Context = R6Class("Context")
 
 #' @title Create a Callback
 #'

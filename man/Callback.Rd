@@ -57,7 +57,7 @@ Call.
 \item{\code{step}}{(\code{character(1)})\cr
 Step.}
 
-\item{\code{context}}{(\link{Context})\cr
+\item{\code{context}}{(\code{Context})\cr
 Context.}
 }
 \if{html}{\out{</div>}}
