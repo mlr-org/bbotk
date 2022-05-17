@@ -27,7 +27,7 @@ ContextInstance = R6Class("ContextInstance",
       if (missing(rhs)) {
         get_private(self$instance)$.result
       } else {
-        get_private(self$instance, ".result") = rhs
+        self$instance$.__enclos_env__$private$.result = rhs
       }
     }
   )
