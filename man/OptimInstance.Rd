@@ -30,6 +30,9 @@ user can access the results with active bindings (see below).
 Stores \code{progressor} function.}
 
 \item{\code{objective_multiplicator}}{(\code{integer()}).}
+
+\item{\code{callbacks}}{(List of \link{Callback}s)\cr
+Callbacks.}
 }
 \if{html}{\out{</div>}}
 }
@@ -76,7 +79,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   search_space = NULL,
   terminator,
   keep_evals = "all",
-  check_values = TRUE
+  check_values = TRUE,
+  callbacks = list()
 )}\if{html}{\out{</div>}}
 }
 
@@ -100,6 +104,9 @@ Keep \code{all} or only \code{best} evaluations in archive?}
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
+
+\item{\code{callbacks}}{(List of \link{Callback}s)\cr
+List of callbacks.}
 }
 \if{html}{\out{</div>}}
 }

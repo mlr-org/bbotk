@@ -13,6 +13,7 @@
 #' @template param_xdt
 #' @template param_search_space
 #' @template param_keep_evals
+#' @template param_callbacks
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
@@ -36,6 +37,10 @@ OptimInstance = R6Class("OptimInstance",
     #' @field objective_multiplicator (`integer()`).
     objective_multiplicator = NULL,
 
+    #' @field callbacks (List of [Callback]s)\cr
+    #' Callbacks.
+    callbacks = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -44,11 +49,12 @@ OptimInstance = R6Class("OptimInstance",
     #' @param check_values (`logical(1)`)\cr
     #'   Should x-values that are added to the archive be checked for validity?
     #'   Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE) {
+    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list()) {
       self$objective = assert_r6(objective, "Objective")
       self$terminator = assert_terminator(terminator, self)
       assert_choice(keep_evals, c("all", "best"))
       assert_flag(check_values)
+      self$callbacks = assert_callbacks(callbacks)
 
       # set search space
       domain_search_space = self$objective$domain$search_space()
@@ -79,6 +85,7 @@ OptimInstance = R6Class("OptimInstance",
         private$.objective_function = objective_function
       }
       self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
+      private$.context = ContextInstance$new(instance = self)
     },
 
     #' @description
@@ -222,6 +229,7 @@ OptimInstance = R6Class("OptimInstance",
   private = list(
     .result = NULL,
     .objective_function = NULL,
+    .context = NULL,
 
     deep_clone = function(name, value) {
       switch(name,

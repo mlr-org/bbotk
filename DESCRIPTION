@@ -69,7 +69,9 @@ RoxygenNote: 7.1.2
 Collate:
     'Archive.R'
     'ArchiveBest.R'
+    'Callback.R'
     'Codomain.R'
+    'Context.R'
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'
