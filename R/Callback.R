@@ -35,6 +35,14 @@ Callback = R6::R6Class("Callback",
   )
 )
 
+#' @title Context
+#'
+#' @description
+#' ABC for Context. Contexts must inherit from this class.
+#'
+#' @export
+Context = R6Class("Context")
+
 #' @title Create a Callback
 #'
 #' @description
