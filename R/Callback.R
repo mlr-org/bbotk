@@ -30,7 +30,10 @@ Callback = R6::R6Class("Callback",
     #' @param context (`Context`)\cr
     #'   Context.
     call = function(step, context) {
-      self[[step]](context)
+      if (!is.null(self[[step]])) {
+        self[[step]](context)
+      }
+
     }
   )
 )
@@ -66,6 +69,7 @@ as_callback = function(id, ...) {
 #' @keywords internal
 #' @export
 call_back = function(step, callbacks, context) {
-  if (!length(callbacks)) return(invisible(NULL))
+  callbacks = Filter(function(x)  !is.null(x), callbacks)
   walk(callbacks, function(callback) callback$call(step, context))
+  return(invisible(NULL))
 }
