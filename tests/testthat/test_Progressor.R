@@ -15,6 +15,7 @@ test_that("progressr works", {
 })
 
 test_that("$clear() method of instance resets progressr", {
+  skip_if_not_installed("progressr")
   progressr::handlers("debug")
   terminator = trm("evals", n_evals = 10)
   inst = MAKE_INST_1D(terminator = terminator)
