@@ -191,27 +191,27 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># modifies the instance by reference</span></span>
 <span class="r-in"><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             x  x_domain           y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.06731238 &lt;list[1]&gt; 0.004530956</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x  x_domain          y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.218216 &lt;list[1]&gt; 0.04761822</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># returns best scoring evaluation</span></span>
 <span class="r-in"><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             x  x_domain           y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.06731238 &lt;list[1]&gt; 0.004530956</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x  x_domain          y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.218216 &lt;list[1]&gt; 0.04761822</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># allows access of data.table of full path of all evaluations</span></span>
 <span class="r-in"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               x           y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.58341914 0.340377898 &lt;list[1]&gt; 2022-05-27 04:21:43        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.26752933 0.071571943 &lt;list[1]&gt; 2022-05-27 04:21:43        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -0.64450500 0.415386698 &lt;list[1]&gt; 2022-05-27 04:21:43        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.06731238 0.004530956 &lt;list[1]&gt; 2022-05-27 04:21:43        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.11070425 0.012255432 &lt;list[1]&gt; 2022-05-27 04:21:43        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.92827285 0.861690485 &lt;list[1]&gt; 2022-05-27 04:21:43        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -0.17452261 0.030458143 &lt;list[1]&gt; 2022-05-27 04:21:43        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -0.68708252 0.472082387 &lt;list[1]&gt; 2022-05-27 04:21:43        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -0.94120570 0.885868161 &lt;list[1]&gt; 2022-05-27 04:21:43        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  0.87749786 0.770002489 &lt;list[1]&gt; 2022-05-27 04:21:43       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x          y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.8549550 0.73094806 &lt;list[1]&gt; 2022-05-28 04:12:59        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.5250206 0.27564664 &lt;list[1]&gt; 2022-05-28 04:12:59        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  0.4691250 0.22007823 &lt;list[1]&gt; 2022-05-28 04:12:59        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -0.3901491 0.15221634 &lt;list[1]&gt; 2022-05-28 04:12:59        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.2468599 0.06093982 &lt;list[1]&gt; 2022-05-28 04:12:59        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.9904706 0.98103194 &lt;list[1]&gt; 2022-05-28 04:12:59        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -0.4874914 0.23764782 &lt;list[1]&gt; 2022-05-28 04:12:59        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -0.2182160 0.04761822 &lt;list[1]&gt; 2022-05-28 04:12:59        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -0.9016726 0.81301339 &lt;list[1]&gt; 2022-05-28 04:12:59        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -0.5760384 0.33182022 &lt;list[1]&gt; 2022-05-28 04:12:59       10</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
