@@ -4,7 +4,6 @@
 #' Callback
 #'
 #' Use `callback()` function to create a [Callback].
-#'
 #' @export
 Callback = R6::R6Class("Callback",
   lock_objects = FALSE,
@@ -69,7 +68,6 @@ as_callback = function(id, ...) {
 #' @keywords internal
 #' @export
 call_back = function(step, callbacks, context) {
-  callbacks = Filter(function(x)  !is.null(x), callbacks)
   walk(callbacks, function(callback) callback$call(step, context))
   return(invisible(NULL))
 }
