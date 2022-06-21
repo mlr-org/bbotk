@@ -68,11 +68,13 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        smooth = p_lgl(default = TRUE),
+        smooth = p_lgl(default = TRUE),  # FIXME: probably switch this to FALSE
         temperature = p_dbl(default = 5230),
+        visiting.param = p_dbl(default = 2.62),
         acceptance.param = p_dbl(default = -5),
+        simple.function = p_lgl(default = FALSE),
         verbose = p_lgl(default = FALSE),
-        trace.mat = p_lgl(default = TRUE)
+        trace.mat = p_lgl(default = FALSE)
       )
       super$initialize(
         id = "gensa",
@@ -89,7 +91,8 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
   private = list(
     .optimize = function(inst) {
       v = self$param_set$values
-      v$maxit = .Machine$integer.max # make sure GenSA does not stop
+      v$maxit = .Machine$integer.max  # make sure GenSA does not stop
+      v$nb.stop.improvement = .Machine$integer.max   # make sure GenSA does not stop
       GenSA::GenSA(par = NULL, fn = inst$objective_function,
         lower = inst$search_space$lower, upper = inst$search_space$upper,
         control = v)
