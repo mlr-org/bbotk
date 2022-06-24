@@ -23,6 +23,11 @@
 #' have removed all control parameters which refer to the termination of the
 #' algorithm and where our terminators allow to obtain the same behavior.
 #'
+#' In contrast to the [GenSA::GenSA()] defaults, we set `trace.mat = FALSE`.
+#' Note that [GenSA::GenSA()] uses `smooth = TRUE` as a default.
+#' In the case of using this optimizer for Hyperparameter Optimization you may
+#' want to set `smooth = FALSE`.
+#'
 #' @template section_progress_bars
 #'
 #' @source
@@ -50,7 +55,7 @@
 #'     search_space = search_space,
 #'     terminator = trm("evals", n_evals = 10))
 #'
-#'   optimizer = opt("cmaes")
+#'   optimizer = opt("gensa")
 #'
 #'   # Modifies the instance by reference
 #'   optimizer$optimize(instance)
@@ -68,14 +73,15 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        smooth = p_lgl(default = TRUE),  # FIXME: probably switch this to FALSE
+        smooth = p_lgl(default = TRUE),
         temperature = p_dbl(default = 5230),
-        visiting.param = p_dbl(default = 2.62),
-        acceptance.param = p_dbl(default = -5),
+        visiting.param = p_dbl(default = 2.62, lower = 2.01, upper = 2.99),  # see https://journal.r-project.org/archive/2013-1/xiang-gubian-suomela-etal.pdf
+        acceptance.param = p_dbl(default = -5, upper = -0.01),  # see https://journal.r-project.org/archive/2013-1/xiang-gubian-suomela-etal.pdf
         simple.function = p_lgl(default = FALSE),
         verbose = p_lgl(default = FALSE),
-        trace.mat = p_lgl(default = FALSE)
+        trace.mat = p_lgl(default = TRUE)
       )
+      param_set$values$trace.mat = FALSE  # we don't need this
       super$initialize(
         id = "gensa",
         param_set = param_set,
@@ -101,3 +107,8 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
 )
 
 mlr_optimizers$add("gensa", OptimizerGenSA)
+
+# a note on smooth and simple.function
+# smooth: switching the local search algorithm from using L-BFGS-B (default) to Nelder-Mead approach that works better when the objective function has very few places where numerical derivatives can be computed (highly non-smooth function)
+# simple.function: simple.function argument is impacting the number of local searches performed when the best energy value is not updated after several iterations
+# as we mainly use this for HPO smooth = FALSE and simple.function = FALSE seems sensible (we just assume the worst)
