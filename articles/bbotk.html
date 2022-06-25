@@ -102,7 +102,7 @@
       <img src="" class="logo" alt=""><h1>bbotk: A brief introduction</h1>
                         <h4 data-toc-skip class="author">Jakob Richter</h4>
             
-            <h4 data-toc-skip class="date">2022-06-24</h4>
+            <h4 data-toc-skip class="date">2022-06-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mlr-org/bbotk/blob/HEAD/vignettes/bbotk.Rmd" class="external-link"><code>vignettes/bbotk.Rmd</code></a></small>
       <div class="d-none name"><code>bbotk.Rmd</code></div>
@@ -126,12 +126,12 @@
 </ul>
 <p>As <code>bbotk</code> also includes some basic optimizers and can be used on its own. The registered optimizers can be queried as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bbotk.mlr-org.com">bbotk</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: paradox</span>
-<span class="fu"><a href="../reference/opt.html">opts</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; &lt;DictionaryOptimizer&gt; with 8 stored values</span>
-<span class="co">#&gt; Keys: cmaes, design_points, focus_search, gensa, grid_search, irace,</span>
-<span class="co">#&gt;   nloptr, random_search</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bbotk.mlr-org.com">bbotk</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: paradox</span></span>
+<span><span class="fu"><a href="../reference/opt.html">opts</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;DictionaryOptimizer&gt; with 8 stored values</span></span>
+<span><span class="co">#&gt; Keys: cmaes, design_points, focus_search, gensa, grid_search, irace,</span></span>
+<span><span class="co">#&gt;   nloptr, random_search</span></span></code></pre></div>
 <p>This Vignette will show you how to use the <code>bbotk</code>-classes to solve a simple optimization problem. Furthermore, you will learn how to</p>
 <ul>
 <li>construct your <code>Objective</code>.</li>
@@ -146,142 +146,142 @@
 </h3>
 <p>In the following we will use <code>bbotk</code> to minimize this function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>First we need to wrap <code>fun</code> inside an <code>Objective</code> object. For functions that expect a list as input we can use the <code>ObjectiveRFun</code> class. Additionally, we need to specify the domain, i.e. the space of x-values that the function accepts as an input. Optionally, we can define the co-domain, i.e. the output space of our objective function. This is only necessary if we want to deviate from the default which would define the output to be named <em>y</em> and be minimized. Such spaces are defined using the package <a href="https://cran.r-project.org/package=paradox" class="external-link"><code>paradox</code></a>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paradox.mlr-org.com" class="external-link">paradox</a></span><span class="op">)</span>
-
-<span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>
-  x1 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,
-  x2 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>
-  y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">obfun</span> <span class="op">=</span> <span class="va"><a href="../reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  fun <span class="op">=</span> <span class="va">fun</span>,
-  domain <span class="op">=</span> <span class="va">domain</span>,
-  codomain <span class="op">=</span> <span class="va">codomain</span>,
-  properties <span class="op">=</span> <span class="st">"deterministic"</span> <span class="co"># i.e. the result always returns the same result for the same input.</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paradox.mlr-org.com" class="external-link">paradox</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span></span>
+<span>  x1 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  x2 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span></span>
+<span>  y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">obfun</span> <span class="op">=</span> <span class="va"><a href="../reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  fun <span class="op">=</span> <span class="va">fun</span>,</span>
+<span>  domain <span class="op">=</span> <span class="va">domain</span>,</span>
+<span>  codomain <span class="op">=</span> <span class="va">codomain</span>,</span>
+<span>  properties <span class="op">=</span> <span class="st">"deterministic"</span> <span class="co"># i.e. the result always returns the same result for the same input.</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>In the next step we decide when the optimization should stop. We can list all available terminators as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/trm.html">trms</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; &lt;DictionaryTerminator&gt; with 8 stored values</span>
-<span class="co">#&gt; Keys: clock_time, combo, evals, none, perf_reached, run_time,</span>
-<span class="co">#&gt;   stagnation, stagnation_batch</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/trm.html">trms</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;DictionaryTerminator&gt; with 8 stored values</span></span>
+<span><span class="co">#&gt; Keys: clock_time, combo, evals, none, perf_reached, run_time,</span></span>
+<span><span class="co">#&gt;   stagnation, stagnation_batch</span></span></code></pre></div>
 <p>The termination should stop, when it takes longer then 10 seconds or when 20 evaluations are reached.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">terminators</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  evals <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,
-  run_time <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"run_time"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">terminators</span>
-<span class="co">#&gt; $evals</span>
-<span class="co">#&gt; &lt;TerminatorEvals&gt;: Number of Evaluation</span>
-<span class="co">#&gt; * Parameters: n_evals=20, k=0</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $run_time</span>
-<span class="co">#&gt; &lt;TerminatorRunTime&gt;: Run Time</span>
-<span class="co">#&gt; * Parameters: secs=30</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">terminators</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  evals <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
+<span>  run_time <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"run_time"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">terminators</span></span>
+<span><span class="co">#&gt; $evals</span></span>
+<span><span class="co">#&gt; &lt;TerminatorEvals&gt;: Number of Evaluation</span></span>
+<span><span class="co">#&gt; * Parameters: n_evals=20, k=0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $run_time</span></span>
+<span><span class="co">#&gt; &lt;TerminatorRunTime&gt;: Run Time</span></span>
+<span><span class="co">#&gt; * Parameters: secs=30</span></span></code></pre></div>
 <p>We have to correct the default of <code>secs=30</code> by setting the <code>values</code> in the <code>param_set</code> of the terminator.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">terminators</span><span class="op">$</span><span class="va">run_time</span><span class="op">$</span><span class="va">param_set</span><span class="op">$</span><span class="va">values</span><span class="op">$</span><span class="va">secs</span> <span class="op">=</span> <span class="fl">10</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">terminators</span><span class="op">$</span><span class="va">run_time</span><span class="op">$</span><span class="va">param_set</span><span class="op">$</span><span class="va">values</span><span class="op">$</span><span class="va">secs</span> <span class="op">=</span> <span class="fl">10</span></span></code></pre></div>
 <p>We have created <code>Terminator</code> objects for both of our criteria. To combine them we use the <em>combo</em> <code>Terminator</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">term_combo</span> <span class="op">=</span> <span class="va"><a href="../reference/mlr_terminators_combo.html">TerminatorCombo</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>terminators <span class="op">=</span> <span class="va">terminators</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">term_combo</span> <span class="op">=</span> <span class="va"><a href="../reference/mlr_terminators_combo.html">TerminatorCombo</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>terminators <span class="op">=</span> <span class="va">terminators</span><span class="op">)</span></span></code></pre></div>
 <p>Before we finally start the optimization, we have to create an <code>OptimInstance</code> that contains also the <code>Objective</code> and the <code>Terminator</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="../reference/OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="va">obfun</span>, terminator <span class="op">=</span> <span class="va">term_combo</span><span class="op">)</span>
-<span class="va">instance</span>
-<span class="co">#&gt; &lt;OptimInstanceSingleCrit&gt;</span>
-<span class="co">#&gt; * State:  Not optimized</span>
-<span class="co">#&gt; * Objective: &lt;ObjectiveRFun:function&gt;</span>
-<span class="co">#&gt; * Search Space:</span>
-<span class="co">#&gt;    id    class lower upper nlevels</span>
-<span class="co">#&gt; 1: x1 ParamDbl   -10    10     Inf</span>
-<span class="co">#&gt; 2: x2 ParamDbl    -5     5     Inf</span>
-<span class="co">#&gt; * Terminator: &lt;TerminatorCombo&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="../reference/OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="va">obfun</span>, terminator <span class="op">=</span> <span class="va">term_combo</span><span class="op">)</span></span>
+<span><span class="va">instance</span></span>
+<span><span class="co">#&gt; &lt;OptimInstanceSingleCrit&gt;</span></span>
+<span><span class="co">#&gt; * State:  Not optimized</span></span>
+<span><span class="co">#&gt; * Objective: &lt;ObjectiveRFun:function&gt;</span></span>
+<span><span class="co">#&gt; * Search Space:</span></span>
+<span><span class="co">#&gt;    id    class lower upper nlevels</span></span>
+<span><span class="co">#&gt; 1: x1 ParamDbl   -10    10     Inf</span></span>
+<span><span class="co">#&gt; 2: x2 ParamDbl    -5     5     Inf</span></span>
+<span><span class="co">#&gt; * Terminator: &lt;TerminatorCombo&gt;</span></span></code></pre></div>
 <p>Note, that <code>OptimInstance(SingleCrit/MultiCrit)$new()</code> also has an optional <code>search_space</code> argument. It can be used if the <code>search_space</code> is only a subset of <code>obfun$domain</code> or if you want to apply transformations. More on that later.</p>
 <p>Finally, we have to define an <code>Optimizer</code>. As we have seen above, that we can call <code><a href="../reference/opt.html">opts()</a></code> to list all available optimizers. We opt for evolutionary optimizer, from the <code>GenSA</code> package.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="../reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span>
-<span class="va">optimizer</span>
-<span class="co">#&gt; &lt;OptimizerGenSA&gt;: Generalized Simulated Annealing</span>
-<span class="co">#&gt; * Parameters: list()</span>
-<span class="co">#&gt; * Parameter classes: ParamDbl</span>
-<span class="co">#&gt; * Properties: single-crit</span>
-<span class="co">#&gt; * Packages: bbotk, GenSA</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="../reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span></span>
+<span><span class="va">optimizer</span></span>
+<span><span class="co">#&gt; &lt;OptimizerGenSA&gt;: Generalized Simulated Annealing</span></span>
+<span><span class="co">#&gt; * Parameters: list()</span></span>
+<span><span class="co">#&gt; * Parameter classes: ParamDbl</span></span>
+<span><span class="co">#&gt; * Properties: single-crit</span></span>
+<span><span class="co">#&gt; * Packages: bbotk, GenSA</span></span></code></pre></div>
 <p>To start the optimization we have to call the <code>Optimizer</code> on the <code>OptimInstance</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span>
-<span class="co">#&gt;    x1 x2  x_domain  y</span>
-<span class="co">#&gt; 1:  2 -3 &lt;list[2]&gt; 10</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    x1 x2  x_domain  y</span></span>
+<span><span class="co">#&gt; 1:  2 -3 &lt;list[2]&gt; 10</span></span></code></pre></div>
 <p>Note, that we did not specify the termination inside the optimizer. <code>bbotk</code> generally sets the termination of the optimizers to never terminate and instead breaks the code internally as soon as a termination criterion is fulfilled.</p>
 <p>The results can be queried from the <code>OptimInstance</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># result as a data.table</span>
-<span class="va">instance</span><span class="op">$</span><span class="va">result</span>
-<span class="co">#&gt;    x1 x2  x_domain  y</span>
-<span class="co">#&gt; 1:  2 -3 &lt;list[2]&gt; 10</span>
-<span class="co"># result as a list that can be passed to the Objective</span>
-<span class="va">instance</span><span class="op">$</span><span class="va">result_x_domain</span>
-<span class="co">#&gt; $x1</span>
-<span class="co">#&gt; [1] 2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $x2</span>
-<span class="co">#&gt; [1] -3</span>
-<span class="co"># result outcome</span>
-<span class="va">instance</span><span class="op">$</span><span class="va">result_y</span>
-<span class="co">#&gt;  y </span>
-<span class="co">#&gt; 10</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># result as a data.table</span></span>
+<span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span>
+<span><span class="co">#&gt;    x1 x2  x_domain  y</span></span>
+<span><span class="co">#&gt; 1:  2 -3 &lt;list[2]&gt; 10</span></span>
+<span><span class="co"># result as a list that can be passed to the Objective</span></span>
+<span><span class="va">instance</span><span class="op">$</span><span class="va">result_x_domain</span></span>
+<span><span class="co">#&gt; $x1</span></span>
+<span><span class="co">#&gt; [1] 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $x2</span></span>
+<span><span class="co">#&gt; [1] -3</span></span>
+<span><span class="co"># result outcome</span></span>
+<span><span class="va">instance</span><span class="op">$</span><span class="va">result_y</span></span>
+<span><span class="co">#&gt;  y </span></span>
+<span><span class="co">#&gt; 10</span></span></code></pre></div>
 <p>You can also access the whole history of evaluated points.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span>
-<span class="co">#&gt;            x1        x2          y           timestamp batch_nr x_domain_x1</span>
-<span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 2022-06-24 04:24:04        1   -4.689827</span>
-<span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 2022-06-24 04:24:04        2   -5.930364</span>
-<span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 2022-06-24 04:24:04        3    7.170817</span>
-<span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 2022-06-24 04:24:04        4    2.045200</span>
-<span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 2022-06-24 04:24:04        5    2.045200</span>
-<span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 2022-06-24 04:24:04        6    2.045200</span>
-<span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 2022-06-24 04:24:04        7    2.045201</span>
-<span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 2022-06-24 04:24:04        8    2.045199</span>
-<span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 2022-06-24 04:24:04        9    2.045200</span>
-<span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 2022-06-24 04:24:04       10    2.045200</span>
-<span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 2022-06-24 04:24:04       11    1.954800</span>
-<span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 2022-06-24 04:24:04       12    1.954801</span>
-<span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 2022-06-24 04:24:04       13    1.954799</span>
-<span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 2022-06-24 04:24:04       14    1.954800</span>
-<span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 2022-06-24 04:24:04       15    1.954800</span>
-<span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 2022-06-24 04:24:04       16    2.000000</span>
-<span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 2022-06-24 04:24:04       17    2.000001</span>
-<span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 2022-06-24 04:24:04       18    1.999999</span>
-<span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 2022-06-24 04:24:04       19    2.000000</span>
-<span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 2022-06-24 04:24:04       20    2.000000</span>
-<span class="co">#&gt;     x_domain_x2</span>
-<span class="co">#&gt;  1:   -1.278761</span>
-<span class="co">#&gt;  2:   -4.400474</span>
-<span class="co">#&gt;  3:   -1.519948</span>
-<span class="co">#&gt;  4:   -1.519948</span>
-<span class="co">#&gt;  5:   -2.064742</span>
-<span class="co">#&gt;  6:   -2.064742</span>
-<span class="co">#&gt;  7:   -2.064742</span>
-<span class="co">#&gt;  8:   -2.064742</span>
-<span class="co">#&gt;  9:   -2.064741</span>
-<span class="co">#&gt; 10:   -2.064743</span>
-<span class="co">#&gt; 11:   -3.935258</span>
-<span class="co">#&gt; 12:   -3.935258</span>
-<span class="co">#&gt; 13:   -3.935258</span>
-<span class="co">#&gt; 14:   -3.935257</span>
-<span class="co">#&gt; 15:   -3.935259</span>
-<span class="co">#&gt; 16:   -3.000000</span>
-<span class="co">#&gt; 17:   -3.000000</span>
-<span class="co">#&gt; 18:   -3.000000</span>
-<span class="co">#&gt; 19:   -2.999999</span>
-<span class="co">#&gt; 20:   -3.000001</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            x1        x2          y           timestamp batch_nr x_domain_x1</span></span>
+<span><span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 2022-06-25 04:21:16        1   -4.689827</span></span>
+<span><span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 2022-06-25 04:21:16        2   -5.930364</span></span>
+<span><span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 2022-06-25 04:21:16        3    7.170817</span></span>
+<span><span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 2022-06-25 04:21:16        4    2.045200</span></span>
+<span><span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 2022-06-25 04:21:16        5    2.045200</span></span>
+<span><span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 2022-06-25 04:21:16        6    2.045200</span></span>
+<span><span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 2022-06-25 04:21:16        7    2.045201</span></span>
+<span><span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 2022-06-25 04:21:16        8    2.045199</span></span>
+<span><span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 2022-06-25 04:21:16        9    2.045200</span></span>
+<span><span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 2022-06-25 04:21:16       10    2.045200</span></span>
+<span><span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 2022-06-25 04:21:16       11    1.954800</span></span>
+<span><span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 2022-06-25 04:21:16       12    1.954801</span></span>
+<span><span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 2022-06-25 04:21:16       13    1.954799</span></span>
+<span><span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 2022-06-25 04:21:16       14    1.954800</span></span>
+<span><span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 2022-06-25 04:21:16       15    1.954800</span></span>
+<span><span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 2022-06-25 04:21:16       16    2.000000</span></span>
+<span><span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 2022-06-25 04:21:16       17    2.000001</span></span>
+<span><span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 2022-06-25 04:21:16       18    1.999999</span></span>
+<span><span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 2022-06-25 04:21:16       19    2.000000</span></span>
+<span><span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 2022-06-25 04:21:16       20    2.000000</span></span>
+<span><span class="co">#&gt;     x_domain_x2</span></span>
+<span><span class="co">#&gt;  1:   -1.278761</span></span>
+<span><span class="co">#&gt;  2:   -4.400474</span></span>
+<span><span class="co">#&gt;  3:   -1.519948</span></span>
+<span><span class="co">#&gt;  4:   -1.519948</span></span>
+<span><span class="co">#&gt;  5:   -2.064742</span></span>
+<span><span class="co">#&gt;  6:   -2.064742</span></span>
+<span><span class="co">#&gt;  7:   -2.064742</span></span>
+<span><span class="co">#&gt;  8:   -2.064742</span></span>
+<span><span class="co">#&gt;  9:   -2.064741</span></span>
+<span><span class="co">#&gt; 10:   -2.064743</span></span>
+<span><span class="co">#&gt; 11:   -3.935258</span></span>
+<span><span class="co">#&gt; 12:   -3.935258</span></span>
+<span><span class="co">#&gt; 13:   -3.935258</span></span>
+<span><span class="co">#&gt; 14:   -3.935257</span></span>
+<span><span class="co">#&gt; 15:   -3.935259</span></span>
+<span><span class="co">#&gt; 16:   -3.000000</span></span>
+<span><span class="co">#&gt; 17:   -3.000000</span></span>
+<span><span class="co">#&gt; 18:   -3.000000</span></span>
+<span><span class="co">#&gt; 19:   -2.999999</span></span>
+<span><span class="co">#&gt; 20:   -3.000001</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="search-space-transformations">Search Space Transformations<a class="anchor" aria-label="anchor" href="#search-space-transformations"></a>
 </h4>
@@ -295,98 +295,98 @@
 <p>In the following we will look at an example for 2.)</p>
 <p>We want to construct a box with the maximal volume, with the restriction that <code>h+w+d = 1</code>. For simplicity we define our problem as a minimization problem.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fun_volume</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">$</span><span class="va">h</span> <span class="op">*</span> <span class="va">xs</span><span class="op">$</span><span class="va">w</span> <span class="op">*</span> <span class="va">xs</span><span class="op">$</span><span class="va">d</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>
-  h <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
-  w <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
-  d <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">obj</span> <span class="op">=</span> <span class="va"><a href="../reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  fun <span class="op">=</span> <span class="va">fun_volume</span>,
-  domain <span class="op">=</span> <span class="va">domain</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fun_volume</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">$</span><span class="va">h</span> <span class="op">*</span> <span class="va">xs</span><span class="op">$</span><span class="va">w</span> <span class="op">*</span> <span class="va">xs</span><span class="op">$</span><span class="va">d</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span></span>
+<span>  h <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  w <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  d <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">obj</span> <span class="op">=</span> <span class="va"><a href="../reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  fun <span class="op">=</span> <span class="va">fun_volume</span>,</span>
+<span>  domain <span class="op">=</span> <span class="va">domain</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>We notice, that our optimization problem has three parameters but due to the restriction it only the degree of freedom 2. Therefore we only need to optimize two parameters and calculate <code>h</code>, <code>w</code>, <code>d</code> accordingly.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">search_space</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>
-  h <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
-  w <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
-  .extra_trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">param_set</span><span class="op">)</span><span class="op">{</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-    <span class="va">x</span><span class="op">[</span><span class="st">"d"</span><span class="op">]</span> <span class="op">=</span> <span class="fl">2</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="co"># model d in dependence of h, w</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="va">x</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="co"># ensure that h+w+d = 1</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-  <span class="op">}</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">search_space</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span></span>
+<span>  h <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  w <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  .extra_trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">param_set</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>    <span class="va">x</span><span class="op">[</span><span class="st">"d"</span><span class="op">]</span> <span class="op">=</span> <span class="fl">2</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="co"># model d in dependence of h, w</span></span>
+<span>    <span class="va">x</span> <span class="op">=</span> <span class="va">x</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="co"># ensure that h+w+d = 1</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Instead of the domain of the <code>Objective</code> we now use our constructed <code>search_space</code> that includes the <code>trafo</code> for the <code>OptimInstance</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">inst</span> <span class="op">=</span> <span class="va"><a href="../reference/OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  objective <span class="op">=</span> <span class="va">obj</span>,
-  search_space <span class="op">=</span> <span class="va">search_space</span>,
-  terminator <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="../reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span>
-<span class="va">lg</span> <span class="op">=</span> <span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html" class="external-link">get_logger</a></span><span class="op">(</span><span class="st">"bbotk"</span><span class="op">)</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"warn"</span><span class="op">)</span> <span class="co"># turn off console output</span>
-<span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">inst</span><span class="op">)</span>
-<span class="co">#&gt;            h         w  x_domain          y</span>
-<span class="co">#&gt; 1: 0.6647984 0.6671394 &lt;list[3]&gt; -0.0370368</span>
-<span class="va">lg</span> <span class="op">=</span> <span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html" class="external-link">get_logger</a></span><span class="op">(</span><span class="st">"bbotk"</span><span class="op">)</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"info"</span><span class="op">)</span> <span class="co"># turn on console output</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">inst</span> <span class="op">=</span> <span class="va"><a href="../reference/OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  objective <span class="op">=</span> <span class="va">obj</span>,</span>
+<span>  search_space <span class="op">=</span> <span class="va">search_space</span>,</span>
+<span>  terminator <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="../reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span></span>
+<span><span class="va">lg</span> <span class="op">=</span> <span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html" class="external-link">get_logger</a></span><span class="op">(</span><span class="st">"bbotk"</span><span class="op">)</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"warn"</span><span class="op">)</span> <span class="co"># turn off console output</span></span>
+<span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">inst</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            h         w  x_domain          y</span></span>
+<span><span class="co">#&gt; 1: 0.6647984 0.6671394 &lt;list[3]&gt; -0.0370368</span></span>
+<span><span class="va">lg</span> <span class="op">=</span> <span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html" class="external-link">get_logger</a></span><span class="op">(</span><span class="st">"bbotk"</span><span class="op">)</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"info"</span><span class="op">)</span> <span class="co"># turn on console output</span></span></code></pre></div>
 <p>The optimizer only saw the search space during optimization and returns the following result:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">inst</span><span class="op">$</span><span class="va">result_x_search_space</span>
-<span class="co">#&gt;            h         w</span>
-<span class="co">#&gt; 1: 0.6647984 0.6671394</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">inst</span><span class="op">$</span><span class="va">result_x_search_space</span></span>
+<span><span class="co">#&gt;            h         w</span></span>
+<span><span class="co">#&gt; 1: 0.6647984 0.6671394</span></span></code></pre></div>
 <p>Internally, the <code>OptimInstance</code> transformed these values to the <em>domain</em> so that the result for the <code>Objective</code> looks as follows:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">inst</span><span class="op">$</span><span class="va">result_x_domain</span>
-<span class="co">#&gt; $h</span>
-<span class="co">#&gt; [1] 0.3323992</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $w</span>
-<span class="co">#&gt; [1] 0.3335697</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $d</span>
-<span class="co">#&gt; [1] 0.3340311</span>
-<span class="va">obj</span><span class="op">$</span><span class="fu">eval</span><span class="op">(</span><span class="va">inst</span><span class="op">$</span><span class="va">result_x_domain</span><span class="op">)</span>
-<span class="co">#&gt;          y </span>
-<span class="co">#&gt; -0.0370368</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">inst</span><span class="op">$</span><span class="va">result_x_domain</span></span>
+<span><span class="co">#&gt; $h</span></span>
+<span><span class="co">#&gt; [1] 0.3323992</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $w</span></span>
+<span><span class="co">#&gt; [1] 0.3335697</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $d</span></span>
+<span><span class="co">#&gt; [1] 0.3340311</span></span>
+<span><span class="va">obj</span><span class="op">$</span><span class="fu">eval</span><span class="op">(</span><span class="va">inst</span><span class="op">$</span><span class="va">result_x_domain</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          y </span></span>
+<span><span class="co">#&gt; -0.0370368</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="notes-on-the-optimization-archive">Notes on the optimization archive<a class="anchor" aria-label="anchor" href="#notes-on-the-optimization-archive"></a>
 </h4>
 <p>The following is just meant for <em>advanced</em> readers. If you want to evaluate the function outside of the optimization but have the result stored in the <code>Archive</code> you can do so by resetting the termination and call <code>$eval_batch()</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
-
-<span class="va">inst</span><span class="op">$</span><span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span>
-<span class="va">xvals</span> <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span>, w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span><span class="op">)</span>
-<span class="va">inst</span><span class="op">$</span><span class="fu">eval_batch</span><span class="op">(</span>xdt <span class="op">=</span> <span class="va">xvals</span><span class="op">)</span>
-<span class="co">#&gt; INFO  [04:24:05.140] [bbotk] Evaluating 2 configuration(s) </span>
-<span class="co">#&gt; INFO  [04:24:05.175] [bbotk] Result of batch 31: </span>
-<span class="co">#&gt; INFO  [04:24:05.184] [bbotk]       h      w           y </span>
-<span class="co">#&gt; INFO  [04:24:05.184] [bbotk]  0.6666 0.6666 -0.03703704 </span>
-<span class="co">#&gt; INFO  [04:24:05.184] [bbotk]  0.6667 0.6667 -0.03703704</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;          x1        x2         y           timestamp batch_nr x_domain_x1</span>
-<span class="co">#&gt; 1: 1.954800 -3.935259  9.123248 2022-06-24 04:24:04       15    1.954800</span>
-<span class="co">#&gt; 2: 2.000000 -3.000000 10.000000 2022-06-24 04:24:04       16    2.000000</span>
-<span class="co">#&gt; 3: 2.000001 -3.000000 10.000000 2022-06-24 04:24:04       17    2.000001</span>
-<span class="co">#&gt; 4: 1.999999 -3.000000 10.000000 2022-06-24 04:24:04       18    1.999999</span>
-<span class="co">#&gt; 5: 2.000000 -2.999999 10.000000 2022-06-24 04:24:04       19    2.000000</span>
-<span class="co">#&gt; 6: 2.000000 -3.000001 10.000000 2022-06-24 04:24:04       20    2.000000</span>
-<span class="co">#&gt;    x_domain_x2</span>
-<span class="co">#&gt; 1:   -3.935259</span>
-<span class="co">#&gt; 2:   -3.000000</span>
-<span class="co">#&gt; 3:   -3.000000</span>
-<span class="co">#&gt; 4:   -3.000000</span>
-<span class="co">#&gt; 5:   -2.999999</span>
-<span class="co">#&gt; 6:   -3.000001</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">inst</span><span class="op">$</span><span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span></span>
+<span><span class="va">xvals</span> <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span>, w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">inst</span><span class="op">$</span><span class="fu">eval_batch</span><span class="op">(</span>xdt <span class="op">=</span> <span class="va">xvals</span><span class="op">)</span></span>
+<span><span class="co">#&gt; INFO  [04:21:17.145] [bbotk] Evaluating 2 configuration(s) </span></span>
+<span><span class="co">#&gt; INFO  [04:21:17.190] [bbotk] Result of batch 31: </span></span>
+<span><span class="co">#&gt; INFO  [04:21:17.201] [bbotk]       h      w           y </span></span>
+<span><span class="co">#&gt; INFO  [04:21:17.201] [bbotk]  0.6666 0.6666 -0.03703704 </span></span>
+<span><span class="co">#&gt; INFO  [04:21:17.201] [bbotk]  0.6667 0.6667 -0.03703704</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          x1        x2         y           timestamp batch_nr x_domain_x1</span></span>
+<span><span class="co">#&gt; 1: 1.954800 -3.935259  9.123248 2022-06-25 04:21:16       15    1.954800</span></span>
+<span><span class="co">#&gt; 2: 2.000000 -3.000000 10.000000 2022-06-25 04:21:16       16    2.000000</span></span>
+<span><span class="co">#&gt; 3: 2.000001 -3.000000 10.000000 2022-06-25 04:21:16       17    2.000001</span></span>
+<span><span class="co">#&gt; 4: 1.999999 -3.000000 10.000000 2022-06-25 04:21:16       18    1.999999</span></span>
+<span><span class="co">#&gt; 5: 2.000000 -2.999999 10.000000 2022-06-25 04:21:16       19    2.000000</span></span>
+<span><span class="co">#&gt; 6: 2.000000 -3.000001 10.000000 2022-06-25 04:21:16       20    2.000000</span></span>
+<span><span class="co">#&gt;    x_domain_x2</span></span>
+<span><span class="co">#&gt; 1:   -3.935259</span></span>
+<span><span class="co">#&gt; 2:   -3.000000</span></span>
+<span><span class="co">#&gt; 3:   -3.000000</span></span>
+<span><span class="co">#&gt; 4:   -3.000000</span></span>
+<span><span class="co">#&gt; 5:   -2.999999</span></span>
+<span><span class="co">#&gt; 6:   -3.000001</span></span></code></pre></div>
 <p>However, this does not update the result. You could set the result by calling <code>inst$assign_result()</code> but this should be handled by the optimizer. Another way to get the best point is the following:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">inst</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;         h      w           y  x_domain           timestamp batch_nr</span>
-<span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2022-06-24 04:24:05       31</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">inst</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         h      w           y  x_domain           timestamp batch_nr</span></span>
+<span><span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2022-06-25 04:21:17       31</span></span></code></pre></div>
 <p>Note, that this method just looks for the best outcome and returns the according row from the archive. For stochastic optimization problems this is overly optimistic and leads to biased results. For this reason the optimizer can use advanced methods to determine the result and set it itself.</p>
 </div>
 </div>

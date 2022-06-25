@@ -150,7 +150,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/mlr_optimizers_nloptr.html">OptimizerNLoptr</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/mlr_optimizers_nloptr.html">OptimizerNLoptr</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -158,7 +158,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">OptimizerNLoptr</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimizerNLoptr</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -176,60 +176,57 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"nloptr"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">objective_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">xs</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">    fun <span class="op">=</span> <span class="va">objective_function</span>,</span>
-<span class="r-in">    domain <span class="op">=</span> <span class="va">domain</span>,</span>
-<span class="r-in">    codomain <span class="op">=</span> <span class="va">codomain</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># We use the internal termination criterion xtol_rel</span></span>
-<span class="r-in">  <span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">    objective <span class="op">=</span> <span class="va">objective</span>,</span>
-<span class="r-in">    search_space <span class="op">=</span> <span class="va">search_space</span>,</span>
-<span class="r-in">    terminator <span class="op">=</span> <span class="va">terminator</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"nloptr"</span>, algorithm <span class="op">=</span> <span class="st">"NLOPT_LN_BOBYQA"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Modifies the instance by reference</span></span>
-<span class="r-in">  <span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Returns best scoring evaluation</span></span>
-<span class="r-in">  <span class="va">instance</span><span class="op">$</span><span class="va">result</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Allows access of data.table of full path of all evaluations</span></span>
-<span class="r-in">  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: nloptr</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"nloptr"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">objective_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">xs</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    fun <span class="op">=</span> <span class="va">objective_function</span>,</span></span>
+<span class="r-in"><span>    domain <span class="op">=</span> <span class="va">domain</span>,</span></span>
+<span class="r-in"><span>    codomain <span class="op">=</span> <span class="va">codomain</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># We use the internal termination criterion xtol_rel</span></span></span>
+<span class="r-in"><span>  <span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
+<span class="r-in"><span>    search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
+<span class="r-in"><span>    terminator <span class="op">=</span> <span class="va">terminator</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"nloptr"</span>, algorithm <span class="op">=</span> <span class="st">"NLOPT_LN_BOBYQA"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Modifies the instance by reference</span></span></span>
+<span class="r-in"><span>  <span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Returns best scoring evaluation</span></span></span>
+<span class="r-in"><span>  <span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Allows access of data.table of full path of all evaluations</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 x            y           timestamp batch_nr    x_domain_x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  7.699303e-01 5.927926e-01 2022-06-24 04:23:58        1  7.699303e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  7.699303e-01 5.927926e-01 2022-06-24 04:23:58        2  7.699303e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  7.699303e-01 5.927926e-01 2022-06-24 04:23:58        3  7.699303e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  9.424826e-01 8.882734e-01 2022-06-24 04:23:58        4  9.424826e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  5.973780e-01 3.568605e-01 2022-06-24 04:23:58        5  5.973780e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  4.248257e-01 1.804769e-01 2022-06-24 04:23:58        6  4.248257e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  7.972113e-02 6.355459e-03 2022-06-24 04:23:58        7  7.972113e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  0.000000e+00 0.000000e+00 2022-06-24 04:23:58        8  0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -1.725523e-02 2.977429e-04 2022-06-24 04:23:58        9 -1.725523e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  1.725523e-03 2.977429e-06 2022-06-24 04:23:58       10  1.725523e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: -1.725523e-04 2.977429e-08 2022-06-24 04:23:58       11 -1.725523e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  1.725523e-04 2.977429e-08 2022-06-24 04:23:58       12  1.725523e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: -1.725523e-05 2.977429e-10 2022-06-24 04:23:58       13 -1.725523e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: -7.188524e-22 5.167487e-43 2022-06-24 04:23:58       14 -7.188524e-22</span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -5.175499e-01 2.678579e-01 2022-06-25 04:21:08        1 -5.175499e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -5.175499e-01 2.678579e-01 2022-06-25 04:21:08        2 -5.175499e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -5.175499e-01 2.678579e-01 2022-06-25 04:21:08        3 -5.175499e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -1.557124e-01 2.424635e-02 2022-06-25 04:21:08        4 -1.557124e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -8.793875e-01 7.733224e-01 2022-06-25 04:21:08        5 -8.793875e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  1.110223e-16 1.232595e-32 2022-06-25 04:21:08        6  1.110223e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  3.618375e-02 1.309264e-03 2022-06-25 04:21:08        7  3.618375e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -3.618375e-03 1.309264e-05 2022-06-25 04:21:08        8 -3.618375e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  3.618375e-04 1.309264e-07 2022-06-25 04:21:08        9  3.618375e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -3.618375e-04 1.309264e-07 2022-06-25 04:21:08       10 -3.618375e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: -3.618375e-05 1.309264e-09 2022-06-25 04:21:08       11 -3.618375e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  6.934309e-23 4.808464e-45 2022-06-25 04:21:08       12  6.934309e-23</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -89,8 +89,8 @@ crash.</p>
     
 
 <p>This <a href="Optimizer.html">Optimizer</a> can be instantiated via the <a href="https://mlr3misc.mlr-org.com/reference/Dictionary.html" class="external-link">dictionary</a>
-<a href="mlr_optimizers.html">mlr_optimizers</a> or with the associated sugar function <code><a href="opt.html">opt()</a></code>:</p><div class="sourceCode"><pre><code><span class="va">mlr_optimizers</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"cmaes"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"cmaes"</span><span class="op">)</span></code></pre></div>
+<a href="mlr_optimizers.html">mlr_optimizers</a> or with the associated sugar function <code><a href="opt.html">opt()</a></code>:</p><div class="sourceCode"><pre><code><span><span class="va">mlr_optimizers</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"cmaes"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"cmaes"</span><span class="op">)</span></span></code></pre></div>
 
     </div>
     <div class="section level2">
@@ -139,7 +139,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/mlr_optimizers_cmaes.html">OptimizerCmaes</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/mlr_optimizers_cmaes.html">OptimizerCmaes</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -147,7 +147,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">OptimizerCmaes</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimizerCmaes</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -165,51 +165,50 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"adagio"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span></span>
-<span class="r-in">    x1 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">    x2 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">objective_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span><span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">    fun <span class="op">=</span> <span class="va">objective_function</span>,</span>
-<span class="r-in">    domain <span class="op">=</span> <span class="va">domain</span>,</span>
-<span class="r-in">    codomain <span class="op">=</span> <span class="va">codomain</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
-<span class="r-in">    objective <span class="op">=</span> <span class="va">objective</span>,</span>
-<span class="r-in">    search_space <span class="op">=</span> <span class="va">search_space</span>,</span>
-<span class="r-in">    terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"cmaes"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># modifies the instance by reference</span></span>
-<span class="r-in">  <span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># returns best scoring evaluation</span></span>
-<span class="r-in">  <span class="va">instance</span><span class="op">$</span><span class="va">result</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># allows access of data.table of full path of all evaluations</span></span>
-<span class="r-in">  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: adagio</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               x1        x2            y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -10.00000000 -5.000000 -138.0000000 &lt;list[2]&gt; 2022-06-24 04:23:52        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:   6.11198696 -5.000000  -10.9084368 &lt;list[2]&gt; 2022-06-24 04:23:52        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  -4.84027461  1.319481  -55.4472692 &lt;list[2]&gt; 2022-06-24 04:23:52        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  -0.04798073  4.088111  -44.4355412 &lt;list[2]&gt; 2022-06-24 04:23:52        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  -2.99158562  4.613257  -72.8776164 &lt;list[2]&gt; 2022-06-24 04:23:52        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  -0.97232339  5.000000  -62.8347063 &lt;list[2]&gt; 2022-06-24 04:23:52        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  10.00000000 -2.864939  -54.0182415 &lt;list[2]&gt; 2022-06-24 04:23:52        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   4.42319797 -1.104416    0.5348748 &lt;list[2]&gt; 2022-06-24 04:23:52        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:   5.97494475 -5.000000   -9.8001858 &lt;list[2]&gt; 2022-06-24 04:23:52        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  10.00000000 -3.587132  -54.3447244 &lt;list[2]&gt; 2022-06-24 04:23:52       10</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"adagio"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    x1 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    x2 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">objective_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span><span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    fun <span class="op">=</span> <span class="va">objective_function</span>,</span></span>
+<span class="r-in"><span>    domain <span class="op">=</span> <span class="va">domain</span>,</span></span>
+<span class="r-in"><span>    codomain <span class="op">=</span> <span class="va">codomain</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="OptimInstanceSingleCrit.html">OptimInstanceSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
+<span class="r-in"><span>    search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
+<span class="r-in"><span>    terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"cmaes"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># modifies the instance by reference</span></span></span>
+<span class="r-in"><span>  <span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># returns best scoring evaluation</span></span></span>
+<span class="r-in"><span>  <span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># allows access of data.table of full path of all evaluations</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x1         x2          y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  -5.745293  3.9906920  -98.85934 &lt;list[2]&gt; 2022-06-25 04:21:01        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -10.000000 -0.1106061 -142.34860 &lt;list[2]&gt; 2022-06-25 04:21:01        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:   0.755635  5.0000000  -55.54844 &lt;list[2]&gt; 2022-06-25 04:21:01        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -10.000000  4.7630596 -194.26509 &lt;list[2]&gt; 2022-06-25 04:21:01        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -10.000000  3.5345303 -176.70009 &lt;list[2]&gt; 2022-06-25 04:21:01        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -10.000000  5.0000000 -198.00000 &lt;list[2]&gt; 2022-06-25 04:21:01        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  -6.059474  3.7509302 -100.53018 &lt;list[2]&gt; 2022-06-25 04:21:01        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  -4.723634  0.4610572  -47.18616 &lt;list[2]&gt; 2022-06-25 04:21:01        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:   8.781642  1.4419247  -55.72136 &lt;list[2]&gt; 2022-06-25 04:21:01        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  10.000000  1.7938757  -76.98124 &lt;list[2]&gt; 2022-06-25 04:21:01       10</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
