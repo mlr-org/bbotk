@@ -180,12 +180,12 @@ evaluation budget is exhausted.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">bb_optimize</span><span class="op">(</span><span class="va">fun</span>, lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, max_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -9.970601 -3.984764</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x1       x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -6.262837 4.608821</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        y1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -134.2651 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -116.1686 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $instance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
@@ -197,20 +197,20 @@ evaluation budget is exhausted.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: x2 ParamDbl    -5     5     Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Terminator: &lt;TerminatorEvals&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Result:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2        y1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -9.970601 -3.984764 -134.2651</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x1       x2        y1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -6.262837 4.608821 -116.1686</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Archive:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            x1        x2          y1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  6.219783  1.591771  -28.890927</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -2.335813 -4.450304  -10.902654</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -9.844651 -4.815122 -133.590424</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  6.671806 -3.827652  -12.510780</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  9.961801 -1.956823  -54.478500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  1.758285  1.271812   -8.306805</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -9.970601 -3.984764 -134.265055</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  2.070462  2.428232  -19.470662</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  2.800718  1.550948  -11.352279</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -8.044473  2.844602 -125.050816</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x1        x2          y1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  8.2479565  4.945434  -92.166888</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -5.1671905  4.943440 -104.466865</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  2.1628274  2.281727  -17.923149</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -0.8847479 -3.652486    1.252492</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  1.5820832 -4.277336    8.193759</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  3.4374911  1.760800  -14.731596</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  9.8092688  3.847789  -97.876896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -0.8968559 -2.436130    1.290277</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -6.2628374  4.608821 -116.168641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -7.5284907 -4.903064  -84.413787</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># function and constant</span></span></span>
@@ -220,12 +220,12 @@ evaluation budget is exhausted.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">bb_optimize</span><span class="op">(</span><span class="va">fun</span>, lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, max_evals <span class="op">=</span> <span class="fl">10</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -9.991186 -3.084195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x1       x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -8.150655 3.156785</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        y1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -142.7956 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -139.9418 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $instance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
@@ -237,20 +237,20 @@ evaluation budget is exhausted.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: x2 ParamDbl    -5     5     Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Terminator: &lt;TerminatorEvals&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Result:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2        y1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -9.991186 -3.084195 -142.7956</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x1       x2        y1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -8.150655 3.156785 -139.9418</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Archive:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            x1         x2           y1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -1.515047  4.7667244  -71.6775614</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -9.991186 -3.0841947 -142.7956191</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  2.740730 -2.7227719    0.3744636</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  3.055522  4.1531068  -51.2810624</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  9.559815  1.9079644  -80.2389193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -5.638432 -3.2364290  -57.4015491</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  0.781737  0.6973410  -14.1544955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  6.261897  3.1041044  -54.4238583</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -2.962657  1.9145064  -47.7803429</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -8.015328  0.3829765 -110.7513315</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x1         x2          y1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  6.71049181  4.3263716  -74.864454</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.57272556 -2.0892719   -6.448343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -5.80268961 -4.5630720  -62.325159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -2.26369958  0.6936183  -30.821950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  0.05725145 -4.2314395   -4.290715</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  1.88663625  1.4840872  -19.119890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -8.15065488  3.1567850 -139.941796</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  5.35321713  4.6372875  -68.572226</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -6.75495821 -1.6121978  -77.575288</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  0.99081790 -1.5648076   -2.078226</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># objective</span></span></span>
@@ -265,12 +265,12 @@ evaluation budget is exhausted.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">bb_optimize</span><span class="op">(</span><span class="va">objective</span>, method <span class="op">=</span> <span class="st">"random_search"</span>, max_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          x1       x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -9.75998 2.838548</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -8.815901 0.3444925</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         z </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -162.3858 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -118.1693 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $instance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OptimInstanceSingleCrit&gt;</span>
@@ -282,20 +282,20 @@ evaluation budget is exhausted.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: x2 ParamDbl    -5     5     Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Terminator: &lt;TerminatorEvals&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Result:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          x1       x2         z</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -9.75998 2.838548 -162.3858</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           x1        x2         z</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -8.815901 0.3444925 -118.1693</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Archive:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            x1        x2           z</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  2.215110  2.502699  -20.325970</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  7.962429 -1.348391  -28.278369</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  1.772679 -1.786651    8.476108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -1.735587 -2.705633   -4.041261</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -4.774778  1.980039  -60.698406</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -9.759980  2.838548 -162.385771</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -5.844963  3.954235  -99.904815</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -4.651465  2.436726  -63.799981</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -4.348479  1.767342  -53.030731</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -1.447861 -4.361150   -3.740471</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x1          x2           z</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -8.8159006  0.34449252 -118.169335</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  9.5352775 -1.96690820  -47.847686</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -8.5355248  0.33677450 -112.131346</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -0.9661722  0.94472631  -14.359043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  4.8241474  3.85890912  -45.020443</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -7.1723353 -0.01402894  -83.047758</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  4.1958998 -2.55807440    4.982726</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  3.9503737  0.92160980   -9.182981</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -5.0835336 -4.36034170  -42.026977</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -1.9532543 -2.44644437   -5.934643</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
