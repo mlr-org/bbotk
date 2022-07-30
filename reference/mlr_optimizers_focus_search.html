@@ -200,118 +200,118 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modifies the instance by reference</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                x  x_domain            y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.0006683473 &lt;list[1]&gt; 4.466882e-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x  x_domain            y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.0204835 &lt;list[1]&gt; 0.0004195737</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns best scoring evaluation</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                x  x_domain            y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.0006683473 &lt;list[1]&gt; 4.466882e-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x  x_domain            y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.0204835 &lt;list[1]&gt; 0.0004195737</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># allows access of data.table of full path of all evaluations</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  x            y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:  0.3965364140 1.572411e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  0.6017443016 3.620962e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3: -0.7716965559 5.955156e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  0.1787155564 3.193925e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:  0.0512599382 2.627581e-03 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   6: -0.1480178335 2.190928e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   7:  0.9481595792 8.990066e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   8:  0.7978385324 6.365463e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   9: -0.0006683473 4.466882e-07 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  10:  0.3645909647 1.329266e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  11:  0.4005770790 1.604620e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  12:  0.9822324738 9.647806e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  13:  0.6775208660 4.590345e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  14: -0.6607598397 4.366036e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  15:  0.6404530718 4.101801e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  16:  0.8962126668 8.031971e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  17:  0.8876415994 7.879076e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  18:  0.8102942077 6.565767e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  19:  0.5440811748 2.960243e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  20: -0.8814784708 7.770043e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  21:  0.2780240928 7.729740e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  22: -0.0641765650 4.118631e-03 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  23:  0.0412553120 1.702001e-03 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  24: -0.6653807256 4.427315e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  25: -0.5513665257 3.040050e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  26:  0.3552252403 1.261850e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  27: -0.5402633832 2.918845e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  28: -0.5375525039 2.889627e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  29: -0.6719055688 4.514571e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  30:  0.4346583146 1.889279e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  31:  0.4197375700 1.761796e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  32: -0.1291709663 1.668514e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  33:  0.0516987713 2.672763e-03 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  34: -0.7437175699 5.531158e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  35: -0.4955586013 2.455783e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  36: -0.7917429623 6.268569e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  37:  0.2396391542 5.742692e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  38: -0.3483294593 1.213334e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  39: -0.1657300084 2.746644e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  40: -0.2325567058 5.408262e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  41:  0.9966055984 9.932227e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  42: -0.6310414737 3.982133e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  43: -0.7571983766 5.733494e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  44: -0.5324733951 2.835279e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  45:  0.8614495113 7.420953e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  46:  0.8716207473 7.597227e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  47:  0.4210957233 1.773216e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  48:  0.6477315570 4.195562e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  49:  0.2096769442 4.396442e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  50:  0.3597782198 1.294404e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  51: -0.8120453232 6.594176e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  52:  0.8934307103 7.982184e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  53: -0.5429815417 2.948290e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  54:  0.4333102182 1.877577e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  55: -0.3891642531 1.514488e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  56: -0.0626852009 3.929434e-03 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  57:  0.9585877690 9.188905e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  58:  0.8747046166 7.651082e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  59: -0.0423567956 1.794098e-03 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  60: -0.8750905306 7.657834e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  61: -0.1772899181 3.143172e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  62:  0.5904875239 3.486755e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  63:  0.5530686425 3.058849e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  64:  0.8197526229 6.719944e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  65: -0.9287141976 8.625101e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  66:  0.9705496407 9.419666e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  67:  0.4242078522 1.799523e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  68:  0.7887274562 6.220910e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  69: -0.7923412868 6.278047e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  70: -0.8172111893 6.678341e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  71:  0.5345557616 2.857499e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  72: -0.8098377204 6.558371e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  73:  0.2250518729 5.064835e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  74:  0.4662203793 2.173614e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  75: -0.3508490636 1.230951e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  76:  0.6907293187 4.771070e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  77:  0.6766269156 4.578240e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  78:  0.1022946057 1.046419e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  79: -0.9354171371 8.750052e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  80: -0.4349244721 1.891593e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  81: -0.5515682981 3.042276e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  82:  0.0830853814 6.903181e-03 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  83:  0.2889726199 8.350518e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  84:  0.3917541872 1.534713e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  85: -0.5305116219 2.814426e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  86: -0.8307611849 6.901641e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  87: -0.3670335663 1.347136e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  88:  0.1289857291 1.663732e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  89:  0.1383654047 1.914499e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  90: -0.1012930418 1.026028e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  91: -0.9300873890 8.650626e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  92:  0.2376386207 5.647211e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  93:  0.4480228522 2.007245e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  94: -0.1632072544 2.663661e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  95: -0.2511243927 6.306346e-02 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  96:  0.0691643185 4.783703e-03 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  97: -0.0035836189 1.284232e-05 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  98:  0.9717189842 9.442378e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  99: -0.5773283774 3.333081e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100: -0.4284111252 1.835361e-01 &lt;list[1]&gt; 2022-07-29 04:33:24        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  x            y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                x            y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: -0.54670236 0.2988834697 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  0.16529329 0.0273218730 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: -0.10511237 0.0110486096 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: -0.70524629 0.4973723325 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: -0.76975580 0.5925239849 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   6:  0.84883984 0.7205290762 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   7: -0.58344432 0.3404072720 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   8: -0.12889880 0.0166149005 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   9: -0.92642718 0.8582673137 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  10:  0.95492809 0.9118876524 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  11:  0.75477843 0.5696904852 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  12: -0.70500927 0.4970380734 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  13:  0.95731009 0.9164426161 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  14: -0.44432516 0.1974248493 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  15: -0.77509498 0.6007722264 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  16: -0.07617287 0.0058023062 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  17: -0.32619293 0.1064018302 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  18: -0.91744450 0.8417044177 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  19: -0.52480321 0.2754184093 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  20:  0.56987789 0.3247608089 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  21:  0.96508702 0.9313929541 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  22:  0.66705941 0.4449682501 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  23: -0.90145673 0.8126242335 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  24: -0.68722799 0.4722823039 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  25: -0.84103211 0.7073350142 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  26: -0.83672430 0.7001075572 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  27:  0.15105802 0.0228185256 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  28:  0.37185597 0.1382768621 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  29:  0.17488043 0.0305831665 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  30: -0.87990173 0.7742270618 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  31:  0.35395962 0.1252874129 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  32:  0.61413151 0.3771575073 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  33: -0.21681400 0.0470083097 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  34: -0.83195159 0.6921434485 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  35:  0.51777767 0.2680937201 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  36:  0.29097243 0.0846649538 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  37: -0.85381114 0.7289934655 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  38:  0.19997976 0.0399919038 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  39:  0.18655073 0.0348011740 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  40:  0.53815266 0.2896082842 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  41: -0.69477101 0.4827067621 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  42:  0.79528355 0.6324759218 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  43:  0.36261584 0.1314902441 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  44:  0.36589385 0.1338783099 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  45: -0.03414504 0.0011658839 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  46:  0.28187640 0.0794543060 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  47: -0.57270749 0.3279938649 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  48:  0.13698083 0.0187637491 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  49: -0.68544299 0.4698320889 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  50:  0.31361890 0.0983568140 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  51: -0.26831502 0.0719929482 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  52: -0.58249828 0.3393042466 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  53: -0.84927960 0.7212758409 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  54:  0.17737564 0.0314621191 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  55: -0.05599828 0.0031358077 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  56: -0.31539072 0.0994713057 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  57:  0.72184363 0.5210582249 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  58: -0.73762057 0.5440841125 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  59:  0.93479509 0.8738418681 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  60: -0.82451414 0.6798235654 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  61:  0.37869445 0.1434094875 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  62:  0.23541805 0.0554216598 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  63: -0.28059699 0.0787346693 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  64:  0.56543610 0.3197179881 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  65: -0.14870347 0.0221127209 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  66:  0.26584482 0.0706734666 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  67:  0.44692315 0.1997402985 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  68:  0.30261297 0.0915746122 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  69:  0.02048350 0.0004195737 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  70: -0.12054721 0.0145316291 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  71:  0.43212319 0.1867304471 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  72:  0.34151410 0.1166318779 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  73: -0.67411756 0.4544344860 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  74: -0.38452870 0.1478623220 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  75: -0.64738459 0.4191068026 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  76: -0.98806426 0.9762709842 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  77:  0.99520818 0.9904393235 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  78:  0.50631164 0.2563514798 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  79:  0.05221209 0.0027261023 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  80:  0.63239552 0.3999240941 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  81: -0.03174768 0.0010079149 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  82:  0.84974660 0.7220692767 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  83:  0.31528514 0.0994047211 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  84: -0.73656354 0.5425258486 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  85:  0.93449262 0.8732764545 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  86: -0.96836572 0.9377321587 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  87:  0.18858038 0.0355625605 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  88: -0.74174601 0.5501871479 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  89: -0.57120252 0.3262723208 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  90:  0.92361149 0.8530581794 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  91:  0.76610785 0.5869212339 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  92:  0.38902860 0.1513432505 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  93:  0.09921638 0.0098438899 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  94:  0.32946396 0.1085464980 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  95: -0.83313196 0.6941088552 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  96: -0.14213576 0.0202025744 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  97:  0.58034401 0.3367991652 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  98:  0.72560274 0.5264993315 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  99: -0.45622545 0.2081416592 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100:  0.15975771 0.0255225256 &lt;list[1]&gt; 2022-07-30 04:27:44        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                x            y  x_domain           timestamp batch_nr</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
