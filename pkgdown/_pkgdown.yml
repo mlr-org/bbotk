@@ -59,6 +59,9 @@ reference:
       - Archive
       - ArchiveBest
       - Codomain
+  - title: Callbacks
+    contents:
+      - ContextOptimization
   - title: Misc
     contents:
       - is_dominated
