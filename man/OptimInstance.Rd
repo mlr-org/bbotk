@@ -105,7 +105,7 @@ Keep \code{all} or only \code{best} evaluations in archive?}
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
 
-\item{\code{callbacks}}{(List of \link{Callback}s)\cr
+\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
 }
 \if{html}{\out{</div>}}

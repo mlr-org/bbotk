@@ -36,8 +36,3 @@ bbotk_reflections$objective_properties = c(
 bbotk_reflections$terminator_properties = c(
   "single-crit", "multi-crit"
 )
-
-### callback_steps
-bbotk_reflections$callback_steps = c(
-  "on_result"
-)
