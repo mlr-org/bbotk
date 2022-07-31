@@ -58,19 +58,19 @@ Optimal outcome.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OptimInstance$new()}}
-\item \href{#method-format}{\code{OptimInstance$format()}}
-\item \href{#method-print}{\code{OptimInstance$print()}}
-\item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
-\item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
-\item \href{#method-objective_function}{\code{OptimInstance$objective_function()}}
-\item \href{#method-clear}{\code{OptimInstance$clear()}}
-\item \href{#method-clone}{\code{OptimInstance$clone()}}
+\item \href{#method-OptimInstance-new}{\code{OptimInstance$new()}}
+\item \href{#method-OptimInstance-format}{\code{OptimInstance$format()}}
+\item \href{#method-OptimInstance-print}{\code{OptimInstance$print()}}
+\item \href{#method-OptimInstance-eval_batch}{\code{OptimInstance$eval_batch()}}
+\item \href{#method-OptimInstance-assign_result}{\code{OptimInstance$assign_result()}}
+\item \href{#method-OptimInstance-objective_function}{\code{OptimInstance$objective_function()}}
+\item \href{#method-OptimInstance-clear}{\code{OptimInstance$clear()}}
+\item \href{#method-OptimInstance-clone}{\code{OptimInstance$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OptimInstance-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -112,8 +112,8 @@ List of callbacks.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-format"></a>}}
-\if{latex}{\out{\hypertarget{method-format}{}}}
+\if{html}{\out{<a id="method-OptimInstance-format"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-format}{}}}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
@@ -122,8 +122,8 @@ Helper for print outputs.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OptimInstance-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-print}{}}}
 \subsection{Method \code{print()}}{
 Printer.
 \subsection{Usage}{
@@ -139,8 +139,8 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval_batch"></a>}}
-\if{latex}{\out{\hypertarget{method-eval_batch}{}}}
+\if{html}{\out{<a id="method-OptimInstance-eval_batch"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-eval_batch}{}}}
 \subsection{Method \code{eval_batch()}}{
 Evaluates all input values in \code{xdt} by calling
 the \link{Objective}. Applies possible transformations to the input values
@@ -165,8 +165,8 @@ columns for extra information.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-assign_result"></a>}}
-\if{latex}{\out{\hypertarget{method-assign_result}{}}}
+\if{html}{\out{<a id="method-OptimInstance-assign_result"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-assign_result}{}}}
 \subsection{Method \code{assign_result()}}{
 The \link{Optimizer} object writes the best found point
 and estimated performance value here. For internal use.
@@ -189,8 +189,8 @@ Optimal outcome.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-objective_function"></a>}}
-\if{latex}{\out{\hypertarget{method-objective_function}{}}}
+\if{html}{\out{<a id="method-OptimInstance-objective_function"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-objective_function}{}}}
 \subsection{Method \code{objective_function()}}{
 Evaluates (untransformed) points of only numeric values. Returns a
 numeric scalar for single-crit or a numeric vector for multi-crit. The
@@ -215,8 +215,8 @@ Objective value as \code{numeric(1)}, negated for maximization problems.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clear"></a>}}
-\if{latex}{\out{\hypertarget{method-clear}{}}}
+\if{html}{\out{<a id="method-OptimInstance-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-clear}{}}}
 \subsection{Method \code{clear()}}{
 Reset terminator and clear all evaluation results from archive and results.
 \subsection{Usage}{
@@ -225,8 +225,8 @@ Reset terminator and clear all evaluation results from archive and results.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OptimInstance-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

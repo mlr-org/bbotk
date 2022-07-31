@@ -85,7 +85,6 @@ OptimInstance = R6Class("OptimInstance",
         private$.objective_function = objective_function
       }
       self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
-      private$.context = ContextInstance$new(instance = self)
     },
 
     #' @description
@@ -127,6 +126,7 @@ OptimInstance = R6Class("OptimInstance",
     #' the *search space* of the [OptimInstance] object. Can contain additional
     #' columns for extra information.
     eval_batch = function(xdt) {
+      call_back("on_optimizer_before_eval", self$callbacks, private$.context)
       # update progressor
       if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
 
@@ -152,6 +152,7 @@ OptimInstance = R6Class("OptimInstance",
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      call_back("on_optimizer_after_eval", self$callbacks, private$.context)
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
     },
 

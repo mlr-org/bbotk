@@ -103,13 +103,3 @@ assert_instance_properties = function(optimizer, inst) {
     stopf("'%s' does not support param types: '%s'", class(optimizer)[1L], paste0(not_supported_pclasses, collapse = ","))
   }
 }
-
-assert_callback = function(callback) {
-  assert_class(callback, "Callback")
-  invisible(callback)
-}
-
-assert_callbacks = function(callbacks) {
-  assert_list(callbacks)
-  invisible(lapply(callbacks, assert_callback))
-}

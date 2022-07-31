@@ -50,18 +50,18 @@ Dimension of codomain.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Objective$new()}}
-\item \href{#method-format}{\code{Objective$format()}}
-\item \href{#method-print}{\code{Objective$print()}}
-\item \href{#method-eval}{\code{Objective$eval()}}
-\item \href{#method-eval_many}{\code{Objective$eval_many()}}
-\item \href{#method-eval_dt}{\code{Objective$eval_dt()}}
-\item \href{#method-clone}{\code{Objective$clone()}}
+\item \href{#method-Objective-new}{\code{Objective$new()}}
+\item \href{#method-Objective-format}{\code{Objective$format()}}
+\item \href{#method-Objective-print}{\code{Objective$print()}}
+\item \href{#method-Objective-eval}{\code{Objective$eval()}}
+\item \href{#method-Objective-eval_many}{\code{Objective$eval_many()}}
+\item \href{#method-Objective-eval_dt}{\code{Objective$eval_dt()}}
+\item \href{#method-Objective-clone}{\code{Objective$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Objective-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -103,8 +103,8 @@ validity?}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-format"></a>}}
-\if{latex}{\out{\hypertarget{method-format}{}}}
+\if{html}{\out{<a id="method-Objective-format"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-format}{}}}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
@@ -116,8 +116,8 @@ Helper for print outputs.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Objective-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-print}{}}}
 \subsection{Method \code{print()}}{
 Print method.
 \subsection{Usage}{
@@ -129,8 +129,8 @@ Print method.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval"></a>}}
-\if{latex}{\out{\hypertarget{method-eval}{}}}
+\if{html}{\out{<a id="method-Objective-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-eval}{}}}
 \subsection{Method \code{eval()}}{
 Evaluates a single input value on the objective function. If
 \code{check_values = TRUE}, the validity of the point as well as the validity
@@ -155,8 +155,8 @@ These extra entries are referred to as \emph{extras}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval_many"></a>}}
-\if{latex}{\out{\hypertarget{method-eval_many}{}}}
+\if{html}{\out{<a id="method-Objective-eval_many"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
 Evaluates multiple input values on the objective function. If
 \code{check_values = TRUE}, the validity of the points as well as the validity
@@ -187,8 +187,8 @@ These extra columns are referred to as \emph{extras}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval_dt"></a>}}
-\if{latex}{\out{\hypertarget{method-eval_dt}{}}}
+\if{html}{\out{<a id="method-Objective-eval_dt"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-eval_dt}{}}}
 \subsection{Method \code{eval_dt()}}{
 Evaluates multiple input values on the objective function
 \subsection{Usage}{
@@ -213,8 +213,8 @@ functions, e.g.  \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Objective-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -20,9 +20,11 @@ where \eqn{D} is the dimension of the search space.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("evals")
+sugar function \code{\link[=trm]{trm()}}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_terminators$get("evals")
 trm("evals")
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Parameters}{
@@ -66,24 +68,24 @@ Other Terminator:
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TerminatorEvals$new()}}
-\item \href{#method-is_terminated}{\code{TerminatorEvals$is_terminated()}}
-\item \href{#method-clone}{\code{TerminatorEvals$clone()}}
+\item \href{#method-TerminatorEvals-new}{\code{TerminatorEvals$new()}}
+\item \href{#method-TerminatorEvals-is_terminated}{\code{TerminatorEvals$is_terminated()}}
+\item \href{#method-TerminatorEvals-clone}{\code{TerminatorEvals$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print">}\href{../../bbotk/html/Terminator.html#method-print}{\code{bbotk::Terminator$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time">}\href{../../bbotk/html/Terminator.html#method-remaining_time}{\code{bbotk::Terminator$remaining_time()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status">}\href{../../bbotk/html/Terminator.html#method-status}{\code{bbotk::Terminator$status()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>bbotk::Terminator$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>bbotk::Terminator$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>bbotk::Terminator$remaining_time()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>bbotk::Terminator$status()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TerminatorEvals-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorEvals-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -92,8 +94,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_terminated"></a>}}
-\if{latex}{\out{\hypertarget{method-is_terminated}{}}}
+\if{html}{\out{<a id="method-TerminatorEvals-is_terminated"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorEvals-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
 Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
 otherwise.
@@ -113,8 +115,8 @@ otherwise.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TerminatorEvals-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorEvals-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
