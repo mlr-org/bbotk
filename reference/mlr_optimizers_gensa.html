@@ -123,6 +123,10 @@ GenSA::GenSA() from package GenSA."><!-- mathjax --><script src="https://cdnjs.c
 </dl><p>For the meaning of the control parameters, see <code><a href="https://rdrr.io/pkg/GenSA/man/GenSA.html" class="external-link">GenSA::GenSA()</a></code>. Note that we
 have removed all control parameters which refer to the termination of the
 algorithm and where our terminators allow to obtain the same behavior.</p>
+<p>In contrast to the <code><a href="https://rdrr.io/pkg/GenSA/man/GenSA.html" class="external-link">GenSA::GenSA()</a></code> defaults, we set <code>trace.mat = FALSE</code>.
+Note that <code><a href="https://rdrr.io/pkg/GenSA/man/GenSA.html" class="external-link">GenSA::GenSA()</a></code> uses <code>smooth = TRUE</code> as a default.
+In the case of using this optimizer for Hyperparameter Optimization you may
+want to set <code>smooth = FALSE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="progress-bars">Progress Bars<a class="anchor" aria-label="anchor" href="#progress-bars"></a></h2>
@@ -199,7 +203,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span>    search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
 <span class="r-in"><span>    terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"cmaes"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Modifies the instance by reference</span></span></span>
 <span class="r-in"><span>  <span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
@@ -210,18 +214,17 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span>  <span class="co"># Allows access of data.table of full path of all evaluations</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>CMA-ES is typically applied to search space dimensions between three and fifty. A lower search space dimension might crash.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              x          y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.5263537 0.27704819 &lt;list[1]&gt; 2022-07-31 04:26:47        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  1.0000000 1.00000000 &lt;list[1]&gt; 2022-07-31 04:26:47        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -1.0000000 1.00000000 &lt;list[1]&gt; 2022-07-31 04:26:47        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -0.2921374 0.08534423 &lt;list[1]&gt; 2022-07-31 04:26:47        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.5273634 0.27811214 &lt;list[1]&gt; 2022-07-31 04:26:47        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  0.4489846 0.20158721 &lt;list[1]&gt; 2022-07-31 04:26:47        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  0.3580768 0.12821896 &lt;list[1]&gt; 2022-07-31 04:26:47        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  0.1767010 0.03122324 &lt;list[1]&gt; 2022-07-31 04:26:47        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  0.3271732 0.10704229 &lt;list[1]&gt; 2022-07-31 04:26:47        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  0.3117656 0.09719781 &lt;list[1]&gt; 2022-07-31 04:26:47       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 x            y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -2.086453e-01 4.353284e-02 &lt;list[1]&gt; 2022-07-31 19:55:45        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  5.508175e-01 3.033999e-01 &lt;list[1]&gt; 2022-07-31 19:55:45        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -6.241731e-01 3.895921e-01 &lt;list[1]&gt; 2022-07-31 19:55:45        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -2.086453e-01 4.353284e-02 &lt;list[1]&gt; 2022-07-31 19:55:45        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -2.086443e-01 4.353242e-02 &lt;list[1]&gt; 2022-07-31 19:55:45        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -2.086463e-01 4.353326e-02 &lt;list[1]&gt; 2022-07-31 19:55:45        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  2.086453e-01 4.353284e-02 &lt;list[1]&gt; 2022-07-31 19:55:45        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  2.086463e-01 4.353326e-02 &lt;list[1]&gt; 2022-07-31 19:55:45        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  2.086443e-01 4.353242e-02 &lt;list[1]&gt; 2022-07-31 19:55:45        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  2.056411e-13 4.228825e-26 &lt;list[1]&gt; 2022-07-31 19:55:45       10</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
