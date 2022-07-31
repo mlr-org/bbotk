@@ -79,13 +79,3 @@ test_that("on_result in OptimInstanceMultiCrit works", {
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 2)
 })
-
-test_that("Callback works with OptimInstanceSingleCrit", {
-  callback_result = as_callback("test", on_result = function(context) context$result$x = 2)
-  instance = OptimInstanceSingleCrit$new(objective = OBJ_1D, search_space = PS_1D, terminator = trm("evals", n_evals = 10), callback = list(callback_result))
-  expect_list(instance$callbacks)
-  expect_class(instance$callbacks[[1]], "Callback")
-  optimizer = opt("random_search")
-  optimizer$optimize(instance)
-  expect_equal(instance$result$x, 2)
-})

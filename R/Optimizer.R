@@ -85,8 +85,9 @@ Optimizer = R6Class("Optimizer",
     optimize = function(inst) {
       inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
       call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
-      optimize_default(inst, self, private)
+      result = optimize_default(inst, self, private)
       call_back("on_optimization_end", inst$callbacks, get_private(inst)$.context)
+      result
     }
   ),
 
