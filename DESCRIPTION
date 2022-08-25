@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 0.5.3
+Version: 0.5.4
 Authors@R:
     c(person(given = "Marc",
              family = "Becker",
@@ -65,7 +65,7 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Collate:
     'Archive.R'
     'ArchiveBest.R'

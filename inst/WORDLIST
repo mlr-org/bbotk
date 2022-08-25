@@ -18,6 +18,7 @@ OptimizerGridSearch
 POSIXct
 Palmerin
 Param
+ParamLgls
 ParamSet
 Params
 Physica
@@ -47,6 +48,7 @@ parallelize
 param
 ps
 saveRDS
+shrinked
 subclasses
 trafo
 unnested

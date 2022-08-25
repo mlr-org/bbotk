@@ -72,17 +72,17 @@ Unit of steps.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Terminator$new()}}
-\item \href{#method-format}{\code{Terminator$format()}}
-\item \href{#method-print}{\code{Terminator$print()}}
-\item \href{#method-status}{\code{Terminator$status()}}
-\item \href{#method-remaining_time}{\code{Terminator$remaining_time()}}
-\item \href{#method-clone}{\code{Terminator$clone()}}
+\item \href{#method-Terminator-new}{\code{Terminator$new()}}
+\item \href{#method-Terminator-format}{\code{Terminator$format()}}
+\item \href{#method-Terminator-print}{\code{Terminator$print()}}
+\item \href{#method-Terminator-status}{\code{Terminator$status()}}
+\item \href{#method-Terminator-remaining_time}{\code{Terminator$remaining_time()}}
+\item \href{#method-Terminator-clone}{\code{Terminator$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Terminator-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Terminator-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -124,8 +124,8 @@ The referenced help package can be opened via method \verb{$help()}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-format"></a>}}
-\if{latex}{\out{\hypertarget{method-format}{}}}
+\if{html}{\out{<a id="method-Terminator-format"></a>}}
+\if{latex}{\out{\hypertarget{method-Terminator-format}{}}}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
@@ -142,8 +142,8 @@ Add parameter values to format string.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Terminator-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Terminator-print}{}}}
 \subsection{Method \code{print()}}{
 Printer.
 \subsection{Usage}{
@@ -159,8 +159,8 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-status"></a>}}
-\if{latex}{\out{\hypertarget{method-status}{}}}
+\if{html}{\out{<a id="method-Terminator-status"></a>}}
+\if{latex}{\out{\hypertarget{method-Terminator-status}{}}}
 \subsection{Method \code{status()}}{
 Returns how many progression steps are made (\code{current_steps}) and the
 amount steps needed for termination (\code{max_steps}).
@@ -180,8 +180,8 @@ named \code{integer(2)}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-remaining_time"></a>}}
-\if{latex}{\out{\hypertarget{method-remaining_time}{}}}
+\if{html}{\out{<a id="method-Terminator-remaining_time"></a>}}
+\if{latex}{\out{\hypertarget{method-Terminator-remaining_time}{}}}
 \subsection{Method \code{remaining_time()}}{
 Returns remaining runtime in seconds. If the terminator is not
 time-based, the reaming runtime is \code{Inf}.
@@ -201,8 +201,8 @@ time-based, the reaming runtime is \code{Inf}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Terminator-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Terminator-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
