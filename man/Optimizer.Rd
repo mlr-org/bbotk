@@ -56,17 +56,17 @@ A warning is signaled by the constructor if at least one of the packages is not 
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Optimizer$new()}}
-\item \href{#method-format}{\code{Optimizer$format()}}
-\item \href{#method-print}{\code{Optimizer$print()}}
-\item \href{#method-help}{\code{Optimizer$help()}}
-\item \href{#method-optimize}{\code{Optimizer$optimize()}}
-\item \href{#method-clone}{\code{Optimizer$clone()}}
+\item \href{#method-Optimizer-new}{\code{Optimizer$new()}}
+\item \href{#method-Optimizer-format}{\code{Optimizer$format()}}
+\item \href{#method-Optimizer-print}{\code{Optimizer$print()}}
+\item \href{#method-Optimizer-help}{\code{Optimizer$help()}}
+\item \href{#method-Optimizer-optimize}{\code{Optimizer$optimize()}}
+\item \href{#method-Optimizer-clone}{\code{Optimizer$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Optimizer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Optimizer-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -114,8 +114,8 @@ The referenced help package can be opened via method \verb{$help()}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-format"></a>}}
-\if{latex}{\out{\hypertarget{method-format}{}}}
+\if{html}{\out{<a id="method-Optimizer-format"></a>}}
+\if{latex}{\out{\hypertarget{method-Optimizer-format}{}}}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
@@ -124,8 +124,8 @@ Helper for print outputs.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Optimizer-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Optimizer-print}{}}}
 \subsection{Method \code{print()}}{
 Print method.
 \subsection{Usage}{
@@ -137,8 +137,8 @@ Print method.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-help"></a>}}
-\if{latex}{\out{\hypertarget{method-help}{}}}
+\if{html}{\out{<a id="method-Optimizer-help"></a>}}
+\if{latex}{\out{\hypertarget{method-Optimizer-help}{}}}
 \subsection{Method \code{help()}}{
 Opens the corresponding help page referenced by field \verb{$man}.
 \subsection{Usage}{
@@ -147,8 +147,8 @@ Opens the corresponding help page referenced by field \verb{$man}.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-optimize"></a>}}
-\if{latex}{\out{\hypertarget{method-optimize}{}}}
+\if{html}{\out{<a id="method-Optimizer-optimize"></a>}}
+\if{latex}{\out{\hypertarget{method-Optimizer-optimize}{}}}
 \subsection{Method \code{optimize()}}{
 Performs the optimization and writes optimization result into
 \link{OptimInstance}. The optimization result is returned but the complete
@@ -169,8 +169,8 @@ optimization path is stored in \link{Archive} of \link{OptimInstance}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Optimizer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Optimizer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
