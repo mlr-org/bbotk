@@ -39,10 +39,12 @@ specify a \code{targetRunner} function when using \code{OptimizerIrace}. A defau
 function is used that forwards several configurations and instances to the
 user defined objective function. As usually, the user defined function has
 a \code{xs}, \code{xss} or \code{xdt} parameter depending on the used \link{Objective} class.
-For irace, the function needs an additional \code{instances} parameter.\preformatted{fun = function(xs, instances) \{
+For irace, the function needs an additional \code{instances} parameter.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{fun = function(xs, instances) \{
  # function to evaluate configuration in `xs` on instance `instances`
 \}
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Archive}{
@@ -70,9 +72,11 @@ on all used instances.
 \section{Dictionary}{
 
 This \link{Optimizer} can be instantiated via the \link[mlr3misc:Dictionary]{dictionary}
-\link{mlr_optimizers} or with the associated sugar function \code{\link[=opt]{opt()}}:\preformatted{mlr_optimizers$get("irace")
+\link{mlr_optimizers} or with the associated sugar function \code{\link[=opt]{opt()}}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_optimizers$get("irace")
 opt("irace")
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Progress Bars}{
@@ -140,23 +144,23 @@ as.data.table(instance$archive)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OptimizerIrace$new()}}
-\item \href{#method-clone}{\code{OptimizerIrace$clone()}}
+\item \href{#method-OptimizerIrace-new}{\code{OptimizerIrace$new()}}
+\item \href{#method-OptimizerIrace-clone}{\code{OptimizerIrace$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format">}\href{../../bbotk/html/Optimizer.html#method-format}{\code{bbotk::Optimizer$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help">}\href{../../bbotk/html/Optimizer.html#method-help}{\code{bbotk::Optimizer$help()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize">}\href{../../bbotk/html/Optimizer.html#method-optimize}{\code{bbotk::Optimizer$optimize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print">}\href{../../bbotk/html/Optimizer.html#method-print}{\code{bbotk::Optimizer$print()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-optimize'><code>bbotk::Optimizer$optimize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OptimizerIrace-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerIrace-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -165,8 +169,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OptimizerIrace-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerIrace-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
