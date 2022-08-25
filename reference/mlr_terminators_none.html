@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.3</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,9 +81,9 @@
 
 <p>This <a href="Terminator.html">Terminator</a> can be instantiated via the
 <a href="https://mlr3misc.mlr-org.com/reference/Dictionary.html" class="external-link">dictionary</a> <a href="mlr_terminators.html">mlr_terminators</a> or with the associated
-sugar function <code><a href="trm.html">trm()</a></code>:</p><div class="sourceCode"><pre><code><span><span class="va">mlr_terminators</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
-
+sugar function <code><a href="trm.html">trm()</a></code>:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mlr_terminators<span class="sc">$</span><span class="fu">get</span>(<span class="st">"none"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">trm</span>(<span class="st">"none"</span>)</span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -108,14 +108,14 @@ sugar function <code><a href="trm.html">trm()</a></code>:</p><div class="sourceC
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>TerminatorNone$new()</code></a></p></li>
-<li><p><a href="#method-is_terminated"><code>TerminatorNone$is_terminated()</code></a></p></li>
-<li><p><a href="#method-clone"><code>TerminatorNone$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href="Terminator.html#method-format"><code>bbotk::Terminator$format()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href="Terminator.html#method-print"><code>bbotk::Terminator$print()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href="Terminator.html#method-remaining_time"><code>bbotk::Terminator$remaining_time()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href="Terminator.html#method-status"><code>bbotk::Terminator$status()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-TerminatorNone-new"><code>TerminatorNone$new()</code></a></p></li>
+<li><p><a href="#method-TerminatorNone-is_terminated"><code>TerminatorNone$is_terminated()</code></a></p></li>
+<li><p><a href="#method-TerminatorNone-clone"><code>TerminatorNone$clone()</code></a></p></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href="Terminator.html#method-format"><code>bbotk::Terminator$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href="Terminator.html#method-print"><code>bbotk::Terminator$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href="Terminator.html#method-remaining_time"><code>bbotk::Terminator$remaining_time()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href="Terminator.html#method-status"><code>bbotk::Terminator$status()</code></a></span></li>
+</ul></details></p><hr><a id="method-TerminatorNone-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -123,7 +123,7 @@ sugar function <code><a href="trm.html">trm()</a></code>:</p><div class="sourceC
 </div>
 
 
-</div><p></p><hr><a id="method-is_terminated"></a><div class="section">
+</div><p></p><hr><a id="method-TerminatorNone-is_terminated"></a><div class="section">
 <h3 id="method-is-terminated-">Method <code>is_terminated()</code><a class="anchor" aria-label="anchor" href="#method-is-terminated-"></a></h3>
 <p>Is <code>TRUE</code> iff the termination criterion is positive, and <code>FALSE</code>
 otherwise.</p><div class="section">
@@ -144,7 +144,7 @@ otherwise.</p><div class="section">
 <p><code>logical(1)</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-TerminatorNone-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>

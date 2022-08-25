@@ -18,7 +18,7 @@ of termination criteria."><!-- mathjax --><script src="https://cdnjs.cloudflare.
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.3</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,9 +99,9 @@ of termination criteria.</p>
     
 
 <p>This <a href="Optimizer.html">Optimizer</a> can be instantiated via the <a href="https://mlr3misc.mlr-org.com/reference/Dictionary.html" class="external-link">dictionary</a>
-<a href="mlr_optimizers.html">mlr_optimizers</a> or with the associated sugar function <code><a href="opt.html">opt()</a></code>:</p><div class="sourceCode"><pre><code><span><span class="va">mlr_optimizers</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"random_search"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/opt.html">opt</a></span><span class="op">(</span><span class="st">"random_search"</span><span class="op">)</span></span></code></pre></div>
-
+<a href="mlr_optimizers.html">mlr_optimizers</a> or with the associated sugar function <code><a href="opt.html">opt()</a></code>:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mlr_optimizers<span class="sc">$</span><span class="fu">get</span>(<span class="st">"random_search"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">opt</span>(<span class="st">"random_search"</span>)</span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="parameters">Parameters<a class="anchor" aria-label="anchor" href="#parameters"></a></h2>
@@ -132,13 +132,13 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>OptimizerRandomSearch$new()</code></a></p></li>
-<li><p><a href="#method-clone"><code>OptimizerRandomSearch$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>bbotk::Optimizer$format()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>bbotk::Optimizer$help()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize"><a href="Optimizer.html#method-optimize"><code>bbotk::Optimizer$optimize()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>bbotk::Optimizer$print()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-OptimizerRandomSearch-new"><code>OptimizerRandomSearch$new()</code></a></p></li>
+<li><p><a href="#method-OptimizerRandomSearch-clone"><code>OptimizerRandomSearch$clone()</code></a></p></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>bbotk::Optimizer$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>bbotk::Optimizer$help()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize"><a href="Optimizer.html#method-optimize"><code>bbotk::Optimizer$optimize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>bbotk::Optimizer$print()</code></a></span></li>
+</ul></details></p><hr><a id="method-OptimizerRandomSearch-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -146,7 +146,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 </div>
 
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-OptimizerRandomSearch-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -191,27 +191,27 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modifies the instance by reference</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              x  x_domain            y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.02799856 &lt;list[1]&gt; 0.0007839195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x  x_domain         y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.1768157 &lt;list[1]&gt; 0.0312638</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns best scoring evaluation</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              x  x_domain            y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.02799856 &lt;list[1]&gt; 0.0007839195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x  x_domain         y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.1768157 &lt;list[1]&gt; 0.0312638</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># allows access of data.table of full path of all evaluations</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               x            y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.90542916 0.8198019642 &lt;list[1]&gt; 2022-08-25 04:41:30        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.23992375 0.0575634052 &lt;list[1]&gt; 2022-08-25 04:41:30        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -0.72177380 0.5209574190 &lt;list[1]&gt; 2022-08-25 04:41:30        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.37751338 0.1425163509 &lt;list[1]&gt; 2022-08-25 04:41:30        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.02799856 0.0007839195 &lt;list[1]&gt; 2022-08-25 04:41:30        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.59798874 0.3575905372 &lt;list[1]&gt; 2022-08-25 04:41:30        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -0.16988548 0.0288610753 &lt;list[1]&gt; 2022-08-25 04:41:30        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -0.03153481 0.0009944443 &lt;list[1]&gt; 2022-08-25 04:41:30        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  0.73631905 0.5421657409 &lt;list[1]&gt; 2022-08-25 04:41:30        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -0.75952810 0.5768829305 &lt;list[1]&gt; 2022-08-25 04:41:30       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x          y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.8064541 0.65036814 &lt;list[1]&gt; 2022-08-25 10:16:29        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.7170254 0.51412539 &lt;list[1]&gt; 2022-08-25 10:16:29        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  0.6658825 0.44339952 &lt;list[1]&gt; 2022-08-25 10:16:29        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.4377780 0.19164961 &lt;list[1]&gt; 2022-08-25 10:16:29        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.5850252 0.34225449 &lt;list[1]&gt; 2022-08-25 10:16:29        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  0.8519369 0.72579648 &lt;list[1]&gt; 2022-08-25 10:16:29        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  0.1768157 0.03126380 &lt;list[1]&gt; 2022-08-25 10:16:29        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -0.2964551 0.08788562 &lt;list[1]&gt; 2022-08-25 10:16:29        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -0.2961600 0.08771072 &lt;list[1]&gt; 2022-08-25 10:16:29        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -0.7734700 0.59825582 &lt;list[1]&gt; 2022-08-25 10:16:29       10</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

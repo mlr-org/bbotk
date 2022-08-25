@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.3</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,15 +148,15 @@ Optimal outcome.</p></dd>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>OptimInstance$new()</code></a></p></li>
-<li><p><a href="#method-format"><code>OptimInstance$format()</code></a></p></li>
-<li><p><a href="#method-print"><code>OptimInstance$print()</code></a></p></li>
-<li><p><a href="#method-eval_batch"><code>OptimInstance$eval_batch()</code></a></p></li>
-<li><p><a href="#method-assign_result"><code>OptimInstance$assign_result()</code></a></p></li>
-<li><p><a href="#method-objective_function"><code>OptimInstance$objective_function()</code></a></p></li>
-<li><p><a href="#method-clear"><code>OptimInstance$clear()</code></a></p></li>
-<li><p><a href="#method-clone"><code>OptimInstance$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-OptimInstance-new"><code>OptimInstance$new()</code></a></p></li>
+<li><p><a href="#method-OptimInstance-format"><code>OptimInstance$format()</code></a></p></li>
+<li><p><a href="#method-OptimInstance-print"><code>OptimInstance$print()</code></a></p></li>
+<li><p><a href="#method-OptimInstance-eval_batch"><code>OptimInstance$eval_batch()</code></a></p></li>
+<li><p><a href="#method-OptimInstance-assign_result"><code>OptimInstance$assign_result()</code></a></p></li>
+<li><p><a href="#method-OptimInstance-objective_function"><code>OptimInstance$objective_function()</code></a></p></li>
+<li><p><a href="#method-OptimInstance-clear"><code>OptimInstance$clear()</code></a></p></li>
+<li><p><a href="#method-OptimInstance-clone"><code>OptimInstance$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-OptimInstance-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -202,7 +202,7 @@ Search space that is logged into archive.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-format"></a><div class="section">
+</div><p></p><hr><a id="method-OptimInstance-format"></a><div class="section">
 <h3 id="method-format-">Method <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code><a class="anchor" aria-label="anchor" href="#method-format-"></a></h3>
 <p>Helper for print outputs.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -210,7 +210,7 @@ Search space that is logged into archive.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-OptimInstance-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Printer.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -226,7 +226,7 @@ Search space that is logged into archive.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-eval_batch"></a><div class="section">
+</div><p></p><hr><a id="method-OptimInstance-eval_batch"></a><div class="section">
 <h3 id="method-eval-batch-">Method <code>eval_batch()</code><a class="anchor" aria-label="anchor" href="#method-eval-batch-"></a></h3>
 <p>Evaluates all input values in <code>xdt</code> by calling
 the <a href="Objective.html">Objective</a>. Applies possible transformations to the input values
@@ -250,7 +250,7 @@ columns for extra information.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-assign_result"></a><div class="section">
+</div><p></p><hr><a id="method-OptimInstance-assign_result"></a><div class="section">
 <h3 id="method-assign-result-">Method <code>assign_result()</code><a class="anchor" aria-label="anchor" href="#method-assign-result-"></a></h3>
 <p>The <a href="Optimizer.html">Optimizer</a> object writes the best found point
 and estimated performance value here. For internal use.</p><div class="section">
@@ -275,7 +275,7 @@ Optimal outcome.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-objective_function"></a><div class="section">
+</div><p></p><hr><a id="method-OptimInstance-objective_function"></a><div class="section">
 <h3 id="method-objective-function-">Method <code>objective_function()</code><a class="anchor" aria-label="anchor" href="#method-objective-function-"></a></h3>
 <p>Evaluates (untransformed) points of only numeric values. Returns a
 numeric scalar for single-crit or a numeric vector for multi-crit. The
@@ -301,7 +301,7 @@ Untransformed points.</p></dd>
 <p>Objective value as <code>numeric(1)</code>, negated for maximization problems.</p>
 </div>
 
-</div><p></p><hr><a id="method-clear"></a><div class="section">
+</div><p></p><hr><a id="method-OptimInstance-clear"></a><div class="section">
 <h3 id="method-clear-">Method <code>clear()</code><a class="anchor" aria-label="anchor" href="#method-clear-"></a></h3>
 <p>Reset terminator and clear all evaluation results from archive and results.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
@@ -309,7 +309,7 @@ Untransformed points.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-OptimInstance-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
