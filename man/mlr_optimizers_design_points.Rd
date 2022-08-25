@@ -17,11 +17,9 @@ of termination criteria.
 \section{Dictionary}{
 
 This \link{Optimizer} can be instantiated via the \link[mlr3misc:Dictionary]{dictionary}
-\link{mlr_optimizers} or with the associated sugar function \code{\link[=opt]{opt()}}:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_optimizers$get("design_points")
+\link{mlr_optimizers} or with the associated sugar function \code{\link[=opt]{opt()}}:\preformatted{mlr_optimizers$get("design_points")
 opt("design_points")
-}\if{html}{\out{</div>}}
+}
 }
 
 \section{Parameters}{
@@ -81,23 +79,23 @@ as.data.table(instance$archive)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-OptimizerDesignPoints-new}{\code{OptimizerDesignPoints$new()}}
-\item \href{#method-OptimizerDesignPoints-clone}{\code{OptimizerDesignPoints$clone()}}
+\item \href{#method-new}{\code{OptimizerDesignPoints$new()}}
+\item \href{#method-clone}{\code{OptimizerDesignPoints$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-optimize'><code>bbotk::Optimizer$optimize()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format">}\href{../../bbotk/html/Optimizer.html#method-format}{\code{bbotk::Optimizer$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help">}\href{../../bbotk/html/Optimizer.html#method-help}{\code{bbotk::Optimizer$help()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize">}\href{../../bbotk/html/Optimizer.html#method-optimize}{\code{bbotk::Optimizer$optimize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print">}\href{../../bbotk/html/Optimizer.html#method-print}{\code{bbotk::Optimizer$print()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerDesignPoints-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerDesignPoints-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -106,8 +104,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerDesignPoints-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerDesignPoints-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

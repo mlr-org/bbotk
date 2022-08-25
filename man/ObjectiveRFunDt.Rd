@@ -20,24 +20,24 @@ Objective function.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-ObjectiveRFunDt-new}{\code{ObjectiveRFunDt$new()}}
-\item \href{#method-ObjectiveRFunDt-eval_many}{\code{ObjectiveRFunDt$eval_many()}}
-\item \href{#method-ObjectiveRFunDt-eval_dt}{\code{ObjectiveRFunDt$eval_dt()}}
-\item \href{#method-ObjectiveRFunDt-clone}{\code{ObjectiveRFunDt$clone()}}
+\item \href{#method-new}{\code{ObjectiveRFunDt$new()}}
+\item \href{#method-eval_many}{\code{ObjectiveRFunDt$eval_many()}}
+\item \href{#method-eval_dt}{\code{ObjectiveRFunDt$eval_dt()}}
+\item \href{#method-clone}{\code{ObjectiveRFunDt$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval"><a href='../../bbotk/html/Objective.html#method-Objective-eval'><code>bbotk::Objective$eval()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format"><a href='../../bbotk/html/Objective.html#method-Objective-format'><code>bbotk::Objective$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print"><a href='../../bbotk/html/Objective.html#method-Objective-print'><code>bbotk::Objective$print()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval">}\href{../../bbotk/html/Objective.html#method-eval}{\code{bbotk::Objective$eval()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format">}\href{../../bbotk/html/Objective.html#method-format}{\code{bbotk::Objective$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print">}\href{../../bbotk/html/Objective.html#method-print}{\code{bbotk::Objective$print()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ObjectiveRFunDt-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ObjectiveRFunDt-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -84,8 +84,8 @@ validity?}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ObjectiveRFunDt-eval_many"></a>}}
-\if{latex}{\out{\hypertarget{method-ObjectiveRFunDt-eval_many}{}}}
+\if{html}{\out{<a id="method-eval_many"></a>}}
+\if{latex}{\out{\hypertarget{method-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
 Evaluates multiple input values received as a list, converted to a \code{data.table()} on the
 objective function. Missing columns in xss are filled with \code{NA}s in \code{xdt}.
@@ -109,8 +109,8 @@ and multiple y-columns for multi-criteria functions, e.g.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ObjectiveRFunDt-eval_dt"></a>}}
-\if{latex}{\out{\hypertarget{method-ObjectiveRFunDt-eval_dt}{}}}
+\if{html}{\out{<a id="method-eval_dt"></a>}}
+\if{latex}{\out{\hypertarget{method-eval_dt}{}}}
 \subsection{Method \code{eval_dt()}}{
 Evaluates multiple input values on the objective function supplied by the user.
 \subsection{Usage}{
@@ -135,8 +135,8 @@ and multiple y-columns for multi-criteria functions, e.g.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ObjectiveRFunDt-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-ObjectiveRFunDt-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

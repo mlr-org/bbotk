@@ -34,6 +34,9 @@ Note that for \link[paradox:ParamLgl]{paradox::ParamLgl}s the value to be shrink
 the \code{default} value instead of dropping a level. Also, a tag \code{shrinked} is
 added.
 
+Note that the returned \link[paradox:ParamSet]{paradox::ParamSet} has lost all its original
+\code{default}s, as they may have become infeasible.
+
 If the \link[paradox:ParamSet]{paradox::ParamSet} has a trafo, \code{x} is expected to contain the
 transformed values.
 }

@@ -27,25 +27,25 @@ Number of batches stored in the archive.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-ArchiveBest-new}{\code{ArchiveBest$new()}}
-\item \href{#method-ArchiveBest-add_evals}{\code{ArchiveBest$add_evals()}}
-\item \href{#method-ArchiveBest-best}{\code{ArchiveBest$best()}}
-\item \href{#method-ArchiveBest-clone}{\code{ArchiveBest$clone()}}
+\item \href{#method-new}{\code{ArchiveBest$new()}}
+\item \href{#method-add_evals}{\code{ArchiveBest$add_evals()}}
+\item \href{#method-best}{\code{ArchiveBest$best()}}
+\item \href{#method-clone}{\code{ArchiveBest$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="clear"><a href='../../bbotk/html/Archive.html#method-Archive-clear'><code>bbotk::Archive$clear()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>bbotk::Archive$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="nds_selection"><a href='../../bbotk/html/Archive.html#method-Archive-nds_selection'><code>bbotk::Archive$nds_selection()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>bbotk::Archive$print()</code></a></span></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="clear">}\href{../../bbotk/html/Archive.html#method-clear}{\code{bbotk::Archive$clear()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format">}\href{../../bbotk/html/Archive.html#method-format}{\code{bbotk::Archive$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="nds_selection">}\href{../../bbotk/html/Archive.html#method-nds_selection}{\code{bbotk::Archive$nds_selection()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print">}\href{../../bbotk/html/Archive.html#method-print}{\code{bbotk::Archive$print()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveBest-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveBest-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -74,8 +74,8 @@ ignored.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveBest-add_evals"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveBest-add_evals}{}}}
+\if{html}{\out{<a id="method-add_evals"></a>}}
+\if{latex}{\out{\hypertarget{method-add_evals}{}}}
 \subsection{Method \code{add_evals()}}{
 Stores the best result in \code{ydt}.
 \subsection{Usage}{
@@ -101,8 +101,8 @@ Optimal outcome.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveBest-best"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveBest-best}{}}}
+\if{html}{\out{<a id="method-best"></a>}}
+\if{latex}{\out{\hypertarget{method-best}{}}}
 \subsection{Method \code{best()}}{
 Returns the best scoring evaluation. For single-crit optimization,
 the solution that minimizes / maximizes the objective function.
@@ -124,8 +124,8 @@ ignored.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveBest-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveBest-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

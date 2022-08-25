@@ -58,19 +58,19 @@ Column names of codomain target parameters.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-Archive-new}{\code{Archive$new()}}
-\item \href{#method-Archive-add_evals}{\code{Archive$add_evals()}}
-\item \href{#method-Archive-best}{\code{Archive$best()}}
-\item \href{#method-Archive-nds_selection}{\code{Archive$nds_selection()}}
-\item \href{#method-Archive-format}{\code{Archive$format()}}
-\item \href{#method-Archive-print}{\code{Archive$print()}}
-\item \href{#method-Archive-clear}{\code{Archive$clear()}}
-\item \href{#method-Archive-clone}{\code{Archive$clone()}}
+\item \href{#method-new}{\code{Archive$new()}}
+\item \href{#method-add_evals}{\code{Archive$add_evals()}}
+\item \href{#method-best}{\code{Archive$best()}}
+\item \href{#method-nds_selection}{\code{Archive$nds_selection()}}
+\item \href{#method-format}{\code{Archive$format()}}
+\item \href{#method-print}{\code{Archive$print()}}
+\item \href{#method-clear}{\code{Archive$clear()}}
+\item \href{#method-clone}{\code{Archive$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -100,8 +100,8 @@ Search space that is logged into archive.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-add_evals"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-add_evals}{}}}
+\if{html}{\out{<a id="method-add_evals"></a>}}
+\if{latex}{\out{\hypertarget{method-add_evals}{}}}
 \subsection{Method \code{add_evals()}}{
 Adds function evaluations to the archive table.
 \subsection{Usage}{
@@ -127,8 +127,8 @@ Optimal outcome.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-best"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-best}{}}}
+\if{html}{\out{<a id="method-best"></a>}}
+\if{latex}{\out{\hypertarget{method-best}{}}}
 \subsection{Method \code{best()}}{
 Returns the best scoring evaluation(s). For single-crit optimization,
 the solution that minimizes / maximizes the objective function.
@@ -154,8 +154,8 @@ Amount of points to select. Ignored for multi-crit optimization.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-nds_selection"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-nds_selection}{}}}
+\if{html}{\out{<a id="method-nds_selection"></a>}}
+\if{latex}{\out{\hypertarget{method-nds_selection}{}}}
 \subsection{Method \code{nds_selection()}}{
 Calculate best points w.r.t. non dominated sorting with hypervolume
 contribution.
@@ -183,8 +183,8 @@ Reference point for hypervolume.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-format"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-format}{}}}
+\if{html}{\out{<a id="method-format"></a>}}
+\if{latex}{\out{\hypertarget{method-format}{}}}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
@@ -193,8 +193,8 @@ Helper for print outputs.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-print"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-print}{}}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Printer.
 \subsection{Usage}{
@@ -210,8 +210,8 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-clear"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-clear}{}}}
+\if{html}{\out{<a id="method-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-clear}{}}}
 \subsection{Method \code{clear()}}{
 Clear all evaluation results from archive.
 \subsection{Usage}{
@@ -220,8 +220,8 @@ Clear all evaluation results from archive.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
