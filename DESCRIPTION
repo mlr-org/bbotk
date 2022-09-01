@@ -60,7 +60,7 @@ Suggests:
 VignetteBuilder:
     knitr
 Remotes:
-    mlr-org/mlr3misc
+    mlr-org/mlr3misc@as_callback
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8

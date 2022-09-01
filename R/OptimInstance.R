@@ -54,7 +54,7 @@ OptimInstance = R6Class("OptimInstance",
       self$terminator = assert_terminator(terminator, self)
       assert_choice(keep_evals, c("all", "best"))
       assert_flag(check_values)
-      self$callbacks = assert_callbacks(callbacks)
+      self$callbacks = assert_callbacks(as_callbacks(callbacks))
 
       # set search space
       domain_search_space = self$objective$domain$search_space()
