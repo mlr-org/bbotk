@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 0.5.3
+Version: 0.5.4
 Authors@R:
     c(person(given = "Marc",
              family = "Becker",
@@ -45,7 +45,7 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.10.0),
+    mlr3misc (>= 0.10.0-9000),
     R6
 Suggests:
     adagio,
@@ -60,7 +60,7 @@ Suggests:
 VignetteBuilder:
     knitr
 Remotes:
-    mlr-org/mlr3misc@callbacks
+    mlr-org/mlr3misc
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8

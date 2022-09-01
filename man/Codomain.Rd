@@ -83,6 +83,7 @@ of a maximization problem to turn it into a minimization problem.}
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="ids"><a href='../../paradox/html/ParamSet.html#method-ParamSet-ids'><code>paradox::ParamSet$ids()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="print"><a href='../../paradox/html/ParamSet.html#method-ParamSet-print'><code>paradox::ParamSet$print()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="search_space"><a href='../../paradox/html/ParamSet.html#method-ParamSet-search_space'><code>paradox::ParamSet$search_space()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="set_values"><a href='../../paradox/html/ParamSet.html#method-ParamSet-set_values'><code>paradox::ParamSet$set_values()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="subset"><a href='../../paradox/html/ParamSet.html#method-ParamSet-subset'><code>paradox::ParamSet$subset()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="test"><a href='../../paradox/html/ParamSet.html#method-ParamSet-test'><code>paradox::ParamSet$test()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="test_dt"><a href='../../paradox/html/ParamSet.html#method-ParamSet-test_dt'><code>paradox::ParamSet$test_dt()</code></a></span></li>

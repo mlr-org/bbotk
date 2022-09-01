@@ -47,6 +47,7 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
       param_set$values = list(n_points = 100L, maxit = 100L)
 
       super$initialize(
+        id = "focus_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
         properties = c("dependencies", "single-crit"),  # NOTE: think about multi-crit variant
@@ -120,6 +121,9 @@ mlr_optimizers$add("focus_search", OptimizerFocusSearch)
 #' Note that for [paradox::ParamLgl]s the value to be shrinked around is set as
 #' the `default` value instead of dropping a level. Also, a tag `shrinked` is
 #' added.
+#'
+#' Note that the returned [paradox::ParamSet] has lost all its original
+#' `default`s, as they may have become infeasible.
 #'
 #' If the [paradox::ParamSet] has a trafo, `x` is expected to contain the
 #' transformed values.
@@ -195,12 +199,11 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
             lower = as.integer(floor(lower))
             upper = as.integer(ceiling(upper))
             ParamInt$new(id = param$id, lower = lower, upper = upper,
-              special_vals = param$special_vals, default = param$default,
-              tags = param$tags)
+              special_vals = param$special_vals, tags = param$tags)
           } else {  # it's ParamDbl then
             ParamDbl$new(id = param$id, lower = lower, upper = upper,
-              special_vals = param$special_vals, default = param$default,
-              tags = param$tags, tolerance = param$tolerance)
+              special_vals = param$special_vals, tags = param$tags,
+              tolerance = param$tolerance)
           }
         }
       } else if (param$is_categ) {
@@ -210,8 +213,7 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
             levels = setdiff(param$levels, sample(setdiff(param$levels, val), size = 1L))
             if (test_r6(param, classes = "ParamFct")) {
               ParamFct$new(id = param$id, levels = levels,
-                special_vals = param$special_vals, default = param$default,
-                tags = param$tags)
+                special_vals = param$special_vals, tags = param$tags)
             } else {
               # for ParamLgls we cannot specify levels; instead we set a default
               ParamLgl$new(id = param$id,
