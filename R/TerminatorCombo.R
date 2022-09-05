@@ -13,12 +13,14 @@
 #' @section Parameters:
 #' \describe{
 #' \item{`any`}{`logical(1)`\cr
-#' Terminate iff any included terminator is positive? (not all), default is
-#' `TRUE`.}
+#'   Terminate iff any included terminator is positive? (not all).
+#'   Default is `TRUE`.}
 #' }
 #'
 #' @family Terminator
+#'
 #' @template param_archive
+#'
 #' @export
 #' @examples
 #' trm("combo",
@@ -48,8 +50,13 @@ TerminatorCombo = R6Class("TerminatorCombo",
       properties = Reduce(intersect, map(terminators, "properties"))
       properties = properties[properties != "progressr"]
 
-      super$initialize(param_set = param_set, properties = properties)
-      self$unit = "percent"
+      super$initialize(
+        id = "combo",
+        param_set = param_set,
+        properties = properties,
+        unit = "percent",
+        label = "Combination",
+        man = "bbotk::mlr_terminators_combo")
     },
 
     #' @description
@@ -78,6 +85,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' runtime is determined by the time-based terminator with the shortest time
     #' remaining. If non-time-based terminators are used and `any = FALSE`,
     #' the the remaining runtime is always `Inf`.
+    #'
     #' @return `integer(1)`.
     remaining_time = function(archive) {
       assert_r6(archive, "Archive")
@@ -87,6 +95,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
 
     #' @description
     #' Returns `max_steps` and `current_steps` for each terminator.
+    #'
     #' @return [data.table::data.table].
     status_long = function(archive) {
       assert_r6(archive, "Archive")

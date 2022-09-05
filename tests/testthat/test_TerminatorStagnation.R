@@ -25,3 +25,8 @@ test_that("TerminatorStagnation works with only unevaluated points", {
   archive$add_evals(xdt = data.table(x = 1), xss_trafoed = NULL, ydt = data.table(), status = "proposed")
   expect_false(terminator$is_terminated(archive))
 })
+
+test_that("man exists", {
+  terminator = trm("stagnation")
+  expect_man_exists(terminator$man)
+})

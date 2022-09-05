@@ -97,15 +97,14 @@ OptimInstance = R6Class("OptimInstance",
       catf(str_indent("* State: ", if (is.null(private$.result)) "Not optimized" else "Optimized"))
       catf(str_indent("* Objective:", format(self$objective)))
       catf("* Search Space:")
-      print(self$search_space)
+      print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
       catf(str_indent("* Terminator:", format(self$terminator)))
-      catf(str_indent("* Terminated:", self$is_terminated))
       if (!is.null(private$.result)) {
         catf("* Result:")
-        print(self$result)
+        print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
+        catf("* Archive:")
+        print(as.data.table(self$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
       }
-      catf("* Archive:")
-      print(self$archive)
     },
 
     #' @description
@@ -309,7 +308,7 @@ OptimInstance = R6Class("OptimInstance",
     clear = function() {
       self$archive$clear()
       private$.result = NULL
-      self$progressor = Progressor$new()
+      self$progressor = NULL
       invisible(self)
     }
   ),

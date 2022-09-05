@@ -45,9 +45,12 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
       )
       param_set$values = list(resolution = 10L, batch_size = 1L)
       super$initialize(
+        id = "grid_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit", "multi-crit")
+        properties = c("dependencies", "single-crit", "multi-crit"),
+        label = "Grid Search",
+        man = "bbotk::mlr_optimizers_grid_search"
       )
     }
   ),

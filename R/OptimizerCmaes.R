@@ -74,10 +74,13 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
       )
       param_set$values$start_values = "random"
       super$initialize(
+        id = "cmaes",
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
-        packages = "adagio"
+        packages = "adagio",
+        label = "Covariance Matrix Adaptation Evolution Strategy",
+        man = "bbotk::mlr_optimizers_cmaes"
       )
     }
   ),

@@ -22,9 +22,11 @@ Xiang Y, Gubian S, Suomela B, Hoeng J (2013).
 \section{Dictionary}{
 
 This \link{Optimizer} can be instantiated via the \link[mlr3misc:Dictionary]{dictionary}
-\link{mlr_optimizers} or with the associated sugar function \code{\link[=opt]{opt()}}:\preformatted{mlr_optimizers$get("gensa")
+\link{mlr_optimizers} or with the associated sugar function \code{\link[=opt]{opt()}}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_optimizers$get("gensa")
 opt("gensa")
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Parameters}{
@@ -40,6 +42,11 @@ opt("gensa")
 For the meaning of the control parameters, see \code{\link[GenSA:GenSA]{GenSA::GenSA()}}. Note that we
 have removed all control parameters which refer to the termination of the
 algorithm and where our terminators allow to obtain the same behavior.
+
+In contrast to the \code{\link[GenSA:GenSA]{GenSA::GenSA()}} defaults, we set \code{trace.mat = FALSE}.
+Note that \code{\link[GenSA:GenSA]{GenSA::GenSA()}} uses \code{smooth = TRUE} as a default.
+In the case of using this optimizer for Hyperparameter Optimization you may
+want to set \code{smooth = FALSE}.
 }
 
 \section{Progress Bars}{
@@ -71,7 +78,7 @@ if (requireNamespace("GenSA")) {
     search_space = search_space,
     terminator = trm("evals", n_evals = 10))
 
-  optimizer = opt("cmaes")
+  optimizer = opt("gensa")
 
   # Modifies the instance by reference
   optimizer$optimize(instance)
@@ -89,22 +96,23 @@ if (requireNamespace("GenSA")) {
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OptimizerGenSA$new()}}
-\item \href{#method-clone}{\code{OptimizerGenSA$clone()}}
+\item \href{#method-OptimizerGenSA-new}{\code{OptimizerGenSA$new()}}
+\item \href{#method-OptimizerGenSA-clone}{\code{OptimizerGenSA$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format">}\href{../../bbotk/html/Optimizer.html#method-format}{\code{bbotk::Optimizer$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize">}\href{../../bbotk/html/Optimizer.html#method-optimize}{\code{bbotk::Optimizer$optimize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print">}\href{../../bbotk/html/Optimizer.html#method-print}{\code{bbotk::Optimizer$print()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="optimize"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-optimize'><code>bbotk::Optimizer$optimize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OptimizerGenSA-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerGenSA-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -113,8 +121,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OptimizerGenSA-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerGenSA-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

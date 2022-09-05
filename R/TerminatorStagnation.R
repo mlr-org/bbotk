@@ -21,7 +21,9 @@
 #' }
 #'
 #' @family Terminator
+#'
 #' @template param_archive
+#'
 #' @export
 #' @examples
 #' TerminatorStagnation$new()
@@ -38,12 +40,20 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
         threshold = p_dbl(lower = 0, default = 0, tags = "required")
       )
       param_set$values = list(iters = 10, threshold = 0)
-      super$initialize(param_set = param_set, properties = "single-crit")
+
+      super$initialize(
+        id = "stagnation",
+        param_set = param_set,
+        properties = "single-crit",
+        label = "Stagnation",
+        man = "bbotk::mlr_terminators_stagnation"
+      )
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
+    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       assert_r6(archive, "Archive")

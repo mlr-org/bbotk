@@ -7,11 +7,8 @@ test_that("OptimInstanceSingleCrit", {
   expect_null(inst$result)
   expect_output(print(inst), "Not optimized")
   expect_output(print(inst), "ObjectiveRFun:function")
-  expect_output(print(inst), "<ParamSet>")
   expect_output(print(inst), "^(?s)(?!.*Result).*$", perl = TRUE)
   expect_output(print(inst), "<TerminatorEvals>")
-  expect_output(print(inst), "Terminated: FALSE")
-  expect_output(print(inst), "<Archive>")
 
   xdt = data.table(x1 = -1:1, x2 = list(-1, 0, 1))
   expect_named(inst$eval_batch(xdt), "y")
@@ -28,11 +25,8 @@ test_that("OptimInstanceSingleCrit", {
   optimizer$optimize(inst)
   expect_output(print(inst), "Optimized")
   expect_output(print(inst), "ObjectiveRFun:function")
-  expect_output(print(inst), "<ParamSet>")
   expect_output(print(inst), "<TerminatorEvals>")
-  expect_output(print(inst), "Terminated: TRUE")
   expect_output(print(inst), "Result")
-  expect_output(print(inst), "<Archive>")
 })
 
 test_that("OptimInstance works with trafos", {
@@ -88,9 +82,8 @@ test_that("OptimInstance works with extras output", {
 })
 
 test_that("Terminator assertions work", {
-  terminator = Terminator$new()
-  terminator$properties = "multi-crit"
-  expect_error(MAKE_INST(terminator = terminator))
+  terminator = trm("perf_reached")
+  expect_error(MAKE_INST_2D_2D(terminator = terminator), "does not support multi-crit optimization")
 })
 
 test_that("objective_function works", {
@@ -222,4 +215,14 @@ test_that("deep clone works", {
   expect_different_address(inst$search_space, inst_2$search_space)
   expect_different_address(inst$archive, inst_2$archive)
   expect_different_address(inst$terminator, inst_2$terminator)
+})
+
+test_that("$clear() method works", {
+  inst = MAKE_INST_2D(1L)
+  inst_copy = inst$clone(deep = TRUE)
+  optimizer = opt("random_search")
+
+  optimizer$optimize(inst)
+  inst$clear()
+  expect_equal(inst, inst_copy)
 })

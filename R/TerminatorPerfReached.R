@@ -1,4 +1,4 @@
-#' @title Terminator that stops when a performance level has been reached
+#' @title Performance Level Terminator
 #'
 #' @name mlr_terminators_perf_reached
 #' @include Terminator.R
@@ -12,13 +12,15 @@
 #' @section Parameters:
 #' \describe{
 #' \item{`level`}{`numeric(1)`\cr
-#' Performance level that needs to be reached, default is 0. Terminates if the
-#' performance exceeds (respective measure has to be maximized) or falls below
-#' (respective measure has to be minimized) this value.}
+#'   Performance level that needs to be reached.
+#'   Default is 0.
+#'   Terminates if the performance exceeds (respective measure has to be maximized) or falls below (respective measure has to be minimized) this value.}
 #' }
 #'
 #' @family Terminator
+#'
 #' @template param_archive
+#'
 #' @export
 #' @examples
 #' TerminatorPerfReached$new()
@@ -34,12 +36,19 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
         level = p_dbl(tags = "required", default = 0.1)
       )
       param_set$values = list(level = 0.1)
-      super$initialize(param_set = param_set, "single-crit")
+      super$initialize(
+        id = "perf_reached",
+        param_set = param_set,
+        properties = "single-crit",
+        label = "Performance Level",
+        man = "bbotk::mlr_terminators_perf_reached"
+      )
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
+    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       assert_r6(archive, "Archive")

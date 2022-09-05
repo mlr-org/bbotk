@@ -65,4 +65,5 @@ reference:
       - Progressor
       - branin
       - bb_optimize
+      - shrink_ps
 

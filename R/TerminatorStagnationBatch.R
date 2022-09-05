@@ -21,7 +21,9 @@
 #' }
 #'
 #' @family Terminator
+#'
 #' @template param_archive
+#'
 #' @export
 #' @examples
 #' TerminatorStagnationBatch$new()
@@ -38,12 +40,20 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
         threshold = p_dbl(lower = 0, default = 0, tags = "required")
       )
       param_set$values = list(n = 1, threshold = 0)
-      super$initialize(param_set = param_set, properties = "single-crit")
+
+      super$initialize(
+        id = "stagnation_batch",
+        param_set = param_set,
+        properties = "single-crit",
+        label = "Stagnation Batch",
+        man = "bbotk::mlr_terminators_stagnation_batch"
+      )
     },
 
     #' @description
     #' Is `TRUE` iff the termination criterion is positive, and `FALSE`
     #' otherwise.
+    #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       assert_r6(archive, "Archive")
@@ -66,12 +76,12 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
       if (minimize) {
         res = map(perf_before$batch_nr, function(nr) {
           min(perf_present[, ycol, with = FALSE]) >= min(
-            perf_before[batch_nr == nr, ycol, with = FALSE]) - pv$threshold
+            perf_before[get("batch_nr") == nr, ycol, with = FALSE]) - pv$threshold
         })
       } else {
         res = map(perf_before$batch_nr, function(nr) {
           max(perf_present[, ycol, with = FALSE]) <= max(
-            perf_before[batch_nr == nr, ycol, with = FALSE]) + pv$threshold
+            perf_before[get("batch_nr") == nr, ycol, with = FALSE]) + pv$threshold
         })
       }
 
