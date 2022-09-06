@@ -3,10 +3,9 @@
 \name{mlr_terminators_budget}
 \alias{mlr_terminators_budget}
 \alias{TerminatorBudget}
-\title{Terminator that Limits Total Budget Component Evaluation}
+\title{Budget Terminator}
 \description{
-\code{\link[=Terminator]{Terminator}} that terminates after the sum (or similar
-aggregate) of a given "budget" search space component crosses a threshold.
+Class to terminate the optimization after a given "budget" search space component crosses a threshold.
 }
 \section{Dictionary}{
 
@@ -25,19 +24,14 @@ trm("budget")
 \item{\code{budget}}{\code{numeric(1)}\cr
 Total budget available, after which to stop. Initialized to \code{Inf}.}
 \item{\code{aggregate}}{\code{function}\cr
-Function taking a vector of values of the budget search space component,
-returning a scalar value to be compared to the \code{budget} configuration
-parameter. If this function returns a value greater or equal to \code{budget} the
-termination criterion is matched. Calling this function with \code{NULL} must
-return the lower bound of the budget value; percentage progress is reported
-as the progress from this lower bound to the value of \code{budget}. Initialized
-to \code{sum()}}
+Function taking a vector of values of the budget search space component, returning a scalar value to be compared to the \code{budget} configuration parameter.
+If this function returns a value greater or equal to \code{budget} the termination criterion is matched.
+Calling this function with \code{NULL} must return the lower bound of the budget value; percentage progress is reported as the progress from this lower bound to the value of \code{budget}.
+Initialized to \code{sum()}}
 }
 }
 
 \examples{
-TerminatorBudget$new()
-
 # evaluate until sum of budget component of evaluated configs is >= 100
 trm("budget", budget = 100)
 

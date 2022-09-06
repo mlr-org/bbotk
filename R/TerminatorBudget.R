@@ -1,11 +1,10 @@
-#' @title Terminator that Limits Total Budget Component Evaluation
+#' @title Budget Terminator
 #'
 #' @name mlr_terminators_budget
 #' @include Terminator.R
 #'
 #' @description
-#' [`Terminator`][bbotk::Terminator] that terminates after the sum (or similar
-#' aggregate) of a given "budget" search space component crosses a threshold.
+#' Class to terminate the optimization after a given "budget" search space component crosses a threshold.
 #'
 #' @templateVar id budget
 #' @template section_dictionary_terminator
@@ -15,21 +14,17 @@
 #' \item{`budget`}{`numeric(1)`\cr
 #' Total budget available, after which to stop. Initialized to `Inf`.}
 #' \item{`aggregate`}{`function`\cr
-#' Function taking a vector of values of the budget search space component,
-#' returning a scalar value to be compared to the `budget` configuration
-#' parameter. If this function returns a value greater or equal to `budget` the
-#' termination criterion is matched. Calling this function with `NULL` must
-#' return the lower bound of the budget value; percentage progress is reported
-#' as the progress from this lower bound to the value of `budget`. Initialized
-#' to `sum()`}
+#' Function taking a vector of values of the budget search space component, returning a scalar value to be compared to the `budget` configuration parameter.
+#' If this function returns a value greater or equal to `budget` the termination criterion is matched.
+#' Calling this function with `NULL` must return the lower bound of the budget value; percentage progress is reported as the progress from this lower bound to the value of `budget`.
+#' Initialized to `sum()`}
 #' }
 #'
 #' @family Terminator
 #' @template param_archive
+#'
 #' @export
 #' @examples
-#' TerminatorBudget$new()
-#'
 #' # evaluate until sum of budget component of evaluated configs is >= 100
 #' trm("budget", budget = 100)
 #'
@@ -43,15 +38,21 @@ TerminatorBudget = R6Class("TerminatorBudget", inherit = Terminator,
     #' Initialize the `TerminatorBudget` object.
     initialize = function() {
       param_set = ps(
-        budget = p_dbl(tags = "required"), aggregate =
-          p_uty(tags = "required", custom_check = function(x) {
-            if (test_function(x) && test_number(x(NULL), finite = TRUE)) return(TRUE)
-            "must be a function with one argument, which when called with NULL must return a finite numeric value."
-          })
-        )
+        budget = p_dbl(tags = "required"),
+        aggregate = p_uty(tags = "required", custom_check = function(x) {
+          if (test_function(x) && test_number(x(NULL), finite = TRUE)) return(TRUE)
+          "must be a function with one argument, which when called with NULL must return a finite numeric value."
+        })
+      )
       param_set$values = list(budget = Inf, aggregate = sum)
-      super$initialize(param_set = param_set, properties = c("single-crit", "multi-crit"))
-      self$unit = "percent"
+      super$initialize(
+        id = "budget",
+        param_set = param_set,
+        properties = c("single-crit", "multi-crit"),
+        unit = "percent",
+        label = "Budget",
+        man = "bbotk::mlr_terminators_clock_time"
+      )
     },
 
     #' @description
@@ -62,9 +63,7 @@ TerminatorBudget = R6Class("TerminatorBudget", inherit = Terminator,
       assert_r6(archive, "Archive")
       params = self$param_set$get_values()
       budget_id = archive$search_space$ids(tags = "budget")
-      if (length(budget_id) != 1) stopf("Need exactly one budget parameter, but found %s: %s",
-        length(budget_id), str_collapse(budget_id))
-
+      if (length(budget_id) != 1) stopf("Need exactly one budget parameter, but found %s: %s", length(budget_id), str_collapse(budget_id))
       budget_data = if (!archive$n_evals) NULL else archive$data["evaluated", budget_id, on = "status", with = FALSE][[1]]
       params$aggregate(budget_data) >= params$budget
     }
@@ -74,8 +73,7 @@ TerminatorBudget = R6Class("TerminatorBudget", inherit = Terminator,
     .status = function(archive) {
       params = self$param_set$get_values()
       budget_id = archive$search_space$ids(tags = "budget")
-      if (length(budget_id) != 1) stopf("Need exactly one budget parameter, but found %s: %s",
-        length(budget_id), str_collapse(budget_id))
+      if (length(budget_id) != 1) stopf("Need exactly one budget parameter, but found %s: %s", length(budget_id), str_collapse(budget_id))
       budget_data = if (!archive$n_evals) NULL else archive$data["evaluated", budget_id, on = "status", with = FALSE][[1]]
 
       origin = params$aggregate(NULL)
