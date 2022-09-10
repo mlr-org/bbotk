@@ -4,6 +4,7 @@
 #' Specialized [mlr3misc::Callback] for optimization.
 #' Callbacks allow to customize the behavior of processes in bbotk.
 #' The [callback_optimization()] function creates a [CallbackOptimization].
+#' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
 #'
 #' @export
 #' @examples
@@ -74,7 +75,10 @@ CallbackOptimization = R6Class("CallbackOptimization",
 #'   The functions must have two arguments named `callback` and `context`.
 #' @param fields (list of `any`)\cr
 #'   List of additional fields.
+#'
 #' @export
+#' @example
+#'
 callback_optimization = function(id, label = NA_character_, man = NA_character_, on_optimization_begin = NULL, on_optimizer_before_eval = NULL, on_optimizer_after_eval = NULL, on_result = NULL,  on_optimization_end = NULL, fields = list()) {
   stages = discard(set_names(list(on_optimization_begin, on_optimizer_before_eval, on_optimizer_after_eval, on_result,  on_optimization_end), c("on_optimization_begin", "on_optimizer_before_eval", "on_optimizer_after_eval", "on_result",  "on_optimization_end")), is.null)
   walk(stages, function(stage) assert_function(stage, args = c("callback", "context")))

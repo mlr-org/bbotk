@@ -61,6 +61,8 @@ reference:
       - Codomain
   - title: Callbacks
     contents:
+      - CallbackOptimization
+      - callback_optimization
       - ContextOptimization
   - title: Misc
     contents:
