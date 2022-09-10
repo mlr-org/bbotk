@@ -155,10 +155,6 @@ branin = function(xs) {
   list(y = (xs[["x2"]] - ((5.1 / (4 * pi^2)) - 0.1 * (1 - xs[["fidelity"]])) * xs[["x1"]]^2 + (5 / pi) * xs[["x1"]] - 6) ^ 2 +  10 * (1 - (1 / (8 * pi))) * cos(xs[["x1"]]) + 10)
 }
 
-catn = function(..., file = "") {
-  cat(paste0(..., collapse = "\n"), "\n", sep = "", file = file)
-}
-
 allow_partial_matching = list(
   warnPartialMatchArgs = FALSE,
   warnPartialMatchAttr = FALSE,

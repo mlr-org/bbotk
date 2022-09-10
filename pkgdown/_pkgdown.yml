@@ -59,6 +59,12 @@ reference:
       - Archive
       - ArchiveBest
       - Codomain
+  - title: Callbacks
+    contents:
+      - CallbackOptimization
+      - callback_optimization
+      - ContextOptimization
+      - bbotk.backup
   - title: Misc
     contents:
       - is_dominated

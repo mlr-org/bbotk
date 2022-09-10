@@ -1,3 +1,7 @@
+# bbotk 0.5.4.9000
+
+* feat: Add callbacks with `CallbackOptimization`, `callback_optimization` and `mlr_callbacks`.
+
 # bbotk 0.5.4
 
 * feat: Add `OptimizerFocusSearch` that performs a focusing random search.

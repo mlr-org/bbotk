@@ -14,6 +14,7 @@
 #' @template param_xdt
 #' @template param_search_space
 #' @template param_keep_evals
+#' @template param_callbacks
 #' @export
 OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
   inherit = OptimInstance,
@@ -27,12 +28,11 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator,
-      keep_evals = "all", check_values = TRUE) {
+    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list()) {
       if (objective$codomain$target_length > 1) {
         stop("Codomain > 1")
       }
-      super$initialize(objective, search_space, terminator, keep_evals, check_values)
+      super$initialize(objective, search_space, terminator, keep_evals, check_values, callbacks)
     },
 
     #' @description
@@ -50,6 +50,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
       x_domain = unlist(transform_xdt_to_xss(xdt, self$search_space), recursive = FALSE)
       if (is.null(x_domain)) x_domain = list()
       private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
+      call_back("on_result", self$callbacks, private$.context)
     }
   )
 )

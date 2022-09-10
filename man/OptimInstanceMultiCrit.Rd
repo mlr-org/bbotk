@@ -59,7 +59,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   search_space = NULL,
   terminator,
   keep_evals = "all",
-  check_values = TRUE
+  check_values = TRUE,
+  callbacks = list()
 )}\if{html}{\out{</div>}}
 }
 
@@ -84,6 +85,9 @@ Keep \code{all} or only \code{best} evaluations in archive?}
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
+
+\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+List of callbacks.}
 }
 \if{html}{\out{</div>}}
 }

@@ -15,6 +15,7 @@
 #' @template param_ydt
 #' @template param_search_space
 #' @template param_keep_evals
+#' @template param_callbacks
 #' @export
 OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
   inherit = OptimInstance,
@@ -29,9 +30,8 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator,
-      keep_evals = "all", check_values = TRUE) {
-      super$initialize(objective, search_space, terminator, keep_evals, check_values)
+    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list()) {
+      super$initialize(objective, search_space, terminator, keep_evals, check_values, callbacks)
     },
 
     #' @description
@@ -50,6 +50,7 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
       x_domain = transform_xdt_to_xss(xdt, self$search_space)
       if (length(x_domain) == 0) x_domain = list(list())
       private$.result = cbind(xdt, x_domain = x_domain, ydt)
+      call_back("on_result", self$callbacks, private$.context)
     }
   ),
 
