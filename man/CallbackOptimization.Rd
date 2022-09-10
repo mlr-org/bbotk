@@ -10,8 +10,12 @@ The \code{\link[=callback_optimization]{callback_optimization()}} function creat
 Predefined callbacks are stored in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_callbacks} and can be retrieved with \code{\link[=clbk]{clbk()}}.
 }
 \examples{
-# callback writes result to disk
-callback_optimization
+# write archive to disk
+callback_optimization("bbotk.backup",
+  on_optimization_end = function(callback, context) {
+    saveRDS(context$instance$archive, "archive.rds")
+  }
+)
 }
 \section{Super class}{
 \code{\link[mlr3misc:Callback]{mlr3misc::Callback}} -> \code{CallbackOptimization}

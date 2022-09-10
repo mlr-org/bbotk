@@ -58,3 +58,11 @@ List of additional fields.}
 \description{
 Function to create a \link{CallbackOptimization}.
 }
+\examples{
+# write archive to disk
+callback_optimization("bbotk.backup",
+  on_optimization_end = function(callback, context) {
+    saveRDS(context$instance$archive, "archive.rds")
+  }
+)
+}

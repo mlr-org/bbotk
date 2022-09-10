@@ -8,8 +8,12 @@
 #'
 #' @export
 #' @examples
-#' # callback writes result to disk
-#' callback_optimization
+#' # write archive to disk
+#' callback_optimization("bbotk.backup",
+#'   on_optimization_end = function(callback, context) {
+#'     saveRDS(context$instance$archive, "archive.rds")
+#'   }
+#' )
 CallbackOptimization = R6Class("CallbackOptimization",
   inherit = Callback,
   public = list(
@@ -77,8 +81,7 @@ CallbackOptimization = R6Class("CallbackOptimization",
 #'   List of additional fields.
 #'
 #' @export
-#' @example
-#'
+#' @inherit CallbackOptimization examples
 callback_optimization = function(id, label = NA_character_, man = NA_character_, on_optimization_begin = NULL, on_optimizer_before_eval = NULL, on_optimizer_after_eval = NULL, on_result = NULL,  on_optimization_end = NULL, fields = list()) {
   stages = discard(set_names(list(on_optimization_begin, on_optimizer_before_eval, on_optimizer_after_eval, on_result,  on_optimization_end), c("on_optimization_begin", "on_optimizer_before_eval", "on_optimizer_after_eval", "on_result",  "on_optimization_end")), is.null)
   walk(stages, function(stage) assert_function(stage, args = c("callback", "context")))
