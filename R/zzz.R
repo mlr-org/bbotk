@@ -9,6 +9,8 @@
 
 .onLoad = function(libname, pkgname) {
   # nocov start
+
+  # callbacks
   x = utils::getFromNamespace("mlr_callbacks", ns = "mlr3misc")
   x$add("bbotk.backup", load_callback_backup)
 
