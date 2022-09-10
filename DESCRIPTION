@@ -60,7 +60,7 @@ Suggests:
 VignetteBuilder:
     knitr
 Remotes:
-    mlr-org/mlr3misc@as_callback
+    mlr-org/mlr3misc
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
@@ -71,6 +71,7 @@ RoxygenNote: 7.2.1
 Collate:
     'Archive.R'
     'ArchiveBest.R'
+    'CallbackOptimization.R'
     'Codomain.R'
     'ContextOptimization.R'
     'Objective.R'
