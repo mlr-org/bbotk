@@ -9,6 +9,9 @@
 
 .onLoad = function(libname, pkgname) {
   # nocov start
+  x = utils::getFromNamespace("mlr_callbacks", ns = "mlr3misc")
+  x$add("bbotk.backup", load_callback_backup)
+
   lg = lgr::get_logger("bbotk")
   assign("lg", lg, envir = parent.env(environment()))
   f = function(event) {
