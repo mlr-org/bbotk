@@ -37,8 +37,7 @@ OptimInstance = R6Class("OptimInstance",
     #' @field objective_multiplicator (`integer()`).
     objective_multiplicator = NULL,
 
-    #' @field callbacks (List of [CallbackOptimization]s)\cr
-    #' Callbacks.
+    #' @field callbacks (List of [CallbackOptimization]s).
     callbacks = NULL,
 
     #' @description
