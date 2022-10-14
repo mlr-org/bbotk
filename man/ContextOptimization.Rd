@@ -4,23 +4,9 @@
 \alias{ContextOptimization}
 \title{Optimization Context}
 \description{
-This \link{Context} can access the
-\itemize{
-\item \code{instance} - \link{OptimInstance}
-\item \code{optimizer} - \link{Optimizer}
-\item \code{result} - Optimization result
-}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{on_optimization_begin
-    on_optimizer_before_eval
-        on_eval_after_design
-        on_eval_after_benchmark
-        on_eval_after_aggregation
-    on_result_begin
-    on_result_end
-    on_optimization_after_eval
-on_optimization_end
-}\if{html}{\out{</div>}}
+The \link{ContextOptimization} allows \link[mlr3misc:Callback]{mlr3misc::Callback}s to access and modify data while optimization.
+See section on active bindings for a list of modifiable objects.
+See \code{\link[=callback_optimization]{callback_optimization()}} for a list of stages which access \link{ContextOptimization}.
 }
 \section{Super class}{
 \code{\link[mlr3misc:Context]{mlr3misc::Context}} -> \code{ContextOptimization}
@@ -28,19 +14,21 @@ on_optimization_end
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{instance}}{(\link{OptimInstance})\cr
-Instance.}
+\item{\code{instance}}{(\link{OptimInstance}).}
 
-\item{\code{optimizer}}{(\link{Optimizer})\cr
-Optimizer.}
+\item{\code{optimizer}}{(\link{Optimizer}).}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
+The points of the latest batch.
+Contains the values in the search space i.e. transformations are not yet applied.}
+
 \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Result.}
+The result of the optimization.}
 }
 \if{html}{\out{</div>}}
 }
@@ -71,11 +59,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{instance}}{(\link{OptimInstance})\cr
-Instance.}
+\item{\code{instance}}{(\link{OptimInstance}).}
 
-\item{\code{optimizer}}{(\link{Optimizer})\cr
-Optimizer.}
+\item{\code{optimizer}}{(\link{Optimizer}).}
 }
 \if{html}{\out{</div>}}
 }
