@@ -4,7 +4,7 @@
 #' @name bbotk.backup
 #'
 #' @description
-#' This [Callback] writes the [Archive] after each batch to disk.
+#' This [CallbackOptimization] writes the [Archive] after each batch to disk.
 #'
 #' @examples
 #' clbk("bbotk.backup", path = "backup.rds")

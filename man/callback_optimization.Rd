@@ -57,6 +57,27 @@ List of additional fields.}
 }
 \description{
 Function to create a \link{CallbackOptimization}.
+
+Optimization callbacks can be called from different stages of optimization process.
+The stages are prefixed with \verb{on_*}.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Start Optimization
+     - on_optimization_begin
+    Start Optimizer Batch
+         - on_optimizer_before_eval
+         - on_optimizer_after_eval
+    End Optimizer Batch
+     - on_result
+     - on_optimization_end
+End Optimization
+}\if{html}{\out{</div>}}
+
+See also the section on parameters for more information on the stages.
+A optimization callback works with \link{ContextOptimization}.
+}
+\details{
+A callback can write data to its state (\verb{$state}), e.g. settings that affect the callback itself.
+The \link{ContextOptimization} allows to modify the instance, archive, optimizer and final result.
 }
 \examples{
 # write archive to disk

@@ -1,6 +1,6 @@
 # bbotk 0.5.4.9000
 
-* feat: Add callbacks with `CallbackOptimization`, `callback_optimization` and `mlr_callbacks`.
+* feat: Add dictionary `mlr_callbacks` with predefined callbacks and `callback_optimization()` function to create custom callbacks.
 
 # bbotk 0.5.4
 

@@ -37,8 +37,7 @@ OptimInstance = R6Class("OptimInstance",
     #' @field objective_multiplicator (`integer()`).
     objective_multiplicator = NULL,
 
-    #' @field callbacks (List of [Callback]s)\cr
-    #' Callbacks.
+    #' @field callbacks (List of [CallbackOptimization]s).
     callbacks = NULL,
 
     #' @description
@@ -126,6 +125,7 @@ OptimInstance = R6Class("OptimInstance",
     #' the *search space* of the [OptimInstance] object. Can contain additional
     #' columns for extra information.
     eval_batch = function(xdt) {
+      private$.xdt = xdt
       call_back("on_optimizer_before_eval", self$callbacks, private$.context)
       # update progressor
       if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
@@ -142,9 +142,9 @@ OptimInstance = R6Class("OptimInstance",
       } else if (!self$search_space$has_trafo && !self$search_space$has_deps && inherits(self$objective, "ObjectiveRFunDt")) {
         # if search space has no transformation function and dependencies, and the objective takes a data table
         # use shortcut to skip conversion between data table and list
-        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
+        ydt = self$objective$eval_dt(private$.xdt[, self$search_space$ids(), with = FALSE])
       } else {
-        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
+        xss_trafoed = transform_xdt_to_xss(private$.xdt, self$search_space)
         ydt = self$objective$eval_many(xss_trafoed)
       }
 
@@ -228,6 +228,7 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   private = list(
+    .xdt = NULL,
     .result = NULL,
     .objective_function = NULL,
     .context = NULL,

@@ -5,6 +5,7 @@
 #' Callbacks allow to customize the behavior of processes in bbotk.
 #' The [callback_optimization()] function creates a [CallbackOptimization].
 #' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
+#' For more information on optimization callbacks see [callback_optimization()].
 #'
 #' @export
 #' @examples
@@ -49,6 +50,29 @@ CallbackOptimization = R6Class("CallbackOptimization",
 #'
 #' @description
 #' Function to create a [CallbackOptimization].
+#'
+#' Optimization callbacks can be called from different stages of optimization process.
+#' The stages are prefixed with `on_*`.
+#'
+#' ```
+#' Start Optimization
+#'      - on_optimization_begin
+#'     Start Optimizer Batch
+#'          - on_optimizer_before_eval
+#'          - on_optimizer_after_eval
+#'     End Optimizer Batch
+#'      - on_result
+#'      - on_optimization_end
+#' End Optimization
+#' ```
+#'
+#' See also the section on parameters for more information on the stages.
+#' A optimization callback works with [ContextOptimization].
+#'
+#' @details
+#' A callback can write data to its state (`$state`), e.g. settings that affect the callback itself.
+#' The [ContextOptimization] allows to modify the instance, archive, optimizer and final result.
+#'
 #'
 #' @param id (`character(1)`)\cr
 #'   Identifier for the new instance.

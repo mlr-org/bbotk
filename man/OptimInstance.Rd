@@ -31,8 +31,7 @@ Stores \code{progressor} function.}
 
 \item{\code{objective_multiplicator}}{(\code{integer()}).}
 
-\item{\code{callbacks}}{(List of \link{Callback}s)\cr
-Callbacks.}
+\item{\code{callbacks}}{(List of \link{CallbackOptimization}s).}
 }
 \if{html}{\out{</div>}}
 }
