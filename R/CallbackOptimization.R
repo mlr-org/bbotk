@@ -5,6 +5,7 @@
 #' Callbacks allow to customize the behavior of processes in bbotk.
 #' The [callback_optimization()] function creates a [CallbackOptimization].
 #' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
+#' For more information on optimization callbacks see [callback_optimization()].
 #'
 #' @export
 #' @examples
