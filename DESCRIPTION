@@ -51,7 +51,7 @@ Suggests:
     adagio,
     emoa,
     GenSA,
-    irace,
+    irace (>= 3.5),
     knitr,
     nloptr,
     progressr,
