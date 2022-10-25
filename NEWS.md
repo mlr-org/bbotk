@@ -1,7 +1,8 @@
-# bbotk 0.5.4.9000
+# bbotk 0.6.0
 
 * fix: `OptimizerIrace` did not work with parameters with multiple dependencies.
-* feat: Add dictionary `mlr_callbacks` with predefined callbacks and `callback_optimization()` function to create custom callbacks.
+* feat: Add new callback that backups the archive to disk to `mlr_callbacks`.
+* feat: Create custom callbacks with the `callback_optimization()` function.
 
 # bbotk 0.5.4
 
