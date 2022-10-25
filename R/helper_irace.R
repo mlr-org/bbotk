@@ -29,12 +29,12 @@ paradox_to_irace = function(param_set) {
     })
 
     # reduce to one row per parameter
-    deps = deps[, list("cond" =  paste(cond, collapse = " & ")), by = id]
+    deps = deps[, list("cond" =  paste(get("cond"), collapse = " & ")), by = "id"]
 
     # add parameters without dependency
-    deps[, cond := paste("|", cond)]
+    deps[, "cond" := paste("|", get("cond"))]
     deps = merge(data.table(id = param_set$ids(), by = "id"), deps, all.x = TRUE, sort = FALSE)
-    deps[is.na(cond), cond := ""]
+    deps[is.na(get("cond")), "cond" := ""]
   } else {
     NULL
   }
