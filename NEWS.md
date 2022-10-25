@@ -1,5 +1,8 @@
 # bbotk 0.6.0.9000
 
+* refactor: Double parameters were processed with only 4 decimal places in `OptimizerIrace`.
+  From now on, double parameters represented with 15 decimal places.
+
 # bbotk 0.6.0
 
 * fix: `OptimizerIrace` did not work with parameters with multiple dependencies.
