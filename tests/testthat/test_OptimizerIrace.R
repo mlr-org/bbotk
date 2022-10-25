@@ -198,3 +198,22 @@ test_that("paradox_to_irace with dependencies", {
     depends = list(a = "c", b = "a", c = character(0), d = "c"),
     hierarchy = c(2, 3, 1, 2))
 })
+
+test_that("paradox_to_irace works with parameters with multiple dependencies", {
+  pps = ps(
+    a = p_lgl(),
+    b = p_lgl(),
+    c = p_fct(levels = c("lvl1", "lvl2", "lvl3")),
+    d = p_fct(levels = c("lvl1", "lvl2", "lvl3", "lvl4")),
+    e = p_int(lower = 1, upper = 9, depends = a == TRUE),
+    f = p_int(lower = 1, upper = 9, depends = a == TRUE && b == TRUE),
+    g = p_int(lower = 2, upper = 3, depends = c %in% c("lvl2", "lvl3")),
+    h = p_int(lower = 2, upper = 3, depends = c %in% c("lvl2", "lvl3") && d %in% c("lvl3", "lvl4"))
+  )
+  expect_irace_parameters(
+    parameters = paradox_to_irace(pps), names = c("a", "b", "c", "d", "e", "f", "g", "h"), types = c("c", "c", "c", "c", "i", "i", "i", "i"),
+    domain = list(a = c("TRUE", "FALSE"), b = c("TRUE", "FALSE"), c = c("lvl1", "lvl2", "lvl3"), d = c("lvl1", "lvl2", "lvl3", "lvl4"), e = c(1, 9), f = c(1, 9), g = c(2, 3), h = c(2, 3)),
+    conditions = list(a = TRUE, b = TRUE, c = TRUE, d = TRUE, e = expression(a == TRUE), f = expression(a == TRUE & b == TRUE), g = expression(c %in% c("lvl2", "lvl3")), h = expression(c %in% c("lvl2", "lvl3") & d %in% c("lvl3", "lvl4"))),
+    depends = list(a = character(0), b = character(0), c = character(0), d = character(0), e = "a", f = c("a", "b"), g = "c", h = c("c", "d")),
+    hierarchy = c(1, 1, 1, 1, 2, 2, 2, 2))
+})

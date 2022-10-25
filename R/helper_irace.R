@@ -32,25 +32,24 @@ get_irace_range = function(param_set) {
 }
 
 get_irace_condition = function(param_set) {
-  cond = rbindlist(apply(param_set$deps, 1, function(x) {
-    on = x[[2]]
-    cond = x[[3]]$rhs
-    if (is.character(cond)) {
-      cond = paste0("'", cond, "'")
-    }
-    if (x[[3]]$type == "equal") {
-      condition = paste("|", x[[2]], "==", cond)
+  deps = pmap_dtr(param_set$deps, function(id, on, cond) {
+    rhs = if (is.character(cond$rhs)) sQuote(cond$rhs, q = FALSE) else cond$rhs
+    cond = if (test_class(cond, "CondEqual")) {
+      paste(on, "==", rhs)
     } else {
-      condition = paste("|", x[[2]], "%in%", paste0("c(", paste0(cond, collapse = ","), ")"))
+      paste(on, "%in%", paste0("c(", paste0(rhs, collapse = ","), ")"))
     }
-    data.table(id = x[[1]], cond = condition)
-  }))
+    data.table(id = id, cond = cond)
+  })
 
-  # coercion back and forth from frame/table is due to data.frame sorting even when sort = FALSE
-  tab = data.frame(merge(data.table(id = param_set$ids()), cond, by = "id", all.x = TRUE, sort = FALSE))
-  tab[is.na(tab)] = ""
+  # reduce to one row per parameter
+  deps = deps[, list("cond" =  paste(cond, collapse = " & ")), by = id]
 
-  return(tab)
+  # add parameters without dependency
+  deps[, cond := paste("|", cond)]
+  deps = merge(data.table(id = param_set$ids(), by = "id"), deps, all.x = TRUE)
+  deps[is.na(cond), cond := ""]
+  deps
 }
 
 target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) { # nolint
