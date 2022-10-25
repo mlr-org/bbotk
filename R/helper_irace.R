@@ -39,7 +39,7 @@ paradox_to_irace = function(param_set) {
     NULL
   }
 
-  irace::readParameters(text = paste(param_set$ids(), '""', types, range, deps$cond, collapse = "\n"))
+  irace::readParameters(text = paste(param_set$ids(), '""', types, range, deps$cond, collapse = "\n"), digits = 15)
 }
 
 target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) { # nolint
