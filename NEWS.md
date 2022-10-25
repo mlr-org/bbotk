@@ -1,3 +1,5 @@
+# bbotk 0.6.0.9000
+
 # bbotk 0.6.0
 
 * fix: `OptimizerIrace` did not work with parameters with multiple dependencies.
