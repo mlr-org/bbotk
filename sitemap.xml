@@ -28,7 +28,13 @@
     <loc>https://bbotk.mlr-org.com/reference/ArchiveBest.html</loc>
   </url>
   <url>
+    <loc>https://bbotk.mlr-org.com/reference/CallbackOptimization.html</loc>
+  </url>
+  <url>
     <loc>https://bbotk.mlr-org.com/reference/Codomain.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/ContextOptimization.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/Objective.html</loc>
@@ -67,6 +73,9 @@
     <loc>https://bbotk.mlr-org.com/reference/bbotk-package.html</loc>
   </url>
   <url>
+    <loc>https://bbotk.mlr-org.com/reference/bbotk.backup.html</loc>
+  </url>
+  <url>
     <loc>https://bbotk.mlr-org.com/reference/bbotk_assertions.html</loc>
   </url>
   <url>
@@ -74,6 +83,9 @@
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/branin.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/callback_optimization.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/index.html</loc>
@@ -143,6 +155,9 @@
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/optimize_default.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://bbotk.mlr-org.com/reference/search_start.html</loc>
