@@ -118,7 +118,7 @@ test_that("paradox_to_irace without dependencies", {
 
   # only ParamUty
   pps = ps(uty = p_uty())
-  expect_error(paradox_to_irace(pps), regexp = "<ParamUty> not supported by <TunerIrace>", fixed = TRUE)
+  expect_error(paradox_to_irace(pps), regexp = "<ParamUty> not supported by <OptimizerIrace>", fixed = TRUE)
 
   # mixed set
   pps = ps(
