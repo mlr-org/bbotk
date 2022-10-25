@@ -113,12 +113,12 @@ test_that("OptimizerIrace works", {
 test_that("paradox_to_irace without dependencies", {
   # only ParamLgl
   pps = ps(lgl = p_lgl())
-  expect_irace_parameters(parameters = paradox_to_irace(pps), names = "lgl", types = "c",
+  expect_irace_parameters(parameters = paradox_to_irace(pps, 4), names = "lgl", types = "c",
     domain = list(lgl = c("TRUE", "FALSE")), conditions = list(lgl = TRUE))
 
   # only ParamUty
   pps = ps(uty = p_uty())
-  expect_error(paradox_to_irace(pps), regexp = "<ParamUty> not supported by <OptimizerIrace>", fixed = TRUE)
+  expect_error(paradox_to_irace(pps, 4), regexp = "<ParamUty> not supported by <OptimizerIrace>", fixed = TRUE)
 
   # mixed set
   pps = ps(
@@ -128,7 +128,7 @@ test_that("paradox_to_irace without dependencies", {
     lgl = p_lgl()
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps),
+    parameters = paradox_to_irace(pps, 4),
     names = c("dbl", "int", "fct", "lgl"),
     types = c("r", "i", "c", "c"),
     domain = list(dbl = c(0.1, 0.3), int = c(1, 9), fct = c("a", "b", "c"), lgl = c("TRUE", "FALSE")))
@@ -142,7 +142,7 @@ test_that("paradox_to_irace without dependencies", {
     lgl = p_lgl()
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps),
+    parameters = paradox_to_irace(pps, 4),
     names = c("fct", "int1", "dbl", "int2", "lgl"),
     types = c("c", "i", "r", "i", "c"),
     domain = list(fct = c("a", "b", "c"), int1 = c(1, 9), dbl = c(0.1, 0.3), int2 = c(10, 90),
@@ -156,7 +156,7 @@ test_that("paradox_to_irace with dependencies", {
     b = p_int(lower = 1, upper = 9, depends = a == TRUE)
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps), names = c("a", "b"), types = c("c", "i"),
+    parameters = paradox_to_irace(pps, 4), names = c("a", "b"), types = c("c", "i"),
     domain = list(a = c("TRUE", "FALSE"), b = c(1, 9)),
     conditions = list(a = TRUE, b = expression(a == TRUE)),
     depends = list(a = character(0), b = "a"),
@@ -169,7 +169,7 @@ test_that("paradox_to_irace with dependencies", {
     b = p_int(lower = 1, upper = 9, depends = a == TRUE)
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps), names = c("a", "c", "b"),
+    parameters = paradox_to_irace(pps, 4), names = c("a", "c", "b"),
     types = c("c", "c", "i"),
     domain = list(a = c("TRUE", "FALSE"), c = c("lvl1", "lvl2"), b = c(1, 9)),
     conditions = list(
@@ -186,7 +186,7 @@ test_that("paradox_to_irace with dependencies", {
     d = p_dbl(lower = 0, upper = 1, depends = c %in% c("lvl1", "lvl2"))
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps), names = c("a", "b", "c", "d"),
+    parameters = paradox_to_irace(pps, 4), names = c("a", "b", "c", "d"),
     types = c("c", "i", "c", "r"),
     domain = list(
       a = c("TRUE", "FALSE"), b = c(1, 9), c = c("lvl1", "lvl2"),
@@ -211,7 +211,7 @@ test_that("paradox_to_irace works with parameters with multiple dependencies", {
     h = p_int(lower = 2, upper = 3, depends = c %in% c("lvl2", "lvl3") && d %in% c("lvl3", "lvl4"))
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps), names = c("a", "b", "c", "d", "e", "f", "g", "h"), types = c("c", "c", "c", "c", "i", "i", "i", "i"),
+    parameters = paradox_to_irace(pps, 4), names = c("a", "b", "c", "d", "e", "f", "g", "h"), types = c("c", "c", "c", "c", "i", "i", "i", "i"),
     domain = list(a = c("TRUE", "FALSE"), b = c("TRUE", "FALSE"), c = c("lvl1", "lvl2", "lvl3"), d = c("lvl1", "lvl2", "lvl3", "lvl4"), e = c(1, 9), f = c(1, 9), g = c(2, 3), h = c(2, 3)),
     conditions = list(a = TRUE, b = TRUE, c = TRUE, d = TRUE, e = expression(a == TRUE), f = expression(a == TRUE & b == TRUE), g = expression(c %in% c("lvl2", "lvl3")), h = expression(c %in% c("lvl2", "lvl3") & d %in% c("lvl3", "lvl4"))),
     depends = list(a = character(0), b = character(0), c = character(0), d = character(0), e = "a", f = c("a", "b"), g = "c", h = c("c", "d")),

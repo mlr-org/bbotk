@@ -1,4 +1,4 @@
-paradox_to_irace = function(param_set) {
+paradox_to_irace = function(param_set, digits) {
   assertClass(param_set, "ParamSet")
   if ("ParamUty" %in% param_set$class) stop("<ParamUty> not supported by <OptimizerIrace>")
 
@@ -39,7 +39,7 @@ paradox_to_irace = function(param_set) {
     NULL
   }
 
-  irace::readParameters(text = paste(param_set$ids(), '""', types, range, deps$cond, collapse = "\n"), digits = 15)
+  irace::readParameters(text = paste(param_set$ids(), '""', types, range, deps$cond, collapse = "\n"), digits = digits)
 }
 
 target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) { # nolint

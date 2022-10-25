@@ -22,6 +22,9 @@
 #' the algorithm. Use [TerminatorEvals] instead. Other terminators do not work
 #' with `OptimizerIrace`.
 #'
+#' In contrast to the [irace::defaultScenario()] defaults, we set `digits = 15`.
+#' This represents double parameters with a higher precision and avoids rounding errors.
+#'
 #' @section Target Runner and Instances:
 #' The irace package uses a `targetRunner` script or R function to evaluate a
 #' configuration on a particular instance. Usually it is not necessary to
@@ -135,7 +138,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
         mu = p_int(default = 5, lower = 1),
         softRestart = p_int(default = 1, lower = 0, upper = 1),
         softRestartThreshold = p_dbl(),
-        digits = p_int(default = 4, lower = 1, upper = 15),
+        digits = p_int(default = 15, lower = 1, upper = 15, tags = "required"),
         testType = p_fct(default = "F-test", levels = c("F-test", "t-test", "t-test-bonferroni", "t-test-holm")),
         firstTest = p_int(default = 5, lower = 0),
         eachTest = p_int(default = 1, lower = 1),
@@ -152,6 +155,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
       param_set$values$debugLevel = 0
       param_set$values$logFile = tempfile(fileext = ".Rdata")
       param_set$values$targetRunnerParallel = target_runner_default
+      param_set$values$digits = 15
 
       super$initialize(
         id = "irace",
@@ -182,7 +186,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
       inst$objective$constants$add(self$param_set$params[["instances"]])
 
       # run irace
-      res = invoke(irace::irace, scenario = scenario, parameters = paradox_to_irace(inst$search_space), .opts = allow_partial_matching)
+      res = invoke(irace::irace, scenario = scenario, parameters = paradox_to_irace(inst$search_space, pv$digits), .opts = allow_partial_matching)
 
       # add race and step to archive
       iraceResults = NULL

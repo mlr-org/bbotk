@@ -1,7 +1,9 @@
 # bbotk 0.6.0.9000
 
-* refactor: Double parameters were processed with only 4 decimal places in `OptimizerIrace`.
-  From now on, double parameters represented with 15 decimal places.
+* refactor: The default of `digits` in `OptimizerIrace` is 15 now to avoid rounding errors.
+* refactor: The bounds of double parameters were processed with only 4 decimal places in `OptimizerIrace`.
+  By default, the bounds of double parameters are represented with 15 decimal places now.
+  The `digits` parameter of `OptimizerIrace` also changes number of decimal places of the bounds now.
 
 # bbotk 0.6.0
 
