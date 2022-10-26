@@ -75,7 +75,6 @@ Collate:
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'
-    'ObjectiveRFunMany.R'
     'OptimInstance.R'
     'OptimInstanceMultiCrit.R'
     'OptimInstanceSingleCrit.R'
