@@ -1,5 +1,6 @@
 # bbotk 0.6.0.9000
 
+* feat: Add `ObjectiveRFunMany` that can evaluate a list of configurations with a user supplied function.
 * refactor: The default of `digits` in `OptimizerIrace` is 15 now to avoid rounding errors.
 * refactor: The bounds of double parameters were processed with only 4 decimal places in `OptimizerIrace`.
   By default, the bounds of double parameters are represented with 15 decimal places now.
