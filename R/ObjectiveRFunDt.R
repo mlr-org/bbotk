@@ -45,7 +45,19 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = invoke(private$.fun, rbindlist(xss, use.names = TRUE, fill = TRUE), .args = self$constants$values)
+      xdt = rbindlist(xss, use.names = TRUE, fill = TRUE)
+      # add missing columns
+      if (ncol(xdt) < self$domain$length) {
+        proto = as.data.table(lapply(self$domain$class, switch,
+          ParamFct = NA_character_,
+          ParamDbl = NA_real_,
+          ParamInt = NA_integer_,
+          ParamLgl = NA,
+          ParamUty = NA
+        ))
+        xdt = rbindlist(list(proto, xdt), use.names = TRUE, fill = TRUE)[-1]
+      }
+      res = invoke(private$.fun, xdt, .args = self$constants$values)
       if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     },

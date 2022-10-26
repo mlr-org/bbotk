@@ -263,6 +263,16 @@ test_that("ObjectiveRFunDt works with deps #141", {
   xss = design$transpose(trafo = TRUE, filter_na = TRUE)
   res = rfun_dt$eval_many(xss)
   expect_equal(res, data.table(y = c(2, 1)))
+
+  # one configuration with missing parameter #189
+  design = Design$new(
+    domain,
+    data.table(x1 = 1, x2 = 2),
+    remove_dupl = FALSE
+  )
+  xss = design$transpose(trafo = TRUE, filter_na = TRUE)
+  res = rfun_dt$eval_many(xss)
+  expect_equal(res, data.table(y = 1))
 })
 
 test_that("Objective works with constants", {
@@ -358,4 +368,10 @@ test_that("named objective value works", {
 
   expect_named(objective$eval(list(x = 1)), "y")
   expect_named(objective$eval_many(list(list(x = 1), list(x = 0))), "y")
+})
+
+test_that("ObjectiveRFunDt works with missing values", {
+  fun = function(xdt) data.table(y = xdt[["x1"]]^2 +  xdt[["x2"]]^2)
+  objective = ObjectiveRFunDt$new(fun = fun, domain = PS_2D_domain, check_values = FALSE)
+  objective$eval_many(list(list(x1 = 1)))
 })
