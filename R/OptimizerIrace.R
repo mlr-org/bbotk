@@ -22,6 +22,9 @@
 #' the algorithm. Use [TerminatorEvals] instead. Other terminators do not work
 #' with `OptimizerIrace`.
 #'
+#' In contrast to [irace::defaultScenario()], we set `digits = 15`.
+#' This represents double parameters with a higher precision and avoids rounding errors.
+#'
 #' @section Target Runner and Instances:
 #' The irace package uses a `targetRunner` script or R function to evaluate a
 #' configuration on a particular instance. Usually it is not necessary to
