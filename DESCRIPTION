@@ -104,7 +104,6 @@ Collate:
     'bbotk_reflections.R'
     'bibentries.R'
     'helper.R'
-    'helper_irace.R'
     'mlr_callbacks.R'
     'nds_selection.R'
     'reexport.R'

@@ -2,6 +2,7 @@
 % Please edit documentation in R/helper.R
 \name{branin}
 \alias{branin}
+\alias{branin_wu}
 \title{Branin Function}
 \source{
 Wu J, Toscano-Palmerin S, Frazier PI, Wilson AG (2019).
@@ -9,18 +10,26 @@ Wu J, Toscano-Palmerin S, Frazier PI, Wilson AG (2019).
 1903.04703.
 }
 \usage{
-branin(xs)
+branin(x1, x2, noise = 0)
+
+branin_wu(x1, x2, fidelity)
 }
 \arguments{
-\item{xs}{List with the input for a single point
-(e.g. \code{list(x1 = 1, x2 = 2, fidelity = 0.5)}).}
+\item{x1}{(\code{numeric()}).}
+
+\item{x2}{(\code{numeric()}).}
+
+\item{noise}{(\code{numeric()}).}
+
+\item{fidelity}{(\code{numeric()}).}
 }
 \value{
-\code{list(1)}
+\code{numeric()}
 }
 \description{
-Augmented 2-D Branin function with fidelity parameter.
+Classic 2-D Branin function with noise \code{branin(x1, x2, noise)} and Branin function with fidelity parameter \code{branin_wu(x1, x2, fidelity)}.
 }
 \examples{
-branin(list(x1 = 12, x2 = 2, fidelity = 1))
+branin(x1 = 12, x2 = 2, noise = 0.05)
+branin_wu(x1 = 12, x2 = 2, fidelity = 1)
 }

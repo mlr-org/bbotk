@@ -1,4 +1,4 @@
-test_that("OptimizerIrace works", {
+test_that("OptimizerIrace minimize works", {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -7,19 +7,7 @@ test_that("OptimizerIrace works", {
   )
 
   fun = function(xdt, instances) {
-    a = 1
-    b = 5.1 / (4 * (pi^2))
-    c = 5 / pi
-    r = 6
-    s = 10
-    t = 1 / (8 * pi)
-
-    data.table(y = (
-      a * ((xdt[["x2"]] -
-        b * (xdt[["x1"]]^2L) +
-        c * xdt[["x1"]] - r)^2) +
-        ((s * (1 - t)) * cos(xdt[["x1"]])) +
-        unlist(instances)))
+    data.table(y = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances)))
   }
 
   objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
@@ -48,28 +36,18 @@ test_that("OptimizerIrace works", {
   # the performance of the best configuration should be the mean performance across all evaluated instances
   configuration_id = instance$result$configuration
   expect_equal(unname(instance$result_y), mean(archive[configuration == configuration_id, y]))
+})
 
+test_that("OptimizerIrace maximize works", {
+  skip_if_not_installed("irace")
 
-  # default maximize
   search_space = domain = ps(
     x1 = p_dbl(-5, 10),
     x2 = p_dbl(0, 15)
   )
 
   fun = function(xdt, instances) {
-    a = 1
-    b = 5.1 / (4 * (pi^2))
-    c = 5 / pi
-    r = 6
-    s = 10
-    t = 1 / (8 * pi)
-
-    data.table(y = -(
-      a * ((xdt[["x2"]] -
-        b * (xdt[["x1"]]^2L) +
-        c * xdt[["x1"]] - r)^2) +
-        ((s * (1 - t)) * cos(xdt[["x1"]])) +
-        unlist(instances)))
+    data.table(y = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances)))
   }
 
   codomain = ps(y = p_dbl(tags = "maximize"))
@@ -98,6 +76,21 @@ test_that("OptimizerIrace works", {
   # the performance of the best configuration should be the mean performance across all evaluated instances
   configuration_id = instance$result$configuration
   expect_equal(unname(instance$result_y), mean(archive[configuration == configuration_id, y]))
+})
+
+test_that("OptimizerIrace assertions works",  {
+  skip_if_not_installed("irace")
+
+  search_space = domain = ps(
+    x1 = p_dbl(-5, 10),
+    x2 = p_dbl(0, 15)
+  )
+
+  fun = function(xdt, instances) {
+    data.table(y = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances)))
+  }
+
+  objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
 
   # unsupported terminators
   instance = OptimInstanceSingleCrit$new(
@@ -105,10 +98,63 @@ test_that("OptimizerIrace works", {
     search_space = search_space,
     terminator = trm("perf_reached", level = 0.1))
 
+  optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
+
   expect_error(optimizer$optimize(instance),
     regexp = "<TerminatorPerfReached> is not supported. Use <TerminatorEvals> instead",
     fixed = TRUE)
 })
+
+test_that("OptimizerIrace works with passed constants set",  {
+  skip_if_not_installed("irace")
+
+  search_space = domain = ps(
+    x1 = p_dbl(-5, 10),
+    x2 = p_dbl(0, 15)
+  )
+
+  fun = function(xdt, instances) {
+    data.table(y = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances)))
+  }
+
+  objective = ObjectiveRFunDt$new(fun = fun, domain = domain, constants = ps(instances = p_uty()))
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = trm("evals", n_evals = 96))
+
+  optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
+
+  x = capture.output(optimizer$optimize(instance))
+  expect_data_table(instance$result, nrows = 1)
+})
+
+test_that("OptimizerIrace works without passed constants set",  {
+  skip_if_not_installed("irace")
+
+  search_space = domain = ps(
+    x1 = p_dbl(-5, 10),
+    x2 = p_dbl(0, 15)
+  )
+
+  fun = function(xdt, instances) {
+    data.table(y = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances)))
+  }
+
+  objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = trm("evals", n_evals = 96))
+
+  optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
+
+  x = capture.output(optimizer$optimize(instance))
+  expect_data_table(instance$result, nrows = 1)
+})
+
 
 test_that("paradox_to_irace without dependencies", {
   # only ParamLgl

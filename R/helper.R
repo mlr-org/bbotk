@@ -137,22 +137,30 @@ search_start = function(search_space, type = "random") {
 #' @title Branin Function
 #'
 #' @description
-#' Augmented 2-D Branin function with fidelity parameter.
+#' Classic 2-D Branin function with noise `branin(x1, x2, noise)` and Branin function with fidelity parameter `branin_wu(x1, x2, fidelity)`.
 #'
 #' @source
 #' `r format_bib("wu_2019")`
 #'
-#' @param xs
-#'   List with the input for a single point
-#'   (e.g. `list(x1 = 1, x2 = 2, fidelity = 0.5)`).
+#' @param x1 (`numeric()`).
+#' @param x2 (`numeric()`).
+#' @param noise (`numeric()`).
+#' @param fidelity (`numeric()`).
 #'
-#' @return `list(1)`
+#' @return `numeric()`
 #'
 #' @export
 #' @examples
-#' branin(list(x1 = 12, x2 = 2, fidelity = 1))
-branin = function(xs) {
-  list(y = (xs[["x2"]] - ((5.1 / (4 * pi^2)) - 0.1 * (1 - xs[["fidelity"]])) * xs[["x1"]]^2 + (5 / pi) * xs[["x1"]] - 6) ^ 2 +  10 * (1 - (1 / (8 * pi))) * cos(xs[["x1"]]) + 10)
+#' branin(x1 = 12, x2 = 2, noise = 0.05)
+#' branin_wu(x1 = 12, x2 = 2, fidelity = 1)
+branin = function(x1, x2, noise = 0) {
+  (x2 - 5.1 / (4 * pi^2) * x1^2 + 5 / pi * x1 - 6)^2 + 10 * (1 - 1 / (8 * pi)) * cos(x1) + 10
+}
+
+#' @rdname branin
+#' @export
+branin_wu = function(x1, x2, fidelity) {
+  (x2 - (5.1 / (4 * pi^2) - 0.1 * (1 - fidelity)) * x1^2 + 5 / pi * x1 - 6) ^ 2 +  10 * (1 - 1 / (8 * pi)) * cos(x1) + 10
 }
 
 allow_partial_matching = list(
