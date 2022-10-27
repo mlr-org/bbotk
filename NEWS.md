@@ -1,5 +1,6 @@
 # bbotk 0.6.0.9000
 
+* fix: `Terminator$format(with_params = TRUE)` printed an empty list when no parameter was set.
 * refactor: `OptimizerIrace` automatically added the `instances` parameter to `Objective$constants`.
   From now on, the `instances` parameter can be also set manually.
 * BREAKING CHANGE: `branin(xs)` is now `branin(x1, x2, noise)` and `branin_wu(x1, x2, fidelity)`.
