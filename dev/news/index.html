@@ -71,7 +71,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0.9000" id="bbotk-0609000">bbotk 0.6.0.9000<a class="anchor" aria-label="anchor" href="#bbotk-0609000"></a></h2>
-<ul><li>feat: Add <code>ObjectiveRFunMany</code> that can evaluate a list of configurations with a user supplied function.</li>
+<ul><li>refactor: <code>OptimizerIrace</code> automatically added the <code>instances</code> parameter to <code>Objective$constants</code>. From now on, the <code>instances</code> parameter can be also set manually.</li>
+<li>BREAKING CHANGE: <code>branin(xs)</code> is now <code>branin(x1, x2, noise)</code> and <code>branin_wu(x1, x2, fidelity)</code>.</li>
+<li>feat: Add <code>ObjectiveRFunMany</code> that can evaluate a list of configurations with a user supplied function.</li>
 <li>fix: If all configurations were missing a parameter, <code>ObjectiveRFunDt$eval_many()</code> did not create a column with <code>NA</code> for the missing parameter.</li>
 <li>refactor: The default of <code>digits</code> in <code>OptimizerIrace</code> is 15 now to avoid rounding errors.</li>
 <li>refactor: The bounds of double parameters were processed with only 4 decimal places in <code>OptimizerIrace</code>. By default, the bounds of double parameters are represented with 15 decimal places now. The <code>digits</code> parameter of <code>OptimizerIrace</code> also changes number of decimal places of the bounds now.</li>
