@@ -33,7 +33,7 @@
 #'   codomain = codomain,
 #'   properties = "deterministic"
 #' )
-ObjectiveRFunMany = R6Class("ObjectiveRMany",
+ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
   inherit = Objective,
   public = list(
 

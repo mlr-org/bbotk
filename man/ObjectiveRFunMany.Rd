@@ -32,7 +32,7 @@ obfun = ObjectiveRFunMany$new(
 )
 }
 \section{Super class}{
-\code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRMany}
+\code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFunMany}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -45,9 +45,9 @@ Objective function.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-ObjectiveRMany-new}{\code{ObjectiveRFunMany$new()}}
-\item \href{#method-ObjectiveRMany-eval_many}{\code{ObjectiveRFunMany$eval_many()}}
-\item \href{#method-ObjectiveRMany-clone}{\code{ObjectiveRFunMany$clone()}}
+\item \href{#method-ObjectiveRFunMany-new}{\code{ObjectiveRFunMany$new()}}
+\item \href{#method-ObjectiveRFunMany-eval_many}{\code{ObjectiveRFunMany$eval_many()}}
+\item \href{#method-ObjectiveRFunMany-clone}{\code{ObjectiveRFunMany$clone()}}
 }
 }
 \if{html}{\out{
@@ -61,8 +61,8 @@ Objective function.}
 </details>
 }}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ObjectiveRMany-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ObjectiveRMany-new}{}}}
+\if{html}{\out{<a id="method-ObjectiveRFunMany-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ObjectiveRFunMany-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -109,8 +109,8 @@ validity?}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ObjectiveRMany-eval_many"></a>}}
-\if{latex}{\out{\hypertarget{method-ObjectiveRMany-eval_many}{}}}
+\if{html}{\out{<a id="method-ObjectiveRFunMany-eval_many"></a>}}
+\if{latex}{\out{\hypertarget{method-ObjectiveRFunMany-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
 Evaluates input value(s) on the objective function.
 Calls the R function supplied by the user.
@@ -133,8 +133,8 @@ These extra columns are referred to as \emph{extras}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ObjectiveRMany-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-ObjectiveRMany-clone}{}}}
+\if{html}{\out{<a id="method-ObjectiveRFunMany-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ObjectiveRFunMany-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
