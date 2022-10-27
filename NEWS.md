@@ -1,5 +1,8 @@
 # bbotk 0.6.0.9000
 
+* refactor: `OptimizerIrace` automatically added the `instances` parameter to `Objective$constants`.
+  From now on, the `instances` parameter can be also set manually.
+* BREAKING CHANGE: `branin(xs)` is now `branin(x1, x2, noise)` and `branin_wu(x1, x2, fidelity)`.
 * feat: Add `ObjectiveRFunMany` that can evaluate a list of configurations with a user supplied function.
 * fix: If all configurations were missing a parameter, `ObjectiveRFunDt$eval_many()` did not create a column with `NA` for the missing parameter.
 * refactor: The default of `digits` in `OptimizerIrace` is 15 now to avoid rounding errors.
