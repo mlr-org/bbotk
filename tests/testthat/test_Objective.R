@@ -395,9 +395,3 @@ test_that("named objective value works", {
   expect_named(objective$eval(list(x = 1)), "y")
   expect_named(objective$eval_many(list(list(x = 1), list(x = 0))), "y")
 })
-
-test_that("ObjectiveRFunDt works with missing values", {
-  fun = function(xdt) data.table(y = xdt[["x1"]]^2 +  xdt[["x2"]]^2)
-  objective = ObjectiveRFunDt$new(fun = fun, domain = PS_2D_domain, check_values = FALSE)
-  objective$eval_many(list(list(x1 = 1)))
-})

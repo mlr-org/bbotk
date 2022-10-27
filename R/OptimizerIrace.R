@@ -79,22 +79,16 @@
 #' # the noise generates different instances of the branin function
 #' # the noise values are passed via the `instances` parameter
 #' fun = function(xdt, instances) {
-#'   a = 1
-#'   b = 5.1 / (4 * (pi^2))
-#'   c = 5 / pi
-#'   r = 6
-#'   s = 10
-#'   t = 1 / (8 * pi)
-#'
-#'   data.table(y = (
-#'     a * ((xdt[["x2"]] -
-#'       b * (xdt[["x1"]]^2L) +
-#'       c * xdt[["x1"]] - r)^2) +
-#'       ((s * (1 - t)) * cos(xdt[["x1"]])) +
-#'       unlist(instances)))
+#'   ys = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances))
+#'   data.table(y = ys)
 #' }
 #'
-#' objective = ObjectiveRFunDt$new(fun = fun, domain = domain, codomain = codomain)
+#' # define objective with instances as a constant
+#' objective = ObjectiveRFunDt$new(
+#'  fun = fun,
+#'  domain = domain,
+#'  codomain = codomain,
+#'  constants = ps(instances = p_uty()))
 #'
 #' instance = OptimInstanceSingleCrit$new(
 #'   objective = objective,
@@ -179,11 +173,13 @@ OptimizerIrace = R6Class("OptimizerIrace",
         stopf("%s is not supported. Use <TerminatorEvals> instead.", format(inst$terminator))
       }
 
+      # check for instances constant
+      if ("instances" %nin% inst$objective$constants$ids()) {
+        inst$objective$constants$add(ParamUty$new("instances"))
+      }
+
       # make scenario
       scenario = c(list(maxExperiments = terminator$param_set$values$n_evals, targetRunnerData = list(inst = inst)), pv)
-
-      # extend objective constants with instances parameter
-      inst$objective$constants$add(self$param_set$params[["instances"]])
 
       # run irace
       res = invoke(irace::irace, scenario = scenario, parameters = paradox_to_irace(inst$search_space, pv$digits), .opts = allow_partial_matching)
@@ -221,3 +217,71 @@ OptimizerIrace = R6Class("OptimizerIrace",
 )
 
 mlr_optimizers$add("irace", OptimizerIrace)
+
+target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) { # nolint
+  optim_instance = scenario$targetRunnerData$inst
+
+  xdt = map_dtr(experiment, function(e) {
+    configuration = as.data.table(e$configuration)
+    # add configuration and instance id to archive
+    set(configuration, j = "configuration", value = e$id.configuration)
+    set(configuration, j = "instance", value = e$id.instance)
+    # fix logicals
+    configuration[, map(.SD, function(x) ifelse(x %in% c("TRUE", "FALSE"), as.logical(x), x))]
+  })
+
+  # provide experiment instances to objective
+  optim_instance$objective$constants$values$instances = map(experiment, function(e) e$instance)
+
+  # evaluate configuration
+  res = optim_instance$eval_batch(xdt)
+
+  # return cost (minimize) and dummy time to irace
+  map(transpose_list(res), function(cost) {
+    list(cost = unlist(cost) * optim_instance$objective_multiplicator, time = NA_real_)
+  })
+}
+
+paradox_to_irace = function(param_set, digits) {
+  assertClass(param_set, "ParamSet")
+  if ("ParamUty" %in% param_set$class) stop("<ParamUty> not supported by <OptimizerIrace>")
+
+  # types
+  paradox_types = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct")
+  irace_types = c("c", "i", "r", "c")
+  types = irace_types[match(param_set$class, paradox_types)]
+
+  # range
+  range = pmap_chr(list(param_set$lower, param_set$upper, param_set$levels), function(lower, upper, levels, ...) {
+    if (is.null(levels)) {
+      paste0("(", lower, ",", upper, ")")
+    } else {
+      paste0("(", paste0(levels, collapse = ","), ")")
+    }
+  })
+
+  # dependencies
+  deps = if (param_set$has_deps) {
+    deps = pmap_dtr(param_set$deps, function(id, on, cond) {
+      rhs = if (is.character(cond$rhs)) sQuote(cond$rhs, q = FALSE) else cond$rhs
+      cond = if (test_class(cond, "CondEqual")) {
+        paste(on, "==", rhs)
+      } else {
+        paste(on, "%in%", paste0("c(", paste0(rhs, collapse = ","), ")"))
+      }
+      data.table(id = id, cond = cond)
+    })
+
+    # reduce to one row per parameter
+    deps = deps[, list("cond" =  paste(get("cond"), collapse = " & ")), by = "id"]
+
+    # add parameters without dependency
+    deps[, "cond" := paste("|", get("cond"))]
+    deps = merge(data.table(id = param_set$ids(), by = "id"), deps, all.x = TRUE, sort = FALSE)
+    deps[is.na(get("cond")), "cond" := ""]
+  } else {
+    NULL
+  }
+
+  irace::readParameters(text = paste(param_set$ids(), '""', types, range, deps$cond, collapse = "\n"), digits = digits)
+}

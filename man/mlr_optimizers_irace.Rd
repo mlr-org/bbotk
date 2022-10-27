@@ -104,22 +104,16 @@ codomain = ps(y = p_dbl(tags = "minimize"))
 # the noise generates different instances of the branin function
 # the noise values are passed via the `instances` parameter
 fun = function(xdt, instances) {
-  a = 1
-  b = 5.1 / (4 * (pi^2))
-  c = 5 / pi
-  r = 6
-  s = 10
-  t = 1 / (8 * pi)
-
-  data.table(y = (
-    a * ((xdt[["x2"]] -
-      b * (xdt[["x1"]]^2L) +
-      c * xdt[["x1"]] - r)^2) +
-      ((s * (1 - t)) * cos(xdt[["x1"]])) +
-      unlist(instances)))
+  ys = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances))
+  data.table(y = ys)
 }
 
-objective = ObjectiveRFunDt$new(fun = fun, domain = domain, codomain = codomain)
+# define objective with instances as a constant
+objective = ObjectiveRFunDt$new(
+ fun = fun,
+ domain = domain,
+ codomain = codomain,
+ constants = ps(instances = p_uty()))
 
 instance = OptimInstanceSingleCrit$new(
   objective = objective,
