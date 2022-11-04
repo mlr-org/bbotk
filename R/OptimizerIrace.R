@@ -244,6 +244,8 @@ target_runner_default = function(experiment, exec.target.runner, scenario, targe
 
 paradox_to_irace = function(param_set, digits) {
   assertClass(param_set, "ParamSet")
+  # workaround for mlr3tuning 0.15.0
+  digits = assert_int(digits %??% 15, lower = 0)
   if ("ParamUty" %in% param_set$class) stop("<ParamUty> not supported by <OptimizerIrace>")
 
   # types
