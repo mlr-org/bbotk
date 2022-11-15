@@ -20,20 +20,6 @@ opt("cmaes")
 }\if{html}{\out{</div>}}
 }
 
-\section{Parameters}{
-
-\describe{
-\item{\code{sigma}}{\code{numeric(1)}}
-\item{\code{start_values}}{\code{character(1)}\cr
-Create \code{random} start values or based on \code{center} of search space? In the
-latter case, it is the center of the parameters before a trafo is applied.}
-}
-
-For the meaning of the control parameters, see \code{\link[adagio:cmaes]{adagio::pureCMAES()}}. Note
-that we have removed all control parameters which refer to the termination of
-the algorithm and where our terminators allow to obtain the same behavior.
-}
-
 \section{Progress Bars}{
 
 \verb{$optimize()} supports progress bars via the package \CRANpkg{progressr}
@@ -125,3 +111,15 @@ The objects of this class are cloneable with this method.
 }
 }
 }
+\section{Control Parameters}{
+\describe{
+\item{start_values}{(\code{character(1)})\cr
+If \code{random} (default), start values are created randomly.
+If \code{center}, start values are the center of the search space.
+In the latter case, it is the center of the parameters before the transformation function is applied.
+
+For the meaning of the control parameters, see \code{\link[adagio:cmaes]{adagio::pureCMAES()}}.
+Note that we have removed all control parameters which refer to the termination of the algorithm and where our terminators allow to obtain the same behavior.}
+}
+}
+

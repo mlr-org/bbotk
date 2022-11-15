@@ -108,5 +108,6 @@ Collate:
     'mlr_callbacks.R'
     'nds_selection.R'
     'reexport.R'
+    'roxy_tag_cparam.R'
     'sugar.R'
     'zzz.R'

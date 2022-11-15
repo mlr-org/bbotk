@@ -12,17 +12,13 @@
 #' @templateVar id cmaes
 #' @template section_dictionary_optimizers
 #'
-#' @section Parameters:
-#' \describe{
-#' \item{`sigma`}{`numeric(1)`}
-#' \item{`start_values`}{`character(1)`\cr
-#' Create `random` start values or based on `center` of search space? In the
-#' latter case, it is the center of the parameters before a trafo is applied.}
-#' }
-#'
-#' For the meaning of the control parameters, see [adagio::pureCMAES()]. Note
-#' that we have removed all control parameters which refer to the termination of
-#' the algorithm and where our terminators allow to obtain the same behavior.
+#' @cparam start_values (`character(1)`)\cr
+#'   If `random` (default), start values are created randomly.
+#'   If `center`, start values are the center of the search space.
+#'   In the latter case, it is the center of the parameters before the transformation function is applied.
+#' @cparam cparam_comment
+#'   For the meaning of the control parameters, see [adagio::pureCMAES()].
+#'   Note that we have removed all control parameters which refer to the termination of the algorithm and where our terminators allow to obtain the same behavior.
 #'
 #' @template section_progress_bars
 #'

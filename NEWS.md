@@ -1,5 +1,7 @@
 # bbotk 0.7.0.9000
 
+* docs: Add `@cparam` tag to document control parameters of the optimizers.
+
 # bbotk 0.7.0
 
 * fix: `Terminator$format(with_params = TRUE)` printed an empty list when no parameter was set.

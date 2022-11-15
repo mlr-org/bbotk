@@ -32,6 +32,12 @@
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
   }
+
+  if (isNamespaceLoaded("roxygen2")) {
+    attachNamespace("roxygen2")
+    registerS3method("roxy_tag_parse", "roxy_tag_cparam", roxy_tag_parse.roxy_tag_cparam)
+    registerS3method("roxy_tag_rd", "roxy_tag_cparam", roxy_tag_rd.roxy_tag_cparam)
+  }
 } # nocov end
 
 
