@@ -107,7 +107,8 @@
 <p>Package website: <a href="https://bbotk.mlr-org.com/">release</a> | <a href="https://bbotk.mlr-org.com/dev/">dev</a></p>
 <!-- badges: start -->
 
-<p>This package provides a common framework for optimization including</p>
+<p><em>bbotk</em> is a black-box optimization framework for R. It features highly configurable search spaces via the <a href="https://github.com/mlr-org/paradox" class="external-link">paradox</a> package and optimizes every user-defined objective function. The package includes several optimization algorithms e.g. Random Search, Iterated Racing, Bayesian Optimization (in <a href="https://github.com/mlr-org/mlr3mbo" class="external-link">mlr3mbo</a>) and Hyperband (in <a href="https://github.com/mlr-org/mlr3hyperband" class="external-link">mlr3hyperband</a>). bbotk is the base package of <a href="https://github.com/mlr-org/mlr3tuning" class="external-link">mlr3tuning</a>, <a href="https://github.com/mlr-org/mlr3fselect" class="external-link">mlr3fselect</a> and <a href="https://github.com/mlr-org/miesmuschel" class="external-link">miesmuschel</a>.</p>
+<p>The package includes the basis building block of optimization:</p>
 <ul>
 <li>
 <code>Optimizer</code>: Objects of this class allow you to optimize an object of the class <code>OptimInstance</code>.</li>
@@ -118,7 +119,6 @@
 <li>
 <code>Terminator</code>: Objects of this class control the termination of the optimization independent of the optimizer.</li>
 </ul>
-<p>Various optimization methods are already implemented e.g. grid search, random search and generalized simulated annealing.</p>
 <div class="section level2">
 <h2 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
@@ -192,28 +192,17 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># all evaluated configuration</span></span>
 <span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">##            x1        x2          y           timestamp batch_nr x_domain_x1</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  1: -4.689827 -1.278761 -37.716445 2022-09-10 18:22:05        1   -4.689827</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  2: -5.930364 -4.400474 -54.851999 2022-09-10 18:22:05        2   -5.930364</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  3:  7.170817 -1.519948 -18.927907 2022-09-10 18:22:05        3    7.170817</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  4:  2.045200 -1.519948   7.807403 2022-09-10 18:22:05        4    2.045200</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  5:  2.045200 -2.064742   9.123250 2022-09-10 18:22:05        5    2.045200</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  6:  2.045200 -2.064742   9.123250 2022-09-10 18:22:05        6    2.045200</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  7:  2.045201 -2.064742   9.123250 2022-09-10 18:22:05        7    2.045201</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  8:  2.045199 -2.064742   9.123250 2022-09-10 18:22:05        8    2.045199</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  9:  2.045200 -2.064741   9.123248 2022-09-10 18:22:05        9    2.045200</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10:  2.045200 -2.064743   9.123252 2022-09-10 18:22:05       10    2.045200</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">##     x_domain_x2</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  1:   -1.278761</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  2:   -4.400474</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  3:   -1.519948</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  4:   -1.519948</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  5:   -2.064742</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  6:   -2.064742</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  7:   -2.064742</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  8:   -2.064742</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  9:   -2.064741</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 10:   -2.064743</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">##            x1        x2          y           timestamp batch_nr x_domain_x1 x_domain_x2</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  1: -4.689827 -1.278761 -37.716445 2022-11-18 11:12:45        1   -4.689827   -1.278761</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  2: -5.930364 -4.400474 -54.851999 2022-11-18 11:12:45        2   -5.930364   -4.400474</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  3:  7.170817 -1.519948 -18.927907 2022-11-18 11:12:45        3    7.170817   -1.519948</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  4:  2.045200 -1.519948   7.807403 2022-11-18 11:12:45        4    2.045200   -1.519948</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  5:  2.045200 -2.064742   9.123250 2022-11-18 11:12:45        5    2.045200   -2.064742</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  6:  2.045200 -2.064742   9.123250 2022-11-18 11:12:45        6    2.045200   -2.064742</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  7:  2.045201 -2.064742   9.123250 2022-11-18 11:12:45        7    2.045201   -2.064742</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  8:  2.045199 -2.064742   9.123250 2022-11-18 11:12:45        8    2.045199   -2.064742</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  9:  2.045200 -2.064741   9.123248 2022-11-18 11:12:45        9    2.045200   -2.064741</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10:  2.045200 -2.064743   9.123252 2022-11-18 11:12:45       10    2.045200   -2.064743</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="quick-optimization-with-bb_optimize">Quick optimization with <code>bb_optimize</code>
@@ -282,8 +271,9 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mlr-org/bbotk/actions" class="external-link"><img src="https://github.com/mlr-org/bbotk/workflows/tic/badge.svg?branch=main" alt="tic"></a></li>
+<li><a href="https://github.com/mlr-org/bbotk/actions/workflows/r-cmd-check.yml" class="external-link"><img src="https://github.com/mlr-org/bbotk/actions/workflows/r-cmd-check.yml/badge.svg" alt="r-cmd-check"></a></li>
 <li><a href="https://cran.r-project.org/package=bbotk" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/bbotk" alt="CRAN Status Badge"></a></li>
+<li><a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link"><img src="https://img.shields.io/badge/chat-mattermost-orange.svg" alt="Mattermost"></a></li>
 </ul>
 </div>
 
