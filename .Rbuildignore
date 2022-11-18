@@ -1,7 +1,6 @@
 ^renv$
 ^renv\.lock$
 ^LICENSE$
-^tic\.R$
 ^appveyor\.yml$
 .ignore
 .editorconfig
