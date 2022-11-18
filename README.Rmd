@@ -7,10 +7,10 @@ library(bbotk)
 lgr::get_logger("bbotk")$set_threshold("warn")
 set.seed(1)
 options(
-    datatable.print.nrows = 10,
-    datatable.print.class = FALSE,
-    datatable.print.keys = FALSE,
-    width = 100)
+  datatable.print.nrows = 10,
+  datatable.print.class = FALSE,
+  datatable.print.keys = FALSE,
+  width = 100)
 ```
 
 # bbotk - Black-Box Optimization Toolkit
