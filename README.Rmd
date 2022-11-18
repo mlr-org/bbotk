@@ -3,6 +3,7 @@ output: github_document
 ---
 
 ```{r, include = FALSE}
+library(bbotk)
 lgr::get_logger("bbotk")$set_threshold("warn")
 set.seed(1)
 options(
@@ -27,10 +28,10 @@ It features highly configurable search spaces via the [paradox](https://github.c
 The package includes several optimization algorithms e.g. Random Search, Iterated Racing, Bayesian Optimization (in [mlr3mbo](https://github.com/mlr-org/mlr3mbo)) and Hyperband (in [mlr3hyperband](https://github.com/mlr-org/mlr3hyperband)).
 bbotk is the base package of [mlr3tuning](https://github.com/mlr-org/mlr3tuning), [mlr3fselect](https://github.com/mlr-org/mlr3fselect) and [miesmuschel](https://github.com/mlr-org/miesmuschel).
 
-The package includes the basis building block of optimization:
+The package includes the basic building blocks of optimization:
 
 * `Optimizer`: Objects of this class allow you to optimize an object of the class `OptimInstance`.
-* `OptimInstance`: Defines the optimization problem, consisting of an `Objective`, the `search_space` and a `Terminator`.
+* `OptimInstance`: Defines the optimization problem, consisting of an `Objective`, the `search_space`, and a `Terminator`.
    All evaluations on the `OptimInstance` will be automatically stored in its own `Archive`.
 * `Objective`: Objects of this class contain the objective function.
    The class ensures that the objective function is called in the right way and defines, whether the function should be minimized or maximized.
@@ -56,15 +57,10 @@ remotes::install_github("mlr-org/bbotk")
 
 ## Examples
 
-```{r, include = FALSE}
-# mute load messages
-library(bbotk)
-```
-
 ### Optimization
 
 ```{r}
-# define objective function
+# define the objective function
 fun = function(xs) {
   - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
 }
@@ -115,7 +111,7 @@ as.data.table(instance$archive)
 ```{r}
 library(bbotk)
 
-# define objective function
+# define the objective function
 fun = function(xs) {
   c(y1 = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
