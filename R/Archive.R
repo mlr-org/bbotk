@@ -41,6 +41,14 @@ Archive = R6Class("Archive",
     #' Contains all performed [Objective] function calls.
     data = NULL,
 
+    #' @field data_extra (named `list`)\cr
+    #' Data created by specific [`Optimizer`]s that does not relate to any
+    #' individual function evaluation and can therefore not be held in
+    #' `$data`.\cr
+    #' Every optimizer should create and refer to its own entry in this list,
+    #' named by its `class()`.
+    data_extra = named_list(),    
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
