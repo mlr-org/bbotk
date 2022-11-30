@@ -1,6 +1,6 @@
 # bbotk 0.7.1
 
-* feat: Data unrelated to a specific point evaluation can be written to `Archive$data_extra()`.
+* feat: Data unrelated to a specific point evaluation can be written to `Archive$data_extra`.
 
 # bbotk 0.7.0
 
