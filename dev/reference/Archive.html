@@ -12,7 +12,7 @@ function calls of the Objective."><meta name="robots" content="noindex"><!-- mat
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.0.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,6 +113,12 @@ Determines if points and results are checked for validity.</p></dd>
 <dt><code>data</code></dt>
 <dd><p>(<a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
 Contains all performed <a href="Objective.html">Objective</a> function calls.</p></dd>
+
+
+<dt><code>data_extra</code></dt>
+<dd><p>(named <code>list</code>)<br>
+Data created by specific <code><a href="Optimizer.html">Optimizer</a></code>s that does not relate to any individual function evaluation and can therefore not be held in <code>$data</code>.
+Every optimizer should create and refer to its own entry in this list, named by its <code><a href="https://rdrr.io/r/base/class.html" class="external-link">class()</a></code>.</p></dd>
 
 
 </dl><p></p></div>
