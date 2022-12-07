@@ -35,6 +35,13 @@ Determines if points and results are checked for validity.}
 
 \item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Contains all performed \link{Objective} function calls.}
+
+\item{\code{data_extra}}{(named \code{list})\cr
+Data created by specific \code{\link{Optimizer}}s that does not relate to any
+individual function evaluation and can therefore not be held in
+\verb{$data}.\cr
+Every optimizer should create and refer to its own entry in this list,
+named by its \code{class()}.}
 }
 \if{html}{\out{</div>}}
 }
