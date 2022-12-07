@@ -12,8 +12,10 @@ Dubois
 GenSA
 Gubian
 Hoeng
+Hyperband
 Ibanez
 Lacoste
+Mattermost
 NLopt
 ORCID
 OptimInstance
@@ -38,12 +40,16 @@ Untransformed
 Xiang
 benchmarking
 cloneable
+cmd
 codomain
 crit
 dev
 fselect
+hyperband
 hypervolume
 irace
+mbo
+miesmuschel
 mlr
 optimizers
 parallelization
