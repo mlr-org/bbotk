@@ -6,7 +6,7 @@
 \alias{bbotk-package}
 \title{bbotk: Black-Box Optimization Toolkit}
 \description{
-Features highly configurable search spaces via the paradox package and optimizes every user-defined objective function. The package includes several optimization algorithms e.g. Random Search, Iterated Racing, Bayesian Optimization (in mlr3mbo) and Hyperband (in mlr3hyperband). bbotk is the base package of mlr3tuning, mlr3fselect and miesmuschel.
+Features highly configurable search spaces via the 'paradox' package and optimizes every user-defined objective function. The package includes several optimization algorithms e.g. Random Search, Iterated Racing, Bayesian Optimization (in 'mlr3mbo') and Hyperband (in 'mlr3hyperband'). bbotk is the base package of 'mlr3tuning', 'mlr3fselect' and 'miesmuschel'.
 }
 \seealso{
 Useful links:
