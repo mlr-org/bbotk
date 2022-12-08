@@ -1,4 +1,6 @@
 test_that("nds_selection works", {
+  skip_if_not_installed("emoa")
+
   points = matrix(
     c( # front 1
       # emoa puts always Inf weight on boundary points, so they always survive
@@ -73,6 +75,8 @@ test_that("nds_selection works", {
 })
 
 test_that("nds_selection in Archive works", {
+    skip_if_not_installed("emoa")
+
   domain = ps(x1 = p_dbl())
   codomain = ps(
     y1 = p_dbl(tags = "minimize"),
