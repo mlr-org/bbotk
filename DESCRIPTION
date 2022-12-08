@@ -30,11 +30,12 @@ Authors@R:
              family = "Mersmann",
              role = "ctb",
              email = "olafm@statistik.tu-dortmund.de"))
-Description: Features highly configurable search spaces via the paradox package
-    and optimizes every user-defined objective function. The package includes
-    several optimization algorithms e.g. Random Search, Iterated Racing,
-    Bayesian Optimization (in mlr3mbo) and Hyperband (in mlr3hyperband). bbotk
-    is the base package of mlr3tuning, mlr3fselect and miesmuschel.
+Description: Features highly configurable search spaces via the 'paradox'
+    package and optimizes every user-defined objective function. The package
+    includes several optimization algorithms e.g. Random Search, Iterated
+    Racing, Bayesian Optimization (in 'mlr3mbo') and Hyperband (in
+    'mlr3hyperband'). bbotk is the base package of 'mlr3tuning', 'mlr3fselect'
+    and 'miesmuschel'.
 License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
