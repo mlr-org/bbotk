@@ -91,16 +91,16 @@ transformed values."><meta name="robots" content="noindex"><!-- mathjax --><scri
     </div>
 
     <div class="ref-description section level2">
-    <p>Shrinks a <a href="https://rdrr.io/pkg/paradox/man/ParamSet.html" class="external-link">paradox::ParamSet</a> towards a point.
+    <p>Shrinks a <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> towards a point.
 Boundaries of numeric values are shrinked to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.</p>
-<p>Note that for <a href="https://rdrr.io/pkg/paradox/man/ParamLgl.html" class="external-link">paradox::ParamLgl</a>s the value to be shrinked around is set as
+<p>Note that for <a href="https://paradox.mlr-org.com/reference/ParamLgl.html" class="external-link">paradox::ParamLgl</a>s the value to be shrinked around is set as
 the <code>default</code> value instead of dropping a level. Also, a tag <code>shrinked</code> is
 added.</p>
-<p>Note that the returned <a href="https://rdrr.io/pkg/paradox/man/ParamSet.html" class="external-link">paradox::ParamSet</a> has lost all its original
+<p>Note that the returned <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> has lost all its original
 <code>default</code>s, as they may have become infeasible.</p>
-<p>If the <a href="https://rdrr.io/pkg/paradox/man/ParamSet.html" class="external-link">paradox::ParamSet</a> has a trafo, <code>x</code> is expected to contain the
+<p>If the <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> has a trafo, <code>x</code> is expected to contain the
 transformed values.</p>
     </div>
 
@@ -112,8 +112,8 @@ transformed values.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>param_set</dt>
-<dd><p>(<a href="https://rdrr.io/pkg/paradox/man/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
-The <a href="https://rdrr.io/pkg/paradox/man/ParamSet.html" class="external-link">paradox::ParamSet</a> to be shrinked.</p></dd>
+<dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
+The <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> to be shrinked.</p></dd>
 
 
 <dt>x</dt>
@@ -126,7 +126,7 @@ around.</p></dd>
 Should feasibility of the parameters be checked?
 If feasibility is not checked, and invalid values are present, no shrinking
 will be done.
-Must be turned off in the case of the <a href="https://rdrr.io/pkg/paradox/man/ParamSet.html" class="external-link">paradox::ParamSet</a> having a trafo.
+Must be turned off in the case of the <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> having a trafo.
 Default is <code>FALSE</code>.</p></dd>
 
 </dl></div>
@@ -134,7 +134,7 @@ Default is <code>FALSE</code>.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><a href="https://rdrr.io/pkg/paradox/man/ParamSet.html" class="external-link">paradox::ParamSet</a></p>
+<p><a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a></p>
 
 
     </div>
@@ -143,11 +143,11 @@ Default is <code>FALSE</code>.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paradox.mlr-org.com" class="external-link">paradox</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">param_set</span> <span class="op">=</span> <span class="va"><a href="https://rdrr.io/pkg/paradox/man/ParamSet.html" class="external-link">ParamSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va"><a href="https://rdrr.io/pkg/paradox/man/ParamDbl.html" class="external-link">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x1"</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="va"><a href="https://rdrr.io/pkg/paradox/man/ParamInt.html" class="external-link">ParamInt</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x2"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="va"><a href="https://rdrr.io/pkg/paradox/man/ParamFct.html" class="external-link">ParamFct</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x3"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="va"><a href="https://rdrr.io/pkg/paradox/man/ParamLgl.html" class="external-link">ParamLgl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x4"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">param_set</span> <span class="op">=</span> <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">ParamSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamDbl.html" class="external-link">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x1"</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamInt.html" class="external-link">ParamInt</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x2"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamFct.html" class="external-link">ParamFct</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x3"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamLgl.html" class="external-link">ParamLgl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x4"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, x2 <span class="op">=</span> <span class="fl">0</span>, x3 <span class="op">=</span> <span class="st">"b"</span>, x4 <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">shrink_ps</span><span class="op">(</span><span class="va">param_set</span>, x <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></span>
