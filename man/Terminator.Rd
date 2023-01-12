@@ -129,7 +129,7 @@ The referenced help package can be opened via method \verb{$help()}.}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Terminator$format(with_params = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Terminator$format(with_params = FALSE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -137,6 +137,8 @@ Helper for print outputs.
 \describe{
 \item{\code{with_params}}{(\code{logical(1)})\cr
 Add parameter values to format string.}
+
+\item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
 }

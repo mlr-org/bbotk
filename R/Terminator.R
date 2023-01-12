@@ -60,7 +60,8 @@ Terminator = R6Class("Terminator",
     #' Helper for print outputs.
     #' @param with_params (`logical(1)`)\cr
     #'   Add parameter values to format string.
-    format = function(with_params = FALSE) {
+    #' @param ... (ignored).
+    format = function(with_params = FALSE, ...) {
       if (with_params && length(self$param_set$values)) {
         sprintf("<%s> [%s]", class(self)[1L], as_short_string(self$param_set$values))
       } else {

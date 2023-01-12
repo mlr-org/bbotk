@@ -61,8 +61,8 @@ Objective = R6Class("Objective",
 
     #' @description
     #' Helper for print outputs.
-    #' @return `character()`.
-    format = function() {
+    #' @param ... (ignored).
+    format = function(...) {
       sprintf("<%s:%s>", class(self)[1L], self$id)
     },
 
