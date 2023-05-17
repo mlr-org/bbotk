@@ -33,6 +33,11 @@ Archive = R6Class("Archive",
     #' [Optimizer].
     start_time = NULL,
 
+    #' @field finish_time
+    #' Time stamp of when the optimization finished.
+    #' The time is set by the [Optimizer].
+    finish_time = NULL,
+
     #' @field check_values (`logical(1)`)\cr
     #' Determines if points and results are checked for validity.
     check_values = NULL,

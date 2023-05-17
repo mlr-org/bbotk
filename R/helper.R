@@ -80,6 +80,7 @@ optimize_default = function(inst, self, private) {
   lg$info("Result:")
   lg$info(capture.output(print(
     inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+  inst$archive$finish_time = Sys.time()
   return(inst$result)
 }
 
