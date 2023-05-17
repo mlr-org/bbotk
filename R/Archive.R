@@ -37,10 +37,6 @@ Archive = R6Class("Archive",
     #' Determines if points and results are checked for validity.
     check_values = NULL,
 
-    #' @field data ([data.table::data.table])\cr
-    #' Contains all performed [Objective] function calls.
-    data = NULL,
-
     #' @field data_extra (named `list`)\cr
     #' Data created by specific [`Optimizer`]s that does not relate to any individual function evaluation and can therefore not be held in `$data`.
     #' Every optimizer should create and refer to its own entry in this list, named by its `class()`.
@@ -162,6 +158,15 @@ Archive = R6Class("Archive",
   ),
 
   active = list(
+
+    #' @field data ([data.table::data.table])\cr
+    #' Contains all performed [Objective] function calls.
+    data = function(rhs) {
+      if (missing(rhs)) {
+        return(private$.data)
+      }
+      private$.data = rhs
+    },
 
     #' @field n_evals (`integer(1)`)\cr
     #' Number of evaluations stored in the archive.
