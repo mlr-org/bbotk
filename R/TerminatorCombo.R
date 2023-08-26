@@ -43,7 +43,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
     initialize = function(terminators = list(TerminatorNone$new())) {
       self$terminators = assert_list(terminators, types = "Terminator", min.len = 1L)
       param_set = ps(
-        any = p_lgl(default = TRUE, tags = "required")
+        any = p_lgl(tags = "required")
       )
       param_set$values = list(any = TRUE)
 

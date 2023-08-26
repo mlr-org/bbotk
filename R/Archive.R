@@ -54,7 +54,7 @@ Archive = R6Class("Archive",
     #' Search space that is logged into archive.
     initialize = function(search_space, codomain, check_values = TRUE) {
       self$search_space = assert_param_set(search_space)
-      self$codomain = Codomain$new(assert_param_set(codomain)$params)
+      self$codomain = Codomain$new(codomain)
       self$check_values = assert_flag(check_values)
       self$data = data.table()
     },

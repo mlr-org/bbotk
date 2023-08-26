@@ -35,7 +35,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        batch_size = p_int(default = 1L, tags = "required")
+        batch_size = p_int(tags = "required")
       )
       param_set$values = list(batch_size = 1L)
 

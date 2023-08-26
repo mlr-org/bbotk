@@ -28,8 +28,7 @@ Optimizer = R6Class("Optimizer",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param param_classes (`character()`)\cr
-    #'   Supported parameter classes that the optimizer can optimize.
-    #'   Subclasses of [paradox::Param].
+    #'   Supported parameter classes that the optimizer can optimize, as given in the [`paradox::ParamSet`] `$class` field.
     #'
     #' @param properties (`character()`)\cr
     #'   Set of properties of the optimizer.
@@ -102,8 +101,7 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @field param_classes (`character()`)\cr
-    #'   Supported parameter classes that the optimizer can optimize.
-    #'   Subclasses of [paradox::Param].
+    #'   Supported parameter classes that the optimizer can optimize, as given in the [`paradox::ParamSet`] `$class` field.
     param_classes = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.param_classes)) {
         stop("$param_classes is read-only.")

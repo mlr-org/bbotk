@@ -41,29 +41,31 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param params (`list()`)\cr
-    #'   List of [Param], named with their respective ID.
-    #'   Parameters are cloned.
-    initialize = function(params = named_list()) {
-      # assert parameters
-      for (param in params) {
-        # only check for codomain parameters tagged with minimize or maximize
-        if (any(c("minimize", "maximize") %in% param$tags)) {
-          # all numeric
-          if (!param$is_number) {
-            stopf("%s in codomain is not numeric", param$id)
-          }
+    #' @param param_set ([`paradox::ParamSet`])\cr
+    #'   [`ParamSet`] that should be wrapped.
+    initialize = function(param_set) {
 
-          # every parameter's tags contain at most one of 'minimize' or 'maximize'
-          if (sum(param$tags %in% c("minimize", "maximize")) > 1) {
-            stopf("%s in codomain contains a 'minimize' and 'maximize' tag", param$id)
-          }
+      assert_param_set(param_set)
+      cod_params = map(param_set$ids(), function(id) param_set$get_param(id))
+      names(cod_params) = param_set$ids()
+
+      super$initialize(cod_params)
+      # assert parameters
+
+      # only check for codomain parameters tagged with minimize or maximize
+      for (id in self$target_ids) {
+        # all numeric
+        if (!self$is_number[id]) {
+          stopf("%s in codomain is not numeric", id)
+        }
+        # every parameter's tags contain at most one of 'minimize' or 'maximize'
+        if (sum(self$tags[[id]] %in% c("minimize", "maximize")) > 1) {
+          stopf("%s in codomain contains a 'minimize' and 'maximize' tag", id)
         }
       }
-      super$initialize(params)
 
-      # assert at least one target parameter
-      if (!any(self$is_target) && length(params)) stop("Codomain contains no parameter tagged with 'minimize' or 'maximize'")
+      # assert at least one target eter
+      if (!any(self$is_target) && self$length) stop("Codomain contains no parameter tagged with 'minimize' or 'maximize'")
     }
   ),
 
@@ -72,25 +74,25 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #' @field is_target (named `logical()`)\cr
     #' Position is `TRUE` for target [Param]s.
     is_target = function() {
-      map_lgl(self$tags, has_element, "minimize") | map_lgl(self$tags, has_element, "maximize")
+      self$ids() %in% self$target_ids
     },
 
     #' @field target_length (`integer()`)\cr
     #' Returns number of target [Param]s.
     target_length = function() {
-      sum(self$is_target)
+      length(self$target_ids)
     },
 
     #' @field target_ids (`character()`)\cr
     #' Number of contained target [Param]s.
     target_ids = function() {
-      self$ids()[self$is_target]
+      self$ids(any_tags = c("minimize", "maximize"))
     },
 
     #' @field target_tags (named `list()` of `character()`)\cr
     #' Tags of target [Param]s.
     target_tags = function() {
-      self$tags[self$is_target]
+      self$tags[self$target_ids]
     },
 
     #' @field maximization_to_minimization (`integer()`)\cr
