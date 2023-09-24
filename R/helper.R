@@ -72,7 +72,7 @@ optimize_default = function(inst, self, private) {
   lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
     inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
   tryCatch({
-    private$.optimize(inst)
+    if (!is.null(inst$rush)) private$.optimize_async(inst) else private$.optimize(inst)
   }, terminated_error = function(cond) {
   })
   private$.assign_result(inst)

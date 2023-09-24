@@ -71,6 +71,7 @@ RoxygenNote: 7.2.3
 Collate:
     'Archive.R'
     'ArchiveBest.R'
+    'ArchiveRush.R'
     'CallbackOptimization.R'
     'Codomain.R'
     'ContextOptimization.R'
@@ -91,6 +92,7 @@ Collate:
     'OptimizerIrace.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
+    'OptimizerSuccessiveHalving.R'
     'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'

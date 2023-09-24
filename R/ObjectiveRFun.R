@@ -60,7 +60,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     #' Evaluates input value(s) on the objective function. Calls the R function
     #' supplied by the user.
     #' @param xs Input values.
-    eval = function(xs) {
+    eval = function(xs, ...) {
       if (self$check_values) self$domain$assert(xs)
       res = invoke(private$.fun, xs, .args = self$constants$values)
       if (!test_named(res)) names(res)[seq_len(self$codomain$length)] = self$codomain$ids()

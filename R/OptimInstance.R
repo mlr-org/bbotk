@@ -40,6 +40,10 @@ OptimInstance = R6Class("OptimInstance",
     #' @field callbacks (List of [CallbackOptimization]s).
     callbacks = NULL,
 
+    #' @field rush ([Rush])\cr
+    #' Rush.
+    rush = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -48,12 +52,13 @@ OptimInstance = R6Class("OptimInstance",
     #' @param check_values (`logical(1)`)\cr
     #'   Should x-values that are added to the archive be checked for validity?
     #'   Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list()) {
+    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list(), rush = NULL) {
       self$objective = assert_r6(objective, "Objective")
       self$terminator = assert_terminator(terminator, self)
       assert_choice(keep_evals, c("all", "best"))
       assert_flag(check_values)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
+      self$rush = assert_class(rush, "Rush", null.ok = TRUE)
 
       # set search space
       domain_search_space = self$objective$domain$search_space()
@@ -71,7 +76,9 @@ OptimInstance = R6Class("OptimInstance",
       }
 
       # use minimal archive if only best points are needed
-      self$archive = if (keep_evals == "all") {
+      self$archive = if (!is.null(self$rush)) {
+        ArchiveRush$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values, rush = self$rush)
+      } else if (keep_evals == "all") {
         Archive$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values)
       } else if (keep_evals == "best") {
         ArchiveBest$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values)
@@ -111,6 +118,22 @@ OptimInstance = R6Class("OptimInstance",
         catf("* Archive:")
         print(as.data.table(self$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
       }
+    },
+
+    start_workers = function(globals = NULL, packages = NULL, host = "local", heartbeat_period = NULL, heartbeat_expire = NULL) {
+      objective = self$objective
+      self$rush$start_workers(
+        fun = objective$eval,
+        as_list = TRUE,
+        globals = c(globals, "objective"),
+        packages = packages,
+        host = host,
+        heartbeat_period = heartbeat_period,
+        heartbeat_expire = heartbeat_expire)
+    },
+
+    create_worker_script = function() {
+
     },
 
     #' @description
@@ -155,6 +178,28 @@ OptimInstance = R6Class("OptimInstance",
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
       call_back("on_optimizer_after_eval", self$callbacks, private$.context)
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
+    },
+
+    eval_async = function(xdt) {
+
+      if (self$is_terminated) stop(terminated_error(self))
+
+      assert_data_table(xdt)
+      assert_names(colnames(xdt), must.include = self$search_space$ids())
+
+      lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
+
+      if (self$search_space$has_trafo) {
+        xss = transform_xdt_to_xss(xdt[, self$search_space$ids(), with = FALSE], self$search_space)
+        setnames(xdt, paste0("untransformed_", names(xdt)))
+        extra = transpose_list(xdt)
+      } else {
+        xss = transpose_list(xdt[, self$search_space$ids(), with = FALSE])
+        extra = transpose_list(xdt[, setdiff(colnames(xdt), self$search_space$ids()), with = FALSE])
+        if (!length(extra)) extra = NULL
+      }
+
+      self$rush$push_tasks(xss, extra)
     },
 
     #' @description

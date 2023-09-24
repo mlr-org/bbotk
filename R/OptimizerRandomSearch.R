@@ -58,6 +58,22 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
         design = sampler$sample(batch_size)
         inst$eval_batch(design$data)
       }
+    },
+
+    .optimize_async = function(inst) {
+      sampler = SamplerUnif$new(inst$search_space)
+
+      # sample more configuration than there are workers so the queue is never empty
+      n = inst$rush$n_workers * 10
+
+      repeat {
+        if (inst$rush$n_queued_tasks < n) {
+          design = sampler$sample(n)
+          inst$eval_async(design$data)
+        }
+        if (inst$is_terminated) stop(terminated_error(self))
+        Sys.sleep(0.01)
+      }
     }
   )
 )
