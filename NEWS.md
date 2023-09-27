@@ -1,5 +1,7 @@
 # bbotk 0.7.2.9000
 
+* fix: `OptimInstance$print()` errored when the search space was empty.
+
 # bbotk 0.7.2
 
 * fix: Standalone `Tuner` and `FSelector` were rejected by `ContextOptimization`.
