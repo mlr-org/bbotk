@@ -168,3 +168,30 @@ allow_partial_matching = list(
   warnPartialMatchAttr = FALSE,
   warnPartialMatchDollar = FALSE
 )
+
+trafo_xs = function(xs, search_space) {
+  xs = map(xs, function(x) Filter(Negate(is_scalar_na), x))
+  if (search_space$has_trafo) {
+    xs = search_space$trafo(xs, search_space)
+  }
+
+  return(xs)
+}
+
+bbotk_worker_loop = function(rush, objective, search_space) {
+  while(!rush$terminate) {
+    task = rush$pop_task()
+    xs_trafoed = trafo_xs(task$xs, search_space)
+
+    if (!is.null(task)) {
+      tryCatch({
+        ys = objective$eval(xs = xs_trafoed)
+        rush$push_results(task$key, yss = list(ys), extra = list(list(x_domain = list(xs_trafoed))))
+      }, error = function(e) {
+        condition = list(message = e$message)
+        rush$push_results(task$key, conditions = list(condition), status = "failed")
+      })
+    }
+  }
+  return(NULL)
+}

@@ -149,6 +149,8 @@ Optimizer = R6Class("Optimizer",
   private = list(
     .optimize = function(inst) stop("abstract"),
 
+    .optimize_async = function(inst) stop("abstract"),
+
     .assign_result = function(inst) {
       assert_r6(inst, "OptimInstance")
       assign_result_default(inst)

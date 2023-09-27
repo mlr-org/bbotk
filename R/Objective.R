@@ -93,7 +93,7 @@ Objective = R6Class("Objective",
     #' The list can also contain additional *named* entries that will be stored in the
     #' archive if called through the [OptimInstance].
     #' These extra entries are referred to as *extras*.
-    eval = function(xs) {
+    eval = function(xs, ...) {
       if (self$check_values) self$domain$assert(xs)
       res = invoke(private$.eval, xs, .args = self$constants$values)
       if (self$check_values) self$codomain$assert(res[self$codomain$ids()])

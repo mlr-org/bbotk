@@ -122,14 +122,16 @@ OptimInstance = R6Class("OptimInstance",
 
     start_workers = function(globals = NULL, packages = NULL, host = "local", heartbeat_period = NULL, heartbeat_expire = NULL) {
       objective = self$objective
+      search_space = self$search_space
       self$rush$start_workers(
-        fun = objective$eval,
-        as_list = TRUE,
+        worker_loop = bbotk_worker_loop,
         globals = c(globals, "objective"),
-        packages = packages,
+        packages = c(packages, "bbotk"),
         host = host,
         heartbeat_period = heartbeat_period,
-        heartbeat_expire = heartbeat_expire)
+        heartbeat_expire = heartbeat_expire,
+        objective = objective,
+        search_space = search_space)
     },
 
     create_worker_script = function() {
@@ -180,6 +182,13 @@ OptimInstance = R6Class("OptimInstance",
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
     },
 
+    #' @description
+    #' Evaluate xdt asynchronously.
+    #'
+    #' @param xdt (`data.table::data.table()`)\cr
+    #' x values as `data.table()` with one point per row.
+    #' Contains the value in  the *search space* of the [OptimInstance] object.
+    #' Can contain additional columns for extra information.
     eval_async = function(xdt) {
 
       if (self$is_terminated) stop(terminated_error(self))
@@ -189,17 +198,16 @@ OptimInstance = R6Class("OptimInstance",
 
       lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
 
-      if (self$search_space$has_trafo) {
-        xss = transform_xdt_to_xss(xdt[, self$search_space$ids(), with = FALSE], self$search_space)
-        setnames(xdt, paste0("untransformed_", names(xdt)))
-        extra = transpose_list(xdt)
+      xss = transpose_list(xdt[, self$search_space$ids(), with = FALSE])
+      xdt[, timestamp := Sys.time()]
+      extra = transpose_list(xdt[, !self$search_space$ids(), with = FALSE])
+
+      if (!is.null(xdt$priority_id)) {
+        self$rush$push_priority_tasks(xss, extra, priority = xdt$priority_id)
       } else {
-        xss = transpose_list(xdt[, self$search_space$ids(), with = FALSE])
-        extra = transpose_list(xdt[, setdiff(colnames(xdt), self$search_space$ids()), with = FALSE])
-        if (!length(extra)) extra = NULL
+        self$rush$push_tasks(xss, extra)
       }
 
-      self$rush$push_tasks(xss, extra)
     },
 
     #' @description
