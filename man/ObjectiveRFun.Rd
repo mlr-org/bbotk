@@ -115,7 +115,7 @@ validity?}
 Evaluates input value(s) on the objective function. Calls the R function
 supplied by the user.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFun$eval(xs)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFun$eval(xs, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

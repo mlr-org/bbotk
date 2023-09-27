@@ -169,6 +169,7 @@ allow_partial_matching = list(
   warnPartialMatchDollar = FALSE
 )
 
+#' @export
 trafo_xs = function(xs, search_space) {
   xs = map(xs, function(x) Filter(Negate(is_scalar_na), x))
   if (search_space$has_trafo) {
@@ -178,6 +179,7 @@ trafo_xs = function(xs, search_space) {
   return(xs)
 }
 
+#' @export
 bbotk_worker_loop = function(rush, objective, search_space) {
   while(!rush$terminate) {
     task = rush$pop_task()

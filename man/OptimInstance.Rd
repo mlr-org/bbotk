@@ -32,6 +32,9 @@ Stores \code{progressor} function.}
 \item{\code{objective_multiplicator}}{(\code{integer()}).}
 
 \item{\code{callbacks}}{(List of \link{CallbackOptimization}s).}
+
+\item{\code{rush}}{(\link{Rush})\cr
+Rush.}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,7 +63,10 @@ Optimal outcome.}
 \item \href{#method-OptimInstance-new}{\code{OptimInstance$new()}}
 \item \href{#method-OptimInstance-format}{\code{OptimInstance$format()}}
 \item \href{#method-OptimInstance-print}{\code{OptimInstance$print()}}
+\item \href{#method-OptimInstance-start_workers}{\code{OptimInstance$start_workers()}}
+\item \href{#method-OptimInstance-create_worker_script}{\code{OptimInstance$create_worker_script()}}
 \item \href{#method-OptimInstance-eval_batch}{\code{OptimInstance$eval_batch()}}
+\item \href{#method-OptimInstance-eval_async}{\code{OptimInstance$eval_async()}}
 \item \href{#method-OptimInstance-assign_result}{\code{OptimInstance$assign_result()}}
 \item \href{#method-OptimInstance-objective_function}{\code{OptimInstance$objective_function()}}
 \item \href{#method-OptimInstance-clear}{\code{OptimInstance$clear()}}
@@ -79,7 +85,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   terminator,
   keep_evals = "all",
   check_values = TRUE,
-  callbacks = list()
+  callbacks = list(),
+  rush = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -145,6 +152,30 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OptimInstance-start_workers"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-start_workers}{}}}
+\subsection{Method \code{start_workers()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$start_workers(
+  globals = NULL,
+  packages = NULL,
+  host = "local",
+  heartbeat_period = NULL,
+  heartbeat_expire = NULL
+)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OptimInstance-create_worker_script"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-create_worker_script}{}}}
+\subsection{Method \code{create_worker_script()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$create_worker_script()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-eval_batch"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-eval_batch}{}}}
 \subsection{Method \code{eval_batch()}}{
@@ -166,6 +197,26 @@ function should be internally called by the \link{Optimizer}.
 x values as \code{data.table()} with one point per row. Contains the value in
 the \emph{search space} of the \link{OptimInstance} object. Can contain additional
 columns for extra information.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OptimInstance-eval_async"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-eval_async}{}}}
+\subsection{Method \code{eval_async()}}{
+Evaluate xdt asynchronously.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_async(xdt)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xdt}}{(\code{data.table::data.table()})\cr
+x values as \code{data.table()} with one point per row.
+Contains the value in  the \emph{search space} of the \link{OptimInstance} object.
+Can contain additional columns for extra information.}
 }
 \if{html}{\out{</div>}}
 }
