@@ -125,12 +125,28 @@ OptimInstance = R6Class("OptimInstance",
       }
     },
 
-    start_workers = function(globals = NULL, packages = NULL, host = "local", heartbeat_period = NULL, heartbeat_expire = NULL) {
+    #' @description
+    #' Start workers with `future`.
+    #'
+    #' @param n_workers (`integer(1)`)\cr
+    #' Number of workers to be started.
+    #' If `NULL` the maximum number of free workers is used.
+    #' @param packages (`character()`)\cr
+    #' Names of packages to load on workers.
+    #' @param host (`character(1)`)\cr
+    #' Local or remote host.
+    #' @param heartbeat_period (`integer(1)`)\cr
+    #' Period of the heartbeat in seconds.
+    #' @param heartbeat_expire (`integer(1)`)\cr
+    #' Time to live of the heartbeat in seconds.
+    start_workers = function(n_workers = NULL, packages = NULL, host = "local", heartbeat_period = NULL, heartbeat_expire = NULL) {
       objective = self$objective
       search_space = self$search_space
+
       self$rush$start_workers(
         worker_loop = bbotk_worker_loop,
-        globals = c(globals, "objective"),
+        n_workers = n_workers,
+        globals = c("objective", "search_space"),
         packages = c(packages, "bbotk"),
         host = host,
         heartbeat_period = heartbeat_period,
