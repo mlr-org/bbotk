@@ -71,7 +71,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
           design = sampler$sample(n)
           inst$eval_async(design$data)
         }
-        if (inst$is_terminated) stop(terminated_error(self))
+        if (inst$is_terminated) stop(terminated_error(inst))
         Sys.sleep(0.01)
       }
     }
