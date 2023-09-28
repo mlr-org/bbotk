@@ -21,5 +21,4 @@ test_that("archive is froozen", {
 
   expect_null(instance$archive$rush)
   expect_data_table(instance$archive$data, min.rows = 10L)
-  expect_data_table()
 })

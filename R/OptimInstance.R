@@ -217,7 +217,9 @@ OptimInstance = R6Class("OptimInstance",
       assert_data_table(xdt)
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 
-      lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
+      lg$info("Evaluating %i configuration(s):", max(1, nrow(xdt)))
+      lg$info(capture.output(print(xdt,
+        class = FALSE, row.names = FALSE, print.keys = FALSE)))
 
       xss = transpose_list(xdt[, self$search_space$ids(), with = FALSE])
       xdt[, timestamp := Sys.time()]
