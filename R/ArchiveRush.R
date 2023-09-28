@@ -67,7 +67,7 @@ ArchiveRush = R6Class("ArchiveRush",
     #'
     #' @return [data.table::data.table()]
     best = function(n_select = 1) {
-      data = self$rush$fetch_finished_tasks()
+      data = self$data
 
       if (self$codomain$target_length == 1L) {
         assert_int(n_select, lower = 1L, upper = nrow(data))
@@ -88,7 +88,7 @@ ArchiveRush = R6Class("ArchiveRush",
     #'
     #' @return [data.table::data.table()]
     nds_selection = function(n_select = 1, ref_point = NULL) {
-      tab = rush$fetch_finished_tasks()
+      tab = self$data
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
@@ -116,8 +116,16 @@ ArchiveRush = R6Class("ArchiveRush",
     #' @description
     #' Clear all evaluation results from archive.
     clear = function() {
-      self$data = data.table()
+      self$rush$reset()
       self$start_time = NULL
+    },
+
+    #' @description
+    #' Copy the data from rush to a local `data.table`.
+    #' This is useful on shared computer clusters where the rush instance is not available after the job has finished.
+    freeze = function() {
+      private$.data = copy(self$rush$fetch_finished_tasks())
+      self$rush = NULL
     }
   ),
 
@@ -125,11 +133,23 @@ ArchiveRush = R6Class("ArchiveRush",
 
     #' @field data ([data.table::data.table])\cr
     #' Data table with all evaluations.
-    data = function() self$rush$fetch_finished_tasks(),
+    data = function() {
+     if (is.null(self$rush)) {
+        private$.data
+      } else {
+        self$rush$fetch_finished_tasks()
+      }
+    },
 
     #' @field n_evals (`integer(1)`)\cr
     #' Number of evaluations stored in the archive.
-    n_evals = function() self$rush$n_finished_tasks,
+    n_evals = function() {
+      if (is.null(self$rush)) {
+        nrow(private$.data)
+      } else {
+        self$rush$n_finished_tasks
+      }
+    },
 
     #' @field cols_x (`character()`)\cr
     #' Column names of search space parameters.
@@ -141,6 +161,9 @@ ArchiveRush = R6Class("ArchiveRush",
   ),
 
   private = list(
+    # data is only stored here when the archive is frozen
+    .data = data.table(),
+
     deep_clone = function(name, value) {
       switch(name,
         search_space = value$clone(deep = TRUE),

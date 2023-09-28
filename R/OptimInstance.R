@@ -44,6 +44,10 @@ OptimInstance = R6Class("OptimInstance",
     #' Rush.
     rush = NULL,
 
+    #' @field freeze_archive (`logical(1)`)\cr
+    #' If `TRUE`, the archive is copied to a local `data.table` after the optimization.
+    freeze_archive = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -52,13 +56,14 @@ OptimInstance = R6Class("OptimInstance",
     #' @param check_values (`logical(1)`)\cr
     #'   Should x-values that are added to the archive be checked for validity?
     #'   Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list(), rush = NULL) {
+    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list(), rush = NULL, freeze_archive = FALSE) {
       self$objective = assert_r6(objective, "Objective")
       self$terminator = assert_terminator(terminator, self)
       assert_choice(keep_evals, c("all", "best"))
       assert_flag(check_values)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
       self$rush = assert_class(rush, "Rush", null.ok = TRUE)
+      self$freeze_archive = assert_flag(freeze_archive)
 
       # set search space
       domain_search_space = self$objective$domain$search_space()
