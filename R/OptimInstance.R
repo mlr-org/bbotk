@@ -210,7 +210,7 @@ OptimInstance = R6Class("OptimInstance",
     #' x values as `data.table()` with one point per row.
     #' Contains the value in  the *search space* of the [OptimInstance] object.
     #' Can contain additional columns for extra information.
-    eval_async = function(xdt) {
+    eval_async = function(xdt, wait = FALSE) {
 
       if (self$is_terminated) stop(terminated_error(self))
 
@@ -226,11 +226,12 @@ OptimInstance = R6Class("OptimInstance",
       extra = transpose_list(xdt[, !self$search_space$ids(), with = FALSE])
 
       if (!is.null(xdt$priority_id)) {
-        self$rush$push_priority_tasks(xss, extra, priority = xdt$priority_id)
+        keys = self$rush$push_priority_tasks(xss, extra, priority = xdt$priority_id)
       } else {
-        self$rush$push_tasks(xss, extra)
+        keys = self$rush$push_tasks(xss, extra)
       }
 
+      if (wait) self$rush$await_tasks(keys)
     },
 
     #' @description

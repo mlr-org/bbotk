@@ -63,6 +63,15 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
     .optimize_async = function(inst) {
       sampler = SamplerUnif$new(inst$search_space)
 
+      # if number of hyperparameter configurations is known, send them all at once
+      if ("TerminatorEvals" %in% class(inst$terminator)) {
+        n = inst$terminator$param_set$values$n_evals
+        design = sampler$sample(n)
+        inst$eval_async(design$data, wait = TRUE)
+        stop(terminated_error(inst))
+      }
+
+      # if number of hyperparameter configurations is unknown, send them in batches
       # sample more configuration than there are workers so the queue is never empty
       n = inst$rush$n_workers * 10
 
@@ -71,6 +80,7 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
           design = sampler$sample(n)
           inst$eval_async(design$data)
         }
+        # we can terminate more precisely if we check in the tuner
         if (inst$is_terminated) stop(terminated_error(inst))
         Sys.sleep(0.01)
       }
