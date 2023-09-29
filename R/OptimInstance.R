@@ -14,6 +14,17 @@
 #' @template param_search_space
 #' @template param_keep_evals
 #' @template param_callbacks
+#' @template param_rush
+#' @template param_freeze_archive
+#' @template param_detect_lost_tasks
+#' @template param_restart_lost_workers
+#'
+#' @template field_rush
+#' @template field_freeze_archive
+#' @template field_detect_lost_tasks
+#' @template field_restart_lost_workers
+#'
+#'
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
@@ -40,13 +51,13 @@ OptimInstance = R6Class("OptimInstance",
     #' @field callbacks (List of [CallbackOptimization]s).
     callbacks = NULL,
 
-    #' @field rush ([Rush])\cr
-    #' Rush.
     rush = NULL,
 
-    #' @field freeze_archive (`logical(1)`)\cr
-    #' If `TRUE`, the archive is copied to a local `data.table` after the optimization.
     freeze_archive = NULL,
+
+    detect_lost_tasks = NULL,
+
+    restart_lost_workers = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
@@ -56,7 +67,18 @@ OptimInstance = R6Class("OptimInstance",
     #' @param check_values (`logical(1)`)\cr
     #'   Should x-values that are added to the archive be checked for validity?
     #'   Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list(), rush = NULL, freeze_archive = FALSE) {
+    initialize = function(
+      objective,
+      search_space = NULL,
+      terminator,
+      keep_evals = "all",
+      check_values = TRUE,
+      callbacks = list(),
+      rush = NULL,
+      freeze_archive = FALSE,
+      detect_lost_tasks = FALSE,
+      restart_lost_workers = FALSE) {
+
       self$objective = assert_r6(objective, "Objective")
       self$terminator = assert_terminator(terminator, self)
       assert_choice(keep_evals, c("all", "best"))
@@ -64,6 +86,8 @@ OptimInstance = R6Class("OptimInstance",
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
       self$rush = assert_class(rush, "Rush", null.ok = TRUE)
       self$freeze_archive = assert_flag(freeze_archive)
+      self$detect_lost_tasks = assert_flag(detect_lost_tasks)
+      self$restart_lost_workers = assert_flag(restart_lost_workers)
 
       # set search space
       domain_search_space = self$objective$domain$search_space()
@@ -155,8 +179,10 @@ OptimInstance = R6Class("OptimInstance",
         search_space = search_space)
     },
 
+    #' @description
+    #' Create a script to start workers.
     create_worker_script = function() {
-
+      NULL
     },
 
     #' @description
@@ -210,9 +236,14 @@ OptimInstance = R6Class("OptimInstance",
     #' x values as `data.table()` with one point per row.
     #' Contains the value in  the *search space* of the [OptimInstance] object.
     #' Can contain additional columns for extra information.
+    #' @param wait (`logical(1)`)\cr
+    #' If `TRUE`, wait for all evaluations to finish.
     eval_async = function(xdt, wait = FALSE) {
 
       if (self$is_terminated) stop(terminated_error(self))
+
+      if (self$detect_lost_tasks) self$rush$detect_lost_tasks()
+      if (self$restart_lost_workers) self$rush$restart_lost_workers()
 
       assert_data_table(xdt)
       assert_names(colnames(xdt), must.include = self$search_space$ids())

@@ -35,4 +35,4 @@
 } # nocov end
 
 
-leanify_package()
+#leanify_package()

@@ -18,6 +18,18 @@ user can access the results with active bindings (see below).
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
+Rush instance used for parallel tuning.}
+
+\item{\code{freeze_archive}}{(\code{logical(1)})\cr
+If \code{TRUE}, the archive is copied to a local \code{data.table} after the optimization.}
+
+\item{\code{detect_lost_tasks}}{(\code{logical(1)})\cr
+If \code{TRUE}, the instance will detect lost tasks.}
+
+\item{\code{restart_lost_workers}}{(\code{logical(1)})\cr
+If \code{TRUE}, the instance will restart lost workers.}
+
 \item{\code{objective}}{(\link{Objective}).}
 
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
@@ -32,9 +44,6 @@ Stores \code{progressor} function.}
 \item{\code{objective_multiplicator}}{(\code{integer()}).}
 
 \item{\code{callbacks}}{(List of \link{CallbackOptimization}s).}
-
-\item{\code{rush}}{(\link{Rush})\cr
-Rush.}
 }
 \if{html}{\out{</div>}}
 }
@@ -86,7 +95,10 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   keep_evals = "all",
   check_values = TRUE,
   callbacks = list(),
-  rush = NULL
+  rush = NULL,
+  freeze_archive = FALSE,
+  detect_lost_tasks = FALSE,
+  restart_lost_workers = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -113,6 +125,20 @@ Search space that is logged into archive.}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
+
+\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
+If a rush instance is supplied, the tuning runs without batches.}
+
+\item{\code{freeze_archive}}{(\code{logical(1)})\cr
+If \code{TRUE}, the archive is copied from redis to a local data.table after tuning.
+This is helpful when the tuning is run on a remote machine and the archive is serialized.
+Only used if \code{rush} is supplied.}
+
+\item{\code{detect_lost_tasks}}{(\code{logical(1)})\cr
+If \code{TRUE}, the instance will detect lost tasks.}
+
+\item{\code{restart_lost_workers}}{(\code{logical(1)})\cr
+If \code{TRUE}, the instance will restart lost workers.}
 }
 \if{html}{\out{</div>}}
 }
@@ -155,9 +181,10 @@ Printer.
 \if{html}{\out{<a id="method-OptimInstance-start_workers"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-start_workers}{}}}
 \subsection{Method \code{start_workers()}}{
+Start workers with \code{future}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$start_workers(
-  globals = NULL,
+  n_workers = NULL,
   packages = NULL,
   host = "local",
   heartbeat_period = NULL,
@@ -165,11 +192,33 @@ Printer.
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n_workers}}{(\code{integer(1)})\cr
+Number of workers to be started.
+If \code{NULL} the maximum number of free workers is used.}
+
+\item{\code{packages}}{(\code{character()})\cr
+Names of packages to load on workers.}
+
+\item{\code{host}}{(\code{character(1)})\cr
+Local or remote host.}
+
+\item{\code{heartbeat_period}}{(\code{integer(1)})\cr
+Period of the heartbeat in seconds.}
+
+\item{\code{heartbeat_expire}}{(\code{integer(1)})\cr
+Time to live of the heartbeat in seconds.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-create_worker_script"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-create_worker_script}{}}}
 \subsection{Method \code{create_worker_script()}}{
+Create a script to start workers.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$create_worker_script()}\if{html}{\out{</div>}}
 }
@@ -207,7 +256,7 @@ columns for extra information.}
 \subsection{Method \code{eval_async()}}{
 Evaluate xdt asynchronously.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_async(xdt)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_async(xdt, wait = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -217,6 +266,9 @@ Evaluate xdt asynchronously.
 x values as \code{data.table()} with one point per row.
 Contains the value in  the \emph{search space} of the \link{OptimInstance} object.
 Can contain additional columns for extra information.}
+
+\item{\code{wait}}{(\code{logical(1)})\cr
+If \code{TRUE}, wait for all evaluations to finish.}
 }
 \if{html}{\out{</div>}}
 }

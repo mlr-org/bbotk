@@ -140,7 +140,7 @@ Evaluates a single input value on the objective function. If
 \code{check_values = TRUE}, the validity of the point as well as the validity
 of the result is checked.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$eval(xs, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Objective$eval(xs)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

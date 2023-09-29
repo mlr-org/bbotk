@@ -64,6 +64,7 @@ Column names of codomain target parameters.}
 \item \href{#method-ArchiveRush-format}{\code{ArchiveRush$format()}}
 \item \href{#method-ArchiveRush-print}{\code{ArchiveRush$print()}}
 \item \href{#method-ArchiveRush-clear}{\code{ArchiveRush$clear()}}
+\item \href{#method-ArchiveRush-freeze}{\code{ArchiveRush$freeze()}}
 \item \href{#method-ArchiveRush-clone}{\code{ArchiveRush$clone()}}
 }
 }
@@ -190,6 +191,17 @@ Printer.
 Clear all evaluation results from archive.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ArchiveRush$clear()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveRush-freeze"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveRush-freeze}{}}}
+\subsection{Method \code{freeze()}}{
+Copy the data from rush to a local \code{data.table}.
+This is useful on shared computer clusters where the rush instance is not available after the job has finished.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveRush$freeze()}\if{html}{\out{</div>}}
 }
 
 }

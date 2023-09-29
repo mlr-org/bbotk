@@ -53,7 +53,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   keep_evals = "all",
   check_values = TRUE,
   callbacks = list(),
-  rush = NULL
+  rush = NULL,
+  freeze_archive = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -80,6 +81,14 @@ Search space that is logged into archive.}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
+
+\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
+If a rush instance is supplied, the tuning runs without batches.}
+
+\item{\code{freeze_archive}}{(\code{logical(1)})\cr
+If \code{TRUE}, the archive is copied from redis to a local data.table after tuning.
+This is helpful when the tuning is run on a remote machine and the archive is serialized.
+Only used if \code{rush} is supplied.}
 }
 \if{html}{\out{</div>}}
 }

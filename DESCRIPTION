@@ -92,7 +92,6 @@ Collate:
     'OptimizerIrace.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
-    'OptimizerSHA.R'
     'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'

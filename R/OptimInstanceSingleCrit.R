@@ -15,6 +15,9 @@
 #' @template param_search_space
 #' @template param_keep_evals
 #' @template param_callbacks
+#' @template param_rush
+#' @template param_freeze_archive
+#'
 #' @export
 OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
   inherit = OptimInstance,
