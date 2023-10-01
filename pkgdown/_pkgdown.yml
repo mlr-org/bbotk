@@ -57,6 +57,7 @@ reference:
   - title: Archive
     contents:
       - Archive
+      - ArchiveRush
       - ArchiveBest
       - Codomain
   - title: Callbacks
@@ -72,4 +73,6 @@ reference:
       - branin
       - bb_optimize
       - shrink_ps
+      - bbotk_worker_loop
+      - trafo_xs
 
