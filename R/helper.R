@@ -189,7 +189,7 @@ bbotk_worker_loop = function(rush, objective, search_space) {
     if (!is.null(task)) {
       tryCatch({
         ys = objective$eval(xs = xs_trafoed)
-        rush$push_results(task$key, yss = list(ys), extra = list(list(x_domain = list(xs_trafoed))))
+        rush$push_results(task$key, yss = list(ys), extra = list(list(x_domain = list(xs_trafoed), timestamp_ys = Sys.time())))
       }, error = function(e) {
         condition = list(message = e$message)
         rush$push_results(task$key, conditions = list(condition), status = "failed")

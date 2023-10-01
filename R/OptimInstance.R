@@ -253,7 +253,7 @@ OptimInstance = R6Class("OptimInstance",
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
 
       xss = transpose_list(xdt[, self$search_space$ids(), with = FALSE])
-      xdt[, timestamp := Sys.time()]
+      xdt[, timestamp_xs := Sys.time()]
       extra = transpose_list(xdt[, !self$search_space$ids(), with = FALSE])
 
       if (!is.null(xdt$priority_id)) {

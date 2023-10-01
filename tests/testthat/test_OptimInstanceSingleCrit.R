@@ -226,3 +226,57 @@ test_that("$clear() method works", {
   inst$clear()
   expect_equal(inst, inst_copy)
 })
+
+# rush -------------------------------------------------------------------------
+
+test_that("archive is froozen", {
+  skip_on_cran()
+
+  rush = Rush$new("test")
+  rush$reset()
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 10L),
+    rush = rush,
+    freeze_archive = TRUE
+  )
+
+  future::plan("multisession", workers = 2L)
+  instance$start_workers()
+  instance$rush$await_workers(2L)
+
+  optimizer = opt("random_search")
+  optimizer$optimize(instance)
+
+  expect_null(instance$archive$rush)
+  expect_data_table(instance$archive$data, min.rows = 10L)
+})
+
+
+test_that("timestamps are written to the archive", {
+  skip_on_cran()
+  skip_on_ci()
+
+  config = start_flush_redis()
+  rush = Rush$new("test", config)
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 10L),
+    rush = rush,
+    freeze_archive = TRUE
+  )
+
+  future::plan("multisession", workers = 2L)
+  instance$start_workers()
+  instance$rush$await_workers(2L)
+
+  optimizer = opt("random_search")
+  optimizer$optimize(instance)
+
+  assert_names(names(instance$archive$data), must.include = c("timestamp_xs", "timestamp_ys"))
+  expect_true(all(instance$archive$data$timestamp_xs < instance$archive$data$timestamp_ys))
+})

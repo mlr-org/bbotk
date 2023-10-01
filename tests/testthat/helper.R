@@ -219,3 +219,11 @@ expect_dictionary = function(d, contains = NA_character_, min_items = 0L) {
   }
   checkmate::expect_data_table(data.table::as.data.table(d), key = "key", nrows = length(keys))
 }
+
+start_flush_redis = function() {
+  future::plan("sequential")
+  config = redux::redis_config()
+  r = redux::hiredis(config)
+  r$FLUSHDB()
+  config
+}
