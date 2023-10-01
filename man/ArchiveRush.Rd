@@ -33,7 +33,7 @@ The time is set by the \link{Optimizer}.}
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Determines if points and results are checked for validity.}
 
-\item{\code{rush}}{(\link{Rush})\cr
+\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
 Rush.}
 }
 \if{html}{\out{</div>}}

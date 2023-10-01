@@ -170,6 +170,16 @@ allow_partial_matching = list(
   warnPartialMatchDollar = FALSE
 )
 
+#' @title Calculate the transformed x-values
+#'
+#' @description
+#' Transforms a given `list()` to a `list()`` with transformed x values.
+#'
+#' @param xs (`list()`) \cr
+#'  List of x-values.
+#' @param search_space [paradox::ParamSet]\cr
+#' Search space.
+#'
 #' @export
 trafo_xs = function(xs, search_space) {
   xs = map(xs, function(x) Filter(Negate(is_scalar_na), x))
@@ -180,6 +190,20 @@ trafo_xs = function(xs, search_space) {
   return(xs)
 }
 
+#' @title Worker loop for Rush
+#'
+#' @description
+#' Loop run on the workers.
+#' Pops a task from the queue and evaluates it with the objective function.
+#' Pushes the results back to the data base.
+#'
+#' @param rush [rush::Rush]\cr
+#' Rush.
+#' @param objective [Objective]\cr
+#' Objective function.
+#' @param search_space [paradox::ParamSet]\cr
+#' Search space.
+#'
 #' @export
 bbotk_worker_loop = function(rush, objective, search_space) {
   while(!rush$terminate) {

@@ -52,12 +52,15 @@ Imports:
 Suggests:
     adagio,
     emoa,
+    future,
     GenSA,
     irace (>= 3.5),
     knitr,
     nloptr,
     progressr,
     rmarkdown,
+    redux,
+    rush,
     testthat (>= 3.0.0)
 VignetteBuilder:
     knitr

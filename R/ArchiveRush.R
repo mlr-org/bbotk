@@ -37,7 +37,7 @@ ArchiveRush = R6Class("ArchiveRush",
     #' Determines if points and results are checked for validity.
     check_values = NULL,
 
-    #' @field rush ([Rush])\cr
+    #' @field rush ([rush::Rush])\cr
     #' Rush.
     rush = NULL,
 
@@ -47,7 +47,7 @@ ArchiveRush = R6Class("ArchiveRush",
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    #' @param rush ([Rush])\cr
+    #' @param rush ([rush::Rush])\cr
     #' Rush.
     initialize = function(search_space, codomain, check_values = TRUE, rush) {
       self$search_space = assert_param_set(search_space)
