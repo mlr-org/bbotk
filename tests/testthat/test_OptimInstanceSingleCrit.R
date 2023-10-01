@@ -229,11 +229,37 @@ test_that("$clear() method works", {
 
 # rush -------------------------------------------------------------------------
 
+test_that("OptimInstanceSingleCrit works with rush", {
+  skip_on_cran()
+  skip_on_ci()
+
+  config = start_flush_redis()
+  rush = Rush$new("test", config)
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 3L),
+    rush = rush,
+    freeze_archive = TRUE
+  )
+
+  future::plan("multisession", workers = 2L)
+  instance$start_workers()
+  instance$rush$await_workers(2L)
+
+  optimizer = opt("random_search")
+
+  expect_data_table(optimizer$optimize(instance), nrows = 1)
+  expect_data_table(as.data.table(instance$archive), nrows = 3)
+})
+
 test_that("archive is froozen", {
   skip_on_cran()
+  skip_on_ci()
 
-  rush = Rush$new("test")
-  rush$reset()
+  config = start_flush_redis()
+  rush = Rush$new("test", config)
 
   instance = OptimInstanceSingleCrit$new(
     objective = OBJ_2D,
@@ -253,7 +279,6 @@ test_that("archive is froozen", {
   expect_null(instance$archive$rush)
   expect_data_table(instance$archive$data, min.rows = 10L)
 })
-
 
 test_that("timestamps are written to the archive", {
   skip_on_cran()

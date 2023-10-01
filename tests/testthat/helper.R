@@ -1,3 +1,6 @@
+library(rush)
+library(checkmate)
+
 # Simple 1D Function
 PS_1D_domain = ps(
   x = p_dbl(lower = -1, upper = 1),
