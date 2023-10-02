@@ -1,3 +1,12 @@
+#' @title Termination Error
+#'
+#' @description
+#' Error class for termination.
+#'
+#' @param optim_instance [OptimInstance]\cr
+#' OptimInstance that terminated.
+#'
+#' @export
 terminated_error = function(optim_instance) {
   msg = sprintf(
     fmt = "Objective (obj:%s, term:%s) terminated",
@@ -212,11 +221,11 @@ bbotk_worker_loop = function(rush, objective, search_space) {
 
     if (!is.null(task)) {
       tryCatch({
-        ys = objective$eval(xs = xs_trafoed)
-        rush$push_results(task$key, yss = list(ys), extra = list(list(x_domain = list(xs_trafoed), timestamp_ys = Sys.time())))
+        log = capture.output({ys = objective$eval(xs = xs_trafoed)})
+        rush$push_results(task$key, yss = list(ys), extra = list(list(x_domain = list(xs_trafoed), timestamp_ys = Sys.time(), log = list(log))))
       }, error = function(e) {
         condition = list(message = e$message)
-        rush$push_results(task$key, conditions = list(condition), status = "failed")
+        rush$push_results(task$key, conditions = list(condition), extra = list(list(x_domain = list(xs_trafoed), timestamp_ys = Sys.time(), log = list(log))), status = "failed")
       })
     }
   }

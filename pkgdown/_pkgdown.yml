@@ -75,4 +75,5 @@ reference:
       - shrink_ps
       - bbotk_worker_loop
       - trafo_xs
+      - terminated_error
 
