@@ -75,6 +75,7 @@ OptimInstance = R6Class("OptimInstance",
       check_values = TRUE,
       callbacks = list(),
       rush = NULL,
+      start_workers = FALSE,
       freeze_archive = FALSE,
       detect_lost_tasks = FALSE,
       restart_lost_workers = FALSE) {
@@ -85,6 +86,7 @@ OptimInstance = R6Class("OptimInstance",
       assert_flag(check_values)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
       self$rush = assert_class(rush, "Rush", null.ok = TRUE)
+      self$start_workers = assert_flag(start_workers)
       self$freeze_archive = assert_flag(freeze_archive)
       self$detect_lost_tasks = assert_flag(detect_lost_tasks)
       self$restart_lost_workers = assert_flag(restart_lost_workers)
@@ -106,7 +108,11 @@ OptimInstance = R6Class("OptimInstance",
 
       # use minimal archive if only best points are needed
       self$archive = if (!is.null(self$rush)) {
-        ArchiveRush$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values, rush = self$rush)
+        ArchiveRush$new(
+          search_space = self$search_space,
+          codomain = objective$codomain,
+          check_values = check_values,
+          rush = self$rush)
       } else if (keep_evals == "all") {
         Archive$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values)
       } else if (keep_evals == "best") {
@@ -120,6 +126,9 @@ OptimInstance = R6Class("OptimInstance",
         private$.objective_function = objective_function
       }
       self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
+
+      # start rush
+      if (!is.null(self$rush) && self$start_workers) self$start_workers()
     },
 
     #' @description
