@@ -225,7 +225,7 @@ bbotk_worker_loop = function(rush, objective, search_space) {
         rush$push_results(task$key, yss = list(ys), extra = list(list(x_domain = list(xs_trafoed), timestamp_ys = Sys.time(), log = list(log))))
       }, error = function(e) {
         condition = list(message = e$message)
-        rush$push_results(task$key, conditions = list(condition), extra = list(list(x_domain = list(xs_trafoed), timestamp_ys = Sys.time(), log = list(log))), status = "failed")
+        rush$push_results(task$key, conditions = list(condition), status = "failed")
       })
     }
   }
