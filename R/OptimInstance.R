@@ -15,6 +15,7 @@
 #' @template param_keep_evals
 #' @template param_callbacks
 #' @template param_rush
+#' @template param_start_workers
 #' @template param_freeze_archive
 #' @template param_detect_lost_tasks
 #' @template param_restart_lost_workers
@@ -86,7 +87,7 @@ OptimInstance = R6Class("OptimInstance",
       assert_flag(check_values)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
       self$rush = assert_class(rush, "Rush", null.ok = TRUE)
-      self$start_workers = assert_flag(start_workers)
+      assert_flag(start_workers)
       self$freeze_archive = assert_flag(freeze_archive)
       self$detect_lost_tasks = assert_flag(detect_lost_tasks)
       self$restart_lost_workers = assert_flag(restart_lost_workers)
@@ -128,7 +129,7 @@ OptimInstance = R6Class("OptimInstance",
       self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
 
       # start rush
-      if (!is.null(self$rush) && self$start_workers) self$start_workers()
+      if (!is.null(self$rush) && start_workers) self$start_workers()
     },
 
     #' @description
@@ -185,7 +186,8 @@ OptimInstance = R6Class("OptimInstance",
         heartbeat_period = heartbeat_period,
         heartbeat_expire = heartbeat_expire,
         objective = objective,
-        search_space = search_space)
+        search_space = search_space,
+        await_workers = FALSE)
     },
 
     #' @description

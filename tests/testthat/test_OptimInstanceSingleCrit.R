@@ -234,6 +234,7 @@ test_that("OptimInstanceSingleCrit works with rush", {
   skip_on_ci()
 
   config = start_flush_redis()
+  future::plan("multisession", workers = 2L)
   rush = Rush$new("test", config)
 
   instance = OptimInstanceSingleCrit$new(
@@ -241,13 +242,10 @@ test_that("OptimInstanceSingleCrit works with rush", {
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 3L),
     rush = rush,
-    freeze_archive = TRUE
+    start_workers = TRUE
   )
 
-  future::plan("multisession", workers = 2L)
-  instance$start_workers()
-  instance$rush$await_workers(2L)
-
+  expect_equal(rush$n_workers, 2)
   optimizer = opt("random_search")
 
   expect_data_table(optimizer$optimize(instance), nrows = 1)
@@ -259,6 +257,7 @@ test_that("archive is froozen", {
   skip_on_ci()
 
   config = start_flush_redis()
+  future::plan("multisession", workers = 2L)
   rush = Rush$new("test", config)
 
   instance = OptimInstanceSingleCrit$new(
@@ -266,12 +265,9 @@ test_that("archive is froozen", {
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10L),
     rush = rush,
+    start_workers = TRUE,
     freeze_archive = TRUE
   )
-
-  future::plan("multisession", workers = 2L)
-  instance$start_workers()
-  instance$rush$await_workers(2L)
 
   optimizer = opt("random_search")
   optimizer$optimize(instance)
@@ -285,6 +281,7 @@ test_that("timestamps are written to the archive", {
   skip_on_ci()
 
   config = start_flush_redis()
+  future::plan("multisession", workers = 2L)
   rush = Rush$new("test", config)
 
   instance = OptimInstanceSingleCrit$new(
@@ -292,12 +289,9 @@ test_that("timestamps are written to the archive", {
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10L),
     rush = rush,
+    start_worker = TRUE,
     freeze_archive = TRUE
   )
-
-  future::plan("multisession", workers = 2L)
-  instance$start_workers()
-  instance$rush$await_workers(2L)
 
   optimizer = opt("random_search")
   optimizer$optimize(instance)

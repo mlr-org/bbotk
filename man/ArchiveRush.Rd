@@ -96,7 +96,7 @@ be minimized or maximized.  The default is to minimize each component.}
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
 
-\item{\code{rush}}{(\link{Rush})\cr
+\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
 Rush.}
 }
 \if{html}{\out{</div>}}
