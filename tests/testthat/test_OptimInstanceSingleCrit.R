@@ -299,3 +299,28 @@ test_that("timestamps are written to the archive", {
   assert_names(names(instance$archive$data), must.include = c("timestamp_xs", "timestamp_ys"))
   expect_true(all(instance$archive$data$timestamp_xs < instance$archive$data$timestamp_ys))
 })
+
+test_that("saving lgr logs works", {
+  skip_on_cran()
+  skip_on_ci()
+
+  config = start_flush_redis()
+  future::plan("multisession", workers = 2L)
+  rush = Rush$new("test", config)
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 3L),
+    rush = rush,
+    start_workers = TRUE,
+    lgr_thresholds = c(rush = "debug")
+  )
+
+  optimizer = opt("random_search")
+  optimizer$optimize(instance)
+
+  log = rush$read_log()
+  expect_data_table(log, nrows = 12)
+  expect_names(names(log), must.include = c("worker_id", "timestamp", "logger", "msg"))
+})

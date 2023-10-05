@@ -227,6 +227,7 @@ bbotk_worker_loop = function(rush, objective, search_space) {
         condition = list(message = e$message)
         rush$push_results(task$key, conditions = list(condition), status = "failed")
       })
+      rush$write_log()
     }
   }
   return(NULL)
