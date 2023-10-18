@@ -215,7 +215,7 @@ trafo_xs = function(xs, search_space) {
 #'
 #' @export
 bbotk_worker_loop = function(rush, objective, search_space) {
-  while(!rush$terminate) {
+  while(!rush$terminated) {
     task = rush$pop_task()
     xs_trafoed = trafo_xs(task$xs, search_space)
 
