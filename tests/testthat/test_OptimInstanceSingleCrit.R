@@ -334,7 +334,7 @@ test_that("rush timestamps are written to the archive", {
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10L),
     rush = rush,
-    start_worker = TRUE,
+    start_workers = TRUE,
     freeze_archive = TRUE
   )
 
