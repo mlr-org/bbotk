@@ -229,36 +229,74 @@ test_that("$clear() method works", {
 
 # rush -------------------------------------------------------------------------
 
-test_that("OptimInstanceSingleCrit works with rush", {
+test_that("starting a rush worker with the cluster backend works", {
   skip_on_cran()
   skip_on_ci()
 
-  config = start_flush_redis()
-  future::plan("multisession", workers = 2L)
-  rush = Rush$new("test", config)
+  rush = rsh()
+  future::plan("cluster", workers = 1L)
 
   instance = OptimInstanceSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("evals", n_evals = 3L),
+    terminator = trm("evals", n_evals = 5L),
     rush = rush,
     start_workers = TRUE
   )
 
-  expect_equal(rush$n_workers, 2)
+  pids = rush$worker_info$pid
+  on.exit({
+    future::plan("sequential")
+    walk(pids, tools::pskill)
+  }, add = TRUE)
+
+  expect_equal(rush$n_workers, 1L)
   optimizer = opt("random_search")
 
-  expect_data_table(optimizer$optimize(instance), nrows = 1)
-  expect_data_table(as.data.table(instance$archive), nrows = 3)
+  expect_data_table(optimizer$optimize(instance), nrows = 1L)
+  expect_data_table(as.data.table(instance$archive), nrows = 5L)
+
+  expect_rush_reset(rush)
 })
 
-test_that("archive is froozen", {
+test_that("starting a rush worker with the multisession backend works", {
   skip_on_cran()
   skip_on_ci()
 
-  config = start_flush_redis()
+  rush = rsh()
   future::plan("multisession", workers = 2L)
-  rush = Rush$new("test", config)
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 10L),
+    rush = rush,
+    start_workers = TRUE
+  )
+
+  pids = rush$worker_info$pid
+  on.exit({
+    future::plan("sequential")
+    walk(pids, tools::pskill)
+  }, add = TRUE)
+
+  expect_equal(rush$n_workers, 2L)
+  optimizer = opt("random_search")
+
+  expect_data_table(optimizer$optimize(instance), nrows = 1L)
+  archive = as.data.table(instance$archive)
+  expect_data_table(archive, nrows = 10L)
+  expect_length(unique(archive$pid), 2L)
+
+  rush$reset()
+})
+
+test_that("freezing the rush archive after the optimization works", {
+  skip_on_cran()
+  skip_on_ci()
+
+  rush = rsh()
+  future::plan("cluster", workers = 1L)
 
   instance = OptimInstanceSingleCrit$new(
     objective = OBJ_2D,
@@ -269,20 +307,27 @@ test_that("archive is froozen", {
     freeze_archive = TRUE
   )
 
+  pids = rush$worker_info$pid
+  on.exit({
+    future::plan("sequential")
+    walk(pids, tools::pskill)
+  }, add = TRUE)
+
   optimizer = opt("random_search")
   optimizer$optimize(instance)
 
   expect_null(instance$archive$rush)
   expect_data_table(instance$archive$data, min.rows = 10L)
+
+  rush$reset()
 })
 
-test_that("timestamps are written to the archive", {
+test_that("rush timestamps are written to the archive", {
   skip_on_cran()
   skip_on_ci()
 
-  config = start_flush_redis()
-  future::plan("multisession", workers = 2L)
-  rush = Rush$new("test", config)
+  rush = rsh()
+  future::plan("cluster", workers = 1L)
 
   instance = OptimInstanceSingleCrit$new(
     objective = OBJ_2D,
@@ -293,20 +338,27 @@ test_that("timestamps are written to the archive", {
     freeze_archive = TRUE
   )
 
+  pids = rush$worker_info$pid
+  on.exit({
+    future::plan("sequential")
+    walk(pids, tools::pskill)
+  }, add = TRUE)
+
   optimizer = opt("random_search")
   optimizer$optimize(instance)
 
   assert_names(names(instance$archive$data), must.include = c("timestamp_xs", "timestamp_ys"))
   expect_true(all(instance$archive$data$timestamp_xs < instance$archive$data$timestamp_ys))
+
+  rush$reset()
 })
 
-test_that("saving lgr logs works", {
+test_that("saving log messages from the workers works", {
   skip_on_cran()
   skip_on_ci()
 
-  config = start_flush_redis()
-  future::plan("multisession", workers = 2L)
-  rush = Rush$new("test", config)
+  rush = rsh()
+  future::plan("cluster", workers = 1L)
 
   instance = OptimInstanceSingleCrit$new(
     objective = OBJ_2D,
@@ -317,10 +369,18 @@ test_that("saving lgr logs works", {
     lgr_thresholds = c(rush = "debug")
   )
 
+  pids = rush$worker_info$pid
+  on.exit({
+    future::plan("sequential")
+    walk(pids, tools::pskill)
+  }, add = TRUE)
+
   optimizer = opt("random_search")
   optimizer$optimize(instance)
 
   log = rush$read_log()
-  expect_data_table(log, nrows = 12)
+  expect_data_table(log, nrows = 13)
   expect_names(names(log), must.include = c("worker_id", "timestamp", "logger", "msg"))
+
+  rush$reset()
 })
