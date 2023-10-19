@@ -198,8 +198,7 @@ Clear all evaluation results from archive.
 \if{html}{\out{<a id="method-ArchiveRush-freeze"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveRush-freeze}{}}}
 \subsection{Method \code{freeze()}}{
-Copy the data from rush to a local \code{data.table}.
-This is useful on shared computer clusters where the rush instance is not available after the job has finished.
+Copy the data from rush to a local \code{\link[data.table:data.table]{data.table::data.table()}}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ArchiveRush$freeze()}\if{html}{\out{</div>}}
 }

@@ -229,7 +229,7 @@ test_that("$clear() method works", {
 
 # rush -------------------------------------------------------------------------
 
-test_that("starting a rush worker with the cluster backend works", {
+test_that("optimizing with rush and the cluster backend works", {
   skip_on_cran()
   skip_on_ci()
 
@@ -259,7 +259,7 @@ test_that("starting a rush worker with the cluster backend works", {
   expect_rush_reset(rush)
 })
 
-test_that("starting a rush worker with the multisession backend works", {
+test_that("optimizing with rush and the multisession backend works", {
   skip_on_cran()
   skip_on_ci()
 

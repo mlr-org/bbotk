@@ -54,6 +54,7 @@ ArchiveRush = R6Class("ArchiveRush",
       self$codomain = Codomain$new(assert_param_set(codomain)$params)
       self$check_values = assert_flag(check_values)
       self$rush = assert_class(rush, "Rush")
+      private$.data = data.table()
     },
 
     #' @description
@@ -121,8 +122,7 @@ ArchiveRush = R6Class("ArchiveRush",
     },
 
     #' @description
-    #' Copy the data from rush to a local `data.table`.
-    #' This is useful on shared computer clusters where the rush instance is not available after the job has finished.
+    #' Copy the data from rush to a local [data.table::data.table()].
     freeze = function() {
       private$.data = copy(self$rush$fetch_finished_tasks())
       self$rush = NULL
@@ -162,7 +162,7 @@ ArchiveRush = R6Class("ArchiveRush",
 
   private = list(
     # data is only stored here when the archive is frozen
-    .data = data.table(),
+    .data = NULL,
 
     deep_clone = function(name, value) {
       switch(name,
