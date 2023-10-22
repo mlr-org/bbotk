@@ -16,15 +16,10 @@
 #' @template param_callbacks
 #' @template param_rush
 #' @template param_start_workers
-#' @template param_lgr_thresholds
-#' @template param_freeze_archive
-#' @template param_detect_lost_tasks
-#' @template param_restart_lost_workers
 #'
 #' @template field_rush
 #' @template field_freeze_archive
 #' @template field_detect_lost_tasks
-#' @template field_restart_lost_workers
 #'
 #' @export
 OptimInstance = R6Class("OptimInstance",
@@ -58,8 +53,6 @@ OptimInstance = R6Class("OptimInstance",
 
     detect_lost_tasks = NULL,
 
-    restart_lost_workers = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -76,11 +69,7 @@ OptimInstance = R6Class("OptimInstance",
       check_values = TRUE,
       callbacks = list(),
       rush = NULL,
-      start_workers = FALSE,
-      lgr_thresholds = NULL,
-      freeze_archive = FALSE,
-      detect_lost_tasks = FALSE,
-      restart_lost_workers = FALSE) {
+      start_workers = FALSE) {
 
       self$objective = assert_r6(objective, "Objective")
       self$terminator = assert_terminator(terminator, self)
@@ -89,10 +78,7 @@ OptimInstance = R6Class("OptimInstance",
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
       self$rush = assert_class(rush, "Rush", null.ok = TRUE)
       assert_flag(start_workers)
-      assert_named(lgr_thresholds)
-      self$freeze_archive = assert_flag(freeze_archive)
-      self$detect_lost_tasks = assert_flag(detect_lost_tasks)
-      self$restart_lost_workers = assert_flag(restart_lost_workers)
+      self$freeze_archive = FALSE
 
       # set search space
       domain_search_space = self$objective$domain$search_space()
@@ -131,7 +117,7 @@ OptimInstance = R6Class("OptimInstance",
       self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
 
       # start rush
-      if (!is.null(self$rush) && start_workers) self$start_workers(lgr_thresholds = lgr_thresholds)
+      if (!is.null(self$rush) && start_workers) self$start_workers()
     },
 
     #' @description
@@ -167,17 +153,30 @@ OptimInstance = R6Class("OptimInstance",
     #' @param n_workers (`integer(1)`)\cr
     #' Number of workers to be started.
     #' If `NULL` the maximum number of free workers is used.
-    #' @param packages (`character()`)\cr
-    #' Names of packages to load on workers.
-    #' @param host (`character(1)`)\cr
-    #' Local or remote host.
-    #' @param heartbeat_period (`integer(1)`)\cr
-    #' Period of the heartbeat in seconds.
-    #' @param heartbeat_expire (`integer(1)`)\cr
-    #' Time to live of the heartbeat in seconds.
     #' @param await_workers (`logical(1)`)\cr
     #' Whether to wait until all workers are available.
-    start_workers = function(n_workers = NULL, packages = NULL, host = "local", heartbeat_period = NULL, heartbeat_expire = NULL, lgr_thresholds = NULL, await_workers = TRUE) {
+    #'
+    #' @template param_packages
+    #' @template param_host
+    #' @template param_heartbeat_period
+    #' @template param_heartbeat_expire
+    #' @template param_lgr_thresholds
+    #' @template param_freeze_archive
+    #' @template param_detect_lost_tasks
+    start_workers = function(
+      n_workers = NULL,
+      packages = NULL,
+      host = "local",
+      heartbeat_period = NULL,
+      heartbeat_expire = NULL,
+      lgr_thresholds = NULL,
+      await_workers = TRUE,
+      detect_lost_tasks = FALSE,
+      freeze_archive = FALSE) {
+
+      self$detect_lost_tasks = assert_flag(detect_lost_tasks)
+      self$freeze_archive = assert_flag(freeze_archive)
+
       objective = self$objective
       search_space = self$search_space
 
@@ -258,9 +257,6 @@ OptimInstance = R6Class("OptimInstance",
 
       if (self$is_terminated) stop(terminated_error(self))
 
-      if (self$detect_lost_tasks) self$rush$detect_lost_tasks()
-      if (self$restart_lost_workers) self$rush$restart_lost_workers()
-
       assert_data_table(xdt)
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 
@@ -278,7 +274,18 @@ OptimInstance = R6Class("OptimInstance",
         keys = self$rush$push_tasks(xss, extra)
       }
 
-      if (wait) self$rush$await_tasks(keys)
+      # optimizer can request to wait for all evaluations to finish
+      if (wait) {
+        self$rush$await_tasks(keys, detect_lost_tasks = self$detect_lost_tasks)
+      }
+
+      # terminate optimization if all workers crashed
+      if (self$rush$n_running_workers == 0)  {
+        lg$warn("Optimization terminated because %i workers crashed.", length(self$rush$lost_worker_ids))
+        stop(terminated_error(self))
+      }
+
+      if (self$detect_lost_tasks) self$rush$detect_lost_tasks()
     },
 
     #' @description

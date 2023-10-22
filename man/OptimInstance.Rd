@@ -24,11 +24,8 @@ Rush instance used for parallel tuning.}
 \item{\code{freeze_archive}}{(\code{logical(1)})\cr
 If \code{TRUE}, the archive is copied to a local \code{data.table} after the optimization.}
 
-\item{\code{detect_lost_tasks}}{(\code{logical(1)})\cr
-If \code{TRUE}, the instance will detect lost tasks.}
-
-\item{\code{restart_lost_workers}}{(\code{logical(1)})\cr
-If \code{TRUE}, the instance will restart lost workers.}
+\item{\code{detect_lost_workers}}{(\code{logical(1)})\cr
+Whether to detect lost workers in each \verb{$eval_async()} call.}
 
 \item{\code{objective}}{(\link{Objective}).}
 
@@ -96,11 +93,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   check_values = TRUE,
   callbacks = list(),
   rush = NULL,
-  start_workers = FALSE,
-  lgr_thresholds = NULL,
-  freeze_archive = FALSE,
-  detect_lost_tasks = FALSE,
-  restart_lost_workers = FALSE
+  start_workers = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -133,21 +126,6 @@ If a rush instance is supplied, the tuning runs without batches.}
 
 \item{\code{start_workers}}{(\code{logical(1)})\cr
 If \code{TRUE}, the workers are started immediately with \code{future} on all available cores.}
-
-\item{\code{lgr_thresholds}}{(named \code{character()} or \code{numeric()})\cr
-Thresholds for the \code{lgr} package e.g. c(rush = "debug", bbotk = "info").
-If \code{NULL}, no log messages from the workers are saved.}
-
-\item{\code{freeze_archive}}{(\code{logical(1)})\cr
-If \code{TRUE}, the archive is copied from redis to a local data.table after tuning.
-This is helpful when the tuning is run on a remote machine and the archive is serialized.
-Only used if \code{rush} is supplied.}
-
-\item{\code{detect_lost_tasks}}{(\code{logical(1)})\cr
-If \code{TRUE}, the instance will detect lost tasks.}
-
-\item{\code{restart_lost_workers}}{(\code{logical(1)})\cr
-If \code{TRUE}, the instance will restart lost workers.}
 }
 \if{html}{\out{</div>}}
 }
@@ -199,7 +177,9 @@ Start workers with \code{future}.
   heartbeat_period = NULL,
   heartbeat_expire = NULL,
   lgr_thresholds = NULL,
-  await_workers = TRUE
+  await_workers = TRUE,
+  detect_lost_workers = FALSE,
+  freeze_archive = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -211,10 +191,11 @@ Number of workers to be started.
 If \code{NULL} the maximum number of free workers is used.}
 
 \item{\code{packages}}{(\code{character()})\cr
-Names of packages to load on workers.}
+Packages to be loaded by the workers.}
 
 \item{\code{host}}{(\code{character(1)})\cr
-Local or remote host.}
+Worker is started on a local or remote host.
+See \link{Rush} for details.}
 
 \item{\code{heartbeat_period}}{(\code{integer(1)})\cr
 Period of the heartbeat in seconds.}
@@ -228,6 +209,15 @@ If \code{NULL}, no log messages from the workers are saved.}
 
 \item{\code{await_workers}}{(\code{logical(1)})\cr
 Whether to wait until all workers are available.}
+
+\item{\code{detect_lost_workers}}{(\code{logical(1)})\cr
+Whether to detect lost workers.
+Defaults to \code{FALSE}.}
+
+\item{\code{freeze_archive}}{(\code{logical(1)})\cr
+If \code{TRUE}, the archive is copied from redis to a local data.table after tuning.
+This is helpful when the tuning is run on a remote machine and the archive is serialized.
+Only used if \code{rush} is supplied.}
 }
 \if{html}{\out{</div>}}
 }

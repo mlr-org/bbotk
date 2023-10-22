@@ -256,7 +256,7 @@ test_that("optimizing with rush and the cluster backend works", {
   expect_data_table(optimizer$optimize(instance), nrows = 1L)
   expect_data_table(as.data.table(instance$archive), nrows = 5L)
 
-  expect_rush_reset(rush)
+  rush$reset()
 })
 
 test_that("optimizing with rush and the multisession backend works", {
@@ -303,9 +303,10 @@ test_that("freezing the rush archive after the optimization works", {
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10L),
     rush = rush,
-    start_workers = TRUE,
-    freeze_archive = TRUE
+    start_workers = FALSE
   )
+
+  instance$start_workers(freeze_archive = TRUE)
 
   pids = rush$worker_info$pid
   on.exit({
@@ -334,8 +335,7 @@ test_that("rush timestamps are written to the archive", {
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10L),
     rush = rush,
-    start_workers = TRUE,
-    freeze_archive = TRUE
+    start_workers = TRUE
   )
 
   pids = rush$worker_info$pid
@@ -365,9 +365,10 @@ test_that("saving log messages from the workers works", {
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 3L),
     rush = rush,
-    start_workers = TRUE,
-    lgr_thresholds = c(rush = "debug")
+    start_workers = FALSE
   )
+
+  instance$start_workers(lgr_thresholds = c(rush = "debug"))
 
   pids = rush$worker_info$pid
   on.exit({
@@ -381,6 +382,77 @@ test_that("saving log messages from the workers works", {
   log = rush$read_log()
   expect_data_table(log, nrows = 13)
   expect_names(names(log), must.include = c("worker_id", "timestamp", "logger", "msg"))
+
+  rush$reset()
+})
+
+test_that("optimizer throws and error when no worker is running", {
+  skip_on_cran()
+  skip_on_ci()
+
+  rush = rsh()
+  future::plan("cluster", workers = 1L)
+
+  fun = function(xs) {
+    get("attach")(structure(list(), class = "UserDefinedDatabase"))
+  }
+
+  obj = ObjectiveRFun$new(fun = fun, domain = PS_2D_domain, properties = "single-crit")
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = obj,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 1L),
+    rush = rush,
+    start_workers = FALSE
+  )
+
+  pids = rush$worker_info$pid
+  on.exit({
+    future::plan("sequential")
+    walk(pids, tools::pskill)
+  }, add = TRUE)
+
+  optimizer = opt("random_search")
+  expect_error(optimizer$optimize(instance), "Cannot start optimization because no workers are running.")
+
+  rush$reset()
+})
+
+
+test_that("detect lost tasks works", {
+  skip_on_cran()
+  skip_on_ci()
+
+  rush = rsh()
+  future::plan("cluster", workers = 1L)
+
+  fun = function(xs) {
+    get("attach")(structure(list(), class = "UserDefinedDatabase"))
+  }
+
+  obj = ObjectiveRFun$new(fun = fun, domain = PS_2D_domain, properties = "single-crit")
+
+  instance = OptimInstanceSingleCrit$new(
+    objective = obj,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 1L),
+    rush = rush,
+    start_workers = FALSE
+  )
+
+  instance$start_workers(detect_lost_tasks = TRUE)
+  rush$await_workers(1)
+  expect_true(instance$detect_lost_tasks)
+
+  pids = rush$worker_info$pid
+  on.exit({
+    future::plan("sequential")
+    walk(pids, tools::pskill)
+  }, add = TRUE)
+
+  optimizer = opt("random_search")
+  expect_error(optimizer$optimize(instance), "Cannot assign result because archive is empty.")
 
   rush$reset()
 })

@@ -66,6 +66,11 @@ transform_xdt_to_xss = function(xdt, search_space) {
 #' @export
 optimize_default = function(inst, self, private) {
   assert_instance_properties(self, inst)
+
+  if (!is.null(inst$rush) && !inst$rush$n_running_workers) {
+    stop("Cannot start optimization because no workers are running.")
+  }
+
   inst$archive$start_time = Sys.time()
   if (isNamespaceLoaded("progressr")) {
     # initialize progressor
@@ -103,6 +108,11 @@ optimize_default = function(inst, self, private) {
 #' @keywords internal
 #' @export
 assign_result_default = function(inst) {
+
+  if (inst$archive$n_evals == 0) {
+    stop("Cannot assign result because archive is empty.")
+  }
+
   res = inst$archive$best()
 
   xdt = res[, inst$search_space$ids(), with = FALSE]

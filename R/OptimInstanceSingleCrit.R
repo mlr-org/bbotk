@@ -17,8 +17,6 @@
 #' @template param_callbacks
 #' @template param_rush
 #' @template param_start_workers
-#' @template param_lgr_thresholds
-#' @template param_freeze_archive
 #'
 #' @export
 OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
@@ -41,9 +39,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
       check_values = TRUE,
       callbacks = list(),
       rush = NULL,
-      start_workers = FALSE,
-      lgr_thresholds = NULL,
-      freeze_archive = FALSE) {
+      start_workers = FALSE) {
 
       if (objective$codomain$target_length > 1) {
         stop("Codomain > 1")
@@ -56,11 +52,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
         check_values = check_values,
         callbacks = callbacks,
         rush = rush,
-        start_workers = start_workers,
-        lgr_thresholds = lgr_thresholds,
-        freeze_archive = freeze_archive,
-        detect_lost_tasks = FALSE,
-        restart_lost_workers = FALSE)
+        start_workers = start_workers)
     },
 
     #' @description
