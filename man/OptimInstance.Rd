@@ -2,7 +2,7 @@
 % Please edit documentation in R/OptimInstance.R
 \name{OptimInstance}
 \alias{OptimInstance}
-\title{Optimization Instance with budget and archive}
+\title{Optimization Instance}
 \description{
 Abstract base class.
 }
@@ -18,15 +18,6 @@ user can access the results with active bindings (see below).
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
-Rush instance used for parallel tuning.}
-
-\item{\code{freeze_archive}}{(\code{logical(1)})\cr
-If \code{TRUE}, the archive is copied to a local \code{data.table} after the optimization.}
-
-\item{\code{detect_lost_workers}}{(\code{logical(1)})\cr
-Whether to detect lost workers in each \verb{$eval_async()} call.}
-
 \item{\code{objective}}{(\link{Objective}).}
 
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
@@ -69,10 +60,7 @@ Optimal outcome.}
 \item \href{#method-OptimInstance-new}{\code{OptimInstance$new()}}
 \item \href{#method-OptimInstance-format}{\code{OptimInstance$format()}}
 \item \href{#method-OptimInstance-print}{\code{OptimInstance$print()}}
-\item \href{#method-OptimInstance-start_workers}{\code{OptimInstance$start_workers()}}
-\item \href{#method-OptimInstance-create_worker_script}{\code{OptimInstance$create_worker_script()}}
 \item \href{#method-OptimInstance-eval_batch}{\code{OptimInstance$eval_batch()}}
-\item \href{#method-OptimInstance-eval_async}{\code{OptimInstance$eval_async()}}
 \item \href{#method-OptimInstance-assign_result}{\code{OptimInstance$assign_result()}}
 \item \href{#method-OptimInstance-objective_function}{\code{OptimInstance$objective_function()}}
 \item \href{#method-OptimInstance-clear}{\code{OptimInstance$clear()}}
@@ -91,9 +79,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   terminator,
   keep_evals = "all",
   check_values = TRUE,
-  callbacks = list(),
-  rush = NULL,
-  start_workers = FALSE
+  callbacks = list()
 )}\if{html}{\out{</div>}}
 }
 
@@ -120,12 +106,6 @@ Search space that is logged into archive.}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
-
-\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
-If a rush instance is supplied, the tuning runs without batches.}
-
-\item{\code{start_workers}}{(\code{logical(1)})\cr
-If \code{TRUE}, the workers are started immediately with \code{future} on all available cores.}
 }
 \if{html}{\out{</div>}}
 }
@@ -165,74 +145,6 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstance-start_workers"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstance-start_workers}{}}}
-\subsection{Method \code{start_workers()}}{
-Start workers with \code{future}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$start_workers(
-  n_workers = NULL,
-  packages = NULL,
-  host = "local",
-  heartbeat_period = NULL,
-  heartbeat_expire = NULL,
-  lgr_thresholds = NULL,
-  await_workers = TRUE,
-  detect_lost_workers = FALSE,
-  freeze_archive = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n_workers}}{(\code{integer(1)})\cr
-Number of workers to be started.
-If \code{NULL} the maximum number of free workers is used.}
-
-\item{\code{packages}}{(\code{character()})\cr
-Packages to be loaded by the workers.}
-
-\item{\code{host}}{(\code{character(1)})\cr
-Worker is started on a local or remote host.
-See \link{Rush} for details.}
-
-\item{\code{heartbeat_period}}{(\code{integer(1)})\cr
-Period of the heartbeat in seconds.}
-
-\item{\code{heartbeat_expire}}{(\code{integer(1)})\cr
-Time to live of the heartbeat in seconds.}
-
-\item{\code{lgr_thresholds}}{(named \code{character()} or \code{numeric()})\cr
-Thresholds for the \code{lgr} package e.g. c(rush = "debug", bbotk = "info").
-If \code{NULL}, no log messages from the workers are saved.}
-
-\item{\code{await_workers}}{(\code{logical(1)})\cr
-Whether to wait until all workers are available.}
-
-\item{\code{detect_lost_workers}}{(\code{logical(1)})\cr
-Whether to detect lost workers.
-Defaults to \code{FALSE}.}
-
-\item{\code{freeze_archive}}{(\code{logical(1)})\cr
-If \code{TRUE}, the archive is copied from redis to a local data.table after tuning.
-This is helpful when the tuning is run on a remote machine and the archive is serialized.
-Only used if \code{rush} is supplied.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstance-create_worker_script"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstance-create_worker_script}{}}}
-\subsection{Method \code{create_worker_script()}}{
-Create a script to start workers.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$create_worker_script()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-eval_batch"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-eval_batch}{}}}
 \subsection{Method \code{eval_batch()}}{
@@ -254,29 +166,6 @@ function should be internally called by the \link{Optimizer}.
 x values as \code{data.table()} with one point per row. Contains the value in
 the \emph{search space} of the \link{OptimInstance} object. Can contain additional
 columns for extra information.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstance-eval_async"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstance-eval_async}{}}}
-\subsection{Method \code{eval_async()}}{
-Evaluate xdt asynchronously.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_async(xdt, wait = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{data.table::data.table()})\cr
-x values as \code{data.table()} with one point per row.
-Contains the value in  the \emph{search space} of the \link{OptimInstance} object.
-Can contain additional columns for extra information.}
-
-\item{\code{wait}}{(\code{logical(1)})\cr
-If \code{TRUE}, wait for all evaluations to finish.}
 }
 \if{html}{\out{</div>}}
 }

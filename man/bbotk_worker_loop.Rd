@@ -7,14 +7,18 @@
 bbotk_worker_loop(rush, objective, search_space)
 }
 \arguments{
-\item{rush}{\link[rush:Rush]{rush::Rush}\cr
-Rush.}
+\item{rush}{(\code{Rush})\cr
+If a rush instance is supplied, the tuning runs without batches.}
 
-\item{objective}{\link{Objective}\cr
+\item{objective}{(\link{Objective})\cr
 Objective function.}
 
-\item{search_space}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
-Search space.}
+\item{search_space}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
+describes either a subset of the \code{domain} of the \link{Objective} or it describes
+a set of parameters together with a \code{trafo} function that transforms values
+from the search space to values of the domain. Depending on the context, this
+value defaults to the domain of the objective.}
 }
 \description{
 Loop run on the workers.

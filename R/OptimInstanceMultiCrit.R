@@ -16,8 +16,6 @@
 #' @template param_search_space
 #' @template param_keep_evals
 #' @template param_callbacks
-#' @template param_rush
-#' @template param_start_workers
 #'
 #' @export
 OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
@@ -39,19 +37,15 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
       terminator,
       keep_evals = "all",
       check_values = TRUE,
-      callbacks = list(),
-      rush = NULL,
-      start_workers = FALSE) {
-
+      callbacks = list()
+      ) {
       super$initialize(
         objective = objective,
         search_space = search_space,
         terminator = terminator,
         keep_evals = keep_evals,
         check_values = check_values,
-        callbacks = callbacks,
-        rush = rush,
-        start_workers = start_workers)
+        callbacks = callbacks)
     },
 
     #' @description

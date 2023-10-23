@@ -51,83 +51,11 @@ transform_xdt_to_xss = function(xdt, search_space) {
   design$transpose(trafo = TRUE, filter_na = TRUE)
 }
 
-#' @title Default optimization function
-#' @description
-#' Used internally in the [Optimizer].
-#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
-#'
-#' @param inst [OptimInstance]
-#' @param self [Optimizer]
-#' @param private (`environment()`)
-#'
-#' @return [data.table::data.table]
-#'
-#' @keywords internal
-#' @export
-optimize_default = function(inst, self, private) {
-  assert_instance_properties(self, inst)
 
-  if (!is.null(inst$rush) && !inst$rush$n_running_workers) {
-    stop("Cannot start optimization because no workers are running.")
-  }
 
-  inst$archive$start_time = Sys.time()
-  if (isNamespaceLoaded("progressr")) {
-    # initialize progressor
-    # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
-    max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
-    unit = assert_character(inst$terminator$unit)
-    progressor = progressr::progressor(steps = max_steps)
-    inst$progressor = Progressor$new(progressor, unit)
-    inst$progressor$max_steps = max_steps
-  }
 
-  # start optimization
-  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-    inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
-  tryCatch({
-    if (!is.null(inst$rush)) private$.optimize_async(inst) else private$.optimize(inst)
-  }, terminated_error = function(cond) {
-  })
-  private$.assign_result(inst)
-  if (inst$freeze_archive) inst$archive$freeze()
-  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
-  lg$info("Result:")
-  lg$info(capture.output(print(
-    inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-  return(inst$result)
-}
 
-#' @title Default assign_result function
-#' @description
-#' Used internally in the [Optimizer].
-#' It is the default way to determine the result by simply obtaining the best performing result from the archive.
-#'
-#' @param inst [OptimInstance]
-#'
-#' @keywords internal
-#' @export
-assign_result_default = function(inst) {
 
-  if (inst$archive$n_evals == 0) {
-    stop("Cannot assign result because archive is empty.")
-  }
-
-  res = inst$archive$best()
-
-  xdt = res[, inst$search_space$ids(), with = FALSE]
-
-  if (inherits(inst, "OptimInstanceMultiCrit")) {
-    ydt = res[, inst$archive$cols_y, with = FALSE]
-    inst$assign_result(xdt, ydt)
-  } else {
-    # unlist keeps name!
-    y = unlist(res[, inst$archive$cols_y, with = FALSE])
-    inst$assign_result(xdt, y)
-  }
-
-  invisible(NULL)
-}
 
 #' @title Get start values for optimizers
 #'
@@ -216,12 +144,9 @@ trafo_xs = function(xs, search_space) {
 #' Pops a task from the queue and evaluates it with the objective function.
 #' Pushes the results back to the data base.
 #'
-#' @param rush [rush::Rush]\cr
-#' Rush.
-#' @param objective [Objective]\cr
-#' Objective function.
-#' @param search_space [paradox::ParamSet]\cr
-#' Search space.
+#' @template param_rush
+#' @template param_objective
+#' @template param_search_space
 #'
 #' @export
 bbotk_worker_loop = function(rush, objective, search_space) {

@@ -10,49 +10,32 @@
 #'   Returns a tabular view of all performed function calls of the
 #'   Objective. The `x_domain` column is unnested to separate columns.
 #'
-#' @template param_codomain
 #' @template param_search_space
-#' @template param_xdt
-#' @template param_ydt
-#' @template param_n_select
-#' @template param_ref_point
+#' @template param_codomain
+#' @template param_rush
+#'
+#' @template field_search_space
+#' @template field_codomain
+#' @template field_start_time
+#' @template field_rush
+#'
 #' @export
 ArchiveRush = R6Class("ArchiveRush",
   public = list(
 
-    #' @field search_space ([paradox::ParamSet])\cr
-    #' Search space of objective.
     search_space = NULL,
 
-    #' @field codomain ([Codomain])\cr
-    #' Codomain of objective function.
     codomain = NULL,
 
-    #' @field start_time ([POSIXct])\cr
-    #' Time stamp of when the optimization started.
-    #' The time is set by the [Optimizer].
     start_time = NULL,
 
-    #' @field check_values (`logical(1)`)\cr
-    #' Determines if points and results are checked for validity.
-    check_values = NULL,
-
-    #' @field rush ([rush::Rush])\cr
-    #' Rush.
     rush = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
-    #' @param check_values (`logical(1)`)\cr
-    #' Should x-values that are added to the archive be checked for validity?
-    #' Search space that is logged into archive.
-    #' @param rush ([rush::Rush])\cr
-    #' Rush.
-    initialize = function(search_space, codomain, check_values = TRUE, rush) {
+    initialize = function(search_space, codomain, rush) {
       self$search_space = assert_param_set(search_space)
       self$codomain = Codomain$new(assert_param_set(codomain)$params)
-      self$check_values = assert_flag(check_values)
       self$rush = assert_class(rush, "Rush")
       private$.data = data.table()
     },
@@ -62,9 +45,7 @@ ArchiveRush = R6Class("ArchiveRush",
     #' For single-crit optimization, the solution that minimizes / maximizes the objective function.
     #' For multi-crit optimization, the Pareto set / front.
     #'
-    #' @param n_select (`integer(1L)`)\cr
-    #' Amount of points to select.
-    #' Ignored for multi-crit optimization.
+    #' @template param_n_select
     #'
     #' @return [data.table::data.table()]
     best = function(n_select = 1) {
@@ -86,6 +67,9 @@ ArchiveRush = R6Class("ArchiveRush",
 
     #' @description
     #' Calculate best points w.r.t. non dominated sorting with hypervolume contribution.
+    #'
+    #' @template param_n_select
+    #' @template param_ref_point
     #'
     #' @return [data.table::data.table()]
     nds_selection = function(n_select = 1, ref_point = NULL) {
@@ -119,6 +103,7 @@ ArchiveRush = R6Class("ArchiveRush",
     clear = function() {
       self$rush$reset()
       self$start_time = NULL
+      private$.data = data.table()
     },
 
     #' @description

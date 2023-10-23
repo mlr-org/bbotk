@@ -1,4 +1,4 @@
-#' @title Optimization Instance with budget and archive
+#' @title Single Criterion Optimization Instance
 #'
 #' @description
 #' Wraps a single-criteria [Objective] function with extra services for
@@ -50,9 +50,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
         terminator = terminator,
         keep_evals = keep_evals,
         check_values = check_values,
-        callbacks = callbacks,
-        rush = rush,
-        start_workers = start_workers)
+        callbacks = callbacks)
     },
 
     #' @description

@@ -21,7 +21,7 @@ Objective. The \code{x_domain} column is unnested to separate columns.
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space of objective.}
+Specification of the search space for the \link{Optimizer}.}
 
 \item{\code{codomain}}{(\link{Codomain})\cr
 Codomain of objective function.}
@@ -30,11 +30,8 @@ Codomain of objective function.}
 Time stamp of when the optimization started.
 The time is set by the \link{Optimizer}.}
 
-\item{\code{check_values}}{(\code{logical(1)})\cr
-Determines if points and results are checked for validity.}
-
-\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
-Rush.}
+\item{\code{rush}}{(\code{Rush})\cr
+Rush controller for parallel optimization.}
 }
 \if{html}{\out{</div>}}
 }
@@ -74,7 +71,7 @@ Column names of codomain target parameters.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveRush$new(search_space, codomain, check_values = TRUE, rush)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveRush$new(search_space, codomain, rush)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -92,12 +89,8 @@ Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.}
 
-\item{\code{check_values}}{(\code{logical(1)})\cr
-Should x-values that are added to the archive be checked for validity?
-Search space that is logged into archive.}
-
-\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
-Rush.}
+\item{\code{rush}}{(\code{Rush})\cr
+If a rush instance is supplied, the tuning runs without batches.}
 }
 \if{html}{\out{</div>}}
 }
@@ -117,8 +110,10 @@ For multi-crit optimization, the Pareto set / front.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{n_select}}{(\code{integer(1L)})\cr
-Amount of points to select.
-Ignored for multi-crit optimization.}
+Amount of points to select.}
+
+\item{\code{n_select}}{(\code{integer(1L)})\cr
+Amount of points to select.}
 }
 \if{html}{\out{</div>}}
 }
@@ -138,6 +133,9 @@ Calculate best points w.r.t. non dominated sorting with hypervolume contribution
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{n_select}}{(\code{integer(1L)})\cr
+Amount of points to select.}
+
 \item{\code{n_select}}{(\code{integer(1L)})\cr
 Amount of points to select.}
 

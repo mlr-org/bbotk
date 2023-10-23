@@ -1,4 +1,4 @@
-#' @title Optimization Instance with budget and archive
+#' @title Optimization Instance
 #'
 #' @description
 #' Abstract base class.
@@ -14,12 +14,7 @@
 #' @template param_search_space
 #' @template param_keep_evals
 #' @template param_callbacks
-#' @template param_rush
-#' @template param_start_workers
 #'
-#' @template field_rush
-#' @template field_freeze_archive
-#' @template field_detect_lost_tasks
 #'
 #' @export
 OptimInstance = R6Class("OptimInstance",
@@ -47,12 +42,6 @@ OptimInstance = R6Class("OptimInstance",
     #' @field callbacks (List of [CallbackOptimization]s).
     callbacks = NULL,
 
-    rush = NULL,
-
-    freeze_archive = NULL,
-
-    detect_lost_tasks = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -67,57 +56,25 @@ OptimInstance = R6Class("OptimInstance",
       terminator,
       keep_evals = "all",
       check_values = TRUE,
-      callbacks = list(),
-      rush = NULL,
-      start_workers = FALSE) {
-
+      callbacks = list()
+      ) {
       self$objective = assert_r6(objective, "Objective")
+      self$search_space = choose_search_space(self$objective, search_space)
       self$terminator = assert_terminator(terminator, self)
       assert_choice(keep_evals, c("all", "best"))
       assert_flag(check_values)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
-      self$rush = assert_class(rush, "Rush", null.ok = TRUE)
-      assert_flag(start_workers)
-      self$freeze_archive = FALSE
-
-      # set search space
-      domain_search_space = self$objective$domain$search_space()
-      self$search_space = if (is.null(search_space) && domain_search_space$length == 0) {
-        # use whole domain as search space
-        self$objective$domain
-      } else if (is.null(search_space) && domain_search_space$length > 0) {
-        # create search space from tune token in domain
-        domain_search_space
-      } else if (!is.null(search_space) && domain_search_space$length == 0) {
-        # use supplied search space
-        assert_param_set(search_space)
-      } else {
-        stop("If the domain contains TuneTokens, you cannot supply a search_space.")
-      }
 
       # use minimal archive if only best points are needed
-      self$archive = if (!is.null(self$rush)) {
-        ArchiveRush$new(
-          search_space = self$search_space,
-          codomain = objective$codomain,
-          check_values = check_values,
-          rush = self$rush)
-      } else if (keep_evals == "all") {
-        Archive$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values)
-      } else if (keep_evals == "best") {
-        ArchiveBest$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values)
-      }
+      Archive = if (keep_evals == "all") Archive else ArchiveBest
+      self$archive = Archive$new(
+        search_space = self$search_space,
+        codomain = objective$codomain,
+        check_values = check_values)
 
       # disable objective function if search space is not all numeric
-      if (!self$search_space$all_numeric) {
-        private$.objective_function = objective_error
-      } else {
-        private$.objective_function = objective_function
-      }
+      private$.objective_function = if (!self$search_space$all_numeric) objective_error else objective_function
       self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
-
-      # start rush
-      if (!is.null(self$rush) && start_workers) self$start_workers()
     },
 
     #' @description
@@ -145,59 +102,6 @@ OptimInstance = R6Class("OptimInstance",
         catf("* Archive:")
         print(as.data.table(self$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
       }
-    },
-
-    #' @description
-    #' Start workers with `future`.
-    #'
-    #' @param n_workers (`integer(1)`)\cr
-    #' Number of workers to be started.
-    #' If `NULL` the maximum number of free workers is used.
-    #' @param await_workers (`logical(1)`)\cr
-    #' Whether to wait until all workers are available.
-    #'
-    #' @template param_packages
-    #' @template param_host
-    #' @template param_heartbeat_period
-    #' @template param_heartbeat_expire
-    #' @template param_lgr_thresholds
-    #' @template param_freeze_archive
-    #' @template param_detect_lost_tasks
-    start_workers = function(
-      n_workers = NULL,
-      packages = NULL,
-      host = "local",
-      heartbeat_period = NULL,
-      heartbeat_expire = NULL,
-      lgr_thresholds = NULL,
-      await_workers = TRUE,
-      detect_lost_tasks = FALSE,
-      freeze_archive = FALSE) {
-
-      self$detect_lost_tasks = assert_flag(detect_lost_tasks)
-      self$freeze_archive = assert_flag(freeze_archive)
-
-      objective = self$objective
-      search_space = self$search_space
-
-      self$rush$start_workers(
-        worker_loop = bbotk_worker_loop,
-        n_workers = n_workers,
-        globals = c("objective", "search_space"),
-        packages = c(packages, "bbotk"),
-        host = host,
-        heartbeat_period = heartbeat_period,
-        heartbeat_expire = heartbeat_expire,
-        lgr_thresholds = lgr_thresholds,
-        objective = objective,
-        search_space = search_space,
-        await_workers = await_workers)
-    },
-
-    #' @description
-    #' Create a script to start workers.
-    create_worker_script = function() {
-      NULL
     },
 
     #' @description
@@ -242,50 +146,6 @@ OptimInstance = R6Class("OptimInstance",
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
       call_back("on_optimizer_after_eval", self$callbacks, private$.context)
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
-    },
-
-    #' @description
-    #' Evaluate xdt asynchronously.
-    #'
-    #' @param xdt (`data.table::data.table()`)\cr
-    #' x values as `data.table()` with one point per row.
-    #' Contains the value in  the *search space* of the [OptimInstance] object.
-    #' Can contain additional columns for extra information.
-    #' @param wait (`logical(1)`)\cr
-    #' If `TRUE`, wait for all evaluations to finish.
-    eval_async = function(xdt, wait = FALSE) {
-
-      if (self$is_terminated) stop(terminated_error(self))
-
-      assert_data_table(xdt)
-      assert_names(colnames(xdt), must.include = self$search_space$ids())
-
-      lg$info("Evaluating %i configuration(s):", max(1, nrow(xdt)))
-      lg$info(capture.output(print(xdt,
-        class = FALSE, row.names = FALSE, print.keys = FALSE)))
-
-      xss = transpose_list(xdt[, self$search_space$ids(), with = FALSE])
-      xdt[, timestamp_xs := Sys.time()]
-      extra = transpose_list(xdt[, !self$search_space$ids(), with = FALSE])
-
-      if (!is.null(xdt$priority_id)) {
-        keys = self$rush$push_priority_tasks(xss, extra, priority = xdt$priority_id)
-      } else {
-        keys = self$rush$push_tasks(xss, extra)
-      }
-
-      # optimizer can request to wait for all evaluations to finish
-      if (wait) {
-        self$rush$await_tasks(keys, detect_lost_tasks = self$detect_lost_tasks)
-      }
-
-      # terminate optimization if all workers crashed
-      if (self$rush$n_running_workers == 0)  {
-        lg$warn("Optimization terminated because %i workers crashed.", length(self$rush$lost_worker_ids))
-        stop(terminated_error(self))
-      }
-
-      if (self$detect_lost_tasks) self$rush$detect_lost_tasks()
     },
 
     #' @description
@@ -389,4 +249,22 @@ objective_function = function(x, inst, maximization_to_minimization) {
 objective_error = function(x, inst, maximization_to_minimization) {
   stop("$objective_function can only be called if search_space only
     contains numeric values")
+}
+
+# used by OptimInstance and OptimInstanceRush
+choose_search_space = function(objective, search_space) {
+  # create search space
+  domain_search_space = objective$domain$search_space()
+  if (is.null(search_space) && domain_search_space$length == 0) {
+    # use whole domain as search space
+    objective$domain
+  } else if (is.null(search_space) && domain_search_space$length > 0) {
+    # create search space from tune token in domain
+    domain_search_space
+  } else if (!is.null(search_space) && domain_search_space$length == 0) {
+    # use supplied search space
+    assert_param_set(search_space)
+  } else {
+    stop("If the domain contains TuneTokens, you cannot supply a search_space.")
+  }
 }

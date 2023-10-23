@@ -21,14 +21,14 @@ Objective. The \code{x_domain} column is unnested to separate columns.
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space of objective.}
+Specification of the search space for the \link{Optimizer}.}
 
 \item{\code{codomain}}{(\link{Codomain})\cr
 Codomain of objective function.}
 
 \item{\code{start_time}}{(\link{POSIXct})\cr
-Time stamp of when the optimization started. The time is set by the
-\link{Optimizer}.}
+Time stamp of when the optimization started.
+The time is set by the \link{Optimizer}.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Determines if points and results are checked for validity.}

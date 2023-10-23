@@ -1,2 +1,2 @@
-#' @field rush ([rush::Rush])\cr
-#' Rush instance used for parallel tuning.
+#' @field rush (`Rush`)\cr
+#' Rush controller for parallel optimization.

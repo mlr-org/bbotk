@@ -2,7 +2,7 @@
 % Please edit documentation in R/OptimInstanceSingleCrit.R
 \name{OptimInstanceSingleCrit}
 \alias{OptimInstanceSingleCrit}
-\title{Optimization Instance with budget and archive}
+\title{Single Criterion Optimization Instance}
 \description{
 Wraps a single-criteria \link{Objective} function with extra services for
 convenient evaluation. Inherits from \link{OptimInstance}.
@@ -27,16 +27,13 @@ point on.
 }
 }
 \if{html}{\out{
-<details><summary>Inherited methods</summary>
+<details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="clear"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-clear'><code>bbotk::OptimInstance$clear()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="create_worker_script"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-create_worker_script'><code>bbotk::OptimInstance$create_worker_script()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="eval_async"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-eval_async'><code>bbotk::OptimInstance$eval_async()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="eval_batch"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-eval_batch'><code>bbotk::OptimInstance$eval_batch()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="objective_function"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-objective_function'><code>bbotk::OptimInstance$objective_function()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-print'><code>bbotk::OptimInstance$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="start_workers"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-start_workers'><code>bbotk::OptimInstance$start_workers()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -82,7 +79,7 @@ Search space that is logged into archive.}
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
 
-\item{\code{rush}}{(\link[rush:Rush]{rush::Rush})\cr
+\item{\code{rush}}{(\code{Rush})\cr
 If a rush instance is supplied, the tuning runs without batches.}
 
 \item{\code{start_workers}}{(\code{logical(1)})\cr
