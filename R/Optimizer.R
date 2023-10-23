@@ -295,7 +295,6 @@ assign_result_default.OptimInstanceRush = function(inst) {
     ydt = res[, inst$archive$cols_y, with = FALSE]
     get_private(inst)$.assign_result(xdt, ydt)
   } else {
-    browser()
     # unlist keeps name!
     y = unlist(res[, inst$archive$cols_y, with = FALSE])
     get_private(inst)$.assign_result(xdt, y)
