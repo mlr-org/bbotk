@@ -14,6 +14,7 @@
 #' @template param_search_space
 #' @template param_keep_evals
 #' @template param_callbacks
+#' @template param_archive
 #'
 #'
 #' @export
@@ -56,7 +57,8 @@ OptimInstance = R6Class("OptimInstance",
       terminator,
       keep_evals = "all",
       check_values = TRUE,
-      callbacks = list()
+      callbacks = list(),
+      archive = NULL
       ) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = choose_search_space(self$objective, search_space)
@@ -65,12 +67,17 @@ OptimInstance = R6Class("OptimInstance",
       assert_flag(check_values)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
 
-      # use minimal archive if only best points are needed
-      Archive = if (keep_evals == "all") Archive else ArchiveBest
-      self$archive = Archive$new(
-        search_space = self$search_space,
-        codomain = objective$codomain,
-        check_values = check_values)
+      # archive is passed when a downstream packages creates a new archive class
+      self$archive = if (is.null(archive)) {
+        # use minimal archive if only best points are needed
+        Archive = if (keep_evals == "all") Archive else ArchiveBest
+        Archive$new(
+          search_space = self$search_space,
+          codomain = objective$codomain,
+          check_values = check_values)
+      } else {
+        assert_r6(archive, "Archive")
+      }
 
       # disable objective function if search space is not all numeric
       private$.objective_function = if (!self$search_space$all_numeric) objective_error else objective_function

@@ -37,7 +37,8 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
       terminator,
       keep_evals = "all",
       check_values = TRUE,
-      callbacks = list()
+      callbacks = list(),
+      archive = NULL
       ) {
       super$initialize(
         objective = objective,
@@ -45,7 +46,8 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
         terminator = terminator,
         keep_evals = keep_evals,
         check_values = check_values,
-        callbacks = callbacks)
+        callbacks = callbacks,
+        archive = archive)
     },
 
     #' @description

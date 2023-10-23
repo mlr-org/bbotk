@@ -1,4 +1,6 @@
 test_that("initializing OptimInstanceRushSingleCrit works", {
+  skip_on_cran()
+
   rush = rsh()
 
   instance = OptimInstanceRushSingleCrit$new(
@@ -19,6 +21,8 @@ test_that("initializing OptimInstanceRushSingleCrit works", {
 })
 
 test_that("starting workers with OptimInstanceRushSingleCrit works", {
+  skip_on_cran()
+
   rush = rsh()
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
@@ -38,6 +42,8 @@ test_that("starting workers with OptimInstanceRushSingleCrit works", {
 })
 
 test_that("evaluating points works with OptimInstanceRushSingleCrit", {
+  skip_on_cran()
+
   rush = rsh()
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
@@ -60,6 +66,8 @@ test_that("evaluating points works with OptimInstanceRushSingleCrit", {
 })
 
 test_that("assigning a result works with OptimInstanceRushSingleCrit", {
+  skip_on_cran()
+
   rush = rsh()
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
@@ -84,6 +92,8 @@ test_that("assigning a result works with OptimInstanceRushSingleCrit", {
 })
 
 test_that("OptimInstanceRushSingleCrit works with trafos", {
+  skip_on_cran()
+
   rush = rsh()
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
@@ -108,6 +118,8 @@ test_that("OptimInstanceRushSingleCrit works with trafos", {
 })
 
 test_that("OptimInstanceRushSingleCrit works with extra input", {
+  skip_on_cran()
+
   rush = rsh()
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
@@ -142,6 +154,8 @@ test_that("OptimInstanceRushSingleCrit works with extra input", {
 })
 
 test_that("OptimInstanceRushSingleCrit works with extra outputs", {
+  skip_on_cran()
+
   fun_extra = function(xs) {
     y = sum(as.numeric(xs)^2)
     res = list(y = y, extra1 = runif(1), extra2 = list(list(a = runif(1), b = Sys.time())))
@@ -181,6 +195,8 @@ test_that("OptimInstanceRushSingleCrit works with extra outputs", {
 })
 
 test_that("clear method of OptimInstanceRushSingleCrit works", {
+  skip_on_cran()
+
   rush = rsh()
   future::plan("cluster", workers = 1L)
   instance = OptimInstanceRushSingleCrit$new(
@@ -227,7 +243,6 @@ test_that("OptimInstanceRushSingleCrit and the cluster backend works", {
 
 test_that("OptimInstanceRushSingleCrit and the multisession backend works", {
   skip_on_cran()
-  skip_on_ci()
 
   rush = rsh()
   future::plan("multisession", workers = 2L)
@@ -254,7 +269,6 @@ test_that("OptimInstanceRushSingleCrit and the multisession backend works", {
 
 test_that("freezing ArchiveRush after the optimization works", {
   skip_on_cran()
-  skip_on_ci()
 
   rush = rsh()
   future::plan("cluster", workers = 1L)
@@ -280,7 +294,6 @@ test_that("freezing ArchiveRush after the optimization works", {
 
 test_that("timestamps are written to ArchiveRush", {
   skip_on_cran()
-  skip_on_ci()
 
   rush = rsh()
   future::plan("cluster", workers = 1L)
@@ -306,7 +319,6 @@ test_that("timestamps are written to ArchiveRush", {
 
 test_that("saving log messages from the workers works", {
   skip_on_cran()
-  skip_on_ci()
 
   rush = rsh()
   future::plan("cluster", workers = 1L)
@@ -333,7 +345,6 @@ test_that("saving log messages from the workers works", {
 
 test_that("optimizer throws and error when no worker is running", {
   skip_on_cran()
-  skip_on_ci()
 
   rush = rsh()
   future::plan("cluster", workers = 1L)
@@ -359,7 +370,6 @@ test_that("optimizer throws and error when no worker is running", {
 
 test_that("detect lost tasks works", {
   skip_on_cran()
-  skip_on_ci()
 
   rush = rsh()
   future::plan("cluster", workers = 1L)

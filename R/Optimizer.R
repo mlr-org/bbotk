@@ -202,7 +202,7 @@ optimize_default.OptimInstance = function(inst, self, private) {
   lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
     inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
   tryCatch({
-    if (!is.null(inst$rush)) private$.optimize_async(inst) else private$.optimize(inst)
+    private$.optimize(inst)
   }, terminated_error = function(cond) {
   })
   private$.assign_result(inst)
@@ -295,6 +295,7 @@ assign_result_default.OptimInstanceRush = function(inst) {
     ydt = res[, inst$archive$cols_y, with = FALSE]
     get_private(inst)$.assign_result(xdt, ydt)
   } else {
+    browser()
     # unlist keeps name!
     y = unlist(res[, inst$archive$cols_y, with = FALSE])
     get_private(inst)$.assign_result(xdt, y)

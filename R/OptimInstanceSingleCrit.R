@@ -15,8 +15,7 @@
 #' @template param_search_space
 #' @template param_keep_evals
 #' @template param_callbacks
-#' @template param_rush
-#' @template param_start_workers
+#' @template param_archive
 #'
 #' @export
 OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
@@ -38,8 +37,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
       keep_evals = "all",
       check_values = TRUE,
       callbacks = list(),
-      rush = NULL,
-      start_workers = FALSE) {
+      archive = NULL) {
 
       if (objective$codomain$target_length > 1) {
         stop("Codomain > 1")
@@ -50,7 +48,8 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
         terminator = terminator,
         keep_evals = keep_evals,
         check_values = check_values,
-        callbacks = callbacks)
+        callbacks = callbacks,
+        archive = archive)
     },
 
     #' @description
