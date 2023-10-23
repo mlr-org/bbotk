@@ -48,6 +48,7 @@ reference:
   - title: Optimization Instance
     contents:
       - starts_with("OptimInstance")
+      - oi
   - title: Optimizer
     contents:
       - starts_with("Optimizer")
