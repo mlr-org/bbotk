@@ -1,4 +1,4 @@
-# bbotk 0.7.2.9000
+# bbotk 0.7.3
 
 * fix: `OptimInstance$print()` errored when the search space was empty.
 
