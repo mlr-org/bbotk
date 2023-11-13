@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 0.7.2.9000
+Version: 0.7.3
 Authors@R:
     c(person(given = "Marc",
              family = "Becker",
