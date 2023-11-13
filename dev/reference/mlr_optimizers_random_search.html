@@ -18,7 +18,7 @@ of termination criteria."><meta name="robots" content="noindex"><!-- mathjax -->
     
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.2.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.3.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -191,27 +191,27 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modifies the instance by reference</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x  x_domain          y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.219075 &lt;list[1]&gt; 0.04799384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x  x_domain           y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.03421039 &lt;list[1]&gt; 0.001170351</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns best scoring evaluation</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x  x_domain          y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.219075 &lt;list[1]&gt; 0.04799384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x  x_domain           y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.03421039 &lt;list[1]&gt; 0.001170351</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># allows access of data.table of full path of all evaluations</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              x          y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.4153752 0.17253658 &lt;list[1]&gt; 2023-10-23 10:53:56        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.7231152 0.52289554 &lt;list[1]&gt; 2023-10-23 10:53:56        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  0.6767870 0.45804060 &lt;list[1]&gt; 2023-10-23 10:53:56        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -0.6303265 0.39731146 &lt;list[1]&gt; 2023-10-23 10:53:56        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  0.8147250 0.66377681 &lt;list[1]&gt; 2023-10-23 10:53:56        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.4593555 0.21100749 &lt;list[1]&gt; 2023-10-23 10:53:56        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -0.5994325 0.35931932 &lt;list[1]&gt; 2023-10-23 10:53:56        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  0.2190750 0.04799384 &lt;list[1]&gt; 2023-10-23 10:53:56        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -0.3106714 0.09651674 &lt;list[1]&gt; 2023-10-23 10:53:56        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -0.4529317 0.20514717 &lt;list[1]&gt; 2023-10-23 10:53:56       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               x           y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.26852163 0.072103868 &lt;list[1]&gt; 2023-11-13 12:13:27        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.98288581 0.966064518 &lt;list[1]&gt; 2023-11-13 12:13:27        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -0.31828495 0.101305311 &lt;list[1]&gt; 2023-11-13 12:13:27        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.03421039 0.001170351 &lt;list[1]&gt; 2023-11-13 12:13:27        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.14864220 0.022094503 &lt;list[1]&gt; 2023-11-13 12:13:27        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  0.65419206 0.427967255 &lt;list[1]&gt; 2023-11-13 12:13:27        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -0.06486460 0.004207417 &lt;list[1]&gt; 2023-11-13 12:13:27        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  0.27054897 0.073196746 &lt;list[1]&gt; 2023-11-13 12:13:27        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -0.69267243 0.479795096 &lt;list[1]&gt; 2023-11-13 12:13:27        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -0.32208675 0.103739873 &lt;list[1]&gt; 2023-11-13 12:13:27       10</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
