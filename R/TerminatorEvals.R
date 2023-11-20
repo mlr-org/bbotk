@@ -9,7 +9,7 @@
 #' The total number of evaluations \eqn{B} is defined as
 #'
 #' \deqn{
-#'    B = \mathrm{n_evals} + k * D
+#'    B = \mathtt{n\_evals} + \mathtt{k} * D
 #' }{
 #'    B = n_evals + k * D
 #' }
