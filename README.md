@@ -1,7 +1,7 @@
 
 # bbotk - Black-Box Optimization Toolkit
 
-Package website: [release](https://bbotk.mlr-org.com/) |
+Package website: [release](https://bbotk.mlr-org.com/) \|
 [dev](https://bbotk.mlr-org.com/dev/)
 
 <!-- badges: start -->
@@ -26,22 +26,22 @@ base package of [mlr3tuning](https://github.com/mlr-org/mlr3tuning),
 
 The package includes the basic building blocks of optimization:
 
-  - `Optimizer`: Objects of this class allow you to optimize an object
+-   `Optimizer`: Objects of this class allow you to optimize an object
     of the class `OptimInstance`.
-  - `OptimInstance`: Defines the optimization problem, consisting of an
+-   `OptimInstance`: Defines the optimization problem, consisting of an
     `Objective`, the `search_space`, and a `Terminator`. All evaluations
     on the `OptimInstance` will be automatically stored in its own
     `Archive`.
-  - `Objective`: Objects of this class contain the objective function.
+-   `Objective`: Objects of this class contain the objective function.
     The class ensures that the objective function is called in the right
     way and defines, whether the function should be minimized or
     maximized.
-  - `Terminator`: Objects of this class control the termination of the
+-   `Terminator`: Objects of this class control the termination of the
     optimization independent of the optimizer.
 
 ## Resources
 
-  - Package
+-   Package
     [vignette](https://CRAN.R-project.org/package=bbotk/vignettes/bbotk.html)
 
 ## Installation
@@ -120,16 +120,16 @@ as.data.table(instance$archive)
 ```
 
     ##            x1        x2          y           timestamp batch_nr x_domain_x1 x_domain_x2
-    ##  1: -4.689827 -1.278761 -37.716445 2022-11-18 11:17:17        1   -4.689827   -1.278761
-    ##  2: -5.930364 -4.400474 -54.851999 2022-11-18 11:17:17        2   -5.930364   -4.400474
-    ##  3:  7.170817 -1.519948 -18.927907 2022-11-18 11:17:17        3    7.170817   -1.519948
-    ##  4:  2.045200 -1.519948   7.807403 2022-11-18 11:17:17        4    2.045200   -1.519948
-    ##  5:  2.045200 -2.064742   9.123250 2022-11-18 11:17:17        5    2.045200   -2.064742
-    ##  6:  2.045200 -2.064742   9.123250 2022-11-18 11:17:17        6    2.045200   -2.064742
-    ##  7:  2.045201 -2.064742   9.123250 2022-11-18 11:17:17        7    2.045201   -2.064742
-    ##  8:  2.045199 -2.064742   9.123250 2022-11-18 11:17:17        8    2.045199   -2.064742
-    ##  9:  2.045200 -2.064741   9.123248 2022-11-18 11:17:17        9    2.045200   -2.064741
-    ## 10:  2.045200 -2.064743   9.123252 2022-11-18 11:17:17       10    2.045200   -2.064743
+    ##  1: -4.689827 -1.278761 -37.716445 2023-11-13 10:35:33        1   -4.689827   -1.278761
+    ##  2: -5.930364 -4.400474 -54.851999 2023-11-13 10:35:33        2   -5.930364   -4.400474
+    ##  3:  7.170817 -1.519948 -18.927907 2023-11-13 10:35:33        3    7.170817   -1.519948
+    ##  4:  2.045200 -1.519948   7.807403 2023-11-13 10:35:33        4    2.045200   -1.519948
+    ##  5:  2.045200 -2.064742   9.123250 2023-11-13 10:35:33        5    2.045200   -2.064742
+    ##  6:  2.045200 -2.064742   9.123250 2023-11-13 10:35:33        6    2.045200   -2.064742
+    ##  7:  2.045201 -2.064742   9.123250 2023-11-13 10:35:33        7    2.045201   -2.064742
+    ##  8:  2.045199 -2.064742   9.123250 2023-11-13 10:35:33        8    2.045199   -2.064742
+    ##  9:  2.045200 -2.064741   9.123248 2023-11-13 10:35:33        9    2.045200   -2.064741
+    ## 10:  2.045200 -2.064743   9.123252 2023-11-13 10:35:33       10    2.045200   -2.064743
 
 ### Quick optimization with `bb_optimize`
 
