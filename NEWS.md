@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* refactor: Optimize the runtime of `archive$best()` method with partial sorting.
+
 # bbotk 0.7.3
 
 * fix: `OptimInstance$print()` errored when the search space was empty.
