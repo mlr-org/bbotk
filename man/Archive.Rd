@@ -134,22 +134,23 @@ Optimal outcome.}
 \if{html}{\out{<a id="method-Archive-best"></a>}}
 \if{latex}{\out{\hypertarget{method-Archive-best}{}}}
 \subsection{Method \code{best()}}{
-Returns the best scoring evaluation(s). For single-crit optimization,
-the solution that minimizes / maximizes the objective function.
+Returns the best scoring evaluation(s).
+For single-crit optimization, the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL, n_select = 1)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL, n_select = 1L)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{batch}}{(\code{integer()})\cr
-The batch number(s) to limit the best results to. Default is
-all batches.}
+The batch number(s) to limit the best results to.
+Default is all batches.}
 
 \item{\code{n_select}}{(\code{integer(1L)})\cr
-Amount of points to select. Ignored for multi-crit optimization.}
+Amount of points to select.
+Ignored for multi-crit optimization.}
 }
 \if{html}{\out{</div>}}
 }
@@ -161,8 +162,7 @@ Amount of points to select. Ignored for multi-crit optimization.}
 \if{html}{\out{<a id="method-Archive-nds_selection"></a>}}
 \if{latex}{\out{\hypertarget{method-Archive-nds_selection}{}}}
 \subsection{Method \code{nds_selection()}}{
-Calculate best points w.r.t. non dominated sorting with hypervolume
-contribution.
+Calculate best points w.r.t. non dominated sorting with hypervolume contribution.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Archive$nds_selection(batch = NULL, n_select = 1, ref_point = NULL)}\if{html}{\out{</div>}}
 }

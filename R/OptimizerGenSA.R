@@ -81,7 +81,6 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
         verbose = p_lgl(default = FALSE),
         trace.mat = p_lgl(default = TRUE)
       )
-      param_set$values$trace.mat = FALSE  # we don't need this
       super$initialize(
         id = "gensa",
         param_set = param_set,
