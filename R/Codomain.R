@@ -1,12 +1,12 @@
 #' @title Codomain of Function
 #'
 #' @description
-#' A set of [Param] objects defining the codomain of a function. The parameter
+#' A [ParamSet] defining the codomain of a function. The parameter
 #' set must contain at least one target parameter tagged with `"minimize"` or
 #' `"maximize"`. The codomain may contain extra parameters which are ignored
 #' when calling the [Archive] methods `$best()`, `$nds_selection()` and
 #' `$cols_y`. This class is usually constructed internally from a
-#' [paradox::ParamSet] when [Objective] is initialized.
+#' [ParamSet] when [Objective] is initialized.
 #'
 #' @export
 #' @examples
@@ -41,8 +41,9 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param param_set (`list()`)\cr
-    #'   Named list of [paradox::Param] or [paradox::Domain] with which to initialize the codomain.
+    #' @param params (`list()`)\cr
+    #'   Named list with which to initialize the codomain.
+    #'   This argument is analogous to [ParamSet]'s `$initialize()` `params` argument.
     initialize = function(params) {
 
       assert_list(params)
@@ -69,19 +70,19 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
   active = list(
 
     #' @field is_target (named `logical()`)\cr
-    #' Position is `TRUE` for target [Param]s.
+    #' Position is `TRUE` for target parameters.
     is_target = function() {
       self$ids() %in% self$target_ids
     },
 
     #' @field target_length (`integer()`)\cr
-    #' Returns number of target [Param]s.
+    #' Returns number of target parameters.
     target_length = function() {
       length(self$target_ids)
     },
 
     #' @field target_ids (`character()`)\cr
-    #' Number of contained target [Param]s.
+    #' IDs of contained target parameters.
     target_ids = function() {
       if ("any_tags" %in% names(formals(self$ids))) {
         self$ids(any_tags = c("minimize", "maximize"))
@@ -92,7 +93,7 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     },
 
     #' @field target_tags (named `list()` of `character()`)\cr
-    #' Tags of target [Param]s.
+    #' Tags of target parameters.
     target_tags = function() {
       self$tags[self$target_ids]
     },
