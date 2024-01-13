@@ -159,8 +159,14 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
   assert_flag(check.feasible)
 
   # shrink each parameter
-  subspaces = param_set$subspaces()
-  param_trafos = set_names(param_set$params$.trafo, param_set$ids())
+  subspaces = if ("subspaces" %in% names(param_set)) {
+    param_set$subspaces()
+  } else {
+    # old paradox
+    lapply(param_set$params, function(x) ParamSet$new(list(x)))
+  }
+  # old paradox: individual trafos as list of NULL
+  param_trafos = set_names(param_set$params$.trafo %??% vector("list", param_set$length), param_set$ids())
   params_new = map(seq_along(subspaces), function(i) {
     param = subspaces[[i]]
 
@@ -204,17 +210,17 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
           if (param$class == "ParamInt") {
             lower = as.integer(floor(lower))
             upper = as.integer(ceiling(upper))
-            ParamSet$new(structure(list(
+            do.call(ps, structure(list(
               p_int(lower = lower, upper = upper,
                 special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
                 trafo = param_trafos[[pid]])
             ), names = pid))
           } else {  # it's ParamDbl then
 
-            ParamSet$new(structure(list(
+            do.call(ps, structure(list(
               p_dbl(lower = lower, upper = upper,
                 special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
-                tolerance = param$params$tolerance[[1]],  # since 'param' is from subspaces(), it only has 1 line
+                tolerance = param$params$tolerance[[1]] %??% param$params[[1]]$tolerance,  # since 'param' is from subspaces(), it only has 1 line ; '%??%' is for old pdaradox
                 trafo = param_trafos[[pid]])
             ), names = pid))
           }
@@ -230,7 +236,7 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
           if (length(levels) > 1L) {
             levels = setdiff(levels, sample(setdiff(levels, val), size = 1L))
             if (param$class == "ParamFct") {
-              ParamSet$new(structure(list(
+              do.call(ps, structure(list(
                 p_fct(levels = levels,
                   special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
                   trafo = param_trafos[[pid]]
@@ -238,7 +244,7 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
               ), names = pid))
             } else {
               # for ParamLgls we cannot specify levels; instead we set a default
-              ParamSet$new(structure(list(
+              do.call(ps, structure(list(
                 p_lgl(special_vals = param$special_vals[[pid]],
                   default = levels, tags = c(param$tags[[pid]], "shrinked"),
                   trafo = param_trafos[[pid]])
@@ -254,9 +260,17 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
   if (length(missing)) {
     params_new[missing] = subspaces[missing]
   }
-  param_set_new = ps_union(params_new)
+  param_set_new = get0("ps_union",
+    # old paradox
+    ifnotfound = function(x) ParamSet$new(lapply(x, function(y) y$params[[1]]))
+  )(params_new)
   param_set_new$deps = param_set$deps
-  param_set_new$extra_trafo = param_set$extra_trafo
+  if ("extra_trafo" %in% names(param_set_new)) {
+    param_set_new$extra_trafo = param_set$extra_trafo
+  } else {
+    # old paradox
+    param_set_new$trafo = param_set$trafo
+  }
   param_set_new$values = param_set$values  # needed for handling constants
   param_set_new
 }

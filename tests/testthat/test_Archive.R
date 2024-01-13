@@ -123,7 +123,12 @@ test_that("deep clone works", {
 
 test_that("best method works with maximization", {
   codomain = FUN_2D_CODOMAIN
-  codomain$params$y$tags = "maximize"
+  tryCatch({
+    codomain$tags$y = "maximize"
+  }, error = function(e) {
+    # old paradox
+    codomain$params$y$tags = "maximize"
+  })
 
   archive = Archive$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
@@ -136,7 +141,13 @@ test_that("best method works with maximization", {
 
 test_that("best method works with minimization", {
   codomain = FUN_2D_CODOMAIN
-  codomain$params$y$tags = "minimize"
+  tryCatch({
+    codomain$tags$y = "minimize"
+  }, error = function(e) {
+    # old paradox
+    codomain$params$y$tags = "minimize"
+  })
+
 
   archive = Archive$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
@@ -149,7 +160,13 @@ test_that("best method works with minimization", {
 
 test_that("best method returns top n results with maximization", {
   codomain = FUN_2D_CODOMAIN
-  codomain$params$y$tags = "maximize"
+  tryCatch({
+    codomain$tags$y = "maximize"
+  }, error = function(e) {
+    # old paradox
+    codomain$params$y$tags = "maximize"
+  })
+
 
   archive = Archive$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
@@ -162,7 +179,12 @@ test_that("best method returns top n results with maximization", {
 
 test_that("best method returns top n results with minimization", {
   codomain = FUN_2D_CODOMAIN
-  codomain$params$y$tags = "minimize"
+  tryCatch({
+    codomain$tags$y = "minimize"
+  }, error = function(e) {
+    # old paradox
+    codomain$params$y$tags = "minimize"
+  })
 
   archive = Archive$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))

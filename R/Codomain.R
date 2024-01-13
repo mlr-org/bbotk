@@ -41,16 +41,13 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param param_set ([`paradox::ParamSet`])\cr
-    #'   [`ParamSet`] that should be wrapped.
-    initialize = function(param_set) {
+    #' @param param_set (`list()`)\cr
+    #'   Named list of [paradox::Param] or [paradox::Domain] with which to initialize the codomain.
+    initialize = function(params) {
 
-      assert_param_set(param_set)
-      cod_params = map(param_set$ids(), function(id) param_set$get_param(id))
-      names(cod_params) = param_set$ids()
+      assert_list(params)
 
-      super$initialize(cod_params)
-      # assert parameters
+      super$initialize(params)
 
       # only check for codomain parameters tagged with minimize or maximize
       for (id in self$target_ids) {
@@ -86,7 +83,12 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #' @field target_ids (`character()`)\cr
     #' Number of contained target [Param]s.
     target_ids = function() {
-      self$ids(any_tags = c("minimize", "maximize"))
+      if ("any_tags" %in% names(formals(self$ids))) {
+        self$ids(any_tags = c("minimize", "maximize"))
+      } else {
+        # old paradox
+        self$ids()[map_lgl(self$tags, function(x) any(c("minimize", "maximize") %in% x))]
+      }
     },
 
     #' @field target_tags (named `list()` of `character()`)\cr

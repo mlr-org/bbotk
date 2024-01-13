@@ -50,7 +50,10 @@ Objective = R6Class("Objective",
       constants = ps(), check_values = TRUE) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
-      self$codomain = Codomain$new(codomain)
+      assert_param_set(codomain)
+      # get "codomain" element if present (new paradox) or default to $params (old paradox)
+      params = get0("domains", codomain, ifnotfound = codomain$params)
+      self$codomain = Codomain$new(params)
       assert_names(self$domain$ids(), disjunct.from = self$codomain$ids())
       assert_names(self$domain$ids(), disjunct.from = c("x_domain", "timestamp", "batch_nr"))
       assert_names(self$codomain$ids(), disjunct.from = c("x_domain", "timestamp", "batch_nr"))

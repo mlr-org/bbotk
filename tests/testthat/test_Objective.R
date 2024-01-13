@@ -277,7 +277,7 @@ test_that("ObjectiveRFunDt works with deps #141", {
     })
   }
   domain = ps(x1 = p_int(), x2 = p_int())
-  domain$add_dep("x2", "x1", CondEqual(-1))
+  domain$add_dep("x2", "x1", CondEqual$new(-1))
   codomain = ps(y = p_dbl(tags = "minimize"))
   rfun_dt = ObjectiveRFunDt$new(fun = FUN, domain = domain, codomain = codomain)
 
