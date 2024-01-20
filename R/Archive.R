@@ -111,11 +111,11 @@ Archive = R6Class("Archive",
           ii = which_max(y, ties_method = "random")
           tab[ii]
         } else {
-          # use partial sort to find the best points
-          y = tab[[self$cols_y]] * self$codomain$maximization_to_minimization
-          i = sort(y, partial = n_select)[n_select]
-          ii = which(y <= i)
-          tab[ii]
+          # copy table to avoid changing the order of the archive
+          if (is.null(batch)) tab = copy(self$data)
+          # use data.table fast sort to find the best points
+          setorderv(tab, cols = self$cols_y, order = self$codomain$maximization_to_minimization)
+          head(tab, n_select)
         }
       } else {
         # use non-dominated sorting to find the best points
@@ -134,17 +134,16 @@ Archive = R6Class("Archive",
     #'
     #' @return [data.table::data.table()]
     nds_selection = function(batch = NULL, n_select = 1, ref_point = NULL) {
-      if (self$n_batch == 0L) stop("No results stored in archive")
-      if (is.null(batch)) batch = seq_len(self$n_batch)
-      assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
+      if (!self$n_batch) return(data.table())
+      assert_subset(batch, seq_len(self$n_batch))
 
-      tab = self$data[get("batch_nr") %in% batch, ]
+      tab = if (is.null(batch)) self$data else self$data[list(batch), , on = "batch_nr"]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
       minimize = map_lgl(self$codomain$target_tags, has_element, "minimize")
-      inds = nds_selection(points, n_select, ref_point, minimize)
-      tab[inds, ]
+      ii = nds_selection(points, n_select, ref_point, minimize)
+      tab[ii, ]
     },
 
     #' @description

@@ -174,7 +174,20 @@ test_that("best method returns top n results with maximization", {
   ydt = data.table(y = c(1, 0.25, 2, 0.5, 0.3))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
-  expect_equal(archive$best(n_select = 2)$y, c(1, 2))
+  expect_equal(archive$best(n_select = 2)$y, c(2, 1))
+})
+
+test_that("best method returns top n results with maximization and ties", {
+  codomain = FUN_2D_CODOMAIN
+  codomain$params$y$tags = "maximize"
+
+  archive = Archive$new(PS_2D, FUN_2D_CODOMAIN)
+  xdt = data.table(x1 = runif(5), x2 = runif(5))
+  xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
+  ydt = data.table(y = c(1, 1, 2, 0.5, 0.5))
+  archive$add_evals(xdt, xss_trafoed, ydt)
+
+  expect_equal(archive$best(n_select = 2)$y, c(2, 1))
 })
 
 test_that("best method returns top n results with minimization", {
@@ -190,6 +203,19 @@ test_that("best method returns top n results with minimization", {
   xdt = data.table(x1 = runif(5), x2 = runif(5))
   xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
   ydt = data.table(y = c(1, 0.25, 2, 0.5, 0.3))
+  archive$add_evals(xdt, xss_trafoed, ydt)
+
+  expect_equal(archive$best(n_select = 2)$y, c(0.25, 0.3))
+})
+
+test_that("best method returns top n results with minimization and ties", {
+  codomain = FUN_2D_CODOMAIN
+  codomain$params$y$tags = "minimize"
+
+  archive = Archive$new(PS_2D, FUN_2D_CODOMAIN)
+  xdt = data.table(x1 = runif(5), x2 = runif(5))
+  xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
+  ydt = data.table(y = c(1, 0.25, 0.5, 0.3, 0.3))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
   expect_equal(archive$best(n_select = 2)$y, c(0.25, 0.3))
