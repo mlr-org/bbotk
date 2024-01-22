@@ -92,12 +92,18 @@ Archive = R6Class("Archive",
     #' @param n_select (`integer(1L)`)\cr
     #' Amount of points to select.
     #' Ignored for multi-crit optimization.
+    #' @param ties_method (`character(1L)`)\cr
+    #' Method to break ties when multiple points have the same score.
+    #' Either `"first"` (default) or `"random"`.
+    #' Ignored for multi-crit optimization.
+    #' If `n_select > 1L`, the tie method is ignored and the first point is returned.
     #'
     #' @return [data.table::data.table()]
-    best = function(batch = NULL, n_select = 1L) {
+    best = function(batch = NULL, n_select = 1L, ties_method = "first") {
       if (!self$n_batch) return(data.table())
       assert_subset(batch, seq_len(self$n_batch))
       assert_int(n_select, lower = 1L)
+      assert_choice(ties_method, c("first", "random"))
 
       tab = if (is.null(batch)) self$data else self$data[list(batch), , on = "batch_nr"]
 
@@ -105,7 +111,7 @@ Archive = R6Class("Archive",
         if (n_select == 1L) {
           # use which_max to find the best point
           y = tab[[self$cols_y]] * -self$codomain$maximization_to_minimization
-          ii = which_max(y, ties_method = "random")
+          ii = which_max(y, ties_method = ties_method)
           tab[ii]
         } else {
           # copy table to avoid changing the order of the archive

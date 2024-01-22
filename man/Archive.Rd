@@ -138,7 +138,7 @@ Returns the best scoring evaluation(s).
 For single-crit optimization, the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL, n_select = 1L)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL, n_select = 1L, ties_method = "first")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -151,6 +151,12 @@ Default is all batches.}
 \item{\code{n_select}}{(\code{integer(1L)})\cr
 Amount of points to select.
 Ignored for multi-crit optimization.}
+
+\item{\code{ties_method}}{(\code{character(1L)})\cr
+Method to break ties when multiple points have the same score.
+Either \code{"first"} (default) or \code{"random"}.
+Ignored for multi-crit optimization.
+If \code{n_select > 1L}, the tie method is ignored and the first point is returned.}
 }
 \if{html}{\out{</div>}}
 }
