@@ -23,7 +23,6 @@ OptimInstanceRushSingleCrit = R6Class("OptimInstanceRushSingleCrit",
       objective,
       search_space = NULL,
       terminator,
-      rush,
       callbacks = list(),
       archive = NULL
       ) {
@@ -35,7 +34,6 @@ OptimInstanceRushSingleCrit = R6Class("OptimInstanceRushSingleCrit",
         objective = objective,
         search_space = search_space,
         terminator = terminator,
-        rush = rush,
         callbacks = callbacks,
         archive = archive)
     }

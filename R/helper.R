@@ -51,12 +51,6 @@ transform_xdt_to_xss = function(xdt, search_space) {
   design$transpose(trafo = TRUE, filter_na = TRUE)
 }
 
-
-
-
-
-
-
 #' @title Get start values for optimizers
 #'
 #' @description
@@ -151,18 +145,17 @@ trafo_xs = function(xs, search_space) {
 #' @export
 bbotk_worker_loop = function(rush, objective, search_space) {
   while(!rush$terminated) {
-    task = rush$pop_task()
+    task = rush$pop_task(fields = c("xs", "seed"))
     xs_trafoed = trafo_xs(task$xs, search_space)
 
     if (!is.null(task)) {
       tryCatch({
-        ys = objective$eval(xs = xs_trafoed)
+        ys = with_rng_state(objective$eval, args = list(xs = xs_trafoed), seed = task$seed)
         rush$push_results(task$key, yss = list(ys), extra = list(list(x_domain = list(xs_trafoed), timestamp_ys = Sys.time())))
       }, error = function(e) {
         condition = list(message = e$message)
-        rush$push_results(task$key, conditions = list(condition), status = "failed")
+        rush$push_failed(task$key, conditions = list(condition))
       })
-      rush$write_log()
     }
   }
   return(NULL)

@@ -227,3 +227,10 @@ clean_on_exit = function(pids) {
   future::plan("sequential")
   walk(pids, tools::pskill)
 }
+
+expect_rush_reset = function(rush, type = "kill") {
+  processes = rush$processes
+  rush$reset(type = type)
+  expect_list(rush$connector$command(c("KEYS", "*")), len = 0)
+  walk(processes, function(p) p$kill())
+}

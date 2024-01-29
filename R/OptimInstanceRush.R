@@ -44,15 +44,20 @@ OptimInstanceRush = R6Class("OptimInstanceRush",
       objective,
       search_space = NULL,
       terminator,
-      rush,
       callbacks = list(),
       archive = NULL
       ) {
+
+      if (!rush_available()) {
+        stop("No rush plan available. Please set with `rush_plan()`.")
+      }
+
       self$objective = assert_r6(objective, "Objective")
       self$search_space = choose_search_space(self$objective, search_space)
       self$terminator = assert_terminator(terminator, self)
-      self$rush = assert_class(rush, "Rush")
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
+
+      self$rush = rsh()
 
       # archive is passed when a downstream packages creates a new archive class
       self$archive = if (is.null(archive)) {

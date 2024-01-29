@@ -1,13 +1,12 @@
 test_that("initializing OptimInstanceRushSingleCrit works", {
   skip_on_cran()
 
-  rush = rsh()
+  rush_plan(n_workers = 2)
 
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
-    rush = rush
   )
 
   expect_r6(instance$archive, "ArchiveRush")
@@ -17,18 +16,18 @@ test_that("initializing OptimInstanceRushSingleCrit works", {
   expect_r6(instance$rush, "Rush")
   expect_null(instance$result)
 
-  rush$reset()
+  expect_rush_reset(instance$rush)
 })
 
 test_that("starting workers with OptimInstanceRushSingleCrit works", {
   skip_on_cran()
 
-  rush = rsh()
+  rush_plan(n_workers = 2)
+
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
-    rush = rush
   )
 
   future::plan("cluster", workers = 1L)
