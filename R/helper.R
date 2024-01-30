@@ -57,7 +57,7 @@ transform_xdt_to_xss = function(xdt, search_space) {
 #' @export
 optimize_default = function(inst, self, private) {
   assert_instance_properties(self, inst)
-  inst$archive$start_time = Sys.time()
+  if (is.null(inst$archive$start_time)) inst$archive$start_time = Sys.time()
   if (isNamespaceLoaded("progressr")) {
     # initialize progressor
     # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
