@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: `OptimizerIrace` failed with logical parameters and dependencies.
 * refactor: Optimize the runtime of `archive$best()` method with partial sorting.
 
 # bbotk 0.7.3
