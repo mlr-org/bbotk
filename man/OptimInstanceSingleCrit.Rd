@@ -50,8 +50,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   keep_evals = "all",
   check_values = TRUE,
   callbacks = list(),
-  rush = NULL,
-  start_workers = FALSE
+  archive = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -79,11 +78,7 @@ Search space that is logged into archive.}
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
 
-\item{\code{rush}}{(\code{Rush})\cr
-If a rush instance is supplied, the tuning runs without batches.}
-
-\item{\code{start_workers}}{(\code{logical(1)})\cr
-If \code{TRUE}, the workers are started immediately with \code{future} on all available cores.}
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }

@@ -36,7 +36,6 @@ Optimal outcome.}
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceRush" data-id="eval_async"><a href='../../bbotk/html/OptimInstanceRush.html#method-OptimInstanceRush-eval_async'><code>bbotk::OptimInstanceRush$eval_async()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceRush" data-id="format"><a href='../../bbotk/html/OptimInstanceRush.html#method-OptimInstanceRush-format'><code>bbotk::OptimInstanceRush$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceRush" data-id="print"><a href='../../bbotk/html/OptimInstanceRush.html#method-OptimInstanceRush-print'><code>bbotk::OptimInstanceRush$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceRush" data-id="start_workers"><a href='../../bbotk/html/OptimInstanceRush.html#method-OptimInstanceRush-start_workers'><code>bbotk::OptimInstanceRush$start_workers()</code></a></span></li>
 </ul>
 </details>
 }}

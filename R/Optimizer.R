@@ -84,6 +84,7 @@ Optimizer = R6Class("Optimizer",
     #' @param inst ([OptimInstance]).
     #' @return [data.table::data.table].
     optimize = function(inst) {
+      inst$archive$start_time = Sys.time()
       inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
       call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
       result = optimize_default(inst, self, private)
@@ -187,7 +188,6 @@ optimize_default = function(inst, self, private) {
 optimize_default.OptimInstance = function(inst, self, private) {
   assert_instance_properties(self, inst)
 
-  inst$archive$start_time = Sys.time()
   if (isNamespaceLoaded("progressr")) {
     # initialize progressor
     # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
@@ -218,12 +218,20 @@ optimize_default.OptimInstance = function(inst, self, private) {
 optimize_default.OptimInstanceRush = function(inst, self, private) {
   assert_instance_properties(self, inst)
 
-  if (!inst$rush$n_running_workers) {
-    stop("Cannot start optimization because no workers are running.")
-  }
+  # decouple from instance
+  objective = inst$objective
+  search_space = inst$search_space
 
-  # start optimization
-  inst$archive$start_time = Sys.time()
+  if (rush_available()) {
+    inst$rush$start_workers(
+      worker_loop = bbotk_worker_loop_centralized,
+      packages = "bbotk",
+      objective = objective,
+      search_space = search_space,
+      wait_for_workers = TRUE)
+  } else {
+    stop("No rush plan available. See `?rush::rush_plan()`")
+  }
 
   lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
     inst$search_space$length,
@@ -239,7 +247,7 @@ optimize_default.OptimInstanceRush = function(inst, self, private) {
 
   # assign result
   private$.assign_result(inst)
-  if (get_private(inst)$.freeze_archive) inst$archive$freeze()
+  # if (get_private(inst)$.freeze_archive) inst$archive$freeze()
   lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
   lg$info("Result:")
   lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))

@@ -79,7 +79,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   terminator,
   keep_evals = "all",
   check_values = TRUE,
-  callbacks = list()
+  callbacks = list(),
+  archive = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -106,6 +107,8 @@ Search space that is logged into archive.}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
+
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }

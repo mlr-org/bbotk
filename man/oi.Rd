@@ -8,7 +8,6 @@ oi(
   objective,
   search_space = NULL,
   terminator,
-  rush = NULL,
   callbacks = list(),
   check_values = TRUE,
   keep_evals = "all"
@@ -27,9 +26,6 @@ value defaults to the domain of the objective.}
 
 \item{terminator}{\link{Terminator}\cr
 Termination criterion.}
-
-\item{rush}{(\code{Rush})\cr
-If a rush instance is supplied, the tuning runs without batches.}
 
 \item{callbacks}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}

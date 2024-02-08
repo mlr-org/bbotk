@@ -57,7 +57,6 @@ Optimal outcome.}
 \item \href{#method-OptimInstanceRush-new}{\code{OptimInstanceRush$new()}}
 \item \href{#method-OptimInstanceRush-format}{\code{OptimInstanceRush$format()}}
 \item \href{#method-OptimInstanceRush-print}{\code{OptimInstanceRush$print()}}
-\item \href{#method-OptimInstanceRush-start_workers}{\code{OptimInstanceRush$start_workers()}}
 \item \href{#method-OptimInstanceRush-eval_async}{\code{OptimInstanceRush$eval_async()}}
 \item \href{#method-OptimInstanceRush-clear}{\code{OptimInstanceRush$clear()}}
 \item \href{#method-OptimInstanceRush-clone}{\code{OptimInstanceRush$clone()}}
@@ -73,9 +72,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
-  rush,
   callbacks = list(),
-  archive = NULL
+  archive = NULL,
+  rush = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -95,13 +94,13 @@ value defaults to the domain of the objective.}
 \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
 
-\item{\code{rush}}{(\code{Rush})\cr
-If a rush instance is supplied, the tuning runs without batches.}
-
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
 
 \item{\code{archive}}{(\link{Archive}).}
+
+\item{\code{rush}}{(\code{Rush})\cr
+If a rush instance is supplied, the tuning runs without batches.}
 }
 \if{html}{\out{</div>}}
 }
@@ -136,63 +135,6 @@ Printer.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceRush-start_workers"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceRush-start_workers}{}}}
-\subsection{Method \code{start_workers()}}{
-Start workers with the \code{future} package.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceRush$start_workers(
-  n_workers = NULL,
-  packages = NULL,
-  host = "local",
-  heartbeat_period = NULL,
-  heartbeat_expire = NULL,
-  lgr_thresholds = NULL,
-  await_workers = TRUE,
-  detect_lost_tasks = FALSE,
-  freeze_archive = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n_workers}}{(\code{integer(1)})\cr
-Number of workers to be started.
-If \code{NULL} the maximum number of free workers is used.}
-
-\item{\code{packages}}{(\code{character()})\cr
-Packages to be loaded by the workers.}
-
-\item{\code{host}}{(\code{character(1)})\cr
-Worker is started on a local or remote host.}
-
-\item{\code{heartbeat_period}}{(\code{integer(1)})\cr
-Period of the heartbeat in seconds.}
-
-\item{\code{heartbeat_expire}}{(\code{integer(1)})\cr
-Time to live of the heartbeat in seconds.}
-
-\item{\code{lgr_thresholds}}{(named \code{character()} or \code{numeric()})\cr
-Thresholds for the \code{lgr} package e.g. c(rush = "debug", bbotk = "info").
-If \code{NULL}, no log messages from the workers are saved.}
-
-\item{\code{await_workers}}{(\code{logical(1)})\cr
-Whether to wait until all workers are available.}
-
-\item{\code{detect_lost_tasks}}{(\code{logical(1)})\cr
-Whether to detect lost tasks.
-Defaults to \code{FALSE}.}
-
-\item{\code{freeze_archive}}{(\code{logical(1)})\cr
-If \code{TRUE}, the archive is copied from redis to a local data.table after tuning.
-This is helpful when the tuning is run on a remote machine and the archive is serialized.
-Only used if \code{rush} is supplied.}
 }
 \if{html}{\out{</div>}}
 }

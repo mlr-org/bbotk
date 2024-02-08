@@ -25,7 +25,6 @@ The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceRushSingleCri
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceRush" data-id="eval_async"><a href='../../bbotk/html/OptimInstanceRush.html#method-OptimInstanceRush-eval_async'><code>bbotk::OptimInstanceRush$eval_async()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceRush" data-id="format"><a href='../../bbotk/html/OptimInstanceRush.html#method-OptimInstanceRush-format'><code>bbotk::OptimInstanceRush$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceRush" data-id="print"><a href='../../bbotk/html/OptimInstanceRush.html#method-OptimInstanceRush-print'><code>bbotk::OptimInstanceRush$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceRush" data-id="start_workers"><a href='../../bbotk/html/OptimInstanceRush.html#method-OptimInstanceRush-start_workers'><code>bbotk::OptimInstanceRush$start_workers()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -39,9 +38,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
-  rush,
   callbacks = list(),
-  archive = NULL
+  archive = NULL,
+  rush = NULL
 )}\if{html}{\out{</div>}}
 }
 
@@ -61,13 +60,13 @@ value defaults to the domain of the objective.}
 \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
 
-\item{\code{rush}}{(\code{Rush})\cr
-If a rush instance is supplied, the tuning runs without batches.}
-
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
 
 \item{\code{archive}}{(\link{Archive}).}
+
+\item{\code{rush}}{(\code{Rush})\cr
+If a rush instance is supplied, the tuning runs without batches.}
 }
 \if{html}{\out{</div>}}
 }

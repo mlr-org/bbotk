@@ -24,7 +24,8 @@ OptimInstanceRushSingleCrit = R6Class("OptimInstanceRushSingleCrit",
       search_space = NULL,
       terminator,
       callbacks = list(),
-      archive = NULL
+      archive = NULL,
+      rush = NULL
       ) {
       if (objective$codomain$target_length > 1) {
         stop("Codomain length must be 1.")
@@ -35,7 +36,8 @@ OptimInstanceRushSingleCrit = R6Class("OptimInstanceRushSingleCrit",
         search_space = search_space,
         terminator = terminator,
         callbacks = callbacks,
-        archive = archive)
+        archive = archive,
+        rush = rush)
     }
   ),
 

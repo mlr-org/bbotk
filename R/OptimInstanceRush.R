@@ -45,19 +45,14 @@ OptimInstanceRush = R6Class("OptimInstanceRush",
       search_space = NULL,
       terminator,
       callbacks = list(),
-      archive = NULL
+      archive = NULL,
+      rush = NULL
       ) {
-
-      if (!rush_available()) {
-        stop("No rush plan available. Please set with `rush_plan()`.")
-      }
-
       self$objective = assert_r6(objective, "Objective")
       self$search_space = choose_search_space(self$objective, search_space)
       self$terminator = assert_terminator(terminator, self)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
-
-      self$rush = rsh()
+      self$rush = rush %??% rsh()
 
       # archive is passed when a downstream packages creates a new archive class
       self$archive = if (is.null(archive)) {
@@ -95,52 +90,6 @@ OptimInstanceRush = R6Class("OptimInstanceRush",
     },
 
     #' @description
-    #' Start workers with the `future` package.
-    #'
-    #' @template param_n_workers
-    #' @template param_packages
-    #' @template param_host
-    #' @template param_heartbeat_period
-    #' @template param_heartbeat_expire
-    #' @template param_lgr_thresholds
-    #' @template param_await_workers
-    #' @template param_detect_lost_tasks
-    #' @template param_freeze_archive
-    start_workers = function(
-      n_workers = NULL,
-      packages = NULL,
-      host = "local",
-      heartbeat_period = NULL,
-      heartbeat_expire = NULL,
-      lgr_thresholds = NULL,
-      await_workers = TRUE,
-      detect_lost_tasks = FALSE,
-      freeze_archive = FALSE
-      ) {
-      private$.detect_lost_tasks = assert_flag(detect_lost_tasks)
-      private$.freeze_archive = assert_flag(freeze_archive)
-
-      # decouple globals from instance
-      objective = self$objective
-      search_space = self$search_space
-
-      worker_ids = self$rush$start_workers(
-        worker_loop = bbotk_worker_loop,
-        n_workers = n_workers,
-        globals = c("objective", "search_space"),
-        packages = c(packages, "bbotk"),
-        host = host,
-        heartbeat_period = heartbeat_period,
-        heartbeat_expire = heartbeat_expire,
-        lgr_thresholds = lgr_thresholds,
-        objective = objective,
-        search_space = search_space,
-        await_workers = await_workers)
-
-      lg$info("Starting %i worker(s) with future.", length(worker_ids))
-    },
-
-    #' @description
     #' Adds points in `xdt` to the queue.
     #' The points are evaluated by calling the [Objective] asynchronously.
     #'
@@ -172,7 +121,7 @@ OptimInstanceRush = R6Class("OptimInstanceRush",
 
       # optimizer can request to wait for all evaluations to finish
       if (wait) {
-        self$rush$await_tasks(keys, detect_lost_tasks = private$.detect_lost_tasks)
+        self$rush$wait_for_tasks(keys, detect_lost_workers = TRUE) # private$.detect_lost_tasks
       }
 
       # terminate optimization if all workers crashed
@@ -181,7 +130,7 @@ OptimInstanceRush = R6Class("OptimInstanceRush",
         stop(terminated_error(self))
       }
 
-      if (private$.detect_lost_tasks) self$rush$detect_lost_tasks()
+      # if (private$.detect_lost_tasks) self$rush$detect_lost_tasks()
 
       return(invisible(keys))
     },

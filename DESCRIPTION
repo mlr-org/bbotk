@@ -72,7 +72,7 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Collate:
     'Archive.R'
     'ArchiveBest.R'
@@ -100,6 +100,7 @@ Collate:
     'OptimizerIrace.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
+    'OptimizerRandomSearchV2.R'
     'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
@@ -120,4 +121,5 @@ Collate:
     'nds_selection.R'
     'reexport.R'
     'sugar.R'
+    'worker_loops.R'
     'zzz.R'
