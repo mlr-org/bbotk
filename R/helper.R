@@ -123,11 +123,10 @@ allow_partial_matching = list(
 #'
 #' @export
 trafo_xs = function(xs, search_space) {
-  xs = map(xs, function(x) Filter(Negate(is_scalar_na), x))
+  xs = discard(xs, is_scalar_na)
   if (search_space$has_trafo) {
     xs = search_space$trafo(xs, search_space)
   }
-
   return(xs)
 }
 
