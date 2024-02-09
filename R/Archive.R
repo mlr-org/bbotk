@@ -80,41 +80,54 @@ Archive = R6Class("Archive",
     },
 
     #' @description
-    #' Returns the best scoring evaluation(s). For single-crit optimization,
-    #' the solution that minimizes / maximizes the objective function.
+    #' Returns the best scoring evaluation(s).
+    #' For single-crit optimization, the solution that minimizes / maximizes the objective function.
     #' For multi-crit optimization, the Pareto set / front.
     #'
     #' @param batch (`integer()`)\cr
-    #'  The batch number(s) to limit the best results to. Default is
-    #'  all batches.
+    #' The batch number(s) to limit the best results to.
+    #' Default is all batches.
     #' @param n_select (`integer(1L)`)\cr
-    #'   Amount of points to select. Ignored for multi-crit optimization.
+    #' Amount of points to select.
+    #' Ignored for multi-crit optimization.
+    #' @param ties_method (`character(1L)`)\cr
+    #' Method to break ties when multiple points have the same score.
+    #' Either `"first"` (default) or `"random"`.
+    #' Ignored for multi-crit optimization.
+    #' If `n_select > 1L`, the tie method is ignored and the first point is returned.
     #'
     #' @return [data.table::data.table()]
-    best = function(batch = NULL, n_select = 1) {
-      if (self$n_batch == 0L) return(data.table())
-      if (is.null(batch)) batch = seq_len(self$n_batch)
+    best = function(batch = NULL, n_select = 1L, ties_method = "first") {
+      if (!self$n_batch) return(data.table())
       assert_subset(batch, seq_len(self$n_batch))
+      assert_int(n_select, lower = 1L)
+      assert_choice(ties_method, c("first", "random"))
 
-      tab = self$data[get("batch_nr") %in% batch, ]
-      assert_int(n_select, lower = 1L, upper = nrow(tab))
+      tab = if (is.null(batch)) self$data else self$data[list(batch), , on = "batch_nr"]
 
-      max_to_min = self$codomain$maximization_to_minimization
       if (self$codomain$target_length == 1L) {
-        setorderv(tab, self$cols_y, order = max_to_min, na.last = TRUE)
-        res = tab[seq_len(n_select), ]
+        if (n_select == 1L) {
+          # use which_max to find the best point
+          y = tab[[self$cols_y]] * -self$codomain$maximization_to_minimization
+          ii = which_max(y, ties_method = ties_method)
+          tab[ii]
+        } else {
+          # copy table to avoid changing the order of the archive
+          if (is.null(batch)) tab = copy(self$data)
+          # use data.table fast sort to find the best points
+          setorderv(tab, cols = self$cols_y, order = self$codomain$maximization_to_minimization)
+          head(tab, n_select)
+        }
       } else {
+        # use non-dominated sorting to find the best points
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-        ymat = max_to_min * ymat
-        res = tab[!is_dominated(ymat)]
+        ymat = self$codomain$maximization_to_minimization * ymat
+        tab[!is_dominated(ymat)]
       }
-
-      return(res)
     },
 
     #' @description
-    #' Calculate best points w.r.t. non dominated sorting with hypervolume
-    #' contribution.
+    #' Calculate best points w.r.t. non dominated sorting with hypervolume contribution.
     #'
     #' @param batch (`integer()`)\cr
     #'   The batch number(s) to limit the best points to. Default is
@@ -122,17 +135,16 @@ Archive = R6Class("Archive",
     #'
     #' @return [data.table::data.table()]
     nds_selection = function(batch = NULL, n_select = 1, ref_point = NULL) {
-      if (self$n_batch == 0L) stop("No results stored in archive")
-      if (is.null(batch)) batch = seq_len(self$n_batch)
-      assert_integerish(batch, lower = 1L, upper = self$n_batch, coerce = TRUE)
+      if (!self$n_batch) return(data.table())
+      assert_subset(batch, seq_len(self$n_batch))
 
-      tab = self$data[get("batch_nr") %in% batch, ]
+      tab = if (is.null(batch)) self$data else self$data[list(batch), , on = "batch_nr"]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
       minimize = map_lgl(self$codomain$target_tags, has_element, "minimize")
-      inds = nds_selection(points, n_select, ref_point, minimize)
-      tab[inds, ]
+      ii = nds_selection(points, n_select, ref_point, minimize)
+      tab[ii, ]
     },
 
     #' @description
