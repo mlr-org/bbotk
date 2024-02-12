@@ -48,7 +48,8 @@ Imports:
     lgr,
     methods,
     mlr3misc (>= 0.11.0),
-    R6
+    R6,
+    rush
 Suggests:
     adagio,
     emoa,
@@ -60,7 +61,6 @@ Suggests:
     progressr,
     rmarkdown,
     redux,
-    rush,
     testthat (>= 3.0.0)
 Remotes:
     mlr-org/rush
