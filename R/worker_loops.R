@@ -35,7 +35,7 @@ bbotk_worker_loop_decentralized = function(rush, optimizer, instance) {
   instance$archive$rush = rush
 
   # run optimizer loop
-  get_private(optimizer)$.optimize_remote(instance)
+  get_private(optimizer)$.optimize(instance)
 
   return(NULL)
 }

@@ -18,49 +18,13 @@ OptimizerRandomSearchV2 = R6Class("OptimizerRandomSearchV2",
     },
 
     optimize = function(inst) {
-
-      # start rush workers
-      if (rush_available()) {
-        inst$rush$start_workers(
-          worker_loop = bbotk_worker_loop_decentralized,
-          packages = "bbotk",
-          optimizer = self,
-          instance = inst,
-          lgr_thresholds = c(rush = "debug", bbotk = "debug"),
-          wait_for_workers = TRUE)
-      } else {
-        stop("No rush plan available. See `?rush::rush_plan()`")
-      }
-
-      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
-        inst$search_space$length,
-        self$format(),
-        inst$terminator$format(with_params = TRUE),
-        inst$rush$n_running_workers
-      )
-
-      # wait
-      while(!inst$is_terminated) {
-        Sys.sleep(1)
-        inst$rush$detect_lost_workers()
-      }
-
-      # assign result
-      private$.assign_result(inst)
-
-      # assign result
-      private$.assign_result(inst)
-      lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
-      lg$info("Result:")
-      lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-      return(inst$result)
-
-      result
+      inst$archive$start_time = Sys.time()
+      optimize_decentralized(inst, self, private)
     }
   ),
 
   private = list(
-    .optimize_remote = function(inst) {
+    .optimize = function(inst) {
 
       while(!inst$is_terminated) {
         # ask

@@ -50,7 +50,7 @@ test_that("starting workers and evaluating points works in a decentralized netwo
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("evals", n_evals = 5L),
+    terminator = trm("evals", n_evals = 20L),
   )
 
   optimizer = opt("random_search_v2")

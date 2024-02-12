@@ -254,6 +254,72 @@ optimize_default.OptimInstanceRush = function(inst, self, private) {
   return(inst$result)
 }
 
+#' @title Decentralized Optimization Function
+#'
+#' @description
+#' Used internally in the [Optimizer].
+#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
+#'
+#' @param inst [OptimInstance]
+#' @param self [Optimizer]
+#' @param private (`environment()`)
+#'
+#' @return [data.table::data.table]
+#'
+#' @keywords internal
+#' @export
+optimize_decentralized = function(inst, self, private) {
+  assert_class(inst, "OptimInstanceRush")
+
+  if (!rush_available()) stop("No rush plan available. See `?rush::rush_plan()`")
+
+  # FIXME: How to handle manual start of workers?
+  # How to pass globals and packages?
+  inst$rush$start_workers(
+    worker_loop = bbotk_worker_loop_decentralized,
+    packages = "bbotk",
+    optimizer = self,
+    instance = inst,
+    wait_for_workers = TRUE)
+
+  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
+    inst$search_space$length,
+    self$format(),
+    inst$terminator$format(with_params = TRUE),
+    inst$rush$n_running_workers
+  )
+
+  # wait until optimization is finished
+  while(!inst$is_terminated) {
+    Sys.sleep(1)
+    inst$rush$print_log()
+    inst$rush$detect_lost_workers()
+
+    # fetch new results for printing
+    new_results = inst$rush$fetch_new_tasks()
+    if (nrow(new_results)) {
+      lg$info("Results of %i configuration(s):", nrow(new_results))
+      lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+    }
+
+    if (!inst$is_terminated && inst$rush$n_running_workers == 0) {
+      stop("All workers have crashed.")
+    }
+  }
+
+  # assign result
+  private$.assign_result(inst)
+
+  # assign result
+  private$.assign_result(inst)
+  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
+  lg$info("Result:")
+  lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+  return(inst$result)
+
+  result
+}
+
 #' @title Default Assign Result Function
 #'
 #' @description
