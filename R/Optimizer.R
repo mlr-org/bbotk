@@ -273,6 +273,10 @@ optimize_decentralized = function(inst, self, private) {
 
   if (!rush_available()) stop("No rush plan available. See `?rush::rush_plan()`")
 
+  inst$archive$start_time = Sys.time()
+  inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
+  call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
+
   # FIXME: How to handle manual start of workers?
   # How to pass globals and packages?
   inst$rush$start_workers(
@@ -315,9 +319,9 @@ optimize_decentralized = function(inst, self, private) {
   lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
   lg$info("Result:")
   lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-  return(inst$result)
 
-  result
+  call_back("on_optimization_end", inst$callbacks, get_private(inst)$.context)
+  return(inst$result)
 }
 
 #' @title Default Assign Result Function
