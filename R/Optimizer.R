@@ -247,7 +247,6 @@ optimize_default.OptimInstanceRush = function(inst, self, private) {
 
   # assign result
   private$.assign_result(inst)
-  # if (get_private(inst)$.freeze_archive) inst$archive$freeze()
   lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
   lg$info("Result:")
   lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
@@ -271,44 +270,54 @@ optimize_default.OptimInstanceRush = function(inst, self, private) {
 optimize_decentralized = function(inst, self, private) {
   assert_class(inst, "OptimInstanceRush")
 
-  if (!rush_available()) stop("No rush plan available. See `?rush::rush_plan()`")
-
   inst$archive$start_time = Sys.time()
   inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
   call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
 
   # FIXME: How to handle manual start of workers?
   # How to pass globals and packages?
-  inst$rush$start_workers(
-    worker_loop = bbotk_worker_loop_decentralized,
-    packages = "bbotk",
-    optimizer = self,
-    instance = inst,
-    wait_for_workers = TRUE)
 
-  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
-    inst$search_space$length,
-    self$format(),
-    inst$terminator$format(with_params = TRUE),
-    inst$rush$n_running_workers
-  )
+  if (getOption("bbotk_local", FALSE)) {
 
-  # wait until optimization is finished
-  while(!inst$is_terminated) {
-    Sys.sleep(1)
-    inst$rush$print_log()
-    inst$rush$detect_lost_workers()
+    if (!rush_available()) stop("No rush plan available. See `?rush::rush_plan()`")
 
-    # fetch new results for printing
-    new_results = inst$rush$fetch_new_tasks()
-    if (nrow(new_results)) {
-      lg$info("Results of %i configuration(s):", nrow(new_results))
-      lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+    inst$rush$start_workers(
+      worker_loop = bbotk_worker_loop_decentralized,
+      packages = "bbotk",
+      optimizer = self,
+      instance = inst,
+      wait_for_workers = TRUE)
+
+    lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
+      inst$search_space$length,
+      self$format(),
+      inst$terminator$format(with_params = TRUE),
+      inst$rush$n_running_workers
+    )
+
+    # wait until optimization is finished
+    while(!inst$is_terminated) {
+      Sys.sleep(1)
+      inst$rush$print_log()
+      inst$rush$detect_lost_workers()
+
+      # fetch new results for printing
+      new_results = inst$rush$fetch_new_tasks()
+      if (nrow(new_results)) {
+        lg$info("Results of %i configuration(s):", nrow(new_results))
+        lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      }
+
+      if (!inst$is_terminated && inst$rush$n_running_workers == 0) {
+        stop("All workers have crashed.")
+      }
     }
-
-    if (!inst$is_terminated && inst$rush$n_running_workers == 0) {
-      stop("All workers have crashed.")
-    }
+  } else {
+    # debug mode runs .optimize() in main process
+    rush = RushWorker$new(inst$rush$network_id, host = "local")
+    inst$rush = rush
+    inst$archive$rush = rush
+    private$.optimize(inst)
   }
 
   # assign result
