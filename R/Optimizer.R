@@ -278,6 +278,12 @@ optimize_decentralized = function(inst, self, private) {
   # How to pass globals and packages?
 
   if (getOption("bbotk_local", FALSE)) {
+    # debug mode runs .optimize() in main process
+    rush = RushWorker$new(inst$rush$network_id, host = "local")
+    inst$rush = rush
+    inst$archive$rush = rush
+    private$.optimize(inst)
+  } else {
 
     if (!rush_available()) stop("No rush plan available. See `?rush::rush_plan()`")
 
@@ -312,12 +318,6 @@ optimize_decentralized = function(inst, self, private) {
         stop("All workers have crashed.")
       }
     }
-  } else {
-    # debug mode runs .optimize() in main process
-    rush = RushWorker$new(inst$rush$network_id, host = "local")
-    inst$rush = rush
-    inst$archive$rush = rush
-    private$.optimize(inst)
   }
 
   # assign result
