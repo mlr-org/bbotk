@@ -288,6 +288,8 @@ optimize_decentralized = function(inst, self, private) {
     if (!rush_available()) stop("No rush plan available. See `?rush::rush_plan()`")
 
     inst$rush$start_workers(
+      # if n_workers is not set, rush will use number of workers from rush plan
+      n_workers = self$param_set$values$n_workers,
       worker_loop = bbotk_worker_loop_decentralized,
       packages = "bbotk",
       optimizer = self,
