@@ -44,7 +44,7 @@ Depends:
     R (>= 3.1.0)
 Imports:
     checkmate (>= 2.0.0),
-    data.table (>= 1.15.2),
+    data.table,
     lgr,
     methods,
     mlr3misc (>= 0.11.0),
