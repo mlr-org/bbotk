@@ -3,7 +3,7 @@
 Boundaries of numeric values are shrinked to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.
-Note that for paradox::ParamLgls the value to be shrinked around is set as
+Note that for paradox::p_lgl()s the value to be shrinked around is set as
 the default value instead of dropping a level. Also, a tag shrinked is
 added.
 Note that the returned paradox::ParamSet has lost all its original
@@ -13,7 +13,7 @@ transformed values."><title>Shrink a ParamSet towards a point. — shrink_ps •
 Boundaries of numeric values are shrinked to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.
-Note that for paradox::ParamLgls the value to be shrinked around is set as
+Note that for paradox::p_lgl()s the value to be shrinked around is set as
 the default value instead of dropping a level. Also, a tag shrinked is
 added.
 Note that the returned paradox::ParamSet has lost all its original
@@ -95,7 +95,7 @@ transformed values."><meta name="robots" content="noindex"><!-- mathjax --><scri
 Boundaries of numeric values are shrinked to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.</p>
-<p>Note that for <a href="https://paradox.mlr-org.com/reference/ParamLgl.html" class="external-link">paradox::ParamLgl</a>s the value to be shrinked around is set as
+<p>Note that for <code><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">paradox::p_lgl()</a></code>s the value to be shrinked around is set as
 the <code>default</code> value instead of dropping a level. Also, a tag <code>shrinked</code> is
 added.</p>
 <p>Note that the returned <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> has lost all its original
@@ -143,19 +143,19 @@ Default is <code>FALSE</code>.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paradox.mlr-org.com" class="external-link">paradox</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">param_set</span> <span class="op">=</span> <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">ParamSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamDbl.html" class="external-link">ParamDbl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x1"</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamInt.html" class="external-link">ParamInt</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x2"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamFct.html" class="external-link">ParamFct</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x3"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="va"><a href="https://paradox.mlr-org.com/reference/ParamLgl.html" class="external-link">ParamLgl</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"x4"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">param_set</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_int</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x3 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_fct</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x4 <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_lgl</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">5</span>, x2 <span class="op">=</span> <span class="fl">0</span>, x3 <span class="op">=</span> <span class="st">"b"</span>, x4 <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">shrink_ps</span><span class="op">(</span><span class="va">param_set</span>, x <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ParamSet&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        id    class lower upper nlevels</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;char&gt;   &lt;char&gt; &lt;num&gt; &lt;num&gt;   &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     x1 ParamDbl   2.5   7.5     Inf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     x2 ParamInt  -5.0   5.0      11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:      x ParamDbl     0    10     Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     x2 ParamInt    -5     5      11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:     x3 ParamFct    NA    NA       2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4:     x4 ParamLgl    NA    NA       2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                      default</span>
