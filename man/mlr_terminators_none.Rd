@@ -21,14 +21,14 @@ trm("none")
 \seealso{
 Other Terminator: 
 \code{\link{Terminator}},
+\code{\link{mlr_terminators}},
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_combo}},
 \code{\link{mlr_terminators_evals}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
-\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}},
-\code{\link{mlr_terminators}}
+\code{\link{mlr_terminators_stagnation_batch}}
 }
 \concept{Terminator}
 \section{Super class}{
