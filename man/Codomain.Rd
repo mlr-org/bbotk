@@ -4,12 +4,12 @@
 \alias{Codomain}
 \title{Codomain of Function}
 \description{
-A set of \link{Param} objects defining the codomain of a function. The parameter
+A \link{ParamSet} defining the codomain of a function. The parameter
 set must contain at least one target parameter tagged with \code{"minimize"} or
 \code{"maximize"}. The codomain may contain extra parameters which are ignored
 when calling the \link{Archive} methods \verb{$best()}, \verb{$nds_selection()} and
 \verb{$cols_y}. This class is usually constructed internally from a
-\link[paradox:ParamSet]{paradox::ParamSet} when \link{Objective} is initialized.
+\link{ParamSet} when \link{Objective} is initialized.
 }
 \examples{
 
@@ -45,16 +45,16 @@ objective = ObjectiveRFun$new(
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{is_target}}{(named \code{logical()})\cr
-Position is \code{TRUE} for target \link{Param}s.}
+Position is \code{TRUE} for target parameters.}
 
 \item{\code{target_length}}{(\code{integer()})\cr
-Returns number of target \link{Param}s.}
+Returns number of target parameters.}
 
 \item{\code{target_ids}}{(\code{character()})\cr
-Number of contained target \link{Param}s.}
+IDs of contained target parameters.}
 
 \item{\code{target_tags}}{(named \code{list()} of \code{character()})\cr
-Tags of target \link{Param}s.}
+Tags of target parameters.}
 
 \item{\code{maximization_to_minimization}}{(\code{integer()})\cr
 Returns a numeric vector with values -1 and 1. Multiply with the outcome
@@ -72,21 +72,28 @@ of a maximization problem to turn it into a minimization problem.}
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="add"><a href='../../paradox/html/ParamSet.html#method-ParamSet-add'><code>paradox::ParamSet$add()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="add_dep"><a href='../../paradox/html/ParamSet.html#method-ParamSet-add_dep'><code>paradox::ParamSet$add_dep()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="assert"><a href='../../paradox/html/ParamSet.html#method-ParamSet-assert'><code>paradox::ParamSet$assert()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="assert_dt"><a href='../../paradox/html/ParamSet.html#method-ParamSet-assert_dt'><code>paradox::ParamSet$assert_dt()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="check"><a href='../../paradox/html/ParamSet.html#method-ParamSet-check'><code>paradox::ParamSet$check()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="check_dependencies"><a href='../../paradox/html/ParamSet.html#method-ParamSet-check_dependencies'><code>paradox::ParamSet$check_dependencies()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="check_dt"><a href='../../paradox/html/ParamSet.html#method-ParamSet-check_dt'><code>paradox::ParamSet$check_dt()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="flatten"><a href='../../paradox/html/ParamSet.html#method-ParamSet-flatten'><code>paradox::ParamSet$flatten()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="format"><a href='../../paradox/html/ParamSet.html#method-ParamSet-format'><code>paradox::ParamSet$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="get_domain"><a href='../../paradox/html/ParamSet.html#method-ParamSet-get_domain'><code>paradox::ParamSet$get_domain()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="get_values"><a href='../../paradox/html/ParamSet.html#method-ParamSet-get_values'><code>paradox::ParamSet$get_values()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="ids"><a href='../../paradox/html/ParamSet.html#method-ParamSet-ids'><code>paradox::ParamSet$ids()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="print"><a href='../../paradox/html/ParamSet.html#method-ParamSet-print'><code>paradox::ParamSet$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="qunif"><a href='../../paradox/html/ParamSet.html#method-ParamSet-qunif'><code>paradox::ParamSet$qunif()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="search_space"><a href='../../paradox/html/ParamSet.html#method-ParamSet-search_space'><code>paradox::ParamSet$search_space()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="set_values"><a href='../../paradox/html/ParamSet.html#method-ParamSet-set_values'><code>paradox::ParamSet$set_values()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="subset"><a href='../../paradox/html/ParamSet.html#method-ParamSet-subset'><code>paradox::ParamSet$subset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="subspaces"><a href='../../paradox/html/ParamSet.html#method-ParamSet-subspaces'><code>paradox::ParamSet$subspaces()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="test"><a href='../../paradox/html/ParamSet.html#method-ParamSet-test'><code>paradox::ParamSet$test()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="test_constraint"><a href='../../paradox/html/ParamSet.html#method-ParamSet-test_constraint'><code>paradox::ParamSet$test_constraint()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="test_constraint_dt"><a href='../../paradox/html/ParamSet.html#method-ParamSet-test_constraint_dt'><code>paradox::ParamSet$test_constraint_dt()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="test_dt"><a href='../../paradox/html/ParamSet.html#method-ParamSet-test_dt'><code>paradox::ParamSet$test_dt()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="trafo"><a href='../../paradox/html/ParamSet.html#method-ParamSet-trafo'><code>paradox::ParamSet$trafo()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -96,15 +103,15 @@ of a maximization problem to turn it into a minimization problem.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Codomain$new(params = named_list())}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Codomain$new(params)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{params}}{(\code{list()})\cr
-List of \link{Param}, named with their respective ID.
-Parameters are cloned.}
+Named list with which to initialize the codomain.
+This argument is analogous to \link{ParamSet}'s \verb{$initialize()} \code{params} argument.}
 }
 \if{html}{\out{</div>}}
 }

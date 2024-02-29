@@ -41,8 +41,8 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
     initialize = function() {
       # NOTE: maybe make range / 2 a hyperparameter?
       param_set = ps(
-        n_points = p_int(default = 100L, tags = "required"),
-        maxit = p_int(default = 100L, tags = "required")
+        n_points = p_int(tags = "required"),
+        maxit = p_int(tags = "required")
       )
       param_set$values = list(n_points = 100L, maxit = 100L)
 
@@ -79,8 +79,8 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
           data = sampler$sample(n_points)$data
           if (length(lgls)) {
             data[, (lgls) := imap(.SD, function(param, id) {
-              if ("shrinked" %in% param_set_local$params[[id]]$tags) {
-                rep(param_set_local$params[[id]]$default, times = length(param))
+              if ("shrinked" %in% param_set_local$tags[[id]]) {
+                rep(param_set_local$default[[id]], times = length(param))
               } else {
                 param
               }
@@ -118,7 +118,7 @@ mlr_optimizers$add("focus_search", OptimizerFocusSearch)
 #' half of the previous length, while for discrete variables, a random
 #' (currently not chosen) level is dropped.
 #'
-#' Note that for [paradox::ParamLgl]s the value to be shrinked around is set as
+#' Note that for [paradox::p_lgl()]s the value to be shrinked around is set as
 #' the `default` value instead of dropping a level. Also, a tag `shrinked` is
 #' added.
 #'
@@ -144,29 +144,37 @@ mlr_optimizers$add("focus_search", OptimizerFocusSearch)
 #' @examples
 #' library(paradox)
 #' library(data.table)
-#' param_set = ParamSet$new(list(
-#'   ParamDbl$new("x1", lower = 0, upper = 10),
-#'   ParamInt$new("x2", lower = -10, upper = 10),
-#'   ParamFct$new("x3", levels = c("a", "b", "c")),
-#'   ParamLgl$new("x4"))
+#' param_set = ps(
+#'   x = p_dbl(lower = 0, upper = 10),
+#'   x2 = p_int(lower = -10, upper = 10),
+#'   x3 = p_fct(levels = c("a", "b", "c")),
+#'   x4 = p_lgl()
 #' )
 #' x = data.table(x1 = 5, x2 = 0, x3 = "b", x4 = FALSE)
 #' shrink_ps(param_set, x = x)
 shrink_ps = function(param_set, x, check.feasible = FALSE) {
-  param_set = param_set$clone(deep = TRUE)  # avoid unwanted side effects
+
   assert_param_set(param_set)
   assert_data_table(x, nrows = 1L, min.cols = 1L)
   assert_flag(check.feasible)
 
   # shrink each parameter
-  params_new = map(seq_along(param_set$params), function(i) {
-    param = param_set$params[[i]]
+  subspaces = if ("subspaces" %in% names(param_set)) {
+    param_set$subspaces()
+  } else {
+    # old paradox
+    lapply(param_set$params, function(x) ParamSet$new(list(x)))
+  }
+  # old paradox: individual trafos as list of NULL
+  param_trafos = set_names(param_set$params$.trafo %??% vector("list", param_set$length), param_set$ids())
+  params_new = map(seq_along(subspaces), function(i) {
+    param = subspaces[[i]]
+
+    pid = param$ids()
     # only shrink if there is a value
-    val = x[[param$id]]
+    val = x[[pid]]
+    param_test_val = param$test(structure(list(val), names = pid))
     if (test_atomic(val, any.missing = FALSE, len = 1L)) {
-      if (check.feasible & !param$test(val)) {
-        stop(sprintf("Parameter value %s is not feasible for %s.", val, param$id))
-      }
 
       if (param$is_number) {
         range = param$upper - param$lower
@@ -177,8 +185,8 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
             # find val on the original scale
             val = stats::uniroot(
               function(x_rep) {
-                xdt[[param$id]] = x_rep
-                param_set$trafo(xdt)[[param$id]] - val
+                xdt[[pid]] = x_rep
+                param_set$trafo(xdt)[[pid]] - val
               },
               interval = c(param$lower, param$upper),
               extendInt = "yes",
@@ -188,37 +196,59 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
           }, error = function(error_condition) {
             param$upper + 1
           })
+          param_test_val = param$test(structure(list(val), names = pid))
+        }
+        if (check.feasible && !param_test_val) {
+          stop(sprintf("Parameter value %s is not feasible for %s.", val, pid))
         }
 
         # if it is not feasible we do nothing
-        if (param$test(val)) {
+        if (param_test_val) {
           # shrink to range / 2, centered at val
           lower = pmax(param$lower, val - (range / 4))
           upper = pmin(param$upper, val + (range / 4))
-          if (test_r6(param, classes = "ParamInt")) {
+          if (param$class == "ParamInt") {
             lower = as.integer(floor(lower))
             upper = as.integer(ceiling(upper))
-            ParamInt$new(id = param$id, lower = lower, upper = upper,
-              special_vals = param$special_vals, tags = param$tags)
+            do.call(ps, structure(list(
+              p_int(lower = lower, upper = upper,
+                special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
+                trafo = param_trafos[[pid]])
+            ), names = pid))
           } else {  # it's ParamDbl then
-            ParamDbl$new(id = param$id, lower = lower, upper = upper,
-              special_vals = param$special_vals, tags = param$tags,
-              tolerance = param$tolerance)
+
+            do.call(ps, structure(list(
+              p_dbl(lower = lower, upper = upper,
+                special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
+                tolerance = param$params$tolerance[[1]] %??% param$params[[1]]$tolerance,  # since 'param' is from subspaces(), it only has 1 line ; '%??%' is for old pdaradox
+                trafo = param_trafos[[pid]])
+            ), names = pid))
           }
         }
       } else if (param$is_categ) {
-        if (param$test(val)) {
+        if (check.feasible && !param_test_val) {
+          stop(sprintf("Parameter value %s is not feasible for %s.", val, pid))
+        }
+
+        if (param_test_val) {
           # randomly drop a level, which is not val
-          if (length(param$levels) > 1L) {
-            levels = setdiff(param$levels, sample(setdiff(param$levels, val), size = 1L))
-            if (test_r6(param, classes = "ParamFct")) {
-              ParamFct$new(id = param$id, levels = levels,
-                special_vals = param$special_vals, tags = param$tags)
+          levels = param$levels[[pid]]
+          if (length(levels) > 1L) {
+            levels = setdiff(levels, sample(setdiff(levels, val), size = 1L))
+            if (param$class == "ParamFct") {
+              do.call(ps, structure(list(
+                p_fct(levels = levels,
+                  special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
+                  trafo = param_trafos[[pid]]
+                )
+              ), names = pid))
             } else {
               # for ParamLgls we cannot specify levels; instead we set a default
-              ParamLgl$new(id = param$id,
-                special_vals = param$special_vals, default = levels,
-                tags = unique(c(param$tags, "shrinked")))
+              do.call(ps, structure(list(
+                p_lgl(special_vals = param$special_vals[[pid]],
+                  default = levels, tags = c(param$tags[[pid]], "shrinked"),
+                  trafo = param_trafos[[pid]])
+              ), names = pid))
             }
           }
         }
@@ -228,11 +258,19 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
 
   missing = which(map_lgl(params_new, is.null))
   if (length(missing)) {
-    params_new[missing] = map(param_set$params[missing], function(param) param$clone(deep = TRUE))
+    params_new[missing] = subspaces[missing]
   }
-  param_set_new = ParamSet$new(params_new)
+  param_set_new = get0("ps_union",
+    # old paradox
+    ifnotfound = function(x) ParamSet$new(lapply(x, function(y) y$params[[1]]))
+  )(params_new)
   param_set_new$deps = param_set$deps
-  param_set_new$trafo = param_set$trafo
+  if ("extra_trafo" %in% names(param_set_new)) {
+    param_set_new$extra_trafo = param_set$extra_trafo
+  } else {
+    # old paradox
+    param_set_new$trafo = param_set$trafo
+  }
   param_set_new$values = param_set$values  # needed for handling constants
   param_set_new
 }
