@@ -1,7 +1,7 @@
 # bbotk 0.8.0
 
 * fix: `OptimizerIrace` failed with logical parameters and dependencies.
-* refactor: Optimize the runtime of `archive$best()` method and ties method.
+* refactor: Optimize the runtime of `archive$best()` method and add ties method.
 * compatibility: Work with new paradox version 1.0.0
 
 # bbotk 0.7.3
