@@ -68,18 +68,18 @@ test_that("starting workers and evaluating points works in a decentralized netwo
 test_that("random search v2 works", {
   skip_on_cran()
   flush_redis()
+  options(bbotk_local = TRUE)
 
   rush_plan(n_workers = 2)
 
   instance = OptimInstanceRushSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("evals", n_evals = 1L),
+    terminator = trm("evals", n_evals = 20L),
   )
 
   optimizer = opt("random_search_v2")
-  instance$rush = RushWorker$new(instance$rush$network_id, host = "local")
-  get_private(optimizer)$.optimize_remote(instance)
+  optimizer$optimize(instance)
 })
 
 

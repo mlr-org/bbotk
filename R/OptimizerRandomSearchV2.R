@@ -25,19 +25,25 @@ OptimizerRandomSearchV2 = R6Class("OptimizerRandomSearchV2",
 
   private = list(
     .optimize = function(inst) {
+      search_space = inst$search_space
+      rush = inst$rush
 
       while(!inst$is_terminated) {
         # ask
-        sampler = SamplerUnif$new(inst$search_space)
+        sampler = SamplerUnif$new(search_space)
         xdt = sampler$sample(1)$data
-        xs = transform_xdt_to_xss(xdt, inst$search_space)[[1]]
-        key = inst$rush$push_running_task(list(xs))
+        xss = transpose_list(xdt)
+        xs = xss[[1]][inst$archive$cols_x]
+        xs_trafoed = trafo_xs(xs, search_space)
+        keys = inst$rush$push_running_task(list(xs), extra = list(list(timestamp_xs = Sys.time())))
 
         # eval
-        ys = inst$objective$eval(xs)
+        ys = inst$objective$eval(xs_trafoed)
 
         # tell
-        inst$rush$push_results(key, list(ys))
+        rush$push_results(keys, yss = list(ys), extra = list(list(
+          x_domain = list(xs_trafoed),
+          timestamp_ys = Sys.time())))
       }
     }
   )
