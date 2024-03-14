@@ -1,3 +1,6 @@
+library(rush)
+library(checkmate)
+
 # Simple 1D Function
 PS_1D_domain = ps(
   x = p_dbl(lower = -1, upper = 1),
@@ -218,4 +221,22 @@ expect_dictionary = function(d, contains = NA_character_, min_items = 0L) {
     testthat::expect_error(d$get(keys[1], 1), "names")
   }
   checkmate::expect_data_table(data.table::as.data.table(d), key = "key", nrows = length(keys))
+}
+
+clean_on_exit = function(pids) {
+  future::plan("sequential")
+  walk(pids, tools::pskill)
+}
+
+expect_rush_reset = function(rush, type = "kill") {
+  processes = rush$processes
+  rush$reset(type = type)
+  expect_list(rush$connector$command(c("KEYS", "*")), len = 0)
+  walk(processes, function(p) p$kill())
+}
+
+flush_redis = function() {
+  config = redux::redis_config()
+  r = redux::hiredis(config)
+  r$FLUSHDB()
 }

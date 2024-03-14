@@ -148,8 +148,9 @@ Optimizer = R6Class("Optimizer",
   private = list(
     .optimize = function(inst) stop("abstract"),
 
+    .optimize_async = function(inst) stop("abstract"),
+
     .assign_result = function(inst) {
-      assert_r6(inst, "OptimInstance")
       assign_result_default(inst)
     },
 
@@ -161,3 +162,230 @@ Optimizer = R6Class("Optimizer",
     .man = NULL
   )
 )
+
+#' @title Default Optimization Function
+#'
+#' @description
+#' Used internally in the [Optimizer].
+#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
+#'
+#' @param inst [OptimInstance]
+#' @param self [Optimizer]
+#' @param private (`environment()`)
+#'
+#' @return [data.table::data.table]
+#'
+#' @keywords internal
+#' @export
+optimize_default = function(inst, self, private) {
+  UseMethod("optimize_default")
+}
+
+#' @rdname optimize_default
+#' @export
+optimize_default.OptimInstance = function(inst, self, private) {
+  assert_instance_properties(self, inst)
+
+  if (isNamespaceLoaded("progressr")) {
+    # initialize progressor
+    # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
+    max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
+    unit = assert_character(inst$terminator$unit)
+    progressor = progressr::progressor(steps = max_steps)
+    inst$progressor = Progressor$new(progressor, unit)
+    inst$progressor$max_steps = max_steps
+  }
+
+  # start optimization
+  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
+    inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
+  tryCatch({
+    private$.optimize(inst)
+  }, terminated_error = function(cond) {
+  })
+  private$.assign_result(inst)
+  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
+  lg$info("Result:")
+  lg$info(capture.output(print(
+    inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+  return(inst$result)
+}
+
+#' @rdname optimize_default
+#' @export
+optimize_default.OptimInstanceRush = function(inst, self, private) {
+  assert_instance_properties(self, inst)
+
+  # decouple from instance
+  objective = inst$objective
+  search_space = inst$search_space
+
+  if (rush_available()) {
+    inst$rush$start_workers(
+      worker_loop = bbotk_worker_loop_centralized,
+      packages = "bbotk",
+      objective = objective,
+      search_space = search_space,
+      wait_for_workers = TRUE)
+  } else {
+    stop("No rush plan available. See `?rush::rush_plan()`")
+  }
+
+  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
+    inst$search_space$length,
+    self$format(),
+    inst$terminator$format(with_params = TRUE),
+    inst$rush$n_running_workers
+  )
+
+  tryCatch({
+    private$.optimize_async(inst)
+  }, terminated_error = function(cond) {
+  })
+
+  # assign result
+  private$.assign_result(inst)
+  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
+  lg$info("Result:")
+  lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+  return(inst$result)
+}
+
+#' @title Decentralized Optimization Function
+#'
+#' @description
+#' Used internally in the [Optimizer].
+#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
+#'
+#' @param inst [OptimInstance]
+#' @param self [Optimizer]
+#' @param private (`environment()`)
+#'
+#' @return [data.table::data.table]
+#'
+#' @keywords internal
+#' @export
+optimize_decentralized = function(inst, self, private) {
+  assert_class(inst, "OptimInstanceRush")
+
+  inst$archive$start_time = Sys.time()
+  inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
+  call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
+
+  # FIXME: How to handle manual start of workers?
+  # How to pass globals and packages?
+
+  if (getOption("bbotk_local", FALSE)) {
+    # debug mode runs .optimize() in main process
+    rush = RushWorker$new(inst$rush$network_id, host = "local")
+    inst$rush = rush
+    inst$archive$rush = rush
+    private$.optimize(inst)
+  } else {
+
+    if (!rush_available()) stop("No rush plan available. See `?rush::rush_plan()`")
+
+    inst$rush$start_workers(
+      # if n_workers is not set, rush will use number of workers from rush plan
+      n_workers = self$param_set$values$n_workers,
+      worker_loop = bbotk_worker_loop_decentralized,
+      packages = "bbotk",
+      optimizer = self,
+      instance = inst,
+      wait_for_workers = TRUE)
+
+    lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
+      inst$search_space$length,
+      self$format(),
+      inst$terminator$format(with_params = TRUE),
+      inst$rush$n_running_workers
+    )
+
+    # wait until optimization is finished
+    while(!inst$is_terminated) {
+      Sys.sleep(1)
+      inst$rush$print_log()
+      inst$rush$detect_lost_workers()
+
+      # fetch new results for printing
+      new_results = inst$rush$fetch_new_tasks()
+      if (nrow(new_results)) {
+        lg$info("Results of %i configuration(s):", nrow(new_results))
+        lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      }
+
+      if (!inst$is_terminated && inst$rush$n_running_workers == 0) {
+        stop("All workers have crashed.")
+      }
+    }
+  }
+
+  # assign result
+  private$.assign_result(inst)
+
+  # assign result
+  private$.assign_result(inst)
+  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
+  lg$info("Result:")
+  lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+
+  call_back("on_optimization_end", inst$callbacks, get_private(inst)$.context)
+  return(inst$result)
+}
+
+#' @title Default Assign Result Function
+#'
+#' @description
+#' Used internally in the [Optimizer].
+#' It is the default way to determine the result by simply obtaining the best performing result from the archive.
+#'
+#' @param inst [OptimInstance]
+#'
+#' @keywords internal
+#' @export
+assign_result_default = function(inst) {
+  UseMethod("assign_result_default")
+}
+
+#' @rdname assign_result_default
+#' @export
+assign_result_default.OptimInstance = function(inst) {
+  assert_r6(inst, "OptimInstance")
+  res = inst$archive$best()
+
+  xdt = res[, inst$search_space$ids(), with = FALSE]
+
+  if (inherits(inst, "OptimInstanceMultiCrit")) {
+    ydt = res[, inst$archive$cols_y, with = FALSE]
+    inst$assign_result(xdt, ydt)
+  } else {
+    # unlist keeps name!
+    y = unlist(res[, inst$archive$cols_y, with = FALSE])
+    inst$assign_result(xdt, y)
+  }
+
+  invisible(NULL)
+}
+
+#' @rdname assign_result_default
+#' @export
+assign_result_default.OptimInstanceRush = function(inst) {
+
+  if (!inst$archive$n_evals) {
+    stopf("Can't assign result to %s.\n %s doesn't contain any results. \n Probably the workers have crashed.", format(inst), format(inst$archive))
+  }
+
+  res = inst$archive$best()
+  xdt = res[, inst$search_space$ids(), with = FALSE]
+
+  if (inherits(inst, "OptimInstanceMultiCrit")) {
+    ydt = res[, inst$archive$cols_y, with = FALSE]
+    get_private(inst)$.assign_result(xdt, ydt)
+  } else {
+    # unlist keeps name!
+    y = unlist(res[, inst$archive$cols_y, with = FALSE])
+    get_private(inst)$.assign_result(xdt, y)
+  }
+
+  invisible(NULL)
+}

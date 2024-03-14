@@ -16,21 +16,19 @@
 #' @template param_ydt
 #' @template param_n_select
 #' @template param_ref_point
+#'
+#' @template field_search_space
+#' @template field_codomain
+#' @template field_start_time
+#'
 #' @export
 Archive = R6Class("Archive",
   public = list(
 
-    #' @field search_space ([paradox::ParamSet])\cr
-    #' Search space of objective.
     search_space = NULL,
 
-    #' @field codomain ([Codomain])\cr
-    #' Codomain of objective function.
     codomain = NULL,
 
-    #' @field start_time ([POSIXct])\cr
-    #' Time stamp of when the optimization started. The time is set by the
-    #' [Optimizer].
     start_time = NULL,
 
     #' @field check_values (`logical(1)`)\cr

@@ -60,7 +60,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   terminator,
   keep_evals = "all",
   check_values = TRUE,
-  callbacks = list()
+  callbacks = list(),
+  archive = NULL
 )}\if{html}{\out{</div>}}
 }
 

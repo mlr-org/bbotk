@@ -2,6 +2,7 @@
 #' @import checkmate
 #' @import paradox
 #' @import mlr3misc
+#' @import rush
 #' @importFrom R6 R6Class
 #' @importFrom utils capture.output head tail
 #' @importFrom methods formalArgs
@@ -33,6 +34,5 @@
     lg$set_threshold("warn")
   }
 } # nocov end
-
 
 leanify_package()

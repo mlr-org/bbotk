@@ -66,3 +66,45 @@ opt = function(.key, ...) {
 opts = function(.keys, ...) {
   dictionary_sugar_mget(mlr_optimizers, .keys, ...)
 }
+
+#' @title Syntactic Sugar for Optimization Instance Construction
+#'
+#' @description
+#' Function to construct a [OptimInstanceSingleCrit], [OptimInstanceMultiCrit], [OptimInstanceRushSingleCrit] or [OptimInstanceRushMultiCrit].
+#'
+#' @template param_objective
+#' @template param_search_space
+#' @template param_terminator
+#' @template param_callbacks
+#' @template param_check_values
+#' @template param_keep_evals
+#'
+#' @export
+oi = function(
+  objective,
+  search_space = NULL,
+  terminator,
+  callbacks = list(),
+  check_values = TRUE,
+  keep_evals = "all"
+  ) {
+  assert_r6(objective, "Objective")
+
+  if (rush_available()) {
+    Instance = if (objective$codomain$target_length == 1) OptimInstanceSingleCrit else OptimInstanceMultiCrit
+    Instance$new(
+      objective = objective,
+      search_space = search_space,
+      terminator = terminator,
+      keep_evals = keep_evals,
+      check_values = check_values,
+      callbacks = callbacks)
+  } else {
+    Instance = if (objective$codomain$target_length == 1) OptimInstanceRushSingleCrit else OptimInstanceRushMultiCrit
+    Instance$new(
+      objective = objective,
+      search_space = search_space,
+      terminator = terminator,
+      callbacks = callbacks)
+  }
+}

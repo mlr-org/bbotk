@@ -35,6 +35,13 @@ assert_terminator = function(terminator, instance = NULL) {
 }
 
 #' @export
+#' @param terminators (list of [Terminator]).
+#' @rdname bbotk_assertions
+assert_terminators = function(terminators) {
+  invisible(lapply(terminators, assert_terminator))
+}
+
+#' @export
 #' @param terminator ([Terminator]).
 #' @param instance ([OptimInstance]).
 #' @rdname bbotk_assertions
@@ -74,7 +81,7 @@ assert_optimizer = function(optimizer) {
 #' @param instance ([OptimInstance]).
 #' @rdname bbotk_assertions
 assert_instance_properties = function(optimizer, inst) {
-  assert_r6(inst, "OptimInstance")
+  assert_multi_class(inst, c("OptimInstance", "OptimInstanceRush"))
 
   require_namespaces(optimizer$packages)
 

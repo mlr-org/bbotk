@@ -48,6 +48,7 @@ reference:
   - title: Optimization Instance
     contents:
       - starts_with("OptimInstance")
+      - oi
   - title: Optimizer
     contents:
       - starts_with("Optimizer")
@@ -57,6 +58,7 @@ reference:
   - title: Archive
     contents:
       - Archive
+      - ArchiveRush
       - ArchiveBest
       - Codomain
   - title: Callbacks
@@ -72,4 +74,7 @@ reference:
       - branin
       - bb_optimize
       - shrink_ps
+      - bbotk_worker_loop
+      - trafo_xs
+      - terminated_error
 

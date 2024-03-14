@@ -1,4 +1,4 @@
-#' @title Optimization Instance with budget and archive
+#' @title Optimization Instance
 #'
 #' @description
 #' Abstract base class.
@@ -14,6 +14,9 @@
 #' @template param_search_space
 #' @template param_keep_evals
 #' @template param_callbacks
+#' @template param_archive
+#'
+#'
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
@@ -48,41 +51,36 @@ OptimInstance = R6Class("OptimInstance",
     #' @param check_values (`logical(1)`)\cr
     #'   Should x-values that are added to the archive be checked for validity?
     #'   Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator, keep_evals = "all", check_values = TRUE, callbacks = list()) {
+    initialize = function(
+      objective,
+      search_space = NULL,
+      terminator,
+      keep_evals = "all",
+      check_values = TRUE,
+      callbacks = list(),
+      archive = NULL
+      ) {
       self$objective = assert_r6(objective, "Objective")
+      self$search_space = choose_search_space(self$objective, search_space)
       self$terminator = assert_terminator(terminator, self)
       assert_choice(keep_evals, c("all", "best"))
       assert_flag(check_values)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
 
-      # set search space
-      domain_search_space = self$objective$domain$search_space()
-      self$search_space = if (is.null(search_space) && domain_search_space$length == 0) {
-        # use whole domain as search space
-        self$objective$domain
-      } else if (is.null(search_space) && domain_search_space$length > 0) {
-        # create search space from tune token in domain
-        domain_search_space
-      } else if (!is.null(search_space) && domain_search_space$length == 0) {
-        # use supplied search space
-        assert_param_set(search_space)
+      # archive is passed when a downstream packages creates a new archive class
+      self$archive = if (is.null(archive)) {
+        # use minimal archive if only best points are needed
+        Archive = if (keep_evals == "all") Archive else ArchiveBest
+        Archive$new(
+          search_space = self$search_space,
+          codomain = objective$codomain,
+          check_values = check_values)
       } else {
-        stop("If the domain contains TuneTokens, you cannot supply a search_space.")
-      }
-
-      # use minimal archive if only best points are needed
-      self$archive = if (keep_evals == "all") {
-        Archive$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values)
-      } else if (keep_evals == "best") {
-        ArchiveBest$new(search_space = self$search_space, codomain = objective$codomain, check_values = check_values)
+        assert_r6(archive, "Archive")
       }
 
       # disable objective function if search space is not all numeric
-      if (!self$search_space$all_numeric) {
-        private$.objective_function = objective_error
-      } else {
-        private$.objective_function = objective_function
-      }
+      private$.objective_function = if (!self$search_space$all_numeric) objective_error else objective_function
       self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
     },
 
@@ -262,4 +260,22 @@ objective_function = function(x, inst, maximization_to_minimization) {
 objective_error = function(x, inst, maximization_to_minimization) {
   stop("$objective_function can only be called if search_space only
     contains numeric values")
+}
+
+# used by OptimInstance and OptimInstanceRush
+choose_search_space = function(objective, search_space) {
+  # create search space
+  domain_search_space = objective$domain$search_space()
+  if (is.null(search_space) && domain_search_space$length == 0) {
+    # use whole domain as search space
+    objective$domain
+  } else if (is.null(search_space) && domain_search_space$length > 0) {
+    # create search space from tune token in domain
+    domain_search_space
+  } else if (!is.null(search_space) && domain_search_space$length == 0) {
+    # use supplied search space
+    assert_param_set(search_space)
+  } else {
+    stop("If the domain contains TuneTokens, you cannot supply a search_space.")
+  }
 }
