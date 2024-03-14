@@ -3,6 +3,7 @@
 \name{bbotk_assertions}
 \alias{bbotk_assertions}
 \alias{assert_terminator}
+\alias{assert_terminators}
 \alias{assert_terminable}
 \alias{assert_set}
 \alias{assert_optimizer}
@@ -10,6 +11,8 @@
 \title{Assertion for bbotk objects}
 \usage{
 assert_terminator(terminator, instance = NULL)
+
+assert_terminators(terminators)
 
 assert_terminable(terminator, instance)
 
@@ -23,6 +26,8 @@ assert_instance_properties(optimizer, inst)
 \item{terminator}{(\link{Terminator}).}
 
 \item{instance}{(\link{OptimInstance}).}
+
+\item{terminators}{(list of \link{Terminator}).}
 
 \item{x}{(any)}
 

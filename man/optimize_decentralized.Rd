@@ -4,7 +4,7 @@
 \alias{optimize_decentralized}
 \title{Decentralized Optimization Function}
 \usage{
-optimize_decentralized(inst, self, privat)
+optimize_decentralized(inst, self, private)
 }
 \arguments{
 \item{inst}{\link{OptimInstance}}
