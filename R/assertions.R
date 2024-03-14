@@ -38,7 +38,7 @@ assert_terminator = function(terminator, instance = NULL) {
 #' @param terminators (list of [Terminator]).
 #' @rdname bbotk_assertions
 assert_terminators = function(terminators) {
-  invisible(lapply(terminators, asseert_terminator))
+  invisible(lapply(terminators, assert_terminator))
 }
 
 #' @export
