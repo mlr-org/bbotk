@@ -89,6 +89,7 @@ Collate:
     'OptimizerGenSA.R'
     'OptimizerGridSearch.R'
     'OptimizerIrace.R'
+    'OptimizerLocalSearch.R'
     'OptimizerNLoptr.R'
     'OptimizerRandomSearch.R'
     'Progressor.R'

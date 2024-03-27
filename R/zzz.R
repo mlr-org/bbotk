@@ -34,5 +34,6 @@
   }
 } # nocov end
 
+utils::globalVariables(".point_id")
 
 leanify_package()
