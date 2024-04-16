@@ -19,3 +19,4 @@ Loop run on the workers.
 Pops a task from the queue and evaluates it with the objective function.
 Pushes the results back to the data base.
 }
+\keyword{internal}

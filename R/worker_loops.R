@@ -10,6 +10,7 @@
 #' @param optimizer [OptimizerAsync].
 #' @param instance [OptimInstanceAsync].
 #'
+#' @keywords internal
 #' @export
 bbotk_worker_loop = function(rush, optimizer, instance) {
   # replace controller with worker
