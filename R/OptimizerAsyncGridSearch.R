@@ -1,6 +1,6 @@
 #' @title Asynchronous Optimization via Grid Search
 #'
-#' @include Optimizer.R
+#' @include OptimizerAsync.R
 #' @name mlr_optimizers_async_grid_search
 #'
 #' @description
@@ -17,13 +17,10 @@
 #' Maximum number of points to try in a batch.}
 #' }
 #'
-#' @template section_progress_bars
 #'
 #' @source
 #' `r format_bib("bergstra_2012")`
 #'
-#' @export
-#' @template example
 #' @export
 OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
   inherit = OptimizerAsync,

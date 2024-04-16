@@ -1,4 +1,4 @@
-#' @title Rush Data Storage for Objective Function Evaluations
+#' @title Rush Data Archive
 #'
 #' @description
 #' Connector to a rush network which stores all performed function calls of the [Objective].
@@ -36,6 +36,75 @@ ArchiveAsync = R6Class("ArchiveAsync",
       self$search_space = assert_param_set(search_space)
       self$codomain = Codomain$new(assert_param_set(codomain)$params)
       self$rush = assert_rush(rush)
+    },
+
+    #' @description
+    #' Push points to the queue.
+    #'
+    #' @param xss (`list`)\cr
+    #' List of points.
+    push_points = function(xss) {
+      self$rush$push_tasks(xss, extra = list(list(timestamp_xs = Sys.time())))
+    },
+
+    #' @description
+    #' Pop a point from the queue.
+    pop_point = function() {
+      self$rush$pop_task(fields = "xs")
+    },
+
+    #' @description
+    #' Push points to running points without queue.
+    #'
+    #' @param xss (`list`)\cr
+    #' List of points.
+    push_running_points = function(xss) {
+      self$rush$push_running_tasks(xss, extra = list(list(timestamp_xs = Sys.time())))
+    },
+
+    #' @description
+    #' Push results to the archive.
+    #'
+    #' @param keys (`character()`)\cr
+    #' Keys of the points.
+    #' @param yss (`list()`)\cr
+    #' List of results.
+    #' @param extra (`list()`)\cr
+    #' List of additional information.
+    push_results = function(keys, yss, extra = NULL) {
+      extra = map(extra, function(x) c(x, list(timestamp_ys = Sys.time())))
+
+      self$rush$push_results(keys, yss, extra = extra)
+    },
+
+    #' @description
+    #' Push failed points to the archive.
+    #'
+    #' @param keys (`character()`)\cr
+    #' Keys of the points.
+    #' @param conditions (`list()`)\cr
+    #' List of conditions.
+    push_failed_points = function(keys, conditions) {
+      self$rush$push_failed(keys, conditions)
+    },
+
+    #' @description
+    #' Fetch data with a specific state.
+    #'
+    #' @param fields (`character()`)\cr
+    #' Fields to fetch.
+    #' Defaults to `c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")`.
+    #' @param states (`character()`)\cr
+    #' States of the tasks to be fetched.
+    #' Defaults to `c("queued", "running", "finished", "failed")`.
+    #' @param reset_cache (`logical(1)`)\cr
+    #' Whether to reset the cache of the finished points.
+    fetch_data_with_state = function(
+      fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
+      states = c("queued", "running", "finished", "failed"),
+      reset_cache = FALSE
+      ) {
+      self$rush$fetch_tasks_with_state(fields, states, reset_cache)
     },
 
     #' @description
@@ -137,6 +206,30 @@ ArchiveAsync = R6Class("ArchiveAsync",
       } else {
         self$rush$fetch_finished_tasks()
       }
+    },
+
+    #' @field queued_data ([data.table::data.table])\cr
+    #' Data table with all queued points.
+    queued_data = function() {
+      self$rush$fetch_queued_tasks()
+    },
+
+    #' @field running_data ([data.table::data.table])\cr
+    #' Data table with all running points.
+    running_data = function() {
+      self$rush$fetch_running_tasks()
+    },
+
+    #' @field finished_data ([data.table::data.table])\cr
+    #' Data table with all finished points.
+    finished_data = function() {
+      self$rush$fetch_finished_tasks()
+    },
+
+    #' @field failed_data ([data.table::data.table])\cr
+    #' Data table with all failed points.
+    failed_data = function() {
+      self$rush$fetch_failed_tasks()
     },
 
     #' @field n_evals (`integer(1)`)\cr

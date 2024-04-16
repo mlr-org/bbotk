@@ -33,45 +33,6 @@ Maximum number of points to try in a batch.}
 }
 }
 
-\section{Progress Bars}{
-
-\verb{$optimize()} supports progress bars via the package \CRANpkg{progressr}
-combined with a \link{Terminator}. Simply wrap the function in
-\code{progressr::with_progress()} to enable them. We recommend to use package
-\CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
-}
-
-\examples{
-search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
-
-codomain = ps(y = p_dbl(tags = "minimize"))
-
-objective_function = function(xs) {
-  list(y = as.numeric(xs)^2)
-}
-
-objective = ObjectiveRFun$new(
- fun = objective_function,
- domain = domain,
- codomain = codomain)
-
-instance = OptimInstanceSingleCrit$new(
- objective = objective,
- search_space = search_space,
- terminator = trm("evals", n_evals = 10))
-
-
-optimizer = opt("async_grid_search")
-
-# modifies the instance by reference
-optimizer$optimize(instance)
-
-# returns best scoring evaluation
-instance$result
-
-# allows access of data.table of full path of all evaluations
-as.data.table(instance$archive$data)
-}
 \section{Super class}{
 \code{\link[bbotk:OptimizerAsync]{bbotk::OptimizerAsync}} -> \code{OptimizerAsyncGridSearch}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ArchiveAsync.R
 \name{ArchiveAsync}
 \alias{ArchiveAsync}
-\title{Rush Data Storage for Objective Function Evaluations}
+\title{Rush Data Archive}
 \description{
 Connector to a rush network which stores all performed function calls of the \link{Objective}.
 }
@@ -40,6 +40,18 @@ Rush controller for parallel optimization.}
 \item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Data table with all evaluations.}
 
+\item{\code{queued_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Data table with all queued points.}
+
+\item{\code{running_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Data table with all running points.}
+
+\item{\code{finished_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Data table with all finished points.}
+
+\item{\code{failed_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Data table with all failed points.}
+
 \item{\code{n_evals}}{(\code{integer(1)})\cr
 Number of evaluations stored in the archive.}
 
@@ -55,6 +67,12 @@ Column names of codomain target parameters.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-ArchiveAsync-new}{\code{ArchiveAsync$new()}}
+\item \href{#method-ArchiveAsync-push_points}{\code{ArchiveAsync$push_points()}}
+\item \href{#method-ArchiveAsync-pop_point}{\code{ArchiveAsync$pop_point()}}
+\item \href{#method-ArchiveAsync-push_running_points}{\code{ArchiveAsync$push_running_points()}}
+\item \href{#method-ArchiveAsync-push_results}{\code{ArchiveAsync$push_results()}}
+\item \href{#method-ArchiveAsync-push_failed_points}{\code{ArchiveAsync$push_failed_points()}}
+\item \href{#method-ArchiveAsync-fetch_data_with_state}{\code{ArchiveAsync$fetch_data_with_state()}}
 \item \href{#method-ArchiveAsync-best}{\code{ArchiveAsync$best()}}
 \item \href{#method-ArchiveAsync-nds_selection}{\code{ArchiveAsync$nds_selection()}}
 \item \href{#method-ArchiveAsync-format}{\code{ArchiveAsync$format()}}
@@ -90,6 +108,127 @@ be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{rush}}{(\code{Rush})\cr
 If a rush instance is supplied, the tuning runs without batches.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_points}{}}}
+\subsection{Method \code{push_points()}}{
+Push points to the queue.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_points(xss)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xss}}{(\code{list})\cr
+List of points.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-pop_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-pop_point}{}}}
+\subsection{Method \code{pop_point()}}{
+Pop a point from the queue.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$pop_point()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_running_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_running_points}{}}}
+\subsection{Method \code{push_running_points()}}{
+Push points to running points without queue.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_running_points(xss)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{xss}}{(\code{list})\cr
+List of points.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_results"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_results}{}}}
+\subsection{Method \code{push_results()}}{
+Push results to the archive.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_results(keys, yss, extra = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{keys}}{(\code{character()})\cr
+Keys of the points.}
+
+\item{\code{yss}}{(\code{list()})\cr
+List of results.}
+
+\item{\code{extra}}{(\code{list()})\cr
+List of additional information.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_failed_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_failed_points}{}}}
+\subsection{Method \code{push_failed_points()}}{
+Push failed points to the archive.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_failed_points(keys, conditions)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{keys}}{(\code{character()})\cr
+Keys of the points.}
+
+\item{\code{conditions}}{(\code{list()})\cr
+List of conditions.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-fetch_data_with_state"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-fetch_data_with_state}{}}}
+\subsection{Method \code{fetch_data_with_state()}}{
+Fetch data with a specific state.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$fetch_data_with_state(
+  fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
+  states = c("queued", "running", "finished", "failed"),
+  reset_cache = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fields}}{(\code{character()})\cr
+Fields to fetch.
+Defaults to \code{c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")}.}
+
+\item{\code{states}}{(\code{character()})\cr
+States of the tasks to be fetched.
+Defaults to \code{c("queued", "running", "finished", "failed")}.}
+
+\item{\code{reset_cache}}{(\code{logical(1)})\cr
+Whether to reset the cache of the finished points.}
 }
 \if{html}{\out{</div>}}
 }

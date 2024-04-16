@@ -24,6 +24,9 @@ Object to convert.}
 
 \item{...}{(any)\cr
 Additional arguments.}
+
+\item{clone}{(\code{logical(1)})\cr
+If \code{TRUE}, ensures that the returned object is not the same as the input \code{x}.}
 }
 \description{
 Convert object to a \link{Terminator} or a list of \link{Terminator}.

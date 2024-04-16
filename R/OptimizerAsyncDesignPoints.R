@@ -1,7 +1,7 @@
 #' @title Asynchronous Optimization via Design Points
 #'
-#' @include Optimizer.R
-#' @name mlr_optimizers_design_points
+#' @include OptimizerAsync.R
+#' @name mlr_optimizers_async_design_points
 #'
 #' @description
 #' `OptimizerAsyncDesignPoints` class that implements optimization w.r.t. fixed design points.
@@ -13,7 +13,7 @@
 #' @section Parameters:
 #' \describe{
 #' \item{`design`}{[data.table::data.table]\cr
-#' Design points to try in search, one per row.}
+#'   Design points to try in search, one per row.}
 #' }
 #'
 #' @template section_progress_bars
@@ -27,10 +27,7 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        batch_size = p_int(lower = 1L, tags = "required"),
-        design = p_uty(tags = "required", custom_check = function(x) {
-          check_data_table(x, min.rows = 1, min.cols = 1, null.ok = TRUE)
-        })
+        design = p_uty(tags = "required", custom_check = function(x) check_data_table(x, min.rows = 1, min.cols = 1, null.ok = TRUE))
       )
       param_set$values = list(batch_size = 1L, design = NULL)
       super$initialize(
@@ -39,7 +36,7 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"),
         properties = c("dependencies", "single-crit", "multi-crit"),
         label = "Design Points",
-        man = "bbotk::mlr_optimizers_design_points"
+        man = "bbotk::mlr_optimizers_async_design_points"
       )
     },
 

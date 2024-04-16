@@ -1,6 +1,6 @@
 #' @title Asynchronous Optimization via Random Search
 #'
-#' @include Optimizer.R
+#' @include OptimizerAsync.R
 #' @name mlr_optimizers_async_random_search
 #'
 #' @description

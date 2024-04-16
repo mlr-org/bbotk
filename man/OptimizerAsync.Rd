@@ -91,8 +91,7 @@ Identifier for the new instance.}
 Set of control parameters.}
 
 \item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes that the optimizer can optimize.
-Subclasses of \link[paradox:Param]{paradox::Param}.}
+Supported parameter classes that the optimizer can optimize.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the optimizer.

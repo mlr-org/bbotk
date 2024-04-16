@@ -14,6 +14,8 @@ as_terminator = function(x, ...) { # nolint
 }
 
 #' @export
+#' @param clone (`logical(1)`)\cr
+#'   If `TRUE`, ensures that the returned object is not the same as the input `x`.
 #' @rdname as_terminator
 as_terminator.Terminator = function(x, clone = FALSE, ...) { # nolint
   if (isTRUE(clone)) x$clone() else x

@@ -29,7 +29,6 @@ Optimizer = R6Class("Optimizer",
     #'
     #' @param param_classes (`character()`)\cr
     #'   Supported parameter classes that the optimizer can optimize.
-    #'   Subclasses of [paradox::Param].
     #'
     #' @param properties (`character()`)\cr
     #'   Set of properties of the optimizer.
