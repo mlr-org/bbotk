@@ -20,7 +20,7 @@
 #' @template field_rush
 #'
 #' @export
-ArchiveRush = R6Class("ArchiveRush",
+ArchiveAsync = R6Class("ArchiveAsync",
   public = list(
 
     search_space = NULL,
@@ -160,6 +160,6 @@ ArchiveRush = R6Class("ArchiveRush",
 )
 
 #' @export
-as.data.table.ArchiveRush = function(x, ...) { # nolint
+as.data.table.ArchiveAsync = function(x, ...) { # nolint
   copy(x$data)
 }

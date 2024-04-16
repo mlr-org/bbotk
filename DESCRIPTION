@@ -53,7 +53,6 @@ Imports:
 Suggests:
     adagio,
     emoa,
-    future,
     GenSA,
     irace (>= 3.5),
     knitr,
@@ -76,7 +75,7 @@ RoxygenNote: 7.3.1
 Collate:
     'Archive.R'
     'ArchiveBest.R'
-    'ArchiveRush.R'
+    'ArchiveAsync.R'
     'CallbackOptimization.R'
     'Codomain.R'
     'ContextOptimization.R'

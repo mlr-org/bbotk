@@ -11,7 +11,7 @@ test_that("initializing OptimInstanceAsyncSingleCrit works", {
     terminator = trm("evals", n_evals = 5L),
   )
 
-  expect_r6(instance$archive, "ArchiveRush")
+  expect_r6(instance$archive, "ArchiveAsync")
   expect_r6(instance$objective, "Objective")
   expect_r6(instance$search_space, "ParamSet")
   expect_r6(instance$terminator, "Terminator")
@@ -329,7 +329,7 @@ test_that("random search v2 works", {
 #   rush$reset()
 # })
 
-# test_that("freezing ArchiveRush after the optimization works", {
+# test_that("freezing ArchiveAsync after the optimization works", {
 #   skip_on_cran()
 
 #   rush = rsh()
@@ -354,7 +354,7 @@ test_that("random search v2 works", {
 #   rush$reset()
 # })
 
-# test_that("timestamps are written to ArchiveRush", {
+# test_that("timestamps are written to ArchiveAsync", {
 #   skip_on_cran()
 
 #   rush = rsh()

@@ -58,9 +58,9 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
 
       # archive is passed when a downstream packages creates a new archive class
       self$archive = if (is.null(archive)) {
-        ArchiveRush$new(search_space = self$search_space, codomain = self$objective$codomain, rush = self$rush)
+        ArchiveAsync$new(search_space = self$search_space, codomain = self$objective$codomain, rush = self$rush)
       } else {
-        assert_r6(archive, "ArchiveRush")
+        assert_r6(archive, "ArchiveAsync")
       }
     },
 
