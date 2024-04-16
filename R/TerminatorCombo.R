@@ -65,7 +65,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      assert_r6(archive, "Archive")
+      assert_multi_class(archive, c("Archive", "ArchiveAsync"))
       g = if (self$param_set$values$any) any else all
       g(map_lgl(self$terminators, function(t) t$is_terminated(archive)))
     },

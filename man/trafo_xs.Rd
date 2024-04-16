@@ -14,5 +14,5 @@ List of x-values.}
 Search space.}
 }
 \description{
-Transforms a given \code{list()} to a `list()`` with transformed x values.
+Transforms a given \code{list()} to a list with transformed x values.
 }

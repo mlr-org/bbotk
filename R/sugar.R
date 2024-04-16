@@ -70,7 +70,7 @@ opts = function(.keys, ...) {
 #' @title Syntactic Sugar for Optimization Instance Construction
 #'
 #' @description
-#' Function to construct a [OptimInstanceSingleCrit], [OptimInstanceMultiCrit], [OptimInstanceAsyncSingleCrit] or [OptimInstanceAsyncMultiCrit].
+#' Function to construct a [OptimInstanceSingleCrit] and [OptimInstanceMultiCrit].
 #'
 #' @template param_objective
 #' @template param_search_space
@@ -90,21 +90,42 @@ oi = function(
   ) {
   assert_r6(objective, "Objective")
 
-  if (rush_available()) {
-    Instance = if (objective$codomain$target_length == 1) OptimInstanceSingleCrit else OptimInstanceMultiCrit
-    Instance$new(
-      objective = objective,
-      search_space = search_space,
-      terminator = terminator,
-      keep_evals = keep_evals,
-      check_values = check_values,
-      callbacks = callbacks)
-  } else {
-    Instance = if (objective$codomain$target_length == 1) OptimInstanceAsyncSingleCrit else OptimInstanceAsyncMultiCrit
-    Instance$new(
-      objective = objective,
-      search_space = search_space,
-      terminator = terminator,
-      callbacks = callbacks)
-  }
+  Instance = if (objective$codomain$target_length == 1) OptimInstanceAsyncSingleCrit else OptimInstanceAsyncMultiCrit
+  Instance$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = terminator,
+    callbacks = callbacks)
+}
+
+#' @title Syntactic Sugar for Asynchronous Optimization Instance Construction
+#'
+#' @description
+#' Function to construct an [OptimInstanceAsyncSingleCrit] and [OptimInstanceAsyncMultiCrit].
+#'
+#' @template param_objective
+#' @template param_search_space
+#' @template param_terminator
+#' @template param_callbacks
+#' @template param_rush
+#'
+#' @export
+oi_async = function(
+  objective,
+  search_space = NULL,
+  terminator,
+  callbacks = list(),
+  rush = NULL
+  ) {
+  assert_r6(objective, "Objective")
+
+  Instance = if (objective$codomain$target_length == 1) OptimInstanceSingleCrit else OptimInstanceMultiCrit
+  Instance$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = terminator,
+    keep_evals = keep_evals,
+    check_values = check_values,
+    callbacks = callbacks,
+    rush = rush)
 }

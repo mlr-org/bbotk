@@ -49,7 +49,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      assert_r6(archive, "Archive")
+      assert_multi_class(archive, c("Archive", "ArchiveAsync"))
       return(Sys.time() >= self$param_set$values$stop_time)
     }
   ),

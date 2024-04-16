@@ -151,8 +151,6 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     .result = NULL,
     .objective_function = NULL,
     .context = NULL,
-    .freeze_archive = NULL,
-    .detect_lost_tasks = NULL,
 
     .assign_result = function(xdt, y) {
       stop("Abstract class")

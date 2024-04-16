@@ -51,7 +51,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      assert_r6(archive, "Archive")
+      assert_multi_class(archive, c("Archive", "ArchiveAsync"))
       level = self$param_set$values$level
       ycol = archive$cols_y
       minimize = "minimize" %in% archive$codomain$tags

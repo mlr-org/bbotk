@@ -48,6 +48,17 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
         man = "bbotk::mlr_optimizers_random_search"
       )
     }
+  ),
+
+  private = list(
+    .optimize = function(inst) {
+      batch_size = self$param_set$values$batch_size
+      sampler = SamplerUnif$new(inst$search_space)
+      repeat { # iterate until we have an exception from eval_batch
+        design = sampler$sample(batch_size)
+        inst$eval_batch(design$data)
+      }
+    }
   )
 )
 

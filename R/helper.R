@@ -32,6 +32,7 @@ is_dominated = function(ymat) {
 }
 
 #' @title Calculates the transformed x-values
+#'
 #' @description
 #' Transforms a given `data.table()` to a list with transformed x values.
 #' If no trafo is defined it will just convert the `data.table()` to a list.
@@ -49,6 +50,25 @@ transform_xdt_to_xss = function(xdt, search_space) {
     remove_dupl = FALSE
   )
   design$transpose(trafo = TRUE, filter_na = TRUE)
+}
+
+#' @title Calculate the transformed x-values
+#'
+#' @description
+#' Transforms a given `list()` to a list with transformed x values.
+#'
+#' @param xs (`list()`) \cr
+#'  List of x-values.
+#' @param search_space [paradox::ParamSet]\cr
+#'  Search space.
+#'
+#' @export
+trafo_xs = function(xs, search_space) {
+  xs = discard(xs, is_scalar_na)
+  if (search_space$has_trafo) {
+    xs = search_space$trafo(xs, search_space)
+  }
+  return(xs)
 }
 
 #' @title Get start values for optimizers
@@ -111,22 +131,4 @@ allow_partial_matching = list(
   warnPartialMatchDollar = FALSE
 )
 
-#' @title Calculate the transformed x-values
-#'
-#' @description
-#' Transforms a given `list()` to a `list()`` with transformed x values.
-#'
-#' @param xs (`list()`) \cr
-#'  List of x-values.
-#' @param search_space [paradox::ParamSet]\cr
-#' Search space.
-#'
-#' @export
-trafo_xs = function(xs, search_space) {
-  xs = discard(xs, is_scalar_na)
-  if (search_space$has_trafo) {
-    xs = search_space$trafo(xs, search_space)
-  }
-  return(xs)
-}
 

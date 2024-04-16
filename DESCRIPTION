@@ -74,8 +74,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Collate:
     'Archive.R'
-    'ArchiveBest.R'
     'ArchiveAsync.R'
+    'ArchiveBest.R'
     'CallbackOptimization.R'
     'Codomain.R'
     'ContextOptimization.R'

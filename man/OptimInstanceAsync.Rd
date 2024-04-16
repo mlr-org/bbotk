@@ -27,7 +27,7 @@ Rush controller for parallel optimization.}
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 Callbacks applied during the optimization.}
 
-\item{\code{archive}}{(\link{ArchiveRush})\cr
+\item{\code{archive}}{(\link{ArchiveAsync})\cr
 Contains all performed function calls of the Objective.}
 }
 \if{html}{\out{</div>}}

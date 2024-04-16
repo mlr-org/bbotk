@@ -207,7 +207,7 @@ start_async_optimize = function(inst, self, private) {
       packages = c(self$packages, "bbotk") # add packages from objective
 
       inst$rush$start_workers(
-        worker_loop = bbotk_worker_loop_decentralized,
+        worker_loop = bbotk_worker_loop,
         packages = packages,
         optimizer = self,
         instance = inst,
