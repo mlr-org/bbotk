@@ -119,13 +119,11 @@ oi_async = function(
   ) {
   assert_r6(objective, "Objective")
 
-  Instance = if (objective$codomain$target_length == 1) OptimInstanceSingleCrit else OptimInstanceMultiCrit
+  Instance = if (objective$codomain$target_length == 1) OptimInstanceAsyncSingleCrit else OptimInstanceAsyncMultiCrit
   Instance$new(
     objective = objective,
     search_space = search_space,
     terminator = terminator,
-    keep_evals = keep_evals,
-    check_values = check_values,
     callbacks = callbacks,
     rush = rush)
 }

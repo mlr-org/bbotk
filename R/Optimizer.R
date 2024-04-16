@@ -205,8 +205,6 @@ optimize_default= function(inst, self, private) {
   return(inst$result)
 }
 
-
-
 #' @title Default Assign Result Function
 #'
 #' @description
@@ -219,12 +217,11 @@ optimize_default= function(inst, self, private) {
 #' @export
 assign_result_default = function(inst) {
   assert_multi_class(inst, c("OptimInstance", "OptimInstanceAsync"))
-  browser()
   res = inst$archive$best()
 
   xdt = res[, inst$search_space$ids(), with = FALSE]
 
-  if (inherits(inst, "OptimInstanceMultiCrit")) {
+  if (inherits(inst, "OptimInstanceMultiCrit") || inherits(inst, "OptimInstanceAsyncMultiCrit")) {
     ydt = res[, inst$archive$cols_y, with = FALSE]
     inst$assign_result(xdt, ydt)
   } else {

@@ -13,5 +13,5 @@ test_that("OptimizerAsyncRandomSearch works", {
 
   optimizer = opt("async_random_search")
 
-  optimizer$optimize(instance)
+  expect_data_table(optimizer$optimize(instance), nrows = 1)
 })
