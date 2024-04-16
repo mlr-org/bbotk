@@ -45,10 +45,11 @@ reference:
       - mlr_terminators
       - trm
       - trms
+      - as_terminator
   - title: Optimization Instance
     contents:
       - starts_with("OptimInstance")
-      - oi
+      - starts_with("oi")
   - title: Optimizer
     contents:
       - starts_with("Optimizer")
@@ -57,9 +58,7 @@ reference:
       - opts
   - title: Archive
     contents:
-      - Archive
-      - ArchiveRush
-      - ArchiveBest
+      - starts_with("Archive")
       - Codomain
   - title: Callbacks
     contents:
