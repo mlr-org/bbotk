@@ -2,15 +2,9 @@
 % Please edit documentation in R/Optimizer.R
 \name{optimize_default}
 \alias{optimize_default}
-\alias{optimize_default.OptimInstance}
-\alias{optimize_default.OptimInstanceRush}
 \title{Default Optimization Function}
 \usage{
 optimize_default(inst, self, private)
-
-\method{optimize_default}{OptimInstance}(inst, self, private)
-
-\method{optimize_default}{OptimInstanceRush}(inst, self, private)
 }
 \arguments{
 \item{inst}{\link{OptimInstance}}

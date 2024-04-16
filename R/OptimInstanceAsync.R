@@ -3,17 +3,19 @@
 #' @include OptimInstance.R
 #'
 #' @description
-#' Abstract base class for [OptimInstanceRushSingleCrit] and [OptimInstanceRushMultiCrit].
+#'
+#'
+#' Abstract base class for [OptimInstanceAsyncSingleCrit] and [OptimInstanceAsyncMultiCrit].
 #' The optimization instances specify an optimization problem for [Optimizer]s.
 #' Points are evaluated asynchronously with the `rush` package.
-#' The function [oi()] creates an [OptimInstanceRushSingleCrit] or [OptimInstanceRushMultiCrit] and the function [bb_optimize()] creates an instance internally.
+#' The function [oi()] creates an [OptimInstanceAsyncSingleCrit] or [OptimInstanceAsyncMultiCrit] and the function [bb_optimize()] creates an instance internally.
 #'
 #' @template param_objective
 #' @template param_search_space
 #' @template param_terminator
-#' @template param_rush
 #' @template param_callbacks
 #' @template param_archive
+#' @template param_rush
 #'
 #' @template field_objective
 #' @template field_search_space
@@ -23,7 +25,7 @@
 #' @template field_archive_rush
 #'
 #' @export
-OptimInstanceRush = R6Class("OptimInstanceRush",
+OptimInstanceAsync = R6Class("OptimInstanceAsync",
   public = list(
 
     objective = NULL,
@@ -52,7 +54,7 @@ OptimInstanceRush = R6Class("OptimInstanceRush",
       self$search_space = choose_search_space(self$objective, search_space)
       self$terminator = assert_terminator(terminator, self)
       self$callbacks = assert_callbacks(as_callbacks(callbacks))
-      self$rush = rush %??% rsh()
+      self$rush = assert_rush(rush, null_ok = TRUE) %??% rsh()
 
       # archive is passed when a downstream packages creates a new archive class
       self$archive = if (is.null(archive)) {
@@ -90,58 +92,26 @@ OptimInstanceRush = R6Class("OptimInstanceRush",
     },
 
     #' @description
-    #' Adds points in `xdt` to the queue.
-    #' The points are evaluated by calling the [Objective] asynchronously.
-    #'
-    #' @param xdt (`data.table::data.table()`)\cr
-    #' x values as `data.table()` with one point per row.
-    #' Contains the value in  the *search space* of the [OptimInstance] object.
-    #' Can contain additional columns for extra information.
-    #' @param wait (`logical(1)`)\cr
-    #' If `TRUE`, wait for all evaluations to finish.
-    eval_async = function(xdt, wait = FALSE) {
-      assert_data_table(xdt)
-      assert_names(colnames(xdt), must.include = self$search_space$ids())
-
-      if (self$is_terminated) stop(terminated_error(self))
-
-      lg$info("Sending %i configuration(s) to workers:", max(1, nrow(xdt)))
-      lg$info(capture.output(print(xdt, class = FALSE, row.names = FALSE, print.keys = FALSE)))
-
-      xss = transpose_list(xdt[, self$search_space$ids(), with = FALSE])
-      xdt[, timestamp_xs := Sys.time()]
-      extra = transpose_list(xdt[, !self$search_space$ids(), with = FALSE])
-
-      # push to shared queue or priority queues
-      if (!is.null(xdt$priority_id)) {
-        keys = self$rush$push_priority_tasks(xss, extra, priority = xdt$priority_id)
-      } else {
-        keys = self$rush$push_tasks(xss, extra)
-      }
-
-      # optimizer can request to wait for all evaluations to finish
-      if (wait) {
-        self$rush$wait_for_tasks(keys, detect_lost_workers = TRUE) # private$.detect_lost_tasks
-      }
-
-      # terminate optimization if all workers crashed
-      if (!self$rush$n_running_workers)  {
-        lg$warn("Optimization terminated because all workers crashed.")
-        stop(terminated_error(self))
-      }
-
-      # if (private$.detect_lost_tasks) self$rush$detect_lost_tasks()
-
-      return(invisible(keys))
-    },
-
-    #' @description
     #' Reset terminator and clear all evaluation results from archive and results.
     clear = function() {
       self$rush$reset()
       self$archive$clear()
       private$.result = NULL
       invisible(self)
+    },
+
+    #' @description
+    #' The [Optimizer] object writes the best found point and estimated performance value here.
+    #' For internal use.
+    #'
+    #' @param xdt (`data.table::data.table()`)\cr
+    #'  x values as `data.table::data.table()` with one row.
+    #' Contains the value in the  *search space* of the [OptimInstance] object.
+    #' Can contain additional columns for extra information.
+    #' @param y (`numeric(1)`)\cr
+    #'   Optimal outcome.
+    assign_result = function(xdt, y) {
+      stop("Abstract class")
     }
   ),
 

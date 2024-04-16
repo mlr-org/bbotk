@@ -22,7 +22,7 @@ ContextOptimization = R6Class("ContextOptimization",
     #' @param instance ([OptimInstance]).
     #' @param optimizer ([Optimizer]).
     initialize = function(instance, optimizer) {
-      self$instance = assert_multi_class(instance, c("OptimInstance", "OptimInstanceRush"))
+      self$instance = assert_multi_class(instance, c("OptimInstance", "OptimInstanceAsync"))
       self$optimizer = optimizer
     }
   ),

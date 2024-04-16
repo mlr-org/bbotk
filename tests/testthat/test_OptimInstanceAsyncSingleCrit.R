@@ -1,10 +1,11 @@
-test_that("initializing OptimInstanceRushSingleCrit works", {
+test_that("initializing OptimInstanceAsyncSingleCrit works", {
   skip_on_cran()
+  skip_if_not_installed("rush")
   flush_redis()
 
   rush_plan(n_workers = 2)
 
-  instance = OptimInstanceRushSingleCrit$new(
+  instance = OptimInstanceAsyncSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
@@ -20,13 +21,32 @@ test_that("initializing OptimInstanceRushSingleCrit works", {
   expect_rush_reset(instance$rush)
 })
 
+test_that("rush controller can be passed to OptimInstanceAsyncSingleCrit", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+
+  rush = rsh(network_id = "remote_network")
+
+  instance = OptimInstanceAsyncSingleCrit$new(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  expect_class(instance$rush, "Rush")
+  expect_equal(instance$rush$network_id, "remote_network")
+})
+
+
 test_that("starting workers and evaluating points works in a centralized network", {
   skip_on_cran()
   flush_redis()
 
   rush_plan(n_workers = 2)
 
-  instance = OptimInstanceRushSingleCrit$new(
+  instance = OptimInstanceAsyncSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
@@ -47,7 +67,7 @@ test_that("starting workers and evaluating points works in a decentralized netwo
 
   rush_plan(n_workers = 2)
 
-  instance = OptimInstanceRushSingleCrit$new(
+  instance = OptimInstanceAsyncSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 20L),
@@ -72,7 +92,7 @@ test_that("random search v2 works", {
 
   rush_plan(n_workers = 2)
 
-  instance = OptimInstanceRushSingleCrit$new(
+  instance = OptimInstanceAsyncSingleCrit$new(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 20L),
@@ -83,11 +103,11 @@ test_that("random search v2 works", {
 })
 
 
-# test_that("evaluating points works with OptimInstanceRushSingleCrit", {
+# test_that("evaluating points works with OptimInstanceAsyncSingleCrit", {
 #   skip_on_cran()
 
 #   rush = rsh()
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 5L),
@@ -107,11 +127,11 @@ test_that("random search v2 works", {
 #   rush$reset()
 # })
 
-# test_that("assigning a result works with OptimInstanceRushSingleCrit", {
+# test_that("assigning a result works with OptimInstanceAsyncSingleCrit", {
 #   skip_on_cran()
 
 #   rush = rsh()
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 5L),
@@ -133,11 +153,11 @@ test_that("random search v2 works", {
 #   rush$reset()
 # })
 
-# test_that("OptimInstanceRushSingleCrit works with trafos", {
+# test_that("OptimInstanceAsyncSingleCrit works with trafos", {
 #   skip_on_cran()
 
 #   rush = rsh()
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D_TRF,
 #     terminator = trm("evals", n_evals = 5L),
@@ -159,11 +179,11 @@ test_that("random search v2 works", {
 #   rush$reset()
 # })
 
-# test_that("OptimInstanceRushSingleCrit works with extra input", {
+# test_that("OptimInstanceAsyncSingleCrit works with extra input", {
 #   skip_on_cran()
 
 #   rush = rsh()
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D_TRF,
 #     terminator = trm("evals", n_evals = 5L),
@@ -195,7 +215,7 @@ test_that("random search v2 works", {
 #   rush$reset()
 # })
 
-# test_that("OptimInstanceRushSingleCrit works with extra outputs", {
+# test_that("OptimInstanceAsyncSingleCrit works with extra outputs", {
 #   skip_on_cran()
 
 #   fun_extra = function(xs) {
@@ -209,7 +229,7 @@ test_that("random search v2 works", {
 #   obj_extra = ObjectiveRFun$new(fun = fun_extra, domain = PS_2D, codomain = FUN_2D_CODOMAIN)
 
 #   rush = rsh()
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = obj_extra,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 5L),
@@ -236,12 +256,12 @@ test_that("random search v2 works", {
 #   rush$reset()
 # })
 
-# test_that("clear method of OptimInstanceRushSingleCrit works", {
+# test_that("clear method of OptimInstanceAsyncSingleCrit works", {
 #   skip_on_cran()
 
 #   rush = rsh()
 #   future::plan("cluster", workers = 1L)
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 5L),
@@ -258,14 +278,14 @@ test_that("random search v2 works", {
 #   expect_data_table(instance$archive$data, nrows = 0L)
 # })
 
-# test_that("OptimInstanceRushSingleCrit and the cluster backend works", {
+# test_that("OptimInstanceAsyncSingleCrit and the cluster backend works", {
 #   skip_on_cran()
 #   skip_on_ci()
 
 #   rush = rsh()
 #   future::plan("cluster", workers = 1L)
 
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 5L),
@@ -283,13 +303,13 @@ test_that("random search v2 works", {
 #   rush$reset()
 # })
 
-# test_that("OptimInstanceRushSingleCrit and the multisession backend works", {
+# test_that("OptimInstanceAsyncSingleCrit and the multisession backend works", {
 #   skip_on_cran()
 
 #   rush = rsh()
 #   future::plan("multisession", workers = 2L)
 
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 10L),
@@ -315,7 +335,7 @@ test_that("random search v2 works", {
 #   rush = rsh()
 #   future::plan("cluster", workers = 1L)
 
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 10L),
@@ -340,7 +360,7 @@ test_that("random search v2 works", {
 #   rush = rsh()
 #   future::plan("cluster", workers = 1L)
 
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 10L),
@@ -365,7 +385,7 @@ test_that("random search v2 works", {
 #   rush = rsh()
 #   future::plan("cluster", workers = 1L)
 
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = OBJ_2D,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 3L),
@@ -397,7 +417,7 @@ test_that("random search v2 works", {
 
 #   obj = ObjectiveRFun$new(fun = fun, domain = PS_2D_domain, properties = "single-crit")
 
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = obj,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 1L),
@@ -420,7 +440,7 @@ test_that("random search v2 works", {
 #     get("attach")(structure(list(), class = "UserDefinedDatabase"))
 #   }
 #   obj = ObjectiveRFun$new(fun = fun, domain = PS_2D_domain, properties = "single-crit")
-#   instance = OptimInstanceRushSingleCrit$new(
+#   instance = OptimInstanceAsyncSingleCrit$new(
 #     objective = obj,
 #     search_space = PS_2D,
 #     terminator = trm("evals", n_evals = 1L),

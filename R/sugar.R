@@ -70,7 +70,7 @@ opts = function(.keys, ...) {
 #' @title Syntactic Sugar for Optimization Instance Construction
 #'
 #' @description
-#' Function to construct a [OptimInstanceSingleCrit], [OptimInstanceMultiCrit], [OptimInstanceRushSingleCrit] or [OptimInstanceRushMultiCrit].
+#' Function to construct a [OptimInstanceSingleCrit], [OptimInstanceMultiCrit], [OptimInstanceAsyncSingleCrit] or [OptimInstanceAsyncMultiCrit].
 #'
 #' @template param_objective
 #' @template param_search_space
@@ -100,7 +100,7 @@ oi = function(
       check_values = check_values,
       callbacks = callbacks)
   } else {
-    Instance = if (objective$codomain$target_length == 1) OptimInstanceRushSingleCrit else OptimInstanceRushMultiCrit
+    Instance = if (objective$codomain$target_length == 1) OptimInstanceAsyncSingleCrit else OptimInstanceAsyncMultiCrit
     Instance$new(
       objective = objective,
       search_space = search_space,

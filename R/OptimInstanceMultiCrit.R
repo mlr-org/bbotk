@@ -16,6 +16,7 @@
 #' @template param_search_space
 #' @template param_keep_evals
 #' @template param_callbacks
+#' @template param_archive
 #'
 #' @export
 OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
@@ -54,9 +55,6 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
     #' The [Optimizer] object writes the best found points
     #' and estimated performance values here (probably the Pareto set / front).
     #' For internal use.
-    #'
-    #' @param ydt (`numeric(1)`)\cr
-    #'   Optimal outcomes, e.g. the Pareto front.
     assign_result = function(xdt, ydt) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)

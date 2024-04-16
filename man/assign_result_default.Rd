@@ -2,15 +2,9 @@
 % Please edit documentation in R/Optimizer.R
 \name{assign_result_default}
 \alias{assign_result_default}
-\alias{assign_result_default.OptimInstance}
-\alias{assign_result_default.OptimInstanceRush}
 \title{Default Assign Result Function}
 \usage{
 assign_result_default(inst)
-
-\method{assign_result_default}{OptimInstance}(inst)
-
-\method{assign_result_default}{OptimInstanceRush}(inst)
 }
 \arguments{
 \item{inst}{\link{OptimInstance}}

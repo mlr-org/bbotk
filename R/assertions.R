@@ -81,7 +81,7 @@ assert_optimizer = function(optimizer) {
 #' @param instance ([OptimInstance]).
 #' @rdname bbotk_assertions
 assert_instance_properties = function(optimizer, inst) {
-  assert_multi_class(inst, c("OptimInstance", "OptimInstanceRush"))
+  assert_multi_class(inst, c("OptimInstance", "OptimInstanceAsync"))
 
   require_namespaces(optimizer$packages)
 

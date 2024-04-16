@@ -89,6 +89,8 @@ Search space that is logged into archive.}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
+
+\item{\code{archive}}{(\link{Archive}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -113,8 +115,8 @@ One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
 Column names have to match ids of the \code{search_space}.
 However, \code{xdt} can contain additional columns.}
 
-\item{\code{ydt}}{(\code{numeric(1)})\cr
-Optimal outcomes, e.g. the Pareto front.}
+\item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+Optimal outcome.}
 }
 \if{html}{\out{</div>}}
 }

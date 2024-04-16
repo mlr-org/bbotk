@@ -262,7 +262,7 @@ objective_error = function(x, inst, maximization_to_minimization) {
     contains numeric values")
 }
 
-# used by OptimInstance and OptimInstanceRush
+# used by OptimInstance and OptimInstanceAsync
 choose_search_space = function(objective, search_space) {
   # create search space
   domain_search_space = objective$domain$search_space()

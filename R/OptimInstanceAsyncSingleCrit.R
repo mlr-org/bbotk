@@ -1,20 +1,22 @@
 #' @title Single Criterion Optimization Instance with Rush
 #'
 #' @description
-#' The [OptimInstanceRushSingleCrit] specifies an optimization problem for [Optimizer]s.
+#' The [OptimInstanceAsyncSingleCrit] specifies an optimization problem for [OptimizerAsync]s.
 #' Points are evaluated asynchronously with the `rush` package.
-#' The function [oi()] creates an [OptimInstanceRushSingleCrit] and the function [bb_optimize()] creates an instance internally.
+#' The function [oi()] creates an [OptimInstanceAsyncSingleCrit] and the function [bb_optimize()] creates an instance internally.
 #'
 #' @template param_objective
 #' @template param_search_space
 #' @template param_terminator
-#' @template param_rush
 #' @template param_callbacks
 #' @template param_archive
+#' @template param_rush
+#'
+#' @template param_xdt
 #'
 #' @export
-OptimInstanceRushSingleCrit = R6Class("OptimInstanceRushSingleCrit",
-  inherit = OptimInstanceRush,
+OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
+  inherit = OptimInstanceAsync,
   public = list(
 
     #' @description
@@ -38,11 +40,15 @@ OptimInstanceRushSingleCrit = R6Class("OptimInstanceRushSingleCrit",
         callbacks = callbacks,
         archive = archive,
         rush = rush)
-    }
-  ),
+    },
 
-  private = list(
-    .assign_result = function(xdt, y) {
+    #' @description
+    #' The [OptimizerAsync] object writes the best found point and estimated performance value here.
+    #' For internal use.
+    #'
+    #' @param y (`numeric(1)`)\cr
+    #' Optimal outcome.
+    assign_result = function(xdt, y) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())

@@ -1,20 +1,22 @@
 #' @title Multi Criterion Optimization Instance
 #'
 #' @description
-#' The [OptimInstanceRushMultiCrit] specifies an optimization problem for [Optimizer]s.
+#' The [OptimInstanceAsyncMultiCrit] specifies an optimization problem for [OptimizerAsync]s.
 #' Points are evaluated asynchronously with the `rush` package.
-#' The function [oi()] creates an [OptimInstanceRushMultiCrit] and the function [bb_optimize()] creates an instance internally.
+#' The function [oi()] creates an [OptimInstanceAsyncMultiCrit] and the function [bb_optimize()] creates an instance internally.
 #'
 #' @template param_objective
 #' @template param_search_space
 #' @template param_terminator
-#' @template param_rush
 #' @template param_callbacks
 #' @template param_archive
+#' @template param_rush
+#'
+#' @template param_xdt
 #'
 #' @export
-OptimInstanceRushMultiCrit = R6Class("OptimInstanceRushMultiCrit",
-  inherit = OptimInstanceRush,
+OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
+  inherit = OptimInstanceAsync,
   public = list(
 
     #' @description
@@ -23,9 +25,9 @@ OptimInstanceRushMultiCrit = R6Class("OptimInstanceRushMultiCrit",
       objective,
       search_space = NULL,
       terminator,
-      rush,
       callbacks = list(),
-      archive = NULL
+      archive = NULL,
+      rush = NULL
       ) {
       if (objective$codomain$target_length == 1) {
         stop("Codomain length must be greater than 1.")
@@ -37,10 +39,14 @@ OptimInstanceRushMultiCrit = R6Class("OptimInstanceRushMultiCrit",
         rush = rush,
         callbacks = callbacks,
         archive = archive)
-    }
-  ),
+    },
 
-  private = list(
+    #' @description
+    #' The [Optimizer] object writes the best found points and estimated performance values here (probably the Pareto set / front).
+    #' For internal use.
+    #'
+    #' @param ydt (`numeric(1)`)\cr
+    #'  Optimal outcomes, e.g. the Pareto front.
     assign_result = function(xdt, ydt) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
