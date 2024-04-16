@@ -1,14 +1,13 @@
-#' @title Logging object for objective function evaluations
+#' @title Rush Data Storage for Objective Function Evaluations
 #'
 #' @description
-#' Container around a [data.table::data.table] which stores all performed
-#' function calls of the Objective.
+#' Connector to a rush network which stores all performed function calls of the [Objective].
 #'
 #' @section S3 Methods:
 #' * `as.data.table(archive)`\cr
-#'   [Archive] -> [data.table::data.table()]\cr
-#'   Returns a tabular view of all performed function calls of the
-#'   Objective. The `x_domain` column is unnested to separate columns.
+#'   [ArchiveAsync] -> [data.table::data.table()]\cr
+#'   Returns a tabular view of all performed function calls of the Objective.
+#'   The `x_domain` column is unnested to separate columns.
 #'
 #' @template param_search_space
 #' @template param_codomain
@@ -36,8 +35,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     initialize = function(search_space, codomain, rush) {
       self$search_space = assert_param_set(search_space)
       self$codomain = Codomain$new(assert_param_set(codomain)$params)
-      self$rush = assert_class(rush, "Rush")
-      private$.data = data.table()
+      self$rush = assert_rush(rush)
     },
 
     #' @description
@@ -45,24 +43,39 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' For single-crit optimization, the solution that minimizes / maximizes the objective function.
     #' For multi-crit optimization, the Pareto set / front.
     #'
-    #' @template param_n_select
+    #' @param n_select (`integer(1L)`)\cr
+    #' Amount of points to select.
+    #' Ignored for multi-crit optimization.
+    #' @param ties_method (`character(1L)`)\cr
+    #' Method to break ties when multiple points have the same score.
+    #' Either `"first"` (default) or `"random"`.
+    #' Ignored for multi-crit optimization.
+    #' If `n_select > 1L`, the tie method is ignored and the first point is returned.
     #'
     #' @return [data.table::data.table()]
-    best = function(n_select = 1) {
-      data = self$data
+    best = function(n_select = 1, ties_method = "first") {
+      assert_count(n_select)
+      tab = self$data
 
       if (self$codomain$target_length == 1L) {
-        assert_int(n_select, lower = 1L, upper = nrow(data))
-        setkeyv(data, self$codomain$target_ids)
-        top_n = if (has_element(self$codomain$target_tags[[1]], "minimize")) head else tail
-        res = top_n(data, n_select)
+        if (n_select == 1L) {
+          # use which_max to find the best point
+          y = tab[[self$cols_y]] * -self$codomain$maximization_to_minimization
+          ii = which_max(y, ties_method = ties_method)
+          tab[ii]
+        } else {
+          # copy table to avoid changing the order of the archive
+          if (is.null(batch)) tab = copy(self$data)
+          # use data.table fast sort to find the best points
+          setorderv(tab, cols = self$cols_y, order = self$codomain$maximization_to_minimization)
+          head(tab, n_select)
+        }
       } else {
-        ymat = t(as.matrix(data[, self$codomain$target_ids, with = FALSE]))
+        # use non-dominated sorting to find the best points
+        ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
         ymat = self$codomain$maximization_to_minimization * ymat
-        res = data[!is_dominated(ymat)]
+        tab[!is_dominated(ymat)]
       }
-
-      return(res)
     },
 
     #' @description

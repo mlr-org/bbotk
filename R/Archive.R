@@ -1,4 +1,4 @@
-#' @title Logging object for objective function evaluations
+#' @title Data Table Storage for Objective Function Evaluations
 #'
 #' @description
 #' Container around a [data.table::data.table] which stores all performed
