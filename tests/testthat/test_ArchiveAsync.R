@@ -29,7 +29,7 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 0)
   expect_equal(archive$fetch_data_with_state()$state, "running")
 
-  archive$push_results(keys, yss = list(list(y1 = 1, y2 = 2)))
+  archive$push_result(keys, ys = list(y1 = 1, y2 = 2), x_domain = list(x1 = 1, x2 = 2))
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)
@@ -37,8 +37,8 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 0)
   expect_equal(archive$fetch_data_with_state()$state, "finished")
 
-  xss = list(list(x1 = 2, x2 = 2))
-  keys = archive$push_running_points(xss)
+  xs = list(x1 = 2, x2 = 2)
+  keys = archive$push_running_point(xs)
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 1)
@@ -46,7 +46,7 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 0)
   expect_equal(archive$fetch_data_with_state()$state, c("running", "finished"))
 
-  archive$push_failed_points(keys, list(list(message = "error")))
+  archive$push_failed_point(keys, message = "error")
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)

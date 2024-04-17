@@ -232,15 +232,19 @@ start_async_optimize = function(inst, self, private) {
 #' @param inst [OptimInstance]
 #' @param self [Optimizer]
 #' @param private (`environment()`)
+#' @param n_evals (`integer(1)`)\cr
+#'  Number of evaluations to wait for.
+#'  Default is `Inf`.
+#'  Needed for `"none"` termination.
 #'
 #' @keywords internal
 #' @export
-wait_for_async_optimize = function(inst, self, private) {
+wait_for_async_optimize = function(inst, self, private, n_evals = Inf) {
   # wait until optimization is finished
-  while(!inst$is_terminated) {
+
+  while(!inst$is_terminated && inst$archive$n_evals < n_evals) {
     Sys.sleep(1)
     inst$rush$print_log()
-    inst$rush$detect_lost_workers()
 
     # fetch new results for printing
     new_results = inst$rush$fetch_new_tasks()
@@ -249,7 +253,7 @@ wait_for_async_optimize = function(inst, self, private) {
       lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
     }
 
-    if (!inst$is_terminated && !inst$rush$n_running_workers) {
+    if (inst$rush$all_workers_lost) {
       stop("All workers have crashed.")
     }
   }

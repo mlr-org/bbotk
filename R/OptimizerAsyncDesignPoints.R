@@ -16,8 +16,6 @@
 #'   Design points to try in search, one per row.}
 #' }
 #'
-#' @template section_progress_bars
-#'
 #' @export
 OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
   inherit = OptimizerAsync,
@@ -29,7 +27,7 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
       param_set = ps(
         design = p_uty(tags = "required", custom_check = function(x) check_data_table(x, min.rows = 1, min.cols = 1, null.ok = TRUE))
       )
-      param_set$values = list(batch_size = 1L, design = NULL)
+      param_set$values = list(design = NULL)
       super$initialize(
         id = "design_points",
         param_set = param_set,
@@ -46,15 +44,16 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
     #' @param inst ([OptimInstance]).
     #' @return [data.table::data.table].
     optimize = function(inst) {
+
+      # generate grid and send to workers
+      design = inst$search_space$assert_dt(self$param_set$values$design)
+      inst$archive$push_points(transpose_list(design))
+
       # start workers
       start_async_optimize(inst, self, private)
 
-      # generate grid and send to workers
-      design = instance$search_space$assert_dt(self$param_set$values$design)
-      inst$rush$push_tasks(transpose_list(design), extra = list(list(timestamp_xs = Sys.time())))
-
       # print logs and check for termination
-      wait_for_async_optimize(inst, self, private)
+      wait_for_async_optimize(inst, self, private, n_evals = nrow(design))
 
       # assign and print results
       finish_async_optimize(inst, self, private)
@@ -63,19 +62,14 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
 
   private = list(
     .optimize = function(inst) {
-      search_space = inst$search_space
-      rush = inst$rush
+      archive = inst$archive
 
       # evaluate grid points
-      while (rush$n_queued_tasks && !inst$is_terminated) {
-        task = rush$pop_task(fields = "xs")
+      while (archive$n_queued && !inst$is_terminated) {
+        task = archive$pop_point() # FIXME: Add fields argument?
         xs_trafoed = trafo_xs(task$xs, inst$search_space)
         ys = inst$objective$eval(xs_trafoed)
-        rush$push_results(
-          task$key,
-          yss = list(ys),
-          extra = list(list(x_domain = list(xs_trafoed),
-          timestamp_ys = Sys.time())))
+        archive$push_result(task$key, ys, x_domain = xs_trafoed)
       }
     }
   )

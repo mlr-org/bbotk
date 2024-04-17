@@ -52,16 +52,17 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
     #' @param inst ([OptimInstance]).
     #' @return [data.table::data.table].
     optimize = function(inst) {
-      # start workers
-      start_async_optimize(inst, self, private)
 
       # generate grid and send to workers
       pv = self$param_set$values
       design = generate_design_grid(inst$search_space, resolution = pv$resolution, param_resolutions = pv$param_resolutions)$data
-      inst$rush$push_tasks(transpose_list(design), extra = list(list(timestamp_xs = Sys.time())))
+      inst$archive$push_points(transpose_list(design))
+
+      # start workers
+      start_async_optimize(inst, self, private)
 
       # print logs and check for termination
-      wait_for_async_optimize(inst, self, private)
+      wait_for_async_optimize(inst, self, private, n_evals = nrow(design))
 
       # assign and print results
       finish_async_optimize(inst, self, private)
@@ -70,24 +71,18 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
 
   private = list(
     .optimize = function(inst) {
-      search_space = inst$search_space
-      rush = inst$rush
+      archive = inst$archive
 
       # evaluate grid points
-      while (rush$n_queued_tasks && !inst$is_terminated) {
-        task = rush$pop_task(fields = "xs")
+      while (archive$n_queued && !inst$is_terminated) {
+        task = archive$pop_point() # FIXME: Add fields argument?
         xs_trafoed = trafo_xs(task$xs, inst$search_space)
         ys = inst$objective$eval(xs_trafoed)
-        rush$push_results(
-          task$key,
-          yss = list(ys),
-          extra = list(list(x_domain = list(xs_trafoed),
-          timestamp_ys = Sys.time())))
+        archive$push_result(task$key, ys, x_domain = xs_trafoed)
       }
     }
   )
 )
 
 mlr_optimizers$add("async_grid_search", OptimizerAsyncGridSearch)
-
 

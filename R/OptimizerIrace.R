@@ -229,7 +229,7 @@ target_runner_default = function(experiment, exec.target.runner, scenario, targe
     configuration
   })
   # fix logicals
-  lgl_params = as.data.table(optim_instance$search_space)[class == "ParamLgl", id]
+  lgl_params = as.data.table(optim_instance$search_space)[class == "ParamLgl", "id", with = FALSE]
   if (length(lgl_params)) xdt[, (lgl_params) := lapply(.SD, as.logical), .SDcols = lgl_params]
 
   # provide experiment instances to objective

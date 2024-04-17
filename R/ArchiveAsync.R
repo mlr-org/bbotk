@@ -41,8 +41,8 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @description
     #' Push points to the queue.
     #'
-    #' @param xss (`list`)\cr
-    #' List of points.
+    #' @param xss (list of named `list()`)\cr
+    #' List of named lists of point values.
     push_points = function(xss) {
       self$rush$push_tasks(xss, extra = list(list(timestamp_xs = Sys.time())))
     },
@@ -54,38 +54,39 @@ ArchiveAsync = R6Class("ArchiveAsync",
     },
 
     #' @description
-    #' Push points to running points without queue.
+    #' Push point to running points without queue.
     #'
-    #' @param xss (`list`)\cr
-    #' List of points.
-    push_running_points = function(xss) {
-      self$rush$push_running_tasks(xss, extra = list(list(timestamp_xs = Sys.time())))
+    #' @param xs (named `list`)\cr
+    #' Named list of point values.
+    push_running_point = function(xs) {
+      self$rush$push_running_tasks(list(xs), extra = list(list(timestamp_xs = Sys.time())))
     },
 
     #' @description
-    #' Push results to the archive.
+    #' Push result to the archive.
     #'
-    #' @param keys (`character()`)\cr
-    #' Keys of the points.
-    #' @param yss (`list()`)\cr
-    #' List of results.
+    #' @param key (`character()`)\cr
+    #' Key of the point.
+    #' @param ys (`list()`)\cr
+    #' Named list of results.
+    #' @param x_domain (`list()`)\cr
+    #' Named list of transformed point values.
     #' @param extra (`list()`)\cr
-    #' List of additional information.
-    push_results = function(keys, yss, extra = NULL) {
-      extra = map(extra, function(x) c(x, list(timestamp_ys = Sys.time())))
-
-      self$rush$push_results(keys, yss, extra = extra)
+    #' Named list of additional information.
+    push_result = function(key, ys, x_domain, extra = NULL) {
+      extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
+      self$rush$push_results(key, list(ys), extra = list(extra))
     },
 
     #' @description
-    #' Push failed points to the archive.
+    #' Push failed point to the archive.
     #'
-    #' @param keys (`character()`)\cr
-    #' Keys of the points.
-    #' @param conditions (`list()`)\cr
-    #' List of conditions.
-    push_failed_points = function(keys, conditions) {
-      self$rush$push_failed(keys, conditions)
+    #' @param key (`character()`)\cr
+    #' Key of the point.
+    #' @param message (`character()`)\cr
+    #' Error message.
+    push_failed_point = function(key, message) {
+      self$rush$push_failed(key, list(list(message = message)))
     },
 
     #' @description
@@ -134,7 +135,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
           tab[ii]
         } else {
           # copy table to avoid changing the order of the archive
-          if (is.null(batch)) tab = copy(self$data)
+          tab = copy(self$data)
           # use data.table fast sort to find the best points
           setorderv(tab, cols = self$cols_y, order = self$codomain$maximization_to_minimization)
           head(tab, n_select)
@@ -232,13 +233,37 @@ ArchiveAsync = R6Class("ArchiveAsync",
       self$rush$fetch_failed_tasks()
     },
 
+    #' @field n_queued (`integer(1)`)\cr
+    #' Number of queued points.
+    n_queued = function() {
+      self$rush$n_queued_tasks
+    },
+
+    #' @field n_running (`integer(1)`)\cr
+    #' Number of running points.
+    n_running = function() {
+      self$rush$n_running_tasks
+    },
+
+    #' @field n_finished (`integer(1)`)\cr
+    #' Number of finished points.
+    n_finished = function() {
+      self$rush$n_finished_tasks
+    },
+
+    #' @field n_failed (`integer(1)`)\cr
+    #' Number of failed points.
+    n_failed = function() {
+      self$rush$n_failed_tasks
+    },
+
     #' @field n_evals (`integer(1)`)\cr
     #' Number of evaluations stored in the archive.
     n_evals = function() {
       if (is.null(self$rush)) {
         nrow(private$.data)
       } else {
-        self$rush$n_finished_tasks
+        self$rush$n_finished_tasks + self$rush$n_failed_tasks
       }
     },
 

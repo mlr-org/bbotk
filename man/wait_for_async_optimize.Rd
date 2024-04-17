@@ -4,7 +4,7 @@
 \alias{wait_for_async_optimize}
 \title{Wait for Decentralized Optimization}
 \usage{
-wait_for_async_optimize(inst, self, private)
+wait_for_async_optimize(inst, self, private, n_evals = Inf)
 }
 \arguments{
 \item{inst}{\link{OptimInstance}}
@@ -12,6 +12,11 @@ wait_for_async_optimize(inst, self, private)
 \item{self}{\link{Optimizer}}
 
 \item{private}{(\code{environment()})}
+
+\item{n_evals}{(\code{integer(1)})\cr
+Number of evaluations to wait for.
+Default is \code{Inf}.
+Needed for \code{"none"} termination.}
 }
 \description{
 Used internally in \link{OptimizerAsync}.

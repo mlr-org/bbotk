@@ -3,15 +3,17 @@ test_that("OptimizerAsyncRandomSearch works", {
   skip_if_not_installed("rush")
   flush_redis()
 
+  # options(bbotk_local = TRUE)
+
   rush_plan(n_workers = 2)
 
-  instance = OptimInstanceAsyncSingleCrit$new(
+  instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("evals", n_evals = 5L),
+    terminator = trm("none"),
   )
 
-  optimizer = opt("async_random_search")
+  optimizer = opt("async_grid_search")
 
   expect_data_table(optimizer$optimize(instance), nrows = 1)
 

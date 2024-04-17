@@ -9,13 +9,9 @@
 #' @templateVar id async_random_search
 #' @template section_dictionary_optimizers
 #'
-#' @template section_progress_bars
-#'
 #' @source
 #' `r format_bib("bergstra_2012")`
 #'
-#' @export
-#' @template example
 #' @export
 OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
   inherit = OptimizerAsync,
@@ -64,16 +60,13 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
         xss = transpose_list(xdt)
         xs = xss[[1]][inst$archive$cols_x]
         xs_trafoed = trafo_xs(xs, search_space)
-        keys = inst$rush$push_running_task(list(xs),
-          extra = list(list(timestamp_xs = Sys.time())))
+        key = inst$archive$push_running_point(xs)
 
         # eval
         ys = inst$objective$eval(xs_trafoed)
 
         # tell
-        rush$push_results(keys, yss = list(ys), extra = list(list(
-          x_domain = list(xs_trafoed),
-          timestamp_ys = Sys.time())))
+        inst$archive$push_result(key, ys = ys, x_domain = xs_trafoed)
       }
     }
   )
