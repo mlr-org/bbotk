@@ -70,9 +70,11 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
     initialize = function() {
       param_set = ps(
         sigma = p_dbl(default = 0.5),
-        start_values = p_fct(default = "random", levels = c("random", "center"))
+        start_values = p_fct(levels = c("random", "center"), tags = "required")
       )
+      # old paradox; new paradox can use 'init = "random"'
       param_set$values$start_values = "random"
+
       super$initialize(
         id = "cmaes",
         param_set = param_set,

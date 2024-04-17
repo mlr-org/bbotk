@@ -132,7 +132,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
         mu = p_int(default = 5, lower = 1),
         softRestart = p_int(default = 1, lower = 0, upper = 1),
         softRestartThreshold = p_dbl(),
-        digits = p_int(default = 15, lower = 1, upper = 15, tags = "required"),
+        digits = p_int(lower = 1, upper = 15, tags = "required"),
         testType = p_fct(default = "F-test", levels = c("F-test", "t-test", "t-test-bonferroni", "t-test-holm")),
         firstTest = p_int(default = 5, lower = 0),
         eachTest = p_int(default = 1, lower = 1),
@@ -175,7 +175,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
 
       # check for instances constant
       if ("instances" %nin% inst$objective$constants$ids()) {
-        inst$objective$constants$add(ParamUty$new("instances"))
+        inst$objective$constants = c(inst$objective$constants, ps(instances = p_uty()))
       }
 
       # make scenario
@@ -229,7 +229,7 @@ target_runner_default = function(experiment, exec.target.runner, scenario, targe
     configuration
   })
   # fix logicals
-  lgl_params = as.data.table(optim_instance$search_space)[class == "ParamLgl", "id", with = FALSE]
+  lgl_params = as.data.table(optim_instance$search_space)[class == "ParamLgl", "id"][[1]]
   if (length(lgl_params)) xdt[, (lgl_params) := lapply(.SD, as.logical), .SDcols = lgl_params]
 
   # provide experiment instances to objective

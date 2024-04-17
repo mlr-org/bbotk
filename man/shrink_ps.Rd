@@ -30,7 +30,7 @@ Boundaries of numeric values are shrinked to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.
 
-Note that for \link[paradox:ParamLgl]{paradox::ParamLgl}s the value to be shrinked around is set as
+Note that for \code{\link[paradox:Domain]{paradox::p_lgl()}}s the value to be shrinked around is set as
 the \code{default} value instead of dropping a level. Also, a tag \code{shrinked} is
 added.
 
@@ -43,11 +43,11 @@ transformed values.
 \examples{
 library(paradox)
 library(data.table)
-param_set = ParamSet$new(list(
-  ParamDbl$new("x1", lower = 0, upper = 10),
-  ParamInt$new("x2", lower = -10, upper = 10),
-  ParamFct$new("x3", levels = c("a", "b", "c")),
-  ParamLgl$new("x4"))
+param_set = ps(
+  x = p_dbl(lower = 0, upper = 10),
+  x2 = p_int(lower = -10, upper = 10),
+  x3 = p_fct(levels = c("a", "b", "c")),
+  x4 = p_lgl()
 )
 x = data.table(x1 = 5, x2 = 0, x3 = "b", x4 = FALSE)
 shrink_ps(param_set, x = x)
