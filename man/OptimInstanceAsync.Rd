@@ -9,45 +9,14 @@ The optimization instances specify an optimization problem for \link{Optimizer}s
 Points are evaluated asynchronously with the \code{rush} package.
 The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCrit} or \link{OptimInstanceAsyncMultiCrit} and the function \code{\link[=bb_optimize]{bb_optimize()}} creates an instance internally.
 }
+\section{Super class}{
+\code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceAsync}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{objective}}{(\link{Objective})\cr
-Objective function of the instance.}
-
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specification of the search space for the \link{Optimizer}.}
-
-\item{\code{terminator}}{\link{Terminator}\cr
-Termination criterion of the optimization.}
-
 \item{\code{rush}}{(\code{Rush})\cr
 Rush controller for parallel optimization.}
-
-\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
-Callbacks applied during the optimization.}
-
-\item{\code{archive}}{(\link{ArchiveAsync})\cr
-Contains all performed function calls of the Objective.}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Get result}
-
-\item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
-x part of the result in the \emph{search space}.}
-
-\item{\code{result_x_domain}}{(\code{list()})\cr
-(transformed) x part of the result in the \emph{domain space} of the objective.}
-
-\item{\code{result_y}}{(\code{numeric()})\cr
-Optimal outcome.}
-
-\item{\code{is_terminated}}{(\code{logical(1)}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -55,13 +24,19 @@ Optimal outcome.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-OptimInstanceAsync-new}{\code{OptimInstanceAsync$new()}}
-\item \href{#method-OptimInstanceAsync-format}{\code{OptimInstanceAsync$format()}}
 \item \href{#method-OptimInstanceAsync-print}{\code{OptimInstanceAsync$print()}}
 \item \href{#method-OptimInstanceAsync-clear}{\code{OptimInstanceAsync$clear()}}
-\item \href{#method-OptimInstanceAsync-assign_result}{\code{OptimInstanceAsync$assign_result()}}
 \item \href{#method-OptimInstanceAsync-clone}{\code{OptimInstanceAsync$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-assign_result'><code>bbotk::OptimInstance$assign_result()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsync-new"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsync-new}{}}}
@@ -106,23 +81,6 @@ If a rush instance is supplied, the tuning runs without batches.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceAsync-format"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceAsync-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$format(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsync-print"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsync-print}{}}}
 \subsection{Method \code{print()}}{
@@ -148,30 +106,6 @@ Reset terminator and clear all evaluation results from archive and results.
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$clear()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceAsync-assign_result"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceAsync-assign_result}{}}}
-\subsection{Method \code{assign_result()}}{
-The \link{Optimizer} object writes the best found point and estimated performance value here.
-For internal use.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$assign_result(xdt, y)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{data.table::data.table()})\cr
-x values as \code{data.table::data.table()} with one row.
-Contains the value in the  \emph{search space} of the \link{OptimInstance} object.
-Can contain additional columns for extra information.}
-
-\item{\code{y}}{(\code{numeric(1)})\cr
-Optimal outcome.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsync-clone"></a>}}

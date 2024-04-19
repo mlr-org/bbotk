@@ -1,7 +1,7 @@
 random_search = function(inst, batch_size = 10) {
   assert_r6(inst, "OptimInstance")
   batch_size = assert_int(batch_size, coerce = TRUE)
-  optim = OptimizerRandomSearch$new()
+  optim = OptimizerBatchRandomSearch$new()
   optim$param_set$values$batch_size = batch_size
   optim$optimize(inst)
   return(inst$archive)

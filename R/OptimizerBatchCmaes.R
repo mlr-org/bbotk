@@ -4,7 +4,7 @@
 #' @name mlr_optimizers_cmaes
 #'
 #' @description
-#' `OptimizerCmaes` class that implements CMA-ES. Calls [adagio::pureCMAES()]
+#' `OptimizerBatchCmaes` class that implements CMA-ES. Calls [adagio::pureCMAES()]
 #' from package \CRANpkg{adagio}. The algorithm is typically applied to search
 #' space dimensions between three and fifty. Lower search space dimensions might
 #' crash.
@@ -45,7 +45,7 @@
 #'     domain = domain,
 #'     codomain = codomain)
 #'
-#'   instance = OptimInstanceSingleCrit$new(
+#'   instance = OptimInstanceBatchSingleCrit$new(
 #'     objective = objective,
 #'     search_space = search_space,
 #'     terminator = trm("evals", n_evals = 10))
@@ -61,8 +61,8 @@
 #'   # allows access of data.table of full path of all evaluations
 #'   as.data.table(instance$archive$data)
 #' }
-OptimizerCmaes = R6Class("OptimizerCmaes",
-  inherit = Optimizer,
+OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
+  inherit = OptimizerBatch,
   public = list(
 
     #' @description
@@ -103,4 +103,4 @@ OptimizerCmaes = R6Class("OptimizerCmaes",
   )
 )
 
-mlr_optimizers$add("cmaes", OptimizerCmaes)
+mlr_optimizers$add("cmaes", OptimizerBatchCmaes)

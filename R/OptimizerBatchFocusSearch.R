@@ -4,7 +4,7 @@
 #' @name mlr_optimizers_focus_search
 #'
 #' @description
-#' `OptimizerFocusSearch` class that implements a Focus Search.
+#' `OptimizerBatchFocusSearch` class that implements a Focus Search.
 #'
 #' Focus Search starts with evaluating `n_points` drawn uniformly at random.
 #' For 1 to `maxit` batches, `n_points` are then drawn uniformly at random and
@@ -32,8 +32,8 @@
 #'
 #' @export
 #' @template example
-OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
-  inherit = Optimizer,
+OptimizerBatchFocusSearch = R6Class("OptimizerBatchFocusSearch",
+  inherit = OptimizerBatch,
   public = list(
 
     #' @description
@@ -106,7 +106,7 @@ OptimizerFocusSearch = R6Class("OptimizerFocusSearch",
   )
 )
 
-mlr_optimizers$add("focus_search", OptimizerFocusSearch)
+mlr_optimizers$add("focus_search", OptimizerBatchFocusSearch)
 
 
 

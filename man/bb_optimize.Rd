@@ -68,7 +68,7 @@ If named, names are used to create the codomain.}
 \itemize{
 \item \code{"par"} - Best found parameters
 \item \code{"value"} - Optimal outcome
-\item \code{"instance"} - \link{OptimInstanceSingleCrit} | \link{OptimInstanceMultiCrit}
+\item \code{"instance"} - \link{OptimInstanceBatchSingleCrit} | \link{OptimInstanceBatchMultiCrit}
 }
 }
 \description{

@@ -4,7 +4,7 @@
 #' @include Terminator.R
 #'
 #' @description
-#' Mainly useful for optimization algorithms where the stopping is inherently controlled by the algorithm itself (e.g. [OptimizerGridSearch]).
+#' Mainly useful for optimization algorithms where the stopping is inherently controlled by the algorithm itself (e.g. [OptimizerBatchGridSearch]).
 #'
 #' @templateVar id none
 #' @template section_dictionary_terminator

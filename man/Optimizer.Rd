@@ -155,23 +155,12 @@ Opens the corresponding help page referenced by field \verb{$man}.
 \if{html}{\out{<a id="method-Optimizer-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-Optimizer-optimize}{}}}
 \subsection{Method \code{optimize()}}{
-Performs the optimization and writes optimization result into
-\link{OptimInstance}. The optimization result is returned but the complete
-optimization path is stored in \link{Archive} of \link{OptimInstance}.
+Performs the optimization and writes optimization result into \link{OptimInstance}.
+The optimization result is returned but the complete optimization path is stored in \link{Archive} of \link{OptimInstance}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize(inst)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{inst}}{(\link{OptimInstance}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}.
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Optimizer-clone"></a>}}

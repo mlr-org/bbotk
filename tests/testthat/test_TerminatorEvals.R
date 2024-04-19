@@ -78,7 +78,7 @@ test_that("status method works", {
 
 test_that("TerminatorEvals works with empty archive", {
   terminator = TerminatorEvals$new()
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
+  archive = ArchiveBatch$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })
 

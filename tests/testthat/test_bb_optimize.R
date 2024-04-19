@@ -12,7 +12,7 @@ test_that("bb_optimize works with function and bounds", {
   expect_named(res$par, c("x1", "x2"))
   expect_numeric(res$value)
   expect_named(res$value, "y1")
-  expect_r6(res$instance, "OptimInstanceSingleCrit")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })
 
 test_that("bb_optimize works with passed arguments to objective function", {
@@ -29,7 +29,7 @@ test_that("bb_optimize works with passed arguments to objective function", {
   expect_named(res$par, c("x1", "x2"))
   expect_numeric(res$value)
   expect_named(res$value, "y1")
-  expect_r6(res$instance, "OptimInstanceSingleCrit")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })
 
 test_that("bb_optimize works with optimizer object", {
@@ -46,7 +46,7 @@ test_that("bb_optimize works with optimizer object", {
   expect_named(res$par, c("x1", "x2"))
   expect_numeric(res$value)
   expect_named(res$value, "y1")
-  expect_r6(res$instance, "OptimInstanceSingleCrit")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })
 
 test_that("bb_optimize works with function and named bounds", {
@@ -63,7 +63,7 @@ test_that("bb_optimize works with function and named bounds", {
   expect_named(res$par, c("z1", "z2"))
   expect_numeric(res$value)
   expect_named(res$value, "y1")
-  expect_r6(res$instance, "OptimInstanceSingleCrit")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })
 
 test_that("bb_optimize works with named codomain", {
@@ -80,7 +80,7 @@ test_that("bb_optimize works with named codomain", {
   expect_named(res$par, c("x1", "x2"))
   expect_numeric(res$value)
   expect_named(res$value, "z")
-  expect_r6(res$instance, "OptimInstanceSingleCrit")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })
 
 test_that("bb_optimize works with objective", {
@@ -100,7 +100,7 @@ test_that("bb_optimize works with objective", {
   expect_named(res$par, c("x1", "x2"))
   expect_numeric(res$value)
   expect_named(res$value, "z")
-  expect_r6(res$instance, "OptimInstanceSingleCrit")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })
 
 
@@ -119,7 +119,7 @@ test_that("bb_optimize works with function and bounds", {
   expect_named(res$par, c("x1", "x2"))
   expect_numeric(res$value)
   expect_named(res$value, "y1")
-  expect_r6(res$instance, "OptimInstanceSingleCrit")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })
 
 
@@ -144,5 +144,5 @@ test_that("bb_optimize works with objective", {
   expect_named(res$par, c("x1", "x2"))
   expect_numeric(res$value)
   expect_named(res$value, "z")
-  expect_r6(res$instance, "OptimInstanceSingleCrit")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })

@@ -4,7 +4,7 @@
 #' @name mlr_optimizers_random_search
 #'
 #' @description
-#' `OptimizerRandomSearch` class that implements a simple Random Search.
+#' `OptimizerBatchRandomSearch` class that implements a simple Random Search.
 #'
 #' In order to support general termination criteria and parallelization, we
 #' evaluate points in a batch-fashion of size `batch_size`. Larger batches mean
@@ -27,8 +27,8 @@
 #'
 #' @export
 #' @template example
-OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
-  inherit = Optimizer,
+OptimizerBatchRandomSearch = R6Class("OptimizerBatchRandomSearch",
+  inherit = OptimizerBatch,
   public = list(
 
     #' @description
@@ -62,4 +62,4 @@ OptimizerRandomSearch = R6Class("OptimizerRandomSearch",
   )
 )
 
-mlr_optimizers$add("random_search", OptimizerRandomSearch)
+mlr_optimizers$add("random_search", OptimizerBatchRandomSearch)

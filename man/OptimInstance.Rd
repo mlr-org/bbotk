@@ -18,20 +18,23 @@ user can access the results with active bindings (see below).
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{objective}}{(\link{Objective}).}
+\item{\code{objective}}{(\link{Objective})\cr
+Objective function of the instance.}
 
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specification of the search space for the \link{Optimizer}.}
 
-\item{\code{terminator}}{(\link{Terminator}).}
+\item{\code{terminator}}{\link{Terminator}\cr
+Termination criterion of the optimization.}
 
-\item{\code{archive}}{(\link{Archive}).}
+\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+Callbacks applied during the optimization.}
+
+\item{\code{archive}}{(\link{Archive})\cr
+Contains all performed function calls of the Objective.}
 
 \item{\code{progressor}}{(\code{progressor()})\cr
 Stores \code{progressor} function.}
-
-\item{\code{objective_multiplicator}}{(\code{integer()}).}
-
-\item{\code{callbacks}}{(List of \link{CallbackOptimization}s).}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,9 +63,7 @@ Optimal outcome.}
 \item \href{#method-OptimInstance-new}{\code{OptimInstance$new()}}
 \item \href{#method-OptimInstance-format}{\code{OptimInstance$format()}}
 \item \href{#method-OptimInstance-print}{\code{OptimInstance$print()}}
-\item \href{#method-OptimInstance-eval_batch}{\code{OptimInstance$eval_batch()}}
 \item \href{#method-OptimInstance-assign_result}{\code{OptimInstance$assign_result()}}
-\item \href{#method-OptimInstance-objective_function}{\code{OptimInstance$objective_function()}}
 \item \href{#method-OptimInstance-clear}{\code{OptimInstance$clear()}}
 \item \href{#method-OptimInstance-clone}{\code{OptimInstance$clone()}}
 }
@@ -77,7 +78,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
-  keep_evals = "all",
   check_values = TRUE,
   callbacks = list(),
   archive = NULL
@@ -97,9 +97,6 @@ from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
 
 \item{\code{terminator}}{(\link{Terminator}).}
-
-\item{\code{keep_evals}}{(\code{character(1)})\cr
-Keep \code{all} or only \code{best} evaluations in archive?}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
@@ -148,37 +145,11 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstance-eval_batch"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstance-eval_batch}{}}}
-\subsection{Method \code{eval_batch()}}{
-Evaluates all input values in \code{xdt} by calling
-the \link{Objective}. Applies possible transformations to the input values
-and writes the results to the \link{Archive}.
-
-Before each batch-evaluation, the \link{Terminator} is checked, and if it
-is positive, an exception of class \code{terminated_error} is raised. This
-function should be internally called by the \link{Optimizer}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_batch(xdt)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{data.table::data.table()})\cr
-x values as \code{data.table()} with one point per row. Contains the value in
-the \emph{search space} of the \link{OptimInstance} object. Can contain additional
-columns for extra information.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-assign_result"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-assign_result}{}}}
 \subsection{Method \code{assign_result()}}{
-The \link{Optimizer} object writes the best found point
-and estimated performance value here. For internal use.
+The \link{Optimizer} object writes the best found point and estimated performance value here.
+For internal use.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y)}\if{html}{\out{</div>}}
 }
@@ -195,32 +166,6 @@ columns for extra information.}
 Optimal outcome.}
 }
 \if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstance-objective_function"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstance-objective_function}{}}}
-\subsection{Method \code{objective_function()}}{
-Evaluates (untransformed) points of only numeric values. Returns a
-numeric scalar for single-crit or a numeric vector for multi-crit. The
-return value(s) are negated if the measure is maximized. Internally,
-\verb{$eval_batch()} is called with a single row. This function serves as a
-objective function for optimizers of numeric spaces - which should always
-be minimized.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$objective_function(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{numeric()})\cr
-Untransformed points.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Objective value as \code{numeric(1)}, negated for maximization problems.
 }
 }
 \if{html}{\out{<hr>}}

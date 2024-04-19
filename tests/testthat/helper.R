@@ -74,9 +74,9 @@ MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D,
     terminator = tt
   }
   if (objective$codomain$length == 1) {
-    OptimInstanceSingleCrit$new(objective = objective, search_space = search_space, terminator = terminator)
+    OptimInstanceBatchSingleCrit$new(objective = objective, search_space = search_space, terminator = terminator)
   } else {
-    OptimInstanceMultiCrit$new(objective = objective, search_space = search_space, terminator = terminator)
+    OptimInstanceBatchMultiCrit$new(objective = objective, search_space = search_space, terminator = terminator)
   }
 
 }
@@ -96,7 +96,7 @@ MAKE_INST_2D_2D = function(terminator) {
 
 test_optimizer_1d = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
-  instance = OptimInstanceSingleCrit$new(objective = OBJ_1D, search_space = PS_1D, terminator = terminator)
+  instance = OptimInstanceBatchSingleCrit$new(objective = OBJ_1D, search_space = PS_1D, terminator = terminator)
   res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
 
   x_opt = res$instance$result_x_domain
@@ -111,7 +111,7 @@ test_optimizer_1d = function(key, ..., term_evals = 2L, real_evals = term_evals)
 
 test_optimizer_2d = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
-  instance = OptimInstanceMultiCrit$new(objective = OBJ_2D_2D, search_space = PS_2D, terminator = terminator)
+  instance = OptimInstanceBatchMultiCrit$new(objective = OBJ_2D_2D, search_space = PS_2D, terminator = terminator)
   res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
 
   x_opt = res$instance$result_x_domain
@@ -126,7 +126,7 @@ test_optimizer_2d = function(key, ..., term_evals = 2L, real_evals = term_evals)
 
 test_optimizer_dependencies = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
-  instance = OptimInstanceSingleCrit$new(objective = OBJ_2D_DEPS, search_space = PS_2D_DEPS, terminator = terminator)
+  instance = OptimInstanceBatchSingleCrit$new(objective = OBJ_2D_DEPS, search_space = PS_2D_DEPS, terminator = terminator)
   res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
   x_opt = res$instance$result_x_domain
   y_opt = res$instance$result_y
@@ -154,7 +154,7 @@ test_optimizer = function(instance, key, ..., real_evals) {
 
 MAKE_OPT = function(param_set = ps(), param_classes = c("ParamDbl", "ParamInt"),
   properties = "single-crit", packages = character(0)) {
-  Optimizer$new(id = "optimizer",
+  OptimizerBatch$new(id = "optimizer",
     param_set = param_set,
     param_classes = param_classes,
     properties = properties,

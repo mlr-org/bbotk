@@ -4,7 +4,7 @@
 #' @name mlr_optimizers_irace
 #'
 #' @description
-#' `OptimizerIrace` class that implements iterated racing. Calls
+#' `OptimizerBatchIrace` class that implements iterated racing. Calls
 #' [irace::irace()] from package \CRANpkg{irace}.
 #'
 #' @section Parameters:
@@ -20,7 +20,7 @@
 #' For the meaning of all other parameters, see [irace::defaultScenario()]. Note
 #' that we have removed all control parameters which refer to the termination of
 #' the algorithm. Use [TerminatorEvals] instead. Other terminators do not work
-#' with `OptimizerIrace`.
+#' with `OptimizerBatchIrace`.
 #'
 #' In contrast to [irace::defaultScenario()], we set `digits = 15`.
 #' This represents double parameters with a higher precision and avoids rounding errors.
@@ -28,7 +28,7 @@
 #' @section Target Runner and Instances:
 #' The irace package uses a `targetRunner` script or R function to evaluate a
 #' configuration on a particular instance. Usually it is not necessary to
-#' specify a `targetRunner` function when using `OptimizerIrace`. A default
+#' specify a `targetRunner` function when using `OptimizerBatchIrace`. A default
 #' function is used that forwards several configurations and instances to the
 #' user defined objective function. As usually, the user defined function has
 #' a `xs`, `xss` or `xdt` parameter depending on the used [Objective] class.
@@ -90,7 +90,7 @@
 #'  codomain = codomain,
 #'  constants = ps(instances = p_uty()))
 #'
-#' instance = OptimInstanceSingleCrit$new(
+#' instance = OptimInstanceBatchSingleCrit$new(
 #'   objective = objective,
 #'   search_space = search_space,
 #'   terminator = trm("evals", n_evals = 1000))
@@ -109,8 +109,8 @@
 #'
 #' # all evaluations
 #' as.data.table(instance$archive)
-OptimizerIrace = R6Class("OptimizerIrace",
-  inherit = Optimizer,
+OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
+  inherit = OptimizerBatch,
   public = list(
 
     #' @description
@@ -216,7 +216,7 @@ OptimizerIrace = R6Class("OptimizerIrace",
   )
 )
 
-mlr_optimizers$add("irace", OptimizerIrace)
+mlr_optimizers$add("irace", OptimizerBatchIrace)
 
 target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) { # nolint
   optim_instance = scenario$targetRunnerData$inst
@@ -248,7 +248,7 @@ paradox_to_irace = function(param_set, digits) {
   assertClass(param_set, "ParamSet")
   # workaround for mlr3tuning 0.15.0
   digits = assert_int(digits %??% 15, lower = 0)
-  if ("ParamUty" %in% param_set$class) stop("<ParamUty> not supported by <OptimizerIrace>")
+  if ("ParamUty" %in% param_set$class) stop("<ParamUty> not supported by <OptimizerBatchIrace>")
 
   # types
   paradox_types = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct")

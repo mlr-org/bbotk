@@ -1,7 +1,7 @@
 #' @title Minimal logging object for objective function evaluations
 #'
 #' @description
-#' The [ArchiveBest] stores no data but records the best scoring evaluation
+#' The [ArchiveBatchBest] stores no data but records the best scoring evaluation
 #' passed to `$add_evals()`. The [Archive] API is fully implemented but many
 #' parameters are ignored and some methods do nothing. The archive still works
 #' with [TerminatorClockTime], [TerminatorEvals], [TerminatorNone] and
@@ -12,8 +12,8 @@
 #' @template param_xdt
 #' @template param_ydt
 #' @export
-ArchiveBest = R6Class("ArchiveBest",
-  inherit = Archive,
+ArchiveBatchBest = R6Class("ArchiveBatchBest",
+  inherit = ArchiveBatch,
   public = list(
 
     #' @description

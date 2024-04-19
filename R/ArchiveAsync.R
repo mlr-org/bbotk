@@ -11,31 +11,27 @@
 #'
 #' @template param_search_space
 #' @template param_codomain
+#' @template param_check_values
 #' @template param_rush
 #'
-#' @template field_search_space
-#' @template field_codomain
-#' @template field_start_time
 #' @template field_rush
 #'
 #' @export
 ArchiveAsync = R6Class("ArchiveAsync",
+  inherit = Archive,
   public = list(
-
-    search_space = NULL,
-
-    codomain = NULL,
-
-    start_time = NULL,
 
     rush = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(search_space, codomain, rush) {
-      self$search_space = assert_param_set(search_space)
-      self$codomain = Codomain$new(assert_param_set(codomain)$params)
+    initialize = function(search_space, codomain, check_values = FALSE, rush) {
       self$rush = assert_rush(rush)
+
+      super$initialize(
+        search_space = search_space,
+        codomain = codomain,
+        check_values = check_values) # FIXME: not implemented yet
     },
 
     #' @description
@@ -185,15 +181,8 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' Clear all evaluation results from archive.
     clear = function() {
       self$rush$reset()
-      self$start_time = NULL
       private$.data = data.table()
-    },
-
-    #' @description
-    #' Copy the data from rush to a local [data.table::data.table()].
-    freeze = function() {
-      private$.data = copy(self$rush$fetch_finished_tasks())
-      self$rush = NULL
+      super$clear()
     }
   ),
 
@@ -201,12 +190,9 @@ ArchiveAsync = R6Class("ArchiveAsync",
 
     #' @field data ([data.table::data.table])\cr
     #' Data table with all evaluations.
-    data = function() {
-     if (is.null(self$rush)) {
-        private$.data
-      } else {
-        self$rush$fetch_finished_tasks()
-      }
+    data = function(rhs) {
+      assert_ro_binding(rhs)
+      self$rush$fetch_finished_tasks()
     },
 
     #' @field queued_data ([data.table::data.table])\cr
@@ -260,26 +246,13 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @field n_evals (`integer(1)`)\cr
     #' Number of evaluations stored in the archive.
     n_evals = function() {
-      if (is.null(self$rush)) {
-        nrow(private$.data)
-      } else {
-        self$rush$n_finished_tasks + self$rush$n_failed_tasks
-      }
-    },
-
-    #' @field cols_x (`character()`)\cr
-    #' Column names of search space parameters.
-    cols_x = function() self$search_space$ids(),
-
-    #' @field cols_y (`character()`)\cr
-    #' Column names of codomain target parameters.
-    cols_y = function() self$codomain$target_ids
+      self$rush$n_finished_tasks + self$rush$n_failed_tasks
+    }
   ),
 
   private = list(
-    # data is only stored here when the archive is frozen
-    .data = NULL,
 
+    # FIXME: archive cannot be cloned without copying the redis data base
     deep_clone = function(name, value) {
       switch(name,
         search_space = value$clone(deep = TRUE),
@@ -289,8 +262,3 @@ ArchiveAsync = R6Class("ArchiveAsync",
     }
   )
 )
-
-#' @export
-as.data.table.ArchiveAsync = function(x, ...) { # nolint
-  copy(x$data)
-}

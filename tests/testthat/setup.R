@@ -8,4 +8,5 @@ old_opts = options(
 old_opts = lapply(old_opts, function(x) if (is.null(x)) FALSE else x)
 
 old_threshold = lg$threshold
-lg$set_threshold("warn")
+lg$set_threshold("error")
+lgr::get_logger("rush")$set_threshold("error")

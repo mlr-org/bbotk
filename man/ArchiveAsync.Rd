@@ -16,19 +16,12 @@ The \code{x_domain} column is unnested to separate columns.
 }
 }
 
+\section{Super class}{
+\code{\link[bbotk:Archive]{bbotk::Archive}} -> \code{ArchiveAsync}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specification of the search space for the \link{Optimizer}.}
-
-\item{\code{codomain}}{(\link{Codomain})\cr
-Codomain of objective function.}
-
-\item{\code{start_time}}{(\link{POSIXct})\cr
-Time stamp of when the optimization started.
-The time is set by the \link{Optimizer}.}
-
 \item{\code{rush}}{(\code{Rush})\cr
 Rush controller for parallel optimization.}
 }
@@ -66,12 +59,6 @@ Number of failed points.}
 
 \item{\code{n_evals}}{(\code{integer(1)})\cr
 Number of evaluations stored in the archive.}
-
-\item{\code{cols_x}}{(\code{character()})\cr
-Column names of search space parameters.}
-
-\item{\code{cols_y}}{(\code{character()})\cr
-Column names of codomain target parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -90,7 +77,6 @@ Column names of codomain target parameters.}
 \item \href{#method-ArchiveAsync-format}{\code{ArchiveAsync$format()}}
 \item \href{#method-ArchiveAsync-print}{\code{ArchiveAsync$print()}}
 \item \href{#method-ArchiveAsync-clear}{\code{ArchiveAsync$clear()}}
-\item \href{#method-ArchiveAsync-freeze}{\code{ArchiveAsync$freeze()}}
 \item \href{#method-ArchiveAsync-clone}{\code{ArchiveAsync$clone()}}
 }
 }
@@ -100,7 +86,7 @@ Column names of codomain target parameters.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$new(search_space, codomain, rush)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$new(search_space, codomain, check_values = FALSE, rush)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -117,6 +103,10 @@ value defaults to the domain of the objective.}
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.}
+
+\item{\code{check_values}}{(\code{logical(1)})\cr
+Should points before the evaluation and the results be checked for
+validity?}
 
 \item{\code{rush}}{(\code{Rush})\cr
 If a rush instance is supplied, the tuning runs without batches.}
@@ -343,16 +333,6 @@ Printer.
 Clear all evaluation results from archive.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$clear()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsync-freeze"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsync-freeze}{}}}
-\subsection{Method \code{freeze()}}{
-Copy the data from rush to a local \code{\link[data.table:data.table]{data.table::data.table()}}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$freeze()}\if{html}{\out{</div>}}
 }
 
 }

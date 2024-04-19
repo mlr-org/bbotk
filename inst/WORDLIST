@@ -19,7 +19,7 @@ Mattermost
 NLopt
 ORCID
 OptimInstance
-OptimizerGridSearch
+OptimizerBatchGridSearch
 POSIXct
 Palmerin
 Param

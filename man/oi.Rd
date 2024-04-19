@@ -38,5 +38,5 @@ validity?}
 Keep \code{all} or only \code{best} evaluations in archive?}
 }
 \description{
-Function to construct a \link{OptimInstanceSingleCrit} and \link{OptimInstanceMultiCrit}.
+Function to construct a \link{OptimInstanceBatchSingleCrit} and \link{OptimInstanceBatchMultiCrit}.
 }

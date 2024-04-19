@@ -8,8 +8,8 @@ The \link{OptimInstanceAsyncSingleCrit} specifies an optimization problem for \l
 Points are evaluated asynchronously with the \code{rush} package.
 The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCrit} and the function \code{\link[=bb_optimize]{bb_optimize()}} creates an instance internally.
 }
-\section{Super class}{
-\code{\link[bbotk:OptimInstanceAsync]{bbotk::OptimInstanceAsync}} -> \code{OptimInstanceAsyncSingleCrit}
+\section{Super classes}{
+\code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceAsync]{bbotk::OptimInstanceAsync}} -> \code{OptimInstanceAsyncSingleCrit}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -22,8 +22,8 @@ The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCr
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="clear"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-clear'><code>bbotk::OptimInstanceAsync$clear()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="format"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-format'><code>bbotk::OptimInstanceAsync$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="print"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-print'><code>bbotk::OptimInstanceAsync$print()</code></a></span></li>
 </ul>
 </details>

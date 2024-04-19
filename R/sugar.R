@@ -70,7 +70,7 @@ opts = function(.keys, ...) {
 #' @title Syntactic Sugar for Optimization Instance Construction
 #'
 #' @description
-#' Function to construct a [OptimInstanceSingleCrit] and [OptimInstanceMultiCrit].
+#' Function to construct a [OptimInstanceBatchSingleCrit] and [OptimInstanceBatchMultiCrit].
 #'
 #' @template param_objective
 #' @template param_search_space
@@ -90,7 +90,7 @@ oi = function(
   ) {
   assert_r6(objective, "Objective")
 
-  Instance = if (objective$codomain$target_length == 1) OptimInstanceAsyncSingleCrit else OptimInstanceAsyncMultiCrit
+  Instance = if (objective$codomain$target_length == 1) OptimInstanceBatchSingleCrit else OptimInstanceBatchMultiCrit
   Instance$new(
     objective = objective,
     search_space = search_space,

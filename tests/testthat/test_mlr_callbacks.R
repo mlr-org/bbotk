@@ -1,7 +1,7 @@
 test_that("backup callback works", {
   on.exit(unlink("./archive.rds"))
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),

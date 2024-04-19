@@ -1,6 +1,6 @@
-test_that("ArchiveBest", {
-  a = ArchiveBest$new(PS_2D, FUN_2D_CODOMAIN)
-  expect_output(print(a), "ArchiveBest")
+test_that("ArchiveBatchBest", {
+  a = ArchiveBatchBest$new(PS_2D, FUN_2D_CODOMAIN)
+  expect_output(print(a), "ArchiveBatchBest")
   expect_equal(a$n_evals, 0)
   expect_equal(a$cols_x, c("x1", "x2"))
   expect_equal(a$cols_y, "y")
@@ -15,7 +15,7 @@ test_that("ArchiveBest", {
 })
 
 test_that("Archive best works", {
-  a = ArchiveBest$new(PS_2D, FUN_2D_CODOMAIN)
+  a = ArchiveBatchBest$new(PS_2D, FUN_2D_CODOMAIN)
   expect_error(a$best(), "No results stored in archive")
   xdt = data.table(x1 = c(0, 0.5), x2 = c(1, 1))
   xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
@@ -31,7 +31,7 @@ test_that("Archive best works", {
 
   codomain = ps(y = p_dbl(tags = "maximize"))
 
-  a = ArchiveBest$new(PS_2D, codomain)
+  a = ArchiveBatchBest$new(PS_2D, codomain)
   expect_error(a$best(), "No results stored in archive")
   xdt = data.table(x1 = c(0, 0.5), x2 = c(1, 1))
   xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
@@ -46,9 +46,9 @@ test_that("Archive best works", {
   expect_equal(a$best(), data.table(x1 = 1, x2 = 1, y = 2))
 })
 
-test_that("ArchiveBest multi-crit works", {
-  a = ArchiveBest$new(PS_2D, FUN_2D_2D_CODOMAIN)
-  expect_output(print(a), "ArchiveBest")
+test_that("ArchiveBatchBest multi-crit works", {
+  a = ArchiveBatchBest$new(PS_2D, FUN_2D_2D_CODOMAIN)
+  expect_output(print(a), "ArchiveBatchBest")
   expect_equal(a$n_evals, 0)
   expect_equal(a$cols_x, c("x1", "x2"))
   expect_equal(a$cols_y, c("y1", "y2"))

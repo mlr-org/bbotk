@@ -4,7 +4,7 @@
 #' @name mlr_optimizers_gensa
 #'
 #' @description
-#' `OptimizerGenSA` class that implements generalized simulated annealing. Calls
+#' `OptimizerBatchGenSA` class that implements generalized simulated annealing. Calls
 #' [GenSA::GenSA()] from package \CRANpkg{GenSA}.
 #'
 #' @templateVar id gensa
@@ -50,7 +50,7 @@
 #'     domain = domain,
 #'     codomain = codomain)
 #'
-#'   instance = OptimInstanceSingleCrit$new(
+#'   instance = OptimInstanceBatchSingleCrit$new(
 #'     objective = objective,
 #'     search_space = search_space,
 #'     terminator = trm("evals", n_evals = 10))
@@ -66,7 +66,7 @@
 #'   # Allows access of data.table of full path of all evaluations
 #'   as.data.table(instance$archive$data)
 #' }
-OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
+OptimizerBatchGenSA = R6Class("OptimizerBatchGenSA", inherit = OptimizerBatch,
   public = list(
 
     #' @description
@@ -105,7 +105,7 @@ OptimizerGenSA = R6Class("OptimizerGenSA", inherit = Optimizer,
   )
 )
 
-mlr_optimizers$add("gensa", OptimizerGenSA)
+mlr_optimizers$add("gensa", OptimizerBatchGenSA)
 
 # a note on smooth and simple.function
 # smooth: switching the local search algorithm from using L-BFGS-B (default) to Nelder-Mead approach that works better when the objective function has very few places where numerical derivatives can be computed (highly non-smooth function)

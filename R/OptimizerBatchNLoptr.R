@@ -4,7 +4,7 @@
 #' @name mlr_optimizers_nloptr
 #'
 #' @description
-#' `OptimizerNLoptr` class that implements non-linear optimization. Calls
+#' `OptimizerBatchNLoptr` class that implements non-linear optimization. Calls
 #' [nloptr::nloptr()] from package \CRANpkg{nloptr}.
 #'
 #' @section Parameters:
@@ -56,7 +56,7 @@
 #'
 #'   # We use the internal termination criterion xtol_rel
 #'   terminator = trm("none")
-#'   instance = OptimInstanceSingleCrit$new(
+#'   instance = OptimInstanceBatchSingleCrit$new(
 #'     objective = objective,
 #'     search_space = search_space,
 #'     terminator = terminator)
@@ -75,7 +75,7 @@
 #' }
 #' }
 #'
-OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
+OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
   public = list(
 
     #' @description
@@ -133,4 +133,4 @@ OptimizerNLoptr = R6Class("OptimizerNLoptr", inherit = Optimizer,
   )
 )
 
-mlr_optimizers$add("nloptr", OptimizerNLoptr)
+mlr_optimizers$add("nloptr", OptimizerBatchNLoptr)

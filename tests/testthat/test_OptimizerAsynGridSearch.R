@@ -1,12 +1,10 @@
 test_that("OptimizerAsyncRandomSearch works", {
+  # options(bbotk_local = TRUE)
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
-  # options(bbotk_local = TRUE)
-
   rush_plan(n_workers = 2)
-
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,

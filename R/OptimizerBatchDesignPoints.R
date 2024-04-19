@@ -4,7 +4,7 @@
 #' @name mlr_optimizers_design_points
 #'
 #' @description
-#' `OptimizerDesignPoints` class that implements optimization w.r.t. fixed
+#' `OptimizerBatchDesignPoints` class that implements optimization w.r.t. fixed
 #' design points. We simply search over a set of points fully specified by the
 #' user. The points in the design are evaluated in order as given.
 #'
@@ -42,7 +42,7 @@
 #'   domain = domain,
 #'   codomain = codomain)
 #'
-#' instance = OptimInstanceSingleCrit$new(
+#' instance = OptimInstanceBatchSingleCrit$new(
 #'   objective = objective,
 #'   search_space = search_space,
 #'   terminator = trm("evals", n_evals = 10))
@@ -59,7 +59,7 @@
 #'
 #' # Allows access of data.table of full path of all evaluations
 #' as.data.table(instance$archive)
-OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
+OptimizerBatchDesignPoints = R6Class("OptimizerBatchDesignPoints", inherit = OptimizerBatch,
   public = list(
 
     #' @description
@@ -100,4 +100,4 @@ OptimizerDesignPoints = R6Class("OptimizerDesignPoints", inherit = Optimizer,
   )
 )
 
-mlr_optimizers$add("design_points", OptimizerDesignPoints)
+mlr_optimizers$add("design_points", OptimizerBatchDesignPoints)

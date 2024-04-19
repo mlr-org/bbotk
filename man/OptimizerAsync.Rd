@@ -40,8 +40,7 @@ String in the format \verb{[pkg]::[topic]} pointing to a manual page for this ob
 The referenced help package can be opened via method \verb{$help()}.}
 
 \item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes that the optimizer can optimize.
-Subclasses of \link[paradox:Param]{paradox::Param}.}
+Supported parameter classes that the optimizer can optimize, as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the optimizer.

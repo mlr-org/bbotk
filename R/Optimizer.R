@@ -21,6 +21,7 @@
 #' @export
 Optimizer = R6Class("Optimizer",
   public = list(
+
     #' @template field_id
     id = NULL,
 
@@ -37,7 +38,15 @@ Optimizer = R6Class("Optimizer",
      #' @param packages (`character()`)\cr
     #'   Set of required packages.
     #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
-    initialize = function(id = "optimizer", param_set, param_classes, properties, packages = character(), label = NA_character_, man = NA_character_) {
+    initialize = function(
+      id = "optimizer",
+      param_set,
+      param_classes,
+      properties,
+      packages = character(),
+      label = NA_character_,
+      man = NA_character_
+      ) {
       self$id = assert_string(id, min.chars = 1L)
       private$.param_set = assert_param_set(param_set)
       private$.param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
@@ -76,19 +85,10 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @description
-    #' Performs the optimization and writes optimization result into
-    #' [OptimInstance]. The optimization result is returned but the complete
-    #' optimization path is stored in [Archive] of [OptimInstance].
-    #'
-    #' @param inst ([OptimInstance]).
-    #' @return [data.table::data.table].
-    optimize = function(inst) {
-      inst$archive$start_time = Sys.time()
-      inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
-      call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
-      result = optimize_default(inst, self, private)
-      call_back("on_optimization_end", inst$callbacks, get_private(inst)$.context)
-      result
+    #' Performs the optimization and writes optimization result into [OptimInstance].
+    #' The optimization result is returned but the complete optimization path is stored in [Archive] of [OptimInstance].
+    optimize = function() {
+      stop("abstract")
     }
   ),
 
@@ -161,48 +161,6 @@ Optimizer = R6Class("Optimizer",
   )
 )
 
-#' @title Default Optimization Function
-#'
-#' @description
-#' Used internally in the [Optimizer].
-#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
-#'
-#' @param inst [OptimInstance]
-#' @param self [Optimizer]
-#' @param private (`environment()`)
-#'
-#' @return [data.table::data.table]
-#'
-#' @keywords internal
-#' @export
-optimize_default= function(inst, self, private) {
-  assert_instance_properties(self, inst)
-
-  if (isNamespaceLoaded("progressr")) {
-    # initialize progressor
-    # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
-    max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
-    unit = assert_character(inst$terminator$unit)
-    progressor = progressr::progressor(steps = max_steps)
-    inst$progressor = Progressor$new(progressor, unit)
-    inst$progressor$max_steps = max_steps
-  }
-
-  # start optimization
-  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-    inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
-  tryCatch({
-    private$.optimize(inst)
-  }, terminated_error = function(cond) {
-  })
-  private$.assign_result(inst)
-  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
-  lg$info("Result:")
-  lg$info(capture.output(print(
-    inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-  return(inst$result)
-}
-
 #' @title Default Assign Result Function
 #'
 #' @description
@@ -214,12 +172,12 @@ optimize_default= function(inst, self, private) {
 #' @keywords internal
 #' @export
 assign_result_default = function(inst) {
-  assert_multi_class(inst, c("OptimInstance", "OptimInstanceAsync"))
+  assert_r6(inst, "OptimInstance")
   res = inst$archive$best()
 
   xdt = res[, inst$search_space$ids(), with = FALSE]
 
-  if (inherits(inst, "OptimInstanceMultiCrit") || inherits(inst, "OptimInstanceAsyncMultiCrit")) {
+  if (inherits(inst, "OptimInstanceBatchMultiCrit") || inherits(inst, "OptimInstanceAsyncMultiCrit")) {
     ydt = res[, inst$archive$cols_y, with = FALSE]
     inst$assign_result(xdt, ydt)
   } else {

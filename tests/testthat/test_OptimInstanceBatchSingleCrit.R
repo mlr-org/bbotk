@@ -1,6 +1,6 @@
-test_that("OptimInstanceSingleCrit", {
+test_that("OptimInstanceBatchSingleCrit", {
   inst = MAKE_INST_2D(20L)
-  expect_r6(inst$archive, "Archive")
+  expect_r6(inst$archive, "ArchiveBatch")
   expect_data_table(inst$archive$data, nrows = 0L)
   expect_identical(inst$archive$n_evals, 0L)
   expect_identical(inst$archive$n_batch, 0L)
@@ -36,7 +36,7 @@ test_that("OptimInstance works with trafos", {
   expect_data_table(inst$archive$data, nrows = 3L)
   expect_equal(inst$archive$data$y, c(2, 0, 2))
   expect_equal(inst$archive$data$x_domain[[1]], list(x1 = -1, x2 = -1))
-  expect_output(print(inst), "<OptimInstanceSingleCrit>")
+  expect_output(print(inst), "<OptimInstanceBatchSingleCrit>")
 })
 
 test_that("OptimInstance works with extras input", {
@@ -110,16 +110,16 @@ test_that("objective_function works", {
 })
 
 test_that("search_space is optional", {
-  inst = OptimInstanceSingleCrit$new(objective = OBJ_1D, terminator = TerminatorEvals$new())
+  inst = OptimInstanceBatchSingleCrit$new(objective = OBJ_1D, terminator = TerminatorEvals$new())
   expect_identical(inst$search_space, OBJ_1D$domain)
 })
 
 test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
-  expect_error(OptimInstanceSingleCrit$new(objective = OBJ_2D_2D,
+  expect_error(OptimInstanceBatchSingleCrit$new(objective = OBJ_2D_2D,
     terminator = trm("none")), "Codomain > 1")
 })
 
-test_that("OptimInstanceSingleCrit$eval_batch() throws and error if columns are missing", {
+test_that("OptimInstanceBatchSingleCrit$eval_batch() throws and error if columns are missing", {
   inst = MAKE_INST_2D(20L)
   expect_error(inst$eval_batch(data.table(x1 = 0)),
     regexp = "include the elements",
@@ -143,7 +143,7 @@ test_that("domain, search_space and TuneToken work", {
   )
 
   # only domain
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     terminator = trm("none")
   )
@@ -155,7 +155,7 @@ test_that("domain, search_space and TuneToken work", {
     x1 = p_dbl(-10, 10)
   )
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     terminator = trm("none"),
     search_space = search_space
@@ -171,7 +171,7 @@ test_that("domain, search_space and TuneToken work", {
     codomain = codomain
   )
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     terminator = trm("none"),
   )
@@ -179,11 +179,11 @@ test_that("domain, search_space and TuneToken work", {
   expect_equal(domain$search_space(), instance$search_space)
 
   # TuneToken and search_space
-  expect_error(OptimInstanceSingleCrit$new(objective = objective, terminator = trm("none"), search_space = search_space),
+  expect_error(OptimInstanceBatchSingleCrit$new(objective = objective, terminator = trm("none"), search_space = search_space),
     regexp = "If the domain contains TuneTokens, you cannot supply a search_space")
 })
 
-test_that("OptimInstanceSingleCrit works with empty search space", {
+test_that("OptimInstanceBatchSingleCrit works with empty search space", {
   fun = function(xs) {
     c(y = 10 + rnorm(1))
   }
@@ -195,12 +195,12 @@ test_that("OptimInstanceSingleCrit works with empty search space", {
   expect_numeric(objective$eval(list()))
 
   # instance
-  instance = OptimInstanceSingleCrit$new(objective, terminator = trm("evals", n_evals = 20))
+  instance = OptimInstanceBatchSingleCrit$new(objective, terminator = trm("evals", n_evals = 20))
   instance$eval_batch(data.table())
   expect_data_table(instance$archive$data, nrows = 1)
 
   # optimizer
-  instance = OptimInstanceSingleCrit$new(objective, terminator = trm("evals", n_evals = 20))
+  instance = OptimInstanceBatchSingleCrit$new(objective, terminator = trm("evals", n_evals = 20))
   optimizer = opt("random_search")
   optimizer$optimize(instance)
   expect_data_table(instance$archive$data, nrows = 20)

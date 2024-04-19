@@ -5,7 +5,7 @@ test_that("on_optimization_begin works", {
     }
   )
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
@@ -25,7 +25,7 @@ test_that("on_optimization_end works", {
     }
   )
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
@@ -39,14 +39,14 @@ test_that("on_optimization_end works", {
 })
 
 
-test_that("on_result in OptimInstanceSingleCrit works", {
+test_that("on_result in OptimInstanceBatchSingleCrit works", {
   callback = callback_optimization(id = "test",
     on_result = function(callback, context) {
       context$result$y = 2
     }
   )
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
@@ -59,7 +59,7 @@ test_that("on_result in OptimInstanceSingleCrit works", {
   expect_equal(instance$result$y, 2)
 })
 
-test_that("on_result in OptimInstanceMultiCrit works", {
+test_that("on_result in OptimInstanceBatchMultiCrit works", {
   callback = callback_optimization(id = "test",
     on_result = function(callback, context) {
       context$result$y1 = 2
@@ -67,7 +67,7 @@ test_that("on_result in OptimInstanceMultiCrit works", {
     }
   )
 
-  instance = OptimInstanceMultiCrit$new(
+  instance = OptimInstanceBatchMultiCrit$new(
     objective = OBJ_2D_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10),

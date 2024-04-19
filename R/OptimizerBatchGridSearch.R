@@ -4,7 +4,7 @@
 #' @name mlr_optimizers_grid_search
 #'
 #' @description
-#' `OptimizerGridSearch` class that implements grid search. The grid is
+#' `OptimizerBatchGridSearch` class that implements grid search. The grid is
 #' constructed as a Cartesian product over discretized values per parameter, see
 #' [paradox::generate_design_grid()]. The points of the grid are evaluated in a
 #' random order.
@@ -32,7 +32,7 @@
 #'
 #' @export
 #' @template example
-OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
+OptimizerBatchGridSearch = R6Class("OptimizerBatchGridSearch", inherit = OptimizerBatch,
   public = list(
 
     #' @description
@@ -69,4 +69,4 @@ OptimizerGridSearch = R6Class("OptimizerGridSearch", inherit = Optimizer,
   )
 )
 
-mlr_optimizers$add("grid_search", OptimizerGridSearch)
+mlr_optimizers$add("grid_search", OptimizerBatchGridSearch)

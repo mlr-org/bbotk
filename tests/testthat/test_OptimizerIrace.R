@@ -1,4 +1,4 @@
-test_that("OptimizerIrace minimize works", {
+test_that("OptimizerBatchIrace minimize works", {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -12,7 +12,7 @@ test_that("OptimizerIrace minimize works", {
 
   objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
     terminator = trm("evals", n_evals = 1000))
@@ -38,7 +38,7 @@ test_that("OptimizerIrace minimize works", {
   expect_equal(unname(instance$result_y), mean(archive[configuration == configuration_id, y]))
 })
 
-test_that("OptimizerIrace maximize works", {
+test_that("OptimizerBatchIrace maximize works", {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -53,7 +53,7 @@ test_that("OptimizerIrace maximize works", {
   codomain = ps(y = p_dbl(tags = "maximize"))
   objective = ObjectiveRFunDt$new(fun = fun, domain = domain, codomain = codomain)
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
     terminator = trm("evals", n_evals = 96))
@@ -78,7 +78,7 @@ test_that("OptimizerIrace maximize works", {
   expect_equal(unname(instance$result_y), mean(archive[configuration == configuration_id, y]))
 })
 
-test_that("OptimizerIrace assertions works",  {
+test_that("OptimizerBatchIrace assertions works",  {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -93,7 +93,7 @@ test_that("OptimizerIrace assertions works",  {
   objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
 
   # unsupported terminators
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
     terminator = trm("perf_reached", level = 0.1))
@@ -105,7 +105,7 @@ test_that("OptimizerIrace assertions works",  {
     fixed = TRUE)
 })
 
-test_that("OptimizerIrace works with passed constants set",  {
+test_that("OptimizerBatchIrace works with passed constants set",  {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -119,7 +119,7 @@ test_that("OptimizerIrace works with passed constants set",  {
 
   objective = ObjectiveRFunDt$new(fun = fun, domain = domain, constants = ps(instances = p_uty()))
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
     terminator = trm("evals", n_evals = 96))
@@ -130,7 +130,7 @@ test_that("OptimizerIrace works with passed constants set",  {
   expect_data_table(instance$result, nrows = 1)
 })
 
-test_that("OptimizerIrace works without passed constants set",  {
+test_that("OptimizerBatchIrace works without passed constants set",  {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -144,7 +144,7 @@ test_that("OptimizerIrace works without passed constants set",  {
 
   objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
     terminator = trm("evals", n_evals = 96))
@@ -164,7 +164,7 @@ test_that("paradox_to_irace without dependencies", {
 
   # only ParamUty
   pps = ps(uty = p_uty())
-  expect_error(paradox_to_irace(pps, 4), regexp = "<ParamUty> not supported by <OptimizerIrace>", fixed = TRUE)
+  expect_error(paradox_to_irace(pps, 4), regexp = "<ParamUty> not supported by <OptimizerBatchIrace>", fixed = TRUE)
 
   # mixed set
   pps = ps(
