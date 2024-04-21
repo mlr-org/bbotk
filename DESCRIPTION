@@ -63,7 +63,7 @@ Suggests:
     redux,
     testthat (>= 3.0.0)
 Remotes:
-    mlr-org/rush
+    mlr-org/rush@mlr3automl
 VignetteBuilder:
     knitr
 Config/testthat/edition: 3
