@@ -72,6 +72,7 @@ opts = function(.keys, ...) {
 #' @description
 #' Function to construct a [OptimInstanceBatchSingleCrit] and [OptimInstanceBatchMultiCrit].
 #'
+#'
 #' @template param_objective
 #' @template param_search_space
 #' @template param_terminator

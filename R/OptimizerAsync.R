@@ -177,11 +177,11 @@ OptimizerAsync = R6Class("OptimizerAsync",
 #'
 #' @keywords internal
 #' @export
-start_async_optimize = function(inst, self, private) {
+start_async_optimize = function(inst, self, private, context) {
   assert_class(inst, "OptimInstanceAsync")
 
   inst$archive$start_time = Sys.time()
-  inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
+  inst$objective$.__enclos_env__$private$.context = context
   call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
 
   if (getOption("bbotk_local", FALSE)) {

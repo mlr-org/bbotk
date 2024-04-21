@@ -2,7 +2,7 @@
 % Please edit documentation in R/OptimizerBatch.R
 \name{optimize_batch_default}
 \alias{optimize_batch_default}
-\title{Default Optimization Function}
+\title{Default Batch Optimization Function}
 \usage{
 optimize_batch_default(inst, self, private)
 }

@@ -19,7 +19,6 @@
 #' @template field_objective
 #' @template field_search_space
 #' @template field_terminator
-#' @template field_callbacks
 #' @template field_archive
 #'
 #' @export
@@ -38,8 +37,6 @@ OptimInstance = R6Class("OptimInstance",
     #' Stores `progressor` function.
     progressor = NULL,
 
-    callbacks = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -53,10 +50,11 @@ OptimInstance = R6Class("OptimInstance",
       search_space = NULL,
       terminator,
       check_values = TRUE,
-      callbacks = list(),
+      callbacks = NULL,
       archive = NULL
       ) {
       self$objective = assert_r6(objective, "Objective")
+      self$objective$callbacks = assert_callbacks(as_callbacks(callbacks))
       self$search_space = assert_param_set(search_space)
       self$terminator = assert_terminator(terminator, self)
       assert_flag(check_values)
@@ -151,9 +149,7 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   private = list(
-    .xdt = NULL,
     .result = NULL,
-    .context = NULL,
 
     deep_clone = function(name, value) {
       switch(name,

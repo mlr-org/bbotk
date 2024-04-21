@@ -17,6 +17,8 @@ bbotk_worker_loop = function(rush, optimizer, instance) {
   instance$rush = rush
   instance$archive$rush = rush
 
+  call_back("on_optimizer_before_eval", objective$callbacks, objective$context)
+
   # run optimizer loop
   get_private(optimizer)$.optimize(instance)
 

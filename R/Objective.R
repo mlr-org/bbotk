@@ -8,6 +8,9 @@
 #' `Objective` objects can have the following properties: `"noisy"`,
 #' `"deterministic"`, `"single-crit"` and `"multi-crit"`.
 #'
+#' @template field_callbacks
+#' @template field_context
+#'
 #' @template param_domain
 #' @template param_codomain
 #' @template param_xdt
@@ -41,13 +44,24 @@ Objective = R6Class("Objective",
     #' @field check_values (`logical(1)`)\cr
     check_values = NULL,
 
+    callbacks = NULL,
+
+    context = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
-    initialize = function(id = "f", properties = character(), domain, codomain = ps(y = p_dbl(tags = "minimize")),
-      constants = ps(), check_values = TRUE) {
+    initialize = function(
+      id = "f",
+      properties = character(),
+      domain,
+      codomain = ps(y = p_dbl(tags = "minimize")),
+      constants = ps(),
+      check_values = TRUE
+      callbacks = NULL
+      ) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
       assert_param_set(codomain)
@@ -60,6 +74,7 @@ Objective = R6Class("Objective",
       self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
       self$constants = assert_param_set(constants)
       self$check_values = assert_flag(check_values)
+      self$callbacks = assert_callbacks(as_callbacks(callbacks))
     },
 
     #' @description

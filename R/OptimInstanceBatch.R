@@ -219,9 +219,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
 
   private = list(
     .xdt = NULL,
-    .result = NULL,
     .objective_function = NULL,
-    .context = NULL,
 
     deep_clone = function(name, value) {
       switch(name,
