@@ -60,7 +60,6 @@ Objective = R6Class("Objective",
       codomain = ps(y = p_dbl(tags = "minimize")),
       constants = ps(),
       check_values = TRUE
-      callbacks = NULL
       ) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
@@ -74,7 +73,6 @@ Objective = R6Class("Objective",
       self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
       self$constants = assert_param_set(constants)
       self$check_values = assert_flag(check_values)
-      self$callbacks = assert_callbacks(as_callbacks(callbacks))
     },
 
     #' @description

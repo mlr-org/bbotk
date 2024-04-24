@@ -116,7 +116,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
     #' columns for extra information.
     eval_batch = function(xdt) {
       private$.xdt = xdt
-      call_back("on_optimizer_before_eval", self$callbacks, private$.context)
+      call_back("on_optimizer_before_eval", self$callbacks, self$objective$context)
       # update progressor
       if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
 
@@ -142,7 +142,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
-      call_back("on_optimizer_after_eval", self$callbacks, private$.context)
+      call_back("on_optimizer_after_eval", self$callbacks, self$objective$context)
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
     },
 

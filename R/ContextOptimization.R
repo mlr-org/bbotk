@@ -1,12 +1,12 @@
 #' @title Optimization Context
 #'
 #' @description
-#' The [ContextOptimization] allows [mlr3misc::Callback]s to access and modify data while optimization.
+#' The [ContextBatch] allows [mlr3misc::Callback]s to access and modify data while optimization.
 #' See section on active bindings for a list of modifiable objects.
-#' See [callback_optimization()] for a list of stages which access [ContextOptimization].
+#' See [callback_optimization()] for a list of stages which access [ContextBatch].
 #'
 #' @export
-ContextOptimization = R6Class("ContextOptimization",
+ContextBatch = R6Class("ContextBatch",
   inherit = Context,
   public = list(
 

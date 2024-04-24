@@ -67,11 +67,11 @@ CallbackOptimization = R6Class("CallbackOptimization",
 #' ```
 #'
 #' See also the section on parameters for more information on the stages.
-#' A optimization callback works with [ContextOptimization].
+#' A optimization callback works with [ContextBatch].
 #'
 #' @details
 #' A callback can write data to its state (`$state`), e.g. settings that affect the callback itself.
-#' The [ContextOptimization] allows to modify the instance, archive, optimizer and final result.
+#' The [ContextBatch] allows to modify the instance, archive, optimizer and final result.
 #'
 #'
 #' @param id (`character(1)`)\cr

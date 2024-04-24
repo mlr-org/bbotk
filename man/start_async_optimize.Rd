@@ -4,7 +4,7 @@
 \alias{start_async_optimize}
 \title{Start Decentralized Optimization}
 \usage{
-start_async_optimize(inst, self, private)
+start_async_optimize(inst, self, private, context)
 }
 \arguments{
 \item{inst}{\link{OptimInstance}}

@@ -16,6 +16,12 @@ numerical codomain.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+Callbacks applied during the optimization.}
+
+\item{\code{context}}{(\link{Context})\cr
+Stores the context for the callbacks.}
+
 \item{\code{id}}{(\code{character(1)})).}
 
 \item{\code{properties}}{(\code{character()}).}

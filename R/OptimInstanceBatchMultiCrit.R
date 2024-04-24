@@ -64,7 +64,7 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
       x_domain = transform_xdt_to_xss(xdt, self$search_space)
       if (length(x_domain) == 0) x_domain = list(list())
       private$.result = cbind(xdt, x_domain = x_domain, ydt)
-      call_back("on_result", self$callbacks, private$.context)
+      call_back("on_result", self$callbacks, self$objective$context)
     }
   ),
 

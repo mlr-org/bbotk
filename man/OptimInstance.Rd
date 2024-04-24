@@ -27,9 +27,6 @@ Specification of the search space for the \link{Optimizer}.}
 \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion of the optimization.}
 
-\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
-Callbacks applied during the optimization.}
-
 \item{\code{archive}}{(\link{Archive})\cr
 Contains all performed function calls of the Objective.}
 
@@ -79,7 +76,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   search_space = NULL,
   terminator,
   check_values = TRUE,
-  callbacks = list(),
+  callbacks = NULL,
   archive = NULL
 )}\if{html}{\out{</div>}}
 }

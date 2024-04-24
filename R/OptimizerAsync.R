@@ -27,60 +27,8 @@
 #'
 #' @export
 OptimizerAsync = R6Class("OptimizerAsync",
+  inherit = Optimizer,
   public = list(
-
-    id = NULL,
-
-    #' @description
-    #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
-    #' @param param_classes (`character()`)\cr
-    #'  Supported parameter classes that the optimizer can optimize.
-    #'
-    #' @param properties (`character()`)\cr
-    #'  Set of properties of the optimizer.
-    #'  Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
-    #'
-    #' @param packages (`character()`)\cr
-    #'  Set of required packages.
-    #'  A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
-    initialize = function(id = "optimizer", param_set, param_classes, properties, packages = character(), label = NA_character_, man = NA_character_) {
-      self$id = assert_string(id, min.chars = 1L)
-      private$.param_set = assert_param_set(param_set)
-      private$.param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
-      # has to have at least multi-crit or single-crit property
-      private$.properties = assert_subset(properties, bbotk_reflections$optimizer_properties, empty.ok = FALSE)
-      private$.packages = union("bbotk", assert_character(packages, any.missing = FALSE, min.chars = 1L))
-      private$.label = assert_string(label, na.ok = TRUE)
-      private$.man = assert_string(man, na.ok = TRUE)
-
-      check_packages_installed(self$packages, msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self)))
-    },
-
-    #' @description
-    #' Helper for print outputs.
-    #' @param ... (ignored).
-    format = function(...) {
-      sprintf("<%s>", class(self)[1L])
-    },
-
-    #' @description
-    #' Print method.
-    #'
-    #' @return (`character()`).
-    print = function() {
-      catn(format(self), if (is.na(self$label)) "" else paste0(": ", self$label))
-      catn(str_indent("* Parameters:", as_short_string(self$param_set$values)))
-      catn(str_indent("* Parameter classes:", self$param_classes))
-      catn(str_indent("* Properties:", self$properties))
-      catn(str_indent("* Packages:", self$packages))
-    },
-
-    #' @description
-    #' Opens the corresponding help page referenced by field `$man`.
-    help = function() {
-      open_help(self$man)
-    },
 
     #' @description
     #' Starts the asynchronous optimization.
@@ -181,8 +129,8 @@ start_async_optimize = function(inst, self, private, context) {
   assert_class(inst, "OptimInstanceAsync")
 
   inst$archive$start_time = Sys.time()
-  inst$objective$.__enclos_env__$private$.context = context
-  call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
+  inst$objective$context = context
+  call_back("on_optimization_begin", inst$callbacks, inst$objective$context)
 
   if (getOption("bbotk_local", FALSE)) {
     # debug mode runs .optimize() in main process
@@ -281,6 +229,6 @@ finish_async_optimize = function(inst, self, private) {
   lg$info("Result:")
   lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
 
-  call_back("on_optimization_end", inst$callbacks, get_private(inst)$.context)
+  call_back("on_optimization_end", inst$callbacks, inst$objective$context)
   return(inst$result)
 }

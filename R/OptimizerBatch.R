@@ -23,8 +23,10 @@ OptimizerBatch = R6Class("OptimizerBatch",
     #' @param inst ([OptimInstance]).
     #' @return [data.table::data.table].
     optimize = function(inst) {
+      context = ContextBatch$new(instance = inst, optimizer = self)
+
       # start optimization
-      start_optimize_batch_bbotk(inst, self)
+      start_optimize_batch_bbotk(inst, self, context)
 
       # run optimization
       run_optimize_batch_bbotk(inst, self)
@@ -37,12 +39,12 @@ OptimizerBatch = R6Class("OptimizerBatch",
 
 #' @keywords internal
 #' @export
-start_optimize_batch_bbotk = function(inst, optimizer) {
+start_optimize_batch_bbotk = function(inst, optimizer, context) {
   assert_instance_properties(optimizer, inst)
 
   inst$archive$start_time = Sys.time()
-  inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = optimizer)
-  call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
+  inst$objective$context = context
+  call_back("on_optimization_begin", inst$callbacks, inst$objective$context)
 }
 
 #' @keywords internal
@@ -75,51 +77,51 @@ finish_optimize_batch_bbotk = function(inst) {
   return(inst$result)
 }
 
-#' @title Default Batch Optimization Function
-#'
-#' @description
-#' Used internally in the [OptimizerBatch].
-#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
-#'
-#' @param inst [OptimInstance]
-#' @param self [OptimizerBatch]
-#' @param private (`environment()`)
-#'
-#' @return [data.table::data.table]
-#'
-#' @keywords internal
-#' @export
-optimize_batch_default = function(inst, self, private) {
-  assert_instance_properties(self, inst)
+# #' @title Default Batch Optimization Function
+# #'
+# #' @description
+# #' Used internally in the [OptimizerBatch].
+# #' Brings together the private `.optimize()` method and the private `.assign_result()` method.
+# #'
+# #' @param inst [OptimInstance]
+# #' @param self [OptimizerBatch]
+# #' @param private (`environment()`)
+# #'
+# #' @return [data.table::data.table]
+# #'
+# #' @keywords internal
+# #' @export
+# optimize_batch_default = function(inst, self, private) {
+#   assert_instance_properties(self, inst)
 
-  inst$archive$start_time = Sys.time()
-  inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
-  call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
+#   inst$archive$start_time = Sys.time()
+#   inst$.__enclos_env__$private$.context = ContextBatch$new(instance = inst, optimizer = self)
+#   call_back("on_optimization_begin", inst$callbacks, inst$objective$context)
 
-  if (isNamespaceLoaded("progressr")) {
-    # initialize progressor
-    # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
-    max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
-    unit = assert_character(inst$terminator$unit)
-    progressor = progressr::progressor(steps = max_steps)
-    inst$progressor = Progressor$new(progressor, unit)
-    inst$progressor$max_steps = max_steps
-  }
+#   if (isNamespaceLoaded("progressr")) {
+#     # initialize progressor
+#     # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
+#     max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
+#     unit = assert_character(inst$terminator$unit)
+#     progressor = progressr::progressor(steps = max_steps)
+#     inst$progressor = Progressor$new(progressor, unit)
+#     inst$progressor$max_steps = max_steps
+#   }
 
-  # start optimization
-  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-    inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
-  tryCatch({
-    private$.optimize(inst)
-  }, terminated_error = function(cond) {
-  })
+#   # start optimization
+#   lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
+#     inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
+#   tryCatch({
+#     private$.optimize(inst)
+#   }, terminated_error = function(cond) {
+#   })
 
-  # assign result
-  private$.assign_result(inst)
-  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
-  lg$info("Result:")
-  lg$info(capture.output(print(
-    inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-  return(inst$result)
-}
+#   # assign result
+#   private$.assign_result(inst)
+#   lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
+#   lg$info("Result:")
+#   lg$info(capture.output(print(
+#     inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+#   return(inst$result)
+# }
 

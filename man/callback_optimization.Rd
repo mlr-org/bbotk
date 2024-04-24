@@ -73,11 +73,11 @@ End Optimization
 }\if{html}{\out{</div>}}
 
 See also the section on parameters for more information on the stages.
-A optimization callback works with \link{ContextOptimization}.
+A optimization callback works with \link{ContextBatch}.
 }
 \details{
 A callback can write data to its state (\verb{$state}), e.g. settings that affect the callback itself.
-The \link{ContextOptimization} allows to modify the instance, archive, optimizer and final result.
+The \link{ContextBatch} allows to modify the instance, archive, optimizer and final result.
 }
 \examples{
 # write archive to disk

@@ -12,7 +12,7 @@
 
 # bbotk 0.7.2
 
-* fix: Standalone `Tuner` and `FSelector` were rejected by `ContextOptimization`.
+* fix: Standalone `Tuner` and `FSelector` were rejected by `ContextBatch`.
 
 # bbotk 0.7.1
 

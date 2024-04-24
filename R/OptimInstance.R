@@ -58,7 +58,6 @@ OptimInstance = R6Class("OptimInstance",
       self$search_space = assert_param_set(search_space)
       self$terminator = assert_terminator(terminator, self)
       assert_flag(check_values)
-      self$callbacks = assert_callbacks(as_callbacks(callbacks))
       self$archive = assert_r6(archive, "Archive")
     },
 

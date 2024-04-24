@@ -25,6 +25,8 @@ Optimizer = R6Class("Optimizer",
     #' @template field_id
     id = NULL,
 
+    context = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'

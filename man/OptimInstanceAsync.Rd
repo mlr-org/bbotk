@@ -47,7 +47,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
-  callbacks = list(),
+  callbacks = NULL,
   archive = NULL,
   rush = NULL
 )}\if{html}{\out{</div>}}

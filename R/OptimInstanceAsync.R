@@ -32,7 +32,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       objective,
       search_space = NULL,
       terminator,
-      callbacks = list(),
+      callbacks = NULL,
       archive = NULL,
       rush = NULL
       ) {
