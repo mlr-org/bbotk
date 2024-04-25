@@ -2,18 +2,17 @@
 % Please edit documentation in R/ArchiveBatch.R
 \name{ArchiveBatch}
 \alias{ArchiveBatch}
-\title{Data Table Storage for Objective Function Evaluations}
+\title{Data Table Storage}
 \description{
-Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
-function calls of the Objective.
+Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed unction calls of the \link{Objective}.
 }
 \section{S3 Methods}{
 
 \itemize{
 \item \code{as.data.table(archive)}\cr
-\link{Archive} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr
-Returns a tabular view of all performed function calls of the
-Objective. The \code{x_domain} column is unnested to separate columns.
+\link{ArchiveBatch} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr
+Returns a tabular view of all performed function calls of the Objective.
+The \code{x_domain} column is unnested to separate columns.
 }
 }
 
@@ -40,12 +39,6 @@ Number of evaluations stored in the archive.}
 
 \item{\code{n_batch}}{(\code{integer(1)})\cr
 Number of batches stored in the archive.}
-
-\item{\code{cols_x}}{(\code{character()})\cr
-Column names of search space parameters.}
-
-\item{\code{cols_y}}{(\code{character()})\cr
-Column names of codomain target parameters.}
 }
 \if{html}{\out{</div>}}
 }
@@ -56,12 +49,18 @@ Column names of codomain target parameters.}
 \item \href{#method-ArchiveBatch-add_evals}{\code{ArchiveBatch$add_evals()}}
 \item \href{#method-ArchiveBatch-best}{\code{ArchiveBatch$best()}}
 \item \href{#method-ArchiveBatch-nds_selection}{\code{ArchiveBatch$nds_selection()}}
-\item \href{#method-ArchiveBatch-format}{\code{ArchiveBatch$format()}}
-\item \href{#method-ArchiveBatch-print}{\code{ArchiveBatch$print()}}
 \item \href{#method-ArchiveBatch-clear}{\code{ArchiveBatch$clear()}}
 \item \href{#method-ArchiveBatch-clone}{\code{ArchiveBatch$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>bbotk::Archive$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>bbotk::Archive$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveBatch-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveBatch-new}{}}}
@@ -180,40 +179,6 @@ Reference point for hypervolume.}
 }
 \subsection{Returns}{
 \code{\link[data.table:data.table]{data.table::data.table()}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveBatch-format"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveBatch-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBatch$format(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveBatch-print"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveBatch-print}{}}}
-\subsection{Method \code{print()}}{
-Printer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveBatch$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

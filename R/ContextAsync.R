@@ -1,9 +1,12 @@
-#' @title Async Optimization Context
+#' @title Asynchronous Optimization Context
 #'
 #' @description
-#' The [ContextAsync] allows [mlr3misc::Callback]s to access and modify data while optimization.
-#' See section on active bindings for a list of modifiable objects.
-#' See [callback_optimization()] for a list of stages which access [ContextAsync].
+#' A [CallbackAsync] accesses and modifies data during the optimization via the `ContextAsync`.
+#' See the section on active bindings for a list of modifiable objects.
+#' See [callback_async()] for a list of stages which access `ContextAsync`.
+#'
+#' @details
+#' Changes to `$instance` and `$optimizer` in the stages executed on the workers are not reflected in the main process.
 #'
 #' @export
 ContextAsync = R6Class("ContextAsync",

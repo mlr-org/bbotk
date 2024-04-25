@@ -7,6 +7,9 @@
 \alias{assert_terminable}
 \alias{assert_set}
 \alias{assert_optimizer}
+\alias{assert_async_optimizer}
+\alias{assert_instance}
+\alias{assert_async_instance}
 \alias{assert_instance_properties}
 \title{Assertion for bbotk objects}
 \usage{
@@ -19,6 +22,12 @@ assert_terminable(terminator, instance)
 assert_set(x, empty = TRUE, .var.name = vname(x))
 
 assert_optimizer(optimizer)
+
+assert_async_optimizer(optimizer)
+
+assert_instance(inst)
+
+assert_async_instance(inst)
 
 assert_instance_properties(optimizer, inst)
 }
@@ -36,6 +45,8 @@ assert_instance_properties(optimizer, inst)
 \item{.var.name}{(\code{character(1)})}
 
 \item{optimizer}{(\link{Optimizer}).}
+
+\item{inst}{(\link{OptimInstanceAsync})}
 }
 \description{
 Most assertion functions ensure the right class attribute, and optionally

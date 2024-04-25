@@ -1,17 +1,17 @@
 #' @title Backup Archive Callback
 #'
-#' @include CallbackOptimization.R
+#' @include CallbackBatch.R
 #' @name bbotk.backup
 #'
 #' @description
-#' This [CallbackOptimization] writes the [Archive] after each batch to disk.
+#' This [CallbackBatch] writes the [Archive] after each batch to disk.
 #'
 #' @examples
 #' clbk("bbotk.backup", path = "backup.rds")
 NULL
 
 load_callback_backup = function() {
-  callback_optimization("bbotk.backup",
+  callback_batch("bbotk.backup",
     label = "Backup Archive Callback",
     man = "bbotk::bbotk.backup",
     on_optimization_begin = function(callback, context) {

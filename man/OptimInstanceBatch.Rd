@@ -48,15 +48,21 @@ Optimal outcome.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-OptimInstanceBatch-new}{\code{OptimInstanceBatch$new()}}
-\item \href{#method-OptimInstanceBatch-format}{\code{OptimInstanceBatch$format()}}
-\item \href{#method-OptimInstanceBatch-print}{\code{OptimInstanceBatch$print()}}
 \item \href{#method-OptimInstanceBatch-eval_batch}{\code{OptimInstanceBatch$eval_batch()}}
-\item \href{#method-OptimInstanceBatch-assign_result}{\code{OptimInstanceBatch$assign_result()}}
 \item \href{#method-OptimInstanceBatch-objective_function}{\code{OptimInstanceBatch$objective_function()}}
 \item \href{#method-OptimInstanceBatch-clear}{\code{OptimInstanceBatch$clear()}}
 \item \href{#method-OptimInstanceBatch-clone}{\code{OptimInstanceBatch$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-assign_result'><code>bbotk::OptimInstance$assign_result()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-print'><code>bbotk::OptimInstance$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceBatch-new"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceBatch-new}{}}}
@@ -67,9 +73,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
-  keep_evals = "all",
   check_values = TRUE,
-  callbacks = list(),
+  callbacks = NULL,
   archive = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -88,9 +93,6 @@ value defaults to the domain of the objective.}
 
 \item{\code{terminator}}{(\link{Terminator}).}
 
-\item{\code{keep_evals}}{(\code{character(1)})\cr
-Keep \code{all} or only \code{best} evaluations in archive?}
-
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
@@ -99,40 +101,6 @@ Search space that is logged into archive.}
 List of callbacks.}
 
 \item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceBatch-format"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceBatch-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceBatch$format(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceBatch-print"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceBatch-print}{}}}
-\subsection{Method \code{print()}}{
-Printer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceBatch$print(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
 }
@@ -159,30 +127,6 @@ function should be internally called by the \link{Optimizer}.
 x values as \code{data.table()} with one point per row. Contains the value in
 the \emph{search space} of the \link{OptimInstance} object. Can contain additional
 columns for extra information.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceBatch-assign_result"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceBatch-assign_result}{}}}
-\subsection{Method \code{assign_result()}}{
-The \link{Optimizer} object writes the best found point
-and estimated performance value here. For internal use.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceBatch$assign_result(xdt, y)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{data.table::data.table()})\cr
-x values as \code{data.table::data.table()} with one row. Contains the value in the
-\emph{search space} of the \link{OptimInstance} object. Can contain additional
-columns for extra information.}
-
-\item{\code{y}}{(\code{numeric(1)})\cr
-Optimal outcome.}
 }
 \if{html}{\out{</div>}}
 }

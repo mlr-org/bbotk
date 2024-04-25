@@ -13,7 +13,6 @@
 #'
 #' @template param_xdt
 #' @template param_search_space
-#' @template param_keep_evals
 #' @template param_callbacks
 #' @template param_archive
 #'
@@ -34,9 +33,8 @@ OptimInstanceBatchSingleCrit = R6Class("OptimInstanceBatchSingleCrit",
       objective,
       search_space = NULL,
       terminator,
-      keep_evals = "all",
       check_values = TRUE,
-      callbacks = list(),
+      callbacks = NULL,
       archive = NULL) {
 
       if (objective$codomain$target_length > 1) {
@@ -46,7 +44,6 @@ OptimInstanceBatchSingleCrit = R6Class("OptimInstanceBatchSingleCrit",
         objective = objective,
         search_space = search_space,
         terminator = terminator,
-        keep_evals = keep_evals,
         check_values = check_values,
         callbacks = callbacks,
         archive = archive)
@@ -67,7 +64,7 @@ OptimInstanceBatchSingleCrit = R6Class("OptimInstanceBatchSingleCrit",
       x_domain = unlist(transform_xdt_to_xss(xdt, self$search_space), recursive = FALSE)
       if (is.null(x_domain)) x_domain = list()
       private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
-      call_back("on_result", self$callbacks, self$objective$context)
+      call_back("on_result", self$objective$callbacks, self$objective$context)
     }
   )
 )

@@ -23,23 +23,23 @@ opt("async_random_search")
 }\if{html}{\out{</div>}}
 }
 
-\section{Super class}{
-\code{\link[bbotk:OptimizerAsync]{bbotk::OptimizerAsync}} -> \code{OptimizerAsyncRandomSearch}
+\section{Super classes}{
+\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerAsync]{bbotk::OptimizerAsync}} -> \code{OptimizerAsyncRandomSearch}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-OptimizerAsyncRandomSearch-new}{\code{OptimizerAsyncRandomSearch$new()}}
-\item \href{#method-OptimizerAsyncRandomSearch-optimize}{\code{OptimizerAsyncRandomSearch$optimize()}}
 \item \href{#method-OptimizerAsyncRandomSearch-clone}{\code{OptimizerAsyncRandomSearch$clone()}}
 }
 }
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="format"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-format'><code>bbotk::OptimizerAsync$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="help"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-help'><code>bbotk::OptimizerAsync$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="print"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-print'><code>bbotk::OptimizerAsync$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="optimize"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-optimize'><code>bbotk::OptimizerAsync$optimize()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -52,26 +52,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{OptimizerAsyncRandomSearch$new()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerAsyncRandomSearch-optimize"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerAsyncRandomSearch-optimize}{}}}
-\subsection{Method \code{optimize()}}{
-Starts the asynchronous optimization.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsyncRandomSearch$optimize(inst)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{inst}}{(\link{OptimInstance}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}.
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerAsyncRandomSearch-clone"></a>}}

@@ -70,10 +70,31 @@ assert_set = function(x, empty = TRUE, .var.name = vname(x)) {
 }
 
 #' @export
-#' @param optimizer ([Optimizer])
+#' @param optimizer ([OptimizerBatch])
 #' @rdname bbotk_assertions
 assert_optimizer = function(optimizer) {
   assert_r6(optimizer, "Optimizer")
+}
+
+#' @export
+#' @param optimizer ([OptimizerAsync])
+#' @rdname bbotk_assertions
+assert_async_optimizer = function(optimizer) {
+  assert_r6(optimizer, "Optimizer")
+}
+
+#' @export
+#' @param inst ([OptimInstanceBatch])
+#' @rdname bbotk_assertions
+assert_instance = function(inst) {
+  assert_r6(inst, "OptimInstanceBatch")
+}
+
+#' @export
+#' @param inst ([OptimInstanceAsync])
+#' @rdname bbotk_assertions
+assert_async_instance = function(inst) {
+  assert_r6(inst, "OptimInstanceAsync")
 }
 
 #' @export
@@ -81,27 +102,21 @@ assert_optimizer = function(optimizer) {
 #' @param instance ([OptimInstance]).
 #' @rdname bbotk_assertions
 assert_instance_properties = function(optimizer, inst) {
-  assert_multi_class(inst, c("OptimInstance", "OptimInstanceAsync"))
+  assert_class(inst, "OptimInstance")
 
   require_namespaces(optimizer$packages)
 
   # check multi or single-crit
   if ("multi-crit" %nin% optimizer$properties && inst$objective$ydim > 1) {
-    stopf(
-      "'%s' does not support multi-crit objectives",
-      optimizer$format())
+    stopf("'%s' does not support multi-crit objectives", optimizer$format())
   }
   if ("single-crit" %nin% optimizer$properties && inst$objective$ydim == 1) {
-    stopf(
-      "'%s' does not support single-crit objectives",
-      optimizer$format())
+    stopf( "'%s' does not support single-crit objectives", optimizer$format())
   }
 
   # check dependencies
   if ("dependencies" %nin% optimizer$properties && inst$search_space$has_deps) {
-    stopf(
-      "'%s' does not support param sets with dependencies!",
-      optimizer$format())
+    stopf("'%s' does not support param sets with dependencies!", optimizer$format())
   }
 
   # check supported parameter class

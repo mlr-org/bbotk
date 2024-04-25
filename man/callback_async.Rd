@@ -2,18 +2,17 @@
 % Please edit documentation in R/CallbackAsync.R
 \name{callback_async}
 \alias{callback_async}
-\title{Create Optimization Callback}
+\title{Create Asynchronous Optimization Callback}
 \usage{
 callback_async(
   id,
   label = NA_character_,
   man = NA_character_,
   on_optimization_begin = NULL,
-  on_optimizer_begin = NULL,
-  on_optimizer_end = NULL,
+  on_worker_begin = NULL,
+  on_worker_end = NULL,
   on_result = NULL,
-  on_optimization_end = NULL,
-  fields = list()
+  on_optimization_end = NULL
 )
 }
 \arguments{
@@ -32,12 +31,12 @@ Stage called at the beginning of the optimization in the main process.
 Called in \code{Optimizer$optimize()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
 
-\item{on_optimizer_begin}{(\verb{function()})\cr
+\item{on_worker_begin}{(\verb{function()})\cr
 Stage called at the beginning of the optimization on the worker.
 Called in the worker loop.
 The functions must have two arguments named \code{callback} and \code{context}.}
 
-\item{on_optimizer_end}{(\verb{function()})\cr
+\item{on_worker_end}{(\verb{function()})\cr
 Stage called at the end of the optimization on the worker.
 Called in the worker loop.
 The functions must have two arguments named \code{callback} and \code{context}.}
@@ -51,12 +50,9 @@ The functions must have two arguments named \code{callback} and \code{context}.}
 Stage called at the end of the optimization in the main process.
 Called in \code{Optimizer$optimize()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
-
-\item{fields}{(list of \code{any})\cr
-List of additional fields.}
 }
 \description{
-Function to create a \link{CallbackOptimization}.
+Function to create a \link{CallbackAsync}.
 
 Optimization callbacks can be called from different stages of optimization process.
 The stages are prefixed with \verb{on_*}.
@@ -64,8 +60,8 @@ The stages are prefixed with \verb{on_*}.
 \if{html}{\out{<div class="sourceCode">}}\preformatted{Start Optimization
      - on_optimization_begin
     Start Worker
-         - on_optimizer_begin
-         - on_optimizer_end
+         - on_worker_begin
+         - on_worker_end
     End Worker
      - on_result
      - on_optimization_end
@@ -78,12 +74,4 @@ A optimization callback works with \link{ContextAsync}.
 \details{
 A callback can write data to its state (\verb{$state}), e.g. settings that affect the callback itself.
 The \link{ContextAsync} allows to modify the instance, archive, optimizer and final result.
-}
-\examples{
-# write archive to disk
-callback_optimization("bbotk.backup",
-  on_optimization_end = function(callback, context) {
-    saveRDS(context$instance$archive, "archive.rds")
-  }
-)
 }

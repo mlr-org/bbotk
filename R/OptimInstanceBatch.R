@@ -37,25 +37,21 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       objective,
       search_space = NULL,
       terminator,
-      keep_evals = "all",
       check_values = TRUE,
-      callbacks = list(),
+      callbacks = NULL,
       archive = NULL
       ) {
       assert_r6(objective, "Objective")
       search_space = choose_search_space(objective, search_space)
-      assert_choice(keep_evals, c("all", "best"))
 
       # archive is passed when a downstream packages creates a new archive class
       archive = if (is.null(archive)) {
-        # use minimal archive if only best points are needed
-        Archive = if (keep_evals == "all") ArchiveBatch else ArchiveBatchBest
-        Archive$new(
+        ArchiveBatch$new(
           search_space = search_space,
           codomain = objective$codomain,
           check_values = check_values)
       } else {
-        assert_r6(archive, "Archive")
+        assert_r6(archive, "ArchiveBatch")
       }
 
       super$initialize(
@@ -71,36 +67,6 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
     },
 
-    #' @description
-    #' Helper for print outputs.
-    #' @param ... (ignored).
-    format = function(...) {
-      sprintf("<%s>", class(self)[1L])
-    },
-
-    #' @description
-    #' Printer.
-    #'
-    #' @param ... (ignored).
-    print = function(...) {
-
-      catf(format(self))
-      catf(str_indent("* State: ", if (is.null(private$.result)) "Not optimized" else "Optimized"))
-      catf(str_indent("* Objective:", format(self$objective)))
-      if (!self$search_space$length) {
-        catf("* Search Space: Empty")
-      } else {
-        catf("* Search Space:")
-        print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
-      }
-      catf(str_indent("* Terminator:", format(self$terminator)))
-      if (!is.null(private$.result)) {
-        catf("* Result:")
-        print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
-        catf("* Archive:")
-        print(as.data.table(self$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
-      }
-    },
 
     #' @description
     #' Evaluates all input values in `xdt` by calling
@@ -116,7 +82,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
     #' columns for extra information.
     eval_batch = function(xdt) {
       private$.xdt = xdt
-      call_back("on_optimizer_before_eval", self$callbacks, self$objective$context)
+      call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
       # update progressor
       if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
 
@@ -142,22 +108,8 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       lg$info("Result of batch %i:", self$archive$n_batch)
       lg$info(capture.output(print(cbind(xdt, ydt),
         class = FALSE, row.names = FALSE, print.keys = FALSE)))
-      call_back("on_optimizer_after_eval", self$callbacks, self$objective$context)
+      call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
       return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
-    },
-
-    #' @description
-    #' The [Optimizer] object writes the best found point
-    #' and estimated performance value here. For internal use.
-    #'
-    #' @param xdt (`data.table::data.table()`)\cr
-    #'   x values as `data.table::data.table()` with one row. Contains the value in the
-    #'   *search space* of the [OptimInstance] object. Can contain additional
-    #'   columns for extra information.
-    #' @param y (`numeric(1)`)\cr
-    #'   Optimal outcome.
-    assign_result = function(xdt, y) {
-      stop("Abstract class")
     },
 
     #' @description
@@ -220,6 +172,12 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
   private = list(
     .xdt = NULL,
     .objective_function = NULL,
+
+    # initialize context for optimization
+    .initialize_context = function(optimizer) {
+      context = ContextBatch$new(instance = self, optimizer = optimizer)
+      self$objective$context = context
+    },
 
     deep_clone = function(name, value) {
       switch(name,

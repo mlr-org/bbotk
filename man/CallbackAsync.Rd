@@ -2,21 +2,13 @@
 % Please edit documentation in R/CallbackAsync.R
 \name{CallbackAsync}
 \alias{CallbackAsync}
-\title{Create Optimization Callback}
+\title{Create Asynchronous Optimization Callback}
 \description{
-Specialized \link[mlr3misc:Callback]{mlr3misc::Callback} for optimization.
+Specialized \link[mlr3misc:Callback]{mlr3misc::Callback} for asynchronous optimization.
 Callbacks allow to customize the behavior of processes in bbotk.
-The \code{\link[=callback_optimization]{callback_optimization()}} function creates a \link{CallbackAsync}.
+The \code{\link[=callback_async]{callback_async()}} function creates a \link{CallbackAsync}.
 Predefined callbacks are stored in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_callbacks} and can be retrieved with \code{\link[=clbk]{clbk()}}.
 For more information on optimization callbacks see \code{\link[=callback_async]{callback_async()}}.
-}
-\examples{
-# write archive to disk
-callback_async("bbotk.backup",
-  on_optimization_end = function(callback, context) {
-    saveRDS(context$instance$archive, "archive.rds")
-  }
-)
 }
 \section{Super class}{
 \code{\link[mlr3misc:Callback]{mlr3misc::Callback}} -> \code{CallbackAsync}
@@ -28,11 +20,11 @@ callback_async("bbotk.backup",
 Stage called at the beginning of the optimization in the main process.
 Called in \code{Optimizer$optimize()}.}
 
-\item{\code{on_optimizer_begin}}{(\verb{function()})\cr
+\item{\code{on_worker_begin}}{(\verb{function()})\cr
 Stage called at the beginning of the optimization on the worker.
 Called in the worker loop.}
 
-\item{\code{on_optimizer_end}}{(\verb{function()})\cr
+\item{\code{on_worker_end}}{(\verb{function()})\cr
 Stage called at the end of the optimization on the worker.
 Called in the worker loop.}
 

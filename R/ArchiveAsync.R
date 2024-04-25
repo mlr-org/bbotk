@@ -1,7 +1,7 @@
-#' @title Rush Data Archive
+#' @title Rush Data Storage
 #'
 #' @description
-#' Connector to a rush network which stores all performed function calls of the [Objective].
+#' Connection to a rush network which stores all performed function calls of the [Objective].
 #'
 #' @section S3 Methods:
 #' * `as.data.table(archive)`\cr
@@ -31,15 +31,16 @@ ArchiveAsync = R6Class("ArchiveAsync",
       super$initialize(
         search_space = search_space,
         codomain = codomain,
-        check_values = check_values) # FIXME: not implemented yet
+        check_values = check_values)
     },
 
     #' @description
-    #' Push points to the queue.
+    #' Push queued points to the archive.
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
     push_points = function(xss) {
+      if (self$check_values) self$search_space$assert(xss)
       self$rush$push_tasks(xss, extra = list(list(timestamp_xs = Sys.time())))
     },
 
@@ -50,11 +51,12 @@ ArchiveAsync = R6Class("ArchiveAsync",
     },
 
     #' @description
-    #' Push point to running points without queue.
+    #' Push running point to the archive.
     #'
     #' @param xs (named `list`)\cr
     #' Named list of point values.
     push_running_point = function(xs) {
+      if (self$check_values) self$search_space$assert(list(xs))
       self$rush$push_running_tasks(list(xs), extra = list(list(timestamp_xs = Sys.time())))
     },
 
@@ -86,7 +88,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     },
 
     #' @description
-    #' Fetch data with a specific state.
+    #' Fetch points with a specific state.
     #'
     #' @param fields (`character()`)\cr
     #' Fields to fetch.
@@ -96,7 +98,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' Defaults to `c("queued", "running", "finished", "failed")`.
     #' @param reset_cache (`logical(1)`)\cr
     #' Whether to reset the cache of the finished points.
-    fetch_data_with_state = function(
+    data_with_state = function(
       fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
       states = c("queued", "running", "finished", "failed"),
       reset_cache = FALSE
@@ -162,26 +164,9 @@ ArchiveAsync = R6Class("ArchiveAsync",
     },
 
     #' @description
-    #' Helper for print outputs.
-    #' @param ... (ignored).
-    format = function(...) {
-      sprintf("<%s>", class(self)[1L])
-    },
-
-    #' @description
-    #' Printer.
-    #'
-    #' @param ... (ignored).
-    print = function() {
-      catf(format(self))
-      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits = 2)
-    },
-
-    #' @description
     #' Clear all evaluation results from archive.
     clear = function() {
       self$rush$reset()
-      private$.data = data.table()
       super$clear()
     }
   ),
@@ -189,7 +174,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
   active = list(
 
     #' @field data ([data.table::data.table])\cr
-    #' Data table with all evaluations.
+    #' Data table with all finished points.
     data = function(rhs) {
       assert_ro_binding(rhs)
       self$rush$fetch_finished_tasks()
@@ -262,3 +247,10 @@ ArchiveAsync = R6Class("ArchiveAsync",
     }
   )
 )
+
+#' @export
+as.data.table.ArchiveAsync = function(x, unnest = "x_domain", ...) { # nolint
+  data = x$data_with_state()
+  cols = intersect(unnest, names(data))
+  unnest(data, cols, prefix = "{col}_")
+}

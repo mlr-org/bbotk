@@ -1,9 +1,9 @@
-#' @title Optimization Context
+#' @title Batch Optimization Context
 #'
 #' @description
-#' The [ContextBatch] allows [mlr3misc::Callback]s to access and modify data while optimization.
-#' See section on active bindings for a list of modifiable objects.
-#' See [callback_optimization()] for a list of stages which access [ContextBatch].
+#' A [CallbackBatch] accesses and modifies data during the optimization via the `ContextBatch`.
+#' See the section on active bindings for a list of modifiable objects.
+#' See [callback_batch()] for a list of stages which that `ContextBatch`.
 #'
 #' @export
 ContextBatch = R6Class("ContextBatch",
@@ -22,8 +22,8 @@ ContextBatch = R6Class("ContextBatch",
     #' @param instance ([OptimInstance]).
     #' @param optimizer ([Optimizer]).
     initialize = function(instance, optimizer) {
-      self$instance = assert_multi_class(instance, c("OptimInstance", "OptimInstanceAsync"))
-      self$optimizer = optimizer
+      self$instance = assert_class(instance, "OptimInstanceBatch")
+      self$optimizer = assert_class(optimizer, "OptimizerBatch")
     }
   ),
 

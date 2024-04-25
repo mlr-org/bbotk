@@ -2,9 +2,9 @@
 % Please edit documentation in R/ArchiveAsync.R
 \name{ArchiveAsync}
 \alias{ArchiveAsync}
-\title{Rush Data Archive}
+\title{Rush Data Storage}
 \description{
-Connector to a rush network which stores all performed function calls of the \link{Objective}.
+Connection to a rush network which stores all performed function calls of the \link{Objective}.
 }
 \section{S3 Methods}{
 
@@ -31,7 +31,7 @@ Rush controller for parallel optimization.}
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Data table with all evaluations.}
+Data table with all finished points.}
 
 \item{\code{queued_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Data table with all queued points.}
@@ -71,15 +71,21 @@ Number of evaluations stored in the archive.}
 \item \href{#method-ArchiveAsync-push_running_point}{\code{ArchiveAsync$push_running_point()}}
 \item \href{#method-ArchiveAsync-push_result}{\code{ArchiveAsync$push_result()}}
 \item \href{#method-ArchiveAsync-push_failed_point}{\code{ArchiveAsync$push_failed_point()}}
-\item \href{#method-ArchiveAsync-fetch_data_with_state}{\code{ArchiveAsync$fetch_data_with_state()}}
+\item \href{#method-ArchiveAsync-data_with_state}{\code{ArchiveAsync$data_with_state()}}
 \item \href{#method-ArchiveAsync-best}{\code{ArchiveAsync$best()}}
 \item \href{#method-ArchiveAsync-nds_selection}{\code{ArchiveAsync$nds_selection()}}
-\item \href{#method-ArchiveAsync-format}{\code{ArchiveAsync$format()}}
-\item \href{#method-ArchiveAsync-print}{\code{ArchiveAsync$print()}}
 \item \href{#method-ArchiveAsync-clear}{\code{ArchiveAsync$clear()}}
 \item \href{#method-ArchiveAsync-clone}{\code{ArchiveAsync$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>bbotk::Archive$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>bbotk::Archive$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-new}{}}}
@@ -118,7 +124,7 @@ If a rush instance is supplied, the tuning runs without batches.}
 \if{html}{\out{<a id="method-ArchiveAsync-push_points"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_points}{}}}
 \subsection{Method \code{push_points()}}{
-Push points to the queue.
+Push queued points to the archive.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_points(xss)}\if{html}{\out{</div>}}
 }
@@ -146,7 +152,7 @@ Pop a point from the queue.
 \if{html}{\out{<a id="method-ArchiveAsync-push_running_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_running_point}{}}}
 \subsection{Method \code{push_running_point()}}{
-Push point to running points without queue.
+Push running point to the archive.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_running_point(xs)}\if{html}{\out{</div>}}
 }
@@ -209,12 +215,12 @@ Error message.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsync-fetch_data_with_state"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsync-fetch_data_with_state}{}}}
-\subsection{Method \code{fetch_data_with_state()}}{
-Fetch data with a specific state.
+\if{html}{\out{<a id="method-ArchiveAsync-data_with_state"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-data_with_state}{}}}
+\subsection{Method \code{data_with_state()}}{
+Fetch points with a specific state.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$fetch_data_with_state(
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$data_with_state(
   fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
   states = c("queued", "running", "finished", "failed"),
   reset_cache = FALSE
@@ -290,40 +296,6 @@ Reference point for hypervolume.}
 }
 \subsection{Returns}{
 \code{\link[data.table:data.table]{data.table::data.table()}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsync-format"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsync-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$format(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsync-print"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsync-print}{}}}
-\subsection{Method \code{print()}}{
-Printer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

@@ -47,7 +47,7 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.11.0),
+    mlr3misc (>= 0.15.0.9000),
     R6,
     rush
 Suggests:
@@ -62,7 +62,8 @@ Suggests:
     redux,
     testthat (>= 3.0.0)
 Remotes:
-    mlr-org/rush
+    mlr-org/rush,
+    mlr-org/mlr3misc
 VignetteBuilder:
     knitr
 Config/testthat/edition: 3
@@ -76,12 +77,11 @@ Collate:
     'Archive.R'
     'ArchiveAsync.R'
     'ArchiveBatch.R'
-    'ArchiveBatchBest.R'
     'CallbackAsync.R'
-    'CallbackOptimization.R'
+    'CallbackBatch.R'
     'Codomain.R'
     'ContextAsync.R'
-    'ContextOptimization.R'
+    'ContextBatch.R'
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'

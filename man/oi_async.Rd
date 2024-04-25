@@ -8,7 +8,7 @@ oi_async(
   objective,
   search_space = NULL,
   terminator,
-  callbacks = list(),
+  callbacks = NULL,
   rush = NULL
 )
 }

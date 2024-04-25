@@ -8,7 +8,7 @@ oi(
   objective,
   search_space = NULL,
   terminator,
-  callbacks = list(),
+  callbacks = NULL,
   check_values = TRUE,
   keep_evals = "all"
 )

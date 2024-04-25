@@ -14,7 +14,6 @@
 #' @template param_xdt
 #' @template param_ydt
 #' @template param_search_space
-#' @template param_keep_evals
 #' @template param_callbacks
 #' @template param_archive
 #'
@@ -36,16 +35,14 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
       objective,
       search_space = NULL,
       terminator,
-      keep_evals = "all",
       check_values = TRUE,
-      callbacks = list(),
+      callbacks = NULL,
       archive = NULL
       ) {
       super$initialize(
         objective = objective,
         search_space = search_space,
         terminator = terminator,
-        keep_evals = keep_evals,
         check_values = check_values,
         callbacks = callbacks,
         archive = archive)
@@ -64,7 +61,7 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
       x_domain = transform_xdt_to_xss(xdt, self$search_space)
       if (length(x_domain) == 0) x_domain = list(list())
       private$.result = cbind(xdt, x_domain = x_domain, ydt)
-      call_back("on_result", self$callbacks, self$objective$context)
+      call_back("on_result", self$objective$callbacks, self$objective$context)
     }
   ),
 

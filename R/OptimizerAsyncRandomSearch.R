@@ -29,32 +29,18 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
         label = "Asynchronous Random Search",
         man = "bbotk::mlr_optimizers_random_search"
       )
-    },
-
-    #' @description
-    #' Starts the asynchronous optimization.
-    #'
-    #' @param inst ([OptimInstance]).
-    #' @return [data.table::data.table].
-    optimize = function(inst) {
-      # start workers
-      start_async_optimize(inst, self, private)
-
-      # print logs and check for termination
-      wait_for_async_optimize(inst, self, private)
-
-      # assign and print results
-      finish_async_optimize(inst, self, private)
     }
   ),
 
   private = list(
     .optimize = function(inst) {
       search_space = inst$search_space
-      rush = inst$rush
+
+      # usually the queue is empty but callbacks might have added points
+      evaluate_queue_default(inst)
 
       while(!inst$is_terminated) {
-        # ask
+        # sample new points
         sampler = SamplerUnif$new(search_space)
         xdt = sampler$sample(1)$data
         xss = transpose_list(xdt)
@@ -65,7 +51,7 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
         # eval
         ys = inst$objective$eval(xs_trafoed)
 
-        # tell
+        # push result
         inst$archive$push_result(key, ys = ys, x_domain = xs_trafoed)
       }
     }

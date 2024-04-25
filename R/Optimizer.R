@@ -25,8 +25,6 @@ Optimizer = R6Class("Optimizer",
     #' @template field_id
     id = NULL,
 
-    context = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -84,13 +82,6 @@ Optimizer = R6Class("Optimizer",
     #' Opens the corresponding help page referenced by field `$man`.
     help = function() {
       open_help(self$man)
-    },
-
-    #' @description
-    #' Performs the optimization and writes optimization result into [OptimInstance].
-    #' The optimization result is returned but the complete optimization path is stored in [Archive] of [OptimInstance].
-    optimize = function() {
-      stop("abstract")
     }
   ),
 

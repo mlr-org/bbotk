@@ -40,11 +40,11 @@ Optimal outcome.}
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-print'><code>bbotk::OptimInstance$print()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="clear"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-clear'><code>bbotk::OptimInstanceBatch$clear()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="eval_batch"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-eval_batch'><code>bbotk::OptimInstanceBatch$eval_batch()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="format"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-format'><code>bbotk::OptimInstanceBatch$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="objective_function"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-objective_function'><code>bbotk::OptimInstanceBatch$objective_function()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="print"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-print'><code>bbotk::OptimInstanceBatch$print()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -58,9 +58,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
-  keep_evals = "all",
   check_values = TRUE,
-  callbacks = list(),
+  callbacks = NULL,
   archive = NULL
 )}\if{html}{\out{</div>}}
 }
@@ -79,9 +78,6 @@ value defaults to the domain of the objective.}
 
 \item{\code{terminator}}{(\link{Terminator})\cr
 Multi-criteria terminator.}
-
-\item{\code{keep_evals}}{(\code{character(1)})\cr
-Keep \code{all} or only \code{best} evaluations in archive?}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?

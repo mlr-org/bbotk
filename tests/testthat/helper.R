@@ -43,7 +43,6 @@ PS_2D_TRF = ps(
   }
 )
 
-
 # Simple 2D Function with deps
 FUN_2D_DEPS = function(xs) {
   y = sum(as.numeric(xs)^2, na.rm = TRUE) # for PS with dependencies we ignore the not present param
@@ -66,8 +65,7 @@ OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D,
   codomain = FUN_2D_2D_CODOMAIN, properties = "multi-crit")
 
 # General Helper
-MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D,
-  terminator = 5L) {
+MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D, terminator = 5L) {
   if (is.integer(terminator)) {
     tt = TerminatorEvals$new()
     tt$param_set$values$n_evals = terminator
@@ -78,7 +76,6 @@ MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D,
   } else {
     OptimInstanceBatchMultiCrit$new(objective = objective, search_space = search_space, terminator = terminator)
   }
-
 }
 
 MAKE_INST_1D = function(terminator) {
@@ -150,6 +147,15 @@ test_optimizer = function(instance, key, ..., real_evals) {
   expect_equal(instance$archive$n_evals, real_evals)
 
   list(optimizer = optimizer, instance = instance)
+}
+
+random_search = function(inst, batch_size = 10) {
+  assert_r6(inst, "OptimInstance")
+  batch_size = assert_int(batch_size, coerce = TRUE)
+  optim = OptimizerBatchRandomSearch$new()
+  optim$param_set$values$batch_size = batch_size
+  optim$optimize(inst)
+  return(inst$archive)
 }
 
 MAKE_OPT = function(param_set = ps(), param_classes = c("ParamDbl", "ParamInt"),
@@ -234,4 +240,29 @@ flush_redis = function() {
   config = redux::redis_config()
   r = redux::hiredis(config)
   r$FLUSHDB()
+}
+
+# async ------------------------------------------------------------------------
+
+test_async_optimizer = function(key, ...) {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+
+  optimizer = opt(key, ...)
+  expect_class(optimizer, "OptimizerAsync")
+
+  rush_plan(n_workers = 2)
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+  )
+
+  optimizer = opt(key, ...)
+
+  expect_data_table(optimizer$optimize(instance), nrows = 1)
+  expect_data_table(instance$archive$data, min.rows = 5)
+
+  expect_rush_reset(instance$rush)
 }

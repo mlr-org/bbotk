@@ -57,7 +57,7 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
       x_domain = unlist(transform_xdt_to_xss(xdt, self$search_space), recursive = FALSE)
       if (is.null(x_domain)) x_domain = list()
       private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
-      call_back("on_result", self$callbacks, self$objective$context)
+      call_back("on_result", self$objective$callbacks, self$objective$context)
     }
   )
 )

@@ -33,8 +33,8 @@ Maximum number of points to try in a batch.}
 }
 }
 
-\section{Super class}{
-\code{\link[bbotk:OptimizerAsync]{bbotk::OptimizerAsync}} -> \code{OptimizerAsyncGridSearch}
+\section{Super classes}{
+\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerAsync]{bbotk::OptimizerAsync}} -> \code{OptimizerAsyncGridSearch}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -47,9 +47,9 @@ Maximum number of points to try in a batch.}
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="format"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-format'><code>bbotk::OptimizerAsync$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="help"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-help'><code>bbotk::OptimizerAsync$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="print"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-print'><code>bbotk::OptimizerAsync$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
 </ul>
 </details>
 }}

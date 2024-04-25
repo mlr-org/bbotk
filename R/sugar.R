@@ -85,7 +85,7 @@ oi = function(
   objective,
   search_space = NULL,
   terminator,
-  callbacks = list(),
+  callbacks = NULL,
   check_values = TRUE,
   keep_evals = "all"
   ) {
@@ -115,7 +115,7 @@ oi_async = function(
   objective,
   search_space = NULL,
   terminator,
-  callbacks = list(),
+  callbacks = NULL,
   rush = NULL
   ) {
   assert_r6(objective, "Objective")

@@ -4,7 +4,7 @@
 \alias{bbotk.backup}
 \title{Backup Archive Callback}
 \description{
-This \link{CallbackOptimization} writes the \link{Archive} after each batch to disk.
+This \link{CallbackBatch} writes the \link{Archive} after each batch to disk.
 }
 \examples{
 clbk("bbotk.backup", path = "backup.rds")

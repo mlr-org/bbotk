@@ -1,14 +1,13 @@
-#' @title Data Table Storage for Objective Function Evaluations
+#' @title Data Table Storage
 #'
 #' @description
-#' Container around a [data.table::data.table] which stores all performed
-#' function calls of the Objective.
+#' Container around a [data.table::data.table] which stores all performed unction calls of the [Objective].
 #'
 #' @section S3 Methods:
 #' * `as.data.table(archive)`\cr
-#'   [Archive] -> [data.table::data.table()]\cr
-#'   Returns a tabular view of all performed function calls of the
-#'   Objective. The `x_domain` column is unnested to separate columns.
+#'   [ArchiveBatch] -> [data.table::data.table()]\cr
+#'   Returns a tabular view of all performed function calls of the Objective.
+#'   The `x_domain` column is unnested to separate columns.
 #'
 #' @template param_codomain
 #' @template param_search_space
@@ -136,26 +135,10 @@ ArchiveBatch = R6Class("ArchiveBatch",
     },
 
     #' @description
-    #' Helper for print outputs.
-    #' @param ... (ignored).
-    format = function(...) {
-      sprintf("<%s>", class(self)[1L])
-    },
-
-    #' @description
-    #' Printer.
-    #'
-    #' @param ... (ignored).
-    print = function() {
-      catf(format(self))
-      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits = 2)
-    },
-
-    #' @description
     #' Clear all evaluation results from archive.
     clear = function() {
       self$data = data.table()
-      self$start_time = NULL
+      super$clear()
     }
   ),
 
@@ -173,15 +156,7 @@ ArchiveBatch = R6Class("ArchiveBatch",
       } else {
         max(self$data$batch_nr)
       }
-    },
-
-    #' @field cols_x (`character()`)\cr
-    #' Column names of search space parameters.
-    cols_x = function() self$search_space$ids(),
-
-    #' @field cols_y (`character()`)\cr
-    #' Column names of codomain target parameters.
-    cols_y = function() self$codomain$target_ids
+    }
   ),
 
   private = list(
@@ -199,10 +174,8 @@ ArchiveBatch = R6Class("ArchiveBatch",
 )
 
 #' @export
-as.data.table.Archive = function(x, ...) { # nolint
-  if (is.null(x$data$x_domain) || !nrow(x$data)) {
-    copy(x$data)
-  } else {
-    unnest(copy(x$data), "x_domain", prefix = "{col}_")
-  }
+as.data.table.ArchiveBatch = function(x, unnest = "x_domain", ...) { # nolint
+  data = copy(x$data)
+  cols = intersect(unnest, names(data))
+  unnest(data, cols, prefix = "{col}_")
 }

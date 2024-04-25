@@ -40,9 +40,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 \if{html}{\out{<a id="method-OptimizerBatch-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerBatch-optimize}{}}}
 \subsection{Method \code{optimize()}}{
-Performs the optimization and writes optimization result into
-\link{OptimInstance}. The optimization result is returned but the complete
-optimization path is stored in \link{Archive} of \link{OptimInstance}.
+Performs the optimization and writes optimization result into \link{OptimInstanceBatch}.
+The optimization result is returned but the complete optimization path is stored in \link{ArchiveBatch} of \link{OptimInstanceBatch}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimizerBatch$optimize(inst)}\if{html}{\out{</div>}}
 }
@@ -50,7 +49,7 @@ optimization path is stored in \link{Archive} of \link{OptimInstance}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{inst}}{(\link{OptimInstance}).}
+\item{\code{inst}}{(\link{OptimInstanceBatch}).}
 }
 \if{html}{\out{</div>}}
 }

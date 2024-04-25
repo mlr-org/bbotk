@@ -2,17 +2,13 @@
 % Please edit documentation in R/Objective.R
 \name{Objective}
 \alias{Objective}
-\title{Objective function with domain and co-domain}
+\title{Objective Function with Domain and Codomain}
 \description{
-Describes a black-box objective function that maps an arbitrary domain to a
-numerical codomain.
+The \code{Objective} class describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }
-\section{Technical details}{
-
-\code{Objective} objects can have the following properties: \code{"noisy"},
-\code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
+\details{
+\code{Objective} objects can have the following properties: \code{"noisy"}, \code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
 }
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

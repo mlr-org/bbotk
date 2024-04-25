@@ -42,7 +42,10 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
 
       # archive is passed when a downstream packages creates a new archive class
       archive = if (is.null(archive)) {
-        ArchiveAsync$new(search_space = search_space, codomain = objective$codomain, rush = self$rush)
+        ArchiveAsync$new(
+          search_space = search_space,
+          codomain = objective$codomain,
+          rush = self$rush)
       } else {
         assert_r6(archive, "ArchiveAsync")
       }
@@ -52,8 +55,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
         search_space = search_space,
         terminator = terminator,
         callbacks = callbacks,
-        archive = archive
-      )
+        archive = archive)
     },
 
     #' @description
@@ -70,6 +72,15 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     clear = function() {
       self$rush$reset()
       super$clear()
+    }
+  ),
+
+  private = list(
+
+    # initialize context for optimization
+    .initialize_context = function(optimizer) {
+      context = ContextAsync$new(instance = self, optimizer = optimizer)
+      self$objective$context = context
     }
   )
 )

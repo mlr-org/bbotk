@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* BREAKING CHANGE: Remove `ArchiveBest` class.
+
 # bbotk 0.8.0
 
 * fix: `OptimizerIrace` failed with logical parameters and dependencies.
@@ -35,7 +37,7 @@
 
 * fix: `OptimizerIrace` did not work with parameters with multiple dependencies.
 * feat: Add new callback that backups the archive to disk to `mlr_callbacks`.
-* feat: Create custom callbacks with the `callback_optimization()` function.
+* feat: Create custom callbacks with the `callback_batch()` function.
 
 # bbotk 0.5.4
 

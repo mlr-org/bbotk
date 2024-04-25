@@ -53,19 +53,11 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
     #' @return [data.table::data.table].
     optimize = function(inst) {
 
-      # generate grid and send to workers
+      # generate grid
       pv = self$param_set$values
       design = generate_design_grid(inst$search_space, resolution = pv$resolution, param_resolutions = pv$param_resolutions)$data
-      inst$archive$push_points(transpose_list(design))
 
-      # start workers
-      start_async_optimize(inst, self, private)
-
-      # print logs and check for termination
-      wait_for_async_optimize(inst, self, private, n_evals = nrow(design))
-
-      # assign and print results
-      finish_async_optimize(inst, self, private)
+      optimize_async_default(inst, self, design)
     }
   ),
 
@@ -74,12 +66,7 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
       archive = inst$archive
 
       # evaluate grid points
-      while (archive$n_queued && !inst$is_terminated) {
-        task = archive$pop_point() # FIXME: Add fields argument?
-        xs_trafoed = trafo_xs(task$xs, inst$search_space)
-        ys = inst$objective$eval(xs_trafoed)
-        archive$push_result(task$key, ys, x_domain = xs_trafoed)
-      }
+      evaluate_queue_default(inst)
     }
   )
 )

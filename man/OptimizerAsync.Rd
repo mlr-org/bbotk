@@ -16,146 +16,33 @@ Optionally, a set of points can be created, e.g. an initial design, and pushed t
 The private method \verb{$.optimize()} is the actual optimization algorithm that runs on the workers.
 Usually, the method proposes new points, evaluates them, and updates the archive.
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{id}}{(\code{character(1)})\cr
-Identifier of the object.
-Used in tables, plot and text output.}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
-Set of control parameters.}
-
-\item{\code{label}}{(\code{character(1)})\cr
-Label for this object.
-Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
-String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
-The referenced help package can be opened via method \verb{$help()}.}
-
-\item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes that the optimizer can optimize, as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
-
-\item{\code{properties}}{(\code{character()})\cr
-Set of properties of the optimizer.
-Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$optimizer_properties}}.}
-
-\item{\code{packages}}{(\code{character()})\cr
-Set of required packages.
-A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
-}
-\if{html}{\out{</div>}}
+\section{Super class}{
+\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerAsync}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-OptimizerAsync-new}{\code{OptimizerAsync$new()}}
-\item \href{#method-OptimizerAsync-format}{\code{OptimizerAsync$format()}}
-\item \href{#method-OptimizerAsync-print}{\code{OptimizerAsync$print()}}
-\item \href{#method-OptimizerAsync-help}{\code{OptimizerAsync$help()}}
 \item \href{#method-OptimizerAsync-optimize}{\code{OptimizerAsync$optimize()}}
 \item \href{#method-OptimizerAsync-clone}{\code{OptimizerAsync$clone()}}
 }
 }
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerAsync-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerAsync-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsync$new(
-  id = "optimizer",
-  param_set,
-  param_classes,
-  properties,
-  packages = character(),
-  label = NA_character_,
-  man = NA_character_
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{(\code{character(1)})\cr
-Identifier for the new instance.}
-
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Set of control parameters.}
-
-\item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes that the optimizer can optimize.}
-
-\item{\code{properties}}{(\code{character()})\cr
-Set of properties of the optimizer.
-Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$optimizer_properties}}.}
-
-\item{\code{packages}}{(\code{character()})\cr
-Set of required packages.
-A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
-
-\item{\code{label}}{(\code{character(1)})\cr
-Label for this object.
-Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
-String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
-The referenced help package can be opened via method \verb{$help()}.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerAsync-format"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerAsync-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsync$format(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerAsync-print"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerAsync-print}{}}}
-\subsection{Method \code{print()}}{
-Print method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsync$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-(\code{character()}).
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerAsync-help"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerAsync-help}{}}}
-\subsection{Method \code{help()}}{
-Opens the corresponding help page referenced by field \verb{$man}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsync$help()}\if{html}{\out{</div>}}
-}
-
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="initialize"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-initialize'><code>bbotk::Optimizer$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerAsync-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerAsync-optimize}{}}}
 \subsection{Method \code{optimize()}}{
-Starts the asynchronous optimization.
+Performs the optimization on a \link{OptimInstanceAsyncSingleCrit} or \link{OptimInstanceAsyncMultiCrit} until termination.
+The single evaluations will be written into the \link{ArchiveAsync}.
+The result will be written into the instance object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimizerAsync$optimize(inst)}\if{html}{\out{</div>}}
 }
@@ -163,12 +50,12 @@ Starts the asynchronous optimization.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{inst}}{(\link{OptimInstance}).}
+\item{\code{inst}}{(\link{OptimInstanceAsyncSingleCrit} | \link{OptimInstanceAsyncMultiCrit}).}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}.
+\code{\link[data.table:data.table]{data.table::data.table()}}
 }
 }
 \if{html}{\out{<hr>}}

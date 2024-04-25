@@ -1,5 +1,5 @@
 test_that("on_optimization_begin works", {
-  callback = callback_optimization(id = "test",
+  callback = callback_batch(id = "test",
     on_optimization_begin = function(callback, context) {
       context$instance$terminator$param_set$values$n_evals = 20
     }
@@ -19,7 +19,7 @@ test_that("on_optimization_begin works", {
 })
 
 test_that("on_optimization_end works", {
-  callback = callback_optimization(id = "test",
+  callback = callback_batch(id = "test",
     on_optimization_end = function(callback, context) {
       context$instance$terminator$param_set$values$n_evals = 20
     }
@@ -40,7 +40,7 @@ test_that("on_optimization_end works", {
 
 
 test_that("on_result in OptimInstanceBatchSingleCrit works", {
-  callback = callback_optimization(id = "test",
+  callback = callback_batch(id = "test",
     on_result = function(callback, context) {
       context$result$y = 2
     }
@@ -60,7 +60,7 @@ test_that("on_result in OptimInstanceBatchSingleCrit works", {
 })
 
 test_that("on_result in OptimInstanceBatchMultiCrit works", {
-  callback = callback_optimization(id = "test",
+  callback = callback_batch(id = "test",
     on_result = function(callback, context) {
       context$result$y1 = 2
       context$result$y2 = 2

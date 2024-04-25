@@ -1,21 +1,21 @@
-#' @title Create Optimization Callback
+#' @title Create Batch Optimization Callback
 #'
 #' @description
-#' Specialized [mlr3misc::Callback] for optimization.
+#' Specialized [mlr3misc::Callback] for batch optimization.
 #' Callbacks allow to customize the behavior of processes in bbotk.
-#' The [callback_optimization()] function creates a [CallbackOptimization].
+#' The [callback_batch()] function creates a [CallbackBatch].
 #' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
-#' For more information on optimization callbacks see [callback_optimization()].
+#' For more information on optimization callbacks see [callback_batch()].
 #'
 #' @export
 #' @examples
 #' # write archive to disk
-#' callback_optimization("bbotk.backup",
+#' callback_batch("bbotk.backup",
 #'   on_optimization_end = function(callback, context) {
 #'     saveRDS(context$instance$archive, "archive.rds")
 #'   }
 #' )
-CallbackOptimization = R6Class("CallbackOptimization",
+CallbackBatch = R6Class("CallbackBatch",
   inherit = Callback,
   public = list(
 
@@ -46,10 +46,10 @@ CallbackOptimization = R6Class("CallbackOptimization",
   )
 )
 
-#' @title Create Optimization Callback
+#' @title Create Batch Optimization Callback
 #'
 #' @description
-#' Function to create a [CallbackOptimization].
+#' Function to create a [CallbackBatch].
 #'
 #' Optimization callbacks can be called from different stages of optimization process.
 #' The stages are prefixed with `on_*`.
@@ -105,11 +105,32 @@ CallbackOptimization = R6Class("CallbackOptimization",
 #'   List of additional fields.
 #'
 #' @export
-#' @inherit CallbackOptimization examples
-callback_optimization = function(id, label = NA_character_, man = NA_character_, on_optimization_begin = NULL, on_optimizer_before_eval = NULL, on_optimizer_after_eval = NULL, on_result = NULL,  on_optimization_end = NULL, fields = list()) {
-  stages = discard(set_names(list(on_optimization_begin, on_optimizer_before_eval, on_optimizer_after_eval, on_result,  on_optimization_end), c("on_optimization_begin", "on_optimizer_before_eval", "on_optimizer_after_eval", "on_result",  "on_optimization_end")), is.null)
+#' @inherit CallbackBatch examples
+callback_batch = function(
+  id,
+  label = NA_character_,
+  man = NA_character_,
+  on_optimization_begin = NULL,
+  on_optimizer_before_eval = NULL,
+  on_optimizer_after_eval = NULL,
+  on_result = NULL,
+  on_optimization_end = NULL,
+  fields = list()
+  ) {
+  stages = discard(set_names(list(
+    on_optimization_begin,
+    on_optimizer_before_eval,
+    on_optimizer_after_eval,
+    on_result,
+    on_optimization_end),
+    c(
+      "on_optimization_begin",
+      "on_optimizer_before_eval",
+      "on_optimizer_after_eval",
+      "on_result",
+      "on_optimization_end")), is.null)
   walk(stages, function(stage) assert_function(stage, args = c("callback", "context")))
-  callback = CallbackOptimization$new(id, label, man)
+  callback = CallbackBatch$new(id, label, man)
   iwalk(stages, function(stage, name) callback[[name]] = stage)
   callback
 }

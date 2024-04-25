@@ -15,220 +15,128 @@
 #' The private method `$.optimize()` is the actual optimization algorithm that runs on the workers.
 #' Usually, the method proposes new points, evaluates them, and updates the archive.
 #'
-#' @template field_id
-#' @template field_param_set
-#' @template field_label
-#' @template field_man
-#'
-#' @template param_id
-#' @template param_param_set
-#' @template param_label
-#' @template param_man
-#'
 #' @export
 OptimizerAsync = R6Class("OptimizerAsync",
   inherit = Optimizer,
   public = list(
 
     #' @description
-    #' Starts the asynchronous optimization.
+    #' Performs the optimization on a [OptimInstanceAsyncSingleCrit] or [OptimInstanceAsyncMultiCrit] until termination.
+    #' The single evaluations will be written into the [ArchiveAsync].
+    #' The result will be written into the instance object.
     #'
-    #' @param inst ([OptimInstance]).
-    #' @return [data.table::data.table].
+    #' @param inst ([OptimInstanceAsyncSingleCrit] | [OptimInstanceAsyncMultiCrit]).
+    #'
+    #' @return [data.table::data.table()]
     optimize = function(inst) {
-      stop("abstract")
+      optimize_async_default(inst, self)
     }
-  ),
-
-  active = list(
-
-    param_set = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.param_set)) {
-        stop("$param_set is read-only.")
-      }
-      private$.param_set
-    },
-
-    #' @field param_classes (`character()`)\cr
-    #'   Supported parameter classes that the optimizer can optimize, as given in the [`paradox::ParamSet`] `$class` field.
-    param_classes = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.param_classes)) {
-        stop("$param_classes is read-only.")
-      }
-      private$.param_classes
-    },
-
-    #' @field properties (`character()`)\cr
-    #'  Set of properties of the optimizer.
-    #'  Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
-    properties = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.properties)) {
-        stop("$properties is read-only.")
-      }
-      private$.properties
-    },
-
-    #' @field packages (`character()`)\cr
-    #'  Set of required packages.
-    #'  A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
-    packages = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.packages)) {
-        stop("$packages is read-only.")
-      }
-      private$.packages
-    },
-
-    label = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.label)) {
-        stop("$label is read-only.")
-      }
-      private$.label
-    },
-
-    man = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.man)) {
-        stop("$man is read-only.")
-      }
-      private$.man
-    }
-  ),
-
-  private = list(
-
-    # runs asynchronously on the workers
-    .optimize = function(inst) {
-      stop("abstract")
-    },
-
-    .assign_result = function(inst) {
-      assign_result_default(inst)
-    },
-
-    .param_set = NULL,
-    .param_classes = NULL,
-    .properties = NULL,
-    .packages = NULL,
-    .label = NULL,
-    .man = NULL
   )
 )
 
-#' @title Start Decentralized Optimization
+#' @title Default Asynchronous Optimization
 #'
 #' @description
 #' Used internally in [OptimizerAsync].
-#' Starts the workers and pushes the necessary objects to the workers.
 #'
-#' @param inst [OptimInstance]
-#' @param self [Optimizer]
-#' @param private (`environment()`)
+#' @param instance [OptimInstanceAsync].
+#' @param optimizer [OptimizerAsync].
 #'
 #' @keywords internal
 #' @export
-start_async_optimize = function(inst, self, private, context) {
-  assert_class(inst, "OptimInstanceAsync")
+optimize_async_default = function(instance, optimizer, design = NULL) {
+  assert_class(instance, "OptimInstanceAsync")
+  assert_class(optimizer, "OptimizerAsync")
+  assert_data_table(design, null.ok = TRUE)
 
-  inst$archive$start_time = Sys.time()
-  inst$objective$context = context
-  call_back("on_optimization_begin", inst$callbacks, inst$objective$context)
+  instance$archive$start_time = Sys.time()
+  get_private(instance)$.initialize_context(optimizer)
+  call_back("on_optimization_begin", instance$objective$callbacks, instance$objective$context)
+
+  # send design to workers
+  if (!is.null(design)) instance$archive$push_points(transpose_list(design))
 
   if (getOption("bbotk_local", FALSE)) {
     # debug mode runs .optimize() in main process
-    rush = RushWorker$new(inst$rush$network_id, host = "local")
-    inst$rush = rush
-    inst$archive$rush = rush
-    private$.optimize(inst)
+    rush = RushWorker$new(instance$rush$network_id, host = "local")
+    instance$rush = rush
+    instance$archive$rush = rush
+    private$.optimize(instance)
   } else {
     # run .optimize() on workers
 
     # check if there are already running workers or a rush plan is available
-    if (!inst$rush$n_running_workers && !rush_available()) {
+    if (!instance$rush$n_running_workers && !rush_available()) {
       stop("No running worker found and no rush plan available to start local workers.\n See `?rush::rush_plan()`")
     }
 
     # FIXME: How to pass globals and packages?
-    if (!inst$rush$n_running_workers) {
+    if (!instance$rush$n_running_workers) {
       lg$debug("Start %i local worker(s)", rush_config()$n_workers)
 
-      packages = c(self$packages, "bbotk") # add packages from objective
+      packages = c(optimizer$packages, "bbotk") # add packages from objective
 
-      inst$rush$start_workers(
+      instance$rush$start_workers(
         worker_loop = bbotk_worker_loop,
         packages = packages,
-        optimizer = self,
-        instance = inst,
+        optimizer = optimizer,
+        instance = instance,
         wait_for_workers = TRUE)
     }
 
     lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
-      inst$search_space$length,
-      self$format(),
-      inst$terminator$format(with_params = TRUE),
-      inst$rush$n_running_workers
+      instance$search_space$length,
+      optimizer$format(),
+      instance$terminator$format(with_params = TRUE),
+      instance$rush$n_running_workers
     )
   }
-}
 
-#' @title Wait for Decentralized Optimization
-#'
-#' @description
-#' Used internally in [OptimizerAsync].
-#' Waits until optimization is finished.
-#' Prints log messages from the workers and checks for errors.
-#'
-#' @param inst [OptimInstance]
-#' @param self [Optimizer]
-#' @param private (`environment()`)
-#' @param n_evals (`integer(1)`)\cr
-#'  Number of evaluations to wait for.
-#'  Default is `Inf`.
-#'  Needed for `"none"` termination.
-#'
-#' @keywords internal
-#' @export
-wait_for_async_optimize = function(inst, self, private, n_evals = Inf) {
   # wait until optimization is finished
-
-  while(!inst$is_terminated && inst$archive$n_evals < n_evals) {
+  # check for number of evaluations when the terminator is "none"
+  while(!instance$is_terminated && instance$archive$n_evals < nrow(design) %??% Inf) {
     Sys.sleep(1)
-    inst$rush$print_log()
+    instance$rush$print_log()
 
     # fetch new results for printing
-    new_results = inst$rush$fetch_new_tasks()
+    new_results = instance$rush$fetch_new_tasks()
     if (nrow(new_results)) {
       lg$info("Results of %i configuration(s):", nrow(new_results))
       lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
     }
 
-    if (inst$rush$all_workers_lost) {
+    if (instance$rush$all_workers_lost) {
       stop("All workers have crashed.")
     }
   }
+
+  # assign result
+  get_private(optimizer)$.assign_result(instance)
+  lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
+  lg$info("Result:")
+  lg$info(capture.output(print(instance$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+
+  call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
+  return(instance$result)
 }
 
-#' @title Wait for Decentralized Optimization
+#' @title Default Evaluation of the Queue
 #'
 #' @description
-#' Used internally in [OptimizerAsync].
-#' Waits until optimization is finished.
-#' Prints log messages from the workers and checks for errors.
+#' Used internally in `$.optimize()` of [OptimizerAsync] classes to evaluate a queue of points e.g. in [OptimizerAsyncGridSearch].
 #'
-#' @param inst [OptimInstance]
-#' @param self [Optimizer]
-#' @param private (`environment()`)
+#' @param instance [OptimInstanceAsync].
+#' @param optimizer [OptimizerAsync].
 #'
 #' @keywords internal
 #' @export
-finish_async_optimize = function(inst, self, private) {
-  # assign result
-  private$.assign_result(inst)
-
-  # assign result
-  private$.assign_result(inst)
-  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
-  lg$info("Result:")
-  lg$info(capture.output(print(inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-
-  call_back("on_optimization_end", inst$callbacks, inst$objective$context)
-  return(inst$result)
+evaluate_queue_default = function(instance) {
+  while (!instance$is_terminated && instance$archive$n_queued) {
+    task = instance$archive$pop_point() # FIXME: Add fields argument?
+      if (!is.null(task)) {
+      xs_trafoed = trafo_xs(task$xs, instance$search_space)
+      ys = instance$objective$eval(xs_trafoed)
+      instance$archive$push_result(task$key, ys, x_domain = xs_trafoed)
+    }
+  }
 }

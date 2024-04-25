@@ -1,20 +1,13 @@
-#' @title Create Optimization Callback
+#' @title Create Asynchronous Optimization Callback
 #'
 #' @description
-#' Specialized [mlr3misc::Callback] for optimization.
+#' Specialized [mlr3misc::Callback] for asynchronous optimization.
 #' Callbacks allow to customize the behavior of processes in bbotk.
-#' The [callback_optimization()] function creates a [CallbackAsync].
+#' The [callback_async()] function creates a [CallbackAsync].
 #' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
 #' For more information on optimization callbacks see [callback_async()].
 #'
 #' @export
-#' @examples
-#' # write archive to disk
-#' callback_async("bbotk.backup",
-#'   on_optimization_end = function(callback, context) {
-#'     saveRDS(context$instance$archive, "archive.rds")
-#'   }
-#' )
 CallbackAsync = R6Class("CallbackAsync",
   inherit = Callback,
   public = list(
@@ -24,15 +17,15 @@ CallbackAsync = R6Class("CallbackAsync",
     #'   Called in `Optimizer$optimize()`.
     on_optimization_begin = NULL,
 
-    #' @field on_optimizer_begin (`function()`)\cr
+    #' @field on_worker_begin (`function()`)\cr
     #'   Stage called at the beginning of the optimization on the worker.
     #'   Called in the worker loop.
-    on_optimizer_begin = NULL,
+    on_worker_begin = NULL,
 
-    #' @field on_optimizer_end (`function()`)\cr
+    #' @field on_worker_end (`function()`)\cr
     #'   Stage called at the end of the optimization on the worker.
     #'   Called in the worker loop.
-    on_optimizer_end = NULL,
+    on_worker_end = NULL,
 
     #' @field on_result (`function()`)\cr
     #'   Stage called after result are written.
@@ -46,10 +39,10 @@ CallbackAsync = R6Class("CallbackAsync",
   )
 )
 
-#' @title Create Optimization Callback
+#' @title Create Asynchronous Optimization Callback
 #'
 #' @description
-#' Function to create a [CallbackOptimization].
+#' Function to create a [CallbackAsync].
 #'
 #' Optimization callbacks can be called from different stages of optimization process.
 #' The stages are prefixed with `on_*`.
@@ -58,8 +51,8 @@ CallbackAsync = R6Class("CallbackAsync",
 #' Start Optimization
 #'      - on_optimization_begin
 #'     Start Worker
-#'          - on_optimizer_begin
-#'          - on_optimizer_end
+#'          - on_worker_begin
+#'          - on_worker_end
 #'     End Worker
 #'      - on_result
 #'      - on_optimization_end
@@ -73,7 +66,6 @@ CallbackAsync = R6Class("CallbackAsync",
 #' A callback can write data to its state (`$state`), e.g. settings that affect the callback itself.
 #' The [ContextAsync] allows to modify the instance, archive, optimizer and final result.
 #'
-#'
 #' @param id (`character(1)`)\cr
 #'   Identifier for the new instance.
 #' @param label (`character(1)`)\cr
@@ -85,11 +77,11 @@ CallbackAsync = R6Class("CallbackAsync",
 #'   Stage called at the beginning of the optimization in the main process.
 #'   Called in `Optimizer$optimize()`.
 #'   The functions must have two arguments named `callback` and `context`.
-#' @param on_optimizer_begin (`function()`)\cr
+#' @param on_worker_begin (`function()`)\cr
 #'   Stage called at the beginning of the optimization on the worker.
 #'   Called in the worker loop.
 #'   The functions must have two arguments named `callback` and `context`.
-#' @param on_optimizer_end (`function()`)\cr
+#' @param on_worker_end (`function()`)\cr
 #'   Stage called at the end of the optimization on the worker.
 #'   Called in the worker loop.
 #'   The functions must have two arguments named `callback` and `context`.
@@ -101,31 +93,27 @@ CallbackAsync = R6Class("CallbackAsync",
 #'   Stage called at the end of the optimization in the main process.
 #'   Called in `Optimizer$optimize()`.
 #'   The functions must have two arguments named `callback` and `context`.
-#' @param fields (list of `any`)\cr
-#'   List of additional fields.
 #'
 #' @export
-#' @inherit CallbackOptimization examples
 callback_async = function(
   id,
   label = NA_character_,
   man = NA_character_,
   on_optimization_begin = NULL,
-  on_optimizer_begin = NULL,
-  on_optimizer_end = NULL,
+  on_worker_begin = NULL,
+  on_worker_end = NULL,
   on_result = NULL,
-  on_optimization_end = NULL,
-  fields = list()
+  on_optimization_end = NULL
   ) {
   stages = discard(set_names(list(
     on_optimization_begin,
-    on_optimizer_begin,
-    on_optimizer_end,
+    on_worker_begin,
+    on_worker_end,
     on_result,
     on_optimization_end),
     c("on_optimization_begin",
-    "on_optimizer_begin",
-    "on_optimizer_end",
+    "on_worker_begin",
+    "on_worker_end",
     "on_result",
     "on_optimization_end")), is.null)
   walk(stages, function(stage) assert_function(stage, args = c("callback", "context")))

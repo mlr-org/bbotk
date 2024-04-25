@@ -1,12 +1,10 @@
-#' @title Objective function with domain and co-domain
+#' @title Objective Function with Domain and Codomain
 #'
 #' @description
-#' Describes a black-box objective function that maps an arbitrary domain to a
-#' numerical codomain.
+#' The `Objective` class describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 #'
-#' @section Technical details:
-#' `Objective` objects can have the following properties: `"noisy"`,
-#' `"deterministic"`, `"single-crit"` and `"multi-crit"`.
+#' @details
+#' `Objective` objects can have the following properties: `"noisy"`, `"deterministic"`, `"single-crit"` and `"multi-crit"`.
 #'
 #' @template field_callbacks
 #' @template field_context

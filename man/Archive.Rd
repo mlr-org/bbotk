@@ -8,21 +8,7 @@ The \link{Archive} class stores all proposed points and their corresponding eval
 }
 \details{
 The \link{Archive} is an abstract class that implements the base functionality each archive must provide.
-\itemize{
-\item A \verb{$best()} method that returns the best scoring evaluation(s).
-\item A \verb{$nds_selection()} method that calculates the best points w.r.t. non-dominated sorting with hypervolume contribution.
 }
-}
-\section{S3 Methods}{
-
-\itemize{
-\item \code{as.data.table(archive)}\cr
-\link{Archive} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr
-Returns a tabular view of all performed function calls of the
-Objective. The \code{x_domain} column is unnested to separate columns.
-}
-}
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -44,9 +30,6 @@ Determines if points and results are checked for validity.}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{n_evals}}{(\code{integer(1)})\cr
-Number of evaluations stored in the archive.}
-
 \item{\code{cols_x}}{(\code{character()})\cr
 Column names of search space parameters.}
 
@@ -59,8 +42,6 @@ Column names of codomain target parameters.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Archive-new}{\code{Archive$new()}}
-\item \href{#method-Archive-best}{\code{Archive$best()}}
-\item \href{#method-Archive-nds_selection}{\code{Archive$nds_selection()}}
 \item \href{#method-Archive-format}{\code{Archive$format()}}
 \item \href{#method-Archive-print}{\code{Archive$print()}}
 \item \href{#method-Archive-clear}{\code{Archive$clear()}}
@@ -97,28 +78,6 @@ Search space that is logged into archive.}
 }
 \if{html}{\out{</div>}}
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-best"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-best}{}}}
-\subsection{Method \code{best()}}{
-Returns the best scoring evaluation(s).
-For single-crit optimization, the solution that minimizes / maximizes the objective function.
-For multi-crit optimization, the Pareto set / front.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$best()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-nds_selection"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-nds_selection}{}}}
-\subsection{Method \code{nds_selection()}}{
-Calculate best points w.r.t. non dominated sorting with hypervolume contribution.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$nds_selection()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Archive-format"></a>}}
