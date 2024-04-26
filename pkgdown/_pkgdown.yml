@@ -62,9 +62,9 @@ reference:
       - Codomain
   - title: Callbacks
     contents:
-      - CallbackOptimization
-      - callback_optimization
-      - ContextOptimization
+      - starts_with("Callback")
+      - starts_with("callback_")
+      - starts_with("Context")
       - bbotk.backup
   - title: Misc
     contents:
