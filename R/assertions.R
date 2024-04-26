@@ -23,8 +23,10 @@ NULL
 #' @export
 #' @param terminator ([Terminator]).
 #' @param instance ([OptimInstance]).
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_terminator = function(terminator, instance = NULL) {
+assert_terminator = function(terminator, instance = NULL, null_ok = FALSE) {
+  if (null_ok && is.null(terminator)) return(NULL)
   assert_r6(terminator, "Terminator")
 
   if (!is.null(instance)) {
@@ -70,43 +72,55 @@ assert_set = function(x, empty = TRUE, .var.name = vname(x)) {
 }
 
 #' @export
-#' @param optimizer ([OptimizerBatch])
+#' @param optimizer ([OptimizerBatch]).
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_optimizer = function(optimizer) {
+assert_optimizer = function(optimizer, null_ok = FALSE) {
+  if (null_ok && is.null(optimizer)) return(NULL)
   assert_r6(optimizer, "Optimizer")
 }
 
 #' @export
 #' @param optimizer ([OptimizerAsync])
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_optimizer_async = function(optimizer) {
+assert_optimizer_async = function(optimizer, null_ok = FALSE) {
+   if (null_ok && is.null(optimizer)) return(NULL)
   assert_r6(optimizer, "OptimizerAsync")
 }
 
 #' @export
 #' @param optimizer ([OptimizerAsync])
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_optimizer_batch = function(optimizer) {
+assert_optimizer_batch = function(optimizer, null_ok = FALSE) {
+  if (null_ok && is.null(optimizer)) return(NULL)
   assert_r6(optimizer, "OptimizerBatch")
 }
 
 #' @export
 #' @param inst ([OptimInstance])
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_instance = function(inst) {
+assert_instance = function(inst, null_ok = FALSE) {
+  if (null_ok && is.null(inst)) return(NULL)
   assert_r6(inst, "OptimInstance")
 }
 
 #' @param inst ([OptimInstanceBatch])
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_instance_batch = function(inst) {
+assert_instance_batch = function(inst, null_ok = FALSE) {
+  if (null_ok && is.null(inst)) return(NULL)
   assert_r6(inst, "OptimInstanceBatch")
 }
 
 #' @export
 #' @param inst ([OptimInstanceAsync])
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_instance_async = function(inst) {
+assert_instance_async = function(inst, null_ok = FALSE) {
+  if (null_ok && is.null(inst)) return(NULL)
   assert_r6(inst, "OptimInstanceAsync")
 }
 
@@ -137,4 +151,31 @@ assert_instance_properties = function(optimizer, inst) {
   if (length(not_supported_pclasses) > 0L) {
     stopf("'%s' does not support param types: '%s'", class(optimizer)[1L], paste0(not_supported_pclasses, collapse = ","))
   }
+}
+
+#' @export
+#' @param archive ([Archive]).
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_archive = function(archive, null_ok = FALSE) {
+  if (null_ok && is.null(archive)) return(NULL)
+  assert_r6(archive, "Archive")
+}
+
+#' @export
+#' @param archive ([ArchiveAsync]).
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_archive_async = function(archive, null_ok = FALSE) {
+  if (null_ok && is.null(archive)) return(NULL)
+  assert_r6(archive, "ArchiveAsync")
+}
+
+#' @export
+#' @param archive ([ArchiveBatch]).
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_archive_batch = function(archive, null_ok = FALSE) {
+  if (null_ok && is.null(archive)) return(NULL)
+  assert_r6(archive, "ArchiveBatch")
 }

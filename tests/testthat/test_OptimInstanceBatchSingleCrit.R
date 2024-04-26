@@ -226,3 +226,10 @@ test_that("$clear() method works", {
   inst$clear()
   expect_equal(inst, inst_copy)
 })
+
+test_that("context is initialized correctly", {
+  inst = MAKE_INST_2D(20L)
+  optimizer = opt("random_search")
+  optimizer$optimize(inst)
+  expect_r6(inst$objective$context, "ContextBatch")
+})

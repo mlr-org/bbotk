@@ -53,13 +53,13 @@ The result of the optimization.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ContextBatch$new(instance, optimizer)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ContextBatch$new(inst, optimizer)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{instance}}{(\link{OptimInstance}).}
+\item{\code{inst}}{(\link{OptimInstance}).}
 
 \item{\code{optimizer}}{(\link{Optimizer}).}
 }

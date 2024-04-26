@@ -38,3 +38,21 @@ test_that("rush controller can be passed to OptimInstanceAsyncSingleCrit", {
   expect_class(instance$rush, "Rush")
   expect_equal(instance$rush$network_id, "remote_network")
 })
+
+test_that("context is initialized correctly", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+
+  rush_plan(n_workers = 2)
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  expect_r6(instance$objective$context, "ContextAsync")
+})

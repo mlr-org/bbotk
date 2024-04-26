@@ -154,7 +154,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
 
     # initialize context for optimization
     .initialize_context = function(optimizer) {
-      context = ContextBatch$new(instance = self, optimizer = optimizer)
+      context = ContextBatch$new(inst = self, optimizer = optimizer)
       self$objective$context = context
     },
 
