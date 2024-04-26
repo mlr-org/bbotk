@@ -249,7 +249,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
 )
 
 #' @export
-as.data.table.ArchiveAsync = function(x, unnest = "x_domain", ...) { # nolint
+as.data.table.ArchiveAsync = function(x, keep.rownames = FALSE, unnest = "x_domain", ...) { # nolint
   data = x$data_with_state()
   cols = intersect(unnest, names(data))
   unnest(data, cols, prefix = "{col}_")

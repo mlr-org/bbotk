@@ -94,7 +94,7 @@ optimize_async_default = function(instance, optimizer, design = NULL) {
 
   # wait until optimization is finished
   # check for number of evaluations when the terminator is "none"
-  while(!instance$is_terminated && instance$archive$n_evals < nrow(design) %??% Inf) {
+  while(!instance$is_terminated && !instance$rush$all_workers_terminated) {
     Sys.sleep(1)
     instance$rush$print_log()
 
@@ -126,7 +126,6 @@ optimize_async_default = function(instance, optimizer, design = NULL) {
 #' Used internally in `$.optimize()` of [OptimizerAsync] classes to evaluate a queue of points e.g. in [OptimizerAsyncGridSearch].
 #'
 #' @param instance [OptimInstanceAsync].
-#' @param optimizer [OptimizerAsync].
 #'
 #' @keywords internal
 #' @export

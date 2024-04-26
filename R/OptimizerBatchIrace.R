@@ -66,6 +66,7 @@
 #'
 #' @export
 #' @examples
+#' \donttest{
 #' library(data.table)
 #'
 #' search_space = domain = ps(
@@ -109,6 +110,7 @@
 #'
 #' # all evaluations
 #' as.data.table(instance$archive)
+#' }
 OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
   inherit = OptimizerBatch,
   public = list(

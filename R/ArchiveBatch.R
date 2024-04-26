@@ -174,7 +174,7 @@ ArchiveBatch = R6Class("ArchiveBatch",
 )
 
 #' @export
-as.data.table.ArchiveBatch = function(x, unnest = "x_domain", ...) { # nolint
+as.data.table.ArchiveBatch = function(x, keep.rownames = FALSE, unnest = "x_domain", ...) { # nolint
   data = copy(x$data)
   cols = intersect(unnest, names(data))
   unnest(data, cols, prefix = "{col}_")

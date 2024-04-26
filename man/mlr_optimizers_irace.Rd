@@ -91,6 +91,7 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
+\donttest{
 library(data.table)
 
 search_space = domain = ps(
@@ -134,6 +135,7 @@ instance$result
 
 # all evaluations
 as.data.table(instance$archive)
+}
 }
 \section{Super classes}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchIrace}
