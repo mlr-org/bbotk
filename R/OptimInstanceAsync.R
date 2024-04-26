@@ -81,7 +81,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
 
     # initialize context for optimization
     .initialize_context = function(optimizer) {
-      context = ContextAsync$new(instance = self, optimizer = optimizer)
+      context = ContextAsync$new(inst = self, optimizer = optimizer)
       self$objective$context = context
     }
   )
