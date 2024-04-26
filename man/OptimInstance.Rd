@@ -4,17 +4,14 @@
 \alias{OptimInstance}
 \title{Optimization Instance}
 \description{
-Abstract base class.
+The \code{OptimInstance} specifies an optimization problem for an \link{Optimizer}.
 }
-\section{Technical details}{
-
-The \link{Optimizer} writes the final result to the \code{.result} field by using
-the \verb{$assign_result()} method. \code{.result} stores a \link[data.table:data.table]{data.table::data.table}
-consisting of x values in the \emph{search space}, (transformed) x values in the
-\emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}. The
-user can access the results with active bindings (see below).
+\details{
+\code{OptimInstance} is an abstract base class that implements the base functionality each instance must provide.
+The \link{Optimizer} writes the final result to the \code{.result} field by using the \verb{$assign_result()} method.
+\code{.result} stores a \link[data.table:data.table]{data.table::data.table} consisting of x values in the \emph{search space}, (transformed) x values in the \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}.
+The user can access the results with active bindings (see below).
 }
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -43,12 +40,6 @@ Get result}
 
 \item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
-
-\item{\code{result_x_domain}}{(\code{list()})\cr
-(transformed) x part of the result in the \emph{domain space} of the objective.}
-
-\item{\code{result_y}}{(\code{numeric()})\cr
-Optimal outcome.}
 
 \item{\code{is_terminated}}{(\code{logical(1)}).}
 }
@@ -84,7 +75,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{objective}}{(\link{Objective}).}
+\item{\code{objective}}{(\link{Objective})\cr
+Objective function.}
 
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
@@ -93,11 +85,11 @@ a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
 
-\item{\code{terminator}}{(\link{Terminator}).}
+\item{\code{terminator}}{\link{Terminator}\cr
+Termination criterion.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should x-values that are added to the archive be checked for validity?
-Search space that is logged into archive.}
+Should points before the evaluation and the results be checked for validity?}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}

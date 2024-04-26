@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* feat: Add asynchronous optimization with `OptimizerAsync` and `OptimInstanceAsync`.
 * BREAKING CHANGE: Remove `ArchiveBest` class.
 
 # bbotk 0.8.0

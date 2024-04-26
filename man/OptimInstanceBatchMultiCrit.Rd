@@ -2,18 +2,10 @@
 % Please edit documentation in R/OptimInstanceBatchMultiCrit.R
 \name{OptimInstanceBatchMultiCrit}
 \alias{OptimInstanceBatchMultiCrit}
-\title{Optimization Instance with budget and archive}
+\title{Multi Criteria Optimization Instance for Batch Optimization}
 \description{
-Wraps a multi-criteria \link{Objective} function with extra services for
-convenient evaluation. Inherits from \link{OptimInstance}.
-\itemize{
-\item Automatic storing of results in an \link{Archive} after evaluation.
-\item Automatic checking for termination. Evaluations of design points are
-performed in batches. Before a batch is evaluated, the \link{Terminator} is
-queried for the remaining budget. If the available budget is exhausted, an
-exception is raised, and no further evaluations can be performed from this
-point on.
-}
+The \link{OptimInstanceBatchMultiCrit} specifies an optimization problem for an \link{OptimizerBatch}.
+The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceBatchMultiCrit}.
 }
 \section{Super classes}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceBatch]{bbotk::OptimInstanceBatch}} -> \code{OptimInstanceBatchMultiCrit}
@@ -40,9 +32,9 @@ Optimal outcome.}
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="clear"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-clear'><code>bbotk::OptimInstance$clear()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-print'><code>bbotk::OptimInstance$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="clear"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-clear'><code>bbotk::OptimInstanceBatch$clear()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="eval_batch"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-eval_batch'><code>bbotk::OptimInstanceBatch$eval_batch()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="objective_function"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-objective_function'><code>bbotk::OptimInstanceBatch$objective_function()</code></a></span></li>
 </ul>
@@ -67,7 +59,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{objective}}{(\link{Objective}).}
+\item{\code{objective}}{(\link{Objective})\cr
+Objective function.}
 
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
@@ -76,12 +69,11 @@ a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
 
-\item{\code{terminator}}{(\link{Terminator})\cr
-Multi-criteria terminator.}
+\item{\code{terminator}}{\link{Terminator}\cr
+Termination criterion.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should x-values that are added to the archive be checked for validity?
-Search space that is logged into archive.}
+Should points before the evaluation and the results be checked for validity?}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}

@@ -12,6 +12,6 @@ evaluate_queue_default(instance)
 \item{optimizer}{\link{OptimizerAsync}.}
 }
 \description{
-Used internally in \verb{$.optimize()} of \link{OptimizerAsync} classes to evaluate a queue of points e.g. \link{OptimizerAsyncGridSearch}.
+Used internally in \verb{$.optimize()} of \link{OptimizerAsync} classes to evaluate a queue of points e.g. in \link{OptimizerAsyncGridSearch}.
 }
 \keyword{internal}

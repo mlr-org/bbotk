@@ -1,13 +1,13 @@
-#' @title Single Criterion Optimization Instance with Rush
+#' @title Single Criterion Optimization Instance for Asynchronous Optimization
 #'
 #' @description
-#' The [OptimInstanceAsyncSingleCrit] specifies an optimization problem for [OptimizerAsync]s.
-#' Points are evaluated asynchronously with the `rush` package.
-#' The function [oi()] creates an [OptimInstanceAsyncSingleCrit] and the function [bb_optimize()] creates an instance internally.
+#' The `OptimInstanceAsyncSingleCrit` specifies an optimization problem for an [OptimizerAsync].
+#' The function [oi_async()] creates an [OptimInstanceAsyncSingleCrit].
 #'
 #' @template param_objective
 #' @template param_search_space
 #' @template param_terminator
+#' @template param_check_values
 #' @template param_callbacks
 #' @template param_archive
 #' @template param_rush
@@ -25,6 +25,7 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
       objective,
       search_space = NULL,
       terminator,
+      check_values = FALSE,
       callbacks = NULL,
       archive = NULL,
       rush = NULL
@@ -37,6 +38,7 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
         objective = objective,
         search_space = search_space,
         terminator = terminator,
+        check_values = check_values,
         callbacks = callbacks,
         archive = archive,
         rush = rush)
@@ -58,6 +60,21 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
       if (is.null(x_domain)) x_domain = list()
       private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays
       call_back("on_result", self$objective$callbacks, self$objective$context)
+    }
+  ),
+
+  active = list(
+
+    #' @field result_x_domain (`list()`)\cr
+    #' (transformed) x part of the result in the *domain space* of the objective.
+    result_x_domain = function() {
+      private$.result$x_domain[[1]]
+    },
+
+    #' @field result_y (`numeric()`)\cr
+    #' Optimal outcome.
+    result_y = function() {
+      unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
     }
   )
 )

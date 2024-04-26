@@ -54,10 +54,10 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 1)
   expect_equal(archive$data_with_state()$state, c("finished", "failed"))
 
-  expect_rush_reset(instance$rush)
+  expect_rush_reset(rush, type = "terminate")
 })
 
-test_test("as.data.table.ArchiveAsync works", {
+test_that("as.data.table.ArchiveAsync works", {
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()

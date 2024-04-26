@@ -111,8 +111,7 @@ Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should points before the evaluation and the results be checked for
-validity?}
+Should points before the evaluation and the results be checked for validity?}
 
 \item{\code{rush}}{(\code{Rush})\cr
 If a rush instance is supplied, the tuning runs without batches.}

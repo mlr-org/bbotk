@@ -2,14 +2,24 @@
 % Please edit documentation in R/OptimInstanceAsyncSingleCrit.R
 \name{OptimInstanceAsyncSingleCrit}
 \alias{OptimInstanceAsyncSingleCrit}
-\title{Single Criterion Optimization Instance with Rush}
+\title{Single Criterion Optimization Instance for Asynchronous Optimization}
 \description{
-The \link{OptimInstanceAsyncSingleCrit} specifies an optimization problem for \link{OptimizerAsync}s.
-Points are evaluated asynchronously with the \code{rush} package.
-The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCrit} and the function \code{\link[=bb_optimize]{bb_optimize()}} creates an instance internally.
+The \code{OptimInstanceAsyncSingleCrit} specifies an optimization problem for an \link{OptimizerAsync}.
+The function \code{\link[=oi_async]{oi_async()}} creates an \link{OptimInstanceAsyncSingleCrit}.
 }
 \section{Super classes}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceAsync]{bbotk::OptimInstanceAsync}} -> \code{OptimInstanceAsyncSingleCrit}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{result_x_domain}}{(\code{list()})\cr
+(transformed) x part of the result in the \emph{domain space} of the objective.}
+
+\item{\code{result_y}}{(\code{numeric()})\cr
+Optimal outcome.}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -38,6 +48,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
+  check_values = FALSE,
   callbacks = NULL,
   archive = NULL,
   rush = NULL
@@ -59,6 +70,9 @@ value defaults to the domain of the objective.}
 
 \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
+
+\item{\code{check_values}}{(\code{logical(1)})\cr
+Should points before the evaluation and the results be checked for validity?}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}

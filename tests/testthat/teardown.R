@@ -1,2 +1,3 @@
 options(old_opts)
-lg$set_threshold(old_threshold)
+lg_bbotk$set_threshold(old_threshold_bbotk)
+lg_rush$set_threshold(old_threshold_rush)

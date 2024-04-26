@@ -1,21 +1,18 @@
-#' @title Optimization Instance with budget and archive
+#' @title Multi Criteria Optimization Instance for Batch Optimization
 #'
 #' @description
-#' Wraps a multi-criteria [Objective] function with extra services for
-#' convenient evaluation. Inherits from [OptimInstance].
+#' The [OptimInstanceBatchMultiCrit] specifies an optimization problem for an [OptimizerBatch].
+#' The function [oi()] creates an [OptimInstanceBatchMultiCrit].
 #'
-#' * Automatic storing of results in an [Archive] after evaluation.
-#' * Automatic checking for termination. Evaluations of design points are
-#'   performed in batches. Before a batch is evaluated, the [Terminator] is
-#'   queried for the remaining budget. If the available budget is exhausted, an
-#'   exception is raised, and no further evaluations can be performed from this
-#'   point on.
+#' @template param_objective
+#' @template param_search_space
+#' @template param_terminator
+#' @template param_check_values
+#' @template param_callbacks
+#' @template param_archive
 #'
 #' @template param_xdt
 #' @template param_ydt
-#' @template param_search_space
-#' @template param_callbacks
-#' @template param_archive
 #'
 #' @export
 OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
@@ -24,13 +21,6 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
-    #' @param objective ([Objective]).
-    #' @param terminator ([Terminator])\cr
-    #' Multi-criteria terminator.
-    #' @param check_values (`logical(1)`)\cr
-    #' Should x-values that are added to the archive be checked for validity?
-    #' Search space that is logged into archive.
     initialize = function(
       objective,
       search_space = NULL,

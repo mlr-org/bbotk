@@ -61,7 +61,7 @@ optimize_async_default = function(instance, optimizer, design = NULL) {
     rush = RushWorker$new(instance$rush$network_id, host = "local")
     instance$rush = rush
     instance$archive$rush = rush
-    private$.optimize(instance)
+    get_private$(optimizer).optimize(instance)
   } else {
     # run .optimize() on workers
 

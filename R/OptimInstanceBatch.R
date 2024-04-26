@@ -1,21 +1,15 @@
-#' @title Optimization Instance
+#' @title Optimization Instance for Batch Optimization
 #'
 #' @description
-#' Abstract base class.
+#' The `OptimInstanceBatch` specifies an optimization problem for an [OptimizerBatch].
+#' The function [oi()] creates an [OptimInstanceAsyncSingleCrit] or [OptimInstanceAsyncMultiCrit].
 #'
-#' @section Technical details:
-#' The [Optimizer] writes the final result to the `.result` field by using
-#' the `$assign_result()` method. `.result` stores a [data.table::data.table]
-#' consisting of x values in the *search space*, (transformed) x values in the
-#' *domain space* and y values in the *codomain space* of the [Objective]. The
-#' user can access the results with active bindings (see below).
-#'
-#' @template param_xdt
+#' @template param_objective
 #' @template param_search_space
-#' @template param_keep_evals
+#' @template param_terminator
+#' @template param_check_values
 #' @template param_callbacks
 #' @template param_archive
-#'
 #'
 #' @export
 OptimInstanceBatch = R6Class("OptimInstanceBatch",
@@ -27,12 +21,6 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
-    #' @param objective ([Objective]).
-    #' @param terminator ([Terminator]).
-    #' @param check_values (`logical(1)`)\cr
-    #'   Should x-values that are added to the archive be checked for validity?
-    #'   Search space that is logged into archive.
     initialize = function(
       objective,
       search_space = NULL,
@@ -126,15 +114,6 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
     #' @return Objective value as `numeric(1)`, negated for maximization problems.
     objective_function = function(x) {
       private$.objective_function(x, self, self$objective_multiplicator)
-    },
-
-    #' @description
-    #' Reset terminator and clear all evaluation results from archive and results.
-    clear = function() {
-      self$archive$clear()
-      private$.result = NULL
-      self$progressor = NULL
-      invisible(self)
     }
   ),
 

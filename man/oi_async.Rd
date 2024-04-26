@@ -8,6 +8,7 @@ oi_async(
   objective,
   search_space = NULL,
   terminator,
+  check_values = FALSE,
   callbacks = NULL,
   rush = NULL
 )
@@ -25,6 +26,9 @@ value defaults to the domain of the objective.}
 
 \item{terminator}{\link{Terminator}\cr
 Termination criterion.}
+
+\item{check_values}{(\code{logical(1)})\cr
+Should points before the evaluation and the results be checked for validity?}
 
 \item{callbacks}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}

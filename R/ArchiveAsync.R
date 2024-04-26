@@ -40,7 +40,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
     push_points = function(xss) {
-      if (self$check_values) self$search_space$assert(xss)
+      if (self$check_values) map(xss, self$search_space$assert)
       self$rush$push_tasks(xss, extra = list(list(timestamp_xs = Sys.time())))
     },
 
@@ -56,7 +56,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @param xs (named `list`)\cr
     #' Named list of point values.
     push_running_point = function(xs) {
-      if (self$check_values) self$search_space$assert(list(xs))
+      if (self$check_values) self$search_space$assert(xs)
       self$rush$push_running_tasks(list(xs), extra = list(list(timestamp_xs = Sys.time())))
     },
 
@@ -177,7 +177,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' Data table with all finished points.
     data = function(rhs) {
       assert_ro_binding(rhs)
-      self$rush$fetch_finished_tasks()
+      self$data_with_state()
     },
 
     #' @field queued_data ([data.table::data.table])\cr

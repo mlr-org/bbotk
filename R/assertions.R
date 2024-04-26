@@ -79,21 +79,34 @@ assert_optimizer = function(optimizer) {
 #' @export
 #' @param optimizer ([OptimizerAsync])
 #' @rdname bbotk_assertions
-assert_async_optimizer = function(optimizer) {
-  assert_r6(optimizer, "Optimizer")
+assert_optimizer_async = function(optimizer) {
+  assert_r6(optimizer, "OptimizerAsync")
 }
 
 #' @export
-#' @param inst ([OptimInstanceBatch])
+#' @param optimizer ([OptimizerAsync])
+#' @rdname bbotk_assertions
+assert_optimizer_batch = function(optimizer) {
+  assert_r6(optimizer, "OptimizerBatch")
+}
+
+#' @export
+#' @param inst ([OptimInstance])
 #' @rdname bbotk_assertions
 assert_instance = function(inst) {
+  assert_r6(inst, "OptimInstance")
+}
+
+#' @param inst ([OptimInstanceBatch])
+#' @rdname bbotk_assertions
+assert_instance_batch = function(inst) {
   assert_r6(inst, "OptimInstanceBatch")
 }
 
 #' @export
 #' @param inst ([OptimInstanceAsync])
 #' @rdname bbotk_assertions
-assert_async_instance = function(inst) {
+assert_instance_async = function(inst) {
   assert_r6(inst, "OptimInstanceAsync")
 }
 

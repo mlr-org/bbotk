@@ -2,11 +2,10 @@
 % Please edit documentation in R/OptimInstanceAsyncMultiCrit.R
 \name{OptimInstanceAsyncMultiCrit}
 \alias{OptimInstanceAsyncMultiCrit}
-\title{Multi Criterion Optimization Instance}
+\title{Multi Criteria Optimization Instance for Asynchronous Optimization}
 \description{
-The \link{OptimInstanceAsyncMultiCrit} specifies an optimization problem for \link{OptimizerAsync}s.
-Points are evaluated asynchronously with the \code{rush} package.
-The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncMultiCrit} and the function \code{\link[=bb_optimize]{bb_optimize()}} creates an instance internally.
+The \link{OptimInstanceAsyncMultiCrit} specifies an optimization problem for an \link{OptimizerAsync}.
+The function \code{\link[=oi_async]{oi_async()}} creates an \link{OptimInstanceAsyncMultiCrit}.
 }
 \section{Super classes}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceAsync]{bbotk::OptimInstanceAsync}} -> \code{OptimInstanceAsyncMultiCrit}
@@ -49,6 +48,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
+  check_values = FALSE,
   callbacks = NULL,
   archive = NULL,
   rush = NULL
@@ -71,6 +71,9 @@ value defaults to the domain of the objective.}
 \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
 
+\item{\code{check_values}}{(\code{logical(1)})\cr
+Should points before the evaluation and the results be checked for validity?}
+
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
 
@@ -86,7 +89,7 @@ If a rush instance is supplied, the tuning runs without batches.}
 \if{html}{\out{<a id="method-OptimInstanceAsyncMultiCrit-assign_result"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsyncMultiCrit-assign_result}{}}}
 \subsection{Method \code{assign_result()}}{
-The \link{Optimizer} object writes the best found points and estimated performance values here (probably the Pareto set / front).
+The \link{OptimizerAsync} writes the best found points and estimated performance values here (probably the Pareto set / front).
 For internal use.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncMultiCrit$assign_result(xdt, ydt)}\if{html}{\out{</div>}}

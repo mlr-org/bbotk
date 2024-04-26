@@ -35,9 +35,8 @@ test_that("on_optimization_end works", {
   optimizer = opt("random_search")
   optimizer$optimize(instance)
   expect_class(instance$objective$context, "ContextBatch")
-  expect_equal(instance$terminator$param_set$values$n_evals, 20)
+  expect_equal(instance$terminator$param_set$values$n_evals, 10)
 })
-
 
 test_that("on_result in OptimInstanceBatchSingleCrit works", {
   callback = callback_batch(id = "test",

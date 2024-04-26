@@ -93,7 +93,6 @@ Collate:
     'OptimInstanceBatch.R'
     'OptimInstanceBatchMultiCrit.R'
     'OptimInstanceBatchSingleCrit.R'
-    'OptimInstanceSync.R'
     'mlr_optimizers.R'
     'Optimizer.R'
     'OptimizerAsync.R'

@@ -1,25 +1,29 @@
 #' @title Optimization Instance
 #'
 #' @description
-#' Abstract base class.
+#' The `OptimInstance` specifies an optimization problem for an [Optimizer].
 #'
-#' @section Technical details:
-#' The [Optimizer] writes the final result to the `.result` field by using
-#' the `$assign_result()` method. `.result` stores a [data.table::data.table]
-#' consisting of x values in the *search space*, (transformed) x values in the
-#' *domain space* and y values in the *codomain space* of the [Objective]. The
-#' user can access the results with active bindings (see below).
+#' @details
+#' `OptimInstance` is an abstract base class that implements the base functionality each instance must provide.
+#' The [Optimizer] writes the final result to the `.result` field by using the `$assign_result()` method.
+#' `.result` stores a [data.table::data.table] consisting of x values in the *search space*, (transformed) x values in the *domain space* and y values in the *codomain space* of the [Objective].
+#' The user can access the results with active bindings (see below).
 #'
-#' @template param_xdt
+#' @template param_objective
 #' @template param_search_space
-#' @template param_keep_evals
+#' @template param_terminator
+#' @template param_check_values
 #' @template param_callbacks
 #' @template param_archive
+#'
+#' @template param_xdt
 #'
 #' @template field_objective
 #' @template field_search_space
 #' @template field_terminator
 #' @template field_archive
+#' @template field_progressor
+#'
 #'
 #' @export
 OptimInstance = R6Class("OptimInstance",
@@ -33,18 +37,10 @@ OptimInstance = R6Class("OptimInstance",
 
     archive = NULL,
 
-    #' @field progressor (`progressor()`)\cr
-    #' Stores `progressor` function.
     progressor = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
-    #' @param objective ([Objective]).
-    #' @param terminator ([Terminator]).
-    #' @param check_values (`logical(1)`)\cr
-    #'   Should x-values that are added to the archive be checked for validity?
-    #'   Search space that is logged into archive.
     initialize = function(
       objective,
       search_space = NULL,
@@ -112,6 +108,7 @@ OptimInstance = R6Class("OptimInstance",
       self$archive$clear()
       private$.result = NULL
       self$progressor = NULL
+      self$objective$context = NULL
       invisible(self)
     }
   ),
@@ -127,18 +124,6 @@ OptimInstance = R6Class("OptimInstance",
     #' x part of the result in the *search space*.
     result_x_search_space = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
-    },
-
-    #' @field result_x_domain (`list()`)\cr
-    #' (transformed) x part of the result in the *domain space* of the objective.
-    result_x_domain = function() {
-      private$.result$x_domain[[1]]
-    },
-
-    #' @field result_y (`numeric()`)\cr
-    #' Optimal outcome.
-    result_y = function() {
-      unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
     },
 
     #' @field is_terminated (`logical(1)`).

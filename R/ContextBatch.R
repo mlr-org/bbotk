@@ -19,11 +19,11 @@ ContextBatch = R6Class("ContextBatch",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param instance ([OptimInstance]).
+    #' @param inst ([OptimInstance]).
     #' @param optimizer ([Optimizer]).
-    initialize = function(instance, optimizer) {
-      self$instance = assert_class(instance, "OptimInstanceBatch")
-      self$optimizer = assert_class(optimizer, "OptimizerBatch")
+    initialize = function(inst, optimizer) {
+      self$instance = assert_instance_batch(inst)
+      self$optimizer = optimizer
     }
   ),
 

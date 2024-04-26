@@ -2,12 +2,13 @@
 % Please edit documentation in R/OptimInstanceAsync.R
 \name{OptimInstanceAsync}
 \alias{OptimInstanceAsync}
-\title{Optimization Instance with Rush}
+\title{Optimization Instance for Asynchronous Optimization}
 \description{
-Abstract base class for \link{OptimInstanceAsyncSingleCrit} and \link{OptimInstanceAsyncMultiCrit}.
-The optimization instances specify an optimization problem for \link{Optimizer}s.
-Points are evaluated asynchronously with the \code{rush} package.
-The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCrit} or \link{OptimInstanceAsyncMultiCrit} and the function \code{\link[=bb_optimize]{bb_optimize()}} creates an instance internally.
+The \code{OptimInstanceAsync} specifies an optimization problem for an \link{OptimizerAsync}.
+The function \code{\link[=oi_async]{oi_async()}} creates an \link{OptimInstanceAsyncSingleCrit} or \link{OptimInstanceAsyncMultiCrit}.
+}
+\details{
+\code{OptimInstanceAsync} is an abstract base class that implements the base functionality each instance must provide.
 }
 \section{Super class}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceAsync}
@@ -47,6 +48,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
+  check_values = FALSE,
   callbacks = NULL,
   archive = NULL,
   rush = NULL
@@ -68,6 +70,9 @@ value defaults to the domain of the objective.}
 
 \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
+
+\item{\code{check_values}}{(\code{logical(1)})\cr
+Should points before the evaluation and the results be checked for validity?}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}

@@ -1,13 +1,13 @@
-#' @title Multi Criterion Optimization Instance
+#' @title Multi Criteria Optimization Instance for Asynchronous Optimization
 #'
 #' @description
-#' The [OptimInstanceAsyncMultiCrit] specifies an optimization problem for [OptimizerAsync]s.
-#' Points are evaluated asynchronously with the `rush` package.
-#' The function [oi()] creates an [OptimInstanceAsyncMultiCrit] and the function [bb_optimize()] creates an instance internally.
+#' The [OptimInstanceAsyncMultiCrit] specifies an optimization problem for an [OptimizerAsync].
+#' The function [oi_async()] creates an [OptimInstanceAsyncMultiCrit].
 #'
 #' @template param_objective
 #' @template param_search_space
 #' @template param_terminator
+#' @template param_check_values
 #' @template param_callbacks
 #' @template param_archive
 #' @template param_rush
@@ -25,6 +25,7 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
       objective,
       search_space = NULL,
       terminator,
+      check_values = FALSE,
       callbacks = NULL,
       archive = NULL,
       rush = NULL
@@ -36,13 +37,14 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
         objective = objective,
         search_space = search_space,
         terminator = terminator,
+        check_values = check_values,
         rush = rush,
         callbacks = callbacks,
         archive = archive)
     },
 
     #' @description
-    #' The [Optimizer] object writes the best found points and estimated performance values here (probably the Pareto set / front).
+    #' The [OptimizerAsync] writes the best found points and estimated performance values here (probably the Pareto set / front).
     #' For internal use.
     #'
     #' @param ydt (`numeric(1)`)\cr
@@ -61,6 +63,7 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
   ),
 
   active = list(
+
     #' @field result_x_domain (`list()`)\cr
     #' (transformed) x part of the result in the *domain space* of the objective.
     result_x_domain = function() {

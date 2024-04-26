@@ -3,7 +3,10 @@
 #' @include mlr_optimizers.R
 #'
 #' @description
-#' Abstract `Optimizer` class that implements the base functionality each `Optimizer` subclass must provide.
+#' The `Optimizer` implements the optimization algorithm.
+#'
+#' @details
+#' `Optimizer` is an abstract base class that implements the base functionality each optimizer must provide.
 #' A `Optimizer` object describes the optimization strategy.
 #' A `Optimizer` object must write its result to the `$assign_result()` method of the [OptimInstance] at the end in order to store the best point and its estimated performance vector.
 #'

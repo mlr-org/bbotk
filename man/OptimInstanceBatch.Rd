@@ -2,19 +2,11 @@
 % Please edit documentation in R/OptimInstanceBatch.R
 \name{OptimInstanceBatch}
 \alias{OptimInstanceBatch}
-\title{Optimization Instance}
+\title{Optimization Instance for Batch Optimization}
 \description{
-Abstract base class.
+The \code{OptimInstanceBatch} specifies an optimization problem for an \link{OptimizerBatch}.
+The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCrit} or \link{OptimInstanceAsyncMultiCrit}.
 }
-\section{Technical details}{
-
-The \link{Optimizer} writes the final result to the \code{.result} field by using
-the \verb{$assign_result()} method. \code{.result} stores a \link[data.table:data.table]{data.table::data.table}
-consisting of x values in the \emph{search space}, (transformed) x values in the
-\emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}. The
-user can access the results with active bindings (see below).
-}
-
 \section{Super class}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceBatch}
 }
@@ -50,7 +42,6 @@ Optimal outcome.}
 \item \href{#method-OptimInstanceBatch-new}{\code{OptimInstanceBatch$new()}}
 \item \href{#method-OptimInstanceBatch-eval_batch}{\code{OptimInstanceBatch$eval_batch()}}
 \item \href{#method-OptimInstanceBatch-objective_function}{\code{OptimInstanceBatch$objective_function()}}
-\item \href{#method-OptimInstanceBatch-clear}{\code{OptimInstanceBatch$clear()}}
 \item \href{#method-OptimInstanceBatch-clone}{\code{OptimInstanceBatch$clone()}}
 }
 }
@@ -58,6 +49,7 @@ Optimal outcome.}
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-assign_result'><code>bbotk::OptimInstance$assign_result()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="clear"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-clear'><code>bbotk::OptimInstance$clear()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-print'><code>bbotk::OptimInstance$print()</code></a></span></li>
 </ul>
@@ -82,7 +74,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{objective}}{(\link{Objective}).}
+\item{\code{objective}}{(\link{Objective})\cr
+Objective function.}
 
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
@@ -91,11 +84,11 @@ a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
 
-\item{\code{terminator}}{(\link{Terminator}).}
+\item{\code{terminator}}{\link{Terminator}\cr
+Termination criterion.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should x-values that are added to the archive be checked for validity?
-Search space that is logged into archive.}
+Should points before the evaluation and the results be checked for validity?}
 
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
@@ -156,16 +149,6 @@ Untransformed points.}
 \subsection{Returns}{
 Objective value as \code{numeric(1)}, negated for maximization problems.
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceBatch-clear"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceBatch-clear}{}}}
-\subsection{Method \code{clear()}}{
-Reset terminator and clear all evaluation results from archive and results.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceBatch$clear()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceBatch-clone"></a>}}

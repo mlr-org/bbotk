@@ -22,11 +22,11 @@ ContextAsync = R6Class("ContextAsync",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param instance ([OptimInstance]).
+    #' @param inst ([OptimInstance]).
     #' @param optimizer ([Optimizer]).
-    initialize = function(instance, optimizer) {
-      self$instance = assert_class(instance, "OptimInstanceAsync")
-      self$optimizer = assert_class(optimizer, "OptimizerAsync")
+    initialize = function(inst, optimizer) {
+      self$instance = assert_instance_async(inst)
+      self$optimizer = optimizer
     }
   ),
 

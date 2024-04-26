@@ -77,8 +77,7 @@ be minimized or maximized.  The default is to minimize each component.}
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should points before the evaluation and the results be checked for
-validity?}
+Should points before the evaluation and the results be checked for validity?}
 }
 \if{html}{\out{</div>}}
 }

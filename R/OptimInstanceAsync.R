@@ -1,18 +1,18 @@
-#' @title Optimization Instance with Rush
+#' @title Optimization Instance for Asynchronous Optimization
 #'
 #' @include OptimInstance.R
 #'
 #' @description
+#' The `OptimInstanceAsync` specifies an optimization problem for an [OptimizerAsync].
+#' The function [oi_async()] creates an [OptimInstanceAsyncSingleCrit] or [OptimInstanceAsyncMultiCrit].
 #'
-#'
-#' Abstract base class for [OptimInstanceAsyncSingleCrit] and [OptimInstanceAsyncMultiCrit].
-#' The optimization instances specify an optimization problem for [Optimizer]s.
-#' Points are evaluated asynchronously with the `rush` package.
-#' The function [oi()] creates an [OptimInstanceAsyncSingleCrit] or [OptimInstanceAsyncMultiCrit] and the function [bb_optimize()] creates an instance internally.
+#' @details
+#' `OptimInstanceAsync` is an abstract base class that implements the base functionality each instance must provide.
 #'
 #' @template param_objective
 #' @template param_search_space
 #' @template param_terminator
+#' @template param_check_values
 #' @template param_callbacks
 #' @template param_archive
 #' @template param_rush
@@ -32,6 +32,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       objective,
       search_space = NULL,
       terminator,
+      check_values = FALSE,
       callbacks = NULL,
       archive = NULL,
       rush = NULL
@@ -45,6 +46,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
         ArchiveAsync$new(
           search_space = search_space,
           codomain = objective$codomain,
+          check_values = check_values,
           rush = self$rush)
       } else {
         assert_r6(archive, "ArchiveAsync")

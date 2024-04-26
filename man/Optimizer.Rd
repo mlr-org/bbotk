@@ -4,7 +4,10 @@
 \alias{Optimizer}
 \title{Optimizer}
 \description{
-Abstract \code{Optimizer} class that implements the base functionality each \code{Optimizer} subclass must provide.
+The \code{Optimizer} implements the optimization algorithm.
+}
+\details{
+\code{Optimizer} is an abstract base class that implements the base functionality each optimizer must provide.
 A \code{Optimizer} object describes the optimization strategy.
 A \code{Optimizer} object must write its result to the \verb{$assign_result()} method of the \link{OptimInstance} at the end in order to store the best point and its estimated performance vector.
 }
@@ -59,7 +62,6 @@ A warning is signaled by the constructor if at least one of the packages is not 
 \item \href{#method-Optimizer-format}{\code{Optimizer$format()}}
 \item \href{#method-Optimizer-print}{\code{Optimizer$print()}}
 \item \href{#method-Optimizer-help}{\code{Optimizer$help()}}
-\item \href{#method-Optimizer-optimize}{\code{Optimizer$optimize()}}
 \item \href{#method-Optimizer-clone}{\code{Optimizer$clone()}}
 }
 }
@@ -148,17 +150,6 @@ Print method.
 Opens the corresponding help page referenced by field \verb{$man}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Optimizer$help()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Optimizer-optimize"></a>}}
-\if{latex}{\out{\hypertarget{method-Optimizer-optimize}{}}}
-\subsection{Method \code{optimize()}}{
-Performs the optimization and writes optimization result into \link{OptimInstance}.
-The optimization result is returned but the complete optimization path is stored in \link{Archive} of \link{OptimInstance}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$optimize()}\if{html}{\out{</div>}}
 }
 
 }

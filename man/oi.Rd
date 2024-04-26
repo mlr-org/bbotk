@@ -31,8 +31,7 @@ Termination criterion.}
 List of callbacks.}
 
 \item{check_values}{(\code{logical(1)})\cr
-Should points before the evaluation and the results be checked for
-validity?}
+Should points before the evaluation and the results be checked for validity?}
 
 \item{keep_evals}{(\code{character(1)})\cr
 Keep \code{all} or only \code{best} evaluations in archive?}
