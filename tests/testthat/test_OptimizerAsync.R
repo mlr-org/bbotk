@@ -1,6 +1,6 @@
 test_that("OptimizerAsync starts local workers", {
   skip_if(TRUE)
-  skip_on_cran()
+  #skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
@@ -21,7 +21,7 @@ test_that("OptimizerAsync starts local workers", {
 
 test_that("OptimizerAsync assigns result", {
   skip_if(TRUE)
-  skip_on_cran()
+  #skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
@@ -42,7 +42,7 @@ test_that("OptimizerAsync assigns result", {
 
 test_that("OptimizerAsync throws an error when all workers are lost", {
   skip_if(TRUE)
-  skip_on_cran()
+  #skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
