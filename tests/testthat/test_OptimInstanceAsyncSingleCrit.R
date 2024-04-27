@@ -1,6 +1,6 @@
 test_that("initializing OptimInstanceAsyncSingleCrit works", {
   skip_if(TRUE)
-  skip_on_cran()
+  #skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
@@ -24,7 +24,7 @@ test_that("initializing OptimInstanceAsyncSingleCrit works", {
 
 test_that("rush controller can be passed to OptimInstanceAsyncSingleCrit", {
   skip_if(TRUE)
-  skip_on_cran()
+  #skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
@@ -43,7 +43,7 @@ test_that("rush controller can be passed to OptimInstanceAsyncSingleCrit", {
 
 test_that("context is initialized correctly", {
   skip_if(TRUE)
-  skip_on_cran()
+  #skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
