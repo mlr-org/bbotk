@@ -16,7 +16,7 @@ test_that("backup batch callback works", {
 })
 
 test_that("async callback works", {
-  skip_if(TRUE)
+  skip_if(TRUE) # Does not work in testthat environment
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
