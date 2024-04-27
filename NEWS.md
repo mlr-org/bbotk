@@ -1,7 +1,11 @@
 # bbotk (development version)
 
-* feat: Add asynchronous optimization with `OptimizerAsync` and `OptimInstanceAsync`.
-* BREAKING CHANGE: Remove `ArchiveBest` class.
+* feat: Introduce asynchronous optimization with the `OptimizerAsync` and `OptimInstanceAsync` classes.
+* BREAKING CHANGE: The `Optimizer` class is `OptimizerBatch` now.
+* BREAKING CHANGE: The `OptimInstance` class and subclasses are `OptimInstanceBatch*` now.
+* BREAKING CHANGE: The `CallbackOptimization` class is `CallbackBatch` now.
+* BREAKING CHANGE: The `ContextOptimization` class is `ContextBatch` now.
+* BREAKING CHANGE: Remove `ArchiveBest` class and `keep_evals` parameter from `OptimInstance`.
 
 # bbotk 0.8.0
 

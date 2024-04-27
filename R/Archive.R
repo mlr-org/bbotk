@@ -1,10 +1,10 @@
 #' @title Data Storage
 #'
 #' @description
-#' The [Archive] class stores all proposed points and their corresponding evaluations.
+#' The `Archive`` class stores all evaluated points and performance scores
 #'
 #' @details
-#' The [Archive] is an abstract class that implements the base functionality each archive must provide.
+#' The `Archive` is an abstract class that implements the base functionality each archive must provide.
 #'
 #' @template field_search_space
 #' @template field_codomain

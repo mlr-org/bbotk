@@ -93,7 +93,7 @@ optimize_async_default = function(instance, optimizer, design = NULL) {
   }
 
   # wait until optimization is finished
-  # check for number of evaluations when the terminator is "none"
+  # check terminated workers when the terminator is "none"
   while(!instance$is_terminated && !instance$rush$all_workers_terminated) {
     Sys.sleep(1)
     instance$rush$print_log()
