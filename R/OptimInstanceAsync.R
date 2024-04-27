@@ -22,6 +22,7 @@
 #' @export
 OptimInstanceAsync = R6Class("OptimInstanceAsync",
   inherit = OptimInstance,
+  cloneable = FALSE,
   public = list(
 
     rush = NULL,

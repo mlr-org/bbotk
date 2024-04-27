@@ -4,7 +4,7 @@
 \alias{ArchiveBatch}
 \title{Data Table Storage}
 \description{
-Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed unction calls of the \link{Objective}.
+The \code{ArchiveBatch} stores all evaluated points and performance scores in a \code{\link[data.table:data.table]{data.table::data.table()}}.
 }
 \section{S3 Methods}{
 

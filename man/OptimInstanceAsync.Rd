@@ -27,7 +27,6 @@ Rush controller for parallel optimization.}
 \item \href{#method-OptimInstanceAsync-new}{\code{OptimInstanceAsync$new()}}
 \item \href{#method-OptimInstanceAsync-print}{\code{OptimInstanceAsync$print()}}
 \item \href{#method-OptimInstanceAsync-clear}{\code{OptimInstanceAsync$clear()}}
-\item \href{#method-OptimInstanceAsync-clone}{\code{OptimInstanceAsync$clone()}}
 }
 }
 \if{html}{\out{
@@ -111,22 +110,5 @@ Reset terminator and clear all evaluation results from archive and results.
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$clear()}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceAsync-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceAsync-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$clone(deep = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
 }
 }

@@ -233,3 +233,13 @@ test_that("context is initialized correctly", {
   optimizer$optimize(inst)
   expect_r6(inst$objective$context, "ContextBatch")
 })
+
+test_that("context deep clone", {
+  inst = MAKE_INST_2D(20L)
+  optimizer = opt("random_search")
+  optimizer$optimize(inst)
+  expect_r6(inst$objective$context, "ContextBatch")
+
+  inst_copy = inst$clone(deep = TRUE)
+  expect_null(inst_copy$objective$context)
+})
