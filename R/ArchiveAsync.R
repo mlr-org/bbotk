@@ -237,18 +237,6 @@ ArchiveAsync = R6Class("ArchiveAsync",
     n_evals = function() {
       self$rush$n_finished_tasks + self$rush$n_failed_tasks
     }
-  ),
-
-  private = list(
-
-    # FIXME: archive cannot be cloned without copying the redis data base
-    deep_clone = function(name, value) {
-      switch(name,
-        search_space = value$clone(deep = TRUE),
-        codomain = value$clone(deep = TRUE),
-        value
-      )
-    }
   )
 )
 
