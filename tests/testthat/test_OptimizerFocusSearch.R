@@ -1,11 +1,11 @@
-test_that("OptimizerFocusSearch", {
+test_that("OptimizerBatchFocusSearch", {
   z = test_optimizer_1d("focus_search", n_points = 1L, maxit = 10L, term_evals = 10L)
-  expect_class(z$optimizer, "OptimizerFocusSearch")
-  expect_output(print(z$optimizer), "OptimizerFocusSearch")
+  expect_class(z$optimizer, "OptimizerBatchFocusSearch")
+  expect_output(print(z$optimizer), "OptimizerBatchFocusSearch")
 
   z = test_optimizer_1d("focus_search", n_points = 10L, maxit = 10L, term_evals = 100L)
-  expect_class(z$optimizer, "OptimizerFocusSearch")
-  expect_output(print(z$optimizer), "OptimizerFocusSearch")
+  expect_class(z$optimizer, "OptimizerBatchFocusSearch")
+  expect_output(print(z$optimizer), "OptimizerBatchFocusSearch")
 
   z = test_optimizer_dependencies("focus_search", n_points = 1L, maxit = 10L, term_evals = 10L)
 

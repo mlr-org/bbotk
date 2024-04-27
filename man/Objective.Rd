@@ -2,20 +2,22 @@
 % Please edit documentation in R/Objective.R
 \name{Objective}
 \alias{Objective}
-\title{Objective function with domain and co-domain}
+\title{Objective Function with Domain and Codomain}
 \description{
-Describes a black-box objective function that maps an arbitrary domain to a
-numerical codomain.
+The \code{Objective} class describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }
-\section{Technical details}{
-
-\code{Objective} objects can have the following properties: \code{"noisy"},
-\code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
+\details{
+\code{Objective} objects can have the following properties: \code{"noisy"}, \code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
 }
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+Callbacks applied during the optimization.}
+
+\item{\code{context}}{(\link{Context})\cr
+Stores the context for the callbacks.}
+
 \item{\code{id}}{(\code{character(1)})).}
 
 \item{\code{properties}}{(\code{character()}).}
@@ -96,8 +98,7 @@ be minimized or maximized.  The default is to minimize each component.}
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should points before the evaluation and the results be checked for
-validity?}
+Should points before the evaluation and the results be checked for validity?}
 }
 \if{html}{\out{</div>}}
 }

@@ -1,3 +1,6 @@
+library(rush)
+library(checkmate)
+
 # Simple 1D Function
 PS_1D_domain = ps(
   x = p_dbl(lower = -1, upper = 1),
@@ -40,7 +43,6 @@ PS_2D_TRF = ps(
   }
 )
 
-
 # Simple 2D Function with deps
 FUN_2D_DEPS = function(xs) {
   y = sum(as.numeric(xs)^2, na.rm = TRUE) # for PS with dependencies we ignore the not present param
@@ -63,19 +65,17 @@ OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D,
   codomain = FUN_2D_2D_CODOMAIN, properties = "multi-crit")
 
 # General Helper
-MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D,
-  terminator = 5L) {
+MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D, terminator = 5L) {
   if (is.integer(terminator)) {
     tt = TerminatorEvals$new()
     tt$param_set$values$n_evals = terminator
     terminator = tt
   }
   if (objective$codomain$length == 1) {
-    OptimInstanceSingleCrit$new(objective = objective, search_space = search_space, terminator = terminator)
+    OptimInstanceBatchSingleCrit$new(objective = objective, search_space = search_space, terminator = terminator)
   } else {
-    OptimInstanceMultiCrit$new(objective = objective, search_space = search_space, terminator = terminator)
+    OptimInstanceBatchMultiCrit$new(objective = objective, search_space = search_space, terminator = terminator)
   }
-
 }
 
 MAKE_INST_1D = function(terminator) {
@@ -93,7 +93,7 @@ MAKE_INST_2D_2D = function(terminator) {
 
 test_optimizer_1d = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
-  instance = OptimInstanceSingleCrit$new(objective = OBJ_1D, search_space = PS_1D, terminator = terminator)
+  instance = OptimInstanceBatchSingleCrit$new(objective = OBJ_1D, search_space = PS_1D, terminator = terminator)
   res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
 
   x_opt = res$instance$result_x_domain
@@ -108,7 +108,7 @@ test_optimizer_1d = function(key, ..., term_evals = 2L, real_evals = term_evals)
 
 test_optimizer_2d = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
-  instance = OptimInstanceMultiCrit$new(objective = OBJ_2D_2D, search_space = PS_2D, terminator = terminator)
+  instance = OptimInstanceBatchMultiCrit$new(objective = OBJ_2D_2D, search_space = PS_2D, terminator = terminator)
   res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
 
   x_opt = res$instance$result_x_domain
@@ -123,7 +123,7 @@ test_optimizer_2d = function(key, ..., term_evals = 2L, real_evals = term_evals)
 
 test_optimizer_dependencies = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
-  instance = OptimInstanceSingleCrit$new(objective = OBJ_2D_DEPS, search_space = PS_2D_DEPS, terminator = terminator)
+  instance = OptimInstanceBatchSingleCrit$new(objective = OBJ_2D_DEPS, search_space = PS_2D_DEPS, terminator = terminator)
   res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
   x_opt = res$instance$result_x_domain
   y_opt = res$instance$result_y
@@ -149,9 +149,18 @@ test_optimizer = function(instance, key, ..., real_evals) {
   list(optimizer = optimizer, instance = instance)
 }
 
+random_search = function(inst, batch_size = 10) {
+  assert_r6(inst, "OptimInstance")
+  batch_size = assert_int(batch_size, coerce = TRUE)
+  optim = OptimizerBatchRandomSearch$new()
+  optim$param_set$values$batch_size = batch_size
+  optim$optimize(inst)
+  return(inst$archive)
+}
+
 MAKE_OPT = function(param_set = ps(), param_classes = c("ParamDbl", "ParamInt"),
   properties = "single-crit", packages = character(0)) {
-  Optimizer$new(id = "optimizer",
+  OptimizerBatch$new(id = "optimizer",
     param_set = param_set,
     param_classes = param_classes,
     properties = properties,
@@ -218,4 +227,17 @@ expect_dictionary = function(d, contains = NA_character_, min_items = 0L) {
     testthat::expect_error(d$get(keys[1], 1), "names")
   }
   checkmate::expect_data_table(data.table::as.data.table(d), key = "key", nrows = length(keys))
+}
+
+expect_rush_reset = function(rush, type = "kill") {
+  processes = rush$processes
+  rush$reset(type = type)
+  expect_list(rush$connector$command(c("KEYS", "*")), len = 0)
+  walk(processes, function(p) p$kill())
+}
+
+flush_redis = function() {
+  config = redux::redis_config()
+  r = redux::hiredis(config)
+  r$FLUSHDB()
 }

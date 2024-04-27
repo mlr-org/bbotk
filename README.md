@@ -91,7 +91,7 @@ objective = ObjectiveRFun$new(
 terminator = trm("evals", n_evals = 10)
 
 # create optimization instance
-instance = OptimInstanceSingleCrit$new(
+instance = OptimInstanceBatchSingleCrit$new(
   objective = objective,
   terminator = terminator
 )
@@ -157,5 +157,5 @@ result$par
 result$value
 ```
 
-    ##        y1 
+    ##        y1
     ## -142.5479

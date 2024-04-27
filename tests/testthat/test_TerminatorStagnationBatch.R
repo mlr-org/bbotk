@@ -30,14 +30,14 @@ test_that("TerminatorStagnationBatch works with single objective and n = 2", {
   expect_error(inst$eval_batch(xdt = data.table(x1 = 0, x2 = 0)))
 })
 
-test_that("TerminatorStagnationBatch in OptimInstanceMultiCrit throws an error", {
+test_that("TerminatorStagnationBatch in OptimInstanceBatchMultiCrit throws an error", {
   terminator = TerminatorStagnationBatch$new()
   expect_error(MAKE_INST_2D_2D(terminator))
 })
 
 test_that("TerminatorStagnationBatch works with empty archive", {
   terminator = TerminatorStagnationBatch$new()
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
+  archive = ArchiveBatch$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })
 

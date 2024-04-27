@@ -88,7 +88,7 @@ objective = ObjectiveRFun$new(
 terminator = trm("evals", n_evals = 10)
 
 # create optimization instance
-instance = OptimInstanceSingleCrit$new(
+instance = OptimInstanceBatchSingleCrit$new(
   objective = objective,
   terminator = terminator
 )

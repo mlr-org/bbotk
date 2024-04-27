@@ -3,7 +3,10 @@
 #' @include mlr_optimizers.R
 #'
 #' @description
-#' Abstract `Optimizer` class that implements the base functionality each `Optimizer` subclass must provide.
+#' The `Optimizer` implements the optimization algorithm.
+#'
+#' @details
+#' `Optimizer` is an abstract base class that implements the base functionality each optimizer must provide.
 #' A `Optimizer` object describes the optimization strategy.
 #' A `Optimizer` object must write its result to the `$assign_result()` method of the [OptimInstance] at the end in order to store the best point and its estimated performance vector.
 #'
@@ -21,6 +24,7 @@
 #' @export
 Optimizer = R6Class("Optimizer",
   public = list(
+
     #' @template field_id
     id = NULL,
 
@@ -37,7 +41,15 @@ Optimizer = R6Class("Optimizer",
      #' @param packages (`character()`)\cr
     #'   Set of required packages.
     #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
-    initialize = function(id = "optimizer", param_set, param_classes, properties, packages = character(), label = NA_character_, man = NA_character_) {
+    initialize = function(
+      id = "optimizer",
+      param_set,
+      param_classes,
+      properties,
+      packages = character(),
+      label = NA_character_,
+      man = NA_character_
+      ) {
       self$id = assert_string(id, min.chars = 1L)
       private$.param_set = assert_param_set(param_set)
       private$.param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
@@ -73,22 +85,6 @@ Optimizer = R6Class("Optimizer",
     #' Opens the corresponding help page referenced by field `$man`.
     help = function() {
       open_help(self$man)
-    },
-
-    #' @description
-    #' Performs the optimization and writes optimization result into
-    #' [OptimInstance]. The optimization result is returned but the complete
-    #' optimization path is stored in [Archive] of [OptimInstance].
-    #'
-    #' @param inst ([OptimInstance]).
-    #' @return [data.table::data.table].
-    optimize = function(inst) {
-      inst$archive$start_time = Sys.time()
-      inst$.__enclos_env__$private$.context = ContextOptimization$new(instance = inst, optimizer = self)
-      call_back("on_optimization_begin", inst$callbacks, get_private(inst)$.context)
-      result = optimize_default(inst, self, private)
-      call_back("on_optimization_end", inst$callbacks, get_private(inst)$.context)
-      result
     }
   ),
 
@@ -149,7 +145,6 @@ Optimizer = R6Class("Optimizer",
     .optimize = function(inst) stop("abstract"),
 
     .assign_result = function(inst) {
-      assert_r6(inst, "OptimInstance")
       assign_result_default(inst)
     },
 
@@ -161,3 +156,31 @@ Optimizer = R6Class("Optimizer",
     .man = NULL
   )
 )
+
+#' @title Default Assign Result Function
+#'
+#' @description
+#' Used internally in the [Optimizer].
+#' It is the default way to determine the result by simply obtaining the best performing result from the archive.
+#'
+#' @param inst [OptimInstance]
+#'
+#' @keywords internal
+#' @export
+assign_result_default = function(inst) {
+  assert_r6(inst, "OptimInstance")
+  res = inst$archive$best()
+
+  xdt = res[, inst$search_space$ids(), with = FALSE]
+
+  if (inherits(inst, "OptimInstanceBatchMultiCrit") || inherits(inst, "OptimInstanceAsyncMultiCrit")) {
+    ydt = res[, inst$archive$cols_y, with = FALSE]
+    inst$assign_result(xdt, ydt)
+  } else {
+    # unlist keeps name!
+    y = unlist(res[, inst$archive$cols_y, with = FALSE])
+    inst$assign_result(xdt, y)
+  }
+
+  invisible(NULL)
+}

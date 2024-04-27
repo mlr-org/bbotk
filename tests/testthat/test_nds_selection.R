@@ -82,7 +82,7 @@ test_that("nds_selection in Archive works", {
     y1 = p_dbl(tags = "minimize"),
     y2 = p_dbl(tags = "minimize")
   )
-  a = Archive$new(domain, codomain)
+  a = ArchiveBatch$new(domain, codomain)
 
   # misuse x1 to identify the points
   xdt = data.table(x1 = seq_len(8))

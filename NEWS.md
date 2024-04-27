@@ -1,5 +1,12 @@
 # bbotk (development version)
 
+* feat: Introduce asynchronous optimization with the `OptimizerAsync` and `OptimInstanceAsync` classes.
+* BREAKING CHANGE: The `Optimizer` class is `OptimizerBatch` now.
+* BREAKING CHANGE: The `OptimInstance` class and subclasses are `OptimInstanceBatch*` now.
+* BREAKING CHANGE: The `CallbackOptimization` class is `CallbackBatch` now.
+* BREAKING CHANGE: The `ContextOptimization` class is `ContextBatch` now.
+* BREAKING CHANGE: Remove `ArchiveBest` class and `keep_evals` parameter from `OptimInstance`.
+
 # bbotk 0.8.0
 
 * fix: `OptimizerIrace` failed with logical parameters and dependencies.
@@ -12,7 +19,7 @@
 
 # bbotk 0.7.2
 
-* fix: Standalone `Tuner` and `FSelector` were rejected by `ContextOptimization`.
+* fix: Standalone `Tuner` and `FSelector` were rejected by `ContextBatch`.
 
 # bbotk 0.7.1
 
@@ -35,7 +42,7 @@
 
 * fix: `OptimizerIrace` did not work with parameters with multiple dependencies.
 * feat: Add new callback that backups the archive to disk to `mlr_callbacks`.
-* feat: Create custom callbacks with the `callback_optimization()` function.
+* feat: Create custom callbacks with the `callback_batch()` function.
 
 # bbotk 0.5.4
 

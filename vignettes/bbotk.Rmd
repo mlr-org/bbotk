@@ -114,7 +114,7 @@ term_combo = TerminatorCombo$new(terminators = terminators)
 Before we finally start the optimization, we have to create an `OptimInstance` that contains also the `Objective` and the `Terminator`.
 
 ```{r}
-instance = OptimInstanceSingleCrit$new(objective = obfun, terminator = term_combo)
+instance = OptimInstanceBatchSingleCrit$new(objective = obfun, terminator = term_combo)
 instance
 ```
 
@@ -207,7 +207,7 @@ search_space = ps(
 Instead of the domain of the `Objective` we now use our constructed `search_space` that includes the `trafo` for the `OptimInstance`.
 
 ```{r}
-inst = OptimInstanceSingleCrit$new(
+inst = OptimInstanceBatchSingleCrit$new(
   objective = obj,
   search_space = search_space,
   terminator = trm("evals", n_evals = 30)

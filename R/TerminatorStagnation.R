@@ -56,7 +56,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      assert_r6(archive, "Archive")
+      assert_multi_class(archive, c("Archive", "ArchiveAsync"))
       pv = self$param_set$values
       iters = pv$iters
       ycol = archive$cols_y

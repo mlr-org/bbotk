@@ -1,3 +1,12 @@
+#' @title Termination Error
+#'
+#' @description
+#' Error class for termination.
+#'
+#' @param optim_instance [OptimInstance]\cr
+#' OptimInstance that terminated.
+#'
+#' @export
 terminated_error = function(optim_instance) {
   msg = sprintf(
     fmt = "Objective (obj:%s, term:%s) terminated",
@@ -23,6 +32,7 @@ is_dominated = function(ymat) {
 }
 
 #' @title Calculates the transformed x-values
+#'
 #' @description
 #' Transforms a given `data.table()` to a list with transformed x values.
 #' If no trafo is defined it will just convert the `data.table()` to a list.
@@ -42,70 +52,23 @@ transform_xdt_to_xss = function(xdt, search_space) {
   design$transpose(trafo = TRUE, filter_na = TRUE)
 }
 
-#' @title Default optimization function
+#' @title Calculate the transformed x-values
+#'
 #' @description
-#' Used internally in the [Optimizer].
-#' Brings together the private `.optimize()` method and the private `.assign_result()` method.
+#' Transforms a given `list()` to a list with transformed x values.
 #'
-#' @param inst [OptimInstance]
-#' @param self [Optimizer]
-#' @param private (`environment()`)
+#' @param xs (`list()`) \cr
+#'  List of x-values.
+#' @param search_space [paradox::ParamSet]\cr
+#'  Search space.
 #'
-#' @return [data.table::data.table]
-#'
-#' @keywords internal
 #' @export
-optimize_default = function(inst, self, private) {
-  assert_instance_properties(self, inst)
-  if (isNamespaceLoaded("progressr")) {
-    # initialize progressor
-    # progressor must be initialized here because progressor finishes when exiting a function since version 0.7.0
-    max_steps = assert_int(inst$terminator$status(inst$archive)["max_steps"])
-    unit = assert_character(inst$terminator$unit)
-    progressor = progressr::progressor(steps = max_steps)
-    inst$progressor = Progressor$new(progressor, unit)
-    inst$progressor$max_steps = max_steps
+trafo_xs = function(xs, search_space) {
+  xs = discard(xs, is_scalar_na)
+  if (search_space$has_trafo) {
+    xs = search_space$trafo(xs, search_space)
   }
-
-  # start optimization
-  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-    inst$search_space$length, self$format(), inst$terminator$format(with_params = TRUE))
-  tryCatch({
-    private$.optimize(inst)
-  }, terminated_error = function(cond) {
-  })
-  private$.assign_result(inst)
-  lg$info("Finished optimizing after %i evaluation(s)", inst$archive$n_evals)
-  lg$info("Result:")
-  lg$info(capture.output(print(
-    inst$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
-  return(inst$result)
-}
-
-#' @title Default assign_result function
-#' @description
-#' Used internally in the [Optimizer].
-#' It is the default way to determine the result by simply obtaining the best performing result from the archive.
-#'
-#' @param inst [OptimInstance]
-#'
-#' @keywords internal
-#' @export
-assign_result_default = function(inst) {
-  res = inst$archive$best()
-
-  xdt = res[, inst$search_space$ids(), with = FALSE]
-
-  if (inherits(inst, "OptimInstanceMultiCrit")) {
-    ydt = res[, inst$archive$cols_y, with = FALSE]
-    inst$assign_result(xdt, ydt)
-  } else {
-    # unlist keeps name!
-    y = unlist(res[, inst$archive$cols_y, with = FALSE])
-    inst$assign_result(xdt, y)
-  }
-
-  invisible(NULL)
+  return(xs)
 }
 
 #' @title Get start values for optimizers
@@ -167,3 +130,5 @@ allow_partial_matching = list(
   warnPartialMatchAttr = FALSE,
   warnPartialMatchDollar = FALSE
 )
+
+

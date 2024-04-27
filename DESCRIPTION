@@ -47,8 +47,9 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.11.0),
-    R6
+    mlr3misc (>= 0.15.0.9000),
+    R6,
+    rush
 Suggests:
     adagio,
     emoa,
@@ -58,7 +59,11 @@ Suggests:
     nloptr,
     progressr,
     rmarkdown,
+    redux,
     testthat (>= 3.0.0)
+Remotes:
+    mlr-org/rush,
+    mlr-org/mlr3misc
 VignetteBuilder:
     knitr
 Config/testthat/edition: 3
@@ -70,27 +75,39 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Collate:
     'Archive.R'
-    'ArchiveBest.R'
-    'CallbackOptimization.R'
+    'ArchiveAsync.R'
+    'ArchiveBatch.R'
+    'CallbackAsync.R'
+    'CallbackBatch.R'
     'Codomain.R'
-    'ContextOptimization.R'
+    'ContextAsync.R'
+    'ContextBatch.R'
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'
     'ObjectiveRFunMany.R'
     'OptimInstance.R'
-    'OptimInstanceMultiCrit.R'
-    'OptimInstanceSingleCrit.R'
+    'OptimInstanceAsync.R'
+    'OptimInstanceAsyncMultiCrit.R'
+    'OptimInstanceAsyncSingleCrit.R'
+    'OptimInstanceBatch.R'
+    'OptimInstanceBatchMultiCrit.R'
+    'OptimInstanceBatchSingleCrit.R'
     'mlr_optimizers.R'
     'Optimizer.R'
-    'OptimizerCmaes.R'
-    'OptimizerDesignPoints.R'
-    'OptimizerFocusSearch.R'
-    'OptimizerGenSA.R'
-    'OptimizerGridSearch.R'
-    'OptimizerIrace.R'
-    'OptimizerNLoptr.R'
-    'OptimizerRandomSearch.R'
+    'OptimizerAsync.R'
+    'OptimizerAsyncDesignPoints.R'
+    'OptimizerAsyncGridSearch.R'
+    'OptimizerAsyncRandomSearch.R'
+    'OptimizerBatch.R'
+    'OptimizerBatchCmaes.R'
+    'OptimizerBatchDesignPoints.R'
+    'OptimizerBatchFocusSearch.R'
+    'OptimizerBatchGenSA.R'
+    'OptimizerBatchGridSearch.R'
+    'OptimizerBatchIrace.R'
+    'OptimizerBatchNLoptr.R'
+    'OptimizerBatchRandomSearch.R'
     'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
@@ -102,6 +119,7 @@ Collate:
     'TerminatorRunTime.R'
     'TerminatorStagnation.R'
     'TerminatorStagnationBatch.R'
+    'as_terminator.R'
     'assertions.R'
     'bb_optimize.R'
     'bbotk_reflections.R'
@@ -111,4 +129,5 @@ Collate:
     'nds_selection.R'
     'reexport.R'
     'sugar.R'
+    'worker_loops.R'
     'zzz.R'

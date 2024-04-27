@@ -1,12 +1,13 @@
-#' @title Objective function with domain and co-domain
+#' @title Objective Function with Domain and Codomain
 #'
 #' @description
-#' Describes a black-box objective function that maps an arbitrary domain to a
-#' numerical codomain.
+#' The `Objective` class describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 #'
-#' @section Technical details:
-#' `Objective` objects can have the following properties: `"noisy"`,
-#' `"deterministic"`, `"single-crit"` and `"multi-crit"`.
+#' @details
+#' `Objective` objects can have the following properties: `"noisy"`, `"deterministic"`, `"single-crit"` and `"multi-crit"`.
+#'
+#' @template field_callbacks
+#' @template field_context
 #'
 #' @template param_domain
 #' @template param_codomain
@@ -41,13 +42,23 @@ Objective = R6Class("Objective",
     #' @field check_values (`logical(1)`)\cr
     check_values = NULL,
 
+    callbacks = NULL,
+
+    context = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
-    initialize = function(id = "f", properties = character(), domain, codomain = ps(y = p_dbl(tags = "minimize")),
-      constants = ps(), check_values = TRUE) {
+    initialize = function(
+      id = "f",
+      properties = character(),
+      domain,
+      codomain = ps(y = p_dbl(tags = "minimize")),
+      constants = ps(),
+      check_values = TRUE
+      ) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
       assert_param_set(codomain)
@@ -163,6 +174,8 @@ Objective = R6Class("Objective",
     },
 
     deep_clone = function(name, value) {
+      if (name == "context") return(NULL)
+      if (!is.environment(value)) return(value)
       switch(name,
         domain = value$clone(deep = TRUE),
         codomain = value$clone(deep = TRUE),

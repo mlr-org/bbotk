@@ -69,7 +69,7 @@ TerminatorEvals = R6Class("TerminatorEvals",
     #'
     #' @return `logical(1)`.
     is_terminated = function(archive) {
-      assert_r6(archive, "Archive")
+      assert_multi_class(archive, c("Archive", "ArchiveAsync"))
       pv = self$param_set$values
       archive$n_evals >= pv$n_evals + pv$k * archive$search_space$length
     }

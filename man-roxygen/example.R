@@ -12,7 +12,7 @@
 #'  domain = domain,
 #'  codomain = codomain)
 #'
-#' instance = OptimInstanceSingleCrit$new(
+#' instance = OptimInstanceBatchSingleCrit$new(
 #'  objective = objective,
 #'  search_space = search_space,
 #'  terminator = trm("evals", n_evals = 10))

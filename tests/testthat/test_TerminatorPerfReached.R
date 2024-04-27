@@ -8,14 +8,14 @@ test_that("TerminatorPerfReached works", {
   expect_true(tail(a$data$y, 1) < 0.2)
 })
 
-test_that("TerminatorPerfReached in OptimInstanceMultiCrit throws an error", {
+test_that("TerminatorPerfReached in OptimInstanceBatchMultiCrit throws an error", {
   terminator = TerminatorPerfReached$new()
   expect_error(MAKE_INST_2D_2D(terminator))
 })
 
 test_that("TerminatorPerfReached works with empty archive", {
   terminator = TerminatorPerfReached$new()
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
+  archive = ArchiveBatch$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
 })
 

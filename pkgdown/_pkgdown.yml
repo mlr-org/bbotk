@@ -45,9 +45,11 @@ reference:
       - mlr_terminators
       - trm
       - trms
+      - as_terminator
   - title: Optimization Instance
     contents:
       - starts_with("OptimInstance")
+      - starts_with("oi")
   - title: Optimizer
     contents:
       - starts_with("Optimizer")
@@ -56,14 +58,13 @@ reference:
       - opts
   - title: Archive
     contents:
-      - Archive
-      - ArchiveBest
+      - starts_with("Archive")
       - Codomain
   - title: Callbacks
     contents:
-      - CallbackOptimization
-      - callback_optimization
-      - ContextOptimization
+      - starts_with("Callback")
+      - starts_with("callback_")
+      - starts_with("Context")
       - bbotk.backup
   - title: Misc
     contents:
@@ -72,4 +73,7 @@ reference:
       - branin
       - bb_optimize
       - shrink_ps
+      - bbotk_worker_loop
+      - trafo_xs
+      - terminated_error
 

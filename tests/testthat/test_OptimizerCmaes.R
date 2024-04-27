@@ -1,4 +1,4 @@
-test_that("OptimizerCmaes", {
+test_that("OptimizerBatchCmaes", {
   skip_if_not_installed("adagio")
 
   search_space = domain = ps(
@@ -17,15 +17,15 @@ test_that("OptimizerCmaes", {
     domain = domain,
     codomain = codomain)
 
-  instance = OptimInstanceSingleCrit$new(
+  instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
     terminator = trm("evals", n_evals = 10))
 
   z = test_optimizer(instance, "cmaes", real_evals = 10L)
 
-  expect_class(z$optimizer, "OptimizerCmaes")
-  expect_output(print(z$optimizer), "OptimizerCmaes")
+  expect_class(z$optimizer, "OptimizerBatchCmaes")
+  expect_output(print(z$optimizer), "OptimizerBatchCmaes")
 
   expect_error(test_optimizer_2d("cmaes", term_evals = 10L), "multi-crit objectives")
 })

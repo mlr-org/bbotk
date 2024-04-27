@@ -84,7 +84,7 @@ Terminator = R6Class("Terminator",
     #'
     #' @return named `integer(2)`.
     status = function(archive) {
-      assert_r6(archive, "Archive")
+      #assert_r6(archive, "Archive")
       private$.status(archive)
     },
 

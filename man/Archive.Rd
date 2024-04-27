@@ -2,55 +2,34 @@
 % Please edit documentation in R/Archive.R
 \name{Archive}
 \alias{Archive}
-\title{Logging object for objective function evaluations}
+\title{Data Storage}
 \description{
-Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
-function calls of the Objective.
+The \link{Archive} class stores all proposed points and their corresponding evaluations.
 }
-\section{S3 Methods}{
-
-\itemize{
-\item \code{as.data.table(archive)}\cr
-\link{Archive} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr
-Returns a tabular view of all performed function calls of the
-Objective. The \code{x_domain} column is unnested to separate columns.
+\details{
+The \link{Archive} is an abstract class that implements the base functionality each archive must provide.
 }
-}
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space of objective.}
+Specification of the search space for the \link{Optimizer}.}
 
 \item{\code{codomain}}{(\link{Codomain})\cr
 Codomain of objective function.}
 
 \item{\code{start_time}}{(\link{POSIXct})\cr
-Time stamp of when the optimization started. The time is set by the
-\link{Optimizer}.}
+Time stamp of when the optimization started.
+The time is set by the \link{Optimizer}.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Determines if points and results are checked for validity.}
-
-\item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Contains all performed \link{Objective} function calls.}
-
-\item{\code{data_extra}}{(named \code{list})\cr
-Data created by specific \code{\link{Optimizer}}s that does not relate to any individual function evaluation and can therefore not be held in \verb{$data}.
-Every optimizer should create and refer to its own entry in this list, named by its \code{class()}.}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{n_evals}}{(\code{integer(1)})\cr
-Number of evaluations stored in the archive.}
-
-\item{\code{n_batch}}{(\code{integer(1)})\cr
-Number of batches stored in the archive.}
-
 \item{\code{cols_x}}{(\code{character()})\cr
 Column names of search space parameters.}
 
@@ -63,9 +42,6 @@ Column names of codomain target parameters.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Archive-new}{\code{Archive$new()}}
-\item \href{#method-Archive-add_evals}{\code{Archive$add_evals()}}
-\item \href{#method-Archive-best}{\code{Archive$best()}}
-\item \href{#method-Archive-nds_selection}{\code{Archive$nds_selection()}}
 \item \href{#method-Archive-format}{\code{Archive$format()}}
 \item \href{#method-Archive-print}{\code{Archive$print()}}
 \item \href{#method-Archive-clear}{\code{Archive$clear()}}
@@ -78,7 +54,7 @@ Column names of codomain target parameters.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -101,95 +77,6 @@ Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
 }
 \if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-add_evals"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-add_evals}{}}}
-\subsection{Method \code{add_evals()}}{
-Adds function evaluations to the archive table.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(xdt, xss_trafoed = NULL, ydt)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
-Column names have to match ids of the \code{search_space}.
-However, \code{xdt} can contain additional columns.}
-
-\item{\code{xss_trafoed}}{(\code{list()})\cr
-Transformed point(s) in the \emph{domain space}.}
-
-\item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Optimal outcome.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-best"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-best}{}}}
-\subsection{Method \code{best()}}{
-Returns the best scoring evaluation(s).
-For single-crit optimization, the solution that minimizes / maximizes the objective function.
-For multi-crit optimization, the Pareto set / front.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL, n_select = 1L, ties_method = "first")}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{batch}}{(\code{integer()})\cr
-The batch number(s) to limit the best results to.
-Default is all batches.}
-
-\item{\code{n_select}}{(\code{integer(1L)})\cr
-Amount of points to select.
-Ignored for multi-crit optimization.}
-
-\item{\code{ties_method}}{(\code{character(1L)})\cr
-Method to break ties when multiple points have the same score.
-Either \code{"first"} (default) or \code{"random"}.
-Ignored for multi-crit optimization.
-If \code{n_select > 1L}, the tie method is ignored and the first point is returned.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-nds_selection"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-nds_selection}{}}}
-\subsection{Method \code{nds_selection()}}{
-Calculate best points w.r.t. non dominated sorting with hypervolume contribution.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$nds_selection(batch = NULL, n_select = 1, ref_point = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{batch}}{(\code{integer()})\cr
-The batch number(s) to limit the best points to. Default is
-all batches.}
-
-\item{\code{n_select}}{(\code{integer(1L)})\cr
-Amount of points to select.}
-
-\item{\code{ref_point}}{(\code{numeric()})\cr
-Reference point for hypervolume.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}}
 }
 }
 \if{html}{\out{<hr>}}

@@ -32,7 +32,7 @@
 #' @return `list` of
 #'  * `"par"` - Best found parameters
 #'  * `"value"` - Optimal outcome
-#'  * `"instance"` - [OptimInstanceSingleCrit] | [OptimInstanceMultiCrit]
+#'  * `"instance"` - [OptimInstanceBatchSingleCrit] | [OptimInstanceBatchMultiCrit]
 #'
 #' @export
 #' @examples
@@ -104,7 +104,7 @@ bb_optimize.Objective = function(x, method = "random_search", max_evals = 1000, 
   } else if (!is.null(max_time)) {
     trm("run_time", secs = max_time)
   }
-  optiminstance = if (x$codomain$length == 1) OptimInstanceSingleCrit else OptimInstanceMultiCrit
+  optiminstance = if (x$codomain$length == 1) OptimInstanceBatchSingleCrit else OptimInstanceBatchMultiCrit
 
   instance = optiminstance$new(x, terminator = terminator, search_space = search_space, check_values = FALSE)
   optimizer$optimize(instance)

@@ -66,3 +66,68 @@ opt = function(.key, ...) {
 opts = function(.keys, ...) {
   dictionary_sugar_mget(mlr_optimizers, .keys, ...)
 }
+
+#' @title Syntactic Sugar for Optimization Instance Construction
+#'
+#' @description
+#' Function to construct a [OptimInstanceBatchSingleCrit] and [OptimInstanceBatchMultiCrit].
+#'
+#'
+#' @template param_objective
+#' @template param_search_space
+#' @template param_terminator
+#' @template param_callbacks
+#' @template param_check_values
+#' @template param_keep_evals
+#'
+#' @export
+oi = function(
+  objective,
+  search_space = NULL,
+  terminator,
+  callbacks = NULL,
+  check_values = TRUE,
+  keep_evals = "all"
+  ) {
+  assert_r6(objective, "Objective")
+
+  Instance = if (objective$codomain$target_length == 1) OptimInstanceBatchSingleCrit else OptimInstanceBatchMultiCrit
+  Instance$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = terminator,
+    callbacks = callbacks)
+}
+
+#' @title Syntactic Sugar for Asynchronous Optimization Instance Construction
+#'
+#' @description
+#' Function to construct an [OptimInstanceAsyncSingleCrit] and [OptimInstanceAsyncMultiCrit].
+#'
+#' @template param_objective
+#' @template param_search_space
+#' @template param_terminator
+#' @template param_check_values
+#' @template param_callbacks
+#' @template param_rush
+#'
+#' @export
+oi_async = function(
+  objective,
+  search_space = NULL,
+  terminator,
+  check_values = FALSE,
+  callbacks = NULL,
+  rush = NULL
+  ) {
+  assert_r6(objective, "Objective")
+
+  Instance = if (objective$codomain$target_length == 1) OptimInstanceAsyncSingleCrit else OptimInstanceAsyncMultiCrit
+  Instance$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = terminator,
+    check_values = check_values,
+    callbacks = callbacks,
+    rush = rush)
+}
