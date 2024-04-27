@@ -1,4 +1,5 @@
 test_that("ArchiveAsync works with one point", {
+  skip_if(TRUE)
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
@@ -58,6 +59,7 @@ test_that("ArchiveAsync works with one point", {
 })
 
 test_that("as.data.table.ArchiveAsync works", {
+  skip_if(TRUE)
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()

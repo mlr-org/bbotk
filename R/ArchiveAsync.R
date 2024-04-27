@@ -1,7 +1,7 @@
 #' @title Rush Data Storage
 #'
 #' @description
-#' Connection to a rush network which stores all performed function calls of the [Objective].
+#' The `ArchiveAsync` stores all evaluated points and performance scores in a [rush::Rush] data base.
 #'
 #' @section S3 Methods:
 #' * `as.data.table(archive)`\cr
@@ -55,9 +55,12 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #'
     #' @param xs (named `list`)\cr
     #' Named list of point values.
-    push_running_point = function(xs) {
+    #' @param extra (`list()`)\cr
+    #' Named list of additional information.
+    push_running_point = function(xs, extra = NULL) {
       if (self$check_values) self$search_space$assert(xs)
-      self$rush$push_running_tasks(list(xs), extra = list(list(timestamp_xs = Sys.time())))
+      extra = c(list(timestamp_xs = Sys.time()), extra)
+      self$rush$push_running_tasks(list(xs), extra = list(extra))
     },
 
     #' @description

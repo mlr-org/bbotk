@@ -153,7 +153,7 @@ Pop a point from the queue.
 \subsection{Method \code{push_running_point()}}{
 Push running point to the archive.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_running_point(xs)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_running_point(xs, extra = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -161,6 +161,9 @@ Push running point to the archive.
 \describe{
 \item{\code{xs}}{(named \code{list})\cr
 Named list of point values.}
+
+\item{\code{extra}}{(\code{list()})\cr
+Named list of additional information.}
 }
 \if{html}{\out{</div>}}
 }

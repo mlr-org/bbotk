@@ -1,7 +1,7 @@
 #' @title Data Table Storage
 #'
 #' @description
-#' Container around a [data.table::data.table] which stores all performed unction calls of the [Objective].
+#' The `ArchiveBatch` stores all evaluated points and performance scores in a [data.table::data.table()].
 #'
 #' @section S3 Methods:
 #' * `as.data.table(archive)`\cr
