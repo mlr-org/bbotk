@@ -1,5 +1,5 @@
 test_that("TerminatorRunTime works", {
-  skip_on_cran()
+    skip_on_cran()
 
   terminator = trm("run_time", secs = 1)
   expect_output(print(terminator), "TerminatorRunTime")
