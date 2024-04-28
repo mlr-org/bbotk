@@ -127,7 +127,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @return [data.table::data.table()]
     best = function(n_select = 1, ties_method = "first") {
       assert_count(n_select)
-      tab = self$data
+      tab = self$finished_data
 
       if (self$codomain$target_length == 1L) {
         if (n_select == 1L) {
@@ -136,8 +136,6 @@ ArchiveAsync = R6Class("ArchiveAsync",
           ii = which_max(y, ties_method = ties_method)
           tab[ii]
         } else {
-          # copy table to avoid changing the order of the archive
-          tab = copy(self$data)
           # use data.table fast sort to find the best points
           setorderv(tab, cols = self$cols_y, order = self$codomain$maximization_to_minimization)
           head(tab, n_select)
