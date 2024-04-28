@@ -156,7 +156,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #'
     #' @return [data.table::data.table()]
     nds_selection = function(n_select = 1, ref_point = NULL) {
-      tab = self$data
+      tab = self$finished_data
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
