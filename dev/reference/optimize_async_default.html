@@ -76,7 +76,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">optimize_async_default</span><span class="op">(</span><span class="va">instance</span>, <span class="va">optimizer</span>, design <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">optimize_async_default</span><span class="op">(</span><span class="va">instance</span>, <span class="va">optimizer</span>, design <span class="op">=</span> <span class="cn">NULL</span>, n_workers <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -87,6 +87,16 @@
 
 <dt>optimizer</dt>
 <dd><p><a href="OptimizerAsync.html">OptimizerAsync</a>.</p></dd>
+
+
+<dt>design</dt>
+<dd><p><code><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code><br>
+(Initial) design send to the queue.</p></dd>
+
+
+<dt>n_workers</dt>
+<dd><p>Number of workers to be started.
+Defaults to the number of workers set by <code><a href="https://rdrr.io/pkg/rush/man/rush_plan.html" class="external-link">rush::rush_plan()</a></code>.</p></dd>
 
 </dl></div>
 
