@@ -4,10 +4,10 @@
 \alias{Archive}
 \title{Data Storage}
 \description{
-The \link{Archive} class stores all proposed points and their corresponding evaluations.
+The `Archive`` class stores all evaluated points and performance scores
 }
 \details{
-The \link{Archive} is an abstract class that implements the base functionality each archive must provide.
+The \code{Archive} is an abstract class that implements the base functionality each archive must provide.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

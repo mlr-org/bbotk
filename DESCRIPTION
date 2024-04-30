@@ -1,46 +1,29 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
 Version: 0.8.0.9000
-Authors@R:
-    c(person(given = "Marc",
-             family = "Becker",
-             role = c("cre", "aut"),
-             email = "marcbecker@posteo.de",
-             comment = c(ORCID = "0000-0002-8115-0400")),
-      person(given = "Jakob",
-             family = "Richter",
-             role = "aut",
-             email = "jakob1richter@gmail.com",
-             comment = c(ORCID = "0000-0003-4481-5554")),
-      person(given = "Michel",
-             family = "Lang",
-             role = "aut",
-             email = "michellang@gmail.com",
-             comment = c(ORCID = "0000-0001-9754-0393")),
-      person(given = "Bernd",
-             family = "Bischl",
-             role = "aut",
-             email = "bernd_bischl@gmx.net",
-             comment = c(ORCID = "0000-0001-6002-6980")),
-      person(given = "Martin",
-             family = "Binder",
-             role = "aut",
-             email = "martin.binder@mail.com"),
-      person(given = "Olaf",
-             family = "Mersmann",
-             role = "ctb",
-             email = "olafm@statistik.tu-dortmund.de"))
+Authors@R:c(
+    person("Marc", "Becker", , "marcbecker@posteo.de", role = c("cre", "aut"),
+           comment = c(ORCID = "0000-0002-8115-0400")),
+    person("Jakob", "Richter", , "jakob1richter@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0003-4481-5554")),
+    person("Michel", "Lang", , "michellang@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0001-9754-0393")),
+    person("Bernd", "Bischl", , "bernd_bischl@gmx.net", role = "aut",
+           comment = c(ORCID = "0000-0001-6002-6980")),
+    person("Martin", "Binder", , "martin.binder@mail.com", role = "aut"),
+    person("Olaf", "Mersmann", , "olafm@statistik.tu-dortmund.de", role = "ctb")
+  )
 Description: Features highly configurable search spaces via the 'paradox'
-    package and optimizes every user-defined objective function. The package
-    includes several optimization algorithms e.g. Random Search, Iterated
-    Racing, Bayesian Optimization (in 'mlr3mbo') and Hyperband (in
-    'mlr3hyperband'). bbotk is the base package of 'mlr3tuning', 'mlr3fselect'
-    and 'miesmuschel'.
+    package and optimizes every user-defined objective function. The
+    package includes several optimization algorithms e.g. Random Search,
+    Iterated Racing, Bayesian Optimization (in 'mlr3mbo') and Hyperband
+    (in 'mlr3hyperband'). bbotk is the base package of 'mlr3tuning',
+    'mlr3fselect' and 'miesmuschel'.
 License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
 Depends:
-    paradox (>= 0.7.0),
+    paradox (>= 1.0.0),
     R (>= 3.1.0)
 Imports:
     checkmate (>= 2.0.0),
@@ -58,14 +41,15 @@ Suggests:
     knitr,
     nloptr,
     progressr,
-    rmarkdown,
     redux,
+    rmarkdown,
     testthat (>= 3.0.0)
-Remotes:
-    mlr-org/rush,
-    mlr-org/mlr3misc
 VignetteBuilder:
     knitr
+Remotes:
+    mlr-org/mlr3misc,
+    mlr-org/paradox,
+    mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8

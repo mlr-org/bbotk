@@ -41,10 +41,14 @@ OptimizerAsync = R6Class("OptimizerAsync",
 #'
 #' @param instance [OptimInstanceAsync].
 #' @param optimizer [OptimizerAsync].
-#'
+#' @param design [data.table::data.table()]\cr
+#' (Initial) design send to the queue.
+#' @param n_workers
+#' Number of workers to be started.
+#' Defaults to the number of workers set by [rush::rush_plan()].
 #' @keywords internal
 #' @export
-optimize_async_default = function(instance, optimizer, design = NULL) {
+optimize_async_default = function(instance, optimizer, design = NULL, n_workers = NULL) {
   assert_class(instance, "OptimInstanceAsync")
   assert_class(optimizer, "OptimizerAsync")
   assert_data_table(design, null.ok = TRUE)
@@ -72,16 +76,17 @@ optimize_async_default = function(instance, optimizer, design = NULL) {
 
     # FIXME: How to pass globals and packages?
     if (!instance$rush$n_running_workers) {
-      lg$debug("Start %i local worker(s)", rush_config()$n_workers)
+      lg$debug("Start %i local worker(s)", n_workers %??% rush_config()$n_workers)
 
       packages = c(optimizer$packages, "bbotk") # add packages from objective
 
       instance$rush$start_workers(
+        n_workers = n_workers,
+        wait_for_workers = TRUE,
         worker_loop = bbotk_worker_loop,
         packages = packages,
         optimizer = optimizer,
-        instance = instance,
-        wait_for_workers = TRUE)
+        instance = instance)
     }
 
     lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",

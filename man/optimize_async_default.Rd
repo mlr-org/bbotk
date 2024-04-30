@@ -4,12 +4,18 @@
 \alias{optimize_async_default}
 \title{Default Asynchronous Optimization}
 \usage{
-optimize_async_default(instance, optimizer, design = NULL)
+optimize_async_default(instance, optimizer, design = NULL, n_workers = NULL)
 }
 \arguments{
 \item{instance}{\link{OptimInstanceAsync}.}
 
 \item{optimizer}{\link{OptimizerAsync}.}
+
+\item{design}{\code{\link[data.table:data.table]{data.table::data.table()}}\cr
+(Initial) design send to the queue.}
+
+\item{n_workers}{Number of workers to be started.
+Defaults to the number of workers set by \code{\link[rush:rush_plan]{rush::rush_plan()}}.}
 }
 \description{
 Used internally in \link{OptimizerAsync}.
