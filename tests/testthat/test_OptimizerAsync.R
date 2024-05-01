@@ -4,7 +4,7 @@ test_that("OptimizerAsync starts local workers", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush_plan(n_workers = 2)
+  rush::rush_plan(n_workers = 2)
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -25,7 +25,7 @@ test_that("OptimizerAsync assigns result", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush_plan(n_workers = 2)
+  rush::rush_plan(n_workers = 2)
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -46,7 +46,7 @@ test_that("OptimizerAsync throws an error when all workers are lost", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush_plan(n_workers = 2)
+  rush::rush_plan(n_workers = 2)
 
   objective = ObjectiveRFun$new(
     fun = function(xs) {

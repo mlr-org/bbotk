@@ -27,6 +27,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(search_space, codomain, check_values = FALSE, rush) {
+      require_namespaces("rush")
       self$rush = assert_rush(rush)
 
       super$initialize(

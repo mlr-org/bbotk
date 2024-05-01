@@ -16,12 +16,12 @@ test_that("backup batch callback works", {
 })
 
 test_that("async callback works", {
-  skip_on_cran() # Does not work in testthat environment
-    skip_on_cran()
+  skip_if(TRUE) # Does not work in testthat environment
+  skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush_plan(n_workers = 2)
+  rush::rush_plan(n_workers = 2)
 
   callback = callback_async("bbotk.test",
     on_worker_begin = function(callback, context) {

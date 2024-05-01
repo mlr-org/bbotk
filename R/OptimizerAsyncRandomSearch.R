@@ -26,6 +26,7 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
         param_set = ps(),
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
         properties = c("dependencies", "single-crit", "multi-crit"),
+        packages = "rush",
         label = "Asynchronous Random Search",
         man = "bbotk::mlr_optimizers_random_search"
       )
