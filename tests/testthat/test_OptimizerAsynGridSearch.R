@@ -7,7 +7,7 @@ test_that("OptimizerAsyncGridSearch works", {
   optimizer = opt("async_grid_search")
   expect_class(optimizer, "OptimizerAsync")
 
-  rush_plan(n_workers = 2)
+  rush::rush_plan(n_workers = 2)
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,

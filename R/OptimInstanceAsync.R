@@ -38,6 +38,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       archive = NULL,
       rush = NULL
       ) {
+      require_namespaces("rush")
       assert_r6(objective, "Objective")
       search_space = choose_search_space(objective, search_space)
       self$rush = assert_rush(rush, null_ok = TRUE) %??% rsh()
