@@ -76,6 +76,12 @@
     <loc>https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatchSingleCrit.html</loc>
   </url>
   <url>
+    <loc>https://bbotk.mlr-org.com/dev/reference/OptimInstanceMultiCrit.html</loc>
+  </url>
+  <url>
+    <loc>https://bbotk.mlr-org.com/dev/reference/OptimInstanceSingleCrit.html</loc>
+  </url>
+  <url>
     <loc>https://bbotk.mlr-org.com/dev/reference/Optimizer.html</loc>
   </url>
   <url>
