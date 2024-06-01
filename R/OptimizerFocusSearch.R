@@ -220,7 +220,7 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
             do.call(ps, structure(list(
               p_dbl(lower = lower, upper = upper,
                 special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
-                tolerance = param$params$tolerance[[1]] %??% param$params[[1]]$tolerance,  # since 'param' is from subspaces(), it only has 1 line ; '%??%' is for old pdaradox
+                tolerance = param$params[[1]]$tolerance,  # since 'param' is from subspaces(), it only has 1 line ; '%??%' is for old pdaradox
                 trafo = param_trafos[[pid]])
             ), names = pid))
           }
