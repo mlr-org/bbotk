@@ -118,7 +118,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
     }
 
-    if (instance$rush$all_workers_lost) {
+    if (instance$rush$all_workers_lost && !instance$is_terminated && !instance$rush$all_workers_terminated) {
       stop("All workers have crashed.")
     }
 
