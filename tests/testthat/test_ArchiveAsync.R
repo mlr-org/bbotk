@@ -3,7 +3,7 @@ test_that("ArchiveAsync works with one point", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush = RushWorker$new(network_id = "remote_network", host = "local")
+  rush = RushWorker$new(network_id = "remote_network", remote = FALSE)
 
   archive = ArchiveAsync$new(
     search_space = PS_2D,
