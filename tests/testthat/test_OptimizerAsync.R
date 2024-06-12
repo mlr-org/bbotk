@@ -2,8 +2,9 @@ test_that("OptimizerAsync starts local workers", {
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
+  library(rush)
 
-  rush::rush_plan(n_workers = 2)
+  rush_plan(n_workers = 2)
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -22,12 +23,14 @@ test_that("OptimizerAsync starts local workers", {
 test_that("OptimizerAsync starts remote workers", {
   skip_on_cran()
   skip_if_not_installed("rush")
+  skip_if_not_installed("processx")
   flush_redis()
+  library(processx)
 
   rush = rsh(network_id = "test_rush")
   expect_snapshot(rush$create_worker_script())
 
-  px = processx::process$new("Rscript",
+  px = process$new("Rscript",
     args = c("-e", 'rush::start_worker(network_id = "test_rush", remote = TRUE, url = "redis://127.0.0.1:6379", scheme = "redis", host = "127.0.0.1", port = "6379")'),
     supervise = TRUE,
     stderr = "|", stdout = "|")
@@ -58,8 +61,9 @@ test_that("OptimizerAsync assigns result", {
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
+  library(rush)
 
-  rush::rush_plan(n_workers = 2)
+  rush_plan(n_workers = 2)
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -78,8 +82,9 @@ test_that("OptimizerAsync throws an error when all workers are lost", {
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
+  library(rush)
 
-  rush::rush_plan(n_workers = 2)
+  rush_plan(n_workers = 2)
 
   objective = ObjectiveRFun$new(
     fun = function(xs) {
