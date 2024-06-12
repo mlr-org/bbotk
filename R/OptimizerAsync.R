@@ -68,38 +68,46 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     get_private(optimizer)$.optimize(instance)
   } else {
     # run .optimize() on workers
-
-    # check if there are already running workers or a rush plan is available
-    if (!instance$rush$n_running_workers && !rush_available()) {
-      stop("No running worker found and no rush plan available to start local workers.\n See `?rush::rush_plan()`")
-    }
+    rush = instance$rush
 
     # FIXME: How to pass globals and packages?
-    if (!instance$rush$n_running_workers) {
-      lg$debug("Start %i local worker(s)", n_workers %??% rush_config()$n_workers)
+    if (rush$n_pre_workers) {
+      # start remote workers
+      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
+        instance$search_space$length,
+        optimizer$format(),
+        instance$terminator$format(with_params = TRUE),
+        rush$n_pre_workers
+      )
 
-      packages = c(optimizer$packages, "bbotk") # add packages from objective
-
-      instance$rush$start_workers(
-        n_workers = n_workers,
-        wait_for_workers = TRUE,
+      rush$start_remote_workers(
         worker_loop = bbotk_worker_loop,
-        packages = packages,
+        packages = c(optimizer$packages, "bbotk"), # add packages from objective
         optimizer = optimizer,
         instance = instance)
-    }
+    } else if (rush_available()) {
+      # local workers
+      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
+        instance$search_space$length,
+        optimizer$format(),
+        instance$terminator$format(with_params = TRUE),
+        rush_config()$n_workers
+      )
 
-    lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i worker(s)",
-      instance$search_space$length,
-      optimizer$format(),
-      instance$terminator$format(with_params = TRUE),
-      instance$rush$n_running_workers
-    )
+      rush$start_local_workers(
+        worker_loop = bbotk_worker_loop,
+        packages = c(optimizer$packages, "bbotk"), # add packages from objective
+        optimizer = optimizer,
+        instance = instance,
+        wait_for_workers = TRUE)
+    } else {
+       stop("No rush plan available to start local workers and no pre-started remote workers found. See `?rush::rush_plan()`.")
+    }
   }
 
   # wait until optimization is finished
   # check terminated workers when the terminator is "none"
-  while(!instance$is_terminated && !instance$rush$all_workers_terminated) {
+  while(TRUE) {
     Sys.sleep(1)
     instance$rush$print_log()
 
@@ -113,9 +121,13 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     if (instance$rush$all_workers_lost) {
       stop("All workers have crashed.")
     }
+
+    if (instance$is_terminated) break
+    if (instance$rush$all_workers_terminated) break
   }
 
   # assign result
+  print(instance$archive$n_evals)
   get_private(optimizer)$.assign_result(instance)
   lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
   lg$info("Result:")
