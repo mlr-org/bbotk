@@ -31,8 +31,7 @@ Imports:
     lgr,
     methods,
     mlr3misc (>= 0.15.0.9000),
-    R6,
-    rush
+    R6
 Suggests:
     adagio,
     emoa,
@@ -43,12 +42,12 @@ Suggests:
     progressr,
     redux,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    rush
 VignetteBuilder:
     knitr
 Remotes:
     mlr-org/mlr3misc,
-    mlr-org/paradox,
     mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
