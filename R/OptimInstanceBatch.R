@@ -70,6 +70,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
     #' columns for extra information.
     eval_batch = function(xdt) {
       private$.xdt = xdt
+      if (is.null(self$objective$context)) private$.initialize_context(NULL)
       call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
       # update progressor
       if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
