@@ -68,7 +68,7 @@ OptimizerBatchDesignPoints = R6Class("OptimizerBatchDesignPoints", inherit = Opt
       param_set = ps(
         batch_size = p_int(lower = 1L, tags = "required"),
         design = p_uty(tags = "required", custom_check = function(x) {
-          check_data_table(x, min.rows = 1, min.cols = 1, null.ok = TRUE)
+          check_data_frame(x, min.rows = 1, min.cols = 1, null.ok = TRUE)
         })
       )
       param_set$values = list(batch_size = 1L, design = NULL)
