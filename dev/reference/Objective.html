@@ -125,7 +125,19 @@ and <code>$.eval_many()</code> as named arguments.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
-    <p></p><div class="r6-active-bindings"><dl><dt><code>xdim</code></dt>
+    <p></p><div class="r6-active-bindings"><dl><dt><code>label</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.</p></dd>
+
+
+<dt><code>man</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
+The referenced help package can be opened via method <code>$help()</code>.</p></dd>
+
+
+<dt><code>xdim</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Dimension of domain.</p></dd>
 
@@ -149,6 +161,7 @@ Dimension of codomain.</p></dd>
 <li><p><a href="#method-Objective-eval"><code>Objective$eval()</code></a></p></li>
 <li><p><a href="#method-Objective-eval_many"><code>Objective$eval_many()</code></a></p></li>
 <li><p><a href="#method-Objective-eval_dt"><code>Objective$eval_dt()</code></a></p></li>
+<li><p><a href="#method-Objective-help"><code>Objective$help()</code></a></p></li>
 <li><p><a href="#method-Objective-clone"><code>Objective$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-Objective-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
@@ -160,7 +173,9 @@ Dimension of codomain.</p></dd>
 <span>  <span class="va">domain</span>,</span>
 <span>  codomain <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  constants <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  check_values <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  check_values <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  label <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  man <span class="op">=</span> <span class="cn">NA_character_</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -196,6 +211,18 @@ Changeable constants or parameters that are not subject to tuning can be stored 
 <dt><code>check_values</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should points before the evaluation and the results be checked for validity?</p></dd>
+
+
+<dt><code>label</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.</p></dd>
+
+
+<dt><code>man</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
+The referenced help package can be opened via method <code>$help()</code>.</p></dd>
 
 
 </dl><p></p></div>
@@ -313,10 +340,18 @@ single-criteria functions and multiple y-columns for multi-criteria
 functions, e.g.  <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.</p>
 </div>
 
+</div><p></p><hr><a id="method-Objective-help"></a><div class="section">
+<h3 id="method-help-">Method <code><a href="https://rdrr.io/r/utils/help.html" class="external-link">help()</a></code><a class="anchor" aria-label="anchor" href="#method-help-"></a></h3>
+<p>Opens the corresponding help page referenced by field <code>$man</code>.</p><div class="section">
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Objective</span><span class="op">$</span><span class="fu">help</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
 </div><p></p><hr><a id="method-Objective-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Objective</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 

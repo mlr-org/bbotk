@@ -142,7 +142,9 @@ Optimal outcome.</p></dd>
 <span>  <span class="va">terminator</span>,</span>
 <span>  check_values <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  callbacks <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  archive <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  archive <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  man <span class="op">=</span> <span class="cn">NA_character_</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -179,6 +181,18 @@ List of callbacks.</p></dd>
 
 <dt><code>archive</code></dt>
 <dd><p>(<a href="Archive.html">Archive</a>).</p></dd>
+
+
+<dt><code>label</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.</p></dd>
+
+
+<dt><code>man</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
+The referenced help package can be opened via method <code>$help()</code>.</p></dd>
 
 
 </dl><p></p></div>
