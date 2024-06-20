@@ -75,7 +75,7 @@ Terminator = R6Class("Terminator",
     #' @param ... (ignored).
     print = function(...) {
       cli_h1(sprintf("%s %s", class(self)[1L], if (is.na(self$label)) "" else paste0("- ", self$label)))
-      cli_li(sprintf("Parameters: %s", if (length(self$param_set$values)) as_short_string(self$param_set$values) else "-"))
+      cli_li(sprintf("Parameters: %s", if(length(self$param_set$values)) as_short_string(self$param_set$values) else "-"))
     },
 
     #' @description

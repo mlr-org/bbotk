@@ -83,7 +83,7 @@ OptimInstance = R6Class("OptimInstance",
       cli_li(sprintf("Objective: %s", class(self$objective)[1]))
       cli_li("Search Space:")
       print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
-      cli_li(sprintf("Terminator: %s (%s)", class(self$terminator)[1], as_short_string(self$terminator$param_set$values)))
+      cli_li(sprintf("Terminator: %s %s", class(self$terminator)[1], if (length(self$terminator$param_set$values)) paste0("(", as_short_string(self$terminator$param_set$values), ")") else ""))
       if (!is.null(private$.result)) {
         cli_li("Result:")
         print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
