@@ -74,7 +74,7 @@ nloptr::nloptr() from package nloptr."><meta name="robots" content="noindex"><!-
 
     <div class="ref-description section level2">
     <p><code>OptimizerBatchNLoptr</code> class that implements non-linear optimization. Calls
-<code><a href="https://rdrr.io/pkg/nloptr/man/nloptr.html" class="external-link">nloptr::nloptr()</a></code> from package <a href="https://CRAN.R-project.org/package=nloptr" class="external-link"><span class="pkg">nloptr</span></a>.</p>
+<code><a href="https://astamm.github.io/nloptr/reference/nloptr.html" class="external-link">nloptr::nloptr()</a></code> from package <a href="https://CRAN.R-project.org/package=nloptr" class="external-link"><span class="pkg">nloptr</span></a>.</p>
     </div>
 
 
@@ -112,10 +112,10 @@ Create <code>random</code> start values or based on <code>center</code> of searc
 latter case, it is the center of the parameters before a trafo is applied.</p></dd>
 
 
-</dl><p>For the meaning of the control parameters, see <code><a href="https://rdrr.io/pkg/nloptr/man/nloptr.html" class="external-link">nloptr::nloptr()</a></code> and
-<code><a href="https://rdrr.io/pkg/nloptr/man/nloptr.print.options.html" class="external-link">nloptr::nloptr.print.options()</a></code>.</p>
+</dl><p>For the meaning of the control parameters, see <code><a href="https://astamm.github.io/nloptr/reference/nloptr.html" class="external-link">nloptr::nloptr()</a></code> and
+<code><a href="https://astamm.github.io/nloptr/reference/nloptr.print.options.html" class="external-link">nloptr::nloptr.print.options()</a></code>.</p>
 <p>The termination conditions <code>stopval</code>, <code>maxtime</code> and <code>maxeval</code> of
-<code><a href="https://rdrr.io/pkg/nloptr/man/nloptr.html" class="external-link">nloptr::nloptr()</a></code> are deactivated and replaced by the <a href="Terminator.html">Terminator</a>
+<code><a href="https://astamm.github.io/nloptr/reference/nloptr.html" class="external-link">nloptr::nloptr()</a></code> are deactivated and replaced by the <a href="Terminator.html">Terminator</a>
 subclasses. The x and function value tolerance termination conditions
 (<code>xtol_rel = 10^-4</code>, <code>xtol_abs = rep(0.0, length(x0))</code>, <code>ftol_rel = 0.0</code> and
 <code>ftol_abs = 0.0</code>) are still available and implemented with their package
@@ -214,17 +214,17 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              x          y           timestamp batch_nr x_domain_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;num&gt;      &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;      &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.1597428 0.02551775 2024-06-18 06:23:17        1 -0.1597428</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.1597428 0.02551775 2024-06-18 06:23:17        2 -0.1597428</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -0.1597428 0.02551775 2024-06-18 06:23:17        3 -0.1597428</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.3402572 0.11577499 2024-06-18 06:23:17        4  0.3402572</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.6597428 0.43526050 2024-06-18 06:23:17        5 -0.6597428</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  0.0000000 0.00000000 2024-06-18 06:23:17        6  0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -0.0500000 0.00250000 2024-06-18 06:23:17        7 -0.0500000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  0.0050000 0.00002500 2024-06-18 06:23:17        8  0.0050000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -0.0005000 0.00000025 2024-06-18 06:23:17        9 -0.0005000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  0.0005000 0.00000025 2024-06-18 06:23:18       10  0.0005000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  0.0000000 0.00000000 2024-06-18 06:23:18       11  0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.1597428 0.02551775 2024-06-20 09:40:38        1 -0.1597428</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -0.1597428 0.02551775 2024-06-20 09:40:39        2 -0.1597428</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -0.1597428 0.02551775 2024-06-20 09:40:39        3 -0.1597428</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  0.3402572 0.11577499 2024-06-20 09:40:39        4  0.3402572</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -0.6597428 0.43526050 2024-06-20 09:40:39        5 -0.6597428</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  0.0000000 0.00000000 2024-06-20 09:40:39        6  0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -0.0500000 0.00250000 2024-06-20 09:40:39        7 -0.0500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  0.0050000 0.00002500 2024-06-20 09:40:39        8  0.0050000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -0.0005000 0.00000025 2024-06-20 09:40:39        9 -0.0005000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  0.0005000 0.00000025 2024-06-20 09:40:39       10  0.0005000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  0.0000000 0.00000000 2024-06-20 09:40:39       11  0.0000000</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
