@@ -27,6 +27,7 @@ Depends:
     R (>= 3.1.0)
 Imports:
     checkmate (>= 2.0.0),
+    cli,
     data.table,
     lgr,
     methods,
@@ -40,6 +41,7 @@ Suggests:
     knitr,
     nloptr,
     progressr,
+    processx,
     redux,
     rmarkdown,
     testthat (>= 3.0.0),

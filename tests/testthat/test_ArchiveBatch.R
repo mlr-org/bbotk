@@ -1,6 +1,6 @@
 test_that("Archive", {
   a = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
-  expect_output(print(a), "Archive")
+  expect_snapshot(a)
   expect_equal(a$n_evals, 0)
   expect_equal(a$cols_x, c("x1", "x2"))
   expect_equal(a$cols_y, c("y"))

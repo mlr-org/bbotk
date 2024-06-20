@@ -10,6 +10,8 @@
 #' @template param_check_values
 #' @template param_callbacks
 #' @template param_archive
+#' @template param_label
+#' @template param_man
 #'
 #' @export
 OptimInstanceBatch = R6Class("OptimInstanceBatch",
@@ -27,7 +29,9 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       terminator,
       check_values = TRUE,
       callbacks = NULL,
-      archive = NULL
+      archive = NULL,
+      label = NA_character_,
+      man = NA_character_
       ) {
       assert_r6(objective, "Objective")
       search_space = choose_search_space(objective, search_space)
@@ -47,7 +51,9 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
         search_space = search_space,
         terminator = terminator,
         callbacks = callbacks,
-        archive = archive
+        archive = archive,
+        label = label,
+        man = man
       )
 
       # disable objective function if search space is not all numeric

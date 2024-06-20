@@ -6,7 +6,7 @@ test_that("Objective works", {
     )
   )
   obj = ObjectiveTestEval$new(domain = PS_2D)
-  expect_output(print(obj), "<ObjectiveTestEval:f>")
+  expect_snapshot(obj)
   expect_equal(obj$xdim, 2L)
   expect_equal(obj$ydim, 1L)
   xs = list(x1 = 0, x2 = 1)
@@ -36,7 +36,7 @@ test_that("Objective works", {
     )
   )
   obj = ObjectiveTestEvalMany$new(domain = PS_2D)
-  expect_output(print(obj), "<ObjectiveTestEvalMany:f>")
+  expect_snapshot(obj)
   res1many = obj$eval(xs)
   expect_list(res1many)
   res2many = obj$eval_many(replicate(3, xs, simplify = FALSE))
@@ -98,10 +98,6 @@ test_that("Objective specialzations work", {
     expect_function(fun1$fun) # check AB
     expect_function(fun2$fun)
     expect_function(fun3$fun)
-
-    expect_output(print(fun1), "ObjectiveRFun:function")
-    expect_output(print(fun2), "ObjectiveRFunDt:function")
-    expect_output(print(fun3), "ObjectiveRFunMany:function")
 
     ps = fun1$domain
     sampler = SamplerUnif$new(param_set = ps)

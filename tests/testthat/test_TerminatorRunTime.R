@@ -2,7 +2,7 @@ test_that("TerminatorRunTime works", {
     skip_on_cran()
 
   terminator = trm("run_time", secs = 1)
-  expect_output(print(terminator), "TerminatorRunTime")
+  expect_snapshot(terminator)
   now = Sys.time()
   inst = MAKE_INST_2D(terminator)
   a = random_search(inst, batch_size = 1L)

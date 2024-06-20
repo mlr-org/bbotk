@@ -30,6 +30,14 @@ Determines if points and results are checked for validity.}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
+
 \item{\code{cols_x}}{(\code{character()})\cr
 Column names of search space parameters.}
 
@@ -45,6 +53,7 @@ Column names of codomain target parameters.}
 \item \href{#method-Archive-format}{\code{Archive$format()}}
 \item \href{#method-Archive-print}{\code{Archive$print()}}
 \item \href{#method-Archive-clear}{\code{Archive$clear()}}
+\item \href{#method-Archive-help}{\code{Archive$help()}}
 \item \href{#method-Archive-clone}{\code{Archive$clone()}}
 }
 }
@@ -54,7 +63,13 @@ Column names of codomain target parameters.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(
+  search_space,
+  codomain,
+  check_values = FALSE,
+  label = NA_character_,
+  man = NA_character_
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -75,6 +90,14 @@ be minimized or maximized.  The default is to minimize each component.}
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
+
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -120,6 +143,16 @@ Printer.
 Clear all evaluation results from archive.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Archive$clear()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Archive-help"></a>}}
+\if{latex}{\out{\hypertarget{method-Archive-help}{}}}
+\subsection{Method \code{help()}}{
+Opens the corresponding help page referenced by field \verb{$man}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$help()}\if{html}{\out{</div>}}
 }
 
 }

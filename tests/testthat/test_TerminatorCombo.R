@@ -3,7 +3,7 @@ test_that("TerminatorCombo works", {
   terminators[[1]]$param_set$values$n_evals = 3L
   terminators[[2]]$param_set$values$n_evals = 6L
   terminator = TerminatorCombo$new(terminators)
-  expect_output(print(terminator), "TerminatorEvals")
+  expect_snapshot(terminator)
   for (mode in c("any", "all")) {
     terminator$param_set$values$any = (mode == "any")
     inst = MAKE_INST_2D(terminator)

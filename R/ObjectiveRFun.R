@@ -45,15 +45,29 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     #' list (e.g. `list(y = 3)`).
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
-    initialize = function(fun, domain, codomain = NULL, id = "function",
-      properties = character(), constants = ps(), check_values = TRUE) {
+    initialize = function(
+      fun,
+      domain,
+      codomain = NULL,
+      id = "function",
+      properties = character(),
+      constants = ps(),
+      check_values = TRUE
+      ) {
       if (is.null(codomain)) {
         codomain = ps(y = p_dbl(tags = "minimize"))
       }
       private$.fun = assert_function(fun, "xs")
       # asserts id, domain, codomain, properties
-      super$initialize(id = id, domain = domain, codomain = codomain,
-        properties = properties, constants = constants, check_values = check_values)
+      super$initialize(
+        id = id,
+        domain = domain,
+        codomain = codomain,
+        properties = properties,
+        constants = constants,
+        check_values = check_values,
+        label = "Objective Custom R Function",
+        man = "bbotk::ObjectiveRFun")
     },
 
     #' @description

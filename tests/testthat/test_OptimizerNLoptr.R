@@ -6,5 +6,5 @@ test_that("OptimizerBatchNLoptr", {
     xtol_rel = -1, xtol_abs = -1, ftol_rel = -1, ftol_abs = -1,
     term_evals = 5L)
   expect_class(z$optimizer, "OptimizerBatchNLoptr")
-  expect_output(print(z$optimizer), "OptimizerBatchNLoptr")
+  expect_snapshot(z$optimizer)
 })

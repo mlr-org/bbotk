@@ -1,6 +1,6 @@
 test_that("OptimInstanceBatchMultiCrit", {
   inst = MAKE_INST_2D_2D(20L)
-  expect_output(print(inst), "OptimInstanceBatchMultiCrit")
+  expect_snapshot(inst)
   expect_r6(inst$archive, "Archive")
   expect_data_table(inst$archive$data, nrows = 0L)
   expect_identical(inst$archive$n_evals, 0L)

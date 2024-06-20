@@ -74,8 +74,8 @@ Terminator = R6Class("Terminator",
     #'
     #' @param ... (ignored).
     print = function(...) {
-      catn(format(self), if (is.na(self$label)) "" else paste0(": ", self$label))
-      catn(str_indent("* Parameters:", as_short_string(self$param_set$values)))
+      cli_h1(sprintf("%s %s", class(self)[1L], if (is.na(self$label)) "" else paste0("- ", self$label)))
+      cli_li(sprintf("Parameters: %s", if (length(self$param_set$values)) as_short_string(self$param_set$values) else "-"))
     },
 
     #' @description
@@ -133,16 +133,12 @@ Terminator = R6Class("Terminator",
     },
 
     label = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.label)) {
-        stop("$label is read-only.")
-      }
+      assert_ro_binding(rhs)
       private$.label
     },
 
     man = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.man)) {
-        stop("$man is read-only.")
-      }
+assert_ro_binding(rhs)
       private$.man
     }
   ),

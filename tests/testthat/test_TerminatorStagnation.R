@@ -2,7 +2,7 @@ test_that("TerminatorStagnation works", {
   terminator = TerminatorStagnation$new()
   terminator$param_set$values$iters = 10
   terminator$param_set$values$threshold = 100
-  expect_output(print(terminator), "TerminatorStagnation")
+  expect_snapshot(terminator)
   inst = MAKE_INST_2D(terminator)
   a = random_search(inst, batch_size = 1L)
   expect_equal(a$n_evals, 11)

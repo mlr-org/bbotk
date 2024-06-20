@@ -81,6 +81,7 @@ Number of evaluations stored in the archive.}
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>bbotk::Archive$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href='../../bbotk/html/Archive.html#method-Archive-help'><code>bbotk::Archive$help()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>bbotk::Archive$print()</code></a></span></li>
 </ul>
 </details>

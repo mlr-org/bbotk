@@ -8,12 +8,17 @@
 #'
 #' @template field_callbacks
 #' @template field_context
+#' @template field_label
+#' @template field_man
 #'
 #' @template param_domain
 #' @template param_codomain
 #' @template param_xdt
 #' @template param_check_values
 #' @template param_constants
+#' @template param_label
+#' @template param_man
+#'
 #' @export
 Objective = R6Class("Objective",
   public = list(
@@ -57,7 +62,9 @@ Objective = R6Class("Objective",
       domain,
       codomain = ps(y = p_dbl(tags = "minimize")),
       constants = ps(),
-      check_values = TRUE
+      check_values = TRUE,
+      label = NA_character_,
+      man = NA_character_
       ) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
@@ -71,6 +78,9 @@ Objective = R6Class("Objective",
       self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
       self$constants = assert_param_set(constants)
       self$check_values = assert_flag(check_values)
+
+      private$.label = assert_string(label, na.ok = TRUE)
+      private$.man = assert_string(man, na.ok = TRUE)
     },
 
     #' @description
@@ -84,14 +94,14 @@ Objective = R6Class("Objective",
     #' Print method.
     #' @return `character()`.
     print = function() {
-      catf(self$format())
-      catf("Domain:")
-      print(self$domain)
-      catf("Codomain:")
-      print(self$codomain)
+      cli_h1(class(self)[1L])
+      cli_li("Domain:")
+      print(as.data.table(self$domain)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
+      cli_li("Codomain:")
+      print(as.data.table(self$codomain)[, c("id", "class", "lower", "upper"), with = FALSE])
       if (length(self$constants$values) > 0) {
-        catf("Constants:")
-        print(self$constants)
+        cli_li("Constants:")
+        print(as.data.table(self$constants)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
       }
     },
 
@@ -147,6 +157,12 @@ Objective = R6Class("Objective",
     #' functions, e.g.  `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_dt = function(xdt) {
       self$eval_many(transpose_list(xdt))
+    },
+
+    #' @description
+    #' Opens the corresponding help page referenced by field `$man`.
+    help = function() {
+      open_help(self$man)
     }
   ),
 
@@ -157,7 +173,17 @@ Objective = R6Class("Objective",
 
     #' @field ydim (`integer(1)`)\cr
     #' Dimension of codomain.
-    ydim = function() self$codomain$target_length
+    ydim = function() self$codomain$target_length,
+
+    label = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.label
+    },
+
+    man = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.man
+    }
   ),
 
   private = list(
@@ -182,6 +208,9 @@ Objective = R6Class("Objective",
         constants = value$clone(deep = TRUE),
         value
       )
-    }
+    },
+
+    .label = NULL,
+    .man = NULL
   )
 )

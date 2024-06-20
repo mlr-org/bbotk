@@ -16,6 +16,8 @@
 #' @template param_callbacks
 #' @template param_archive
 #' @template param_rush
+#' @template param_label
+#' @template param_man
 #'
 #' @template field_rush
 #'
@@ -36,12 +38,14 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       check_values = FALSE,
       callbacks = NULL,
       archive = NULL,
-      rush = NULL
+      rush = NULL,
+      label = NA_character_,
+      man = NA_character_
       ) {
       require_namespaces("rush")
       assert_r6(objective, "Objective")
       search_space = choose_search_space(objective, search_space)
-      self$rush = assert_rush(rush, null_ok = TRUE) %??% rsh()
+      self$rush = rush::assert_rush(rush, null_ok = TRUE) %??% rush::rsh()
 
       # archive is passed when a downstream packages creates a new archive class
       archive = if (is.null(archive)) {
@@ -59,7 +63,9 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
         search_space = search_space,
         terminator = terminator,
         callbacks = callbacks,
-        archive = archive)
+        archive = archive,
+        label = label,
+        man = man)
     },
 
     #' @description
@@ -68,7 +74,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     #' @param ... (ignored).
     print = function(...) {
       super$print()
-      catf(str_indent("* Workers:", self$rush$n_workers))
+      cli_li(sprintf("Workers: %i", self$rush$n_workers))
     },
 
     #' @description

@@ -46,11 +46,26 @@ ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
-    initialize = function(fun, domain, codomain = NULL, id = "function", properties = character(), constants = ps(), check_values = TRUE) {
+    initialize = function(
+      fun,
+      domain,
+      codomain = NULL,
+      id = "function",
+      properties = character(),
+      constants = ps(),
+      check_values = TRUE
+      ) {
       if (is.null(codomain)) codomain = ps(y = p_dbl(tags = "minimize"))
       private$.fun = assert_function(fun, "xss")
       # asserts id, domain, codomain, properties
-      super$initialize(id = id, domain = domain, codomain = codomain, properties = properties, constants = constants, check_values = check_values)
+      super$initialize(
+        id = id,
+        domain = domain,
+        codomain = codomain,
+        properties = properties,
+        constants = constants,
+        check_values = check_values,
+        label = "Objective Custom R Function Eval List")
     },
 
     #' @description

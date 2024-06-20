@@ -5,11 +5,7 @@ test_that("OptimInstanceBatchSingleCrit", {
   expect_identical(inst$archive$n_evals, 0L)
   expect_identical(inst$archive$n_batch, 0L)
   expect_null(inst$result)
-  expect_output(print(inst), "Not optimized")
-  expect_output(print(inst), "ObjectiveRFun:function")
-  expect_output(print(inst), "^(?s)(?!.*Result).*$", perl = TRUE)
-  expect_output(print(inst), "<TerminatorEvals>")
-
+  expect_snapshot(inst)
   xdt = data.table(x1 = -1:1, x2 = list(-1, 0, 1))
   expect_named(inst$eval_batch(xdt), "y")
   expect_data_table(inst$archive$data, nrows = 3L)
@@ -23,10 +19,6 @@ test_that("OptimInstanceBatchSingleCrit", {
   inst = MAKE_INST_2D(20L)
   optimizer = opt("random_search")
   optimizer$optimize(inst)
-  expect_output(print(inst), "Optimized")
-  expect_output(print(inst), "ObjectiveRFun:function")
-  expect_output(print(inst), "<TerminatorEvals>")
-  expect_output(print(inst), "Result")
 })
 
 test_that("OptimInstance works with trafos", {
@@ -36,7 +28,6 @@ test_that("OptimInstance works with trafos", {
   expect_data_table(inst$archive$data, nrows = 3L)
   expect_equal(inst$archive$data$y, c(2, 0, 2))
   expect_equal(inst$archive$data$x_domain[[1]], list(x1 = -1, x2 = -1))
-  expect_output(print(inst), "<OptimInstanceBatchSingleCrit>")
 })
 
 test_that("OptimInstance works with extras input", {
