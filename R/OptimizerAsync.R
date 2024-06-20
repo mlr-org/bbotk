@@ -62,7 +62,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 
   if (getOption("bbotk_local", FALSE)) {
     # debug mode runs .optimize() in main process
-    rush = RushWorker$new(instance$rush$network_id, remote = FALSE)
+    rush = rush::RushWorker$new(instance$rush$network_id, remote = FALSE)
     instance$rush = rush
     instance$archive$rush = rush
     get_private(optimizer)$.optimize(instance)
@@ -85,13 +85,13 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         packages = c(optimizer$packages, "bbotk"), # add packages from objective
         optimizer = optimizer,
         instance = instance)
-    } else if (rush_available()) {
+    } else if (rush::rush_available()) {
       # local workers
       lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
         instance$search_space$length,
         optimizer$format(),
         instance$terminator$format(with_params = TRUE),
-        rush_config()$n_workers
+        rush::rush_config()$n_workers
       )
 
       rush$start_local_workers(

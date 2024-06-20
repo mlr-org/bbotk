@@ -28,12 +28,14 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(search_space, codomain, check_values = FALSE, rush) {
       require_namespaces("rush")
-      self$rush = assert_rush(rush)
+      self$rush = rush::assert_rush(rush)
 
       super$initialize(
         search_space = search_space,
         codomain = codomain,
-        check_values = check_values)
+        check_values = check_values,
+        label = "Rush Data Storage",
+        man = "bbotk::ArchiveAsync")
     },
 
     #' @description

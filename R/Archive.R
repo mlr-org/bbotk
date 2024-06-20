@@ -9,9 +9,13 @@
 #' @template field_search_space
 #' @template field_codomain
 #' @template field_start_time
+#' @template field_label
+#' @template field_man
 #'
 #' @template param_search_space
 #' @template param_codomain
+#' @template param_label
+#' @template param_man
 #'
 #' @export
 Archive = R6Class("Archive",
@@ -33,13 +37,22 @@ Archive = R6Class("Archive",
     #' @param check_values (`logical(1)`)\cr
     #' Should x-values that are added to the archive be checked for validity?
     #' Search space that is logged into archive.
-    initialize = function(search_space, codomain, check_values = FALSE) {
+    initialize = function(
+      search_space,
+      codomain,
+      check_values = FALSE,
+      label = NA_character_,
+      man = NA_character_
+      ) {
       self$search_space = assert_param_set(search_space)
       assert_param_set(codomain)
       # get "codomain" element if present (new paradox) or default to $params (old paradox)
       params = get0("domains", codomain, ifnotfound = codomain$params)
       self$codomain = Codomain$new(params)
       self$check_values = assert_flag(check_values)
+
+      private$.label = assert_string(label, na.ok = TRUE)
+      private$.man = assert_string(man, na.ok = TRUE)
     },
 
     #' @description
@@ -54,8 +67,8 @@ Archive = R6Class("Archive",
     #'
     #' @param ... (ignored).
     print = function() {
-      catf(format(self))
-      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits = 2)
+      cli_h1(sprintf("%s %s", class(self)[1L], if (is.na(self$label)) "" else paste0("- ", self$label)))
+      print(as.data.table(self, unnest = "x_domain"), digits = 1)
     },
 
     #' @description
@@ -63,6 +76,12 @@ Archive = R6Class("Archive",
     clear = function() {
       self$start_time = NULL
       invisible(self)
+    },
+
+    #' @description
+    #' Opens the corresponding help page referenced by field `$man`.
+    help = function() {
+      open_help(self$man)
     }
   ),
 
@@ -74,7 +93,22 @@ Archive = R6Class("Archive",
 
     #' @field cols_y (`character()`)\cr
     #' Column names of codomain target parameters.
-    cols_y = function() self$codomain$target_ids
+    cols_y = function() self$codomain$target_ids,
+
+    label = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.label
+    },
+
+    man = function(rhs) {
+assert_ro_binding(rhs)
+      private$.man
+    }
+  ),
+
+  private = list(
+    .label = NULL,
+    .man = NULL
   )
 )
 

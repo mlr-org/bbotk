@@ -26,18 +26,22 @@ OptimInstanceBatchSingleCrit = R6Class("OptimInstanceBatchSingleCrit",
       terminator,
       check_values = TRUE,
       callbacks = NULL,
-      archive = NULL) {
+      archive = NULL
+      ) {
 
       if (objective$codomain$target_length > 1) {
         stop("Codomain > 1")
       }
+
       super$initialize(
         objective = objective,
         search_space = search_space,
         terminator = terminator,
         check_values = check_values,
         callbacks = callbacks,
-        archive = archive)
+        archive = archive,
+        label = "Batch Single Criterion",
+        man = "bbotk::OptimInstanceBatchSingleCrit")
     },
 
     #' @description

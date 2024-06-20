@@ -50,7 +50,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   check_values = FALSE,
   callbacks = NULL,
   archive = NULL,
-  rush = NULL
+  rush = NULL,
+  label = NA_character_,
+  man = NA_character_
 )}\if{html}{\out{</div>}}
 }
 
@@ -80,6 +82,14 @@ List of callbacks.}
 
 \item{\code{rush}}{(\code{Rush})\cr
 If a rush instance is supplied, the tuning runs without batches.}
+
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
 }
 \if{html}{\out{</div>}}
 }

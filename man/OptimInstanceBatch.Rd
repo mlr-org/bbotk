@@ -67,7 +67,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   terminator,
   check_values = TRUE,
   callbacks = NULL,
-  archive = NULL
+  archive = NULL,
+  label = NA_character_,
+  man = NA_character_
 )}\if{html}{\out{</div>}}
 }
 
@@ -94,6 +96,14 @@ Should points before the evaluation and the results be checked for validity?}
 List of callbacks.}
 
 \item{\code{archive}}{(\link{Archive}).}
+
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
 }
 \if{html}{\out{</div>}}
 }

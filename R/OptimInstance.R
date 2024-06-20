@@ -15,6 +15,8 @@
 #' @template param_check_values
 #' @template param_callbacks
 #' @template param_archive
+#' @template param_label
+#' @template param_man
 #'
 #' @template param_xdt
 #'
@@ -23,6 +25,8 @@
 #' @template field_terminator
 #' @template field_archive
 #' @template field_progressor
+#' @template field_label
+#' @template field_man
 #'
 #'
 #' @export
@@ -47,7 +51,9 @@ OptimInstance = R6Class("OptimInstance",
       terminator,
       check_values = TRUE,
       callbacks = NULL,
-      archive = NULL
+      archive = NULL,
+      label = NA_character_,
+      man = NA_character_
       ) {
       self$objective = assert_r6(objective, "Objective")
       self$objective$callbacks = assert_callbacks(as_callbacks(callbacks))
@@ -55,6 +61,9 @@ OptimInstance = R6Class("OptimInstance",
       self$terminator = assert_terminator(terminator, self)
       assert_flag(check_values)
       self$archive = assert_r6(archive, "Archive")
+
+      private$.label = assert_string(label, na.ok = TRUE)
+      private$.man = assert_string(man, na.ok = TRUE)
     },
 
     #' @description
@@ -69,22 +78,19 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param ... (ignored).
     print = function(...) {
-
-      catf(format(self))
-      catf(str_indent("* State: ", if (is.null(private$.result)) "Not optimized" else "Optimized"))
-      catf(str_indent("* Objective:", format(self$objective)))
-      if (!self$search_space$length) {
-        catf("* Search Space: Empty")
-      } else {
-        catf("* Search Space:")
-        print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
-      }
-      catf(str_indent("* Terminator:", format(self$terminator)))
+      cli_h1(class(self)[1L])
+      cli_li(sprintf("State: %s", if (is.null(private$.result)) "Not optimized" else "Optimized"))
+      cli_li(sprintf("Objective: %s", class(self$objective)[1]))
+      cli_li("Search Space:")
+      print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
+      cli_li(sprintf("Terminator: %s %s", class(self$terminator)[1], if (length(self$terminator$param_set$values)) paste0("(", as_short_string(self$terminator$param_set$values), ")") else ""))
       if (!is.null(private$.result)) {
-        catf("* Result:")
+        cli_li("Result:")
         print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
-        catf("* Archive:")
-        print(as.data.table(self$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
+        cli_li("Archive:")
+        tab = as.data.table(self$archive)
+        x_domain_ids = names(tab)[grepl("x_domain_" , names(tab))]
+        print(tab[, c(self$archive$cols_y, self$archive$cols_x, x_domain_ids), with = FALSE], digits = 1)
       }
     },
 
@@ -129,11 +135,23 @@ OptimInstance = R6Class("OptimInstance",
     #' @field is_terminated (`logical(1)`).
     is_terminated = function() {
       self$terminator$is_terminated(self$archive)
+    },
+
+    label = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.label
+    },
+
+    man = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.man
     }
   ),
 
   private = list(
     .result = NULL,
+    .label = NULL,
+    .man = NULL,
 
     deep_clone = function(name, value) {
       switch(name,

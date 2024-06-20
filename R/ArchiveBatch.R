@@ -40,7 +40,9 @@ ArchiveBatch = R6Class("ArchiveBatch",
       super$initialize(
         search_space = search_space,
         codomain = codomain,
-        check_values = check_values) # FIXME: not implemented yet
+        check_values = check_values,  # FIXME: not implemented yet
+        label = "Data Table Storage",
+        man = "bbotk::ArchiveBatch")
       self$data = data.table()
     },
 

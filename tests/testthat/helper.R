@@ -215,7 +215,6 @@ expect_man_exists = function(man) {
 
 expect_dictionary = function(d, contains = NA_character_, min_items = 0L) {
   checkmate::expect_r6(d, "Dictionary")
-  testthat::expect_output(print(d), "Dictionary")
   keys = d$keys()
 
   checkmate::expect_environment(d$items)

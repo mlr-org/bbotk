@@ -25,7 +25,7 @@ test_that("OptimizerBatchCmaes", {
   z = test_optimizer(instance, "cmaes", real_evals = 10L)
 
   expect_class(z$optimizer, "OptimizerBatchCmaes")
-  expect_output(print(z$optimizer), "OptimizerBatchCmaes")
+  expect_snapshot(z$optimizer)
 
   expect_error(test_optimizer_2d("cmaes", term_evals = 10L), "multi-crit objectives")
 })
