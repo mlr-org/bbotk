@@ -111,7 +111,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{params}}{(\code{list()})\cr
 Named list with which to initialize the codomain.
-This argument is analogous to \link{ParamSet}'s \verb{$initialize()} \code{params} argument.}
+This argument is analogous to \link[paradox:ParamSet]{paradox::ParamSet}'s \verb{$initialize()} \code{params} argument.}
 }
 \if{html}{\out{</div>}}
 }

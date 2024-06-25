@@ -43,7 +43,7 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #'
     #' @param params (`list()`)\cr
     #'   Named list with which to initialize the codomain.
-    #'   This argument is analogous to [ParamSet]'s `$initialize()` `params` argument.
+    #'   This argument is analogous to [paradox::ParamSet]'s `$initialize()` `params` argument.
     initialize = function(params) {
 
       assert_list(params)
