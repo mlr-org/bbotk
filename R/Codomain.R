@@ -6,7 +6,7 @@
 #' `"maximize"`. The codomain may contain extra parameters which are ignored
 #' when calling the [Archive] methods `$best()`, `$nds_selection()` and
 #' `$cols_y`. This class is usually constructed internally from a
-#' [ParamSet] when [Objective] is initialized.
+#' [paradox::ParamSet] when [Objective] is initialized.
 #'
 #' @export
 #' @examples

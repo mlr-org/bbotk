@@ -15,7 +15,7 @@ The \code{Objective} class describes a black-box objective function that maps an
 \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 Callbacks applied during the optimization.}
 
-\item{\code{context}}{(\link{Context})\cr
+\item{\code{context}}{(\link{ContextBatch})\cr
 Stores the context for the callbacks.}
 
 \item{\code{id}}{(\code{character(1)})).}
