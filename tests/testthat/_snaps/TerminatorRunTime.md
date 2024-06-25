@@ -2,7 +2,8 @@
 
     Code
       terminator
-    Output
-      <TerminatorRunTime>: Run Time
+    Message
+      
+      -- TerminatorRunTime - Run Time ------------------------------------------------
       * Parameters: secs=1
 
