@@ -2,9 +2,8 @@
 
     Code
       z$optimizer
-    Message
-      
-      -- OptimizerBatchGridSearch - Grid Search --------------------------------------
+    Output
+      <OptimizerBatchGridSearch>: Grid Search
       * Parameters: batch_size=1, resolution=10
       * Parameter classes: ParamLgl, ParamInt, ParamDbl, ParamFct
       * Properties: dependencies, single-crit, multi-crit
@@ -14,9 +13,8 @@
 
     Code
       z$optimizer
-    Message
-      
-      -- OptimizerBatchGridSearch - Grid Search --------------------------------------
+    Output
+      <OptimizerBatchGridSearch>: Grid Search
       * Parameters: batch_size=1, resolution=10
       * Parameter classes: ParamLgl, ParamInt, ParamDbl, ParamFct
       * Properties: dependencies, single-crit, multi-crit
