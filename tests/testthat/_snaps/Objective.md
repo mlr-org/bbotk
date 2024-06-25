@@ -2,39 +2,35 @@
 
     Code
       obj
-    Message
-      
-      -- ObjectiveTestEval -----------------------------------------------------------
-      * Domain:
     Output
-             id    class lower upper nlevels
-         <char>   <char> <num> <num>   <num>
-      1:     x1 ParamDbl    -1     1     Inf
-      2:     x2 ParamDbl    -1     1     Inf
-    Message
-      * Codomain:
-    Output
-             id    class lower upper
-         <char>   <char> <num> <num>
-      1:      y ParamDbl  -Inf   Inf
+      <ObjectiveTestEval:f>
+      Domain:
+      <ParamSet(2)>
+             id    class lower upper nlevels        default  value
+         <char>   <char> <num> <num>   <num>         <list> <list>
+      1:     x1 ParamDbl    -1     1     Inf <NoDefault[0]>       
+      2:     x2 ParamDbl    -1     1     Inf <NoDefault[0]>       
+      Codomain:
+      <Codomain(1)>
+             id    class lower upper nlevels        default  value
+         <char>   <char> <num> <num>   <num>         <list> <list>
+      1:      y ParamDbl  -Inf   Inf     Inf <NoDefault[0]>       
 
 ---
 
     Code
       obj
-    Message
-      
-      -- ObjectiveTestEvalMany -------------------------------------------------------
-      * Domain:
     Output
-             id    class lower upper nlevels
-         <char>   <char> <num> <num>   <num>
-      1:     x1 ParamDbl    -1     1     Inf
-      2:     x2 ParamDbl    -1     1     Inf
-    Message
-      * Codomain:
-    Output
-             id    class lower upper
-         <char>   <char> <num> <num>
-      1:      y ParamDbl  -Inf   Inf
+      <ObjectiveTestEvalMany:f>
+      Domain:
+      <ParamSet(2)>
+             id    class lower upper nlevels        default  value
+         <char>   <char> <num> <num>   <num>         <list> <list>
+      1:     x1 ParamDbl    -1     1     Inf <NoDefault[0]>       
+      2:     x2 ParamDbl    -1     1     Inf <NoDefault[0]>       
+      Codomain:
+      <Codomain(1)>
+             id    class lower upper nlevels        default  value
+         <char>   <char> <num> <num>   <num>         <list> <list>
+      1:      y ParamDbl  -Inf   Inf     Inf <NoDefault[0]>       
 

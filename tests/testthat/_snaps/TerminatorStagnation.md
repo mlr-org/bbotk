@@ -2,8 +2,7 @@
 
     Code
       terminator
-    Message
-      
-      -- TerminatorStagnation - Stagnation -------------------------------------------
+    Output
+      <TerminatorStagnation>: Stagnation
       * Parameters: iters=10, threshold=100
 

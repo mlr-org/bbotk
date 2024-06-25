@@ -94,14 +94,14 @@ Objective = R6Class("Objective",
     #' Print method.
     #' @return `character()`.
     print = function() {
-      cli_h1(class(self)[1L])
-      cli_li("Domain:")
-      print(as.data.table(self$domain)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
-      cli_li("Codomain:")
-      print(as.data.table(self$codomain)[, c("id", "class", "lower", "upper"), with = FALSE])
+      catf(self$format())
+      catf("Domain:")
+      print(self$domain)
+      catf("Codomain:")
+      print(self$codomain)
       if (length(self$constants$values) > 0) {
-        cli_li("Constants:")
-        print(as.data.table(self$constants)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
+        catf("Constants:")
+        print(self$constants)
       }
     },
 
