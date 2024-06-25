@@ -30,7 +30,7 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.15.0.9000),
+    mlr3misc (>= 0.15.1),
     R6
 Suggests:
     adagio,
@@ -47,9 +47,6 @@ Suggests:
     rush
 VignetteBuilder:
     knitr
-Remotes:
-    mlr-org/mlr3misc,
-    mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
