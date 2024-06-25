@@ -67,8 +67,8 @@ Archive = R6Class("Archive",
     #'
     #' @param ... (ignored).
     print = function() {
-      catf(format(self))
-      print(self$data[, setdiff(names(self$data), "x_domain"), with = FALSE], digits = 2)
+      cli_h1(sprintf("%s %s", class(self)[1L], if (is.na(self$label)) "" else paste0("- ", self$label)))
+      print(as.data.table(self, unnest = "x_domain"), digits = 1)
     },
 
     #' @description

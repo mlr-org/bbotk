@@ -2,8 +2,9 @@
 
     Code
       z$optimizer
-    Output
-      <OptimizerBatchCmaes>: Covariance Matrix Adaptation Evolution Strategy
+    Message
+      
+      -- OptimizerBatchCmaes - Covariance Matrix Adaptation Evolution Strategy -------
       * Parameters: start_values=random
       * Parameter classes: ParamDbl
       * Properties: single-crit

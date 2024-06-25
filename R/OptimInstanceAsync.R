@@ -74,7 +74,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     #' @param ... (ignored).
     print = function(...) {
       super$print()
-      catf(str_indent("* Workers:", self$rush$n_workers))
+      cli_li(sprintf("Workers: %i", self$rush$n_workers))
     },
 
     #' @description
