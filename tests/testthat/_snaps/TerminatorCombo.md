@@ -2,10 +2,8 @@
 
     Code
       terminator
-    Message
-      
-      -- TerminatorCombo - Combination -----------------------------------------------
-      * Parameters: any=TRUE
     Output
+      <TerminatorCombo>: Combination
+      * Parameters: any=TRUE
       * Terminators: <TerminatorEvals>,<TerminatorEvals>
 
