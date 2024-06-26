@@ -4,7 +4,7 @@
 \alias{Codomain}
 \title{Codomain of Function}
 \description{
-A \link{ParamSet} defining the codomain of a function. The parameter
+A \link[paradox:ParamSet]{paradox::ParamSet} defining the codomain of a function. The parameter
 set must contain at least one target parameter tagged with \code{"minimize"} or
 \code{"maximize"}. The codomain may contain extra parameters which are ignored
 when calling the \link{Archive} methods \verb{$best()}, \verb{$nds_selection()} and
@@ -73,11 +73,14 @@ of a maximization problem to turn it into a minimization problem.}
 <details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="add_dep"><a href='../../paradox/html/ParamSet.html#method-ParamSet-add_dep'><code>paradox::ParamSet$add_dep()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="aggr_internal_tuned_values"><a href='../../paradox/html/ParamSet.html#method-ParamSet-aggr_internal_tuned_values'><code>paradox::ParamSet$aggr_internal_tuned_values()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="assert"><a href='../../paradox/html/ParamSet.html#method-ParamSet-assert'><code>paradox::ParamSet$assert()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="assert_dt"><a href='../../paradox/html/ParamSet.html#method-ParamSet-assert_dt'><code>paradox::ParamSet$assert_dt()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="check"><a href='../../paradox/html/ParamSet.html#method-ParamSet-check'><code>paradox::ParamSet$check()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="check_dependencies"><a href='../../paradox/html/ParamSet.html#method-ParamSet-check_dependencies'><code>paradox::ParamSet$check_dependencies()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="check_dt"><a href='../../paradox/html/ParamSet.html#method-ParamSet-check_dt'><code>paradox::ParamSet$check_dt()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="convert_internal_search_space"><a href='../../paradox/html/ParamSet.html#method-ParamSet-convert_internal_search_space'><code>paradox::ParamSet$convert_internal_search_space()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="disable_internal_tuning"><a href='../../paradox/html/ParamSet.html#method-ParamSet-disable_internal_tuning'><code>paradox::ParamSet$disable_internal_tuning()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="flatten"><a href='../../paradox/html/ParamSet.html#method-ParamSet-flatten'><code>paradox::ParamSet$flatten()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="format"><a href='../../paradox/html/ParamSet.html#method-ParamSet-format'><code>paradox::ParamSet$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="paradox" data-topic="ParamSet" data-id="get_domain"><a href='../../paradox/html/ParamSet.html#method-ParamSet-get_domain'><code>paradox::ParamSet$get_domain()</code></a></span></li>

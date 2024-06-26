@@ -1,7 +1,7 @@
 #' @title Codomain of Function
 #'
 #' @description
-#' A [ParamSet] defining the codomain of a function. The parameter
+#' A [paradox::ParamSet] defining the codomain of a function. The parameter
 #' set must contain at least one target parameter tagged with `"minimize"` or
 #' `"maximize"`. The codomain may contain extra parameters which are ignored
 #' when calling the [Archive] methods `$best()`, `$nds_selection()` and
