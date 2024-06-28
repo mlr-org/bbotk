@@ -1,3 +1,5 @@
+# bbotk (development version)
+
 # bbotk 1.0.0
 
 * feat: Introduce asynchronous optimization with the `OptimizerAsync` and `OptimInstanceAsync` classes.
