@@ -4,12 +4,12 @@
 \alias{Codomain}
 \title{Codomain of Function}
 \description{
-A \link{ParamSet} defining the codomain of a function. The parameter
+A \link[paradox:ParamSet]{paradox::ParamSet} defining the codomain of a function. The parameter
 set must contain at least one target parameter tagged with \code{"minimize"} or
 \code{"maximize"}. The codomain may contain extra parameters which are ignored
 when calling the \link{Archive} methods \verb{$best()}, \verb{$nds_selection()} and
 \verb{$cols_y}. This class is usually constructed internally from a
-\link{ParamSet} when \link{Objective} is initialized.
+\link[paradox:ParamSet]{paradox::ParamSet} when \link{Objective} is initialized.
 }
 \examples{
 
@@ -114,7 +114,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{params}}{(\code{list()})\cr
 Named list with which to initialize the codomain.
-This argument is analogous to \link{ParamSet}'s \verb{$initialize()} \code{params} argument.}
+This argument is analogous to \link[paradox:ParamSet]{paradox::ParamSet}'s \verb{$initialize()} \code{params} argument.}
 }
 \if{html}{\out{</div>}}
 }
