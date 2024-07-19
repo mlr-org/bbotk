@@ -166,7 +166,9 @@ Optimizer = R6Class("Optimizer",
 assign_result_default = function(inst) {
   assert_r6(inst, "OptimInstance")
   res = inst$archive$best()
-  xdt = res[, inst$search_space$ids(), with = FALSE]
+  ids = inst$search_space$ids()
+  if ("keys" %in% names(res)) ids = c(ids, "keys")
+  xdt = res[, ids, with = FALSE]
 
   if (inherits(inst, "OptimInstanceBatchMultiCrit") || inherits(inst, "OptimInstanceAsyncMultiCrit")) {
     ydt = res[, inst$archive$cols_y, with = FALSE]
