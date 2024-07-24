@@ -98,7 +98,6 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
         xss_trafoed = transform_xdt_to_xss(private$.xdt, self$search_space)
         ydt = self$objective$eval_many(xss_trafoed)
       }
-      if (!private$.store_x_domain) xss_trafoed = NULL
 
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
@@ -159,7 +158,6 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
   private = list(
     .xdt = NULL,
     .objective_function = NULL,
-    .store_x_domain = TRUE,
 
     # initialize context for optimization
     .initialize_context = function(optimizer) {
