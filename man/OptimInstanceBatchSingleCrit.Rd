@@ -79,7 +79,7 @@ List of callbacks.}
 The \link{Optimizer} object writes the best found point
 and estimated performance value here. For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceBatchSingleCrit$assign_result(xdt, y)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceBatchSingleCrit$assign_result(xdt, y, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -93,6 +93,9 @@ However, \code{xdt} can contain additional columns.}
 
 \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
+
+\item{\code{...}}{(\code{any})\cr
+ignored.}
 }
 \if{html}{\out{</div>}}
 }
