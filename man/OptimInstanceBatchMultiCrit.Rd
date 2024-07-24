@@ -91,7 +91,7 @@ The \link{Optimizer} object writes the best found points
 and estimated performance values here (probably the Pareto set / front).
 For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceBatchMultiCrit$assign_result(xdt, ydt)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceBatchMultiCrit$assign_result(xdt, ydt, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -105,6 +105,9 @@ However, \code{xdt} can contain additional columns.}
 
 \item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Optimal outcome.}
+
+\item{\code{...}}{(\code{any})\cr
+ignored.}
 }
 \if{html}{\out{</div>}}
 }

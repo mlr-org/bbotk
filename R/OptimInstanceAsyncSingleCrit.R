@@ -52,7 +52,9 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
     #'
     #' @param y (`numeric(1)`)\cr
     #' Optimal outcome.
-    assign_result = function(xdt, y) {
+    #' @param ... (`any`)\cr
+    #' ignored.
+    assign_result = function(xdt, y, ...) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())
