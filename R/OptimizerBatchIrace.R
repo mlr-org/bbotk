@@ -181,15 +181,20 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
       }
 
       # make scenario
-      scenario = c(list(maxExperiments = terminator$param_set$values$n_evals, targetRunnerData = list(inst = inst)), pv)
+      digits = pv$digits
+      pv$digits = NULL
+
+      scenario = c(list(
+        parameters = paradox_to_irace(inst$search_space, pv$digits),
+        maxExperiments = terminator$param_set$values$n_evals,
+        targetRunnerData = list(inst = inst)), pv)
 
       # run irace
-      res = invoke(irace::irace, scenario = scenario, parameters = paradox_to_irace(inst$search_space, pv$digits), .opts = allow_partial_matching)
+      res = invoke(irace::irace, scenario = scenario, .opts = allow_partial_matching)
 
       # add race and step to archive
-      iraceResults = NULL
-      load(self$param_set$values$logFile)
-      log = as.data.table(iraceResults$experimentLog)
+      iraceResults = irace::read_logfile(self$param_set$values$logFile)
+      log = iraceResults$state$experiment_log
       log[, "step" := rleid("instance"), by = "iteration"]
       set(inst$archive$data, j = "race", value = log$iteration)
       set(inst$archive$data, j = "step", value = log$step)
@@ -220,14 +225,14 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
 
 mlr_optimizers$add("irace", OptimizerBatchIrace)
 
-target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) { # nolint
+target_runner_default = function(experiment, exec_target_runner, scenario, target_runner) { # nolint
   optim_instance = scenario$targetRunnerData$inst
 
   xdt = map_dtr(experiment, function(e) {
     configuration = as.data.table(e$configuration)
     # add configuration and instance id to archive
-    set(configuration, j = "configuration", value = e$id.configuration)
-    set(configuration, j = "instance", value = e$id.instance)
+    set(configuration, j = "configuration", value = e$id_configuration)
+    set(configuration, j = "instance", value = e$id_instance)
     configuration
   })
   # fix logicals
