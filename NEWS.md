@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+compatibility: Work with new irace 4.0.0
+
 # bbotk 1.0.1
 
 * refactor: extra columns in results.
