@@ -17,11 +17,7 @@ toc:
 navbar:
   structure:
     left:  [reference, news, book]
-<<<<<<< Updated upstream
-    right: [github, mattermost, stackoverflow, rss, lightswitch]
-=======
-    right: [search, github, mattermost, stackoverflow, rss]
->>>>>>> Stashed changes
+    right: [search, github, mattermost, stackoverflow, rss, lightswitch]
   components:
     home: ~
     reference:
