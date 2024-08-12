@@ -42,11 +42,8 @@ Suggests:
     progressr,
     processx,
     redux,
-    rmarkdown,
     testthat (>= 3.0.0),
     rush
-VignetteBuilder:
-    knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8

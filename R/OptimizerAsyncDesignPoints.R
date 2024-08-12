@@ -34,7 +34,7 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"),
         properties = c("dependencies", "single-crit", "multi-crit"),
         packages = "rush",
-        label = "Design Points",
+        label = "Asynchronous Design Points",
         man = "bbotk::mlr_optimizers_async_design_points"
       )
     },
