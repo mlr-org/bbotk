@@ -96,8 +96,7 @@ A optimization callback works with <a href="ContextBatch.html">ContextBatch</a>.
 <span>  on_optimizer_before_eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_optimizer_after_eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_result <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  on_optimization_end <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  on_optimization_end <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -154,11 +153,6 @@ The functions must have two arguments named <code>callback</code> and <code>cont
 Stage called at the end of the optimization.
 Called in <code>Optimizer$optimize()</code>.
 The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
-
-
-<dt id="arg-fields">fields<a class="anchor" aria-label="anchor" href="#arg-fields"></a></dt>
-<dd><p>(list of <code>any</code>)<br>
-List of additional fields.</p></dd>
 
 </dl></div>
     <div class="section level2">
