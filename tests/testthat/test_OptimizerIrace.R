@@ -28,7 +28,7 @@ test_that("OptimizerBatchIrace minimize works", {
 
   # check optimization direction
   # first elite of the first race should have the lowest average performance
-  load(optimizer$param_set$values$logFile)
+  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile)
   elites = iraceResults$allElites
   aggr = instance$archive$data[race == 1, .(y = mean(y)), by = configuration]
   expect_equal(aggr[which.min(y), configuration], elites[[1]][1])
@@ -68,7 +68,7 @@ test_that("OptimizerBatchIrace maximize works", {
 
   # check optimization direction
   # first elite of the first race should have the highest average performance
-  load(optimizer$param_set$values$logFile)
+  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile)
   elites = iraceResults$allElites
   aggr = instance$archive$data[race == 1, .(y = mean(y)), by = configuration]
   expect_equal(aggr[which.max(y), configuration], elites[[1]][1])
