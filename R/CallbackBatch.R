@@ -101,8 +101,6 @@ CallbackBatch = R6Class("CallbackBatch",
 #'   Stage called at the end of the optimization.
 #'   Called in `Optimizer$optimize()`.
 #'   The functions must have two arguments named `callback` and `context`.
-#' @param fields (list of `any`)\cr
-#'   List of additional fields.
 #'
 #' @export
 #' @inherit CallbackBatch examples
@@ -114,8 +112,7 @@ callback_batch = function(
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
   on_result = NULL,
-  on_optimization_end = NULL,
-  fields = list()
+  on_optimization_end = NULL
   ) {
   stages = discard(set_names(list(
     on_optimization_begin,
