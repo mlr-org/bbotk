@@ -67,6 +67,7 @@ optimize_batch_default = function(instance, optimizer) {
   lg$info("Result:")
   lg$info(capture.output(print(
     instance$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+  call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
   return(instance$result)
 }
 
