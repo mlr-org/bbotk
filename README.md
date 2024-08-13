@@ -16,51 +16,53 @@ Badge](https://www.r-pkg.org/badges/version-ago/bbotk)](https://cran.r-project.o
 configurable search spaces via the
 [paradox](https://github.com/mlr-org/paradox) package and optimizes
 every user-defined objective function. The package includes several
-optimization algorithms e.g. Random Search, Iterated Racing, Bayesian
-Optimization (in [mlr3mbo](https://github.com/mlr-org/mlr3mbo)) and
-Hyperband (in
+optimization algorithms e.g. Random Search, Grid Search, Iterated
+Racing, Bayesian Optimization (in
+[mlr3mbo](https://github.com/mlr-org/mlr3mbo)) and Hyperband (in
 [mlr3hyperband](https://github.com/mlr-org/mlr3hyperband)). bbotk is the
 base package of [mlr3tuning](https://github.com/mlr-org/mlr3tuning),
 [mlr3fselect](https://github.com/mlr-org/mlr3fselect) and
 [miesmuschel](https://github.com/mlr-org/miesmuschel).
 
-The package includes the basic building blocks of optimization:
-
--   `Optimizer`: Objects of this class allow you to optimize an object
-    of the class `OptimInstance`.
--   `OptimInstance`: Defines the optimization problem, consisting of an
-    `Objective`, the `search_space`, and a `Terminator`. All evaluations
-    on the `OptimInstance` will be automatically stored in its own
-    `Archive`.
--   `Objective`: Objects of this class contain the objective function.
-    The class ensures that the objective function is called in the right
-    way and defines, whether the function should be minimized or
-    maximized.
--   `Terminator`: Objects of this class control the termination of the
-    optimization independent of the optimizer.
-
 ## Resources
 
--   Package
-    [vignette](https://CRAN.R-project.org/package=bbotk/vignettes/bbotk.html)
+There are several sections about black-box optimization in the
+[mlr3book](https://mlr3book.mlr-org.com). Often the sections about
+tuning are also relevant for general black-box optimization.
+
+-   Getting started with [black-box
+    optimization](https://mlr3book.mlr-org.com/chapters/chapter5/advanced_tuning_methods_and_black_box_optimization.html#sec-black-box-optimization).
+-   An overview of all optimizers and tuners can be found on our
+    [website](https://mlr-org.com/tuners.html).
+-   Learn about log transformations in the [search
+    space](https://mlr3book.mlr-org.com/chapters/chapter4/hyperparameter_optimization.html#sec-logarithmic-transformations).
+-   Or more advanced [search space
+    transformations](https://mlr3book.mlr-org.com/chapters/chapter4/hyperparameter_optimization.html#sec-tune-trafo).
+-   Run [multi-objective
+    optimization](https://mlr3book.mlr-org.com/chapters/chapter5/advanced_tuning_methods_and_black_box_optimization.html#sec-multi-metrics-tuning).
+-   The [mlr3viz](https://github.com/mlr-org/mlr3viz) package can be
+    used to
+    [visualize](https://mlr-org.com/gallery/technical/2022-12-22-mlr3viz/#tuning-instance)
+    the optimization process.
+-   Quick optimization with the
+    [`bb_optimize`](https://bbotk.mlr-org.com/reference/bb_optimize.html)
+    function.
 
 ## Installation
 
-Install the last release from CRAN:
+Install the latest release from CRAN.
 
 ``` r
 install.packages("bbotk")
 ```
 
-Install the development version from GitHub:
+Install the development version from GitHub.
 
 ``` r
-remotes::install_github("mlr-org/bbotk")
+pak::pkg_install("mlr-org/bbotk")
 ```
 
-## Examples
-
-### Optimization
+## Example
 
 ``` r
 # define the objective function
@@ -79,7 +81,7 @@ codomain = ps(
   y = p_dbl(tags = "maximize")
 )
 
-# create Objective object
+# create objective
 objective = ObjectiveRFun$new(
   fun = fun,
   domain = domain,
@@ -87,13 +89,10 @@ objective = ObjectiveRFun$new(
   properties = "deterministic"
 )
 
-# Define termination criterion
-terminator = trm("evals", n_evals = 10)
-
-# create optimization instance
-instance = OptimInstanceBatchSingleCrit$new(
+# initialize instance
+instance = oi(
   objective = objective,
-  terminator = terminator
+  terminator = trm("evals", n_evals = 20)
 )
 
 # load optimizer
@@ -103,16 +102,16 @@ optimizer = opt("gensa")
 optimizer$optimize(instance)
 ```
 
-    ##        x1        x2  x_domain        y
-    ## 1: 2.0452 -2.064743 <list[2]> 9.123252
+    ##    x1 x2  x_domain  y
+    ## 1:  2 -3 <list[2]> 10
 
 ``` r
 # best performing configuration
 instance$result
 ```
 
-    ##        x1        x2  x_domain        y
-    ## 1: 2.0452 -2.064743 <list[2]> 9.123252
+    ##    x1 x2  x_domain  y
+    ## 1:  2 -3 <list[2]> 10
 
 ``` r
 # all evaluated configuration
@@ -120,42 +119,14 @@ as.data.table(instance$archive)
 ```
 
     ##            x1        x2          y           timestamp batch_nr x_domain_x1 x_domain_x2
-    ##  1: -4.689827 -1.278761 -37.716445 2024-06-21 09:34:39        1   -4.689827   -1.278761
-    ##  2: -5.930364 -4.400474 -54.851999 2024-06-21 09:34:39        2   -5.930364   -4.400474
-    ##  3:  7.170817 -1.519948 -18.927907 2024-06-21 09:34:39        3    7.170817   -1.519948
-    ##  4:  2.045200 -1.519948   7.807403 2024-06-21 09:34:39        4    2.045200   -1.519948
-    ##  5:  2.045200 -2.064742   9.123250 2024-06-21 09:34:39        5    2.045200   -2.064742
-    ##  6:  2.045200 -2.064742   9.123250 2024-06-21 09:34:39        6    2.045200   -2.064742
-    ##  7:  2.045201 -2.064742   9.123250 2024-06-21 09:34:39        7    2.045201   -2.064742
-    ##  8:  2.045199 -2.064742   9.123250 2024-06-21 09:34:39        8    2.045199   -2.064742
-    ##  9:  2.045200 -2.064741   9.123248 2024-06-21 09:34:39        9    2.045200   -2.064741
-    ## 10:  2.045200 -2.064743   9.123252 2024-06-21 09:34:39       10    2.045200   -2.064743
-
-### Quick optimization with `bb_optimize`
-
-``` r
-library(bbotk)
-
-# define the objective function
-fun = function(xs) {
-  c(y1 = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
-}
-
-# optimize function with random search
-result = bb_optimize(fun, method = "random_search", lower = c(-10, -5), upper = c(10, 5),
-  max_evals = 100)
-
-# optimized parameters
-result$par
-```
-
-    ##           x1       x2
-    ## 1: -7.982537 4.273021
-
-``` r
-# optimal outcome
-result$value
-```
-
-    ##        y1 
-    ## -142.5479
+    ##  1: -4.689827 -1.278761 -37.716445 2024-08-13 17:52:54        1   -4.689827   -1.278761
+    ##  2: -5.930364 -4.400474 -54.851999 2024-08-13 17:52:54        2   -5.930364   -4.400474
+    ##  3:  7.170817 -1.519948 -18.927907 2024-08-13 17:52:54        3    7.170817   -1.519948
+    ##  4:  2.045200 -1.519948   7.807403 2024-08-13 17:52:54        4    2.045200   -1.519948
+    ##  5:  2.045200 -2.064742   9.123250 2024-08-13 17:52:54        5    2.045200   -2.064742
+    ## ---                                                                                    
+    ## 16:  2.000000 -3.000000  10.000000 2024-08-13 17:52:54       16    2.000000   -3.000000
+    ## 17:  2.000001 -3.000000  10.000000 2024-08-13 17:52:54       17    2.000001   -3.000000
+    ## 18:  1.999999 -3.000000  10.000000 2024-08-13 17:52:54       18    1.999999   -3.000000
+    ## 19:  2.000000 -2.999999  10.000000 2024-08-13 17:52:54       19    2.000000   -2.999999
+    ## 20:  2.000000 -3.000001  10.000000 2024-08-13 17:52:54       20    2.000000   -3.000001
