@@ -102,6 +102,7 @@ Collate:
     'TerminatorRunTime.R'
     'TerminatorStagnation.R'
     'TerminatorStagnationBatch.R'
+    'TerminatorStagnationHypervolume.R'
     'as_terminator.R'
     'assertions.R'
     'bb_optimize.R'
