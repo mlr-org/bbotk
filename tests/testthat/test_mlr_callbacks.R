@@ -49,5 +49,5 @@ test_that("async callback works", {
 
   x = instance$archive$data$x
   expect_equal(head(x, 2), c(1, 1))
-  # expect_equal(tail(x, 2), c(2, 2))
+  expect_subset(2, tail(x, 2))
 })

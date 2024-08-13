@@ -12,8 +12,7 @@ callback_batch(
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
   on_result = NULL,
-  on_optimization_end = NULL,
-  fields = list()
+  on_optimization_end = NULL
 )
 }
 \arguments{
@@ -51,9 +50,6 @@ The functions must have two arguments named \code{callback} and \code{context}.}
 Stage called at the end of the optimization.
 Called in \code{Optimizer$optimize()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
-
-\item{fields}{(list of \code{any})\cr
-List of additional fields.}
 }
 \description{
 Function to create a \link{CallbackBatch}.
