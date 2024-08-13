@@ -152,9 +152,9 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"nloptr"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">codomain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">objective_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">xs</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
@@ -187,18 +187,18 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 x            y           timestamp batch_nr    x_domain_x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;num&gt;        &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;         &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  6.432053e-01 4.137131e-01 2024-08-13 15:45:10        1  6.432053e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  6.432053e-01 4.137131e-01 2024-08-13 15:45:10        2  6.432053e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  6.432053e-01 4.137131e-01 2024-08-13 15:45:10        3  6.432053e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  9.108013e-01 8.295591e-01 2024-08-13 15:45:10        4  9.108013e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  3.756093e-01 1.410824e-01 2024-08-13 15:45:10        5  3.756093e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  1.080133e-01 1.166687e-02 2024-08-13 15:45:10        6  1.080133e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  0.000000e+00 0.000000e+00 2024-08-13 15:45:10        7  0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -2.675960e-02 7.160763e-04 2024-08-13 15:45:10        8 -2.675960e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  2.675960e-03 7.160763e-06 2024-08-13 15:45:10        9  2.675960e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -2.675960e-04 7.160763e-08 2024-08-13 15:45:10       10 -2.675960e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  2.675960e-05 7.160763e-10 2024-08-13 15:45:10       11  2.675960e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: -3.091070e-21 9.554716e-42 2024-08-13 15:45:10       12 -3.091070e-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  6.432053e-01 4.137131e-01 2024-08-13 15:56:02        1  6.432053e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  6.432053e-01 4.137131e-01 2024-08-13 15:56:02        2  6.432053e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  6.432053e-01 4.137131e-01 2024-08-13 15:56:02        3  6.432053e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  9.108013e-01 8.295591e-01 2024-08-13 15:56:02        4  9.108013e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  3.756093e-01 1.410824e-01 2024-08-13 15:56:02        5  3.756093e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  1.080133e-01 1.166687e-02 2024-08-13 15:56:02        6  1.080133e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  0.000000e+00 0.000000e+00 2024-08-13 15:56:02        7  0.000000e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -2.675960e-02 7.160763e-04 2024-08-13 15:56:02        8 -2.675960e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  2.675960e-03 7.160763e-06 2024-08-13 15:56:02        9  2.675960e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -2.675960e-04 7.160763e-08 2024-08-13 15:56:02       10 -2.675960e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  2.675960e-05 7.160763e-10 2024-08-13 15:56:02       11  2.675960e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: -3.091070e-21 9.554716e-42 2024-08-13 15:56:02       12 -3.091070e-21</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

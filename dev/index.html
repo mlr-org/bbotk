@@ -74,42 +74,34 @@
 <p>Package website: <a href="https://bbotk.mlr-org.com/">release</a> | <a href="https://bbotk.mlr-org.com/dev/">dev</a></p>
 <!-- badges: start -->
 
-<p><em>bbotk</em> is a black-box optimization framework for R. It features highly configurable search spaces via the <a href="https://github.com/mlr-org/paradox" class="external-link">paradox</a> package and optimizes every user-defined objective function. The package includes several optimization algorithms e.g. Random Search, Iterated Racing, Bayesian Optimization (in <a href="https://github.com/mlr-org/mlr3mbo" class="external-link">mlr3mbo</a>) and Hyperband (in <a href="https://github.com/mlr-org/mlr3hyperband" class="external-link">mlr3hyperband</a>). bbotk is the base package of <a href="https://github.com/mlr-org/mlr3tuning" class="external-link">mlr3tuning</a>, <a href="https://github.com/mlr-org/mlr3fselect" class="external-link">mlr3fselect</a> and <a href="https://github.com/mlr-org/miesmuschel" class="external-link">miesmuschel</a>.</p>
-<p>The package includes the basic building blocks of optimization:</p>
-<ul>
-<li>
-<code>Optimizer</code>: Objects of this class allow you to optimize an object of the class <code>OptimInstance</code>.</li>
-<li>
-<code>OptimInstance</code>: Defines the optimization problem, consisting of an <code>Objective</code>, the <code>search_space</code>, and a <code>Terminator</code>. All evaluations on the <code>OptimInstance</code> will be automatically stored in its own <code>Archive</code>.</li>
-<li>
-<code>Objective</code>: Objects of this class contain the objective function. The class ensures that the objective function is called in the right way and defines, whether the function should be minimized or maximized.</li>
-<li>
-<code>Terminator</code>: Objects of this class control the termination of the optimization independent of the optimizer.</li>
-</ul>
+<p><em>bbotk</em> is a black-box optimization framework for R. It features highly configurable search spaces via the <a href="https://github.com/mlr-org/paradox" class="external-link">paradox</a> package and optimizes every user-defined objective function. The package includes several optimization algorithms e.g. Random Search, Grid Search, Iterated Racing, Bayesian Optimization (in <a href="https://github.com/mlr-org/mlr3mbo" class="external-link">mlr3mbo</a>) and Hyperband (in <a href="https://github.com/mlr-org/mlr3hyperband" class="external-link">mlr3hyperband</a>). bbotk is the base package of <a href="https://github.com/mlr-org/mlr3tuning" class="external-link">mlr3tuning</a>, <a href="https://github.com/mlr-org/mlr3fselect" class="external-link">mlr3fselect</a> and <a href="https://github.com/mlr-org/miesmuschel" class="external-link">miesmuschel</a>.</p>
 <div class="section level2">
 <h2 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
+<p>There are several sections about black-box optimization in the <a href="https://mlr3book.mlr-org.com" class="external-link">mlr3book</a>. Often the sections about tuning are also relevant for general black-box optimization.</p>
 <ul>
-<li>Package <a href="https://CRAN.R-project.org/package=bbotk/vignettes/bbotk.html" class="external-link">vignette</a>
-</li>
+<li>Getting started with <a href="https://mlr3book.mlr-org.com/chapters/chapter5/advanced_tuning_methods_and_black_box_optimization.html#sec-black-box-optimization" class="external-link">black-box optimization</a>.</li>
+<li>An overview of all optimizers and tuners can be found on our <a href="https://mlr-org.com/tuners.html" class="external-link">website</a>.</li>
+<li>Learn about log transformations in the <a href="https://mlr3book.mlr-org.com/chapters/chapter4/hyperparameter_optimization.html#sec-logarithmic-transformations" class="external-link">search space</a>.</li>
+<li>Or more advanced <a href="https://mlr3book.mlr-org.com/chapters/chapter4/hyperparameter_optimization.html#sec-tune-trafo" class="external-link">search space transformations</a>.</li>
+<li>Run <a href="https://mlr3book.mlr-org.com/chapters/chapter5/advanced_tuning_methods_and_black_box_optimization.html#sec-multi-metrics-tuning" class="external-link">multi-objective optimization</a>.</li>
+<li>The <a href="https://github.com/mlr-org/mlr3viz" class="external-link">mlr3viz</a> package can be used to <a href="https://mlr-org.com/gallery/technical/2022-12-22-mlr3viz/#tuning-instance" class="external-link">visualize</a> the optimization process.</li>
+<li>Quick optimization with the <a href="https://bbotk.mlr-org.com/reference/bb_optimize.html"><code>bb_optimize</code></a> function.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Install the last release from CRAN:</p>
+<p>Install the latest release from CRAN.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bbotk"</span><span class="op">)</span></span></code></pre></div>
-<p>Install the development version from GitHub:</p>
+<p>Install the development version from GitHub.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mlr-org/bbotk"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"mlr-org/bbotk"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<div class="section level3">
-<h3 id="optimization">Optimization<a class="anchor" aria-label="anchor" href="#optimization"></a>
-</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define the objective function</span></span>
 <span><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span>
@@ -127,7 +119,7 @@
 <span>  y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># create Objective object</span></span>
+<span><span class="co"># create objective</span></span>
 <span><span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="reference/ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>  fun <span class="op">=</span> <span class="va">fun</span>,</span>
 <span>  domain <span class="op">=</span> <span class="va">domain</span>,</span>
@@ -135,13 +127,10 @@
 <span>  properties <span class="op">=</span> <span class="st">"deterministic"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Define termination criterion</span></span>
-<span><span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># create optimization instance</span></span>
-<span><span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="reference/OptimInstanceBatchSingleCrit.html">OptimInstanceBatchSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span><span class="co"># initialize instance</span></span>
+<span><span class="va">instance</span> <span class="op">=</span> <span class="fu"><a href="reference/oi.html">oi</a></span><span class="op">(</span></span>
 <span>  objective <span class="op">=</span> <span class="va">objective</span>,</span>
-<span>  terminator <span class="op">=</span> <span class="va">terminator</span></span>
+<span>  terminator <span class="op">=</span> <span class="fu"><a href="reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># load optimizer</span></span>
@@ -149,54 +138,28 @@
 <span></span>
 <span><span class="co"># trigger optimization</span></span>
 <span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="do">##        x1        x2  x_domain        y</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="do">## 1: 2.0452 -2.064743 &lt;list[2]&gt; 9.123252</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="do">##    x1 x2  x_domain  y</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="do">## 1:  2 -3 &lt;list[2]&gt; 10</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># best performing configuration</span></span>
 <span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="do">##        x1        x2  x_domain        y</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="do">## 1: 2.0452 -2.064743 &lt;list[2]&gt; 9.123252</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="do">##    x1 x2  x_domain  y</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="do">## 1:  2 -3 &lt;list[2]&gt; 10</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># all evaluated configuration</span></span>
 <span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="do">##            x1        x2          y           timestamp batch_nr x_domain_x1 x_domain_x2</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="do">##  1: -4.689827 -1.278761 -37.716445 2024-06-21 09:34:39        1   -4.689827   -1.278761</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="do">##  2: -5.930364 -4.400474 -54.851999 2024-06-21 09:34:39        2   -5.930364   -4.400474</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="do">##  3:  7.170817 -1.519948 -18.927907 2024-06-21 09:34:39        3    7.170817   -1.519948</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="do">##  4:  2.045200 -1.519948   7.807403 2024-06-21 09:34:39        4    2.045200   -1.519948</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="do">##  5:  2.045200 -2.064742   9.123250 2024-06-21 09:34:39        5    2.045200   -2.064742</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="do">##  6:  2.045200 -2.064742   9.123250 2024-06-21 09:34:39        6    2.045200   -2.064742</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="do">##  7:  2.045201 -2.064742   9.123250 2024-06-21 09:34:39        7    2.045201   -2.064742</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="do">##  8:  2.045199 -2.064742   9.123250 2024-06-21 09:34:39        8    2.045199   -2.064742</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="do">##  9:  2.045200 -2.064741   9.123248 2024-06-21 09:34:39        9    2.045200   -2.064741</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="do">## 10:  2.045200 -2.064743   9.123252 2024-06-21 09:34:39       10    2.045200   -2.064743</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="quick-optimization-with-bb_optimize">Quick optimization with <code>bb_optimize</code>
-<a class="anchor" aria-label="anchor" href="#quick-optimization-with-bb_optimize"></a>
-</h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bbotk.mlr-org.com">bbotk</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># define the objective function</span></span>
-<span><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>y1 <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co"># optimize function with random search</span></span>
-<span><span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="reference/bb_optimize.html">bb_optimize</a></span><span class="op">(</span><span class="va">fun</span>, method <span class="op">=</span> <span class="st">"random_search"</span>, lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  max_evals <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># optimized parameters</span></span>
-<span><span class="va">result</span><span class="op">$</span><span class="va">par</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="do">##           x1       x2</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="do">## 1: -7.982537 4.273021</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># optimal outcome</span></span>
-<span><span class="va">result</span><span class="op">$</span><span class="va">value</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="do">##        y1 </span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="do">## -142.5479</span></span></code></pre></div>
-</div>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="do">##  1: -4.689827 -1.278761 -37.716445 2024-08-13 17:52:54        1   -4.689827   -1.278761</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="do">##  2: -5.930364 -4.400474 -54.851999 2024-08-13 17:52:54        2   -5.930364   -4.400474</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="do">##  3:  7.170817 -1.519948 -18.927907 2024-08-13 17:52:54        3    7.170817   -1.519948</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="do">##  4:  2.045200 -1.519948   7.807403 2024-08-13 17:52:54        4    2.045200   -1.519948</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="do">##  5:  2.045200 -2.064742   9.123250 2024-08-13 17:52:54        5    2.045200   -2.064742</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="do">## ---                                                                                    </span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="do">## 16:  2.000000 -3.000000  10.000000 2024-08-13 17:52:54       16    2.000000   -3.000000</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="do">## 17:  2.000001 -3.000000  10.000000 2024-08-13 17:52:54       17    2.000001   -3.000000</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="do">## 18:  1.999999 -3.000000  10.000000 2024-08-13 17:52:54       18    1.999999   -3.000000</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="do">## 19:  2.000000 -2.999999  10.000000 2024-08-13 17:52:54       19    2.000000   -2.999999</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="do">## 20:  2.000000 -3.000001  10.000000 2024-08-13 17:52:54       20    2.000000   -3.000001</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

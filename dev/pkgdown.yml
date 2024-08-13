@@ -1,9 +1,8 @@
 pandoc: 3.1.11
 pkgdown: 2.1.0
 pkgdown_sha: ~
-articles:
-  bbotk: bbotk.html
-last_built: 2024-08-13T15:44Z
+articles: {}
+last_built: 2024-08-13T15:55Z
 urls:
   reference: https://bbotk.mlr-org.com/reference
   article: https://bbotk.mlr-org.com/articles
