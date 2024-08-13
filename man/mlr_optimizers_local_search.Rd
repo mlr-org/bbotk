@@ -43,6 +43,15 @@ Default is \code{0.1}.}
 }
 }
 
+\section{Archive}{
+
+The \link{Archive} holds the following additional column that is specific to the algorithm:
+\itemize{
+\item \code{.point_id} (\code{integer(1)})\cr
+The id (\verb{1, ..., n_initial_points}) indicating from which of the \code{n_initial_points} best points the evaluated point was generated from.
+}
+}
+
 \section{Progress Bars}{
 
 \verb{$optimize()} supports progress bars via the package \CRANpkg{progressr}
@@ -68,10 +77,16 @@ objective = ObjectiveRFun$new(
 instance = OptimInstanceBatchSingleCrit$new(
  objective = objective,
  search_space = search_space,
- terminator = trm("evals", n_evals = 10))
+ terminator = trm("evals", n_evals = 100))
 
-
-optimizer = opt("local_search")
+# evaluate an initial sample of 10 points uniformly at random
+# choose the best 3 points as the initial points
+# for each of these points generate 10 neighbors
+# repeat this process
+optimizer = opt("local_search",
+  n_initial_points = 3,
+  initial_random_sample_size = 10,
+  neighbors_per_point = 10)
 
 # modifies the instance by reference
 optimizer$optimize(instance)

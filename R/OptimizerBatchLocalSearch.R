@@ -33,10 +33,50 @@
 #'   Default is `0.1`.}
 #' }
 #'
+#' @section Archive:
+#' The [bbotk::Archive] holds the following additional column that is specific to the algorithm:
+#'   * `.point_id` (`integer(1)`)\cr
+#'     The id (`1, ..., n_initial_points`) indicating from which of the `n_initial_points` best points the evaluated point was generated from.
+#'
 #' @template section_progress_bars
 #'
 #' @export
-#' @template example
+#' @examples
+#' search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
+#'
+#' codomain = ps(y = p_dbl(tags = "minimize"))
+#'
+#' objective_function = function(xs) {
+#'   list(y = as.numeric(xs)^2)
+#' }
+#'
+#' objective = ObjectiveRFun$new(
+#'  fun = objective_function,
+#'  domain = domain,
+#'  codomain = codomain)
+#'
+#' instance = OptimInstanceBatchSingleCrit$new(
+#'  objective = objective,
+#'  search_space = search_space,
+#'  terminator = trm("evals", n_evals = 100))
+#'
+#' # evaluate an initial sample of 10 points uniformly at random
+#' # choose the best 3 points as the initial points
+#' # for each of these points generate 10 neighbors
+#' # repeat this process
+#' optimizer = opt("local_search",
+#'   n_initial_points = 3,
+#'   initial_random_sample_size = 10,
+#'   neighbors_per_point = 10)
+#'
+#' # modifies the instance by reference
+#' optimizer$optimize(instance)
+#'
+#' # returns best scoring evaluation
+#' instance$result
+#'
+#' # allows access of data.table of full path of all evaluations
+#' as.data.table(instance$archive$data)
 OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
   inherit = bbotk::OptimizerBatch,
   public = list(
@@ -92,7 +132,7 @@ OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
       # get the levels of all categorical parameters
       search_space_levels = inst$search_space$levels
 
-      point_id = generate_unique_point_id(inst)
+      point_id = ".point_id"
 
       repeat { # iterate until we have an exception from eval_batch
         # generate neighbors
@@ -128,14 +168,6 @@ OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
 )
 
 mlr_optimizers$add("local_search", OptimizerBatchLocalSearch)
-
-generate_unique_point_id = function(inst) {
-  point_id = ".point_id"
-  while (point_id %in% c(inst$archive$cols_x, inst$archive$cols_y)) {
-    point_id = paste0(".", point_id)
-  }
-  point_id
-}
 
 mutate_point = function(point, search_space_classes, search_space_bounds, search_space_levels, ids_numeric, ids_categorical, mutation_sd) {
   neighbor = copy(point)
