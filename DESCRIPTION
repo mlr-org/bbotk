@@ -89,6 +89,7 @@ Collate:
     'OptimizerBatchGenSA.R'
     'OptimizerBatchGridSearch.R'
     'OptimizerBatchIrace.R'
+    'OptimizerBatchLocalSearch.R'
     'OptimizerBatchNLoptr.R'
     'OptimizerBatchRandomSearch.R'
     'Progressor.R'
