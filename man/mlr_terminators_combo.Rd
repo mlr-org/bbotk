@@ -44,7 +44,8 @@ Other Terminator:
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
 \code{\link{mlr_terminators_stagnation}},
-\code{\link{mlr_terminators_stagnation_batch}}
+\code{\link{mlr_terminators_stagnation_batch}},
+\code{\link{mlr_terminators_stagnation_hypervolume}}
 }
 \concept{Terminator}
 \section{Super class}{
