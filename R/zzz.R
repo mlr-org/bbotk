@@ -34,4 +34,6 @@
   }
 } # nocov end
 
+utils::globalVariables("batch_nr")
+
 leanify_package()
