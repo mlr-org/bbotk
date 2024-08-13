@@ -87,23 +87,36 @@ If <code>objects</code> is set to <code>TRUE</code>, the constructed objects are
 <code><a href="mlr_terminators_perf_reached.html">mlr_terminators_perf_reached</a></code>,
 <code><a href="mlr_terminators_run_time.html">mlr_terminators_run_time</a></code>,
 <code><a href="mlr_terminators_stagnation.html">mlr_terminators_stagnation</a></code>,
-<code><a href="mlr_terminators_stagnation_batch.html">mlr_terminators_stagnation_batch</a></code></p></div>
+<code><a href="mlr_terminators_stagnation_batch.html">mlr_terminators_stagnation_batch</a></code>,
+<code><a href="mlr_terminators_stagnation_hypervolume.html">mlr_terminators_stagnation_hypervolume</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mlr_terminators</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;key&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 key                label             properties        unit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              &lt;char&gt;               &lt;char&gt;                 &lt;list&gt;      &lt;char&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:       clock_time           Clock Time single-crit,multi-crit     seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:            combo          Combination single-crit,multi-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:            evals Number of Evaluation single-crit,multi-crit evaluations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:             none                 None single-crit,multi-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:     perf_reached    Performance Level            single-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:         run_time             Run Time single-crit,multi-crit     seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:       stagnation           Stagnation            single-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8: stagnation_batch     Stagnation Batch            single-crit     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       key                  label             properties</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    &lt;char&gt;                 &lt;char&gt;                 &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:             clock_time             Clock Time single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:                  combo            Combination single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:                  evals   Number of Evaluation single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:                   none                   None single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:           perf_reached      Performance Level            single-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:               run_time               Run Time single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:             stagnation             Stagnation            single-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8:       stagnation_batch       Stagnation Batch            single-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9: stagnation_hypervolume Stagnation Hypervolume             multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           unit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: evaluations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:     seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9:     percent</span>
 <span class="r-in"><span><span class="va">mlr_terminators</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"evals"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;TerminatorEvals&gt;: Number of Evaluation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: n_evals=100, k=0</span>

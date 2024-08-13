@@ -172,9 +172,9 @@ package <a href="https://cran.r-project.org/package=paradox" class="external-lin
 list all available terminators as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/trm.html">trms</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;DictionaryTerminator&gt; with 8 stored values</span></span>
+<span><span class="co">#&gt; &lt;DictionaryTerminator&gt; with 9 stored values</span></span>
 <span><span class="co">#&gt; Keys: clock_time, combo, evals, none, perf_reached, run_time,</span></span>
-<span><span class="co">#&gt;   stagnation, stagnation_batch</span></span></code></pre></div>
+<span><span class="co">#&gt;   stagnation, stagnation_batch, stagnation_hypervolume</span></span></code></pre></div>
 <p>The termination should stop, when it takes longer then 10 seconds or
 when 20 evaluations are reached.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -265,26 +265,26 @@ termination criterion is fulfilled.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            x1        x2          y           timestamp batch_nr x_domain_x1</span></span>
 <span><span class="co">#&gt;         &lt;num&gt;     &lt;num&gt;      &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;</span></span>
-<span><span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 2024-08-13 12:52:39        1   -4.689827</span></span>
-<span><span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 2024-08-13 12:52:39        2   -5.930364</span></span>
-<span><span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 2024-08-13 12:52:39        3    7.170817</span></span>
-<span><span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 2024-08-13 12:52:39        4    2.045200</span></span>
-<span><span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 2024-08-13 12:52:39        5    2.045200</span></span>
-<span><span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 2024-08-13 12:52:39        6    2.045200</span></span>
-<span><span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 2024-08-13 12:52:39        7    2.045201</span></span>
-<span><span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 2024-08-13 12:52:39        8    2.045199</span></span>
-<span><span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 2024-08-13 12:52:39        9    2.045200</span></span>
-<span><span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 2024-08-13 12:52:39       10    2.045200</span></span>
-<span><span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 2024-08-13 12:52:39       11    1.954800</span></span>
-<span><span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 2024-08-13 12:52:39       12    1.954801</span></span>
-<span><span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 2024-08-13 12:52:39       13    1.954799</span></span>
-<span><span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 2024-08-13 12:52:39       14    1.954800</span></span>
-<span><span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 2024-08-13 12:52:39       15    1.954800</span></span>
-<span><span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 2024-08-13 12:52:39       16    2.000000</span></span>
-<span><span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 2024-08-13 12:52:39       17    2.000001</span></span>
-<span><span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 2024-08-13 12:52:39       18    1.999999</span></span>
-<span><span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 2024-08-13 12:52:39       19    2.000000</span></span>
-<span><span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 2024-08-13 12:52:39       20    2.000000</span></span>
+<span><span class="co">#&gt;  1: -4.689827 -1.278761 -37.716445 2024-08-13 15:45:21        1   -4.689827</span></span>
+<span><span class="co">#&gt;  2: -5.930364 -4.400474 -54.851999 2024-08-13 15:45:21        2   -5.930364</span></span>
+<span><span class="co">#&gt;  3:  7.170817 -1.519948 -18.927907 2024-08-13 15:45:21        3    7.170817</span></span>
+<span><span class="co">#&gt;  4:  2.045200 -1.519948   7.807403 2024-08-13 15:45:21        4    2.045200</span></span>
+<span><span class="co">#&gt;  5:  2.045200 -2.064742   9.123250 2024-08-13 15:45:21        5    2.045200</span></span>
+<span><span class="co">#&gt;  6:  2.045200 -2.064742   9.123250 2024-08-13 15:45:21        6    2.045200</span></span>
+<span><span class="co">#&gt;  7:  2.045201 -2.064742   9.123250 2024-08-13 15:45:21        7    2.045201</span></span>
+<span><span class="co">#&gt;  8:  2.045199 -2.064742   9.123250 2024-08-13 15:45:21        8    2.045199</span></span>
+<span><span class="co">#&gt;  9:  2.045200 -2.064741   9.123248 2024-08-13 15:45:21        9    2.045200</span></span>
+<span><span class="co">#&gt; 10:  2.045200 -2.064743   9.123252 2024-08-13 15:45:21       10    2.045200</span></span>
+<span><span class="co">#&gt; 11:  1.954800 -3.935258   9.123250 2024-08-13 15:45:21       11    1.954800</span></span>
+<span><span class="co">#&gt; 12:  1.954801 -3.935258   9.123250 2024-08-13 15:45:21       12    1.954801</span></span>
+<span><span class="co">#&gt; 13:  1.954799 -3.935258   9.123250 2024-08-13 15:45:21       13    1.954799</span></span>
+<span><span class="co">#&gt; 14:  1.954800 -3.935257   9.123252 2024-08-13 15:45:21       14    1.954800</span></span>
+<span><span class="co">#&gt; 15:  1.954800 -3.935259   9.123248 2024-08-13 15:45:21       15    1.954800</span></span>
+<span><span class="co">#&gt; 16:  2.000000 -3.000000  10.000000 2024-08-13 15:45:21       16    2.000000</span></span>
+<span><span class="co">#&gt; 17:  2.000001 -3.000000  10.000000 2024-08-13 15:45:21       17    2.000001</span></span>
+<span><span class="co">#&gt; 18:  1.999999 -3.000000  10.000000 2024-08-13 15:45:21       18    1.999999</span></span>
+<span><span class="co">#&gt; 19:  2.000000 -2.999999  10.000000 2024-08-13 15:45:21       19    2.000000</span></span>
+<span><span class="co">#&gt; 20:  2.000000 -3.000001  10.000000 2024-08-13 15:45:21       20    2.000000</span></span>
 <span><span class="co">#&gt;            x1        x2          y           timestamp batch_nr x_domain_x1</span></span>
 <span><span class="co">#&gt;     x_domain_x2</span></span>
 <span><span class="co">#&gt;           &lt;num&gt;</span></span>
@@ -413,20 +413,20 @@ termination and call <code>$eval_batch()</code>.</p>
 <span><span class="va">inst</span><span class="op">$</span><span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="../reference/trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="va">xvals</span> <span class="op">=</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span>, w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6666</span>, <span class="fl">0.6667</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">inst</span><span class="op">$</span><span class="fu">eval_batch</span><span class="op">(</span>xdt <span class="op">=</span> <span class="va">xvals</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO  [12:52:40.462] [bbotk] Evaluating 2 configuration(s)</span></span>
-<span><span class="co">#&gt; INFO  [12:52:40.508] [bbotk] Result of batch 31:</span></span>
-<span><span class="co">#&gt; INFO  [12:52:40.515] [bbotk]       h      w           y</span></span>
-<span><span class="co">#&gt; INFO  [12:52:40.515] [bbotk]  0.6666 0.6666 -0.03703704</span></span>
-<span><span class="co">#&gt; INFO  [12:52:40.515] [bbotk]  0.6667 0.6667 -0.03703704</span></span>
+<span><span class="co">#&gt; INFO  [15:45:22.635] [bbotk] Evaluating 2 configuration(s)</span></span>
+<span><span class="co">#&gt; INFO  [15:45:22.680] [bbotk] Result of batch 31:</span></span>
+<span><span class="co">#&gt; INFO  [15:45:22.688] [bbotk]       h      w           y</span></span>
+<span><span class="co">#&gt; INFO  [15:45:22.688] [bbotk]  0.6666 0.6666 -0.03703704</span></span>
+<span><span class="co">#&gt; INFO  [15:45:22.688] [bbotk]  0.6667 0.6667 -0.03703704</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          x1        x2         y           timestamp batch_nr x_domain_x1</span></span>
 <span><span class="co">#&gt;       &lt;num&gt;     &lt;num&gt;     &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1: 1.954800 -3.935259  9.123248 2024-08-13 12:52:39       15    1.954800</span></span>
-<span><span class="co">#&gt; 2: 2.000000 -3.000000 10.000000 2024-08-13 12:52:39       16    2.000000</span></span>
-<span><span class="co">#&gt; 3: 2.000001 -3.000000 10.000000 2024-08-13 12:52:39       17    2.000001</span></span>
-<span><span class="co">#&gt; 4: 1.999999 -3.000000 10.000000 2024-08-13 12:52:39       18    1.999999</span></span>
-<span><span class="co">#&gt; 5: 2.000000 -2.999999 10.000000 2024-08-13 12:52:39       19    2.000000</span></span>
-<span><span class="co">#&gt; 6: 2.000000 -3.000001 10.000000 2024-08-13 12:52:39       20    2.000000</span></span>
+<span><span class="co">#&gt; 1: 1.954800 -3.935259  9.123248 2024-08-13 15:45:21       15    1.954800</span></span>
+<span><span class="co">#&gt; 2: 2.000000 -3.000000 10.000000 2024-08-13 15:45:21       16    2.000000</span></span>
+<span><span class="co">#&gt; 3: 2.000001 -3.000000 10.000000 2024-08-13 15:45:21       17    2.000001</span></span>
+<span><span class="co">#&gt; 4: 1.999999 -3.000000 10.000000 2024-08-13 15:45:21       18    1.999999</span></span>
+<span><span class="co">#&gt; 5: 2.000000 -2.999999 10.000000 2024-08-13 15:45:21       19    2.000000</span></span>
+<span><span class="co">#&gt; 6: 2.000000 -3.000001 10.000000 2024-08-13 15:45:21       20    2.000000</span></span>
 <span><span class="co">#&gt;    x_domain_x2</span></span>
 <span><span class="co">#&gt;          &lt;num&gt;</span></span>
 <span><span class="co">#&gt; 1:   -3.935259</span></span>
@@ -442,7 +442,7 @@ the optimizer. Another way to get the best point is the following:</p>
 <code class="sourceCode R"><span><span class="va">inst</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         h      w           y  x_domain           timestamp batch_nr</span></span>
 <span><span class="co">#&gt;     &lt;num&gt;  &lt;num&gt;       &lt;num&gt;    &lt;list&gt;              &lt;POSc&gt;    &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2024-08-13 12:52:40       31</span></span></code></pre></div>
+<span><span class="co">#&gt; 1: 0.6667 0.6667 -0.03703704 &lt;list[3]&gt; 2024-08-13 15:45:22       31</span></span></code></pre></div>
 <p>Note, that this method just looks for the best outcome and returns
 the according row from the archive. For stochastic optimization problems
 this is overly optimistic and leads to biased results. For this reason
