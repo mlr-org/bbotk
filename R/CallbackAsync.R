@@ -73,6 +73,10 @@ CallbackAsync = R6Class("CallbackAsync",
 #' @param man (`character(1)`)\cr
 #'   String in the format `[pkg]::[topic]` pointing to a manual page for this object.
 #'   The referenced help package can be opened via method `$help()`.
+#' @param initialize_callback (`function()`)\cr
+#'  Function to be called when the callback is initialized.
+#'  The function should have the signature `function(self)`.
+#'  The function can be used to set default values in the state via `self$state$...`.
 #' @param on_optimization_begin (`function()`)\cr
 #'   Stage called at the beginning of the optimization in the main process.
 #'   Called in `Optimizer$optimize()`.
@@ -99,6 +103,7 @@ callback_async = function(
   id,
   label = NA_character_,
   man = NA_character_,
+  initialize_callback = NULL,
   on_optimization_begin = NULL,
   on_worker_begin = NULL,
   on_worker_end = NULL,
@@ -117,7 +122,7 @@ callback_async = function(
     "on_result",
     "on_optimization_end")), is.null)
   walk(stages, function(stage) assert_function(stage, args = c("callback", "context")))
-  callback = CallbackAsync$new(id, label, man)
+  callback = CallbackAsync$new(id, label, man, initialize_callback)
   iwalk(stages, function(stage, name) callback[[name]] = stage)
   callback
 }

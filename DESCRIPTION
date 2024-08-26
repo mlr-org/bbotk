@@ -44,6 +44,8 @@ Suggests:
     redux,
     testthat (>= 3.0.0),
     rush
+Remotes:
+    mlr-org/mlr3misc@init_callback
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8

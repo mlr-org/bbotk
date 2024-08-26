@@ -81,6 +81,10 @@ CallbackBatch = R6Class("CallbackBatch",
 #' @param man (`character(1)`)\cr
 #'   String in the format `[pkg]::[topic]` pointing to a manual page for this object.
 #'   The referenced help package can be opened via method `$help()`.
+#' @param initialize_callback (`function()`)\cr
+#'  Function to be called when the callback is initialized.
+#'  The function should have the signature `function(self)`.
+#'  The function can be used to set default values in the state via `self$state$...`.
 #' @param on_optimization_begin (`function()`)\cr
 #'   Stage called at the beginning of the optimization.
 #'   Called in `Optimizer$optimize()`.
@@ -108,6 +112,7 @@ callback_batch = function(
   id,
   label = NA_character_,
   man = NA_character_,
+  initialize_callback = NULL,
   on_optimization_begin = NULL,
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
@@ -127,7 +132,7 @@ callback_batch = function(
       "on_result",
       "on_optimization_end")), is.null)
   walk(stages, function(stage) assert_function(stage, args = c("callback", "context")))
-  callback = CallbackBatch$new(id, label, man)
+  callback = CallbackBatch$new(id, label, man, initialize_callback)
   iwalk(stages, function(stage, name) callback[[name]] = stage)
   callback
 }
