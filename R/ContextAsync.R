@@ -33,12 +33,42 @@ ContextAsync = R6Class("ContextAsync",
   active = list(
 
     #' @field result ([data.table::data.table])\cr
-    #'   The result of the optimization.
+    #' The result of the optimization.
     result = function(rhs) {
       if (missing(rhs)) {
         get_private(self$instance)$.result
       } else {
         get_private(self$instance, ".result") = rhs
+      }
+    },
+
+    #' @field xs (list())\cr
+    #' The point to be evaluated.
+    xs = function(rhs) {
+      if (missing(rhs)) {
+        get_private(self$instance)$.xs
+      } else {
+        get_private(self$instance, ".xs") = rhs
+      }
+    },
+
+    #' @field xs_trafoed (list())\cr
+    #' The transformed point to be evaluated.
+    xs_trafoed = function(rhs) {
+      if (missing(rhs)) {
+        get_private(self$instance)$.xs_trafoed
+      } else {
+        get_private(self$instance, ".xs_trafoed") = rhs
+      }
+    },
+
+    #' @field ys (list())\cr
+    #' The result of the evaluation.
+    ys = function(rhs) {
+      if (missing(rhs)) {
+        get_private(self$instance)$.ys
+      } else {
+        get_private(self$instance, ".ys") = rhs
       }
     }
   )

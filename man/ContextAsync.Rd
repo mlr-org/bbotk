@@ -28,6 +28,15 @@ Changes to \verb{$instance} and \verb{$optimizer} in the stages executed on the 
 \describe{
 \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 The result of the optimization.}
+
+\item{\code{xs}}{(list())\cr
+The point to be evaluated.}
+
+\item{\code{xs_trafoed}}{(list())\cr
+The transformed point to be evaluated.}
+
+\item{\code{ys}}{(list())\cr
+The result of the evaluation.}
 }
 \if{html}{\out{</div>}}
 }

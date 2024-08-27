@@ -50,6 +50,16 @@ The functions must have two arguments named \code{callback} and \code{context}.}
 Stage called at the end of the optimization in the main process.
 Called in \code{Optimizer$optimize()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
+
+\item{on_optimizer_before_eval}{(\verb{function()})\cr
+Stage called after the optimizer proposes points.
+Called in \code{OptimInstance$eval_point()}.
+The functions must have two arguments named \code{callback} and \code{context}.}
+
+\item{on_optimizer_after_eval}{(\verb{function()})\cr
+Stage called after points are evaluated.
+Called in \code{OptimInstance$eval_point()}.
+The functions must have two arguments named \code{callback} and \code{context}.}
 }
 \description{
 Function to create a \link{CallbackAsync}.
@@ -61,6 +71,10 @@ The stages are prefixed with \verb{on_*}.
      - on_optimization_begin
     Start Worker
          - on_worker_begin
+           Start Optimization on Worker
+             - on_optimizer_before_eval
+             - on_optimizer_after_eval
+           End Optimization on Worker
          - on_worker_end
     End Worker
      - on_result

@@ -86,6 +86,49 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
   ),
 
   private = list(
+    .xs = NULL,
+    .xs_trafoed = NULL,
+    .ys = NULL,
+
+    .eval_point = function(xs) {
+      # transpose point
+      private$.xs = xs[self$archive$cols_x]
+      private$.xs_trafoed = trafo_xs(private$.xs, self$search_space)
+
+      call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
+
+      # eval
+      key = self$archive$push_running_point(private$.xs)
+      private$.ys = self$objective$eval(private$.xs_trafoed)
+
+      call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
+
+      # push result
+      extra = xs[names(xs) != self$archive$cols_x]
+      self$archive$push_result(key, private$.ys, x_domain = private$.xs_trafoed, extra = extra)
+
+      return(invisible(private$.ys))
+    },
+
+    .eval_queue = function() {
+      while (!self$is_terminated && self$archive$n_queued) {
+        task = self$archive$pop_point()
+        if (!is.null(task)) {
+          private$.xs = task$xs
+
+          # transpose point
+          private$.xs_trafoed = trafo_xs(private$.xs, self$search_space)
+
+          # eval
+          call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
+          private$.ys = self$objective$eval(private$.xs_trafoed)
+
+          # push reuslt
+          call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
+          self$archive$push_result(task$key, private$.ys, x_domain = private$.xs_trafoed)
+        }
+      }
+    },
 
     # initialize context for optimization
     .initialize_context = function(optimizer) {
@@ -94,4 +137,3 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     }
   )
 )
-

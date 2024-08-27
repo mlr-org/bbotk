@@ -45,7 +45,6 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
     #' @param inst ([OptimInstance]).
     #' @return [data.table::data.table].
     optimize = function(inst) {
-
       # generate grid and send to workers
       design = inst$search_space$assert_dt(self$param_set$values$design)
 
@@ -55,10 +54,8 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
 
   private = list(
     .optimize = function(inst) {
-      archive = inst$archive
-
       # evaluate design of points
-      evaluate_queue_default(inst)
+      get_private(inst)$.eval_queue()
     }
   )
 )

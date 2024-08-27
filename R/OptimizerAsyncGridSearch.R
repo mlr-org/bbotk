@@ -53,7 +53,6 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
     #' @param inst ([OptimInstance]).
     #' @return [data.table::data.table].
     optimize = function(inst) {
-
       # generate grid
       pv = self$param_set$values
       design = generate_design_grid(inst$search_space, resolution = pv$resolution, param_resolutions = pv$param_resolutions)$data
@@ -64,10 +63,8 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
 
   private = list(
     .optimize = function(inst) {
-      archive = inst$archive
-
       # evaluate grid points
-      evaluate_queue_default(inst)
+      get_private(inst)$.eval_queue()
     }
   )
 )
