@@ -104,7 +104,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
 
       # push result
-      extra = xs[names(xs) != self$archive$cols_x]
+      extra = xs[names(xs) %nin% self$archive$cols_x]
       self$archive$push_result(key, private$.ys, x_domain = private$.xs_trafoed, extra = extra)
 
       return(invisible(private$.ys))
