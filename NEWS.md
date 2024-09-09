@@ -1,5 +1,11 @@
 # bbotk (development version)
 
+* docs: Move vignette to mlr3book.
+* feat: Add hypervolume stagnation terminator `trm("stagnation_hypervolume")`.
+* feat Add local search optimizer `opt("local_search")`.
+* refactor: Remove unused fields from callbacks.
+* fix: Add `"on_optimization_end_batch"` stage to `CallbackBatch`.
+
 # bbotk 1.0.1
 
 * refactor: extra columns in results.
