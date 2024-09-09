@@ -1,4 +1,4 @@
-# bbotk (development version)
+# bbotk 1.1.0
 
 * docs: Move vignette to mlr3book.
 * feat: Add hypervolume stagnation terminator `trm("stagnation_hypervolume")`.
