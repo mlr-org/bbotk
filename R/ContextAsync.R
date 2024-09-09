@@ -62,6 +62,16 @@ ContextAsync = R6Class("ContextAsync",
       }
     },
 
+    #' @field extra (list())\cr
+    #' Additional information.
+    extra = function(rhs) {
+      if (missing(rhs)) {
+        get_private(self$instance)$.extra
+      } else {
+        get_private(self$instance, ".extra") = rhs
+      }
+    },
+
     #' @field ys (list())\cr
     #' The result of the evaluation.
     ys = function(rhs) {

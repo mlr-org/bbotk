@@ -88,12 +88,14 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
   private = list(
     .xs = NULL,
     .xs_trafoed = NULL,
+    .extra = NULL,
     .ys = NULL,
 
     .eval_point = function(xs) {
       # transpose point
       private$.xs = xs[self$archive$cols_x]
       private$.xs_trafoed = trafo_xs(private$.xs, self$search_space)
+      private$.extra = xs[names(xs) %nin% c(self$archive$cols_x, "x_domain")]
 
       call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
 
@@ -104,8 +106,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
 
       # push result
-      extra = xs[names(xs) %nin% self$archive$cols_x]
-      self$archive$push_result(key, private$.ys, x_domain = private$.xs_trafoed, extra = extra)
+      self$archive$push_result(key, private$.ys, x_domain = private$.xs_trafoed, extra = private$.extra)
 
       return(invisible(private$.ys))
     },

@@ -70,7 +70,13 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     rush = rush::RushWorker$new(instance$rush$network_id, remote = FALSE)
     instance$rush = rush
     instance$archive$rush = rush
+
+    call_back("on_worker_begin", instance$objective$callbacks, instance$objective$context)
+
+    # run optimizer loop
     get_private(optimizer)$.optimize(instance)
+
+    call_back("on_worker_end", instance$objective$callbacks, instance$objective$context)
   } else {
     # run .optimize() on workers
     rush = instance$rush

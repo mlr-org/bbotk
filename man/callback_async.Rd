@@ -10,6 +10,8 @@ callback_async(
   man = NA_character_,
   on_optimization_begin = NULL,
   on_worker_begin = NULL,
+  on_optimizer_before_eval = NULL,
+  on_optimizer_after_eval = NULL,
   on_worker_end = NULL,
   on_result = NULL,
   on_optimization_end = NULL
@@ -36,6 +38,16 @@ Stage called at the beginning of the optimization on the worker.
 Called in the worker loop.
 The functions must have two arguments named \code{callback} and \code{context}.}
 
+\item{on_optimizer_before_eval}{(\verb{function()})\cr
+Stage called after the optimizer proposes points.
+Called in \code{OptimInstance$eval_point()}.
+The functions must have two arguments named \code{callback} and \code{context}.}
+
+\item{on_optimizer_after_eval}{(\verb{function()})\cr
+Stage called after points are evaluated.
+Called in \code{OptimInstance$eval_point()}.
+The functions must have two arguments named \code{callback} and \code{context}.}
+
 \item{on_worker_end}{(\verb{function()})\cr
 Stage called at the end of the optimization on the worker.
 Called in the worker loop.
@@ -49,16 +61,6 @@ The functions must have two arguments named \code{callback} and \code{context}.}
 \item{on_optimization_end}{(\verb{function()})\cr
 Stage called at the end of the optimization in the main process.
 Called in \code{Optimizer$optimize()}.
-The functions must have two arguments named \code{callback} and \code{context}.}
-
-\item{on_optimizer_before_eval}{(\verb{function()})\cr
-Stage called after the optimizer proposes points.
-Called in \code{OptimInstance$eval_point()}.
-The functions must have two arguments named \code{callback} and \code{context}.}
-
-\item{on_optimizer_after_eval}{(\verb{function()})\cr
-Stage called after points are evaluated.
-Called in \code{OptimInstance$eval_point()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
 }
 \description{

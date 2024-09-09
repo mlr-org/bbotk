@@ -35,6 +35,9 @@ The point to be evaluated.}
 \item{\code{xs_trafoed}}{(list())\cr
 The transformed point to be evaluated.}
 
+\item{\code{extra}}{(list())\cr
+Additional information.}
+
 \item{\code{ys}}{(list())\cr
 The result of the evaluation.}
 }
