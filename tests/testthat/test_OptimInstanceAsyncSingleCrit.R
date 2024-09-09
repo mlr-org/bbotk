@@ -1,6 +1,5 @@
 test_that("initializing OptimInstanceAsyncSingleCrit works", {
   skip_on_cran()
-  #  skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
@@ -24,7 +23,6 @@ test_that("initializing OptimInstanceAsyncSingleCrit works", {
 
 test_that("rush controller can be passed to OptimInstanceAsyncSingleCrit", {
   skip_on_cran()
-  #  skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
@@ -43,7 +41,6 @@ test_that("rush controller can be passed to OptimInstanceAsyncSingleCrit", {
 
 test_that("context is initialized correctly", {
   skip_on_cran()
-  #  skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
@@ -51,11 +48,28 @@ test_that("context is initialized correctly", {
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("evals", n_evals = 5L),
+    terminator = trm("evals", n_evals = 5L)
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
   expect_r6(instance$objective$context, "ContextAsync")
+})
+
+test_that("point evaluation works", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+
+  # evaluation takes place on the workers
+  rush = RushWorker$new("test", remote = FALSE)
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  expect_equal(get_private(instance)$.eval_point(list(x1 = 1, x2 = 0)), list(y = 1))
 })

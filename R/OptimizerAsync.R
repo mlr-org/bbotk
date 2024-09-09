@@ -31,6 +31,11 @@ OptimizerAsync = R6Class("OptimizerAsync",
     optimize = function(inst) {
       optimize_async_default(inst, self)
     }
+  ),
+
+  private = list(
+    .xdt = NULL,
+    .ys = NULL
   )
 )
 
@@ -65,7 +70,13 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     rush = rush::RushWorker$new(instance$rush$network_id, remote = FALSE)
     instance$rush = rush
     instance$archive$rush = rush
+
+    call_back("on_worker_begin", instance$objective$callbacks, instance$objective$context)
+
+    # run optimizer loop
     get_private(optimizer)$.optimize(instance)
+
+    call_back("on_worker_end", instance$objective$callbacks, instance$objective$context)
   } else {
     # run .optimize() on workers
     rush = instance$rush
@@ -134,24 +145,4 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
   return(instance$result)
-}
-
-#' @title Default Evaluation of the Queue
-#'
-#' @description
-#' Used internally in `$.optimize()` of [OptimizerAsync] classes to evaluate a queue of points e.g. in [OptimizerAsyncGridSearch].
-#'
-#' @param instance [OptimInstanceAsync].
-#'
-#' @keywords internal
-#' @export
-evaluate_queue_default = function(instance) {
-  while (!instance$is_terminated && instance$archive$n_queued) {
-    task = instance$archive$pop_point() # FIXME: Add fields argument?
-      if (!is.null(task)) {
-      xs_trafoed = trafo_xs(task$xs, instance$search_space)
-      ys = instance$objective$eval(xs_trafoed)
-      instance$archive$push_result(task$key, ys, x_domain = xs_trafoed)
-    }
-  }
 }

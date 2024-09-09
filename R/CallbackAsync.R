@@ -13,18 +13,28 @@ CallbackAsync = R6Class("CallbackAsync",
   public = list(
 
     #' @field on_optimization_begin (`function()`)\cr
-    #'   Stage called at the beginning of the optimization in the main process.
-    #'   Called in `Optimizer$optimize()`.
+    #' Stage called at the beginning of the optimization in the main process.
+    #' Called in `Optimizer$optimize()`.
     on_optimization_begin = NULL,
 
     #' @field on_worker_begin (`function()`)\cr
-    #'   Stage called at the beginning of the optimization on the worker.
-    #'   Called in the worker loop.
+    #' Stage called at the beginning of the optimization on the worker.
+    #' Called in the worker loop.
     on_worker_begin = NULL,
 
+    #' @field on_optimizer_before_eval (`function()`)\cr
+    #' Stage called after the optimizer proposes points.
+    #' Called in `OptimInstance$.eval_point()`.
+    on_optimizer_before_eval = NULL,
+
+    #' @field on_optimizer_after_eval (`function()`)\cr
+    #' Stage called after points are evaluated.
+    #' Called in `OptimInstance$.eval_point()`.
+    on_optimizer_after_eval = NULL,
+
     #' @field on_worker_end (`function()`)\cr
-    #'   Stage called at the end of the optimization on the worker.
-    #'   Called in the worker loop.
+    #' Stage called at the end of the optimization on the worker.
+    #' Called in the worker loop.
     on_worker_end = NULL,
 
     #' @field on_result (`function()`)\cr
@@ -52,6 +62,10 @@ CallbackAsync = R6Class("CallbackAsync",
 #'      - on_optimization_begin
 #'     Start Worker
 #'          - on_worker_begin
+#'            Start Optimization on Worker
+#'              - on_optimizer_before_eval
+#'              - on_optimizer_after_eval
+#'            End Optimization on Worker
 #'          - on_worker_end
 #'     End Worker
 #'      - on_result
@@ -81,6 +95,14 @@ CallbackAsync = R6Class("CallbackAsync",
 #'   Stage called at the beginning of the optimization on the worker.
 #'   Called in the worker loop.
 #'   The functions must have two arguments named `callback` and `context`.
+#' @param on_optimizer_before_eval (`function()`)\cr
+#'   Stage called after the optimizer proposes points.
+#'   Called in `OptimInstance$eval_point()`.
+#'   The functions must have two arguments named `callback` and `context`.
+#' @param on_optimizer_after_eval (`function()`)\cr
+#'   Stage called after points are evaluated.
+#'   Called in `OptimInstance$eval_point()`.
+#'   The functions must have two arguments named `callback` and `context`.
 #' @param on_worker_end (`function()`)\cr
 #'   Stage called at the end of the optimization on the worker.
 #'   Called in the worker loop.
@@ -101,6 +123,8 @@ callback_async = function(
   man = NA_character_,
   on_optimization_begin = NULL,
   on_worker_begin = NULL,
+  on_optimizer_before_eval = NULL,
+  on_optimizer_after_eval = NULL,
   on_worker_end = NULL,
   on_result = NULL,
   on_optimization_end = NULL
@@ -108,11 +132,15 @@ callback_async = function(
   stages = discard(set_names(list(
     on_optimization_begin,
     on_worker_begin,
+    on_optimizer_before_eval,
+    on_optimizer_after_eval,
     on_worker_end,
     on_result,
     on_optimization_end),
     c("on_optimization_begin",
     "on_worker_begin",
+    "on_optimizer_before_eval",
+    "on_optimizer_after_eval",
     "on_worker_end",
     "on_result",
     "on_optimization_end")), is.null)
