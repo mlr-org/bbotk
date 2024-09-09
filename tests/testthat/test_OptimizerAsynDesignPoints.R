@@ -1,6 +1,5 @@
 test_that("OptimizerAsyncRandomSearch works", {
   skip_on_cran()
-  #  skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
 
@@ -12,7 +11,7 @@ test_that("OptimizerAsyncRandomSearch works", {
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("none"),
+    terminator = trm("none")
   )
 
   expect_data_table(optimizer$optimize(instance), nrows = 1)
