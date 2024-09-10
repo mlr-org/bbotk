@@ -26,7 +26,7 @@ test_that("rush controller can be passed to OptimInstanceAsyncSingleCrit", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush = rsh(network_id = "remote_network")
+  rush = rush::rsh(network_id = "remote_network")
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -63,7 +63,7 @@ test_that("point evaluation works", {
   flush_redis()
 
   # evaluation takes place on the workers
-  rush = RushWorker$new("test", remote = FALSE)
+  rush = rush::RushWorker$new("test", remote = FALSE)
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
