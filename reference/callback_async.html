@@ -6,6 +6,10 @@ Start Optimization
      - on_optimization_begin
     Start Worker
          - on_worker_begin
+           Start Optimization on Worker
+             - on_optimizer_before_eval
+             - on_optimizer_after_eval
+           End Optimization on Worker
          - on_worker_end
     End Worker
      - on_result
@@ -20,6 +24,10 @@ Start Optimization
      - on_optimization_begin
     Start Worker
          - on_worker_begin
+           Start Optimization on Worker
+             - on_optimizer_before_eval
+             - on_optimizer_after_eval
+           End Optimization on Worker
          - on_worker_end
     End Worker
      - on_result
@@ -35,7 +43,7 @@ A optimization callback works with ContextAsync."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +54,9 @@ A optimization callback works with ContextAsync."></head><body>
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-file-alt"></span> Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://mlr3book.mlr-org.com"><span class="fa fa-link"></span> mlr3book</a></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlr-org/bbotk/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlr-org/bbotk/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/"><span class="fa fa-comments"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://stackoverflow.com/questions/tagged/mlr"><span class="fa fab fa-stack-overflow"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://mlr-org.com/"><span class="fa fa-rss"></span></a></li>
@@ -77,11 +87,15 @@ The stages are prefixed with <code>on_*</code>.</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>     <span class="sc">-</span> on_optimization_begin</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    Start Worker</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>         <span class="sc">-</span> on_worker_begin</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>         <span class="sc">-</span> on_worker_end</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    End Worker</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>     <span class="sc">-</span> on_result</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>     <span class="sc">-</span> on_optimization_end</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>End Optimization</span></code></pre><p></p></div>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>           Start Optimization on Worker</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>             <span class="sc">-</span> on_optimizer_before_eval</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>             <span class="sc">-</span> on_optimizer_after_eval</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>           End Optimization on Worker</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>         <span class="sc">-</span> on_worker_end</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>    End Worker</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>     <span class="sc">-</span> on_result</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>     <span class="sc">-</span> on_optimization_end</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>End Optimization</span></code></pre><p></p></div>
 <p>See also the section on parameters for more information on the stages.
 A optimization callback works with <a href="ContextAsync.html">ContextAsync</a>.</p>
     </div>
@@ -94,6 +108,8 @@ A optimization callback works with <a href="ContextAsync.html">ContextAsync</a>.
 <span>  man <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  on_optimization_begin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_worker_begin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  on_optimizer_before_eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  on_optimizer_after_eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_worker_end <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_result <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_optimization_end <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -131,6 +147,20 @@ The functions must have two arguments named <code>callback</code> and <code>cont
 <dd><p>(<code>function()</code>)<br>
 Stage called at the beginning of the optimization on the worker.
 Called in the worker loop.
+The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
+
+
+<dt id="arg-on-optimizer-before-eval">on_optimizer_before_eval<a class="anchor" aria-label="anchor" href="#arg-on-optimizer-before-eval"></a></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called after the optimizer proposes points.
+Called in <code>OptimInstance$eval_point()</code>.
+The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
+
+
+<dt id="arg-on-optimizer-after-eval">on_optimizer_after_eval<a class="anchor" aria-label="anchor" href="#arg-on-optimizer-after-eval"></a></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called after points are evaluated.
+Called in <code>OptimInstance$eval_point()</code>.
 The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
 
 

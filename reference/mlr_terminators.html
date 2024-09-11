@@ -13,7 +13,7 @@ For a more convenient way to retrieve and construct terminator, see trm()/trms()
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,9 @@ For a more convenient way to retrieve and construct terminator, see trm()/trms()
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-file-alt"></span> Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://mlr3book.mlr-org.com"><span class="fa fa-link"></span> mlr3book</a></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlr-org/bbotk/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlr-org/bbotk/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/"><span class="fa fa-comments"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://stackoverflow.com/questions/tagged/mlr"><span class="fa fab fa-stack-overflow"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://mlr-org.com/"><span class="fa fa-rss"></span></a></li>
@@ -85,23 +87,36 @@ If <code>objects</code> is set to <code>TRUE</code>, the constructed objects are
 <code><a href="mlr_terminators_perf_reached.html">mlr_terminators_perf_reached</a></code>,
 <code><a href="mlr_terminators_run_time.html">mlr_terminators_run_time</a></code>,
 <code><a href="mlr_terminators_stagnation.html">mlr_terminators_stagnation</a></code>,
-<code><a href="mlr_terminators_stagnation_batch.html">mlr_terminators_stagnation_batch</a></code></p></div>
+<code><a href="mlr_terminators_stagnation_batch.html">mlr_terminators_stagnation_batch</a></code>,
+<code><a href="mlr_terminators_stagnation_hypervolume.html">mlr_terminators_stagnation_hypervolume</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mlr_terminators</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;key&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 key                label             properties        unit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              &lt;char&gt;               &lt;char&gt;                 &lt;list&gt;      &lt;char&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:       clock_time           Clock Time single-crit,multi-crit     seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:            combo          Combination single-crit,multi-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:            evals Number of Evaluation single-crit,multi-crit evaluations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:             none                 None single-crit,multi-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:     perf_reached    Performance Level            single-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:         run_time             Run Time single-crit,multi-crit     seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7:       stagnation           Stagnation            single-crit     percent</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8: stagnation_batch     Stagnation Batch            single-crit     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       key                  label             properties</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    &lt;char&gt;                 &lt;char&gt;                 &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:             clock_time             Clock Time single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:                  combo            Combination single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:                  evals   Number of Evaluation single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:                   none                   None single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:           perf_reached      Performance Level            single-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:               run_time               Run Time single-crit,multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:             stagnation             Stagnation            single-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8:       stagnation_batch       Stagnation Batch            single-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9: stagnation_hypervolume Stagnation Hypervolume             multi-crit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           unit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: evaluations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:     seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8:     percent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9:     percent</span>
 <span class="r-in"><span><span class="va">mlr_terminators</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"evals"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;TerminatorEvals&gt;: Number of Evaluation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: n_evals=100, k=0</span>

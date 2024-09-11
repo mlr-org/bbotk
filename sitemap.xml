@@ -1,8 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://bbotk.mlr-org.com/404.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/LICENSE-text.html</loc></url>
-<url><loc>https://bbotk.mlr-org.com/articles/bbotk.html</loc></url>
-<url><loc>https://bbotk.mlr-org.com/articles/index.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/authors.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/index.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/news/index.html</loc></url>
@@ -43,7 +41,6 @@
 <url><loc>https://bbotk.mlr-org.com/reference/branin.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/callback_async.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/callback_batch.html</loc></url>
-<url><loc>https://bbotk.mlr-org.com/reference/evaluate_queue_default.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/index.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/is_dominated.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers.html</loc></url>
@@ -56,6 +53,7 @@
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_gensa.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_grid_search.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_irace.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_local_search.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_nloptr.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_random_search.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_terminators.html</loc></url>
@@ -67,6 +65,7 @@
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_terminators_run_time.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation_batch.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation_hypervolume.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/nds_selection.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/oi.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/oi_async.html</loc></url>
