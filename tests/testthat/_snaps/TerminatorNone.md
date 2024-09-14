@@ -4,11 +4,17 @@
       terminators
     Output
       $evals
-      <TerminatorEvals>: Number of Evaluation
+    Message
+      
+      -- TerminatorEvals - Number of Evaluation --------------------------------------
       * Parameters: n_evals=10, k=0
+    Output
       
       $none
-      <TerminatorNone>: None
-      * Parameters: list()
+    Message
+      
+      -- TerminatorNone - None -------------------------------------------------------
+      * Parameters: -
+    Output
       
 
