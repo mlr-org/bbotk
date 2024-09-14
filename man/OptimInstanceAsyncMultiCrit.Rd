@@ -92,7 +92,7 @@ If a rush instance is supplied, the tuning runs without batches.}
 The \link{OptimizerAsync} writes the best found points and estimated performance values here (probably the Pareto set / front).
 For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncMultiCrit$assign_result(xdt, ydt)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncMultiCrit$assign_result(xdt, ydt, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -106,6 +106,9 @@ However, \code{xdt} can contain additional columns.}
 
 \item{\code{ydt}}{(\code{numeric(1)})\cr
 Optimal outcomes, e.g. the Pareto front.}
+
+\item{\code{...}}{(\code{any})\cr
+ignored.}
 }
 \if{html}{\out{</div>}}
 }

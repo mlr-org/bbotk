@@ -246,7 +246,7 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
               # for ParamLgls we cannot specify levels; instead we set a default
               do.call(ps, structure(list(
                 p_lgl(special_vals = param$special_vals[[pid]],
-                  default = levels, tags = c(param$tags[[pid]], "shrinked"),
+                  default = levels, tags = unique(c(param$tags[[pid]], "shrinked")),
                   trafo = param_trafos[[pid]])
               ), names = pid))
             }

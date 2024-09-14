@@ -77,7 +77,7 @@ trafo_xs = function(xs, search_space) {
 #' Returns a named numeric vector with start
 #' values for optimizers.
 #'
-#' @param search_space [ParamSet].
+#' @param search_space [paradox::ParamSet].
 #' @param type (`character(1)`)\cr
 #' `random` start values or `center` of search space?
 #'

@@ -7,7 +7,7 @@
 search_start(search_space, type = "random")
 }
 \arguments{
-\item{search_space}{\link{ParamSet}.}
+\item{search_space}{\link[paradox:ParamSet]{paradox::ParamSet}.}
 
 \item{type}{(\code{character(1)})\cr
 \code{random} start values or \code{center} of search space?}

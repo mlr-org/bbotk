@@ -21,7 +21,6 @@ load_callback_backup = function() {
     on_optimizer_after_eval = function(callback, context) {
       if (file.exists(callback$state$path)) unlink(callback$state$path)
       saveRDS(context$instance$archive$data, callback$state$path)
-    },
-    fields = list(path = "archive.rds")
+    }
   )
 }

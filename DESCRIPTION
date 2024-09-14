@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 0.8.0.9000
+Version: 1.1.0.9000
 Authors@R: c(
     person("Marc", "Becker", , "marcbecker@posteo.de", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-8115-0400")),
@@ -31,7 +31,7 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.15.0.9000),
+    mlr3misc (>= 0.15.1),
     R6
 Suggests:
     adagio,
@@ -43,21 +43,15 @@ Suggests:
     progressr,
     processx,
     redux,
-    rmarkdown,
     testthat (>= 3.0.0),
     rush
-VignetteBuilder:
-    knitr
-Remotes:
-    mlr-org/mlr3misc,
-    mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Collate:
     'Archive.R'
     'ArchiveAsync.R'
@@ -93,6 +87,7 @@ Collate:
     'OptimizerBatchGenSA.R'
     'OptimizerBatchGridSearch.R'
     'OptimizerBatchIrace.R'
+    'OptimizerBatchLocalSearch.R'
     'OptimizerBatchNLoptr.R'
     'OptimizerBatchRandomSearch.R'
     'Progressor.R'
@@ -106,6 +101,7 @@ Collate:
     'TerminatorRunTime.R'
     'TerminatorStagnation.R'
     'TerminatorStagnationBatch.R'
+    'TerminatorStagnationHypervolume.R'
     'as_terminator.R'
     'assertions.R'
     'bb_optimize.R'

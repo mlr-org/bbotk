@@ -1,12 +1,12 @@
 #' @title Codomain of Function
 #'
 #' @description
-#' A [ParamSet] defining the codomain of a function. The parameter
+#' A [paradox::ParamSet] defining the codomain of a function. The parameter
 #' set must contain at least one target parameter tagged with `"minimize"` or
 #' `"maximize"`. The codomain may contain extra parameters which are ignored
 #' when calling the [Archive] methods `$best()`, `$nds_selection()` and
 #' `$cols_y`. This class is usually constructed internally from a
-#' [ParamSet] when [Objective] is initialized.
+#' [paradox::ParamSet] when [Objective] is initialized.
 #'
 #' @export
 #' @examples
@@ -43,7 +43,7 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #'
     #' @param params (`list()`)\cr
     #'   Named list with which to initialize the codomain.
-    #'   This argument is analogous to [ParamSet]'s `$initialize()` `params` argument.
+    #'   This argument is analogous to [paradox::ParamSet]'s `$initialize()` `params` argument.
     initialize = function(params) {
 
       assert_list(params)

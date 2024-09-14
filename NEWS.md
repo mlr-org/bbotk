@@ -1,5 +1,19 @@
 # bbotk (development version)
 
+# bbotk 1.1.0
+
+* docs: Move vignette to mlr3book.
+* feat: Add hypervolume stagnation terminator `trm("stagnation_hypervolume")`.
+* feat Add local search optimizer `opt("local_search")`.
+* refactor: Remove unused fields from callbacks.
+* fix: Add `"on_optimization_end_batch"` stage to `CallbackBatch`.
+
+# bbotk 1.0.1
+
+* refactor: extra columns in results.
+
+# bbotk 1.0.0
+
 * feat: Introduce asynchronous optimization with the `OptimizerAsync` and `OptimInstanceAsync` classes.
 * BREAKING CHANGE: The `Optimizer` class is `OptimizerBatch` now.
 * BREAKING CHANGE: The `OptimInstance` class and subclasses are `OptimInstanceBatch*` now.
