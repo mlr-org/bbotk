@@ -107,7 +107,9 @@ OptimInstance = R6Class("OptimInstance",
     #'   columns for extra information.
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
-    assign_result = function(xdt, y) {
+    #' @param ... (`any`)\cr
+    #' ignored.
+    assign_result = function(xdt, y, ...) {
       stop("Abstract class")
     },
 
