@@ -2,7 +2,8 @@
 
     Code
       terminator
-    Output
-      <TerminatorClockTime>: Clock Time
+    Message
+      
+      -- TerminatorClockTime - Clock Time --------------------------------------------
       * Parameters: stop_time=<POSIXct>
 

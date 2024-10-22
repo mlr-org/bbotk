@@ -2,8 +2,9 @@
 
     Code
       z$optimizer
-    Output
-      <OptimizerBatchRandomSearch>: Random Search
+    Message
+      
+      -- OptimizerBatchRandomSearch - Random Search ----------------------------------
       * Parameters: batch_size=1
       * Parameter classes: ParamLgl, ParamInt, ParamDbl, ParamFct
       * Properties: dependencies, single-crit, multi-crit
@@ -13,8 +14,9 @@
 
     Code
       z$optimizer
-    Output
-      <OptimizerBatchRandomSearch>: Random Search
+    Message
+      
+      -- OptimizerBatchRandomSearch - Random Search ----------------------------------
       * Parameters: batch_size=1
       * Parameter classes: ParamLgl, ParamInt, ParamDbl, ParamFct
       * Properties: dependencies, single-crit, multi-crit
@@ -24,8 +26,9 @@
 
     Code
       z$optimizer
-    Output
-      <OptimizerBatchRandomSearch>: Random Search
+    Message
+      
+      -- OptimizerBatchRandomSearch - Random Search ----------------------------------
       * Parameters: batch_size=10
       * Parameter classes: ParamLgl, ParamInt, ParamDbl, ParamFct
       * Properties: dependencies, single-crit, multi-crit
