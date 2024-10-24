@@ -1,6 +1,11 @@
 # bbotk (development version)
 
+* feat: `ContextBatch` and `ContextAsync` have a `result_extra` field now to access additional results passed to the instance.
+* refactor: Additional information are passed with `extra` to `OptimInstance$assign_result()`.
+
 # bbotk 1.1.1
+
+* feat: The optimizers passes additional information to `OptimInstance$assign_result()` method.
 
 # bbotk 1.1.0
 

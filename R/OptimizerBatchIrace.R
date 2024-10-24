@@ -208,10 +208,13 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
       }
 
       res = inst$archive$data[get("configuration") == private$.result_id, ]
-      cols = c(inst$archive$cols_x, "configuration")
-      xdt = res[1, cols, with = FALSE]
-      y = set_names(mean(unlist(res[, inst$archive$cols_y, with = FALSE])), inst$archive$cols_y)
-      inst$assign_result(xdt, y)
+      cols_x = c(inst$archive$cols_x, "configuration")
+      cols_y = inst$archive$cols_y
+      xdt = res[1, cols_x, with = FALSE]
+      y = set_names(mean(unlist(res[, cols_y, with = FALSE])), cols_y)
+      extra = res[, !c(cols_x, cols_y), with = FALSE]
+
+      inst$assign_result(xdt, y, extra = extra)
     },
 
     .result_id = NULL

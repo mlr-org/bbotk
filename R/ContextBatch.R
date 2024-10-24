@@ -48,6 +48,16 @@ ContextBatch = R6Class("ContextBatch",
       } else {
         get_private(self$instance, ".result") = rhs
       }
+    },
+
+    #' @field result_extra ([data.table::data.table])\cr
+    #' Additional information about the result.
+    result_extra = function(rhs) {
+      if (missing(rhs)) {
+        get_private(self$instance)$.result_extra
+      } else {
+        get_private(self$instance, ".result_extra") = rhs
+      }
     }
   )
 )

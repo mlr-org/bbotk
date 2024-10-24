@@ -167,17 +167,20 @@ assign_result_default = function(inst) {
   assert_r6(inst, "OptimInstance")
 
   xydt = inst$archive$best()
-  ids = inst$search_space$ids()
-  xdt = xydt[, ids, with = FALSE]
+  cols_x = inst$archive$cols_x
+  cols_y = inst$archive$cols_y
+
+  xdt = xydt[, cols_x, with = FALSE]
+  extra = xydt[, !c(cols_x, cols_y), with = FALSE]
 
   if (inherits(inst, "OptimInstanceBatchMultiCrit") || inherits(inst, "OptimInstanceAsyncMultiCrit")) {
     ydt = xydt[, inst$archive$cols_y, with = FALSE]
     # upstream packages might extract extra columns from xydt
-    inst$assign_result(xdt, ydt, xydt = xydt)
+    inst$assign_result(xdt, ydt, xydt = xydt, extra = extra)
   } else {
     # unlist keeps name!
     y = unlist(xydt[, inst$archive$cols_y, with = FALSE])
-    inst$assign_result(xdt, y, xydt = xydt)
+    inst$assign_result(xdt, y, xydt = xydt, extra = extra)
   }
 
   invisible(NULL)

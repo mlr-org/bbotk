@@ -51,14 +51,17 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
     #'
     #' @param ydt (`numeric(1)`)\cr
     #' Optimal outcomes, e.g. the Pareto front.
+    #' @param extra (`data.table::data.table()`)\cr
+    #' Additional information.
     #' @param ... (`any`)\cr
     #' ignored.
-    assign_result = function(xdt, ydt, ...) {
+    assign_result = function(xdt, ydt, extra, ...) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_data_table(ydt)
       assert_names(names(ydt), permutation.of = self$objective$codomain$ids())
+      private$.result_extra = assert_data_table(extra, null.ok = TRUE)
       x_domain = transform_xdt_to_xss(xdt, self$search_space)
       if (length(x_domain) == 0) x_domain = list(list())
       private$.result = cbind(xdt, x_domain = x_domain, ydt)
