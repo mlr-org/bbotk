@@ -44,6 +44,7 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
     #' The [Optimizer] object writes the best found points
     #' and estimated performance values here (probably the Pareto set / front).
     #' For internal use.
+    #'
     #' @param extra (`data.table::data.table()`)\cr
     #' Additional information.
     #' @param ... (`any`)\cr
