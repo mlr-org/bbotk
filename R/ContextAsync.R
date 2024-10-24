@@ -42,6 +42,16 @@ ContextAsync = R6Class("ContextAsync",
       }
     },
 
+    #' @field result_extra ([data.table::data.table])\cr
+    #' Additional information about the result.
+    result_extra = function(rhs) {
+      if (missing(rhs)) {
+        get_private(self$instance)$.result_extra
+      } else {
+        get_private(self$instance, ".result_extra") = rhs
+      }
+    },
+
     #' @field xs (list())\cr
     #' The point to be evaluated.
     xs = function(rhs) {

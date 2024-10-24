@@ -52,14 +52,17 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
     #'
     #' @param y (`numeric(1)`)\cr
     #' Optimal outcome.
+    #' @param extra (`data.table::data.table()`)\cr
+    #' Additional information.
     #' @param ... (`any`)\cr
     #' ignored.
-    assign_result = function(xdt, y, ...) {
+    assign_result = function(xdt, y, extra, ...) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())
       assert_number(y)
       assert_names(names(y), permutation.of = self$objective$codomain$target_ids)
+      private$.result_extra = assert_data_table(extra, null.ok = TRUE)
       x_domain = unlist(transform_xdt_to_xss(xdt, self$search_space), recursive = FALSE)
       if (is.null(x_domain)) x_domain = list()
       private$.result = cbind(xdt, x_domain = list(x_domain), t(y)) # t(y) so the name of y stays

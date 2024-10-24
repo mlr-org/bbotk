@@ -29,6 +29,9 @@ Changes to \verb{$instance} and \verb{$optimizer} in the stages executed on the 
 \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 The result of the optimization.}
 
+\item{\code{result_extra}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Additional information about the result.}
+
 \item{\code{xs}}{(list())\cr
 The point to be evaluated.}
 

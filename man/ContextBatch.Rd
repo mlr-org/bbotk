@@ -29,6 +29,9 @@ Contains the values in the search space i.e. transformations are not yet applied
 
 \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 The result of the optimization.}
+
+\item{\code{result_extra}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Additional information about the result.}
 }
 \if{html}{\out{</div>}}
 }
