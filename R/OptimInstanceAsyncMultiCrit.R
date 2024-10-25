@@ -55,7 +55,7 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
     #' Additional information.
     #' @param ... (`any`)\cr
     #' ignored.
-    assign_result = function(xdt, ydt, extra, ...) {
+    assign_result = function(xdt, ydt, extra = NULL, ...) {
       # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
       assert_data_table(xdt)
       assert_names(names(xdt), must.include = self$search_space$ids())
