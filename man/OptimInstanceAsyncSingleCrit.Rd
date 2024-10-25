@@ -92,7 +92,7 @@ If a rush instance is supplied, the tuning runs without batches.}
 The \link{OptimizerAsync} object writes the best found point and estimated performance value here.
 For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncSingleCrit$assign_result(xdt, y, extra, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncSingleCrit$assign_result(xdt, y, extra = NULL, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

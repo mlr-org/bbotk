@@ -92,7 +92,7 @@ If a rush instance is supplied, the tuning runs without batches.}
 The \link{OptimizerAsync} writes the best found points and estimated performance values here (probably the Pareto set / front).
 For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncMultiCrit$assign_result(xdt, ydt, extra, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncMultiCrit$assign_result(xdt, ydt, extra = NULL, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
