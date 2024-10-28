@@ -82,6 +82,14 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     clear = function() {
       self$rush$reset()
       super$clear()
+    },
+
+    #' @description
+    #' Reconnect to Redis.
+    #' The connection breaks when the [rush::Rush] is saved to disk.
+    #' Call this method to reconnect after loading the object.
+    reconnect = function() {
+      self$rush$reconnect()
     }
   ),
 

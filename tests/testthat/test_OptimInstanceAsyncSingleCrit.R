@@ -73,3 +73,31 @@ test_that("point evaluation works", {
 
   expect_equal(get_private(instance)$.eval_point(list(x1 = 1, x2 = 0)), list(y = 1))
 })
+
+test_that("reconnect method works", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+
+  on.exit({
+    file.remove("instance.rds")
+  })
+
+  rush::rush_plan(n_workers = 2)
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  saveRDS(instance, file = "instance.rds")
+  instance = readRDS("instance.rds")
+
+  instance$reconnect()
+
+  expect_r6(instance, "OptimInstanceAsyncSingleCrit")
+})
