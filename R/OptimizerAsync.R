@@ -141,7 +141,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   get_private(optimizer)$.assign_result(instance)
   lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
   lg$info("Result:")
-  lg$info(capture.output(print(instance$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+  lg$info(capture.output(print(instance$result, class = FALSE, row.names = FALSE, print.keys = FALSE)))
 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
   return(instance$result)

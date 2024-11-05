@@ -11,6 +11,8 @@ callback_batch(
   on_optimization_begin = NULL,
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
+  on_result_begin = NULL,
+  on_result_end = NULL,
   on_result = NULL,
   on_optimization_end = NULL
 )
@@ -41,7 +43,18 @@ Stage called after points are evaluated.
 Called in \code{OptimInstance$eval_batch()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
 
+\item{on_result_begin}{(\verb{function()})\cr
+Stage called before result are written.
+Called in \code{OptimInstance$assign_result()}.
+The functions must have two arguments named \code{callback} and \code{context}.}
+
+\item{on_result_end}{(\verb{function()})\cr
+Stage called after result are written.
+Called in \code{OptimInstance$assign_result()}.
+The functions must have two arguments named \code{callback} and \code{context}.}
+
 \item{on_result}{(\verb{function()})\cr
+Deprecated. Use \code{on_result_end} instead.
 Stage called after result are written.
 Called in \code{OptimInstance$assign_result()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
@@ -63,7 +76,8 @@ The stages are prefixed with \verb{on_*}.
          - on_optimizer_before_eval
          - on_optimizer_after_eval
     End Optimizer Batch
-     - on_result
+     - on_result_begin
+     - on_result_end
      - on_optimization_end
 End Optimization
 }\if{html}{\out{</div>}}

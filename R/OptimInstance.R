@@ -154,8 +154,11 @@ OptimInstance = R6Class("OptimInstance",
   ),
 
   private = list(
-    .result = NULL,
+    # intermediate objects
+    .result_xdt = NULL,
     .result_extra = NULL,
+    .result = NULL,
+
     .label = NULL,
     .man = NULL,
 

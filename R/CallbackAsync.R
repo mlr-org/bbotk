@@ -37,10 +37,15 @@ CallbackAsync = R6Class("CallbackAsync",
     #' Called in the worker loop.
     on_worker_end = NULL,
 
-    #' @field on_result (`function()`)\cr
-    #'   Stage called after result are written.
+    #' @field on_result_begin (`function()`)\cr
+    #'   Stage called before the results are written.
     #'   Called in `OptimInstance$assign_result()`.
-    on_result = NULL,
+    on_result_begin = NULL,
+
+    #' @field on_result_end (`function()`)\cr
+    #'   Stage called after the results are written.
+    #'   Called in `OptimInstance$assign_result()`.
+    on_result_end = NULL,
 
     #' @field on_optimization_end (`function()`)\cr
     #'   Stage called at the end of the optimization in the main process.
@@ -68,7 +73,8 @@ CallbackAsync = R6Class("CallbackAsync",
 #'            End Optimization on Worker
 #'          - on_worker_end
 #'     End Worker
-#'      - on_result
+#'      - on_result_begin
+#'      - on_result_end
 #'      - on_optimization_end
 #' End Optimization
 #' ```
@@ -97,17 +103,26 @@ CallbackAsync = R6Class("CallbackAsync",
 #'   The functions must have two arguments named `callback` and `context`.
 #' @param on_optimizer_before_eval (`function()`)\cr
 #'   Stage called after the optimizer proposes points.
-#'   Called in `OptimInstance$eval_point()`.
+#'   Called in `OptimInstance$.eval_point()`.
 #'   The functions must have two arguments named `callback` and `context`.
 #' @param on_optimizer_after_eval (`function()`)\cr
 #'   Stage called after points are evaluated.
-#'   Called in `OptimInstance$eval_point()`.
+#'   Called in `OptimInstance$.eval_point()`.
 #'   The functions must have two arguments named `callback` and `context`.
 #' @param on_worker_end (`function()`)\cr
 #'   Stage called at the end of the optimization on the worker.
 #'   Called in the worker loop.
 #'   The functions must have two arguments named `callback` and `context`.
+#' @param on_result_begin (`function()`)\cr
+#'  Stage called before result are written.
+#'  Called in `OptimInstance$assign_result()`.
+#'  The functions must have two arguments named `callback` and `context`.
+#' @param on_result_end (`function()`)\cr
+#'  Stage called after result are written.
+#'  Called in `OptimInstance$assign_result()`.
+#'  The functions must have two arguments named `callback` and `context`.
 #' @param on_result (`function()`)\cr
+#'   Deprecated. Use `on_result_end` instead.
 #'   Stage called after result are written.
 #'   Called in `OptimInstance$assign_result()`.
 #'   The functions must have two arguments named `callback` and `context`.
@@ -126,6 +141,8 @@ callback_async = function(
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
   on_worker_end = NULL,
+  on_result_begin = NULL,
+  on_result_end = NULL,
   on_result = NULL,
   on_optimization_end = NULL
   ) {
@@ -135,15 +152,26 @@ callback_async = function(
     on_optimizer_before_eval,
     on_optimizer_after_eval,
     on_worker_end,
+    on_result_begin,
+    on_result_end,
     on_result,
     on_optimization_end),
     c("on_optimization_begin",
-    "on_worker_begin",
-    "on_optimizer_before_eval",
-    "on_optimizer_after_eval",
-    "on_worker_end",
-    "on_result",
-    "on_optimization_end")), is.null)
+      "on_worker_begin",
+      "on_optimizer_before_eval",
+      "on_optimizer_after_eval",
+      "on_worker_end",
+      "on_result_begin",
+      "on_result_end",
+      "on_result",
+      "on_optimization_end")), is.null)
+
+  if ("on_result" %in% names(stages)) {
+    .Deprecated(old = "on_result", new = "on_result_end")
+    stages$on_result_end = stages$on_result
+    stages$on_result = NULL
+  }
+
   walk(stages, function(stage) assert_function(stage, args = c("callback", "context")))
   callback = CallbackAsync$new(id, label, man)
   iwalk(stages, function(stage, name) callback[[name]] = stage)
