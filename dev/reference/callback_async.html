@@ -12,7 +12,8 @@ Start Optimization
            End Optimization on Worker
          - on_worker_end
     End Worker
-     - on_result
+     - on_result_begin
+     - on_result_end
      - on_optimization_end
 End Optimization
 
@@ -30,7 +31,8 @@ Start Optimization
            End Optimization on Worker
          - on_worker_end
     End Worker
-     - on_result
+     - on_result_begin
+     - on_result_end
      - on_optimization_end
 End Optimization
 
@@ -93,9 +95,10 @@ The stages are prefixed with <code>on_*</code>.</p>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>           End Optimization on Worker</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>         <span class="sc">-</span> on_worker_end</span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>    End Worker</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>     <span class="sc">-</span> on_result</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>     <span class="sc">-</span> on_optimization_end</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>End Optimization</span></code></pre><p></p></div>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>     <span class="sc">-</span> on_result_begin</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>     <span class="sc">-</span> on_result_end</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>     <span class="sc">-</span> on_optimization_end</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>End Optimization</span></code></pre><p></p></div>
 <p>See also the section on parameters for more information on the stages.
 A optimization callback works with <a href="ContextAsync.html">ContextAsync</a>.</p>
     </div>
@@ -111,6 +114,8 @@ A optimization callback works with <a href="ContextAsync.html">ContextAsync</a>.
 <span>  on_optimizer_before_eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_optimizer_after_eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_worker_end <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  on_result_begin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  on_result_end <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_result <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_optimization_end <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -153,15 +158,18 @@ The functions must have two arguments named <code>callback</code> and <code>cont
 <dt id="arg-on-optimizer-before-eval">on_optimizer_before_eval<a class="anchor" aria-label="anchor" href="#arg-on-optimizer-before-eval"></a></dt>
 <dd><p>(<code>function()</code>)<br>
 Stage called after the optimizer proposes points.
-Called in <code>OptimInstance$eval_point()</code>.
-The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
+Called in <code>OptimInstance$.eval_point()</code>.
+The functions must have two arguments named <code>callback</code> and <code>context</code>.
+The argument of <code>instance$.eval_point(xs)</code> and <code>xs_trafoed</code> and <code>extra</code> are available in the <code>context</code>.
+Or <code>xs</code> and <code>xs_trafoed</code> of <code>instance$.eval_queue()</code> are available in the <code>context</code>.</p></dd>
 
 
 <dt id="arg-on-optimizer-after-eval">on_optimizer_after_eval<a class="anchor" aria-label="anchor" href="#arg-on-optimizer-after-eval"></a></dt>
 <dd><p>(<code>function()</code>)<br>
 Stage called after points are evaluated.
-Called in <code>OptimInstance$eval_point()</code>.
-The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
+Called in <code>OptimInstance$.eval_point()</code>.
+The functions must have two arguments named <code>callback</code> and <code>context</code>.
+The outcome <code>y</code> is available in the <code>context</code>.</p></dd>
 
 
 <dt id="arg-on-worker-end">on_worker_end<a class="anchor" aria-label="anchor" href="#arg-on-worker-end"></a></dt>
@@ -171,8 +179,26 @@ Called in the worker loop.
 The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
 
 
+<dt id="arg-on-result-begin">on_result_begin<a class="anchor" aria-label="anchor" href="#arg-on-result-begin"></a></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called before result are written.
+Called in <code>OptimInstance$assign_result()</code>.
+The functions must have two arguments named <code>callback</code> and <code>context</code>.
+The arguments of <code>$.assign_result(xdt, y, extra)</code> are available in the <code>context</code>.</p></dd>
+
+
+<dt id="arg-on-result-end">on_result_end<a class="anchor" aria-label="anchor" href="#arg-on-result-end"></a></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called after result are written.
+Called in <code>OptimInstance$assign_result()</code>.
+The functions must have two arguments named <code>callback</code> and <code>context</code>.
+The final result <code>instance$result</code> is available in the <code>context</code>.</p></dd>
+
+
 <dt id="arg-on-result">on_result<a class="anchor" aria-label="anchor" href="#arg-on-result"></a></dt>
 <dd><p>(<code>function()</code>)<br>
+Deprecated.
+Use <code>on_result_end</code> instead.
 Stage called after result are written.
 Called in <code>OptimInstance$assign_result()</code>.
 The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>

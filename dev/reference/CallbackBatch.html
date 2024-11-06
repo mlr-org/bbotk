@@ -84,9 +84,15 @@ Stage called after points are evaluated.
 Called in <code>OptimInstance$eval_batch()</code>.</p></dd>
 
 
-<dt><code>on_result</code></dt>
+<dt><code>on_result_begin</code></dt>
 <dd><p>(<code>function()</code>)<br>
-Stage called after result are written.
+Stage called before the results are written.
+Called in <code>OptimInstance$assign_result()</code>.</p></dd>
+
+
+<dt><code>on_result_end</code></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called after the results are written.
 Called in <code>OptimInstance$assign_result()</code>.</p></dd>
 
 
