@@ -1,4 +1,4 @@
-# optimizer stages -------------------------------------------------------------
+# stages in $optimize() --------------------------------------------------------
 
 test_that("on_optimization_begin works", {
   skip_on_cran()
@@ -49,7 +49,7 @@ test_that("on_optimization_end works", {
   expect_equal(instance$terminator$param_set$values$n_evals, 200)
 })
 
-# worker stages ----------------------------------------------------------------
+# stager in worker_loop() ------------------------------------------------------
 
 test_that("on_worker_begin works", {
   skip_on_cran()
@@ -104,7 +104,7 @@ test_that("on_worker_end works", {
   expect_subset(1, instance$archive$data$x)
 })
 
-# eval stages -------------------------------------------------------------------
+# stages in $.eval_point() -----------------------------------------------------
 
 test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
   skip_on_cran()
@@ -138,7 +138,7 @@ test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
   expect_equal(unique(unlist(instance$archive$data$x_domain)), 0)
 })
 
-# result stages in OptimInstanceAsyncSingleCrit --------------------------------
+# stages in $assign_result() in OptimInstanceAsyncSingleCrit -------------------
 
 test_that("on_result_begin in OptimInstanceAsyncSingleCrit works", {
   skip_on_cran()
@@ -217,7 +217,7 @@ test_that("on_result in OptimInstanceAsyncSingleCrit works", {
   expect_equal(instance$result, 2)
 })
 
-# result stages in OptimInstanceAsyncMultiCrit ---------------------------------
+# stages in $assign_result() in OptimInstanceAsyncMultiCrit --------------------
 
 test_that("on_result_begin in OptimInstanceAsyncMultiCrit works", {
   skip_on_cran()
