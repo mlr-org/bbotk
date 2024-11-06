@@ -41,7 +41,7 @@ The result of the evaluation in \code{instance$.eval_point()}.}
 \item{\code{result_xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
 The xdt passed to \code{instance$assign_result()}.}
 
-\item{\code{result_y}}{(\link{numeric(1)})\cr
+\item{\code{result_y}}{(\code{numeric(1)})\cr
 The y passed to \code{instance$assign_result()}.
 Only available for single criterion optimization.}
 

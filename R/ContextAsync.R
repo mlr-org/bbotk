@@ -82,7 +82,7 @@ ContextAsync = R6Class("ContextAsync",
       }
     },
 
-    #' @field result_y ([numeric(1)])\cr
+    #' @field result_y (`numeric(1)`)\cr
     #' The y passed to `instance$assign_result()`.
     #' Only available for single criterion optimization.
     result_y = function(rhs) {
