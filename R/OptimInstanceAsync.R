@@ -94,6 +94,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
   ),
 
   private = list(
+    # intermediate objects
     .xs = NULL,
     .xs_trafoed = NULL,
     .extra = NULL,
@@ -123,17 +124,18 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       while (!self$is_terminated && self$archive$n_queued) {
         task = self$archive$pop_point()
         if (!is.null(task)) {
-          private$.xs = task$xs
-
           # transpose point
+          private$.xs = task$xs
           private$.xs_trafoed = trafo_xs(private$.xs, self$search_space)
 
-          # eval
           call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
+
+          # eval
           private$.ys = self$objective$eval(private$.xs_trafoed)
 
-          # push reuslt
           call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
+
+          # push reuslt
           self$archive$push_result(task$key, private$.ys, x_domain = private$.xs_trafoed)
         }
       }

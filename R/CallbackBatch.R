@@ -34,10 +34,15 @@ CallbackBatch = R6Class("CallbackBatch",
     #'   Called in `OptimInstance$eval_batch()`.
     on_optimizer_after_eval = NULL,
 
-    #' @field on_result (`function()`)\cr
-    #'   Stage called after result are written.
+    #' @field on_result_begin (`function()`)\cr
+    #'   Stage called before the results are written.
     #'   Called in `OptimInstance$assign_result()`.
-    on_result = NULL,
+    on_result_begin = NULL,
+
+    #' @field on_result_end (`function()`)\cr
+    #'   Stage called after the results are written.
+    #'   Called in `OptimInstance$assign_result()`.
+    on_result_end = NULL,
 
     #' @field on_optimization_end (`function()`)\cr
     #'   Stage called at the end of the optimization.
@@ -61,7 +66,8 @@ CallbackBatch = R6Class("CallbackBatch",
 #'          - on_optimizer_before_eval
 #'          - on_optimizer_after_eval
 #'     End Optimizer Batch
-#'      - on_result
+#'      - on_result_begin
+#'      - on_result_end
 #'      - on_optimization_end
 #' End Optimization
 #' ```
@@ -75,32 +81,47 @@ CallbackBatch = R6Class("CallbackBatch",
 #'
 #'
 #' @param id (`character(1)`)\cr
-#'   Identifier for the new instance.
+#'  Identifier for the new instance.
 #' @param label (`character(1)`)\cr
-#'   Label for the new instance.
+#'  Label for the new instance.
 #' @param man (`character(1)`)\cr
-#'   String in the format `[pkg]::[topic]` pointing to a manual page for this object.
-#'   The referenced help package can be opened via method `$help()`.
+#'  String in the format `[pkg]::[topic]` pointing to a manual page for this object.
+#'  The referenced help package can be opened via method `$help()`.
+#'
 #' @param on_optimization_begin (`function()`)\cr
-#'   Stage called at the beginning of the optimization.
-#'   Called in `Optimizer$optimize()`.
-#'   The functions must have two arguments named `callback` and `context`.
+#'  Stage called at the beginning of the optimization.
+#'  Called in `Optimizer$optimize()`.
+#'  The functions must have two arguments named `callback` and `context`.
 #' @param on_optimizer_before_eval (`function()`)\cr
-#'   Stage called after the optimizer proposes points.
-#'   Called in `OptimInstance$eval_batch()`.
-#'   The functions must have two arguments named `callback` and `context`.
+#'  Stage called after the optimizer proposes points.
+#'  Called in `OptimInstance$eval_batch()`.
+#'  The functions must have two arguments named `callback` and `context`.
+#'  The argument of `$eval_batch(xdt)` is available in `context`.
 #' @param on_optimizer_after_eval (`function()`)\cr
-#'   Stage called after points are evaluated.
-#'   Called in `OptimInstance$eval_batch()`.
-#'   The functions must have two arguments named `callback` and `context`.
+#'  Stage called after points are evaluated.
+#'  Called in `OptimInstance$eval_batch()`.
+#'  The functions must have two arguments named `callback` and `context`.
+#'  The new points and outcomes in `instance$archive` are available in `context`.
+#' @param on_result_begin (`function()`)\cr
+#'  Stage called before result are written to the instance.
+#'  Called in `OptimInstance$assign_result()`.
+#'  The functions must have two arguments named `callback` and `context`.
+#'  The arguments of `$assign_result(xdt, y, extra)` are available in `context`.
+#' @param on_result_end (`function()`)\cr
+#'  Stage called after result are written to the instance.
+#'  Called in `OptimInstance$assign_result()`.
+#'  The functions must have two arguments named `callback` and `context`.
+#'  The final result `instance$result` is available in `context`.
 #' @param on_result (`function()`)\cr
-#'   Stage called after result are written.
-#'   Called in `OptimInstance$assign_result()`.
-#'   The functions must have two arguments named `callback` and `context`.
+#'  Deprecated.
+#'  Use `on_result_end` instead.
+#'  Stage called after result are written.
+#'  Called in `OptimInstance$assign_result()`.
+#'  The functions must have two arguments named `callback` and `context`.
 #' @param on_optimization_end (`function()`)\cr
-#'   Stage called at the end of the optimization.
-#'   Called in `Optimizer$optimize()`.
-#'   The functions must have two arguments named `callback` and `context`.
+#'  Stage called at the end of the optimization.
+#'  Called in `Optimizer$optimize()`.
+#'  The functions must have two arguments named `callback` and `context`.
 #'
 #' @export
 #' @inherit CallbackBatch examples
@@ -111,6 +132,8 @@ callback_batch = function(
   on_optimization_begin = NULL,
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
+  on_result_begin = NULL,
+  on_result_end = NULL,
   on_result = NULL,
   on_optimization_end = NULL
   ) {
@@ -118,14 +141,25 @@ callback_batch = function(
     on_optimization_begin,
     on_optimizer_before_eval,
     on_optimizer_after_eval,
+    on_result_begin,
+    on_result_end,
     on_result,
     on_optimization_end),
     c(
       "on_optimization_begin",
       "on_optimizer_before_eval",
       "on_optimizer_after_eval",
+      "on_result_begin",
+      "on_result_end",
       "on_result",
       "on_optimization_end")), is.null)
+
+  if ("on_result" %in% names(stages)) {
+    .Deprecated(old = "on_result", new = "on_result_end")
+    stages$on_result_end = stages$on_result
+    stages$on_result = NULL
+  }
+
   walk(stages, function(stage) assert_function(stage, args = c("callback", "context")))
   callback = CallbackBatch$new(id, label, man)
   iwalk(stages, function(stage, name) callback[[name]] = stage)

@@ -36,8 +36,12 @@ Called in \code{OptimInstance$.eval_point()}.}
 Stage called at the end of the optimization on the worker.
 Called in the worker loop.}
 
-\item{\code{on_result}}{(\verb{function()})\cr
-Stage called after result are written.
+\item{\code{on_result_begin}}{(\verb{function()})\cr
+Stage called before the results are written.
+Called in \code{OptimInstance$assign_result()}.}
+
+\item{\code{on_result_end}}{(\verb{function()})\cr
+Stage called after the results are written.
 Called in \code{OptimInstance$assign_result()}.}
 
 \item{\code{on_optimization_end}}{(\verb{function()})\cr

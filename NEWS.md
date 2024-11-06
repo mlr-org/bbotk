@@ -1,5 +1,9 @@
 # bbotk (development version)
 
+* feat: Add new stage `on_result_begin` to `CallbackAsyncTuning` and `CallbackBatchTuning`.
+* refactor: Rename stage `on_result` to `on_result_end` in `CallbackAsyncTuning` and `CallbackBatchTuning`.
+* docs: Extend the `CallbackAsyncTuning` and `CallbackBatchTuning` documentation.
+
 # bbotk 1.2.0
 
 * feat: `ContextBatch` and `ContextAsync` have a `result_extra` field now to access additional results passed to the instance.

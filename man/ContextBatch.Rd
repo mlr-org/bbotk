@@ -24,14 +24,25 @@ See \code{\link[=callback_batch]{callback_batch()}} for a list of stages which t
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
-The points of the latest batch.
+The points of the latest batch in \code{instance$eval_batch()}.
 Contains the values in the search space i.e. transformations are not yet applied.}
 
-\item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
-The result of the optimization.}
+\item{\code{result_xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
+The xdt passed to \code{instance$assign_result()}.}
+
+\item{\code{result_y}}{(\code{numeric(1)})\cr
+The y passed to \code{instance$assign_result()}.
+Only available for single criterion optimization.}
+
+\item{\code{result_ydt}}{(\link[data.table:data.table]{data.table::data.table})\cr
+The ydt passed to \code{instance$assign_result()}.
+Only available for multi criterion optimization.}
 
 \item{\code{result_extra}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Additional information about the result.}
+Additional information about the result passed to \code{instance$assign_result()}.}
+
+\item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
+The result of the optimization in \code{instance$assign_result()}.}
 }
 \if{html}{\out{</div>}}
 }
