@@ -43,7 +43,7 @@ Suggests:
     processx,
     redux,
     testthat (>= 3.0.0),
-    rush
+    rush (>= 0.1.2)
 Remotes:
     mlr-org/rush
 Config/testthat/edition: 3
