@@ -105,3 +105,32 @@ test_that("OptimizerAsync throws an error when all workers are lost", {
 
   expect_rush_reset(instance$rush)
 })
+
+test_that("restarting the optimization works", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+  library(rush)
+
+  rush_plan(n_workers = 2)
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  expect_data_table(instance$archive$data, min.rows = 5L)
+
+  Sys.sleep(1)
+
+  instance$terminator$param_set$values$n_evals = 30L
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  expect_data_table(instance$archive$data, min.rows = 30L)
+})
