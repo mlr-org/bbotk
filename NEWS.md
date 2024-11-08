@@ -1,4 +1,4 @@
-# bbotk (development version)
+# bbotk 1.3.0
 
 * feat: Add new stage `on_result_begin` to `CallbackAsyncTuning` and `CallbackBatchTuning`.
 * refactor: Rename stage `on_result` to `on_result_end` in `CallbackAsyncTuning` and `CallbackBatchTuning`.
