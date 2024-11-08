@@ -9,7 +9,7 @@ The function oi_async() creates an OptimInstanceAsyncSingleCrit or OptimInstance
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,6 +77,7 @@ Rush controller for parallel optimization.</p></dd>
 <ul><li><p><a href="#method-OptimInstanceAsync-new"><code>OptimInstanceAsync$new()</code></a></p></li>
 <li><p><a href="#method-OptimInstanceAsync-print"><code>OptimInstanceAsync$print()</code></a></p></li>
 <li><p><a href="#method-OptimInstanceAsync-clear"><code>OptimInstanceAsync$clear()</code></a></p></li>
+<li><p><a href="#method-OptimInstanceAsync-reconnect"><code>OptimInstanceAsync$reconnect()</code></a></p></li>
 </ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href="OptimInstance.html#method-assign_result"><code>bbotk::OptimInstance$assign_result()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href="OptimInstance.html#method-format"><code>bbotk::OptimInstance$format()</code></a></span></li>
 </ul></details></p><hr><a id="method-OptimInstanceAsync-new"></a><div class="section">
@@ -172,6 +173,16 @@ The referenced help package can be opened via method <code>$help()</code>.</p></
 <p>Reset terminator and clear all evaluation results from archive and results.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimInstanceAsync</span><span class="op">$</span><span class="fu">clear</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-OptimInstanceAsync-reconnect"></a><div class="section">
+<h3 id="method-reconnect-">Method <code>reconnect()</code><a class="anchor" aria-label="anchor" href="#method-reconnect-"></a></h3>
+<p>Reconnect to Redis.
+The connection breaks when the <a href="https://rdrr.io/pkg/rush/man/Rush.html" class="external-link">rush::Rush</a> is saved to disk.
+Call this method to reconnect after loading the object.</p><div class="section">
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimInstanceAsync</span><span class="op">$</span><span class="fu">reconnect</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 

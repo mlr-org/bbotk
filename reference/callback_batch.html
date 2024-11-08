@@ -8,7 +8,8 @@ Start Optimization
          - on_optimizer_before_eval
          - on_optimizer_after_eval
     End Optimizer Batch
-     - on_result
+     - on_result_begin
+     - on_result_end
      - on_optimization_end
 End Optimization
 
@@ -22,7 +23,8 @@ Start Optimization
          - on_optimizer_before_eval
          - on_optimizer_after_eval
     End Optimizer Batch
-     - on_result
+     - on_result_begin
+     - on_result_end
      - on_optimization_end
 End Optimization
 
@@ -35,7 +37,7 @@ A optimization callback works with ContextBatch."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,9 +83,10 @@ The stages are prefixed with <code>on_*</code>.</p>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>         <span class="sc">-</span> on_optimizer_before_eval</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>         <span class="sc">-</span> on_optimizer_after_eval</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    End Optimizer Batch</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>     <span class="sc">-</span> on_result</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>     <span class="sc">-</span> on_optimization_end</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>End Optimization</span></code></pre><p></p></div>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>     <span class="sc">-</span> on_result_begin</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>     <span class="sc">-</span> on_result_end</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>     <span class="sc">-</span> on_optimization_end</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>End Optimization</span></code></pre><p></p></div>
 <p>See also the section on parameters for more information on the stages.
 A optimization callback works with <a href="ContextBatch.html">ContextBatch</a>.</p>
     </div>
@@ -97,6 +100,8 @@ A optimization callback works with <a href="ContextBatch.html">ContextBatch</a>.
 <span>  on_optimization_begin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_optimizer_before_eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_optimizer_after_eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  on_result_begin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  on_result_end <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_result <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  on_optimization_end <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -133,18 +138,38 @@ The functions must have two arguments named <code>callback</code> and <code>cont
 <dd><p>(<code>function()</code>)<br>
 Stage called after the optimizer proposes points.
 Called in <code>OptimInstance$eval_batch()</code>.
-The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
+The functions must have two arguments named <code>callback</code> and <code>context</code>.
+The argument of <code>$eval_batch(xdt)</code> is available in <code>context</code>.</p></dd>
 
 
 <dt id="arg-on-optimizer-after-eval">on_optimizer_after_eval<a class="anchor" aria-label="anchor" href="#arg-on-optimizer-after-eval"></a></dt>
 <dd><p>(<code>function()</code>)<br>
 Stage called after points are evaluated.
 Called in <code>OptimInstance$eval_batch()</code>.
-The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>
+The functions must have two arguments named <code>callback</code> and <code>context</code>.
+The new points and outcomes in <code>instance$archive</code> are available in <code>context</code>.</p></dd>
+
+
+<dt id="arg-on-result-begin">on_result_begin<a class="anchor" aria-label="anchor" href="#arg-on-result-begin"></a></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called before result are written to the instance.
+Called in <code>OptimInstance$assign_result()</code>.
+The functions must have two arguments named <code>callback</code> and <code>context</code>.
+The arguments of <code>$assign_result(xdt, y, extra)</code> are available in <code>context</code>.</p></dd>
+
+
+<dt id="arg-on-result-end">on_result_end<a class="anchor" aria-label="anchor" href="#arg-on-result-end"></a></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called after result are written to the instance.
+Called in <code>OptimInstance$assign_result()</code>.
+The functions must have two arguments named <code>callback</code> and <code>context</code>.
+The final result <code>instance$result</code> is available in <code>context</code>.</p></dd>
 
 
 <dt id="arg-on-result">on_result<a class="anchor" aria-label="anchor" href="#arg-on-result"></a></dt>
 <dd><p>(<code>function()</code>)<br>
+Deprecated.
+Use <code>on_result_end</code> instead.
 Stage called after result are written.
 Called in <code>OptimInstance$assign_result()</code>.
 The functions must have two arguments named <code>callback</code> and <code>context</code>.</p></dd>

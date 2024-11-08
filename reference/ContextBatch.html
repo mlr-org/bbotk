@@ -11,7 +11,7 @@ See callback_batch() for a list of stages which that ContextBatch."></head><body
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,18 +74,35 @@ See <code><a href="callback_batch.html">callback_batch()</a></code> for a list o
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
     <p></p><div class="r6-active-bindings"><dl><dt><code>xdt</code></dt>
 <dd><p>(<a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
-The points of the latest batch.
+The points of the latest batch in <code>instance$eval_batch()</code>.
 Contains the values in the search space i.e. transformations are not yet applied.</p></dd>
 
 
-<dt><code>result</code></dt>
+<dt><code>result_xdt</code></dt>
 <dd><p>(<a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
-The result of the optimization.</p></dd>
+The xdt passed to <code>instance$assign_result()</code>.</p></dd>
+
+
+<dt><code>result_y</code></dt>
+<dd><p>(<code>numeric(1)</code>)<br>
+The y passed to <code>instance$assign_result()</code>.
+Only available for single criterion optimization.</p></dd>
+
+
+<dt><code>result_ydt</code></dt>
+<dd><p>(<a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
+The ydt passed to <code>instance$assign_result()</code>.
+Only available for multi criterion optimization.</p></dd>
 
 
 <dt><code>result_extra</code></dt>
 <dd><p>(<a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
-Additional information about the result.</p></dd>
+Additional information about the result passed to <code>instance$assign_result()</code>.</p></dd>
+
+
+<dt><code>result</code></dt>
+<dd><p>(<a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
+The result of the optimization in <code>instance$assign_result()</code>.</p></dd>
 
 
 </dl><p></p></div>

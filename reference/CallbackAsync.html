@@ -15,7 +15,7 @@ For more information on optimization callbacks see callback_async()."></head><bo
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,9 +96,15 @@ Stage called at the end of the optimization on the worker.
 Called in the worker loop.</p></dd>
 
 
-<dt><code>on_result</code></dt>
+<dt><code>on_result_begin</code></dt>
 <dd><p>(<code>function()</code>)<br>
-Stage called after result are written.
+Stage called before the results are written.
+Called in <code>OptimInstance$assign_result()</code>.</p></dd>
+
+
+<dt><code>on_result_end</code></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called after the results are written.
 Called in <code>OptimInstance$assign_result()</code>.</p></dd>
 
 
