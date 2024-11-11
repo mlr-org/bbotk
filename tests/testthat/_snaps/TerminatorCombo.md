@@ -6,6 +6,5 @@
       
       -- TerminatorCombo - Combination -----------------------------------------------
       * Parameters: any=TRUE
-    Output
-      * Terminators: <TerminatorEvals>,<TerminatorEvals>
+      * Terminators: <TerminatorEvals>, <TerminatorEvals>
 
