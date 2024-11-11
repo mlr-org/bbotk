@@ -76,8 +76,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' @param ... (ignored).
     print = function(...) {
       super$print(...)
-      catf(str_indent("* Terminators:", paste(map_chr(self$terminators, format),
-        collapse = ",")))
+      cli_li(sprintf("Terminators: %s", paste(map_chr(self$terminators, format), collapse = ", ")))
     },
 
     #' @description

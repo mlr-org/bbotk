@@ -78,22 +78,19 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param ... (ignored).
     print = function(...) {
-
-      catf(format(self))
-      catf(str_indent("* State: ", if (is.null(private$.result)) "Not optimized" else "Optimized"))
-      catf(str_indent("* Objective:", format(self$objective)))
-      if (!self$search_space$length) {
-        catf("* Search Space: Empty")
-      } else {
-        catf("* Search Space:")
-        print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
-      }
-      catf(str_indent("* Terminator:", format(self$terminator)))
+      cli_h1(class(self)[1L])
+      cli_li(sprintf("State: %s", if (is.null(private$.result)) "Not optimized" else "Optimized"))
+      cli_li(sprintf("Objective: %s", class(self$objective)[1]))
+      cli_li("Search Space:")
+      print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
+      cli_li(sprintf("Terminator: %s %s", class(self$terminator)[1], if (length(self$terminator$param_set$values)) paste0("(", as_short_string(self$terminator$param_set$values), ")") else ""))
       if (!is.null(private$.result)) {
-        catf("* Result:")
+        cli_li("Result:")
         print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
-        catf("* Archive:")
-        print(as.data.table(self$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
+        cli_li("Archive:")
+        tab = as.data.table(self$archive)
+        x_domain_ids = names(tab)[grepl("x_domain_" , names(tab))]
+        print(tab[, c(self$archive$cols_y, self$archive$cols_x, x_domain_ids), with = FALSE], digits = 1)
       }
     },
 
