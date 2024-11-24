@@ -4,7 +4,7 @@ test_that("mlr_optimizers", {
 
   for (key in keys) {
     if (key == "chain") {
-      optimizer = opt(key, optimizers = list(opt("random_serch")))
+      optimizer = opt(key, optimizers = list(opt("random_search")))
     } else {
       optimizer = opt(key)
     }
