@@ -8,21 +8,31 @@
 \link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3misc:Dictionary]{mlr3misc::Dictionary}.
 }
 \description{
-A simple \link[mlr3misc:Dictionary]{mlr3misc::Dictionary} storing objects of class \link{Terminator}. Each
-terminator has an associated help page, see \code{mlr_terminators_[id]}.
+A simple \link[mlr3misc:Dictionary]{mlr3misc::Dictionary} storing objects of class \link{Terminator}.
+Each terminator has an associated help page, see \code{mlr_terminators_[id]}.
 
-This dictionary can get populated with additional terminators by add-on
-packages.
+This dictionary can get populated with additional terminators by add-on packages.
 
-For a more convenient way to retrieve and construct terminator, see
-\code{\link[=trm]{trm()}}/\code{\link[=trms]{trms()}}.
+For a more convenient way to retrieve and construct terminator, see \code{\link[=trm]{trm()}}/\code{\link[=trms]{trms()}}.
 }
 \section{Methods}{
 
 See \link[mlr3misc:Dictionary]{mlr3misc::Dictionary}.
 }
 
+\section{S3 methods}{
+
+\itemize{
+\item \code{as.data.table(dict, ..., objects = FALSE)}\cr
+\link[mlr3misc:Dictionary]{mlr3misc::Dictionary} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr
+Returns a \code{\link[data.table:data.table]{data.table::data.table()}} with fields "key", "label", "properties" and "unit" as columns.
+If \code{objects} is set to \code{TRUE}, the constructed objects are returned in the list column named \code{object}.
+}
+}
+
 \examples{
+as.data.table(mlr_terminators)
+mlr_terminators$get("evals")
 trm("evals", n_evals = 10)
 }
 \seealso{
@@ -36,8 +46,9 @@ Other Terminator:
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
+\code{\link{mlr_terminators_stagnation}},
 \code{\link{mlr_terminators_stagnation_batch}},
-\code{\link{mlr_terminators_stagnation}}
+\code{\link{mlr_terminators_stagnation_hypervolume}}
 }
 \concept{Terminator}
 \keyword{datasets}

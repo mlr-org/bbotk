@@ -3,7 +3,7 @@ test_that("TerminatorCombo works", {
   terminators[[1]]$param_set$values$n_evals = 3L
   terminators[[2]]$param_set$values$n_evals = 6L
   terminator = TerminatorCombo$new(terminators)
-  expect_output(print(terminator), "TerminatorEvals")
+  expect_snapshot(terminator)
   for (mode in c("any", "all")) {
     terminator$param_set$values$any = (mode == "any")
     inst = MAKE_INST_2D(terminator)
@@ -26,16 +26,20 @@ test_that("status method works", {
   inst$eval_batch(xdt)
   Sys.sleep(1)
 
-  expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 100))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 10), tolerance = 11)
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 100))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 10), tolerance = 11)
   expect_equal(inst$terminator$remaining_time(inst$archive), 9, tolerance = 3)
   expect_data_table(inst$terminator$status_long(inst$archive), nrows = 2, ncols = 3)
   expect_named(inst$terminator$status_long(inst$archive), c("max_steps", "current_steps", "unit"))
 
   Sys.sleep(1)
 
-  expect_equal(inst$terminator$status(inst$archive)["max_steps"],  c("max_steps" = 100))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps"= 20), tolerance = 11)
+  expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 100))
+  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 20), tolerance = 11)
   expect_equal(inst$terminator$remaining_time(inst$archive), 8, tolerance = 3)
 })
 
+test_that("man exists", {
+  terminator = trm("combo")
+  expect_man_exists(terminator$man)
+})

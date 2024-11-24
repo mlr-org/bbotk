@@ -3,29 +3,58 @@
 \name{bbotk_assertions}
 \alias{bbotk_assertions}
 \alias{assert_terminator}
+\alias{assert_terminators}
 \alias{assert_terminable}
 \alias{assert_set}
 \alias{assert_optimizer}
+\alias{assert_optimizer_async}
+\alias{assert_optimizer_batch}
+\alias{assert_instance}
+\alias{assert_instance_batch}
+\alias{assert_instance_async}
 \alias{assert_instance_properties}
-\alias{assert_codomain}
+\alias{assert_archive}
+\alias{assert_archive_async}
+\alias{assert_archive_batch}
 \title{Assertion for bbotk objects}
 \usage{
-assert_terminator(terminator, instance = NULL)
+assert_terminator(terminator, instance = NULL, null_ok = FALSE)
+
+assert_terminators(terminators)
 
 assert_terminable(terminator, instance)
 
 assert_set(x, empty = TRUE, .var.name = vname(x))
 
-assert_optimizer(optimizer)
+assert_optimizer(optimizer, null_ok = FALSE)
+
+assert_optimizer_async(optimizer, null_ok = FALSE)
+
+assert_optimizer_batch(optimizer, null_ok = FALSE)
+
+assert_instance(inst, null_ok = FALSE)
+
+assert_instance_batch(inst, null_ok = FALSE)
+
+assert_instance_async(inst, null_ok = FALSE)
 
 assert_instance_properties(optimizer, inst)
 
-assert_codomain(codomain)
+assert_archive(archive, null_ok = FALSE)
+
+assert_archive_async(archive, null_ok = FALSE)
+
+assert_archive_batch(archive, null_ok = FALSE)
 }
 \arguments{
 \item{terminator}{(\link{Terminator}).}
 
 \item{instance}{(\link{OptimInstance}).}
+
+\item{null_ok}{(\code{logical(1)})\cr
+Is \code{NULL} a valid value?}
+
+\item{terminators}{(list of \link{Terminator}).}
 
 \item{x}{(any)}
 
@@ -35,7 +64,9 @@ assert_codomain(codomain)
 
 \item{optimizer}{(\link{Optimizer}).}
 
-\item{codomain}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
+\item{inst}{(\link{OptimInstanceAsync})}
+
+\item{archive}{(\link{ArchiveBatch}).}
 }
 \description{
 Most assertion functions ensure the right class attribute, and optionally

@@ -5,33 +5,30 @@
 \title{Objective interface with custom R function}
 \description{
 Objective interface where the user can pass a custom R function that expects a list as input.
+If the return of the function is unnamed, it is named with the ids of the codomain.
 }
 \examples{
-library(paradox)
-# Define objective function
+# define objective function
 fun = function(xs) {
-  - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+  -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
 }
 
-# Set domain
-domain = ParamSet$new(list(
-  ParamDbl$new("x1", -10, 10),
-  ParamDbl$new("x2", -5, 5)
-))
+# set domain
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
 
-# Set codomain
-codomain = ParamSet$new(list(
-  ParamDbl$new("y", tags = "maximize")
-))
+# set codomain
+codomain = ps(y = p_dbl(tags = "maximize"))
 
-# Create Objective object
+# create Objective object
 obfun = ObjectiveRFun$new(
   fun = fun,
   domain = domain,
   codomain = codomain,
   properties = "deterministic"
 )
-
 }
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFun}
@@ -47,24 +44,25 @@ Objective function.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ObjectiveRFun$new()}}
-\item \href{#method-eval}{\code{ObjectiveRFun$eval()}}
-\item \href{#method-clone}{\code{ObjectiveRFun$clone()}}
+\item \href{#method-ObjectiveRFun-new}{\code{ObjectiveRFun$new()}}
+\item \href{#method-ObjectiveRFun-eval}{\code{ObjectiveRFun$eval()}}
+\item \href{#method-ObjectiveRFun-clone}{\code{ObjectiveRFun$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_dt">}\href{../../bbotk/html/Objective.html#method-eval_dt}{\code{bbotk::Objective$eval_dt()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many">}\href{../../bbotk/html/Objective.html#method-eval_many}{\code{bbotk::Objective$eval_many()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format">}\href{../../bbotk/html/Objective.html#method-format}{\code{bbotk::Objective$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print">}\href{../../bbotk/html/Objective.html#method-print}{\code{bbotk::Objective$print()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_dt"><a href='../../bbotk/html/Objective.html#method-Objective-eval_dt'><code>bbotk::Objective$eval_dt()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many"><a href='../../bbotk/html/Objective.html#method-Objective-eval_many'><code>bbotk::Objective$eval_many()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format"><a href='../../bbotk/html/Objective.html#method-Objective-format'><code>bbotk::Objective$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="help"><a href='../../bbotk/html/Objective.html#method-Objective-help'><code>bbotk::Objective$help()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print"><a href='../../bbotk/html/Objective.html#method-Objective-print'><code>bbotk::Objective$print()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ObjectiveRFun-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ObjectiveRFun-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -74,7 +72,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   codomain = NULL,
   id = "function",
   properties = character(),
-  constants = ParamSet$new(),
+  constants = ps(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
@@ -105,15 +103,14 @@ be minimized or maximized.  The default is to minimize each component.}
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should points before the evaluation and the results be checked for
-validity?}
+Should points before the evaluation and the results be checked for validity?}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval"></a>}}
-\if{latex}{\out{\hypertarget{method-eval}{}}}
+\if{html}{\out{<a id="method-ObjectiveRFun-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-ObjectiveRFun-eval}{}}}
 \subsection{Method \code{eval()}}{
 Evaluates input value(s) on the objective function. Calls the R function
 supplied by the user.
@@ -130,8 +127,8 @@ supplied by the user.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ObjectiveRFun-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ObjectiveRFun-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

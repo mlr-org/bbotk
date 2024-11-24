@@ -1,68 +1,39 @@
-#' @title Optimization Instance with budget and archive
+#' @title Multi Criteria Optimization Instance for Batch Optimization
 #'
 #' @description
-#' Wraps a multi-criteria [Objective] function with extra services for
-#' convenient evaluation. Inherits from [OptimInstance].
+#' `OptimInstanceMultiCrit` is a deprecated class that is now a wrapper around [OptimInstanceBatchMultiCrit].
 #'
-#' * Automatic storing of results in an [Archive] after evaluation.
-#' * Automatic checking for termination. Evaluations of design points are
-#'   performed in batches. Before a batch is evaluated, the [Terminator] is
-#'   queried for the remaining budget. If the available budget is exhausted, an
-#'   exception is raised, and no further evaluations can be performed from this
-#'   point on.
-#'
-#' @template param_xdt
-#' @template param_ydt
+#' @template param_objective
 #' @template param_search_space
+#' @template param_terminator
+#' @template param_check_values
+#' @template param_callbacks
 #' @template param_keep_evals
+#'
 #' @export
 OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
-  inherit = OptimInstance,
+  inherit = OptimInstanceBatchMultiCrit,
   public = list(
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
-    #' @param objective ([Objective]).
-    #' @param terminator ([Terminator])\cr
-    #' Multi-criteria terminator.
-    #' @param check_values (`logical(1)`)\cr
-    #' Should x-values that are added to the archive be checked for validity?
-    #' Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator,
-      keep_evals = "all", check_values = TRUE) {
-      super$initialize(objective, search_space, terminator, keep_evals, check_values)
-    },
+    initialize = function(
+      objective,
+      search_space = NULL,
+      terminator,
+      keep_evals = "all",
+      check_values = TRUE,
+      callbacks = NULL
+      ) {
 
-    #' @description
-    #' The [Optimizer] object writes the best found points
-    #' and estimated performance values here (probably the Pareto set / front).
-    #' For internal use.
-    #'
-    #' @param ydt (`numeric(1)`)\cr
-    #'   Optimal outcomes, e.g. the Pareto front.
-    assign_result = function(xdt, ydt) {
-      # FIXME: We could have one way that just lets us put a 1xn DT as result directly.
-      assert_data_table(xdt)
-      assert_names(names(xdt), must.include = self$search_space$ids())
-      assert_data_table(ydt)
-      assert_names(names(ydt), permutation.of = self$objective$codomain$ids())
-      x_domain = transform_xdt_to_xss(xdt, self$search_space)
-      private$.result = cbind(xdt, x_domain = x_domain, ydt)
-    }
-  ),
+      message("OptimInstanceMultiCrit is deprecated. Use OptimInstanceBatchMultiCrit instead.")
 
-  active = list(
-    #' @field result_x_domain (`list()`)\cr
-    #' (transformed) x part of the result in the *domain space* of the objective.
-    result_x_domain = function() {
-      private$.result$x_domain
-    },
-
-    #' @field result_y (`numeric(1)`)\cr
-    #' Optimal outcome.
-    result_y = function() {
-      private$.result[, self$objective$codomain$ids(), with = FALSE]
+      super$initialize(
+        objective = objective,
+        search_space = search_space,
+        terminator = terminator,
+        check_values = check_values,
+        callbacks = callbacks)
     }
   )
 )

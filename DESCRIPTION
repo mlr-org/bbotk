@@ -1,87 +1,95 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 0.3.2.9000
-Authors@R:
-    c(person(given = "Marc",
-             family = "Becker",
-             role = c("cre", "aut"),
-             email = "marcbecker@posteo.de",
-             comment = c(ORCID = "0000-0002-8115-0400")),
-      person(given = "Jakob",
-             family = "Richter",
-             role = "aut",
-             email = "jakob1richter@gmail.com",
-             comment = c(ORCID = "0000-0003-4481-5554")),
-      person(given = "Michel",
-             family = "Lang",
-             role = "aut",
-             email = "michellang@gmail.com",
-             comment = c(ORCID = "0000-0001-9754-0393")),
-      person(given = "Bernd",
-             family = "Bischl",
-             role = "aut",
-             email = "bernd_bischl@gmx.net",
-             comment = c(ORCID = "0000-0001-6002-6980")),
-      person(given = "Martin",
-             family = "Binder",
-             role = "aut",
-             email = "martin.binder@mail.com"),
-      person(given = "Olaf",
-             family = "Mersmann",
-             role = "ctb",
-             email = "olafm@statistik.tu-dortmund.de"))
-Description: Provides a common framework for optimization of
-    black-box functions for other packages, e.g. 'mlr3tuning' or
-    'mlr3fselect'.  It offers various optimization methods e.g. grid
-    search, random search and generalized simulated annealing.
+Version: 1.3.0.9000
+Authors@R: c(
+    person("Marc", "Becker", , "marcbecker@posteo.de", role = c("cre", "aut"),
+           comment = c(ORCID = "0000-0002-8115-0400")),
+    person("Jakob", "Richter", , "jakob1richter@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0003-4481-5554")),
+    person("Michel", "Lang", , "michellang@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0001-9754-0393")),
+    person("Bernd", "Bischl", , "bernd_bischl@gmx.net", role = "aut",
+           comment = c(ORCID = "0000-0001-6002-6980")),
+    person("Martin", "Binder", , "martin.binder@mail.com", role = "aut"),
+    person("Olaf", "Mersmann", , "olafm@statistik.tu-dortmund.de", role = "ctb")
+  )
+Description: Features highly configurable search spaces via the 'paradox'
+    package and optimizes every user-defined objective function. The
+    package includes several optimization algorithms e.g. Random Search,
+    Iterated Racing, Bayesian Optimization (in 'mlr3mbo') and Hyperband
+    (in 'mlr3hyperband'). bbotk is the base package of 'mlr3tuning',
+    'mlr3fselect' and 'miesmuschel'.
 License: LGPL-3
 URL: https://bbotk.mlr-org.com, https://github.com/mlr-org/bbotk
 BugReports: https://github.com/mlr-org/bbotk/issues
 Depends:
+    paradox (>= 1.0.0),
     R (>= 3.1.0)
 Imports:
     checkmate (>= 2.0.0),
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.7.0),
-    paradox (>= 0.7.0),
+    mlr3misc (>= 0.15.1),
     R6
 Suggests:
     adagio,
+    emoa,
     GenSA,
+    irace (>= 3.5),
     knitr,
     nloptr,
     progressr,
-    rmarkdown,
-    testthat (>= 3.0.0)
-VignetteBuilder:
-    knitr
+    processx,
+    redux,
+    testthat (>= 3.0.0),
+    rush (>= 0.1.2)
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 Collate:
     'Archive.R'
-    'ArchiveBest.R'
+    'ArchiveAsync.R'
+    'ArchiveBatch.R'
+    'CallbackAsync.R'
+    'CallbackBatch.R'
+    'Codomain.R'
+    'ContextAsync.R'
+    'ContextBatch.R'
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'
+    'ObjectiveRFunMany.R'
     'OptimInstance.R'
+    'OptimInstanceAsync.R'
+    'OptimInstanceAsyncMultiCrit.R'
+    'OptimInstanceAsyncSingleCrit.R'
+    'OptimInstanceBatch.R'
+    'OptimInstanceBatchMultiCrit.R'
+    'OptimInstanceBatchSingleCrit.R'
     'OptimInstanceMultiCrit.R'
     'OptimInstanceSingleCrit.R'
     'mlr_optimizers.R'
     'Optimizer.R'
-    'OptimizerChain.R'
-    'OptimizerCmaes.R'
-    'OptimizerDesignPoints.R'
-    'OptimizerGenSA.R'
-    'OptimizerGridSearch.R'
-    'OptimizerNLoptr.R'
-    'OptimizerRandomSearch.R'
+    'OptimizerAsync.R'
+    'OptimizerAsyncDesignPoints.R'
+    'OptimizerAsyncGridSearch.R'
+    'OptimizerAsyncRandomSearch.R'
+    'OptimizerBatch.R'
+    'OptimizerBatchChain.R'
+    'OptimizerBatchCmaes.R'
+    'OptimizerBatchDesignPoints.R'
+    'OptimizerBatchFocusSearch.R'
+    'OptimizerBatchGenSA.R'
+    'OptimizerBatchGridSearch.R'
+    'OptimizerBatchIrace.R'
+    'OptimizerBatchLocalSearch.R'
+    'OptimizerBatchNLoptr.R'
+    'OptimizerBatchRandomSearch.R'
     'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
@@ -93,9 +101,16 @@ Collate:
     'TerminatorRunTime.R'
     'TerminatorStagnation.R'
     'TerminatorStagnationBatch.R'
+    'TerminatorStagnationHypervolume.R'
+    'as_terminator.R'
     'assertions.R'
+    'bb_optimize.R'
     'bbotk_reflections.R'
     'bibentries.R'
     'helper.R'
+    'mlr_callbacks.R'
+    'nds_selection.R'
+    'reexport.R'
     'sugar.R'
+    'worker_loops.R'
     'zzz.R'

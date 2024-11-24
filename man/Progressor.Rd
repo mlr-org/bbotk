@@ -22,44 +22,35 @@ Wraps \code{progressr::progressor()} function and stores current progress.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Progressor$new()}}
-\item \href{#method-setup}{\code{Progressor$setup()}}
-\item \href{#method-update}{\code{Progressor$update()}}
-\item \href{#method-clone}{\code{Progressor$clone()}}
+\item \href{#method-Progressor-new}{\code{Progressor$new()}}
+\item \href{#method-Progressor-update}{\code{Progressor$update()}}
+\item \href{#method-Progressor-clone}{\code{Progressor$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Progressor-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Progressor-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Progressor$new()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-setup"></a>}}
-\if{latex}{\out{\hypertarget{method-setup}{}}}
-\subsection{Method \code{setup()}}{
-Creates \code{progressr::progressor()}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Progressor$setup(terminator, archive)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Progressor$new(progressor, unit)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{terminator}}{(\link{Terminator}).}
+\item{\code{progressor}}{(\code{progressr::progressor()})\cr
+Progressor function.}
 
-\item{\code{archive}}{(\link{Archive}).}
+\item{\code{unit}}{(\code{character(1)})\cr
+Unit of progress.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-update"></a>}}
-\if{latex}{\out{\hypertarget{method-update}{}}}
+\if{html}{\out{<a id="method-Progressor-update"></a>}}
+\if{latex}{\out{\hypertarget{method-Progressor-update}{}}}
 \subsection{Method \code{update()}}{
 Updates \code{progressr::progressor()} with current steps.
 \subsection{Usage}{
@@ -77,8 +68,8 @@ Updates \code{progressr::progressor()} with current steps.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Progressor-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Progressor-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

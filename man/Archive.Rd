@@ -2,82 +2,74 @@
 % Please edit documentation in R/Archive.R
 \name{Archive}
 \alias{Archive}
-\title{Logging object for objective function evaluations}
+\title{Data Storage}
 \description{
-Container around a \link[data.table:data.table]{data.table::data.table} which stores all performed
-function calls of the Objective.
+The `Archive`` class stores all evaluated points and performance scores
 }
-\section{S3 Methods}{
-
-\itemize{
-\item \code{as.data.table(archive)}\cr
-\link{Archive} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr
-Returns a tabular view of all performed function calls of the
-Objective. The \code{x_domain} column is unnested to separate columns.
+\details{
+The \code{Archive} is an abstract class that implements the base functionality each archive must provide.
 }
-}
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Search space of objective.}
+Specification of the search space for the \link{Optimizer}.}
 
-\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+\item{\code{codomain}}{(\link{Codomain})\cr
 Codomain of objective function.}
 
 \item{\code{start_time}}{(\link{POSIXct})\cr
-Time stamp of when the optimization started. The time is set by the
-\link{Optimizer}.}
+Time stamp of when the optimization started.
+The time is set by the \link{Optimizer}.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Determines if points and results are checked for validity.}
-
-\item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Contains all performed \link{Objective} function calls.}
-
-\item{\code{store_x_domain}}{(\code{logical(1)})\cr
-Determines if x values, should be stored in \verb{$data$x_domain} as list
-items. The trafo will be applied if defined in \code{search_space}.}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{n_evals}}{(\code{integer(1)})\cr
-Number of evaluations stored in the archive.}
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
 
-\item{\code{n_batch}}{(\code{integer(1)})\cr
-Number of batches stored in the archive.}
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
 
 \item{\code{cols_x}}{(\code{character()})\cr
 Column names of search space parameters.}
 
 \item{\code{cols_y}}{(\code{character()})\cr
-Column names of codomain parameters.}
+Column names of codomain target parameters.}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Archive$new()}}
-\item \href{#method-add_evals}{\code{Archive$add_evals()}}
-\item \href{#method-best}{\code{Archive$best()}}
-\item \href{#method-format}{\code{Archive$format()}}
-\item \href{#method-print}{\code{Archive$print()}}
-\item \href{#method-clear}{\code{Archive$clear()}}
-\item \href{#method-clone}{\code{Archive$clone()}}
+\item \href{#method-Archive-new}{\code{Archive$new()}}
+\item \href{#method-Archive-format}{\code{Archive$format()}}
+\item \href{#method-Archive-print}{\code{Archive$print()}}
+\item \href{#method-Archive-clear}{\code{Archive$clear()}}
+\item \href{#method-Archive-help}{\code{Archive$help()}}
+\item \href{#method-Archive-clone}{\code{Archive$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Archive-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Archive-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(search_space, codomain, check_values = TRUE, store_x_domain = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$new(
+  search_space,
+  codomain,
+  check_values = FALSE,
+  label = NA_character_,
+  man = NA_character_
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -99,78 +91,37 @@ be minimized or maximized.  The default is to minimize each component.}
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
 
-\item{\code{store_x_domain}}{(\code{logical(1)})\cr
-Determines if x values, should be stored in \verb{$data$x_domain} as list
-items. The trafo will be applied if defined in \code{search_space}.}
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_evals"></a>}}
-\if{latex}{\out{\hypertarget{method-add_evals}{}}}
-\subsection{Method \code{add_evals()}}{
-Adds function evaluations to the archive table.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$add_evals(xdt, xss_trafoed = NULL, ydt)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
-Column names have to match ids of the \code{search_space}.
-However, \code{xdt} can contain additional columns.}
-
-\item{\code{xss_trafoed}}{(\code{list()})\cr
-Transformed point(s) in the \emph{domain space}.
-Not stored and needed if \code{store_x_domain = FALSE}.}
-
-\item{\code{ydt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Optimal outcome.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-best"></a>}}
-\if{latex}{\out{\hypertarget{method-best}{}}}
-\subsection{Method \code{best()}}{
-Returns the best scoring evaluation. For single-crit optimization,
-the solution that minimizes / maximizes the objective function.
-For multi-crit optimization, the Pareto set / front.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$best(batch = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{batch}}{(\code{integer()})\cr
-The batch number(s) to limit the best results to. Default is
-all batches.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-format"></a>}}
-\if{latex}{\out{\hypertarget{method-format}{}}}
+\if{html}{\out{<a id="method-Archive-format"></a>}}
+\if{latex}{\out{\hypertarget{method-Archive-format}{}}}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$format()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Archive$format(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{(ignored).}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Archive-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Archive-print}{}}}
 \subsection{Method \code{print()}}{
 Printer.
 \subsection{Usage}{
@@ -186,8 +137,8 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clear"></a>}}
-\if{latex}{\out{\hypertarget{method-clear}{}}}
+\if{html}{\out{<a id="method-Archive-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-Archive-clear}{}}}
 \subsection{Method \code{clear()}}{
 Clear all evaluation results from archive.
 \subsection{Usage}{
@@ -196,8 +147,18 @@ Clear all evaluation results from archive.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Archive-help"></a>}}
+\if{latex}{\out{\hypertarget{method-Archive-help}{}}}
+\subsection{Method \code{help()}}{
+Opens the corresponding help page referenced by field \verb{$man}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Archive$help()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Archive-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Archive-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

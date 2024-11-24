@@ -21,15 +21,29 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' whereas each point is represented by one row.
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
-    initialize = function(fun, domain, codomain = NULL, id = "function",
-      properties = character(), constants = ParamSet$new(), check_values = TRUE) {
+    initialize = function(
+      fun,
+      domain,
+      codomain = NULL,
+      id = "function",
+      properties = character(),
+      constants = ps(),
+      check_values = TRUE
+      ) {
       if (is.null(codomain)) {
-        codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize")))
+        codomain = ps(y = p_dbl(tags = "minimize"))
       }
       private$.fun = assert_function(fun, "xdt")
       # asserts id, domain, codomain, properties
-      super$initialize(id = id, domain = domain, codomain = codomain,
-        properties = properties, constants = constants, check_values = check_values)
+      super$initialize(
+        id = id,
+        domain = domain,
+        codomain = codomain,
+        properties = properties,
+        constants = constants,
+        check_values = check_values,
+        label = "Objective Custom R Function Eval Data Table",
+        man = "bbotk::ObjectiveRFunDt")
     },
 
     #' @description
@@ -45,7 +59,19 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = private$.fun(rbindlist(xss, use.names = TRUE, fill = TRUE))
+      xdt = rbindlist(xss, use.names = TRUE, fill = TRUE)
+      # add missing columns
+      if (ncol(xdt) < self$domain$length) {
+        proto = as.data.table(lapply(self$domain$class, switch,
+          ParamFct = NA_character_,
+          ParamDbl = NA_real_,
+          ParamInt = NA_integer_,
+          ParamLgl = NA,
+          ParamUty = NA
+        ))
+        xdt = rbindlist(list(proto, xdt), use.names = TRUE, fill = TRUE)[-1]
+      }
+      res = invoke(private$.fun, xdt, .args = self$constants$values)
       if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     },
@@ -58,7 +84,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_dt = function(xdt) {
       if (self$check_values) self$domain$assert_dt(xdt)
-      res = private$.fun(xdt)
+      res = invoke(private$.fun, xdt, .args = self$constants$values)
       if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     }

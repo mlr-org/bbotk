@@ -23,8 +23,10 @@ NULL
 #' @export
 #' @param terminator ([Terminator]).
 #' @param instance ([OptimInstance]).
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_terminator = function(terminator, instance = NULL) {
+assert_terminator = function(terminator, instance = NULL, null_ok = FALSE) {
+  if (null_ok && is.null(terminator)) return(NULL)
   assert_r6(terminator, "Terminator")
 
   if (!is.null(instance)) {
@@ -35,11 +37,18 @@ assert_terminator = function(terminator, instance = NULL) {
 }
 
 #' @export
+#' @param terminators (list of [Terminator]).
+#' @rdname bbotk_assertions
+assert_terminators = function(terminators) {
+  invisible(lapply(terminators, assert_terminator))
+}
+
+#' @export
 #' @param terminator ([Terminator]).
 #' @param instance ([OptimInstance]).
 #' @rdname bbotk_assertions
 assert_terminable = function(terminator, instance) {
-  if ("OptimInstanceMultiCrit" %in% class(instance)) {
+  if ("OptimInstanceBatchMultiCrit" %in% class(instance)) {
     if (!"multi-crit" %in% terminator$properties) {
       stopf("Terminator '%s' does not support multi-crit optimization",
         terminator$format())
@@ -63,10 +72,56 @@ assert_set = function(x, empty = TRUE, .var.name = vname(x)) {
 }
 
 #' @export
-#' @param optimizer ([Optimizer])
+#' @param optimizer ([OptimizerBatch]).
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_optimizer = function(optimizer) {
+assert_optimizer = function(optimizer, null_ok = FALSE) {
+  if (null_ok && is.null(optimizer)) return(NULL)
   assert_r6(optimizer, "Optimizer")
+}
+
+#' @export
+#' @param optimizer ([OptimizerAsync])
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_optimizer_async = function(optimizer, null_ok = FALSE) {
+   if (null_ok && is.null(optimizer)) return(NULL)
+  assert_r6(optimizer, "OptimizerAsync")
+}
+
+#' @export
+#' @param optimizer ([OptimizerAsync])
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_optimizer_batch = function(optimizer, null_ok = FALSE) {
+  if (null_ok && is.null(optimizer)) return(NULL)
+  assert_r6(optimizer, "OptimizerBatch")
+}
+
+#' @export
+#' @param inst ([OptimInstance])
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_instance = function(inst, null_ok = FALSE) {
+  if (null_ok && is.null(inst)) return(NULL)
+  assert_r6(inst, "OptimInstance")
+}
+
+#' @param inst ([OptimInstanceBatch])
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_instance_batch = function(inst, null_ok = FALSE) {
+  if (null_ok && is.null(inst)) return(NULL)
+  assert_r6(inst, "OptimInstanceBatch")
+}
+
+#' @export
+#' @param inst ([OptimInstanceAsync])
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_instance_async = function(inst, null_ok = FALSE) {
+  if (null_ok && is.null(inst)) return(NULL)
+  assert_r6(inst, "OptimInstanceAsync")
 }
 
 #' @export
@@ -74,63 +129,53 @@ assert_optimizer = function(optimizer) {
 #' @param instance ([OptimInstance]).
 #' @rdname bbotk_assertions
 assert_instance_properties = function(optimizer, inst) {
-  assert_r6(inst, "OptimInstance")
+  assert_class(inst, "OptimInstance")
 
   require_namespaces(optimizer$packages)
 
   # check multi or single-crit
   if ("multi-crit" %nin% optimizer$properties && inst$objective$ydim > 1) {
-    stopf(
-      "'%s' does not support multi-crit objectives",
-      optimizer$format())
+    stopf("'%s' does not support multi-crit objectives", optimizer$format())
   }
   if ("single-crit" %nin% optimizer$properties && inst$objective$ydim == 1) {
-    stopf(
-      "'%s' does not support single-crit objectives",
-      optimizer$format())
+    stopf( "'%s' does not support single-crit objectives", optimizer$format())
   }
 
   # check dependencies
   if ("dependencies" %nin% optimizer$properties && inst$search_space$has_deps) {
-    stopf(
-      "'%s' does not support param sets with dependencies!",
-      optimizer$format())
+    stopf("'%s' does not support param sets with dependencies!", optimizer$format())
   }
 
   # check supported parameter class
-  not_supported_pclasses = setdiff(
-    unique(inst$search_space$class),
-    optimizer$param_classes)
+  not_supported_pclasses = setdiff(unique(inst$search_space$class), get_private(optimizer)$.param_classes)
   if (length(not_supported_pclasses) > 0L) {
-    stopf(
-      "'%s' does not support param types: '%s'", class(optimizer)[1L],
-      paste0(not_supported_pclasses, collapse = ","))
+    stopf("'%s' does not support param types: '%s'", class(optimizer)[1L], paste0(not_supported_pclasses, collapse = ","))
   }
 }
 
 #' @export
-#' @param codomain ([paradox::ParamSet]).
+#' @param archive ([Archive]).
+#' @template param_null_ok
 #' @rdname bbotk_assertions
-assert_codomain = function(codomain) {
-  assert_param_set(codomain)
+assert_archive = function(archive, null_ok = FALSE) {
+  if (null_ok && is.null(archive)) return(NULL)
+  assert_r6(archive, "Archive")
+}
 
-  # check that "codomain" is
-  for (y in codomain$params) {
+#' @export
+#' @param archive ([ArchiveAsync]).
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_archive_async = function(archive, null_ok = FALSE) {
+  if (null_ok && is.null(archive)) return(NULL)
+  assert_r6(archive, "ArchiveAsync")
+}
 
-    # (1) all numeric
-    if (!y$is_number) {
-      stopf("%s in codomain is not numeric", y$id)
-    }
-
-    # (2) every parameter's tags contain at most one of 'minimize' or 'maximize'
-    if (sum(y$tags %in% c("minimize", "maximize")) > 1) {
-      stopf("%s in codomain contains a 'minimize' and 'maximize' tag", y$id)
-    }
-
-    # (3) every parameter contains a 'minimize' or 'maximize' tag
-    if (!any(y$tags %in% c("minimize", "maximize"))) {
-      stopf("%s in codomain contains no 'minimize' or 'maximize' tag", y$id)
-    }
-  }
-  return(codomain)
+#' @export
+#' @param archive ([ArchiveBatch]).
+#' @template param_null_ok
+#' @rdname bbotk_assertions
+assert_archive_batch = function(archive, null_ok = FALSE) {
+  if (null_ok && is.null(archive)) return(NULL)
+  assert_r6(archive, "ArchiveBatch")
 }

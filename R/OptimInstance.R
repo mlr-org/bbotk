@@ -1,95 +1,75 @@
-#' @title Optimization Instance with budget and archive
+#' @title Optimization Instance
 #'
 #' @description
-#' Abstract base class.
+#' The `OptimInstance` specifies an optimization problem for an [Optimizer].
 #'
-#' @section Technical details:
-#' The [Optimizer] writes the final result to the `.result` field by using
-#' the `$assign_result()` method. `.result` stores a [data.table::data.table]
-#' consisting of x values in the *search space*, (transformed) x values in the
-#' *domain space* and y values in the *codomain space* of the [Objective]. The
-#' user can access the results with active bindings (see below).
+#' @details
+#' `OptimInstance` is an abstract base class that implements the base functionality each instance must provide.
+#' The [Optimizer] writes the final result to the `.result` field by using the `$assign_result()` method.
+#' `.result` stores a [data.table::data.table] consisting of x values in the *search space*, (transformed) x values in the *domain space* and y values in the *codomain space* of the [Objective].
+#' The user can access the results with active bindings (see below).
+#'
+#' @template param_objective
+#' @template param_search_space
+#' @template param_terminator
+#' @template param_check_values
+#' @template param_callbacks
+#' @template param_archive
+#' @template param_label
+#' @template param_man
 #'
 #' @template param_xdt
-#' @template param_search_space
-#' @template param_keep_evals
+#'
+#' @template field_objective
+#' @template field_search_space
+#' @template field_terminator
+#' @template field_archive
+#' @template field_progressor
+#' @template field_label
+#' @template field_man
+#'
+#'
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(
 
-    #' @field objective ([Objective]).
     objective = NULL,
 
-    #' @field search_space ([paradox::ParamSet]).
     search_space = NULL,
 
-    #' @field terminator ([Terminator]).
     terminator = NULL,
 
-    #' @field archive ([Archive]).
     archive = NULL,
 
-    #' @field progressor (`progressor()`)\cr
-    #' Stores `progressor` function.
     progressor = NULL,
-
-    #' @field objective_multiplicator (`integer()`).
-    objective_multiplicator = NULL,
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    #'
-    #' @param objective ([Objective]).
-    #' @param terminator ([Terminator]).
-    #' @param check_values (`logical(1)`)\cr
-    #' Should x-values that are added to the archive be checked for validity?
-    #' Search space that is logged into archive.
-    initialize = function(objective, search_space = NULL, terminator,
-      keep_evals = "all", check_values = TRUE) {
-
-      assert_choice(keep_evals, c("all", "best"))
+    initialize = function(
+      objective,
+      search_space = NULL,
+      terminator,
+      check_values = TRUE,
+      callbacks = NULL,
+      archive = NULL,
+      label = NA_character_,
+      man = NA_character_
+      ) {
       self$objective = assert_r6(objective, "Objective")
-
-      domain_search_space  = self$objective$domain$search_space()
-      self$search_space = if (is.null(search_space) && domain_search_space$length == 0) {
-        self$objective$domain
-      } else if (is.null(search_space) && domain_search_space$length > 0) {
-        domain_search_space
-      } else if (!is.null(search_space) && domain_search_space$length == 0) {
-        assert_param_set(search_space)
-      } else {
-        stop("If the domain contains TuneTokens, you cannot supply a search_space.")
-      }
+      self$objective$callbacks = assert_callbacks(as_callbacks(callbacks))
+      self$search_space = assert_param_set(search_space)
       self$terminator = assert_terminator(terminator, self)
-
       assert_flag(check_values)
+      self$archive = assert_r6(archive, "Archive")
 
-      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
-
-      self$archive = if (keep_evals == "all") {
-        Archive$new(search_space = self$search_space,
-          codomain = objective$codomain, check_values = check_values,
-          store_x_domain = !is_rfundt || self$search_space$has_trafo)
-      } else if (keep_evals == "best") {
-        ArchiveBest$new(search_space = self$search_space,
-          codomain = objective$codomain, check_values = check_values,
-          store_x_domain = !is_rfundt || self$search_space$has_trafo) 
-          # only not store xss if we have RFunDT and not trafo
-      }
-
-      if (!self$search_space$all_numeric) {
-        private$.objective_function = objective_error
-      } else {
-        private$.objective_function = objective_function
-      }
-      self$objective_multiplicator = mult_max_to_min(self$objective$codomain)
-
-      self$progressor = Progressor$new()
+      private$.label = assert_string(label, na.ok = TRUE)
+      private$.man = assert_string(man, na.ok = TRUE)
     },
 
     #' @description
     #' Helper for print outputs.
-    format = function() {
+    #' @param ... (ignored).
+    format = function(...) {
       sprintf("<%s>", class(self)[1L])
     },
 
@@ -102,90 +82,35 @@ OptimInstance = R6Class("OptimInstance",
       catf(format(self))
       catf(str_indent("* State: ", if (is.null(private$.result)) "Not optimized" else "Optimized"))
       catf(str_indent("* Objective:", format(self$objective)))
-      catf("* Search Space:")
-      print(self$search_space)
+      if (!self$search_space$length) {
+        catf("* Search Space: Empty")
+      } else {
+        catf("* Search Space:")
+        print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
+      }
       catf(str_indent("* Terminator:", format(self$terminator)))
-      catf(str_indent("* Terminated:", self$is_terminated))
       if (!is.null(private$.result)) {
         catf("* Result:")
-        print(self$result)
+        print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
+        catf("* Archive:")
+        print(as.data.table(self$archive)[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
       }
-      catf("* Archive:")
-      print(self$archive)
     },
 
     #' @description
-    #' Evaluates all input values in `xdt` by calling
-    #' the [Objective]. Applies possible transformations to the input values
-    #' and writes the results to the [Archive].
-    #'
-    #' Before each batch-evaluation, the [Terminator] is checked, and if it
-    #' is positive, an exception of class `terminated_error` is raised. This
-    #' function should be internally called by the [Optimizer].
-    #' @param xdt (`data.table::data.table()`)\cr
-    #' x values as `data.table()` with one point per row. Contains the value in
-    #' the *search space* of the [OptimInstance] object. Can contain additional
-    #' columns for extra information.
-    eval_batch = function(xdt) {
-      self$progressor$update(self$terminator, self$archive)
-
-      if (self$is_terminated) stop(terminated_error(self))
-
-      assert_data_table(xdt, min.rows = 1)
-      assert_names(colnames(xdt), must.include = self$search_space$ids())
-
-      lg$info("Evaluating %i configuration(s)", nrow(xdt))
-
-      is_rfundt = inherits(self$objective, "ObjectiveRFunDt")
-      # calculate the x as (trafoed) domain only if needed
-      if (self$search_space$has_trafo || self$search_space$has_deps || self$archive$store_x_domain || !is_rfundt) {
-        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
-      } else {
-        xss_trafoed = NULL
-      }
-
-      # if no trafos, no deps and objective evals dt directly, we go a shortcut
-      if (is_rfundt && !self$search_space$has_trafo && !self$search_space$has_deps) {
-        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
-      } else {
-        ydt = self$objective$eval_many(xss_trafoed)
-      }
-
-      self$archive$add_evals(xdt, xss_trafoed, ydt)
-      lg$info("Result of batch %i:", self$archive$n_batch)
-      lg$info(capture.output(print(cbind(xdt, ydt),
-        class = FALSE, row.names = FALSE, print.keys = FALSE)))
-      return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
-    },
-
-    #' @description
-    #' The [Optimizer] object writes the best found point
-    #' and estimated performance value here. For internal use.
+    #' The [Optimizer] object writes the best found point and estimated performance value here.
+    #' For internal use.
     #'
     #' @param xdt (`data.table::data.table()`)\cr
-    #' x values as `data.table()` with one row. Contains the value in the *search
-    #' space* of the [OptimInstance] object. Can contain additional columns for
-    #' extra information.
+    #'   x values as `data.table::data.table()` with one row. Contains the value in the
+    #'   *search space* of the [OptimInstance] object. Can contain additional
+    #'   columns for extra information.
     #' @param y (`numeric(1)`)\cr
     #'   Optimal outcome.
-    assign_result = function(xdt, y) {
+    #' @param ... (`any`)\cr
+    #' ignored.
+    assign_result = function(xdt, y, ...) {
       stop("Abstract class")
-    },
-
-    #' @description
-    #' Evaluates (untransformed) points of only numeric values. Returns a
-    #' numeric scalar for single-crit or a numeric vector for multi-crit. The
-    #' return value(s) are negated if the measure is maximized. Internally,
-    #' `$eval_batch()` is called with a single row. This function serves as a
-    #' objective function for optimizers of numeric spaces - which should always
-    #' be minimized.
-    #'
-    #' @param x (`numeric()`)\cr
-    #' Untransformed points.
-    #'
-    #' @return Objective value as `numeric(1)`, negated for maximization problems.
-    objective_function = function(x) {
-      private$.objective_function(x, self, self$objective_multiplicator)
     },
 
     #' @description
@@ -193,7 +118,8 @@ OptimInstance = R6Class("OptimInstance",
     clear = function() {
       self$archive$clear()
       private$.result = NULL
-      self$progressor = Progressor$new()
+      self$progressor = NULL
+      self$objective$context = NULL
       invisible(self)
     }
   ),
@@ -211,41 +137,57 @@ OptimInstance = R6Class("OptimInstance",
       private$.result[, self$search_space$ids(), with = FALSE]
     },
 
-    #' @field result_x_domain (`list()`)\cr
-    #' (transformed) x part of the result in the *domain space* of the objective.
-    result_x_domain = function() {
-      private$.result$x_domain[[1]]
-    },
-
-    #' @field result_y (`numeric()`)\cr
-    #' Optimal outcome.
-    result_y = function() {
-      unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
-    },
-
     #' @field is_terminated (`logical(1)`).
     is_terminated = function() {
       self$terminator$is_terminated(self$archive)
+    },
+
+    label = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.label
+    },
+
+    man = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.man
     }
   ),
 
   private = list(
+    # intermediate objects
+    .result_xdt = NULL,
+    .result_extra = NULL,
     .result = NULL,
 
-    .objective_function = NULL
+    .label = NULL,
+    .man = NULL,
+
+    deep_clone = function(name, value) {
+      switch(name,
+        objective = value$clone(deep = TRUE),
+        search_space = value$clone(deep = TRUE),
+        terminator = value$clone(deep = TRUE),
+        archive = value$clone(deep = TRUE),
+        value
+      )
+    }
   )
 )
 
-objective_function = function(x, inst, multiplicator) {
-  xs = set_names(as.list(x), inst$search_space$ids())
-  inst$search_space$assert(xs)
-  xdt = as.data.table(xs)
-  res = inst$eval_batch(xdt)
-  y = as.numeric(res[, inst$objective$codomain$ids(), with = FALSE])
-  y * multiplicator
-}
-
-objective_error = function(x, inst, multiplicator) {
-  stop("$objective_function can only be called if search_space only
-    contains numeric values")
+# used by OptimInstance and OptimInstanceAsync
+choose_search_space = function(objective, search_space) {
+  # create search space
+  domain_search_space = objective$domain$search_space()
+  if (is.null(search_space) && domain_search_space$length == 0) {
+    # use whole domain as search space
+    objective$domain
+  } else if (is.null(search_space) && domain_search_space$length > 0) {
+    # create search space from tune token in domain
+    domain_search_space
+  } else if (!is.null(search_space) && domain_search_space$length == 0) {
+    # use supplied search space
+    assert_param_set(search_space)
+  } else {
+    stop("If the domain contains TuneTokens, you cannot supply a search_space.")
+  }
 }

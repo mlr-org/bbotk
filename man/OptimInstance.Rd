@@ -2,51 +2,52 @@
 % Please edit documentation in R/OptimInstance.R
 \name{OptimInstance}
 \alias{OptimInstance}
-\title{Optimization Instance with budget and archive}
+\title{Optimization Instance}
 \description{
-Abstract base class.
+The \code{OptimInstance} specifies an optimization problem for an \link{Optimizer}.
 }
-\section{Technical details}{
-
-The \link{Optimizer} writes the final result to the \code{.result} field by using
-the \verb{$assign_result()} method. \code{.result} stores a \link[data.table:data.table]{data.table::data.table}
-consisting of x values in the \emph{search space}, (transformed) x values in the
-\emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}. The
-user can access the results with active bindings (see below).
+\details{
+\code{OptimInstance} is an abstract base class that implements the base functionality each instance must provide.
+The \link{Optimizer} writes the final result to the \code{.result} field by using the \verb{$assign_result()} method.
+\code{.result} stores a \link[data.table:data.table]{data.table::data.table} consisting of x values in the \emph{search space}, (transformed) x values in the \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}.
+The user can access the results with active bindings (see below).
 }
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{objective}}{(\link{Objective}).}
+\item{\code{objective}}{(\link{Objective})\cr
+Objective function of the instance.}
 
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet}).}
+\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+Specification of the search space for the \link{Optimizer}.}
 
-\item{\code{terminator}}{(\link{Terminator}).}
+\item{\code{terminator}}{\link{Terminator}\cr
+Termination criterion of the optimization.}
 
-\item{\code{archive}}{(\link{Archive}).}
+\item{\code{archive}}{(\link{Archive})\cr
+Contains all performed function calls of the Objective.}
 
 \item{\code{progressor}}{(\code{progressor()})\cr
 Stores \code{progressor} function.}
-
-\item{\code{objective_multiplicator}}{(\code{integer()}).}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
+
 \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Get result}
 
 \item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
-
-\item{\code{result_x_domain}}{(\code{list()})\cr
-(transformed) x part of the result in the \emph{domain space} of the objective.}
-
-\item{\code{result_y}}{(\code{numeric()})\cr
-Optimal outcome.}
 
 \item{\code{is_terminated}}{(\code{logical(1)}).}
 }
@@ -55,19 +56,17 @@ Optimal outcome.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OptimInstance$new()}}
-\item \href{#method-format}{\code{OptimInstance$format()}}
-\item \href{#method-print}{\code{OptimInstance$print()}}
-\item \href{#method-eval_batch}{\code{OptimInstance$eval_batch()}}
-\item \href{#method-assign_result}{\code{OptimInstance$assign_result()}}
-\item \href{#method-objective_function}{\code{OptimInstance$objective_function()}}
-\item \href{#method-clear}{\code{OptimInstance$clear()}}
-\item \href{#method-clone}{\code{OptimInstance$clone()}}
+\item \href{#method-OptimInstance-new}{\code{OptimInstance$new()}}
+\item \href{#method-OptimInstance-format}{\code{OptimInstance$format()}}
+\item \href{#method-OptimInstance-print}{\code{OptimInstance$print()}}
+\item \href{#method-OptimInstance-assign_result}{\code{OptimInstance$assign_result()}}
+\item \href{#method-OptimInstance-clear}{\code{OptimInstance$clear()}}
+\item \href{#method-OptimInstance-clone}{\code{OptimInstance$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OptimInstance-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -75,15 +74,19 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   objective,
   search_space = NULL,
   terminator,
-  keep_evals = "all",
-  check_values = TRUE
+  check_values = TRUE,
+  callbacks = NULL,
+  archive = NULL,
+  label = NA_character_,
+  man = NA_character_
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{objective}}{(\link{Objective}).}
+\item{\code{objective}}{(\link{Objective})\cr
+Objective function.}
 
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
@@ -92,31 +95,48 @@ a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
 
-\item{\code{terminator}}{(\link{Terminator}).}
-
-\item{\code{keep_evals}}{(\code{character(1)})\cr
-Keep \code{all} or only \code{best} evaluations in archive?}
+\item{\code{terminator}}{\link{Terminator}\cr
+Termination criterion.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should x-values that are added to the archive be checked for validity?
-Search space that is logged into archive.}
+Should points before the evaluation and the results be checked for validity?}
+
+\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+List of callbacks.}
+
+\item{\code{archive}}{(\link{Archive}).}
+
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-format"></a>}}
-\if{latex}{\out{\hypertarget{method-format}{}}}
+\if{html}{\out{<a id="method-OptimInstance-format"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-format}{}}}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$format()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$format(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{(ignored).}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OptimInstance-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-print}{}}}
 \subsection{Method \code{print()}}{
 Printer.
 \subsection{Usage}{
@@ -132,84 +152,35 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval_batch"></a>}}
-\if{latex}{\out{\hypertarget{method-eval_batch}{}}}
-\subsection{Method \code{eval_batch()}}{
-Evaluates all input values in \code{xdt} by calling
-the \link{Objective}. Applies possible transformations to the input values
-and writes the results to the \link{Archive}.
-
-Before each batch-evaluation, the \link{Terminator} is checked, and if it
-is positive, an exception of class \code{terminated_error} is raised. This
-function should be internally called by the \link{Optimizer}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$eval_batch(xdt)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{data.table::data.table()})\cr
-x values as \code{data.table()} with one point per row. Contains the value in
-the \emph{search space} of the \link{OptimInstance} object. Can contain additional
-columns for extra information.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-assign_result"></a>}}
-\if{latex}{\out{\hypertarget{method-assign_result}{}}}
+\if{html}{\out{<a id="method-OptimInstance-assign_result"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-assign_result}{}}}
 \subsection{Method \code{assign_result()}}{
-The \link{Optimizer} object writes the best found point
-and estimated performance value here. For internal use.
+The \link{Optimizer} object writes the best found point and estimated performance value here.
+For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{xdt}}{(\code{data.table::data.table()})\cr
-x values as \code{data.table()} with one row. Contains the value in the \emph{search
-space} of the \link{OptimInstance} object. Can contain additional columns for
-extra information.}
+x values as \code{data.table::data.table()} with one row. Contains the value in the
+\emph{search space} of the \link{OptimInstance} object. Can contain additional
+columns for extra information.}
 
 \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-objective_function"></a>}}
-\if{latex}{\out{\hypertarget{method-objective_function}{}}}
-\subsection{Method \code{objective_function()}}{
-Evaluates (untransformed) points of only numeric values. Returns a
-numeric scalar for single-crit or a numeric vector for multi-crit. The
-return value(s) are negated if the measure is maximized. Internally,
-\verb{$eval_batch()} is called with a single row. This function serves as a
-objective function for optimizers of numeric spaces - which should always
-be minimized.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$objective_function(x)}\if{html}{\out{</div>}}
-}
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{numeric()})\cr
-Untransformed points.}
+\item{\code{...}}{(\code{any})\cr
+ignored.}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Returns}{
-Objective value as \code{numeric(1)}, negated for maximization problems.
-}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clear"></a>}}
-\if{latex}{\out{\hypertarget{method-clear}{}}}
+\if{html}{\out{<a id="method-OptimInstance-clear"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-clear}{}}}
 \subsection{Method \code{clear()}}{
 Reset terminator and clear all evaluation results from archive and results.
 \subsection{Usage}{
@@ -218,8 +189,8 @@ Reset terminator and clear all evaluation results from archive and results.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OptimInstance-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

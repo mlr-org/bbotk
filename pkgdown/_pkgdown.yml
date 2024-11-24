@@ -1,10 +1,10 @@
 url: https://bbotk.mlr-org.com
 
 template:
+  bootstrap: 5
+  light-switch: true
+  math-rendering: mathjax
   package: mlr3pkgdowntemplate
-  params:
-    bootswatch: journal
-  default_assets: false
 
 development:
   mode: auto
@@ -17,9 +17,13 @@ toc:
 navbar:
   structure:
     left:  [reference, news, book]
-    right: [github, mattermost, stackoverflow, rss]
+    right: [search, github, mattermost, stackoverflow, rss, lightswitch]
   components:
     home: ~
+    reference:
+      icon: fa fa-file-alt
+      text: Reference
+      href: reference/index.html
     mattermost:
       icon: fa fa-comments
       href: https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/
@@ -29,11 +33,10 @@ navbar:
       href: https://mlr3book.mlr-org.com
     stackoverflow:
       icon: fab fa-stack-overflow
-      href: https://stackoverflow.com/questions/tagged/mlr3
+      href: https://stackoverflow.com/questions/tagged/mlr
     rss:
       icon: fa-rss
       href: https://mlr-org.com/
-
 reference:
   - title: Package
     contents:
@@ -45,11 +48,13 @@ reference:
     contents:
       - starts_with("Terminator")
       - mlr_terminators
-      - term
-      - terms
+      - trm
+      - trms
+      - as_terminator
   - title: Optimization Instance
     contents:
       - starts_with("OptimInstance")
+      - starts_with("oi")
   - title: Optimizer
     contents:
       - starts_with("Optimizer")
@@ -58,7 +63,22 @@ reference:
       - opts
   - title: Archive
     contents:
-      - Archive
+      - starts_with("Archive")
+      - Codomain
+  - title: Callbacks
+    contents:
+      - starts_with("Callback")
+      - starts_with("callback_")
+      - starts_with("Context")
+      - bbotk.backup
   - title: Misc
     contents:
       - is_dominated
+      - Progressor
+      - branin
+      - bb_optimize
+      - shrink_ps
+      - bbotk_worker_loop
+      - trafo_xs
+      - terminated_error
+

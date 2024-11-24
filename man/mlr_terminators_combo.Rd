@@ -12,17 +12,19 @@ of the included terminators are positive.
 
 This \link{Terminator} can be instantiated via the
 \link[mlr3misc:Dictionary]{dictionary} \link{mlr_terminators} or with the associated
-sugar function \code{\link[=trm]{trm()}}:\preformatted{mlr_terminators$get("combo")
+sugar function \code{\link[=trm]{trm()}}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_terminators$get("combo")
 trm("combo")
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Parameters}{
 
 \describe{
 \item{\code{any}}{\code{logical(1)}\cr
-Terminate iff any included terminator is positive? (not all), default is
-\code{TRUE}.}
+Terminate iff any included terminator is positive? (not all).
+Default is \code{TRUE}.}
 }
 }
 
@@ -35,14 +37,15 @@ trm("combo",
 \seealso{
 Other Terminator: 
 \code{\link{Terminator}},
+\code{\link{mlr_terminators}},
 \code{\link{mlr_terminators_clock_time}},
 \code{\link{mlr_terminators_evals}},
 \code{\link{mlr_terminators_none}},
 \code{\link{mlr_terminators_perf_reached}},
 \code{\link{mlr_terminators_run_time}},
-\code{\link{mlr_terminators_stagnation_batch}},
 \code{\link{mlr_terminators_stagnation}},
-\code{\link{mlr_terminators}}
+\code{\link{mlr_terminators_stagnation_batch}},
+\code{\link{mlr_terminators_stagnation_hypervolume}}
 }
 \concept{Terminator}
 \section{Super class}{
@@ -59,25 +62,25 @@ List of objects of class \link{Terminator}.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TerminatorCombo$new()}}
-\item \href{#method-is_terminated}{\code{TerminatorCombo$is_terminated()}}
-\item \href{#method-print}{\code{TerminatorCombo$print()}}
-\item \href{#method-remaining_time}{\code{TerminatorCombo$remaining_time()}}
-\item \href{#method-status_long}{\code{TerminatorCombo$status_long()}}
-\item \href{#method-clone}{\code{TerminatorCombo$clone()}}
+\item \href{#method-TerminatorCombo-new}{\code{TerminatorCombo$new()}}
+\item \href{#method-TerminatorCombo-is_terminated}{\code{TerminatorCombo$is_terminated()}}
+\item \href{#method-TerminatorCombo-print}{\code{TerminatorCombo$print()}}
+\item \href{#method-TerminatorCombo-remaining_time}{\code{TerminatorCombo$remaining_time()}}
+\item \href{#method-TerminatorCombo-status_long}{\code{TerminatorCombo$status_long()}}
+\item \href{#method-TerminatorCombo-clone}{\code{TerminatorCombo$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format">}\href{../../bbotk/html/Terminator.html#method-format}{\code{bbotk::Terminator$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status">}\href{../../bbotk/html/Terminator.html#method-status}{\code{bbotk::Terminator$status()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>bbotk::Terminator$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>bbotk::Terminator$status()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TerminatorCombo-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorCombo-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -94,8 +97,8 @@ List of objects of class \link{Terminator}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_terminated"></a>}}
-\if{latex}{\out{\hypertarget{method-is_terminated}{}}}
+\if{html}{\out{<a id="method-TerminatorCombo-is_terminated"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorCombo-is_terminated}{}}}
 \subsection{Method \code{is_terminated()}}{
 Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
 otherwise.
@@ -115,8 +118,8 @@ otherwise.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-TerminatorCombo-print"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorCombo-print}{}}}
 \subsection{Method \code{print()}}{
 Printer.
 \subsection{Usage}{
@@ -132,8 +135,8 @@ Printer.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-remaining_time"></a>}}
-\if{latex}{\out{\hypertarget{method-remaining_time}{}}}
+\if{html}{\out{<a id="method-TerminatorCombo-remaining_time"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorCombo-remaining_time}{}}}
 \subsection{Method \code{remaining_time()}}{
 Returns the remaining runtime in seconds. If \code{any = TRUE}, the remaining
 runtime is determined by the time-based terminator with the shortest time
@@ -155,8 +158,8 @@ the the remaining runtime is always \code{Inf}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-status_long"></a>}}
-\if{latex}{\out{\hypertarget{method-status_long}{}}}
+\if{html}{\out{<a id="method-TerminatorCombo-status_long"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorCombo-status_long}{}}}
 \subsection{Method \code{status_long()}}{
 Returns \code{max_steps} and \code{current_steps} for each terminator.
 \subsection{Usage}{
@@ -175,8 +178,8 @@ Returns \code{max_steps} and \code{current_steps} for each terminator.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TerminatorCombo-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorCombo-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

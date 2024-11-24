@@ -2,44 +2,35 @@
 % Please edit documentation in R/OptimInstanceSingleCrit.R
 \name{OptimInstanceSingleCrit}
 \alias{OptimInstanceSingleCrit}
-\title{Optimization Instance with budget and archive}
+\title{Single Criterion Optimization Instance for Batch Optimization}
 \description{
-Wraps a single-criteria \link{Objective} function with extra services for
-convenient evaluation. Inherits from \link{OptimInstance}.
-\itemize{
-\item Automatic storing of results in an \link{Archive} after evaluation.
-\item Automatic checking for termination. Evaluations of design points are
-performed in batches. Before a batch is evaluated, the \link{Terminator} is
-queried for the remaining budget. If the available budget is exhausted, an
-exception is raised, and no further evaluations can be performed from this
-point on.
+\code{OptimInstanceSingleCrit} is a deprecated class that is now a wrapper around \code{OptimInstanceBatchSingleCrit}.
 }
-}
-\section{Super class}{
-\code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceSingleCrit}
+\section{Super classes}{
+\code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceBatch]{bbotk::OptimInstanceBatch}} -> \code{\link[bbotk:OptimInstanceBatchSingleCrit]{bbotk::OptimInstanceBatchSingleCrit}} -> \code{OptimInstanceSingleCrit}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OptimInstanceSingleCrit$new()}}
-\item \href{#method-assign_result}{\code{OptimInstanceSingleCrit$assign_result()}}
-\item \href{#method-clone}{\code{OptimInstanceSingleCrit$clone()}}
+\item \href{#method-OptimInstanceSingleCrit-new}{\code{OptimInstanceSingleCrit$new()}}
+\item \href{#method-OptimInstanceSingleCrit-clone}{\code{OptimInstanceSingleCrit$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="clear">}\href{../../bbotk/html/OptimInstance.html#method-clear}{\code{bbotk::OptimInstance$clear()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="eval_batch">}\href{../../bbotk/html/OptimInstance.html#method-eval_batch}{\code{bbotk::OptimInstance$eval_batch()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format">}\href{../../bbotk/html/OptimInstance.html#method-format}{\code{bbotk::OptimInstance$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="objective_function">}\href{../../bbotk/html/OptimInstance.html#method-objective_function}{\code{bbotk::OptimInstance$objective_function()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print">}\href{../../bbotk/html/OptimInstance.html#method-print}{\code{bbotk::OptimInstance$print()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="clear"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-clear'><code>bbotk::OptimInstance$clear()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-print'><code>bbotk::OptimInstance$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="eval_batch"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-eval_batch'><code>bbotk::OptimInstanceBatch$eval_batch()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatch" data-id="objective_function"><a href='../../bbotk/html/OptimInstanceBatch.html#method-OptimInstanceBatch-objective_function'><code>bbotk::OptimInstanceBatch$objective_function()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceBatchSingleCrit" data-id="assign_result"><a href='../../bbotk/html/OptimInstanceBatchSingleCrit.html#method-OptimInstanceBatchSingleCrit-assign_result'><code>bbotk::OptimInstanceBatchSingleCrit$assign_result()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OptimInstanceSingleCrit-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstanceSingleCrit-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -48,14 +39,16 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   search_space = NULL,
   terminator,
   keep_evals = "all",
-  check_values = TRUE
+  check_values = TRUE,
+  callbacks = NULL
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{objective}}{(\link{Objective}).}
+\item{\code{objective}}{(\link{Objective})\cr
+Objective function.}
 
 \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
@@ -64,46 +57,24 @@ a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
 
-\item{\code{terminator}}{(\link{Terminator}).}
+\item{\code{terminator}}{\link{Terminator}\cr
+Termination criterion.}
 
 \item{\code{keep_evals}}{(\code{character(1)})\cr
 Keep \code{all} or only \code{best} evaluations in archive?}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should x-values that are added to the archive be checked for validity?
-Search space that is logged into archive.}
+Should points before the evaluation and the results be checked for validity?}
+
+\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+List of callbacks.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-assign_result"></a>}}
-\if{latex}{\out{\hypertarget{method-assign_result}{}}}
-\subsection{Method \code{assign_result()}}{
-The \link{Optimizer} object writes the best found point
-and estimated performance value here. For internal use.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceSingleCrit$assign_result(xdt, y)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
-Set of untransformed points / points from the \emph{search space}.
-One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
-Column names have to match ids of the \code{search_space}.
-However, \code{xdt} can contain additional columns.}
-
-\item{\code{y}}{(\code{numeric(1)})\cr
-Optimal outcome.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OptimInstanceSingleCrit-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstanceSingleCrit-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -24,7 +24,7 @@ bbotk_reflections = new.env(parent = emptyenv())
 
 ### optimizer_properties
 bbotk_reflections$optimizer_properties = c(
-  "dependencies", "single-crit", "multi-crit"
+  "dependencies", "single-crit", "multi-crit", "async"
 )
 
 ### objective_properties
@@ -34,5 +34,5 @@ bbotk_reflections$objective_properties = c(
 
 ### terminator_properties
 bbotk_reflections$terminator_properties = c(
-    "single-crit", "multi-crit"
+  "single-crit", "multi-crit"
 )

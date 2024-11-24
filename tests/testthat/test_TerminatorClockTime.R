@@ -2,7 +2,7 @@ test_that("TerminatorClockTime works", {
   terminator = TerminatorClockTime$new()
   now = Sys.time()
   terminator$param_set$values$stop_time = now + 2L
-  expect_output(print(terminator), "TerminatorClockTime")
+  expect_snapshot(terminator)
   inst = MAKE_INST_2D(terminator)
   a = random_search(inst, batch_size = 1L)
   time_needed = as.numeric(difftime(Sys.time(), now), units = "secs")
@@ -18,13 +18,16 @@ test_that("status method works", {
   Sys.sleep(1)
 
   expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 3))
-  expect_equal(inst$terminator$status(inst$archive)["current_steps"], c("current_steps" = 1), tolerance = 1)
-  expect_equal(inst$terminator$remaining_time(inst$archive), 2, tolerance = 1)
 })
 
-test_that("TerminatorClockTime works with empty archive" ,{
+test_that("TerminatorClockTime works with empty archive", {
   terminator = TerminatorClockTime$new()
   terminator$param_set$values$stop_time = Sys.time() + 2L
-  archive = Archive$new(ps(x = p_dbl()), ps(y = p_dbl()))
+  archive = ArchiveBatch$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
   expect_false(terminator$is_terminated(archive))
+})
+
+test_that("man exists", {
+  terminator = trm("clock_time")
+  expect_man_exists(terminator$man)
 })

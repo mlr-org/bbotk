@@ -1,7 +1,6 @@
 ^renv$
 ^renv\.lock$
 ^LICENSE$
-^tic\.R$
 ^appveyor\.yml$
 .ignore
 .editorconfig
@@ -22,3 +21,8 @@
 ^Meta$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^README\.Rmd$
+^README\.html$
+^revdep$
+^CRAN-SUBMISSION$
+^benchmark$

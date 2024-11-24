@@ -2,20 +2,22 @@
 % Please edit documentation in R/Objective.R
 \name{Objective}
 \alias{Objective}
-\title{Objective function with domain and co-domain}
+\title{Objective Function with Domain and Codomain}
 \description{
-Describes a black-box objective function that maps an arbitrary domain to a
-numerical codomain.
+The \code{Objective} class describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }
-\section{Technical details}{
-
-\code{Objective} objects can have the following properties: \code{"noisy"},
-\code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
+\details{
+\code{Objective} objects can have the following properties: \code{"noisy"}, \code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
 }
-
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+Callbacks applied during the optimization.}
+
+\item{\code{context}}{(\link{ContextBatch})\cr
+Stores the context for the callbacks.}
+
 \item{\code{id}}{(\code{character(1)})).}
 
 \item{\code{properties}}{(\code{character()}).}
@@ -28,7 +30,9 @@ and ranges.}
 Specifies codomain of function, hence its feasible values.}
 
 \item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet}).\cr
-Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
+Changeable constants or parameters that are not subject to tuning can be
+stored and accessed here. Set constant values are passed to \verb{$.eval()}
+and \verb{$.eval_many()} as named arguments.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr}
 }
@@ -37,6 +41,14 @@ Changeable constants or parameters that are not subject to tuning can be stored 
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
+
 \item{\code{xdim}}{(\code{integer(1)})\cr
 Dimension of domain.}
 
@@ -48,18 +60,19 @@ Dimension of codomain.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Objective$new()}}
-\item \href{#method-format}{\code{Objective$format()}}
-\item \href{#method-print}{\code{Objective$print()}}
-\item \href{#method-eval}{\code{Objective$eval()}}
-\item \href{#method-eval_many}{\code{Objective$eval_many()}}
-\item \href{#method-eval_dt}{\code{Objective$eval_dt()}}
-\item \href{#method-clone}{\code{Objective$clone()}}
+\item \href{#method-Objective-new}{\code{Objective$new()}}
+\item \href{#method-Objective-format}{\code{Objective$format()}}
+\item \href{#method-Objective-print}{\code{Objective$print()}}
+\item \href{#method-Objective-eval}{\code{Objective$eval()}}
+\item \href{#method-Objective-eval_many}{\code{Objective$eval_many()}}
+\item \href{#method-Objective-eval_dt}{\code{Objective$eval_dt()}}
+\item \href{#method-Objective-help}{\code{Objective$help()}}
+\item \href{#method-Objective-clone}{\code{Objective$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Objective-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
@@ -67,9 +80,11 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   id = "f",
   properties = character(),
   domain,
-  codomain = ParamSet$new(list(ParamDbl$new("y", tags = "minimize"))),
-  constants = ParamSet$new(),
-  check_values = TRUE
+  codomain = ps(y = p_dbl(tags = "minimize")),
+  constants = ps(),
+  check_values = TRUE,
+  label = NA_character_,
+  man = NA_character_
 )}\if{html}{\out{</div>}}
 }
 
@@ -94,28 +109,39 @@ be minimized or maximized.  The default is to minimize each component.}
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
-Should points before the evaluation and the results be checked for
-validity?}
+Should points before the evaluation and the results be checked for validity?}
+
+\item{\code{label}}{(\code{character(1)})\cr
+Label for this object.
+Can be used in tables, plot and text output instead of the ID.}
+
+\item{\code{man}}{(\code{character(1)})\cr
+String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
+The referenced help package can be opened via method \verb{$help()}.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-format"></a>}}
-\if{latex}{\out{\hypertarget{method-format}{}}}
+\if{html}{\out{<a id="method-Objective-format"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-format}{}}}
 \subsection{Method \code{format()}}{
 Helper for print outputs.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$format()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Objective$format(...)}\if{html}{\out{</div>}}
 }
 
-\subsection{Returns}{
-\code{character()}.
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{(ignored).}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Objective-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-print}{}}}
 \subsection{Method \code{print()}}{
 Print method.
 \subsection{Usage}{
@@ -127,8 +153,8 @@ Print method.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval"></a>}}
-\if{latex}{\out{\hypertarget{method-eval}{}}}
+\if{html}{\out{<a id="method-Objective-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-eval}{}}}
 \subsection{Method \code{eval()}}{
 Evaluates a single input value on the objective function. If
 \code{check_values = TRUE}, the validity of the point as well as the validity
@@ -153,8 +179,8 @@ These extra entries are referred to as \emph{extras}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval_many"></a>}}
-\if{latex}{\out{\hypertarget{method-eval_many}{}}}
+\if{html}{\out{<a id="method-Objective-eval_many"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-eval_many}{}}}
 \subsection{Method \code{eval_many()}}{
 Evaluates multiple input values on the objective function. If
 \code{check_values = TRUE}, the validity of the points as well as the validity
@@ -185,8 +211,8 @@ These extra columns are referred to as \emph{extras}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval_dt"></a>}}
-\if{latex}{\out{\hypertarget{method-eval_dt}{}}}
+\if{html}{\out{<a id="method-Objective-eval_dt"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-eval_dt}{}}}
 \subsection{Method \code{eval_dt()}}{
 Evaluates multiple input values on the objective function
 \subsection{Usage}{
@@ -211,8 +237,18 @@ functions, e.g.  \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Objective-help"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-help}{}}}
+\subsection{Method \code{help()}}{
+Opens the corresponding help page referenced by field \verb{$man}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Objective$help()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Objective-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

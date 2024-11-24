@@ -6,10 +6,7 @@
 \alias{bbotk-package}
 \title{bbotk: Black-Box Optimization Toolkit}
 \description{
-Provides a common framework for optimization of
-    black-box functions for other packages, e.g. 'mlr3tuning' or
-    'mlr3fselect'.  It offers various optimization methods e.g. grid
-    search, random search and generalized simulated annealing.
+Features highly configurable search spaces via the 'paradox' package and optimizes every user-defined objective function. The package includes several optimization algorithms e.g. Random Search, Iterated Racing, Bayesian Optimization (in 'mlr3mbo') and Hyperband (in 'mlr3hyperband'). bbotk is the base package of 'mlr3tuning', 'mlr3fselect' and 'miesmuschel'.
 }
 \seealso{
 Useful links:
