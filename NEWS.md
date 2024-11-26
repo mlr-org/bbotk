@@ -1,4 +1,7 @@
-# bbotk (development version)
+# bbotk 1.4.0
+
+* feat: Add `OptimizerBatchChain` that runs multiple optimizers sequentially.
+* refactor: Only pass `extra` to `$assign_result()`.
 
 # bbotk 1.3.0
 
