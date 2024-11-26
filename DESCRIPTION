@@ -80,6 +80,7 @@ Collate:
     'OptimizerAsyncGridSearch.R'
     'OptimizerAsyncRandomSearch.R'
     'OptimizerBatch.R'
+    'OptimizerBatchChain.R'
     'OptimizerBatchCmaes.R'
     'OptimizerBatchDesignPoints.R'
     'OptimizerBatchFocusSearch.R'
