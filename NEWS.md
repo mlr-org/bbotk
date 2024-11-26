@@ -1,5 +1,8 @@
 # bbotk (development version)
 
+* feat: Add `OptimizerBatchChain` that runs multiple optimizers sequentially.
+* refactor: Only pass `extra` to `$assign_result()`.
+
 # bbotk 1.3.0
 
 * feat: Add new stage `on_result_begin` to `CallbackAsyncTuning` and `CallbackBatchTuning`.
