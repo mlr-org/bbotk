@@ -158,9 +158,9 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"GenSA"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">codomain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">objective_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">xs</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
@@ -189,16 +189,16 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 x            y  x_domain           timestamp batch_nr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;num&gt;        &lt;num&gt;    &lt;list&gt;              &lt;POSc&gt;    &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  3.071060e-02 9.431411e-04 &lt;list[1]&gt; 2024-11-26 14:00:08        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  7.901734e-01 6.243739e-01 &lt;list[1]&gt; 2024-11-26 14:00:08        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -3.848173e-01 1.480844e-01 &lt;list[1]&gt; 2024-11-26 14:00:08        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  3.071060e-02 9.431411e-04 &lt;list[1]&gt; 2024-11-26 14:00:08        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  3.071160e-02 9.432025e-04 &lt;list[1]&gt; 2024-11-26 14:00:08        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  3.070960e-02 9.430797e-04 &lt;list[1]&gt; 2024-11-26 14:00:08        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -3.071060e-02 9.431411e-04 &lt;list[1]&gt; 2024-11-26 14:00:08        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -3.070960e-02 9.430797e-04 &lt;list[1]&gt; 2024-11-26 14:00:08        8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: -3.071160e-02 9.432025e-04 &lt;list[1]&gt; 2024-11-26 14:00:08        9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -1.141448e-15 1.302904e-30 &lt;list[1]&gt; 2024-11-26 14:00:08       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  3.721262e-01 1.384779e-01 &lt;list[1]&gt; 2024-11-26 14:24:23        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: -8.684110e-01 7.541377e-01 &lt;list[1]&gt; 2024-11-26 14:24:23        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -4.340169e-02 1.883707e-03 &lt;list[1]&gt; 2024-11-26 14:24:23        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -4.340169e-02 1.883707e-03 &lt;list[1]&gt; 2024-11-26 14:24:23        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -4.340069e-02 1.883620e-03 &lt;list[1]&gt; 2024-11-26 14:24:23        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -4.340269e-02 1.883794e-03 &lt;list[1]&gt; 2024-11-26 14:24:23        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  4.340169e-02 1.883707e-03 &lt;list[1]&gt; 2024-11-26 14:24:23        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  4.340269e-02 1.883794e-03 &lt;list[1]&gt; 2024-11-26 14:24:23        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  4.340069e-02 1.883620e-03 &lt;list[1]&gt; 2024-11-26 14:24:23        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  4.718448e-16 2.226375e-31 &lt;list[1]&gt; 2024-11-26 14:24:23       10</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -89,43 +89,46 @@ If <code>objects</code> is set to <code>TRUE</code>, the constructed objects are
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: async_design_points                      Asynchronous Design Points</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:   async_grid_search                        Asynchronous Grid Search</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3: async_random_search                      Asynchronous Random Search</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:               cmaes Covariance Matrix Adaptation Evolution Strategy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:       design_points                                   Design Points</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:        focus_search                                    Focus Search</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:               gensa                 Generalized Simulated Annealing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:         grid_search                                     Grid Search</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:               irace                                 Iterated Racing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:        local_search                                    Local Search</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:              nloptr                         Non-linear Optimization</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:       random_search                                   Random Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:               chain          Chain Multiple Optimizers Sequentially</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:               cmaes Covariance Matrix Adaptation Evolution Strategy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:       design_points                                   Design Points</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:        focus_search                                    Focus Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:               gensa                 Generalized Simulated Annealing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:         grid_search                                     Grid Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:               irace                                 Iterated Racing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:        local_search                                    Local Search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:              nloptr                         Non-linear Optimization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:       random_search                                   Random Search</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    param_classes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                           &lt;list&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: ParamLgl,ParamInt,ParamDbl,ParamFct,ParamUty</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:                                     ParamDbl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: ParamLgl,ParamInt,ParamDbl,ParamFct,ParamUty</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:                                     ParamDbl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:          ParamDbl,ParamInt,ParamFct,ParamLgl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:                                     ParamDbl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:                                     ParamDbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: ParamLgl,ParamInt,ParamDbl,ParamFct,ParamUty</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:                                     ParamDbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:          ParamDbl,ParamInt,ParamFct,ParamLgl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:                                     ParamDbl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:          ParamLgl,ParamInt,ParamDbl,ParamFct</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    properties     packages</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                        &lt;list&gt;       &lt;list&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: dependencies,single-crit,multi-crit,async   bbotk,rush</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2: dependencies,single-crit,multi-crit,async   bbotk,rush</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3: dependencies,single-crit,multi-crit,async   bbotk,rush</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:                               single-crit bbotk,adagio</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:       dependencies,single-crit,multi-crit        bbotk</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:                  dependencies,single-crit        bbotk</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:                               single-crit  bbotk,GenSA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:       dependencies,single-crit,multi-crit        bbotk</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:                  dependencies,single-crit  bbotk,irace</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:                  dependencies,single-crit        bbotk</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:                               single-crit bbotk,nloptr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:       dependencies,single-crit,multi-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:       dependencies,single-crit,multi-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:                               single-crit bbotk,adagio</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:       dependencies,single-crit,multi-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:                  dependencies,single-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:                               single-crit  bbotk,GenSA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:       dependencies,single-crit,multi-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:                  dependencies,single-crit  bbotk,irace</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:                  dependencies,single-crit        bbotk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:                               single-crit bbotk,nloptr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:       dependencies,single-crit,multi-crit        bbotk</span>
 <span class="r-in"><span><span class="va">mlr_optimizers</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"random_search"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OptimizerBatchRandomSearch&gt;: Random Search</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: batch_size=1</span>

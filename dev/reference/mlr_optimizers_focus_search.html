@@ -150,9 +150,9 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">search_space</span> <span class="op">=</span> <span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">codomain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">objective_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">xs</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
@@ -173,121 +173,121 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modifies the instance by reference</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               x  x_domain            y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;num&gt;    &lt;list&gt;        &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.0003830018 &lt;list[1]&gt; 1.466903e-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x  x_domain            y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;num&gt;    &lt;list&gt;        &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.03039435 &lt;list[1]&gt; 0.0009238167</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># returns best scoring evaluation</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               x  x_domain            y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;num&gt;    &lt;list&gt;        &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.0003830018 &lt;list[1]&gt; 1.466903e-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              x  x_domain            y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;num&gt;    &lt;list&gt;        &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -0.03039435 &lt;list[1]&gt; 0.0009238167</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># allows access of data.table of full path of all evaluations</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  x            y  x_domain           timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              &lt;num&gt;        &lt;num&gt;    &lt;list&gt;              &lt;POSc&gt;    &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1: -0.9770409241 9.546090e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  0.7764991359 6.029509e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  0.9926938377 9.854411e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  0.0003830018 1.466903e-07 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: -0.2820659513 7.956120e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   6:  0.5498260446 3.023087e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   7:  0.1689505018 2.854427e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   8:  0.2679527421 7.179867e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   9:  0.7173323096 5.145656e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  10:  0.1337886774 1.789941e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  11: -0.4940059613 2.440419e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  12:  0.8376064291 7.015845e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  13:  0.7347004097 5.397847e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  14: -0.5029226062 2.529311e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  15: -0.1942375763 3.772824e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  16:  0.5392603520 2.908017e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  17: -0.7610292509 5.791655e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  18: -0.6106100767 3.728447e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  19: -0.6708615036 4.500552e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  20:  0.3264131625 1.065456e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  21:  0.7131500090 5.085829e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  22:  0.8530928968 7.277675e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  23:  0.1047551893 1.097365e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  24:  0.1541313888 2.375649e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  25:  0.3748954912 1.405466e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  26: -0.5105635407 2.606751e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  27: -0.9107656833 8.294941e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  28:  0.8197091133 6.719230e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  29: -0.8586375616 7.372585e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  30:  0.9937829468 9.876045e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  31:  0.2237048349 5.004385e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  32: -0.6548823086 4.288708e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  33:  0.8188819303 6.705676e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  34: -0.9250976662 8.558057e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  35:  0.1871075807 3.500925e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  36: -0.5260448903 2.767232e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  37:  0.8125945334 6.603099e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  38:  0.6377459681 4.067199e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  39:  0.3996587144 1.597271e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  40: -0.5599993416 3.135993e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  41:  0.4559818767 2.079195e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  42: -0.5658310754 3.201648e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  43: -0.0875396035 7.663182e-03 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  44: -0.3344004834 1.118237e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  45:  0.1367053371 1.868835e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  46: -0.4955885503 2.456080e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  47: -0.0719728665 5.180094e-03 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  48:  0.8353210138 6.977612e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  49:  0.9456884358 8.943266e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  50:  0.6381648933 4.072544e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  51:  0.8058475964 6.493903e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  52:  0.1627320880 2.648173e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  53:  0.5460169623 2.981345e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  54:  0.9902460529 9.805872e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  55:  0.4219424995 1.780355e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  56: -0.5701148086 3.250309e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  57: -0.4164847401 1.734595e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  58:  0.4435194586 1.967095e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  59:  0.7332314067 5.376283e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  60: -0.5230937870 2.736271e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  61: -0.9910073839 9.820956e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  62:  0.8870329284 7.868274e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  63: -0.1237255991 1.530802e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  64:  0.5012066565 2.512081e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  65:  0.3356315289 1.126485e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  66: -0.1840535970 3.387573e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  67: -0.2975023701 8.850766e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  68:  0.4761831230 2.267504e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  69:  0.3285709857 1.079589e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  70: -0.8295505997 6.881542e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  71:  0.7122643134 5.073205e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  72: -0.8460333566 7.157724e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  73:  0.7056896067 4.979978e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  74: -0.7873060782 6.198509e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  75: -0.0303943530 9.238167e-04 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  76: -0.5055617793 2.555927e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  77:  0.3731384212 1.392323e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  78: -0.6727536037 4.525974e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  79:  0.9056495996 8.202012e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  80: -0.3562908978 1.269432e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  81: -0.2769317664 7.669120e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  82:  0.7754468350 6.013178e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  83:  0.6560288356 4.303738e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  84: -0.7986870846 6.379011e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  85:  0.8121031555 6.595115e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  86:  0.5454607289 2.975274e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  87: -0.2332586590 5.440960e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  88:  0.9993049144 9.986103e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  89: -0.3014019029 9.084311e-02 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  90:  0.8946365323 8.003745e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  91: -0.5678000478 3.223969e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  92: -0.9358145823 8.757489e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  93: -0.7093683132 5.032034e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  94:  0.7087677759 5.023518e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  95: -0.5737013780 3.291333e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  96: -0.5793785239 3.356795e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  97: -0.9209586200 8.481648e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  98:  0.8895496065 7.912985e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  99: -0.5101440251 2.602469e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100:  0.5622451361 3.161196e-01 &lt;list[1]&gt; 2024-11-26 14:00:07        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  x            y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                x            y  x_domain           timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;num&gt;        &lt;num&gt;    &lt;list&gt;              &lt;POSc&gt;    &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:  0.85309290 0.7277674905 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  0.10475519 0.0109736497 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  0.15413139 0.0237564850 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  0.37489549 0.1405466293 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: -0.51056354 0.2606751291 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   6: -0.91076568 0.8294941298 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   7:  0.81970911 0.6719230305 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   8: -0.85863756 0.7372584621 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   9:  0.99378295 0.9876045454 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  10:  0.22370483 0.0500438532 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  11: -0.65488231 0.4288708381 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  12:  0.81888193 0.6705676158 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  13: -0.92509767 0.8558056920 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  14:  0.18710758 0.0350092468 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  15: -0.52604489 0.2767232266 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  16:  0.81259453 0.6603098758 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  17:  0.63774597 0.4067199198 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  18:  0.39965871 0.1597270880 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  19: -0.55999934 0.3135992626 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  20:  0.45598188 0.2079194719 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  21: -0.56583108 0.3201648059 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  22: -0.08753960 0.0076631822 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  23: -0.33440048 0.1118236833 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  24:  0.13670534 0.0186883492 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  25: -0.49558855 0.2456080112 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  26: -0.07197287 0.0051800935 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  27:  0.83532101 0.6977611961 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  28:  0.94568844 0.8943266176 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  29:  0.63816489 0.4072544310 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  30:  0.80584760 0.6493903486 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  31:  0.16273209 0.0264817325 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  32:  0.54601696 0.2981345231 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  33:  0.99024605 0.9805872452 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  34:  0.42194250 0.1780354729 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  35: -0.57011481 0.3250308950 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  36: -0.41648474 0.1734595387 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  37:  0.44351946 0.1967095102 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  38:  0.73323141 0.5376282957 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  39: -0.52309379 0.2736271100 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  40: -0.99100738 0.9820956350 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  41:  0.88703293 0.7868274161 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  42: -0.12372560 0.0153080239 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  43:  0.50120666 0.2512081125 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  44:  0.33563153 0.1126485232 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  45: -0.18405360 0.0338757266 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  46: -0.29750237 0.0885076602 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  47:  0.47618312 0.2267503666 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  48:  0.32857099 0.1079588926 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  49: -0.82955060 0.6881541974 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  50:  0.71226431 0.5073204521 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  51: -0.84603336 0.7157724405 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  52:  0.70568961 0.4979978210 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  53: -0.78730608 0.6198508608 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  54: -0.03039435 0.0009238167 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  55: -0.50556178 0.2555927126 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  56:  0.37313842 0.1392322814 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  57: -0.67275360 0.4525974112 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  58:  0.90564960 0.8202011973 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  59: -0.35629090 0.1269432039 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  60: -0.27693177 0.0766912033 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  61:  0.77544683 0.6013177939 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  62:  0.65602884 0.4303738331 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  63: -0.79868708 0.6379010591 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  64:  0.81210316 0.6595115352 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  65:  0.54546073 0.2975274068 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  66: -0.23325866 0.0544096020 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  67:  0.99930491 0.9986103119 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  68: -0.30140190 0.0908431071 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  69:  0.89463653 0.8003745249 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  70: -0.56780005 0.3223968943 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  71: -0.93581458 0.8757489324 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  72: -0.70936831 0.5032034038 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  73:  0.70876778 0.5023517602 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  74: -0.57370138 0.3291332711 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  75: -0.57937852 0.3356794739 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  76: -0.92095862 0.8481647798 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  77:  0.88954961 0.7912985024 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  78: -0.51014403 0.2602469263 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  79:  0.56224514 0.3161195931 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  80: -0.42352566 0.1793739877 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  81:  0.75071582 0.5635742433 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  82: -0.40849981 0.1668720962 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  83:  0.96705082 0.9351872806 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  84:  0.17967511 0.0322831462 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  85:  0.51831676 0.2686522634 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  86:  0.67215061 0.4517864450 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  87:  0.52563894 0.2762962946 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  88: -0.16546015 0.0273770604 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  89: -0.72385032 0.5239592832 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  90: -0.83831008 0.7027637850 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  91:  0.31196525 0.0973223186 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  92:  0.20400772 0.0416191491 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  93:  0.31399166 0.0985907621 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  94: -0.34136567 0.1165305225 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  95:  0.95894844 0.9195821122 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  96:  0.43037227 0.1852202894 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  97:  0.74526061 0.5554133765 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  98:  0.96656749 0.9342527204 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  99: -0.56287401 0.3168271557 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100:  0.32906013 0.1082805681 &lt;list[1]&gt; 2024-11-26 14:24:22        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                x            y  x_domain           timestamp batch_nr</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
