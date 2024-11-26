@@ -214,11 +214,7 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
       y = set_names(mean(unlist(res[, cols_y, with = FALSE])), cols_y)
       extra = res[, !c(cols_x, cols_y), with = FALSE]
 
-      if ("extra" %in% formalArgs(inst$assign_result)) {
-        inst$assign_result(xdt, y, extra = extra)
-      } else {
-        inst$assign_result(xdt, y)
-      }
+      inst$assign_result(xdt, y, extra = extra)
     },
 
     .result_id = NULL

@@ -175,20 +175,11 @@ assign_result_default = function(inst) {
 
   if (inherits(inst, "OptimInstanceBatchMultiCrit") || inherits(inst, "OptimInstanceAsyncMultiCrit")) {
     ydt = xydt[, inst$archive$cols_y, with = FALSE]
-    # workaround until extra is implemented in upstream packages
-    if ("extra" %in% formalArgs(inst$assign_result)) {
-      inst$assign_result(xdt, ydt, extra = extra)
-    } else {
-      inst$assign_result(xdt, ydt, xydt = xydt)
-    }
+    inst$assign_result(xdt, ydt, extra = extra)
   } else {
     # unlist keeps name!
     y = unlist(xydt[, inst$archive$cols_y, with = FALSE])
-    if ("extra" %in% formalArgs(inst$assign_result)) {
-      inst$assign_result(xdt, y, extra = extra)
-    } else {
-      inst$assign_result(xdt, y, xydt = xydt)
-    }
+    inst$assign_result(xdt, y, extra = extra)
   }
 
   invisible(NULL)
