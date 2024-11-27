@@ -1,4 +1,4 @@
-# bbotk (development version)
+# bbotk 1.4.1
 
 * compatibility: irace 4.0.0
 
