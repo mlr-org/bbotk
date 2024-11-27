@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* compatibility: irace 4.0.0
+
 # bbotk 1.4.0
 
 * feat: Add `OptimizerBatchChain` that runs multiple optimizers sequentially.
