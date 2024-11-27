@@ -158,7 +158,7 @@ Printer.
 The \link{Optimizer} object writes the best found point and estimated performance value here.
 For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -171,6 +171,9 @@ columns for extra information.}
 
 \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
+
+\item{\code{...}}{(\code{any})\cr
+ignored.}
 }
 \if{html}{\out{</div>}}
 }

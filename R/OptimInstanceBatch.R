@@ -156,6 +156,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
   ),
 
   private = list(
+    # intermediate objects
     .xdt = NULL,
     .objective_function = NULL,
 

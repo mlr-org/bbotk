@@ -166,19 +166,20 @@ Optimizer = R6Class("Optimizer",
 assign_result_default = function(inst) {
   assert_r6(inst, "OptimInstance")
 
-  res = inst$archive$best()
-  ids = inst$search_space$ids()
-  # workaround until ... works
-  if ("internal_tuned_values" %in% names(res)) ids = c(ids, "internal_tuned_values")
-  xdt = res[, ids, with = FALSE]
+  xydt = inst$archive$best()
+  cols_x = inst$archive$cols_x
+  cols_y = inst$archive$cols_y
+
+  xdt = xydt[, cols_x, with = FALSE]
+  extra = xydt[, !c(cols_x, cols_y), with = FALSE]
 
   if (inherits(inst, "OptimInstanceBatchMultiCrit") || inherits(inst, "OptimInstanceAsyncMultiCrit")) {
-    ydt = res[, inst$archive$cols_y, with = FALSE]
-    inst$assign_result(xdt, ydt)
+    ydt = xydt[, inst$archive$cols_y, with = FALSE]
+    inst$assign_result(xdt, ydt, extra = extra)
   } else {
     # unlist keeps name!
-    y = unlist(res[, inst$archive$cols_y, with = FALSE])
-    inst$assign_result(xdt, y)
+    y = unlist(xydt[, inst$archive$cols_y, with = FALSE])
+    inst$assign_result(xdt, y, extra = extra)
   }
 
   invisible(NULL)

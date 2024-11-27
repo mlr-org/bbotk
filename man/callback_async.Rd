@@ -10,7 +10,11 @@ callback_async(
   man = NA_character_,
   on_optimization_begin = NULL,
   on_worker_begin = NULL,
+  on_optimizer_before_eval = NULL,
+  on_optimizer_after_eval = NULL,
   on_worker_end = NULL,
+  on_result_begin = NULL,
+  on_result_end = NULL,
   on_result = NULL,
   on_optimization_end = NULL
 )
@@ -36,12 +40,39 @@ Stage called at the beginning of the optimization on the worker.
 Called in the worker loop.
 The functions must have two arguments named \code{callback} and \code{context}.}
 
+\item{on_optimizer_before_eval}{(\verb{function()})\cr
+Stage called after the optimizer proposes points.
+Called in \code{OptimInstance$.eval_point()}.
+The functions must have two arguments named \code{callback} and \code{context}.
+The argument of \code{instance$.eval_point(xs)} and \code{xs_trafoed} and \code{extra} are available in the \code{context}.
+Or \code{xs} and \code{xs_trafoed} of \code{instance$.eval_queue()} are available in the \code{context}.}
+
+\item{on_optimizer_after_eval}{(\verb{function()})\cr
+Stage called after points are evaluated.
+Called in \code{OptimInstance$.eval_point()}.
+The functions must have two arguments named \code{callback} and \code{context}.
+The outcome \code{y} is available in the \code{context}.}
+
 \item{on_worker_end}{(\verb{function()})\cr
 Stage called at the end of the optimization on the worker.
 Called in the worker loop.
 The functions must have two arguments named \code{callback} and \code{context}.}
 
+\item{on_result_begin}{(\verb{function()})\cr
+Stage called before result are written.
+Called in \code{OptimInstance$assign_result()}.
+The functions must have two arguments named \code{callback} and \code{context}.
+The arguments of \verb{$.assign_result(xdt, y, extra)} are available in the \code{context}.}
+
+\item{on_result_end}{(\verb{function()})\cr
+Stage called after result are written.
+Called in \code{OptimInstance$assign_result()}.
+The functions must have two arguments named \code{callback} and \code{context}.
+The final result \code{instance$result} is available in the \code{context}.}
+
 \item{on_result}{(\verb{function()})\cr
+Deprecated.
+Use \code{on_result_end} instead.
 Stage called after result are written.
 Called in \code{OptimInstance$assign_result()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
@@ -61,9 +92,14 @@ The stages are prefixed with \verb{on_*}.
      - on_optimization_begin
     Start Worker
          - on_worker_begin
+           Start Optimization on Worker
+             - on_optimizer_before_eval
+             - on_optimizer_after_eval
+           End Optimization on Worker
          - on_worker_end
     End Worker
-     - on_result
+     - on_result_begin
+     - on_result_end
      - on_optimization_end
 End Optimization
 }\if{html}{\out{</div>}}

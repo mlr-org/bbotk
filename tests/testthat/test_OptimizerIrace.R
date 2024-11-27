@@ -157,6 +157,8 @@ test_that("OptimizerBatchIrace works without passed constants set",  {
 
 
 test_that("paradox_to_irace without dependencies", {
+  skip_if_not_installed("irace")
+
   # only ParamLgl
   pps = ps(lgl = p_lgl())
   expect_irace_parameters(parameters = paradox_to_irace(pps, 4), names = "lgl", types = "c",
@@ -196,6 +198,8 @@ test_that("paradox_to_irace without dependencies", {
 })
 
 test_that("paradox_to_irace with dependencies", {
+  skip_if_not_installed("irace")
+
   # one dependency
   pps = ps(
     a = p_lgl(),
@@ -246,6 +250,8 @@ test_that("paradox_to_irace with dependencies", {
 })
 
 test_that("paradox_to_irace works with parameters with multiple dependencies", {
+  skip_if_not_installed("irace")
+
   pps = ps(
     a = p_lgl(),
     b = p_lgl(),

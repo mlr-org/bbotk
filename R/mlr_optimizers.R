@@ -37,11 +37,22 @@ as.data.table.DictionaryOptimizer = function(x, ..., objects = FALSE) {
   assert_flag(objects)
 
   setkeyv(map_dtr(x$keys(), function(key) {
-    t = withCallingHandlers(x$get(key),
-      packageNotFoundWarning = function(w) invokeRestart("muffleWarning"))
-    insert_named(
-      list(key = key, label = t$label, param_classes = list(t$param_classes), properties = list(t$properties), packages = list(t$packages)),
-      if (objects) list(object = list(t))
-    )
+    # NOTE: special handling of OptimizerBatchChain due to optimizers being required as an argument during construction
+    if (key == "chain") {
+      optimizer1 = opt("random_search")
+      optimizer2 = opt("random_search")
+      opt = withCallingHandlers(x$get(key, optimizers = list(optimizer1, optimizer2)), packageNotFoundWarning = function(w) invokeRestart("muffleWarning"))
+      insert_named(
+        list(key = key, label = opt$label, param_classes = list(opt$param_classes), properties = list(opt$properties), packages = list(opt$packages)),
+        if (objects) list(object = list(opt))
+      )
+    } else {
+      opt = withCallingHandlers(x$get(key),
+        packageNotFoundWarning = function(w) invokeRestart("muffleWarning"))
+      insert_named(
+        list(key = key, label = opt$label, param_classes = list(opt$param_classes), properties = list(opt$properties), packages = list(opt$packages)),
+        if (objects) list(object = list(t))
+      )
+    }
   }, .fill = TRUE), "key")[]
 }

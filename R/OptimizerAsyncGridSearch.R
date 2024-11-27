@@ -40,7 +40,7 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
         id = "async_grid_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit", "multi-crit"),
+        properties = c("dependencies", "single-crit", "multi-crit", "async"),
         packages = "rush",
         label = "Asynchronous Grid Search",
         man = "bbotk::mlr_optimizers_async_grid_search"
@@ -53,7 +53,6 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
     #' @param inst ([OptimInstance]).
     #' @return [data.table::data.table].
     optimize = function(inst) {
-
       # generate grid
       pv = self$param_set$values
       design = generate_design_grid(inst$search_space, resolution = pv$resolution, param_resolutions = pv$param_resolutions)$data
@@ -64,10 +63,8 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
 
   private = list(
     .optimize = function(inst) {
-      archive = inst$archive
-
       # evaluate grid points
-      evaluate_queue_default(inst)
+      get_private(inst)$.eval_queue()
     }
   )
 )

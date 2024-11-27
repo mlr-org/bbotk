@@ -1,6 +1,34 @@
 # bbotk (development version)
 
-compatibility: Work with new irace 4.0.0
+* compatibility: irace 4.0.0
+
+# bbotk 1.4.0
+
+* feat: Add `OptimizerBatchChain` that runs multiple optimizers sequentially.
+* refactor: Only pass `extra` to `$assign_result()`.
+
+# bbotk 1.3.0
+
+* feat: Add new stage `on_result_begin` to `CallbackAsyncTuning` and `CallbackBatchTuning`.
+* refactor: Rename stage `on_result` to `on_result_end` in `CallbackAsyncTuning` and `CallbackBatchTuning`.
+* docs: Extend the `CallbackAsyncTuning` and `CallbackBatchTuning` documentation.
+
+# bbotk 1.2.0
+
+* feat: `ContextBatch` and `ContextAsync` have a `result_extra` field now to access additional results passed to the instance.
+* refactor: Additional information are passed with `extra` to `OptimInstance$assign_result()`.
+
+# bbotk 1.1.1
+
+* feat: The optimizers passes additional information to `OptimInstance$assign_result()` method.
+
+# bbotk 1.1.0
+
+* docs: Move vignette to mlr3book.
+* feat: Add hypervolume stagnation terminator `trm("stagnation_hypervolume")`.
+* feat Add local search optimizer `opt("local_search")`.
+* refactor: Remove unused fields from callbacks.
+* fix: Add `"on_optimization_end_batch"` stage to `CallbackBatch`.
 
 # bbotk 1.0.1
 

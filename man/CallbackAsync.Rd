@@ -24,12 +24,24 @@ Called in \code{Optimizer$optimize()}.}
 Stage called at the beginning of the optimization on the worker.
 Called in the worker loop.}
 
+\item{\code{on_optimizer_before_eval}}{(\verb{function()})\cr
+Stage called after the optimizer proposes points.
+Called in \code{OptimInstance$.eval_point()}.}
+
+\item{\code{on_optimizer_after_eval}}{(\verb{function()})\cr
+Stage called after points are evaluated.
+Called in \code{OptimInstance$.eval_point()}.}
+
 \item{\code{on_worker_end}}{(\verb{function()})\cr
 Stage called at the end of the optimization on the worker.
 Called in the worker loop.}
 
-\item{\code{on_result}}{(\verb{function()})\cr
-Stage called after result are written.
+\item{\code{on_result_begin}}{(\verb{function()})\cr
+Stage called before the results are written.
+Called in \code{OptimInstance$assign_result()}.}
+
+\item{\code{on_result_end}}{(\verb{function()})\cr
+Stage called after the results are written.
 Called in \code{OptimInstance$assign_result()}.}
 
 \item{\code{on_optimization_end}}{(\verb{function()})\cr

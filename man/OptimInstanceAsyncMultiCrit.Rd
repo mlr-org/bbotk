@@ -35,6 +35,7 @@ Optimal outcome.}
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="clear"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-clear'><code>bbotk::OptimInstanceAsync$clear()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="print"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-print'><code>bbotk::OptimInstanceAsync$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="reconnect"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-reconnect'><code>bbotk::OptimInstanceAsync$reconnect()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -92,7 +93,7 @@ If a rush instance is supplied, the tuning runs without batches.}
 The \link{OptimizerAsync} writes the best found points and estimated performance values here (probably the Pareto set / front).
 For internal use.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncMultiCrit$assign_result(xdt, ydt, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncMultiCrit$assign_result(xdt, ydt, extra = NULL, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -106,6 +107,9 @@ However, \code{xdt} can contain additional columns.}
 
 \item{\code{ydt}}{(\code{numeric(1)})\cr
 Optimal outcomes, e.g. the Pareto front.}
+
+\item{\code{extra}}{(\code{data.table::data.table()})\cr
+Additional information.}
 
 \item{\code{...}}{(\code{any})\cr
 ignored.}

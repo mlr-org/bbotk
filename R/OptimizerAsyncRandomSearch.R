@@ -25,7 +25,7 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
         id = "async_random_search",
         param_set = ps(),
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit", "multi-crit"),
+        properties = c("dependencies", "single-crit", "multi-crit", "async"),
         packages = "rush",
         label = "Asynchronous Random Search",
         man = "bbotk::mlr_optimizers_random_search"
@@ -38,22 +38,16 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
       search_space = inst$search_space
 
       # usually the queue is empty but callbacks might have added points
-      evaluate_queue_default(inst)
+      get_private(inst)$.eval_queue()
 
       while(!inst$is_terminated) {
         # sample new points
         sampler = SamplerUnif$new(search_space)
         xdt = sampler$sample(1)$data
-        xss = transpose_list(xdt)
-        xs = xss[[1]][inst$archive$cols_x]
-        xs_trafoed = trafo_xs(xs, search_space)
-        key = inst$archive$push_running_point(xs)
+        xs = transpose_list(xdt)[[1]]
 
-        # eval
-        ys = inst$objective$eval(xs_trafoed)
-
-        # push result
-        inst$archive$push_result(key, ys = ys, x_domain = xs_trafoed)
+        # evaluate
+        get_private(inst)$.eval_point(xs)
       }
     }
   )

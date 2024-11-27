@@ -3,7 +3,11 @@ test_that("mlr_optimizers", {
   keys = mlr_optimizers$keys()
 
   for (key in keys) {
-    optimizer = opt(key)
+    if (key == "chain") {
+      optimizer = opt(key, optimizers = list(opt("random_search")))
+    } else {
+      optimizer = opt(key)
+    }
     expect_multi_class(optimizer, c("Optimizer", "OptimizerAsync"))
   }
 })

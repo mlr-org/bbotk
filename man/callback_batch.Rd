@@ -11,9 +11,10 @@ callback_batch(
   on_optimization_begin = NULL,
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
+  on_result_begin = NULL,
+  on_result_end = NULL,
   on_result = NULL,
-  on_optimization_end = NULL,
-  fields = list()
+  on_optimization_end = NULL
 )
 }
 \arguments{
@@ -35,14 +36,30 @@ The functions must have two arguments named \code{callback} and \code{context}.}
 \item{on_optimizer_before_eval}{(\verb{function()})\cr
 Stage called after the optimizer proposes points.
 Called in \code{OptimInstance$eval_batch()}.
-The functions must have two arguments named \code{callback} and \code{context}.}
+The functions must have two arguments named \code{callback} and \code{context}.
+The argument of \verb{$eval_batch(xdt)} is available in \code{context}.}
 
 \item{on_optimizer_after_eval}{(\verb{function()})\cr
 Stage called after points are evaluated.
 Called in \code{OptimInstance$eval_batch()}.
-The functions must have two arguments named \code{callback} and \code{context}.}
+The functions must have two arguments named \code{callback} and \code{context}.
+The new points and outcomes in \code{instance$archive} are available in \code{context}.}
+
+\item{on_result_begin}{(\verb{function()})\cr
+Stage called before result are written to the instance.
+Called in \code{OptimInstance$assign_result()}.
+The functions must have two arguments named \code{callback} and \code{context}.
+The arguments of \verb{$assign_result(xdt, y, extra)} are available in \code{context}.}
+
+\item{on_result_end}{(\verb{function()})\cr
+Stage called after result are written to the instance.
+Called in \code{OptimInstance$assign_result()}.
+The functions must have two arguments named \code{callback} and \code{context}.
+The final result \code{instance$result} is available in \code{context}.}
 
 \item{on_result}{(\verb{function()})\cr
+Deprecated.
+Use \code{on_result_end} instead.
 Stage called after result are written.
 Called in \code{OptimInstance$assign_result()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
@@ -51,9 +68,6 @@ The functions must have two arguments named \code{callback} and \code{context}.}
 Stage called at the end of the optimization.
 Called in \code{Optimizer$optimize()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
-
-\item{fields}{(list of \code{any})\cr
-List of additional fields.}
 }
 \description{
 Function to create a \link{CallbackBatch}.
@@ -67,7 +81,8 @@ The stages are prefixed with \verb{on_*}.
          - on_optimizer_before_eval
          - on_optimizer_after_eval
     End Optimizer Batch
-     - on_result
+     - on_result_begin
+     - on_result_end
      - on_optimization_end
 End Optimization
 }\if{html}{\out{</div>}}

@@ -82,10 +82,64 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     clear = function() {
       self$rush$reset()
       super$clear()
+    },
+
+    #' @description
+    #' Reconnect to Redis.
+    #' The connection breaks when the [rush::Rush] is saved to disk.
+    #' Call this method to reconnect after loading the object.
+    reconnect = function() {
+      self$rush$reconnect()
     }
   ),
 
   private = list(
+    # intermediate objects
+    .xs = NULL,
+    .xs_trafoed = NULL,
+    .extra = NULL,
+    .ys = NULL,
+
+    .eval_point = function(xs) {
+      # transpose point
+      private$.xs = xs[self$archive$cols_x]
+      private$.xs_trafoed = trafo_xs(private$.xs, self$search_space)
+      private$.extra = xs[names(xs) %nin% c(self$archive$cols_x, "x_domain")]
+
+      call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
+
+      # eval
+      key = self$archive$push_running_point(private$.xs)
+      private$.ys = self$objective$eval(private$.xs_trafoed)
+
+      call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
+
+      # push result
+      self$archive$push_result(key, private$.ys, x_domain = private$.xs_trafoed, extra = private$.extra)
+
+      return(invisible(private$.ys))
+    },
+
+    .eval_queue = function() {
+      while (!self$is_terminated && self$archive$n_queued) {
+        task = self$archive$pop_point()
+        if (!is.null(task)) {
+          # transpose point
+          private$.xs = task$xs
+          private$.xs_trafoed = trafo_xs(private$.xs, self$search_space)
+
+          call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
+
+          # eval
+          private$.ys = self$objective$eval(private$.xs_trafoed)
+
+          call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
+
+          # push reuslt
+          self$archive$push_result(task$key, private$.ys, x_domain = private$.xs_trafoed)
+        }
+      }
+    },
 
     # initialize context for optimization
     .initialize_context = function(optimizer) {
@@ -94,4 +148,3 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     }
   )
 )
-

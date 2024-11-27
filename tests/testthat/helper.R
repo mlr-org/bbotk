@@ -1,4 +1,3 @@
-library(rush)
 library(checkmate)
 
 # Simple 1D Function
