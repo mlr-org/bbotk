@@ -105,7 +105,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         rush::rush_config()$n_workers
       )
 
-      rush$start_local_workers(
+      rush$start_mirai_workers(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, "bbotk"), # add packages from objective
         optimizer = optimizer,
