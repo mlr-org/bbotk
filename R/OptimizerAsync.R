@@ -54,8 +54,6 @@ OptimizerAsync = R6Class("OptimizerAsync",
 #' @keywords internal
 #' @export
 optimize_async_default = function(instance, optimizer, design = NULL, n_workers = NULL) {
-  assert_class(instance, "OptimInstanceAsync")
-  assert_class(optimizer, "OptimizerAsync")
   assert_data_table(design, null.ok = TRUE)
 
   instance$archive$start_time = Sys.time()
