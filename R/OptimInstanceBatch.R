@@ -58,7 +58,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
 
       # disable objective function if search space is not all numeric
       private$.objective_function = if (!self$search_space$all_numeric) objective_error else objective_function
-      self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
+      self$objective_multiplicator = self$objective$codomain$direction
     },
 
 

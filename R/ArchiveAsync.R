@@ -135,18 +135,18 @@ ArchiveAsync = R6Class("ArchiveAsync",
       if (self$codomain$target_length == 1L) {
         if (n_select == 1L) {
           # use which_max to find the best point
-          y = tab[[self$cols_y]] * -self$codomain$maximization_to_minimization
+          y = tab[[self$cols_y]] * -self$codomain$direction
           ii = which_max(y, ties_method = ties_method)
           tab[ii]
         } else {
           # use data.table fast sort to find the best points
-          setorderv(tab, cols = self$cols_y, order = self$codomain$maximization_to_minimization)
+          setorderv(tab, cols = self$cols_y, order = self$codomain$direction)
           head(tab, n_select)
         }
       } else {
         # use non-dominated sorting to find the best points
         ymat = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-        ymat = self$codomain$maximization_to_minimization * ymat
+        ymat = self$codomain$direction * ymat
         tab[!is_dominated(ymat)]
       }
     },

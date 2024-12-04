@@ -1,17 +1,17 @@
 
-#' @title Rush Data Storage
+#' @title Frozen Rush Data Storage
 #'
 #' @description
 #' Freezes the Redis data base of an [ArchiveAsync] to a  `data.table::data.table()`.
 #' No further points can be added to the archive but the data can be accessed and analyzed.
 #' Useful when the Redis data base is not permanently available.
+#' Use the callback [bbotk.async_freeze_archive] to freeze the archive after the optimization has finished.
 #'
 #' @section S3 Methods:
 #' * `as.data.table(archive)`\cr
 #'   [ArchiveAsync] -> [data.table::data.table()]\cr
 #'   Returns a tabular view of all performed function calls of the Objective.
 #'   The `x_domain` column is unnested to separate columns.
-#'
 #'
 #' @export
 ArchiveAsyncFrozen = R6Class("ArchiveAsyncFrozen",
