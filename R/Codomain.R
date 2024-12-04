@@ -1,12 +1,10 @@
 #' @title Codomain of Function
 #'
 #' @description
-#' A [paradox::ParamSet] defining the codomain of a function. The parameter
-#' set must contain at least one target parameter tagged with `"minimize"` or
-#' `"maximize"`. The codomain may contain extra parameters which are ignored
-#' when calling the [Archive] methods `$best()`, `$nds_selection()` and
-#' `$cols_y`. This class is usually constructed internally from a
-#' [paradox::ParamSet] when [Objective] is initialized.
+#' A [paradox::ParamSet] defining the codomain of a function.
+#' The parameter set must contain at least one target parameter tagged with `"minimize"` or `"maximize"`.
+#' The codomain may contain extra parameters which are ignored when calling the [Archive] methods `$best()`, `$nds_selection()` and `$cols_y`.
+#' This class is usually constructed internally from a [paradox::ParamSet] when [Objective] is initialized.
 #'
 #' @export
 #' @examples
@@ -102,6 +100,15 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #' Returns a numeric vector with values -1 and 1. Multiply with the outcome
     #' of a maximization problem to turn it into a minimization problem.
     maximization_to_minimization = function() {
+      .Deprecated("direction", old = "maximization_to_minimization")
+      ifelse(map_lgl(self$target_tags, has_element, "minimize"), 1L, -1L)
+    },
+
+    #' @field direction (`integer()`)\cr
+    #' Returns `1` for minimization and `-1` for maximization.
+    #' If the codomain contains multiple parameters an integer vector is returned.
+    #' Multiply with the outcome of a maximization problem to turn it into a minimization problem.
+    direction = function() {
       ifelse(map_lgl(self$target_tags, has_element, "minimize"), 1L, -1L)
     }
   )
