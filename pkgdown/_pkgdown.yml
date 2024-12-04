@@ -71,6 +71,7 @@ reference:
       - starts_with("callback_")
       - starts_with("Context")
       - bbotk.backup
+      - bbotk.async_freeze_archive
   - title: Misc
     contents:
       - is_dominated

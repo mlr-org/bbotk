@@ -54,6 +54,7 @@ RoxygenNote: 7.3.2
 Collate:
     'Archive.R'
     'ArchiveAsync.R'
+    'ArchiveAsyncFrozen.R'
     'ArchiveBatch.R'
     'CallbackAsync.R'
     'CallbackBatch.R'
