@@ -210,9 +210,6 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span>  objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
 <span class="r-in"><span>  search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
 <span class="r-in"><span>  terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create instances of branin function</span></span></span>
 <span class="r-in"><span><span class="va">instances</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
@@ -222,7 +219,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modifies the instance by reference</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:50 UTC: Initialization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:57:56 UTC: Initialization</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Elitist race</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Elitist new instances: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Elitist limit: 2</span>
@@ -235,7 +232,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> # mu: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # deterministic: FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:50 UTC: Iteration 1 of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:57:57 UTC: Iteration 1 of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 1000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 333</span>
@@ -252,21 +249,9 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         55|         32|    0.6807327591|         55|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|         55|         32|    0.6807327591|        110|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|         55|         32|    0.6807327591|        165|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|         55|         32|    0.6807327591|        220|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          5|          1|         32|    0.6807327591|        275|00:00:00|   NA|  NA|    NA|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:          32    mean value:     0.6807327591</span>
@@ -274,10 +259,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32   32 3.37967336177826 2.20616519451141       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:51 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:57:58 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  x1               x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32 3.37967336177826 2.20616519451141</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:52 UTC: Iteration 2 of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:57:59 UTC: Iteration 2 of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 275</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 725</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 362</span>
@@ -293,25 +278,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|         52|         66|    0.4358445903|         52|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|         52|         66|    0.4358445903|        103|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         52|         66|    0.4358445903|        154|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|         52|         66|    0.4358445903|        205|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          2|          2|         66|    0.4358445903|        256|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 66</span>
@@ -320,11 +290,11 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32   32 3.37967336177826 2.20616519451141       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:53 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:00 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  x1               x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32 3.37967336177826 2.20616519451141</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 66 3.12659798739228 2.47875866510817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:54 UTC: Iteration 3 of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:00 UTC: Iteration 3 of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 531</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 469</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 469</span>
@@ -340,25 +310,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          7|         60|        155|    0.4063383880|         60|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|         60|        155|    0.4063383880|        118|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          5|         60|        155|    0.4063383880|        177|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         60|        155|    0.4063383880|        235|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          2|          3|        155|    0.4063383880|        293|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 155</span>
@@ -367,12 +322,12 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 66   66 3.12659798739228 2.47875866510817       32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:55 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:01 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 66  3.12659798739228 2.47875866510817</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32  3.37967336177826 2.20616519451141</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 155 3.17261652702200 2.31282092945237</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:56 UTC: Iteration 4 of 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:02 UTC: Iteration 4 of 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 824</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 176</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 176</span>
@@ -388,25 +343,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          8|         21|        155|    0.4063383880|         21|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          5|         21|        155|    0.4063383880|         39|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|         21|        155|    0.4063383880|         57|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         21|        155|    0.4063383880|         75|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          2|          3|        155|    0.4063383880|         93|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 155</span>
@@ -415,12 +355,12 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 66   66 3.12659798739228 2.47875866510817       32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:56 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:02 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 66  3.12659798739228 2.47875866510817</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32  3.37967336177826 2.20616519451141</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 155 3.17261652702200 2.31282092945237</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:57 UTC: Iteration 5 of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:03 UTC: Iteration 5 of 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 917</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 83</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 83</span>
@@ -436,41 +376,14 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          9|         10|        189|    0.3997731773|         10|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         10|        189|    0.3997731773|         17|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          8|         10|        189|    0.3997731773|         24|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|         10|        189|    0.3997731773|         32|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          6|          4|        189|    0.3997731773|         40|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |!|          7|          4|        189|    0.3997731773|         41|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |!|          2|          4|        189|    0.3997731773|         42|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |!|          3|          4|        189|    0.3997731773|         43|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          5|          1|        189|    0.3997731773|         44|00:00:00|   NA|  NA|    NA|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:         189    mean value:     0.3997731773</span>
@@ -478,10 +391,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .ID.               x1             x2 .PARENT.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 189  189 3.14982869495763 2.308084599866      155</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:57 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:04 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   x1             x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 189 3.14982869495763 2.308084599866</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:58 UTC: Iteration 6 of 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:04 UTC: Iteration 6 of 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 961</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 39</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 39</span>
@@ -497,25 +410,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|         10|          4|        192|    0.3988000631|          4|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|          4|        192|    0.3988000631|          7|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          9|          4|        192|    0.3988000631|         10|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|          4|        192|    0.3988000631|         13|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          3|          2|        192|    0.3988000631|         16|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 192</span>
@@ -524,11 +422,11 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .ID.               x1             x2 .PARENT.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 189  189 3.14982869495763 2.308084599866      155</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:58 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:04 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 189 3.14982869495763 2.30808459986600</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 192 3.14194228084746 2.30492865459122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:59 UTC: Iteration 7 of 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:05 UTC: Iteration 7 of 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 977</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 23</span>
@@ -544,25 +442,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|         10|          4|        192|    0.3988000631|          2|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|          4|        192|    0.3988000631|          4|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          5|          4|        192|    0.3988000631|          7|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          8|          4|        192|    0.3988000631|         10|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          3|          2|        192|    0.3988000631|         12|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |.|          9|          2|        192|    0.3988000631|         12|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
@@ -572,11 +455,11 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .ID.               x1             x2 .PARENT.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 189  189 3.14982869495763 2.308084599866      155</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:59 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:05 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 189 3.14982869495763 2.30808459986600</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 192 3.14194228084746 2.30492865459122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:05:59 UTC: Stopped because there is not enough budget left to race more than the minimum (3).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:06 UTC: Stopped because there is not enough budget left to race more than the minimum (3).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # You may either increase the budget or set 'minNbSurvival' to a lower value.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Iteration: 8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # nbIterations: 8</span>
@@ -586,8 +469,8 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # number of elites: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Total CPU user time: 9.603, CPU sys time: 0.035, Wall-clock time: 9.64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:06:00 UTC: Starting post-selection:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Total CPU user time: 9.359, CPU sys time: 0.052, Wall-clock time: 9.411</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:06 UTC: Starting post-selection:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Configurations selected: 189, 192, 66, 32, 155.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Pending instances: 0, 3, 1, 1, 1.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Seed: 2011091433</span>
@@ -605,27 +488,15 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|          5|        192|    0.3988000631|          1|00:00:00|   NA|  NA|    NA|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |.|          2|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |.|          8|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |.|          9|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |.|          5|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |.|          4|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |!|         10|          5|        192|    0.3988000631|          4|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |!|          7|          5|        192|    0.3988000631|          5|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |.|          3|          5|        192|    0.3988000631|          5|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'maximization_to_minimization' is deprecated.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'direction' instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |-|          1|          1|        192|    0.3988000631|          6|00:00:00|   NA|  NA|    NA|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:         192    mean value:     0.3988000631</span>
@@ -633,10 +504,10 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .ID.               x1               x2 .PARENT.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 192  192 3.14194228084746 2.30492865459122      189</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:06:10 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-04 10:58:16 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 192 3.14194228084746 2.30492865459122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Total CPU user time: 19.171, CPU sys time: 0.319, Wall-clock time: 19.502</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Total CPU user time: 19.155, CPU sys time: 0.284, Wall-clock time: 19.457</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          x1       x2 configuration  x_domain         y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;    &lt;num&gt;         &lt;int&gt;    &lt;list&gt;     &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 3.141942 2.304929           192 &lt;list[2]&gt; 0.3988001</span>
@@ -664,17 +535,17 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> 995:  3.141942  2.3049287   0.3988001     8     1        2           192</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                timestamp batch_nr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;POSc&gt;    &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 2024-12-04 10:05:51        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 2024-12-04 10:05:51        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 2024-12-04 10:05:51        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 2024-12-04 10:05:51        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 2024-12-04 10:05:51        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 2024-12-04 10:57:57        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 2024-12-04 10:57:57        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 2024-12-04 10:57:57        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 2024-12-04 10:57:57        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 2024-12-04 10:57:57        1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  ---                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 991: 2024-12-04 10:06:10       41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 992: 2024-12-04 10:06:10       41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 993: 2024-12-04 10:06:10       41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 994: 2024-12-04 10:06:10       42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 995: 2024-12-04 10:06:10       43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 991: 2024-12-04 10:58:16       41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 992: 2024-12-04 10:58:16       41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 993: 2024-12-04 10:58:16       41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 994: 2024-12-04 10:58:16       42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 995: 2024-12-04 10:58:16       43</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
