@@ -22,40 +22,28 @@ test_that("OptimizerAsync starts local workers", {
 
 test_that("OptimizerAsync starts remote workers", {
   skip_on_cran()
-  skip_if_not_installed("rush")
-  skip_if_not_installed("processx")
+  skip_if_not_installed(c("rush", "mirai"))
   flush_redis()
-  library(processx)
+  library(rush)
 
-  rush = rsh(network_id = "test_rush")
-  expect_snapshot(rush$create_worker_script())
+  mirai::daemons(2)
 
-  px = process$new("Rscript",
-    args = c("-e", 'rush::start_worker(network_id = "test_rush", remote = TRUE, url = "redis://127.0.0.1:6379", scheme = "redis", host = "127.0.0.1", port = "6379")'),
-    supervise = TRUE,
-    stderr = "|", stdout = "|")
-
-  on.exit({
-    px$kill()
-  }, add = TRUE)
-
-  Sys.sleep(5)
+  rush_plan(n_workers = 2)
 
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
-    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
-  expect_data_table(instance$rush$worker_info, nrows = 1)
-  expect_true(instance$rush$worker_info$remote)
+  expect_data_table(instance$rush$worker_info, nrows = 2)
 
   expect_rush_reset(instance$rush)
 })
+
 
 test_that("OptimizerAsync assigns result", {
   skip_on_cran()

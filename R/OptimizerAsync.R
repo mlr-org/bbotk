@@ -79,19 +79,18 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     # run .optimize() on workers
     rush = instance$rush
 
-    # FIXME: How to pass globals and packages?
-    if (rush$n_pre_workers) {
-      # start remote workers
+    if (requireNamespace("mirai") && mirai::daemons()$connections) {
+      # remote workers
       lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
         instance$search_space$length,
         optimizer$format(),
         instance$terminator$format(with_params = TRUE),
-        rush$n_pre_workers
-      )
+        rush::rush_config()$n_workers)
 
       rush$start_remote_workers(
         worker_loop = bbotk_worker_loop,
-        packages = c(optimizer$packages, "bbotk"), # add packages from objective
+        packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
+        wait_for_workers = TRUE,
         optimizer = optimizer,
         instance = instance)
     } else if (rush::rush_available()) {
@@ -103,14 +102,14 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         rush::rush_config()$n_workers
       )
 
-      rush$start_mirai_workers(
+      rush$start_local_workers(
         worker_loop = bbotk_worker_loop,
-        packages = c(optimizer$packages, "bbotk"), # add packages from objective
+        packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
+        wait_for_workers = TRUE,
         optimizer = optimizer,
-        instance = instance,
-        wait_for_workers = TRUE)
+        instance = instance)
     } else {
-       stop("No rush plan available to start local workers and no pre-started remote workers found. See `?rush::rush_plan()`.")
+       stop("No rush plan available to start local workers and `mirai::daemons()` found. See `?rush::rush_plan()`.")
     }
   }
 
