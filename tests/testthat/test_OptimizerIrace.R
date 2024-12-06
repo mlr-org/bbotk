@@ -56,7 +56,7 @@ test_that("OptimizerBatchIrace maximize works", {
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 96))
+    terminator = trm("evals", n_evals = 1000))
 
   optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
 
