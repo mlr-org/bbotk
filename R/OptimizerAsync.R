@@ -90,7 +90,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       rush$start_remote_workers(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
-        wait_for_workers = FALSE,
+        wait_for_workers = TRUE,
         optimizer = optimizer,
         instance = instance)
     } else if (rush::rush_available()) {
