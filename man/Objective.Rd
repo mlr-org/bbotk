@@ -35,6 +35,9 @@ stored and accessed here. Set constant values are passed to \verb{$.eval()}
 and \verb{$.eval_many()} as named arguments.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr}
+
+\item{\code{packages}}{(\code{character()})\cr
+Additional packages that are required to evaluate the objective function.}
 }
 \if{html}{\out{</div>}}
 }

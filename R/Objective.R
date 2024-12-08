@@ -51,6 +51,10 @@ Objective = R6Class("Objective",
 
     context = NULL,
 
+    #' @field packages (`character()`)\cr
+    #' Additional packages that are required to evaluate the objective function.
+    packages = NULL,
+
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
