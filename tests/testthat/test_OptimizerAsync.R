@@ -9,7 +9,7 @@ test_that("OptimizerAsync starts local workers", {
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("evals", n_evals = 5L),
+    terminator = trm("evals", n_evals = 50L),
   )
 
   optimizer = opt("async_random_search")

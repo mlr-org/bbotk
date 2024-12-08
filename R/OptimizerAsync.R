@@ -90,7 +90,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       rush$start_remote_workers(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
-        wait_for_workers = TRUE,
+        wait_for_workers = FALSE,
         optimizer = optimizer,
         instance = instance)
     } else if (rush::rush_available()) {
@@ -105,7 +105,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       rush$start_local_workers(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
-        wait_for_workers = TRUE,
+        wait_for_workers = FALSE,
         optimizer = optimizer,
         instance = instance)
     } else {
@@ -113,10 +113,17 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     }
   }
 
+  n_running_workers = 0
   # wait until optimization is finished
   # check terminated workers when the terminator is "none"
   while(TRUE) {
     Sys.sleep(1)
+
+    if (rush$n_running_workers > n_running_workers) {
+      n_running_workers = rush$n_running_workers
+      lg$info("%i of %i worker(s) started", n_running_workers, rush::rush_config()$n_workers)
+    }
+
     instance$rush$print_log()
 
     # fetch new results for printing
