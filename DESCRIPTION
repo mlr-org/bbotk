@@ -38,12 +38,15 @@ Suggests:
     GenSA,
     irace (>= 4.0.0),
     knitr,
+    mirai,
     nloptr,
     progressr,
     processx,
     redux,
     testthat (>= 3.0.0),
     rush (>= 0.1.2)
+Remotes:
+    mlr-org/rush@mirai
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8

@@ -215,7 +215,7 @@ test_that("$clear() method works", {
 
   optimizer$optimize(inst)
   inst$clear()
-  expect_equal(inst, inst_copy)
+  suppressWarnings(expect_equal(inst, inst_copy))
 })
 
 test_that("context is initialized correctly", {
