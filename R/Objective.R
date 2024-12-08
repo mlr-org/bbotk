@@ -51,10 +51,6 @@ Objective = R6Class("Objective",
 
     context = NULL,
 
-    #' @field packages (`character()`)\cr
-    #' Additional packages that are required to evaluate the objective function.
-    packages = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -187,6 +183,13 @@ Objective = R6Class("Objective",
     man = function(rhs) {
       assert_ro_binding(rhs)
       private$.man
+    },
+
+    #' @field packages (`character()`)\cr
+    #'   Set of required packages.
+    packages = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.packages
     }
   ),
 
@@ -215,6 +218,7 @@ Objective = R6Class("Objective",
     },
 
     .label = NULL,
-    .man = NULL
+    .man = NULL,
+    .packages = NULL
   )
 )
