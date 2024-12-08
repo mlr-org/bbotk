@@ -1,4 +1,42 @@
+test_that("OptimizerBatchIrace minimize works", {
+  skip_if_not_installed("irace")
 
+  search_space = domain = ps(
+    x1 = p_dbl(-5, 10),
+    x2 = p_dbl(0, 15)
+  )
+
+  fun = function(xdt, instances) {
+    data.table(y = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances)))
+  }
+
+  objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
+
+  instance = OptimInstanceBatchSingleCrit$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = trm("evals", n_evals = 200))
+
+
+  optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
+
+  x = capture.output(optimizer$optimize(instance))
+
+  # check archive columns
+  archive = instance$archive$data
+  expect_subset(c("race", "step", "configuration", "instance"), names(archive))
+
+  # check optimization direction
+  # first elite of the first race should have the lowest average performance
+  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile)
+  elites = iraceResults$allElites
+  aggr = instance$archive$data[race == 1, .(y = mean(y)), by = configuration]
+  expect_equal(aggr[which.min(y), configuration], elites[[1]][1])
+
+  # the performance of the best configuration should be the mean performance across all evaluated instances
+  configuration_id = instance$result$configuration
+  expect_equal(unname(instance$result_y), mean(archive[configuration == configuration_id, y]))
+})
 
 test_that("OptimizerBatchIrace maximize works", {
   skip_if_not_installed("irace")
