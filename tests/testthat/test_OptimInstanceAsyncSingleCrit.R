@@ -79,10 +79,6 @@ test_that("reconnect method works", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  on.exit({
-    file.remove("instance.rds")
-  })
-
   rush::rush_plan(n_workers = 2)
 
   instance = oi_async(
@@ -94,8 +90,9 @@ test_that("reconnect method works", {
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
-  saveRDS(instance, file = "instance.rds")
-  instance = readRDS("instance.rds")
+  file = tempfile(fileext = ".rds")
+  saveRDS(instance, file = file )
+  instance = readRDS(file)
 
   instance$reconnect()
 
