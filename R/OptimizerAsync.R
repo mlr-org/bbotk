@@ -113,6 +113,8 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     }
   }
 
+  Sys.sleep(20)
+
   n_running_workers = 0
   # wait until optimization is finished
   # check terminated workers when the terminator is "none"
