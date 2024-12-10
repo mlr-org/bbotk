@@ -91,7 +91,9 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-\donttest{
+# currently there is bug in irace 4.0.0 that sometimes let the example crash
+\dontrun{
+
 library(data.table)
 
 search_space = domain = ps(
