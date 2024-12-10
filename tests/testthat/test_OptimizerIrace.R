@@ -154,9 +154,9 @@ test_that("OptimizerBatchIrace works without passed constants set",  {
     search_space = search_space,
     terminator = trm("evals", n_evals = 96))
 
-  optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1)
+  optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
 
-  x = capture.output(optimizer$optimize(instance)))
+  x = capture.output(optimizer$optimize(instance))
   expect_data_table(instance$result, nrows = 1)
 })
 
