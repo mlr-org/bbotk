@@ -109,8 +109,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, "bbotk"), # add packages from objective
         optimizer = optimizer,
-        instance = instance,
-        wait_for_workers = TRUE)
+        instance = instance)
     } else {
        stop("No rush plan available to start local workers and no pre-started remote workers found. See `?rush::rush_plan()`.")
     }
