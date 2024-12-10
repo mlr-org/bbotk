@@ -90,7 +90,6 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       rush$start_remote_workers(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
-        wait_for_workers = FALSE,
         optimizer = optimizer,
         instance = instance)
     } else if (rush::rush_available()) {
@@ -105,15 +104,12 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       rush$start_local_workers(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
-        wait_for_workers = FALSE,
         optimizer = optimizer,
         instance = instance)
     } else {
        stop("No rush plan available to start local workers and `mirai::daemons()` found. See `?rush::rush_plan()`.")
     }
   }
-
-  Sys.sleep(20)
 
   n_running_workers = 0
   # wait until optimization is finished
