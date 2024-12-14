@@ -66,8 +66,8 @@
 #'
 #' @export
 #' @examples
-#' # currently there is bug in irace 4.0.0 that sometimes let the example crash
-#' \dontrun{
+#' # runtime of the example is too long
+#' \donttest{
 #'
 #' library(data.table)
 #'
@@ -96,7 +96,7 @@
 #' instance = OptimInstanceBatchSingleCrit$new(
 #'   objective = objective,
 #'   search_space = search_space,
-#'   terminator = trm("evals", n_evals = 1000))
+#'   terminator = trm("evals", n_evals = 96))
 #'
 #' # create instances of branin function
 #' instances = rnorm(10, mean = 0, sd = 0.1)

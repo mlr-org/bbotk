@@ -91,8 +91,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-# currently there is bug in irace 4.0.0 that sometimes let the example crash
-\dontrun{
+# runtime of the example is too long
+\donttest{
 
 library(data.table)
 

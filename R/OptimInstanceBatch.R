@@ -178,16 +178,16 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
   )
 )
 
-objective_function = function(x, inst, maximization_to_minimization) {
+objective_function = function(x, inst, direction) {
   xs = set_names(as.list(x), inst$search_space$ids())
   inst$search_space$assert(xs)
   xdt = as.data.table(xs)
   res = inst$eval_batch(xdt)
   y = as.numeric(res[, inst$objective$codomain$target_ids, with = FALSE])
-  y * maximization_to_minimization
+  y * direction
 }
 
-objective_error = function(x, inst, maximization_to_minimization) {
+objective_error = function(x, inst, direction) {
   stop("$objective_function can only be called if search_space only
     contains numeric values")
 }
