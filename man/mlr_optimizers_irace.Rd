@@ -121,7 +121,7 @@ objective = ObjectiveRFunDt$new(
 instance = OptimInstanceBatchSingleCrit$new(
   objective = objective,
   search_space = search_space,
-  terminator = trm("evals", n_evals = 1000))
+  terminator = trm("evals", n_evals = 96))
 
 # create instances of branin function
 instances = rnorm(10, mean = 0, sd = 0.1)
