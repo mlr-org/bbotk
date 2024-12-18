@@ -1,6 +1,9 @@
-# bbotk (development version)
+# bbotk 1.5.0
 
-
+* compatibility: irace 4.1.0
+* compatibility: rush 0.2.0
+* refactor: Replace `Codomain$maximization_to_minimization` with `$direction` field.
+* feat: Save `ArchiveAsync` to a `data.table` with `ArchiveAsyncFrozen`.
 
 # bbotk 1.4.1
 
