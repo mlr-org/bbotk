@@ -9,7 +9,7 @@ irace::irace() from package irace."><meta name="robots" content="noindex"></head
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.4.1.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.5.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -211,7 +211,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span><span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="OptimInstanceBatchSingleCrit.html">OptimInstanceBatchSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
 <span class="r-in"><span>  search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
-<span class="r-in"><span>  terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">96</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create instances of branin function</span></span></span>
 <span class="r-in"><span><span class="va">instances</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
@@ -221,7 +221,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modifies the instance by reference</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:51 UTC: Initialization</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:04 UTC: Initialization</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Elitist race</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Elitist new instances: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Elitist limit: 2</span>
@@ -230,15 +230,15 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> # nbParameters: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # seed: 2011091433</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # confidence level: 0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # budget: 1000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # budget: 96</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # mu: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # deterministic: FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:52 UTC: Iteration 1 of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:05 UTC: Iteration 1 of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 1000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Markers:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      x No test is performed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      c Configurations are discarded only due to capping.</span>
@@ -250,25 +250,25 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         55|         32|    0.6807327591|         55|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|         55|         32|    0.6807327591|        110|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|         55|         32|    0.6807327591|        165|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|         55|         32|    0.6807327591|        220|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          5|          1|         32|    0.6807327591|        275|00:00:00|   NA|  NA|    NA|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|          5|          2|     16.54517279|          5|00:00:00|   NA|  NA|    NA|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|          5|          2|     16.54517279|         10|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|          5|          2|     16.54517279|         15|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|          5|          2|     16.54517279|         20|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          5|          1|          2|     16.54517279|         25|00:00:00|   NA|  NA|    NA|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:          32    mean value:     0.6807327591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:           2    mean value:      16.54517279</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32   32 3.37967336177826 2.20616519451141       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .ID.               x1               x2 .PARENT.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2 7.21608519554138 2.15154692530632       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:53 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  x1               x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 3.37967336177826 2.20616519451141</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:53 UTC: Iteration 2 of 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 725</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 362</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:05 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 x1               x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 7.21608519554138 2.15154692530632</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:06 UTC: Iteration 2 of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Markers:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      x No test is performed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      c Configurations are discarded only due to capping.</span>
@@ -280,27 +280,27 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|         52|         66|    0.4358445903|         52|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|         52|         66|    0.4358445903|        103|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         52|         66|    0.4358445903|        154|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|         52|         66|    0.4358445903|        205|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          2|          2|         66|    0.4358445903|        256|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|          5|          6|     4.104613811|          5|00:00:00|   NA|  NA|    NA|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          5|          5|          6|     4.104613811|          9|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|          5|          6|     4.104613811|         13|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|          5|          6|     4.104613811|         17|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          3|          2|          6|     4.104613811|         21|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:          32    mean value:     0.6807327591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:           2    mean value:      16.54517279</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32   32 3.37967336177826 2.20616519451141       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .ID.               x1               x2 .PARENT.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2 7.21608519554138 2.15154692530632       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:54 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  x1               x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 3.37967336177826 2.20616519451141</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66 3.12659798739228 2.47875866510817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:55 UTC: Iteration 3 of 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 531</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 469</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 469</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:06 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 x1                x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 7.21608519554138 2.151546925306320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 9.12606399995485 0.423063351400879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:06 UTC: Iteration 3 of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Markers:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      x No test is performed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      c Configurations are discarded only due to capping.</span>
@@ -312,124 +312,25 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          7|         60|        155|    0.4063383880|         60|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|         60|        155|    0.4063383880|        118|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          5|         60|        155|    0.4063383880|        177|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         60|        155|    0.4063383880|        235|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          2|          3|        155|    0.4063383880|        293|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          7|          7|         11|    0.7360248612|          7|00:00:00|   NA|  NA|    NA|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|          7|         11|    0.7360248612|         12|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|          7|         11|    0.7360248612|         17|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|          7|         11|    0.7360248612|         22|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          5|          3|         11|    0.7360248612|         27|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:          66    mean value:     0.4358445903</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:           2    mean value:      16.54517279</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66   66 3.12659798739228 2.47875866510817       32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .ID.               x1               x2 .PARENT.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2 7.21608519554138 2.15154692530632       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:56 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66  3.12659798739228 2.47875866510817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32  3.37967336177826 2.20616519451141</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 155 3.17261652702200 2.31282092945237</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:57 UTC: Iteration 4 of 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 824</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Markers:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      x No test is performed.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      c Configurations are discarded only due to capping.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      - The test is performed and some configurations are discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      = The test is performed but no configuration is discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      . All alive configurations are elite and nothing is discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          8|         21|        155|    0.4063383880|         21|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          5|         21|        155|    0.4063383880|         39|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|         21|        155|    0.4063383880|         57|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         21|        155|    0.4063383880|         75|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          2|          3|        155|    0.4063383880|         93|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:          66    mean value:     0.4358445903</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66   66 3.12659798739228 2.47875866510817       32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:57 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66  3.12659798739228 2.47875866510817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32  3.37967336177826 2.20616519451141</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 155 3.17261652702200 2.31282092945237</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:58 UTC: Iteration 5 of 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 917</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 83</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 83</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Markers:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      x No test is performed.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      c Configurations are discarded only due to capping.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      - The test is performed and some configurations are discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      = The test is performed but no configuration is discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      . All alive configurations are elite and nothing is discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          9|         10|        189|    0.3997731773|         10|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          1|         10|        189|    0.3997731773|         17|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          8|         10|        189|    0.3997731773|         24|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|         10|        189|    0.3997731773|         32|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          6|          4|        189|    0.3997731773|         40|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |!|          7|          4|        189|    0.3997731773|         41|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |!|          2|          4|        189|    0.3997731773|         42|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |!|          3|          4|        189|    0.3997731773|         43|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          5|          1|        189|    0.3997731773|         44|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:         189    mean value:     0.3997731773</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     .ID.               x1             x2 .PARENT.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 189  189 3.14982869495763 2.308084599866      155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:58 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   x1             x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 189 3.14982869495763 2.308084599866</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:59 UTC: Iteration 6 of 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 961</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Markers:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      x No test is performed.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      c Configurations are discarded only due to capping.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      - The test is performed and some configurations are discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      = The test is performed but no configuration is discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      . All alive configurations are elite and nothing is discarded.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|         10|          4|        192|    0.3988000631|          4|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|          4|        192|    0.3988000631|          7|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          9|          4|        192|    0.3988000631|         10|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|          4|        192|    0.3988000631|         13|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          3|          2|        192|    0.3988000631|         16|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:         189    mean value:     0.3997731773</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     .ID.               x1             x2 .PARENT.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 189  189 3.14982869495763 2.308084599866      155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:35:59 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 189 3.14982869495763 2.30808459986600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 192 3.14194228084746 2.30492865459122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:36:00 UTC: Iteration 7 of 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 977</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:07 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  x1                x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  7.21608519554138 2.151546925306320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  9.12606399995485 0.423063351400879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 9.26569520132867 1.878363370490038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:07 UTC: Iteration 4 of 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 73</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 4</span>
@@ -444,40 +345,75 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|         10|          4|        192|    0.3988000631|          2|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          2|          4|        192|    0.3988000631|          4|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          5|          4|        192|    0.3988000631|          7|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          8|          4|        192|    0.3988000631|         10|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          3|          2|        192|    0.3988000631|         12|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          9|          2|        192|    0.3988000631|         12|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          8|          4|         11|    0.7360248612|          4|00:00:00|   NA|  NA|    NA|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          7|          4|         11|    0.7360248612|          5|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|          4|         11|    0.7360248612|          6|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          4|          4|         11|    0.7360248612|          9|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          5|          3|         11|    0.7360248612|         10|00:00:00|+1.00|1.00|0.0000|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:         189    mean value:     0.3997731773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best configuration for the instances in this race: 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:           6    mean value:      4.104613811</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     .ID.               x1             x2 .PARENT.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 189  189 3.14982869495763 2.308084599866      155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .ID.               x1                x2 .PARENT.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    6 9.12606399995485 0.423063351400879        2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:36:00 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 189 3.14982869495763 2.30808459986600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 192 3.14194228084746 2.30492865459122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:36:00 UTC: Stopped because there is not enough budget left to race more than the minimum (3).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:07 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  x1                x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  9.12606399995485 0.423063351400879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  7.21608519554138 2.151546925306320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 9.26569520132867 1.878363370490038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:08 UTC: Iteration 5 of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Markers:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      x No test is performed.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      c Configurations are discarded only due to capping.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      - The test is performed and some configurations are discarded.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      = The test is performed but no configuration is discarded.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      ! The test is performed and configurations could be discarded but elite configurations are preserved.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      . All alive configurations are elite and nothing is discarded.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          7|          4|         11|    0.7360248612|          1|00:00:00|   NA|  NA|    NA|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          3|          4|         11|    0.7360248612|          3|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          5|          4|         11|    0.7360248612|          4|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|          4|         11|    0.7360248612|          5|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          2|          3|         11|    0.7360248612|          6|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          4|          3|         11|    0.7360248612|          6|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          8|          3|         11|    0.7360248612|          6|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          1|          3|         11|    0.7360248612|          6|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:          11    mean value:     0.7360248612</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   11 9.26569520132867 1.87836337049004        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:08 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  x1                x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 9.26569520132867 1.878363370490038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  9.12606399995485 0.423063351400879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  7.21608519554138 2.151546925306320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:08 UTC: Stopped because there is not enough budget left to race more than the minimum (3).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # You may either increase the budget or set 'minNbSurvival' to a lower value.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Iteration: 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # nbIterations: 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 989</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Iteration: 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # nbIterations: 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # experimentsUsedSoFar: 89</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # timeUsed: 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # number of elites: 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # remainingBudget: 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # currentBudget: 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # number of elites: 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # nbConfigurations: 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Total CPU user time: 8.857, CPU sys time: 0.048, Wall-clock time: 8.906</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:36:01 UTC: Starting post-selection:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Configurations selected: 189, 192, 66, 32, 155.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Pending instances: 0, 3, 1, 1, 1.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Total CPU user time: 4.22, CPU sys time: 0.036, Wall-clock time: 4.256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:09 UTC: Starting post-selection:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Configurations selected: 11, 6, 2, 1.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Pending instances: 0, 0, 0, 3.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Seed: 2011091433</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Configurations: 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Available experiments: 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Configurations: 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Available experiments: 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # minSurvival: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Markers:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      x No test is performed.</span>
@@ -490,64 +426,235 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|          5|        192|    0.3988000631|          1|00:00:00|   NA|  NA|    NA|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          2|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          8|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          9|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          5|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          4|          5|        192|    0.3988000631|          1|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |!|         10|          5|        192|    0.3988000631|          4|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |!|          7|          5|        192|    0.3988000631|          5|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          3|          5|        192|    0.3988000631|          5|00:00:00|+1.00|1.00|0.0000|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          1|          1|        192|    0.3988000631|          6|00:00:00|   NA|  NA|    NA|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          7|          4|         11|    0.7360248612|          1|00:00:00|   NA|  NA|    NA|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          2|          4|         11|    0.7360248612|          1|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          4|          4|         11|    0.7360248612|          1|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |x|          6|          4|         11|    0.7360248612|          2|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |!|          8|          4|         11|    0.7360248612|          3|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          5|          4|         11|    0.7360248612|          3|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          1|          4|         11|    0.7360248612|          3|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |.|          3|          4|         11|    0.7360248612|          3|00:00:00|+1.00|1.00|0.0000|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |-|          9|          1|         11|    0.7360248612|          7|00:00:00|   NA|  NA|    NA|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:         192    mean value:     0.3988000631</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best-so-far configuration:          11    mean value:     0.7360248612</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description of the best-so-far configuration:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     .ID.               x1               x2 .PARENT.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 192  192 3.14194228084746 2.30492865459122      189</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    .ID.               x1               x2 .PARENT.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   11 9.26569520132867 1.87836337049004        6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-14 09:36:11 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   x1               x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 192 3.14194228084746 2.30492865459122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Total CPU user time: 18.66, CPU sys time: 0.328, Wall-clock time: 19.025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # 2024-12-18 10:05:09 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  x1               x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 9.26569520132867 1.87836337049004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Total CPU user time: 4.563, CPU sys time: 0.036, Wall-clock time: 4.599</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          x1       x2 configuration  x_domain         y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;    &lt;num&gt;         &lt;int&gt;    &lt;list&gt;     &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 3.141942 2.304929           192 &lt;list[2]&gt; 0.3988001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 9.265695 1.878363            11 &lt;list[2]&gt; 0.7360249</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># best scoring configuration</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          x1       x2 configuration  x_domain         y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;    &lt;num&gt;         &lt;int&gt;    &lt;list&gt;     &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 3.141942 2.304929           192 &lt;list[2]&gt; 0.3988001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 9.265695 1.878363            11 &lt;list[2]&gt; 0.7360249</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># all evaluations</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             x1         x2           y  race  step instance configuration</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;num&gt;      &lt;num&gt;       &lt;num&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;         &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:  4.785923  0.7999151  10.9992463     1     1        2             1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2: -2.714076  8.2999152  10.0905500     1     1        2             2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  8.535923 12.0499152 108.4497127     1     1        2             3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  1.035924  4.5499152  14.8980988     1     1        2             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:  2.910923 10.1749152  60.1449255     1     1        2             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 991:  3.379673  2.2061652   0.6807328     8     1        1            32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 992:  3.126598  2.4787587   0.4358446     8     1        1            66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 993:  3.172617  2.3128209   0.4063384     8     1        1           155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 994:  3.141942  2.3049287   0.3988001     8     1        6           192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 995:  3.141942  2.3049287   0.3988001     8     1        2           192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                timestamp batch_nr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;POSc&gt;    &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 2024-12-14 09:35:52        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 2024-12-14 09:35:52        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 2024-12-14 09:35:52        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 2024-12-14 09:35:52        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 2024-12-14 09:35:52        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 991: 2024-12-14 09:36:11       41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 992: 2024-12-14 09:36:11       41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 993: 2024-12-14 09:36:11       41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 994: 2024-12-14 09:36:11       42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 995: 2024-12-14 09:36:11       43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: -0.2839148  9.6515465  29.3891389     1     1        2             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  7.2160852  2.1515469  16.5451728     1     1        2             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -4.0339147  5.9015469  78.2914784     1     1        2             3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  3.4660852 13.4015465 130.0850078     1     1        2             4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  5.3410852  4.0265469  23.7231778     1     1        2             5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -0.2839148  9.6515465  29.3891389     1     1       10             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  7.2160852  2.1515469  16.5451728     1     1       10             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: -4.0339147  5.9015469  78.2914784     1     1       10             3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  3.4660852 13.4015465 130.0850078     1     1       10             4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  5.3410852  4.0265469  23.7231778     1     1       10             5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: -0.2839148  9.6515465  29.3891389     1     1        4             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  7.2160852  2.1515469  16.5451728     1     1        4             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: -4.0339147  5.9015469  78.2914784     1     1        4             3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:  3.4660852 13.4015465 130.0850078     1     1        4             4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:  5.3410852  4.0265469  23.7231778     1     1        4             5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: -0.2839148  9.6515465  29.3891389     1     1        9             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:  7.2160852  2.1515469  16.5451728     1     1        9             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: -4.0339147  5.9015469  78.2914784     1     1        9             3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:  3.4660852 13.4015465 130.0850078     1     1        9             4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:  5.3410852  4.0265469  23.7231778     1     1        9             5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21: -0.2839148  9.6515465  29.3891389     1     1        8             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22:  7.2160852  2.1515469  16.5451728     1     1        8             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: -4.0339147  5.9015469  78.2914784     1     1        8             3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24:  3.4660852 13.4015465 130.0850078     1     1        8             4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25:  5.3410852  4.0265469  23.7231778     1     1        8             5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26:  7.2160852  2.1515469  16.5451728     2     1        3             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27:  9.1260640  0.4230634   4.1046138     2     1        3             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28:  9.9814309  1.0175448   5.7167544     2     1        3             7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29:  5.0076254  3.9627674  20.0471055     2     1        3             8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30:  7.2773650  2.7089999  17.3365236     2     1        3             9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31:  9.1260640  0.4230634   4.1046138     2     1        8             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32:  9.9814309  1.0175448   5.7167544     2     1        8             7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33:  5.0076254  3.9627674  20.0471055     2     1        8             8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34:  7.2773650  2.7089999  17.3365236     2     1        8             9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35:  9.1260640  0.4230634   4.1046138     2     1        2             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36:  9.9814309  1.0175448   5.7167544     2     1        2             7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37:  5.0076254  3.9627674  20.0471055     2     1        2             8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38:  7.2773650  2.7089999  17.3365236     2     1        2             9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39:  9.1260640  0.4230634   4.1046138     2     1       10             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40:  9.9814309  1.0175448   5.7167544     2     1       10             7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41:  5.0076254  3.9627674  20.0471055     2     1       10             8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42:  7.2773650  2.7089999  17.3365236     2     1       10             9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43:  9.1260640  0.4230634   4.1046138     2     1        4             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44:  9.9814309  1.0175448   5.7167544     2     1        4             7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45:  5.0076254  3.9627674  20.0471055     2     1        4             8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46:  7.2773650  2.7089999  17.3365236     2     1        4             9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47:  7.2160852  2.1515469  16.5451728     3     1        6             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48:  9.1260640  0.4230634   4.1046138     3     1        6             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49:  8.6697676  1.2913234   3.3920805     3     1        6            10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50:  9.2656952  1.8783634   0.7360249     3     1        6            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51:  8.7304678  0.8102927   3.9234273     3     1        6            12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52:  8.1051079  0.7415683   8.3283539     3     1        6            13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53:  6.3181451  0.3029009  20.2336398     3     1        6            14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54:  8.6697676  1.2913234   3.3920805     3     1       10            10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55:  9.2656952  1.8783634   0.7360249     3     1       10            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56:  8.7304678  0.8102927   3.9234273     3     1       10            12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57:  8.1051079  0.7415683   8.3283539     3     1       10            13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58:  6.3181451  0.3029009  20.2336398     3     1       10            14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59:  8.6697676  1.2913234   3.3920805     3     1        3            10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60:  9.2656952  1.8783634   0.7360249     3     1        3            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61:  8.7304678  0.8102927   3.9234273     3     1        3            12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62:  8.1051079  0.7415683   8.3283539     3     1        3            13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63:  6.3181451  0.3029009  20.2336398     3     1        3            14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64:  8.6697676  1.2913234   3.3920805     3     1        2            10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65:  9.2656952  1.8783634   0.7360249     3     1        2            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66:  8.7304678  0.8102927   3.9234273     3     1        2            12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67:  8.1051079  0.7415683   8.3283539     3     1        2            13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68:  6.3181451  0.3029009  20.2336398     3     1        2            14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69:  8.6697676  1.2913234   3.3920805     3     1        8            10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70:  9.2656952  1.8783634   0.7360249     3     1        8            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71:  8.7304678  0.8102927   3.9234273     3     1        8            12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72:  8.1051079  0.7415683   8.3283539     3     1        8            13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73:  6.3181451  0.3029009  20.2336398     3     1        8            14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74:  7.2160852  2.1515469  16.5451728     4     1        7             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75:  9.1260640  0.4230634   4.1046138     4     1        7             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76:  9.2656952  1.8783634   0.7360249     4     1        7            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77:  6.8101530  0.5622976  18.6479655     4     1        7            15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78:  6.8101530  0.5622976  18.6479655     4     1        6            15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79:  6.8101530  0.5622976  18.6479655     4     1        3            15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80:  9.1260640  0.4230634   4.1046138     4     1        9             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81:  9.2656952  1.8783634   0.7360249     4     1        9            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82:  6.8101530  0.5622976  18.6479655     4     1        9            15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83:  6.8101530  0.5622976  18.6479655     4     1        8            15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84:  6.2504068  3.4957169  25.3407491     5     1        6            16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85:  9.2656952  1.8783634   0.7360249     5     1        4            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86:  6.2504068  3.4957169  25.3407491     5     1        4            16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87:  6.2504068  3.4957169  25.3407491     5     1        8            16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88:  6.2504068  3.4957169  25.3407491     5     1        3            16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89:  6.2504068  3.4957169  25.3407491     5     1       10            16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90: -0.2839148  9.6515465  29.3891389     6     1        6             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91: -0.2839148  9.6515465  29.3891389     6     1        3             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92: -0.2839148  9.6515465  29.3891389     6     1        7             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93: -0.2839148  9.6515465  29.3891389     6     1        5             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94:  7.2160852  2.1515469  16.5451728     6     1        5             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95:  9.1260640  0.4230634   4.1046138     6     1        5             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96:  9.2656952  1.8783634   0.7360249     6     1        5            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x1         x2           y  race  step instance configuration</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               timestamp batch_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  &lt;POSc&gt;    &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 2024-12-18 10:05:05        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 2024-12-18 10:05:05        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 2024-12-18 10:05:05        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 2024-12-18 10:05:05        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 2024-12-18 10:05:05        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 2024-12-18 10:05:05        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 2024-12-18 10:05:05        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 2024-12-18 10:05:05        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 2024-12-18 10:05:05        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2024-12-18 10:05:05        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2024-12-18 10:05:05        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2024-12-18 10:05:05        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2024-12-18 10:05:05        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 2024-12-18 10:05:05        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 2024-12-18 10:05:05        3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 2024-12-18 10:05:05        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 2024-12-18 10:05:05        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 2024-12-18 10:05:05        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 2024-12-18 10:05:05        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 2024-12-18 10:05:05        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 2024-12-18 10:05:05        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 2024-12-18 10:05:05        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 2024-12-18 10:05:05        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 2024-12-18 10:05:05        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 2024-12-18 10:05:05        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 2024-12-18 10:05:06        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 2024-12-18 10:05:06        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 2024-12-18 10:05:06        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 2024-12-18 10:05:06        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 2024-12-18 10:05:06        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 2024-12-18 10:05:06        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 2024-12-18 10:05:06        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33: 2024-12-18 10:05:06        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34: 2024-12-18 10:05:06        7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35: 2024-12-18 10:05:06        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36: 2024-12-18 10:05:06        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37: 2024-12-18 10:05:06        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38: 2024-12-18 10:05:06        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39: 2024-12-18 10:05:06        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40: 2024-12-18 10:05:06        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41: 2024-12-18 10:05:06        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42: 2024-12-18 10:05:06        9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43: 2024-12-18 10:05:06       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44: 2024-12-18 10:05:06       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45: 2024-12-18 10:05:06       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46: 2024-12-18 10:05:06       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47: 2024-12-18 10:05:06       11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48: 2024-12-18 10:05:06       11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49: 2024-12-18 10:05:06       11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50: 2024-12-18 10:05:06       11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51: 2024-12-18 10:05:06       11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52: 2024-12-18 10:05:06       11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53: 2024-12-18 10:05:06       11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54: 2024-12-18 10:05:06       12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55: 2024-12-18 10:05:06       12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56: 2024-12-18 10:05:06       12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57: 2024-12-18 10:05:06       12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58: 2024-12-18 10:05:06       12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59: 2024-12-18 10:05:06       13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60: 2024-12-18 10:05:06       13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61: 2024-12-18 10:05:06       13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62: 2024-12-18 10:05:06       13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63: 2024-12-18 10:05:06       13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64: 2024-12-18 10:05:06       14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65: 2024-12-18 10:05:06       14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66: 2024-12-18 10:05:06       14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67: 2024-12-18 10:05:06       14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68: 2024-12-18 10:05:06       14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69: 2024-12-18 10:05:07       15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70: 2024-12-18 10:05:07       15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71: 2024-12-18 10:05:07       15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72: 2024-12-18 10:05:07       15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73: 2024-12-18 10:05:07       15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74: 2024-12-18 10:05:07       16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75: 2024-12-18 10:05:07       16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76: 2024-12-18 10:05:07       16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77: 2024-12-18 10:05:07       16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78: 2024-12-18 10:05:07       17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79: 2024-12-18 10:05:07       18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80: 2024-12-18 10:05:07       19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81: 2024-12-18 10:05:07       19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82: 2024-12-18 10:05:07       19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83: 2024-12-18 10:05:07       20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84: 2024-12-18 10:05:08       21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85: 2024-12-18 10:05:08       22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86: 2024-12-18 10:05:08       22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87: 2024-12-18 10:05:08       23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88: 2024-12-18 10:05:08       24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89: 2024-12-18 10:05:08       25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90: 2024-12-18 10:05:09       26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91: 2024-12-18 10:05:09       27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92: 2024-12-18 10:05:09       28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93: 2024-12-18 10:05:09       29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94: 2024-12-18 10:05:09       29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95: 2024-12-18 10:05:09       29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96: 2024-12-18 10:05:09       29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               timestamp batch_nr</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
