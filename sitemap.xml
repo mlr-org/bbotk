@@ -6,6 +6,7 @@
 <url><loc>https://bbotk.mlr-org.com/news/index.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/Archive.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/ArchiveAsync.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/ArchiveAsyncFrozen.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/ArchiveBatch.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/CallbackAsync.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/CallbackBatch.html</loc></url>
@@ -34,6 +35,7 @@
 <url><loc>https://bbotk.mlr-org.com/reference/assign_result_default.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bb_optimize.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk-package.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/bbotk.async_freeze_archive.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk.backup.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk_assertions.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk_reflections.html</loc></url>
