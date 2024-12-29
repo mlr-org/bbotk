@@ -79,7 +79,16 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     # run .optimize() on workers
     rush = instance$rush
 
-    if (requireNamespace("mirai") && mirai::daemons()$connections) {
+    if (rush::rush_config()$worker_type == "script") {
+      # worker script
+      rush$worker_script(
+        worker_loop = bbotk_worker_loop,
+        packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
+        optimizer = optimizer,
+        instance = instance)
+
+      return(TRUE)
+    } else if (requireNamespace("mirai") && mirai::daemons()$connections) {
       # remote workers
       lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
         instance$search_space$length,
