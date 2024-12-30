@@ -78,17 +78,18 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   } else {
     # run .optimize() on workers
     rush = instance$rush
+    worker_type = rush::rush_config()$worker_type
 
-    if (rush::rush_config()$worker_type == "script") {
+    if (worker_type == "script") {
       # worker script
       rush$worker_script(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
         instance = instance)
+    } else if (worker_type == "mirai") {
+      #requireNamespace("mirai") && mirai::daemons()$connections
 
-      return(TRUE)
-    } else if (requireNamespace("mirai") && mirai::daemons()$connections) {
       # remote workers
       lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
         instance$search_space$length,
@@ -101,7 +102,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
         instance = instance)
-    } else if (rush::rush_available()) {
+    } else if (worker_type == "local") {
       # local workers
       lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
         instance$search_space$length,

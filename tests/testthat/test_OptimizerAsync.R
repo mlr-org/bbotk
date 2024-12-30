@@ -44,6 +44,28 @@ test_that("OptimizerAsync starts remote workers", {
   expect_rush_reset(instance$rush)
 })
 
+test_that("OptimizerAsync starts script workers", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+  library(rush)
+
+  rush_plan(worker_type = "script")
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  expect_data_table(instance$rush$worker_info, nrows = 2)
+
+  expect_rush_reset(instance$rush)
+})
+
 
 test_that("OptimizerAsync assigns result", {
   skip_on_cran()
