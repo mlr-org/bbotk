@@ -4,6 +4,7 @@
       terminator
     Message
       
-      -- TerminatorPerfReached - Performance Level -----------------------------------
+      -- <TerminatorPerfReached> - Performance Level ---------------------------------
       * Parameters: level=0.2
+      * Terminators:
 

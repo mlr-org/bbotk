@@ -4,6 +4,7 @@
       terminator
     Message
       
-      -- TerminatorStagnation - Stagnation -------------------------------------------
+      -- <TerminatorStagnation> - Stagnation -----------------------------------------
       * Parameters: iters=10, threshold=100
+      * Terminators:
 

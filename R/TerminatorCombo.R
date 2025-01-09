@@ -76,7 +76,11 @@ TerminatorCombo = R6Class("TerminatorCombo",
     #' @param ... (ignored).
     print = function(...) {
       super$print(...)
-      cli_li(sprintf("Terminators: %s", paste(map_chr(self$terminators, format), collapse = ", ")))
+
+      terminators = map_chr(self$terminators, function(t) {class(t)[1L]})
+      msg = cli_vec(lapply(terminators, function(trm) format_inline('{.cls {trm}}')),
+                         style = list(last = ' and ', sep = ', '))
+      cli_li("Terminators: {msg}")
     },
 
     #' @description

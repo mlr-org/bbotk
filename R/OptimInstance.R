@@ -78,12 +78,15 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param ... (ignored).
     print = function(...) {
-      cli_h1(class(self)[1L])
-      cli_li(sprintf("State: %s", if (is.null(private$.result)) "Not optimized" else "Optimized"))
-      cli_li(sprintf("Objective: %s", class(self$objective)[1]))
+      cli_h1("{.cls {class(self)[1L]}}")
+      result = if (is.null(private$.result)) "Not optimized" else "Optimized"
+      cli_li("State: {result}")
+      cli_li("Objective: {.cls {class(self$objective)[1]}}")
       cli_li("Search Space:")
       print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
-      cli_li(sprintf("Terminator: %s %s", class(self$terminator)[1], if (length(self$terminator$param_set$values)) paste0("(", as_short_string(self$terminator$param_set$values), ")") else ""))
+      terminator = if (length(self$terminator$param_set$values)) paste0("(", as_short_string(self$terminator$param_set$values), ")") else ""
+      cli_li("Terminator: {.cls {class(self$terminator)[1]}} {terminator}")
+
       if (!is.null(private$.result)) {
         cli_li("Result:")
         print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])

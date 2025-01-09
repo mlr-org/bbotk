@@ -4,7 +4,7 @@
       obj
     Message
       
-      -- ObjectiveTestEval -----------------------------------------------------------
+      -- <ObjectiveTestEval> ---------------------------------------------------------
       * Domain:
     Output
              id    class lower upper nlevels
@@ -24,7 +24,7 @@
       obj
     Message
       
-      -- ObjectiveTestEvalMany -------------------------------------------------------
+      -- <ObjectiveTestEvalMany> -----------------------------------------------------
       * Domain:
     Output
              id    class lower upper nlevels

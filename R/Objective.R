@@ -94,7 +94,7 @@ Objective = R6Class("Objective",
     #' Print method.
     #' @return `character()`.
     print = function() {
-      cli_h1(class(self)[1L])
+      cli_h1("{.cls {class(self)[1L]}}")
       cli_li("Domain:")
       print(as.data.table(self$domain)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
       cli_li("Codomain:")
