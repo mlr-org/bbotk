@@ -6,6 +6,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom utils capture.output head tail
 #' @importFrom methods formalArgs
+#' @importFrom stats setNames
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
@@ -14,6 +15,7 @@
   # callbacks
   x = utils::getFromNamespace("mlr_callbacks", ns = "mlr3misc")
   x$add("bbotk.backup", load_callback_backup)
+  x$add("bbotk.async_freeze_archive", load_callback_freeze_archive)
 
   lg = lgr::get_logger("bbotk")
   assign("lg", lg, envir = parent.env(environment()))

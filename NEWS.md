@@ -1,5 +1,36 @@
 # bbotk (development version)
 
+# bbotk 1.5.0
+
+* compatibility: irace 4.1.0
+* compatibility: rush 0.2.0
+* refactor: Replace `Codomain$maximization_to_minimization` with `$direction` field.
+* feat: Save `ArchiveAsync` to a `data.table` with `ArchiveAsyncFrozen`.
+
+# bbotk 1.4.1
+
+* compatibility: irace 4.0.0
+
+# bbotk 1.4.0
+
+* feat: Add `OptimizerBatchChain` that runs multiple optimizers sequentially.
+* refactor: Only pass `extra` to `$assign_result()`.
+
+# bbotk 1.3.0
+
+* feat: Add new stage `on_result_begin` to `CallbackAsyncTuning` and `CallbackBatchTuning`.
+* refactor: Rename stage `on_result` to `on_result_end` in `CallbackAsyncTuning` and `CallbackBatchTuning`.
+* docs: Extend the `CallbackAsyncTuning` and `CallbackBatchTuning` documentation.
+
+# bbotk 1.2.0
+
+* feat: `ContextBatch` and `ContextAsync` have a `result_extra` field now to access additional results passed to the instance.
+* refactor: Additional information are passed with `extra` to `OptimInstance$assign_result()`.
+
+# bbotk 1.1.1
+
+* feat: The optimizers passes additional information to `OptimInstance$assign_result()` method.
+
 # bbotk 1.1.0
 
 * docs: Move vignette to mlr3book.

@@ -27,6 +27,7 @@ Rush controller for parallel optimization.}
 \item \href{#method-OptimInstanceAsync-new}{\code{OptimInstanceAsync$new()}}
 \item \href{#method-OptimInstanceAsync-print}{\code{OptimInstanceAsync$print()}}
 \item \href{#method-OptimInstanceAsync-clear}{\code{OptimInstanceAsync$clear()}}
+\item \href{#method-OptimInstanceAsync-reconnect}{\code{OptimInstanceAsync$reconnect()}}
 }
 }
 \if{html}{\out{
@@ -118,6 +119,18 @@ Printer.
 Reset terminator and clear all evaluation results from archive and results.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$clear()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OptimInstanceAsync-reconnect"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstanceAsync-reconnect}{}}}
+\subsection{Method \code{reconnect()}}{
+Reconnect to Redis.
+The connection breaks when the \link[rush:Rush]{rush::Rush} is saved to disk.
+Call this method to reconnect after loading the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$reconnect()}\if{html}{\out{</div>}}
 }
 
 }

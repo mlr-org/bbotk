@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 1.1.0.9000
+Version: 1.5.0.9000
 Authors@R: c(
     person("Marc", "Becker", , "marcbecker@posteo.de", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-8115-0400")),
@@ -37,14 +37,14 @@ Suggests:
     adagio,
     emoa,
     GenSA,
-    irace (>= 3.5),
+    irace (>= 4.0.0),
     knitr,
     nloptr,
     progressr,
     processx,
     redux,
     testthat (>= 3.0.0),
-    rush
+    rush (>= 0.1.2)
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
@@ -55,6 +55,7 @@ RoxygenNote: 7.3.2
 Collate:
     'Archive.R'
     'ArchiveAsync.R'
+    'ArchiveAsyncFrozen.R'
     'ArchiveBatch.R'
     'CallbackAsync.R'
     'CallbackBatch.R'
@@ -81,6 +82,7 @@ Collate:
     'OptimizerAsyncGridSearch.R'
     'OptimizerAsyncRandomSearch.R'
     'OptimizerBatch.R'
+    'OptimizerBatchChain.R'
     'OptimizerBatchCmaes.R'
     'OptimizerBatchDesignPoints.R'
     'OptimizerBatchFocusSearch.R'

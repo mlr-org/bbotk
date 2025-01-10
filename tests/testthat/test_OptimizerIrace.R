@@ -15,7 +15,7 @@ test_that("OptimizerBatchIrace minimize works", {
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 1000))
+    terminator = trm("evals", n_evals = 96))
 
 
   optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
@@ -28,7 +28,7 @@ test_that("OptimizerBatchIrace minimize works", {
 
   # check optimization direction
   # first elite of the first race should have the lowest average performance
-  load(optimizer$param_set$values$logFile)
+  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile)
   elites = iraceResults$allElites
   aggr = instance$archive$data[race == 1, .(y = mean(y)), by = configuration]
   expect_equal(aggr[which.min(y), configuration], elites[[1]][1])
@@ -68,7 +68,7 @@ test_that("OptimizerBatchIrace maximize works", {
 
   # check optimization direction
   # first elite of the first race should have the highest average performance
-  load(optimizer$param_set$values$logFile)
+  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile)
   elites = iraceResults$allElites
   aggr = instance$archive$data[race == 1, .(y = mean(y)), by = configuration]
   expect_equal(aggr[which.max(y), configuration], elites[[1]][1])
@@ -157,6 +157,8 @@ test_that("OptimizerBatchIrace works without passed constants set",  {
 
 
 test_that("paradox_to_irace without dependencies", {
+  skip_if_not_installed("irace")
+
   # only ParamLgl
   pps = ps(lgl = p_lgl())
   expect_irace_parameters(parameters = paradox_to_irace(pps, 4), names = "lgl", types = "c",
@@ -196,6 +198,8 @@ test_that("paradox_to_irace without dependencies", {
 })
 
 test_that("paradox_to_irace with dependencies", {
+  skip_if_not_installed("irace")
+
   # one dependency
   pps = ps(
     a = p_lgl(),
@@ -246,6 +250,8 @@ test_that("paradox_to_irace with dependencies", {
 })
 
 test_that("paradox_to_irace works with parameters with multiple dependencies", {
+  skip_if_not_installed("irace")
+
   pps = ps(
     a = p_lgl(),
     b = p_lgl(),

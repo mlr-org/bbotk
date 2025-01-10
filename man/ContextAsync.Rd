@@ -26,20 +26,34 @@ Changes to \verb{$instance} and \verb{$optimizer} in the stages executed on the 
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
-The result of the optimization.}
-
 \item{\code{xs}}{(list())\cr
-The point to be evaluated.}
+The point to be evaluated in \code{instance$.eval_point()}.}
 
 \item{\code{xs_trafoed}}{(list())\cr
-The transformed point to be evaluated.}
+The transformed point to be evaluated in \code{instance$.eval_point()}.}
 
 \item{\code{extra}}{(list())\cr
-Additional information.}
+Additional information of the point to be evaluated in \code{instance$.eval_point()}.}
 
 \item{\code{ys}}{(list())\cr
-The result of the evaluation.}
+The result of the evaluation in \code{instance$.eval_point()}.}
+
+\item{\code{result_xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
+The xdt passed to \code{instance$assign_result()}.}
+
+\item{\code{result_y}}{(\code{numeric(1)})\cr
+The y passed to \code{instance$assign_result()}.
+Only available for single criterion optimization.}
+
+\item{\code{result_ydt}}{(\link[data.table:data.table]{data.table::data.table})\cr
+The ydt passed to \code{instance$assign_result()}.
+Only available for multi criterion optimization.}
+
+\item{\code{result_extra}}{(\link[data.table:data.table]{data.table::data.table})\cr
+Additional information about the result passed to \code{instance$assign_result()}.}
+
+\item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
+The result of the optimization in \code{instance$assign_result()}.}
 }
 \if{html}{\out{</div>}}
 }

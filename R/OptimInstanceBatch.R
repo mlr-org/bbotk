@@ -58,7 +58,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
 
       # disable objective function if search space is not all numeric
       private$.objective_function = if (!self$search_space$all_numeric) objective_error else objective_function
-      self$objective_multiplicator = self$objective$codomain$maximization_to_minimization
+      self$objective_multiplicator = self$objective$codomain$direction
     },
 
 
@@ -156,6 +156,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
   ),
 
   private = list(
+    # intermediate objects
     .xdt = NULL,
     .objective_function = NULL,
 
@@ -177,16 +178,16 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
   )
 )
 
-objective_function = function(x, inst, maximization_to_minimization) {
+objective_function = function(x, inst, direction) {
   xs = set_names(as.list(x), inst$search_space$ids())
   inst$search_space$assert(xs)
   xdt = as.data.table(xs)
   res = inst$eval_batch(xdt)
   y = as.numeric(res[, inst$objective$codomain$target_ids, with = FALSE])
-  y * maximization_to_minimization
+  y * direction
 }
 
-objective_error = function(x, inst, maximization_to_minimization) {
+objective_error = function(x, inst, direction) {
   stop("$objective_function can only be called if search_space only
     contains numeric values")
 }

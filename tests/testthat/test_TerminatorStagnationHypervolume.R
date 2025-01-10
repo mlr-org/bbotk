@@ -1,4 +1,6 @@
 test_that("TerminatorStagnationHypervolume works", {
+  skip_if_not_installed("emoa")
+
   terminator = trm("stagnation_hypervolume")
   terminator$param_set$values$iters = 5
   terminator$param_set$values$threshold = 0

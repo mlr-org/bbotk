@@ -66,7 +66,9 @@
 #'
 #' @export
 #' @examples
+#' # runtime of the example is too long
 #' \donttest{
+#'
 #' library(data.table)
 #'
 #' search_space = domain = ps(
@@ -94,7 +96,7 @@
 #' instance = OptimInstanceBatchSingleCrit$new(
 #'   objective = objective,
 #'   search_space = search_space,
-#'   terminator = trm("evals", n_evals = 1000))
+#'   terminator = trm("evals", n_evals = 96))
 #'
 #' # create instances of branin function
 #' instances = rnorm(10, mean = 0, sd = 0.1)
@@ -181,15 +183,20 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
       }
 
       # make scenario
-      scenario = c(list(maxExperiments = terminator$param_set$values$n_evals, targetRunnerData = list(inst = inst)), pv)
+      digits = pv$digits
+      pv$digits = NULL
+
+      scenario = c(list(
+        parameters = paradox_to_irace(inst$search_space, pv$digits),
+        maxExperiments = terminator$param_set$values$n_evals,
+        targetRunnerData = list(inst = inst)), pv)
 
       # run irace
-      res = invoke(irace::irace, scenario = scenario, parameters = paradox_to_irace(inst$search_space, pv$digits), .opts = allow_partial_matching)
+      res = invoke(irace::irace, scenario = scenario, .opts = allow_partial_matching)
 
       # add race and step to archive
-      iraceResults = NULL
-      load(self$param_set$values$logFile)
-      log = as.data.table(iraceResults$experimentLog)
+      iraceResults = irace::read_logfile(self$param_set$values$logFile)
+      log = iraceResults$state$experiment_log
       log[, "step" := rleid("instance"), by = "iteration"]
       set(inst$archive$data, j = "race", value = log$iteration)
       set(inst$archive$data, j = "step", value = log$step)
@@ -208,10 +215,13 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
       }
 
       res = inst$archive$data[get("configuration") == private$.result_id, ]
-      cols = c(inst$archive$cols_x, "configuration")
-      xdt = res[1, cols, with = FALSE]
-      y = set_names(mean(unlist(res[, inst$archive$cols_y, with = FALSE])), inst$archive$cols_y)
-      inst$assign_result(xdt, y)
+      cols_x = c(inst$archive$cols_x, "configuration")
+      cols_y = inst$archive$cols_y
+      xdt = res[1, cols_x, with = FALSE]
+      y = set_names(mean(unlist(res[, cols_y, with = FALSE])), cols_y)
+      extra = res[, !c(cols_x, cols_y), with = FALSE]
+
+      inst$assign_result(xdt, y, extra = extra)
     },
 
     .result_id = NULL
@@ -220,14 +230,14 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
 
 mlr_optimizers$add("irace", OptimizerBatchIrace)
 
-target_runner_default = function(experiment, exec.target.runner, scenario, target.runner) { # nolint
+target_runner_default = function(experiment, exec_target_runner, scenario, target_runner) { # nolint
   optim_instance = scenario$targetRunnerData$inst
 
   xdt = map_dtr(experiment, function(e) {
     configuration = as.data.table(e$configuration)
     # add configuration and instance id to archive
-    set(configuration, j = "configuration", value = e$id.configuration)
-    set(configuration, j = "instance", value = e$id.instance)
+    set(configuration, j = "configuration", value = e$id_configuration)
+    set(configuration, j = "instance", value = e$id_instance)
     configuration
   })
   # fix logicals
