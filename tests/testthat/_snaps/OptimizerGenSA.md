@@ -2,7 +2,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchGenSA> - Generalized Simulated Annealing ---------------------
       * Parameters: list()

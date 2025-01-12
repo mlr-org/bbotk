@@ -75,15 +75,16 @@ Optimizer = R6Class("Optimizer",
     #' @return (`character()`).
     print = function() {
       msg_h = if (is.na(self$label)) "" else paste0(" - ", self$label)
-      cli_h1("{.cls {class(self)[1L]}}{msg_h}")
-      cli_li("Parameters: {.args {as_short_string(self$param_set$values)}}")
-
-      param_cls = cli_vec(lapply(self$param_classes, function(cls) format_inline('{.cls {cls}}')),
+      msg_params = cli_vec(lapply(self$param_classes, function(cls) format_inline('{.cls {cls}}')),
                           style = list(last = ' and ', sep = ', '))
-      cli_li("Parameter classes: {param_cls}")
 
-      cli_li("Properties: {self$properties}")
-      cli_li("Packages: {.pkg {self$packages}}")
+      cat_cli({
+        cli_h1("{.cls {class(self)[1L]}}{msg_h}")
+        cli_li("Parameters: {.args {as_short_string(self$param_set$values)}}")
+        cli_li("Parameter classes: {msg_params}")
+        cli_li("Properties: {self$properties}")
+        cli_li("Packages: {.pkg {self$packages}}")
+      })
     },
 
     #' @description

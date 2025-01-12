@@ -78,19 +78,21 @@ OptimInstance = R6Class("OptimInstance",
     #'
     #' @param ... (ignored).
     print = function(...) {
-      cli_h1("{.cls {class(self)[1L]}}")
-      result = if (is.null(private$.result)) "Not optimized" else "Optimized"
-      cli_li("State: {result}")
-      cli_li("Objective: {.cls {class(self$objective)[1]}}")
-      cli_li("Search Space:")
+      is_optimized = if (is.null(private$.result)) "Not optimized" else "Optimized"
+      cat_cli({
+        cli_h1("{.cls {class(self)[1L]}}")
+        cli_li("State: {is_optimized}")
+        cli_li("Objective: {.cls {class(self$objective)[1]}}")
+        cli_li("Search Space:")
+      })
       print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
       terminator = if (length(self$terminator$param_set$values)) paste0("(", as_short_string(self$terminator$param_set$values), ")") else ""
-      cli_li("Terminator: {.cls {class(self$terminator)[1]}} {terminator}")
+      cat_cli(cli_li("Terminator: {.cls {class(self$terminator)[1]}} {terminator}"))
 
       if (!is.null(private$.result)) {
-        cli_li("Result:")
+        cat_cli(cli_li("Result:"))
         print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
-        cli_li("Archive:")
+        cat_cli(cli_li("Archive:"))
         tab = as.data.table(self$archive)
         x_domain_ids = names(tab)[grepl("x_domain_" , names(tab))]
         print(tab[, c(self$archive$cols_y, self$archive$cols_x, x_domain_ids), with = FALSE], digits = 1)

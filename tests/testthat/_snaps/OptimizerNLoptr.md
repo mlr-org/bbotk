@@ -2,7 +2,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchNLoptr> - Non-linear Optimization ----------------------------
       * Parameters: algorithm=NLOPT_LN_BOBYQA, xtol_rel=-1, xtol_abs=-1, ftol_rel=-1,

@@ -2,7 +2,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchRandomSearch> - Random Search --------------------------------
       * Parameters: batch_size=1
@@ -14,7 +14,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchRandomSearch> - Random Search --------------------------------
       * Parameters: batch_size=1
@@ -26,7 +26,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchRandomSearch> - Random Search --------------------------------
       * Parameters: batch_size=10

@@ -2,7 +2,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchCmaes> - Covariance Matrix Adaptation Evolution Strategy -----
       * Parameters: start_values=random

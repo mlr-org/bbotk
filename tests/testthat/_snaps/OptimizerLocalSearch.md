@@ -2,7 +2,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchLocalSearch> - Local Search ----------------------------------
       * Parameters: n_initial_points=3, initial_random_sample_size=100,
@@ -15,7 +15,7 @@
 
     Code
       optimizer
-    Message
+    Output
       
       -- <OptimizerBatchLocalSearch> - Local Search ----------------------------------
       * Parameters: n_initial_points=3, initial_random_sample_size=100,
@@ -28,7 +28,7 @@
 
     Code
       optimizer
-    Message
+    Output
       
       -- <OptimizerBatchLocalSearch> - Local Search ----------------------------------
       * Parameters: n_initial_points=3, initial_random_sample_size=100,

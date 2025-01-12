@@ -2,7 +2,7 @@
 
     Code
       terminator
-    Message
+    Output
       
       -- <TerminatorPerfReached> - Performance Level ---------------------------------
       * Parameters: level=0.2

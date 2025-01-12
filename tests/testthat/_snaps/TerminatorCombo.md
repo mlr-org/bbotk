@@ -2,7 +2,7 @@
 
     Code
       terminator
-    Message
+    Output
       
       -- <TerminatorCombo> - Combination ---------------------------------------------
       * Parameters: any=TRUE

@@ -74,7 +74,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     #' @param ... (ignored).
     print = function(...) {
       super$print()
-      cli_li("Workers: {.val {self$rush$n_workers}}")
+      cat_cli(cli_li("Workers: {.val {self$rush$n_workers}}"))
     },
 
     #' @description

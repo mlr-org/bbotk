@@ -68,7 +68,7 @@ Archive = R6Class("Archive",
     #' @param ... (ignored).
     print = function() {
       msg_h = if (is.na(self$label)) "" else paste0(" - ", self$label)
-      cli_h1("{.cls {class(self)[1L]}}{msg_h}")
+      cat_cli(cli_h1("{.cls {class(self)[1L]}}{msg_h}"))
       print(as.data.table(self, unnest = "x_domain"), digits = 1)
     },
 

@@ -2,7 +2,7 @@
 
     Code
       terminator
-    Message
+    Output
       
       -- <TerminatorStagnationBatch> - Stagnation Batch ------------------------------
       * Parameters: n=1, threshold=0
@@ -12,7 +12,7 @@
 
     Code
       terminator
-    Message
+    Output
       
       -- <TerminatorStagnationBatch> - Stagnation Batch ------------------------------
       * Parameters: n=2, threshold=0

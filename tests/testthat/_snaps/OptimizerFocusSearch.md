@@ -2,7 +2,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchFocusSearch> - Focus Search ----------------------------------
       * Parameters: n_points=1, maxit=10
@@ -14,7 +14,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchFocusSearch> - Focus Search ----------------------------------
       * Parameters: n_points=10, maxit=10

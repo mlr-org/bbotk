@@ -2,7 +2,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchDesignPoints> - Design Points --------------------------------
       * Parameters: batch_size=1, design=<data.table>
@@ -15,7 +15,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchDesignPoints> - Design Points --------------------------------
       * Parameters: batch_size=1, design=<data.table>

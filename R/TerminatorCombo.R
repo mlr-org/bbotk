@@ -78,9 +78,9 @@ TerminatorCombo = R6Class("TerminatorCombo",
       super$print(...)
 
       terminators = map_chr(self$terminators, function(t) {class(t)[1L]})
-      msg = cli_vec(lapply(terminators, function(trm) format_inline('{.cls {trm}}')),
+      msg_trms = cli_vec(lapply(terminators, function(trm) format_inline('{.cls {trm}}')),
                          style = list(last = ' and ', sep = ', '))
-      cli_li("Terminators: {msg}")
+      cat_cli(cli_li("Terminators: {msg_trms}"))
     },
 
     #' @description

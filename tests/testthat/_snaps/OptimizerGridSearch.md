@@ -2,7 +2,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchGridSearch> - Grid Search ------------------------------------
       * Parameters: batch_size=1, resolution=10
@@ -14,7 +14,7 @@
 
     Code
       z$optimizer
-    Message
+    Output
       
       -- <OptimizerBatchGridSearch> - Grid Search ------------------------------------
       * Parameters: batch_size=1, resolution=10
