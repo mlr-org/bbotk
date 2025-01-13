@@ -3,6 +3,8 @@
     Code
       terminator
     Output
-      <TerminatorClockTime>: Clock Time
+      
+      -- <TerminatorClockTime> - Clock Time ------------------------------------------
       * Parameters: stop_time=<POSIXct>
+      * Terminators:
 

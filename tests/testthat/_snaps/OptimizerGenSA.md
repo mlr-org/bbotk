@@ -3,9 +3,10 @@
     Code
       z$optimizer
     Output
-      <OptimizerBatchGenSA>: Generalized Simulated Annealing
+      
+      -- <OptimizerBatchGenSA> - Generalized Simulated Annealing ---------------------
       * Parameters: list()
-      * Parameter classes: ParamDbl
+      * Parameter classes: <ParamDbl>
       * Properties: single-crit
-      * Packages: bbotk, GenSA
+      * Packages: bbotk and GenSA
 

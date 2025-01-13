@@ -3,6 +3,7 @@
     Code
       a
     Output
-      <ArchiveBatch>
+      
+      -- <ArchiveBatch> - Data Table Storage -----------------------------------------
       Null data.table (0 rows and 0 cols)
 
