@@ -87,16 +87,8 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
         instance = instance)
-    } else if (worker_type == "mirai") {
-      #requireNamespace("mirai") && mirai::daemons()$connections
-
+    } else if (worker_type == "remote") {
       # remote workers
-      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
-        instance$search_space$length,
-        optimizer$format(),
-        instance$terminator$format(with_params = TRUE),
-        rush::rush_config()$n_workers)
-
       rush$start_remote_workers(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
@@ -104,22 +96,20 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         instance = instance)
     } else if (worker_type == "local") {
       # local workers
-      lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %i remote worker(s)",
-        instance$search_space$length,
-        optimizer$format(),
-        instance$terminator$format(with_params = TRUE),
-        rush::rush_config()$n_workers
-      )
-
       rush$start_local_workers(
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
         instance = instance)
-    } else {
-       stop("No rush plan available to start local workers and `mirai::daemons()` found. See `?rush::rush_plan()`.")
     }
   }
+
+  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %s %s worker(s)",
+    instance$search_space$length,
+    optimizer$format(),
+    instance$terminator$format(with_params = TRUE),
+    as.character(rush::rush_config()$n_workers %??% ""),
+    worker_type)
 
   n_running_workers = 0
   # wait until optimization is finished
@@ -129,7 +119,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 
     if (rush$n_running_workers > n_running_workers) {
       n_running_workers = rush$n_running_workers
-      lg$info("%i of %i worker(s) started", n_running_workers, rush::rush_config()$n_workers)
+      lg$info("%i worker(s) started", n_running_workers)
     }
 
     instance$rush$print_log()

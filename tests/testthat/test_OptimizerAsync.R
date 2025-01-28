@@ -16,6 +16,7 @@ test_that("OptimizerAsync starts local workers", {
   optimizer$optimize(instance)
 
   expect_data_table(instance$rush$worker_info, nrows = 2)
+  expect_list(instance$rush$processes_processx, len = 2)
 
   expect_rush_reset(instance$rush)
 })
@@ -28,7 +29,7 @@ test_that("OptimizerAsync starts remote workers", {
 
   mirai::daemons(2)
 
-  rush_plan(n_workers = 2)
+  rush_plan(n_workers = 2, worker_type = "remote")
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -40,22 +41,44 @@ test_that("OptimizerAsync starts remote workers", {
   optimizer$optimize(instance)
 
   expect_data_table(instance$rush$worker_info, nrows = 2)
+  expect_list(instance$rush$processes_mirai, len = 2)
+
+  expect_rush_reset(instance$rush)
+  mirai::daemons(0)
+})
+
+test_that("OptimizerAsync starts without rush_plan", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  skip_if_not_installed("processx")
+  flush_redis()
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 50L),
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  expect_data_table(instance$rush$worker_info, nrows = 2)
 
   expect_rush_reset(instance$rush)
 })
 
-test_that("OptimizerAsync starts script workers", {
+test_that("OptimizerAsync defaults to local worker", {
   skip_on_cran()
   skip_if_not_installed("rush")
   flush_redis()
   library(rush)
 
-  rush_plan(worker_type = "script")
+  rush_plan(n_workers = 2)
 
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("evals", n_evals = 5L),
+    terminator = trm("evals", n_evals = 50L),
   )
 
   optimizer = opt("async_random_search")
@@ -65,7 +88,6 @@ test_that("OptimizerAsync starts script workers", {
 
   expect_rush_reset(instance$rush)
 })
-
 
 test_that("OptimizerAsync assigns result", {
   skip_on_cran()
