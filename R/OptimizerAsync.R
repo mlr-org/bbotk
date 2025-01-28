@@ -78,7 +78,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   } else {
     # run .optimize() on workers
     rush = instance$rush
-    worker_type = rush::rush_config()$worker_type
+    worker_type = rush::rush_config()$worker_type %??% "local"
 
     if (worker_type == "script") {
       # worker script
