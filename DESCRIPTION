@@ -42,6 +42,7 @@ Suggests:
     progressr,
     processx,
     redux,
+    RhpcBLASctl,
     testthat (>= 3.0.0),
     rush (>= 0.1.2)
 Config/testthat/edition: 3
