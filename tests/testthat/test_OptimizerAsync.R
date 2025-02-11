@@ -53,6 +53,9 @@ test_that("OptimizerAsync starts without rush_plan", {
   skip_if_not_installed("processx")
   flush_redis()
 
+  rush::remove_rush_plan()
+  rush_plan(n_workers = 2, worker_type = "remote")
+
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
@@ -62,7 +65,7 @@ test_that("OptimizerAsync starts without rush_plan", {
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
-  expect_data_table(instance$rush$worker_info, nrows = 2)
+  expect_data_table(instance$rush$worker_info, nrows = 1)
 
   expect_rush_reset(instance$rush)
 })
