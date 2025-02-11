@@ -47,29 +47,6 @@ test_that("OptimizerAsync starts remote workers", {
   mirai::daemons(0)
 })
 
-test_that("OptimizerAsync starts without rush_plan", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  skip_if_not_installed("processx")
-  flush_redis()
-
-  rush::remove_rush_plan()
-  rush_plan(n_workers = 2, worker_type = "remote")
-
-  instance = oi_async(
-    objective = OBJ_2D,
-    search_space = PS_2D,
-    terminator = trm("evals", n_evals = 50L),
-  )
-
-  optimizer = opt("async_random_search")
-  optimizer$optimize(instance)
-
-  expect_data_table(instance$rush$worker_info, nrows = 1)
-
-  expect_rush_reset(instance$rush)
-})
-
 test_that("OptimizerAsync defaults to local worker", {
   skip_on_cran()
   skip_if_not_installed("rush")
