@@ -68,6 +68,7 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
+        par = p_uty(),
         sigma = p_dbl(default = 0.5),
         start_values = p_fct(levels = c("random", "center"), tags = "required")
       )
