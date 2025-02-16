@@ -34,6 +34,7 @@ Imports:
     R6
 Suggests:
     adagio,
+    DEoptim,
     emoa,
     GenSA,
     irace (>= 4.0.0),
@@ -83,6 +84,7 @@ Collate:
     'OptimizerBatch.R'
     'OptimizerBatchChain.R'
     'OptimizerBatchCmaes.R'
+    'OptimizerBatchDEoptim.R'
     'OptimizerBatchDesignPoints.R'
     'OptimizerBatchFocusSearch.R'
     'OptimizerBatchGenSA.R'
