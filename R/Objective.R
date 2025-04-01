@@ -119,7 +119,7 @@ Objective = R6Class("Objective",
     #' These extra entries are referred to as *extras*.
     eval = function(xs) {
       if (self$check_values) self$domain$assert(xs)
-      res = invoke(private$.eval, xs, .args = self$constants$values)
+      res = invoke(private$.eval, xs = xs, .args = self$constants$values)
       if (self$check_values) self$codomain$assert(res[self$codomain$ids()])
       return(res)
     },
@@ -144,7 +144,7 @@ Objective = R6Class("Objective",
     #' These extra columns are referred to as *extras*.
     eval_many = function(xss) {
       if (self$check_values) lapply(xss, self$domain$assert)
-      res = invoke(private$.eval_many, xss, .args = self$constants$values)
+      res = invoke(private$.eval_many, xss = xss, .args = self$constants$values)
       if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
       return(res)
     },
