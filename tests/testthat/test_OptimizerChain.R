@@ -38,6 +38,7 @@ test_that("OptimizerBatchChain", {
     search_space = PS_1D,
     terminator = terminator
   )
+  skip_if_not_installed("GenSA")
   z = test_optimizer(
     instance = instance,
     key = "chain",
