@@ -19,7 +19,6 @@
 #' @export
 ArchiveAsync = R6Class("ArchiveAsync",
   inherit = Archive,
-  cloneable = FALSE,
   public = list(
 
     rush = NULL,
