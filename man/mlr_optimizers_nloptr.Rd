@@ -10,8 +10,8 @@ Johnson, G S (2020).
 \url{https://github.com/stevengj/nlopt}.
 }
 \description{
-\code{OptimizerBatchNLoptr} class that implements non-linear optimization. Calls
-\code{\link[nloptr:nloptr]{nloptr::nloptr()}} from package \CRANpkg{nloptr}.
+\code{OptimizerBatchNLoptr} class that implements non-linear optimization.
+Calls \code{\link[nloptr:nloptr]{nloptr::nloptr()}} from package \CRANpkg{nloptr}.
 }
 \section{Parameters}{
 
@@ -23,8 +23,13 @@ Johnson, G S (2020).
 \item{\code{ftol_rel}}{\code{numeric(1)}}
 \item{\code{ftol_abs}}{\code{numeric(1)}}
 \item{\code{start_values}}{\code{character(1)}\cr
-Create \code{random} start values or based on \code{center} of search space? In the
-latter case, it is the center of the parameters before a trafo is applied.}
+Create \code{random} start values or based on \code{center} of search space?
+In the latter case, it is the center of the parameters before a trafo is applied.}
+\item{\code{approximate_eval_grad_f}}{\code{logical(1)}\cr
+Should gradients be numerically approximated via finite differences (\link[nloptr:nl.grad]{nloptr::nl.grad}).
+Only required for certain algorithms.
+Note that function evaluations required for the numerical gradient approximation will be logged as usual
+and are not treated differently than regular function evaluations by, e.g., \link{Terminator}s.}
 }
 
 For the meaning of the control parameters, see \code{\link[nloptr:nloptr]{nloptr::nloptr()}} and

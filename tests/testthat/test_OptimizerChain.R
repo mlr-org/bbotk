@@ -59,3 +59,4 @@ test_that("OptimizerBatchChain", {
       "OptimizerBatchGenSA_1.verbose", "OptimizerBatchGenSA_1.trace.mat")
   )
 })
+
