@@ -16,7 +16,6 @@
 #' @export
 ArchiveAsyncFrozen = R6Class("ArchiveAsyncFrozen",
   inherit = ArchiveAsync,
-  cloneable = FALSE,
   public = list(
 
     #' @description
