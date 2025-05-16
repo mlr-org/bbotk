@@ -128,12 +128,15 @@ OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
       pv$x0 = search_start(inst$search_space, type = pv$start_values)
       pv$start_values = NULL
 
-      eval_grad_f = if (pv$approximate_eval_grad_f) {
-        function(x) {
+      if (pv$approximate_eval_grad_f) {
+        eval_grad_f = function(x) {
           invoke(nloptr::nl.grad, x0 = x, fn = inst$objective_function)
         }
+        saveguard_epsilon = 1e-5
       } else {
-        NULL
+        eval_grad_f = NULL
+        saveguard_epsilon = 0
+
       }
       pv$eval_grad_f = eval_grad_f
       pv$approximate_eval_grad_f = NULL
@@ -149,8 +152,8 @@ OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
 
       invoke(nloptr::nloptr,
         eval_f = inst$objective_function,
-        lb = inst$search_space$lower,
-        ub = inst$search_space$upper,
+        lb = inst$search_space$lower + saveguard_epsilon,  # needed due to numerical issues with NLoptr
+        ub = inst$search_space$upper - saveguard_epsilon,  # needed due to numerical issues with NLoptr
         opts = opts,
         .args = pv)
     }
