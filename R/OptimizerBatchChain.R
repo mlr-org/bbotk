@@ -142,8 +142,8 @@ OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
         optimizer = private$.optimizers[[i]]
         optimizer$param_set$values = self$param_set$.__enclos_env__$private$.sets[[i]]$values
         optimizer$optimize(inner_inst)
-        inner_inst$archive$data$batch_nr = max(inst$archive$data$batch_nr, 0L) + inner_inst$archive$data$batch_nr
-        inner_inst$archive$data$optimizer = private$.ids[i]
+        set(inner_inst$archive$data, j = "batch_nr", value = max(inst$archive$data$batch_nr, 0L) + inner_inst$archive$data$batch_nr)
+        set(inner_inst$archive$data, j = ".optimizer_id", value = private$.ids[i])
         inst$archive$data = rbind(inst$archive$data, inner_inst$archive$data, fill = TRUE)
         inner_inst$archive$data = data.table()
         if (terminator$is_terminated(inst$archive)) {
