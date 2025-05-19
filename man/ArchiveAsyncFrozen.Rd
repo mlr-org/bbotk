@@ -68,6 +68,7 @@ Number of evaluations stored in the archive.}
 \item \href{#method-ArchiveAsyncFrozen-push_failed_point}{\code{ArchiveAsyncFrozen$push_failed_point()}}
 \item \href{#method-ArchiveAsyncFrozen-data_with_state}{\code{ArchiveAsyncFrozen$data_with_state()}}
 \item \href{#method-ArchiveAsyncFrozen-clear}{\code{ArchiveAsyncFrozen$clear()}}
+\item \href{#method-ArchiveAsyncFrozen-clone}{\code{ArchiveAsyncFrozen$clone()}}
 }
 }
 \if{html}{\out{
@@ -235,5 +236,22 @@ Clear all evaluation results from archive.
 \if{html}{\out{<div class="r">}}\preformatted{ArchiveAsyncFrozen$clear()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsyncFrozen$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
 }
 }

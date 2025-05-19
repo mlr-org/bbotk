@@ -75,6 +75,7 @@ Number of evaluations stored in the archive.}
 \item \href{#method-ArchiveAsync-best}{\code{ArchiveAsync$best()}}
 \item \href{#method-ArchiveAsync-nds_selection}{\code{ArchiveAsync$nds_selection()}}
 \item \href{#method-ArchiveAsync-clear}{\code{ArchiveAsync$clear()}}
+\item \href{#method-ArchiveAsync-clone}{\code{ArchiveAsync$clone()}}
 }
 }
 \if{html}{\out{
@@ -309,5 +310,22 @@ Clear all evaluation results from archive.
 \if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$clear()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
 }
 }

@@ -89,25 +89,31 @@ OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
       assert_list(optimizers, types = "Optimizer", any.missing = FALSE)
       assert_list(terminators, types = c("Terminator", "NULL"), len = length(optimizers))
 
-      param_sets = vector(mode = "list", length = length(optimizers))
-      param_set_ids  = vector(mode = "character", length = length(optimizers))
-      ids_taken = character(0L)
-      # for each optimizer check whether the id of the param_set (deduced from the optimizer class) is already taken
-      # if necessary postfix the id
+      class_counts = list()
+      param_sets = vector("list", length(optimizers))
+      param_set_ids = character(length(optimizers))
+
       for (i in seq_along(optimizers)) {
         optimizer = optimizers[[i]]
         ps = optimizer$param_set$clone(deep = TRUE)
-        param_set_ids[i] = class(optimizer)[[1L]]
-        try_postfix = 0L
-        while (param_set_ids[i] %in% ids_taken) {
-          try_postfix = try_postfix + 1L
-          param_set_ids[i] = paste0(class(optimizer)[[1L]], "_", try_postfix)
+        class_name = class(optimizer)[[1L]]
+
+        if (is.null(class_counts[[class_name]])) {
+          class_counts[[class_name]] = 1L
+        } else {
+          class_counts[[class_name]] = class_counts[[class_name]] + 1L
         }
-        ids_taken[[i]] = param_set_ids[i]
+
+        suffix = class_counts[[class_name]]
+        param_set_id = paste0(class_name, "_", suffix)
+
+        param_set_ids[[i]] = param_set_id
         param_sets[[i]] = ps
       }
-      private$.ids = param_set_ids
+
       param_sets = setNames(param_sets, nm = param_set_ids)
+      private$.ids = param_set_ids
+
       super$initialize(
         id = "chain",
         param_set = ParamSetCollection$new(param_sets),
@@ -142,8 +148,8 @@ OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
         optimizer = private$.optimizers[[i]]
         optimizer$param_set$values = self$param_set$.__enclos_env__$private$.sets[[i]]$values
         optimizer$optimize(inner_inst)
-        inner_inst$archive$data$batch_nr = max(inst$archive$data$batch_nr, 0L) + inner_inst$archive$data$batch_nr
-        inner_inst$archive$data$optimizer = private$.ids[i]
+        set(inner_inst$archive$data, j = "batch_nr", value = max(inst$archive$data$batch_nr, 0L) + inner_inst$archive$data$batch_nr)
+        set(inner_inst$archive$data, j = ".optimizer_id", value = private$.ids[i])
         inst$archive$data = rbind(inst$archive$data, inner_inst$archive$data, fill = TRUE)
         inner_inst$archive$data = data.table()
         if (terminator$is_terminated(inst$archive)) {

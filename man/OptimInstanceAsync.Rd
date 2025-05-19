@@ -28,6 +28,7 @@ Rush controller for parallel optimization.}
 \item \href{#method-OptimInstanceAsync-print}{\code{OptimInstanceAsync$print()}}
 \item \href{#method-OptimInstanceAsync-clear}{\code{OptimInstanceAsync$clear()}}
 \item \href{#method-OptimInstanceAsync-reconnect}{\code{OptimInstanceAsync$reconnect()}}
+\item \href{#method-OptimInstanceAsync-clone}{\code{OptimInstanceAsync$clone()}}
 }
 }
 \if{html}{\out{
@@ -133,5 +134,22 @@ Call this method to reconnect after loading the object.
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$reconnect()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OptimInstanceAsync-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstanceAsync-clone}{}}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
 }
 }

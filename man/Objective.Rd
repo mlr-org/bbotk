@@ -54,6 +54,9 @@ Dimension of domain.}
 
 \item{\code{ydim}}{(\code{integer(1)})\cr
 Dimension of codomain.}
+
+\item{\code{packages}}{(\code{character()})\cr
+Set of required packages.}
 }
 \if{html}{\out{</div>}}
 }
