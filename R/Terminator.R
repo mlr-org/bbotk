@@ -74,8 +74,16 @@ Terminator = R6Class("Terminator",
     #'
     #' @param ... (ignored).
     print = function(...) {
-      catn(format(self), if (is.na(self$label)) "" else paste0(": ", self$label))
-      catn(str_indent("* Parameters:", as_short_string(self$param_set$values)))
+      msg_h = if (is.na(self$label)) "" else paste0(" - ", self$label)
+      terminators = map_chr(self$terminators, function(t) {class(t)[1L]})
+      msg_trms = cli_vec(lapply(terminators, function(trm) format_inline('{.cls {trm}}')),
+                         style = list(last = ' and ', sep = ', '))
+
+      cat_cli({
+        cli_h1("{.cls {class(self)[1L]}}{msg_h}")
+        cli_li("Parameters: {as_short_string(self$param_set$values)}")
+        cli_li("Terminators: {msg_trms}")
+      })
     },
 
     #' @description

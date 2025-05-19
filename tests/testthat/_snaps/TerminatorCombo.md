@@ -3,7 +3,9 @@
     Code
       terminator
     Output
-      <TerminatorCombo>: Combination
+      
+      -- <TerminatorCombo> - Combination ---------------------------------------------
       * Parameters: any=TRUE
-      * Terminators: <TerminatorEvals>,<TerminatorEvals>
+      * Terminators: <TerminatorEvals> and <TerminatorEvals>
+      * Terminators: <TerminatorEvals> and <TerminatorEvals>
 
