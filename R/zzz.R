@@ -17,20 +17,13 @@
   x$add("bbotk.backup", load_callback_backup)
   x$add("bbotk.async_freeze_archive", load_callback_freeze_archive)
 
-  lg = lgr::get_logger(paste0("mlr3/", pkgname))
+  lg = lgr::get_logger("mlr3/bbotk")
   assign("lg", lg, envir = parent.env(environment()))
   f = function(event) {
     event$msg = paste("[bbotk]", event$msg)
     TRUE
   }
   lg$set_filters(f)
-
-  register_namespace_callback("bbotk", "mlr3", function(pkgname, pkgpath) {
-    x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
-    if (is.list(x$loggers)) { # be backward compatible with mlr3 <= 0.13.0
-      x$loggers[["bbotk"]] = lg
-    }
-  })
 
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
