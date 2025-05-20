@@ -17,7 +17,7 @@
   x$add("bbotk.backup", load_callback_backup)
   x$add("bbotk.async_freeze_archive", load_callback_freeze_archive)
 
-  lg = lgr::get_logger("bbotk")
+  lg = lgr::get_logger(paste0("mlr3/", pkgname))
   assign("lg", lg, envir = parent.env(environment()))
   f = function(event) {
     event$msg = paste("[bbotk]", event$msg)
