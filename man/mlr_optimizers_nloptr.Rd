@@ -23,8 +23,11 @@ Calls \code{\link[nloptr:nloptr]{nloptr::nloptr()}} from package \CRANpkg{nloptr
 \item{\code{ftol_rel}}{\code{numeric(1)}}
 \item{\code{ftol_abs}}{\code{numeric(1)}}
 \item{\code{start_values}}{\code{character(1)}\cr
-Create \code{random} start values or based on \code{center} of search space?
-In the latter case, it is the center of the parameters before a trafo is applied.}
+Create \code{"random"} start values or based on \code{"center"} of search space?
+In the latter case, it is the center of the parameters before a trafo is applied.
+If set to \code{"custom"}, the start values can be passed via the \code{start} parameter.}
+\item{\code{start}}{\code{numeric()}\cr
+Custom start values. Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
 \item{\code{approximate_eval_grad_f}}{\code{logical(1)}\cr
 Should gradients be numerically approximated via finite differences (\link[nloptr:nl.grad]{nloptr::nl.grad}).
 Only required for certain algorithms.
