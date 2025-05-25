@@ -16,8 +16,11 @@
 #' \item{`ftol_rel`}{`numeric(1)`}
 #' \item{`ftol_abs`}{`numeric(1)`}
 #' \item{`start_values`}{`character(1)`\cr
-#' Create `random` start values or based on `center` of search space?
-#' In the latter case, it is the center of the parameters before a trafo is applied.}
+#' Create `"random"` start values or based on `"center"` of search space?
+#' In the latter case, it is the center of the parameters before a trafo is applied.
+#' If set to `"custom"`, the start values can be passed via the `start` parameter.}
+#' \item{`start`}{`numeric()`\cr
+#' Custom start values. Only applicable if `start_values` parameter is set to `"custom"`.}
 #' \item{`approximate_eval_grad_f`}{`logical(1)`\cr
 #' Should gradients be numerically approximated via finite differences ([nloptr::nl.grad]).
 #' Only required for certain algorithms.
@@ -103,10 +106,12 @@ OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
         xtol_abs = p_dbl(default = 0, lower = 0, upper = Inf, special_vals = list(-1)),
         ftol_rel = p_dbl(default = 0, lower = 0, upper = Inf, special_vals = list(-1)),
         ftol_abs = p_dbl(default = 0, lower = 0, upper = Inf, special_vals = list(-1)),
-        start_values = p_fct(default = "random", levels = c("random", "center")),
+        start_values = p_fct(default = "random", levels = c("random", "center", "custom")),
+        start = p_uty(default = NULL, depends = start_values == "custom"),
         approximate_eval_grad_f = p_lgl(default = FALSE)
       )
       param_set$values$start_values = "random"
+      param_set$values$start = NULL
       param_set$values$approximate_eval_grad_f = FALSE
 
       super$initialize(
@@ -125,8 +130,15 @@ OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
     .optimize = function(inst) {
       pv = self$param_set$values
 
-      pv$x0 = search_start(inst$search_space, type = pv$start_values)
-      pv$start_values = NULL
+      if (pv$start_values == "custom") {
+        pv$x0 = pv$start
+        pv$start_values = NULL
+        pv$start = NULL
+      } else {
+        pv$x0 = search_start(inst$search_space, type = pv$start_values)
+        pv$start_values = NULL
+        pv$start = NULL
+      }
 
       if (pv$approximate_eval_grad_f) {
         eval_grad_f = function(x) {

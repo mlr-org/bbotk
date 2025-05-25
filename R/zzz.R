@@ -30,6 +30,6 @@
   }
 } # nocov end
 
-utils::globalVariables("batch_nr")
+utils::globalVariables(c("batch_nr", "start_values"))
 
 leanify_package()
