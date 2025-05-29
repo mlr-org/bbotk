@@ -46,9 +46,9 @@ Suggests:
     redux,
     RhpcBLASctl,
     testthat (>= 3.0.0),
-    rush (>= 0.1.2)
+    rush (>= 0.1.2.9000)
 Remotes:
-    mlr-org/rush@mirai
+    mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
