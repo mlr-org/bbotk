@@ -91,7 +91,7 @@ test_that("reconnect method works", {
   optimizer$optimize(instance)
 
   file = tempfile(fileext = ".rds")
-  saveRDS(instance, file = file )
+  suppressWarnings(saveRDS(instance, file = file))
   instance = readRDS(file)
 
   instance$reconnect()
