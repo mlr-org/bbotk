@@ -46,7 +46,7 @@ Suggests:
     redux,
     RhpcBLASctl,
     testthat (>= 3.0.0),
-    rush (>= 0.1.2.9000)
+    rush (>= 0.2.0)
 Remotes:
     mlr-org/rush
 Config/testthat/edition: 3
