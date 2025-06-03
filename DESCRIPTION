@@ -41,14 +41,12 @@ Suggests:
     knitr,
     mirai,
     nloptr,
-    progressr,
     processx,
+    progressr,
     redux,
     RhpcBLASctl,
-    testthat (>= 3.0.0),
-    rush (>= 0.2.0)
-Remotes:
-    mlr-org/rush
+    rush (>= 0.2.0),
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
