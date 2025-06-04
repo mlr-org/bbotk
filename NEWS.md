@@ -1,4 +1,4 @@
-# bbotk (development version)
+# bbotk 1.6.0
 
 # bbotk 1.5.0
 
