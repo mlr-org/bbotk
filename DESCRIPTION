@@ -51,7 +51,7 @@ Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
 Language: en-US
-NeedsCompilation: no
+NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Collate:
@@ -112,6 +112,7 @@ Collate:
     'bbotk_reflections.R'
     'bibentries.R'
     'helper.R'
+    'local_search_c.R'
     'mlr_callbacks.R'
     'nds_selection.R'
     'reexport.R'

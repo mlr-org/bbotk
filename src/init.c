@@ -5,9 +5,11 @@
 
 /* .Call calls */
 extern SEXP c_is_dominated(SEXP);
+extern SEXP c_local_search(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"c_is_dominated", (DL_FUNC) &c_is_dominated, 1},
+    {"c_local_search", (DL_FUNC) &c_local_search, 2},
     {NULL, NULL, 0}
 };
 
