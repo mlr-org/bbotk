@@ -1,14 +1,12 @@
-load_all(".")
 library(devtools)
 library(paradox)
 library(microbenchmark)
+load_all(".")
 
 loglevel = "info"
 lgr::get_logger()$set_threshold(loglevel)
 lgr::get_logger("bbotk")$set_threshold(loglevel)
 lgr::get_logger("mlr3")$set_threshold(loglevel)
-
-
 
 square_function = function(xs) {
   list(objective = xs$x^2 + xs$y^2)
@@ -33,11 +31,11 @@ instance = OptimInstanceBatchSingleCrit$new(
   terminator = trm("evals", n_evals = 30)
 )
 
-optimizer = opt("local_search",
-  n_initial_points = 3,
-  initial_random_sample_size = 3,
-  neighbors_per_point = 2,
-  mutation_sd = 0.1
+optimizer = opt("local_search_2",
+  n_searches = 2,
+  n_neighbors = 2,
+  mut_sd = 0.1,
+  n_steps = 1
 )
 
 optimizer$optimize(instance)
@@ -50,20 +48,16 @@ print(result)
 
 ##################################################
 
-cat("Running microbenchmark...\n")
+# cat("Running microbenchmark...\n")
 
-mb = microbenchmark(
-  ls1 = {
-    ii = OptimInstanceBatchSingleCrit$new(
-        objective = objective,
-        search_space = search_space,
-        terminator = trm("evals", n_evals = 20)
-    )
-    optimizer$optimize(ii)
-  },
-  times = 5,
-  unit = "ms"
-)
+# mb = microbenchmark(times = 5, unit = "ms", ls1 = {
+#     ii = OptimInstanceBatchSingleCrit$new(
+#         objective = objective,
+#         search_space = search_space,
+#         terminator = trm("evals", n_evals = 20)
+#     )
+#     optimizer$optimize(ii)
+# })
 
-print(mb)
+# print(mb)
 

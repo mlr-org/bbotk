@@ -85,18 +85,18 @@ OptimizerBatchLocalSearch2 = R6Class("OptimizerBatchLocalSearch2",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        n_initial_points = p_int(lower = 1L, default = 10L),
-        initial_random_sample_size = p_int(lower = 1L, default = 100L),
-        neighbors_per_point = p_int(lower = 1L, default = 100L),
-        mutation_sd = p_dbl(lower = 0L, default = 0.1)
+        n_searches = p_int(lower = 1L, default = 10L),
+        n_steps = p_int(lower = 1L, default = 10L),
+        n_neighbors = p_int(lower = 1L, default = 100L),
+        mut_sd = p_dbl(lower = 0L, default = 0.1)
       )
-      param_set$values = list(n_initial_points = 10L, initial_random_sample_size = 100L, neighbors_per_point = 100L, mutation_sd = 0.1)
+      param_set$values = list(n_searches = 10L, n_steps = 10L, n_neighbors = 100L, mut_sd = 0.1)
 
       super$initialize(
-        id = "local_search",
+        id = "local_search_2",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit"), # NOTE: think about multi-crit version
+        properties = c("dependencies", "single-crit"),   # FIXME: we cannot handle deps?
         label = "Local Search",
         man = "bbotk::mlr_optimizers_local_search"
       )
@@ -104,36 +104,14 @@ OptimizerBatchLocalSearch2 = R6Class("OptimizerBatchLocalSearch2",
   ),
   private = list(
     .optimize = function(inst) {
-      n_initial_points = self$param_set$values$n_initial_points
-      mutation_sd = self$param_set$values$mutation_sd
-
-      # if fewer than `n_initial_points` points are present in the archive, generate `initial_random_sample_size` points by sampling them uniformly at random and evaluate them
-      if (inst$archive$n_evals < n_initial_points) {
-        data = generate_design_random(inst$search_space, n = self$param_set$values$initial_random_sample_size)$data
-        inst$eval_batch(data)
-      }
-      points = inst$archive$best(n_select = n_initial_points)[, c(inst$archive$cols_x, inst$archive$cols_y), with = FALSE]
-
-      # Prepare data for C function
-      control = list(
-        n_searches = n_initial_points,
-        neighbors_per_point = self$param_set$values$neighbors_per_point,
-        mutation_sd = mutation_sd,
-        objective_multiplier = inst$objective_multiplicator,
-        max_iterations = 1000 # Default max iterations
-      )
+      ps = self$param_set
+      psv = ps$values
       
-      # Call C implementation
-      result = local_search_c(inst$search_space$param_set, control)
-      
-      # Convert result back to data.table format and update points
-      result_dt = as.data.table(result)
-      colnames(result_dt) = c(inst$archive$cols_x, inst$archive$cols_y)
-      
-      # Update the points with the optimized values
-      points = result_dt
+      control = self$param_set$values
+      control$obj_mult = inst$objective_multiplicator
+      .Call("c_local_search", inst$search_space, control, inst, PACKAGE = "bbotk")
     }
   )
 )
 
-mlr_optimizers$add("local_search", OptimizerBatchLocalSearch2) 
+mlr_optimizers$add("local_search_2", OptimizerBatchLocalSearch2)
