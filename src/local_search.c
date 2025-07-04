@@ -7,15 +7,17 @@
 
 /* 
 //FIXME:
-need to use rng from R
-make sure we free all malloced memory
-can we get rid of level_names?
-make sure that random_int is really uniform
-we have to be careful if there are trafos or other weird thing in the search space??
+    * need to use rng from R
+    * we sure that random_int is really uniform
+    * make sure we free all malloced memory
+    * have to be careful if there are trafos or other weird thing in the search space??
+    * terminator exception is not handled
+    * we need to be sure that levels in R always are without gaps (ie no NA)
+    * is the LS somehow elitist?
 */
 
 // Debug printer system - can be switched on/off
-#define DEBUG_ENABLED 0  // Set to 0 to disable all debug output
+#define DEBUG_ENABLED 1  // Set to 0 to disable all debug output
 
 #if DEBUG_ENABLED
 #define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)
@@ -335,17 +337,17 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
         }
     }
     
-    // Now mutate one parameter for each neighbor (except the first which is a copy)
+    // Now mutate one parameter for each neighbor 
     for (int i = 0; i < n_searches; i++) {
-        for (int k = 1; k < n_neighs; k++) {
+        for (int k = 0; k < n_neighs; k++) {
             int neighbor_idx = i * n_neighs + k;
             int param_idx = random_int(0, ss->n_params - 1);
             int param_class = ss->param_classes[param_idx];
             SEXP s_pop_col = VECTOR_ELT(s_pop_x, param_idx);
-            SEXP neighbor_col = VECTOR_ELT(s_neighs_x, param_idx);
+            SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, param_idx);
             if (param_class == 0) { // ParamDbl
                 double* pop_col = REAL(s_pop_col);
-                double* neighbor_ne = REAL(neighbor_col);
+                double* neigh_col = REAL(s_neigh_col);
                 double value = pop_col[i];
                 double lower = ss->lower_bounds[param_idx];
                 double upper = ss->upper_bounds[param_idx];
@@ -356,10 +358,10 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
                 double result = value_norm * (upper - lower) + lower;
                 if (result < lower) result = lower;
                 if (result > upper) result = upper;
-                neighbor_ne[neighbor_idx] = result;
+                neigh_col[neighbor_idx] = result;
             } else if (param_class == 1) { // ParamInt
                 int* pop_col = INTEGER(s_pop_col);
-                int* neighbor_ne = INTEGER(neighbor_col);
+                int* neigh_col = INTEGER(s_neigh_col);
                 double value = (double)pop_col[i];
                 double lower = ss->lower_bounds[param_idx];
                 double upper = ss->upper_bounds[param_idx];
@@ -378,11 +380,11 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
                 do {
                     new_level = random_int(1, ss->n_levels[param_idx]); // 1-based
                 } while (new_level == current_level && ss->n_levels[param_idx] > 1);
-                int* neighbor_ne = INTEGER(neighbor_col);
+                int* neighbor_ne = INTEGER(s_neigh_col);
                 neighbor_ne[neighbor_idx] = new_level;
             } else { // ParamLgl
                 int* pop_col = LOGICAL(s_pop_col);
-                int* neighbor_ne = LOGICAL(neighbor_col);
+                int* neigh_col = LOGICAL(s_neigh_col);
                 int current_level = pop_col[i] ? 1 : 0;
                 int new_level;
                 do {
@@ -490,7 +492,6 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst) {
     }
 
     generate_random_points(n_searches, s_pop_x, &ss);
-    print_dt(s_pop_x, 10);
     
       
     // Main local search loop
@@ -498,7 +499,9 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst) {
         DEBUG_PRINT("step=%i\n", step);
         // Generate neighbors for all current points in pre-allocated data.table
         generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
-                
+
+        print_dt(s_neighs_x, 10);
+
         // Create the function call
         SEXP call = PROTECT(Rf_lang2(s_eval_batch, s_neighs_x));
         
