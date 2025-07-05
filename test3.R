@@ -36,11 +36,11 @@ ppp = get_private(mylrn)$.predict
 
 sm_obj = ObjectiveRFunDt$new(
   fun = function(xdt) {
-    #p = mylrn$predict_newdata(xdt)
-    #data.table(y = p$data$response)
-    ttt = as_task_regr(xdt, target = "y")
-    ppp(task = ttt)
+    p = mylrn$predict_newdata(xdt)
     data.table(y = p$data$response)
+    # ttt = as_task_regr(xdt, target = "y")
+    # ppp(task = ttt)
+    # data.table(y = p$data$response)
   },
   domain = search_space,
   codomain = codomain,
@@ -50,9 +50,9 @@ sm_obj = ObjectiveRFunDt$new(
 #################################################################
 
 
-n_searches = 2
-n_neighbors = 2
-n_steps = 2
+n_searches = 10
+n_neighbors = 10
+n_steps = 10
 # n_searches = 10
 # n_neighbors = 10
 # n_steps = 300
@@ -93,14 +93,14 @@ print(nrow(aa))
 
 ##################################################
 
-# cat("Running microbenchmark...\n")
+cat("Running microbenchmark...\n")
 
-# mb = microbenchmark(times = 5, unit = "ms", 
-#   ls1 = {ii$clear(); oo1$optimize(ii)},
-#   ls2 = {ii$clear(); oo2$optimize(ii)}
-# )
+mb = microbenchmark(times = 5, unit = "ms", 
+  ls1 = {ii$clear(); oo1$optimize(ii)},
+  ls2 = {ii$clear(); oo2$optimize(ii)}
+)
 
-# print(mb)
+print(mb)
 
 ##################################################
 

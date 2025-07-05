@@ -510,19 +510,19 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
             if (param_class == 0) { // ParamDbl
                 double* neigh_col = REAL(s_neigh_col);
                 double* pop_col = REAL(s_pop_col);
-                pop_col[i] = neigh_col[best_idx];
+                pop_col[pop_i] = neigh_col[best_i];
             } else if (param_class == 1) { // ParamInt
                 int* neigh_col = INTEGER(s_neigh_col);
                 int* pop_col = INTEGER(s_pop_col);
-                pop_col[i] = neigh_col[best_idx];
+                pop_col[pop_i] = neigh_col[best_i];
             } else if (param_class == 2) { // ParamFct
                 int* neigh_col = INTEGER(s_neigh_col);
                 int* pop_col = INTEGER(s_pop_col);
-                pop_col[i] = neigh_col[best_idx];
+                pop_col[pop_i] = neigh_col[best_i];
             } else { // ParamLgl
                 int* neigh_col = LOGICAL(s_neigh_col);
                 int* pop_col = LOGICAL(s_pop_col);
-                pop_col[i] = neigh_col[best_idx];
+                pop_col[pop_i] = neigh_col[best_i];
             }
         }
     }
