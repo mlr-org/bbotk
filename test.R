@@ -3,20 +3,18 @@ library(devtools)
 library(paradox)
 library(microbenchmark)
 
-loglevel = "info"
-lgr::get_logger()$set_threshold(loglevel)
-lgr::get_logger("bbotk")$set_threshold(loglevel)
-lgr::get_logger("mlr3")$set_threshold(loglevel)
+set.seed(124)
 
-
+loglevel = "warn"
+lgr::get_logger("mlr3/bbotk")$set_threshold(loglevel)
 
 square_function = function(xs) {
-  list(objective = xs$x^2 + xs$y^2)
+  list(objective = xs$x1^2 + xs$x2^2)
 }
 
 search_space = ps(
-  x = p_dbl(lower = -2, upper = 2),
-  y = p_dbl(lower = -2, upper = 2)
+  x1 = p_dbl(lower = -2, upper = 2),
+  x2 = p_dbl(lower = -2, upper = 2)
 )
 
 codomain = ps(objective = p_dbl(tags = "minimize"))
@@ -27,18 +25,14 @@ objective = ObjectiveRFun$new(
   codomain = codomain
 )
 
+tt = trm("none")
+
 instance = OptimInstanceBatchSingleCrit$new(
   objective = objective,
   search_space = search_space,
-  terminator = trm("evals", n_evals = 30)
+  terminator = tt
 )
 
-optimizer = opt("local_search",
-  n_initial_points = 3,
-  initial_random_sample_size = 3,
-  neighbors_per_point = 2,
-  mutation_sd = 0.1
-)
 
 optimizer$optimize(instance)
 result = instance$result
