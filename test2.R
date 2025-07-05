@@ -5,7 +5,7 @@ load_all(".")
 
 set.seed(123)
 
-loglevel = "info"
+loglevel = "warn"
 lgr::get_logger("mlr3/bbotk")$set_threshold(loglevel)
 
 square_function = function(xs) {
@@ -34,10 +34,10 @@ ii = OptimInstanceBatchSingleCrit$new(
 )
 
 oo = opt("local_search_2",
-  n_searches = 10,
-  n_neighbors = 10,
+  n_searches = 2,
+  n_neighbors = 2,
   mut_sd = 0.1,
-  n_steps = 10
+  n_steps = 1
 )
 
 oo$optimize(ii)

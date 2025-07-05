@@ -106,10 +106,10 @@ OptimizerBatchLocalSearch2 = R6Class("OptimizerBatchLocalSearch2",
     .optimize = function(inst) {
       ps = self$param_set
       psv = ps$values
-      
       control = self$param_set$values
       control$obj_mult = inst$objective_multiplicator
-      .Call("c_local_search", inst$search_space, control, inst, PACKAGE = "bbotk")
+      init_points = generate_design_random(inst$search_space, n = control$n_searches)$data
+      .Call("c_local_search", inst$search_space, control, inst, init_points, PACKAGE = "bbotk")
     }
   )
 )
