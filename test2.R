@@ -34,10 +34,10 @@ ii = OptimInstanceBatchSingleCrit$new(
 )
 
 oo = opt("local_search_2",
-  n_searches = 5,
-  n_neighbors = 5,
+  n_searches = 10,
+  n_neighbors = 10,
   mut_sd = 0.1,
-  n_steps = 5
+  n_steps = 10
 )
 
 oo$optimize(ii)
