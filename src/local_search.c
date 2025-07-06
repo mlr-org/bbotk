@@ -7,6 +7,7 @@
 
 /* 
 //FIXME:
+    * make most funs static
     * R_alloc automatically handles memory cleanup
     * have to be careful if there are trafos or other weird thing in the search space??
     * terminator exception is not handled
@@ -68,6 +69,29 @@ SEXP get_dt_col_by_name(SEXP dt, const char *name) {
 
 SEXP get_r6_el_by_name(SEXP r6, const char *str) {
     return Rf_findVar(Rf_install(str), r6);
+}
+
+////////// error handling //////////
+
+static SEXP try_eval(void *data) {
+    return Rf_eval((SEXP) data, R_GlobalEnv);
+}
+
+static SEXP catch_condition(SEXP s_condition, void *data) {
+    SEXP s_cls = Rf_getAttrib(s_condition, R_ClassSymbol);
+    const char *cls = CHAR(STRING_ELT(s_cls, 0));
+    Rprintf("Caught R condition of class: %s\n", cls);
+    
+    // if the terminator stopped use, we stop, otherwise we raise error back to R
+    if (!Rf_inherits(s_condition, "terminator_exception")) {
+        SEXP stop_call = Rf_lang2(Rf_install("stop"), s_condition);
+        Rf_eval(stop_call, R_GlobalEnv);
+    }
+    return R_NilValue;
+}
+
+SEXP safe_eval(SEXP expr) {
+    return R_tryCatchError(try_eval, expr, catch_condition, NULL);
 }
 
 void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
@@ -556,12 +580,15 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
         // print_dt(s_neighs_x, 10);
 
         // Create the function call
-        SEXP call = PROTECT(Rf_lang2(s_eval_batch, s_neighs_x));
-        
-        SEXP s_neighs_y = PROTECT(Rf_eval(call, s_inst));
+        SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_neighs_x));
+        SEXP s_neighs_y = PROTECT(safe_eval(s_call));
+        if (s_neighs_y == R_NilValue) { 
+            UNPROTECT(2); // s_call, s_neighs_y
+            break;        
+        }
         double* neighs_y = REAL(VECTOR_ELT(s_neighs_y, 0));
         copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x, &ss, obj_mult);
-        UNPROTECT(2); // s_neighs_y, call
+        UNPROTECT(2); // s_call, s_neighs_y
     }
 
     UNPROTECT(2); // s_pop_x, s_neighs_x
