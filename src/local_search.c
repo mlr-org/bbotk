@@ -32,8 +32,8 @@ typedef struct {
     double* lower;
     double* upper;
     int* n_levels;
-    char*** level_names;  // Array of arrays of level names for factors, only used for factors (not logicals)
-    char** param_names;  // Parameter names for data.table columns
+    const char*** level_names;  // Array of arrays of level names for factors, only used for factors (not logicals)
+    const char** param_names;  // Parameter names for data.table columns
     int* mutable_params;  // 1 if parameter can be mutated, 0 if not (due to dependencies)
     // for efficient random selection
     int n_mutable_params;
@@ -130,29 +130,23 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
         }
     }
 
-    // copy param_names
-    ss->param_names = (char**) R_alloc(ss->n_params, sizeof(char*));
+    // copy param_names (just store pointers to R's string pool)
+    ss->param_names = (const char**) R_alloc(ss->n_params, sizeof(const char*));
     SEXP s_ids = get_dt_col_by_name(s_data, "id");
     for (int i = 0; i < ss->n_params; i++) {
-        const char* param_name = CHAR(STRING_ELT(s_ids, i));
-        int len = strlen(param_name);
-        ss->param_names[i] = (char*) R_alloc(len + 1, sizeof(char));
-        strcpy(ss->param_names[i], param_name);
+        ss->param_names[i] = CHAR(STRING_ELT(s_ids, i));
     }
 
-    // copy level_names
-    ss->level_names = (char***) R_alloc(ss->n_params, sizeof(char**));
+    // copy level_names (just store pointers to R's string pool)
+    ss->level_names = (const char***) R_alloc(ss->n_params, sizeof(const char**));
     SEXP s_ps_levels = get_dt_col_by_name(s_data, "levels");
     for (int i = 0; i < ss->n_params; i++) {
         if (ss->param_classes[i] == 2 ) { // ParamFct 
             SEXP s_p_levels = VECTOR_ELT(s_ps_levels, i);
             int n_levels = ss->n_levels[i];
-            ss->level_names[i] = (char**) R_alloc(n_levels, sizeof(char*));
+            ss->level_names[i] = (const char**) R_alloc(n_levels, sizeof(const char*));
             for (int k = 0; k < n_levels; k++) {
-                const char* level_name = CHAR(STRING_ELT(s_p_levels, k));
-                int len = strlen(level_name);
-                ss->level_names[i][k] = (char*) R_alloc(len + 1, sizeof(char));
-                strcpy(ss->level_names[i][k], level_name);
+                ss->level_names[i][k] = CHAR(STRING_ELT(s_p_levels, k));
             }
         } else {
             ss->level_names[i] = NULL;
@@ -211,7 +205,7 @@ void print_search_space(SearchSpace* ss) {
         const char* mutable_status = ss->mutable_params[i] ? "Yes" : "No";
         
         if (ss->param_classes[i] == 2 || ss->param_classes[i] == 3) {
-            // Factor or Logical - show levels
+            // ParamFct or ParamLgl - show levels
             Rprintf("%-15s %-10s %-12s %-12s ", 
                        ss->param_names[i], type_name, "N/A", "N/A");
             if (ss->level_names[i] != NULL) {
@@ -236,11 +230,14 @@ int is_na_value(SEXP col, int idx) {
     switch (TYPEOF(col)) {
         case REALSXP:
             return ISNA(REAL(col)[idx]);
-        case INTSXP:  // covers factors too
+        case INTSXP:  // covers integers
             return ISNA(INTEGER(col)[idx]);
         case LGLSXP:
             return ISNA(LOGICAL(col)[idx]);
+        case STRSXP:
+            return STRING_ELT(col, idx) == NA_STRING;
         default:
+            DEBUG_PRINT("is_na_value: unknown type %d\n", TYPEOF(col));
             return 0; // Should not happen for our use case
     }
 }
@@ -273,18 +270,7 @@ SEXP generate_dt(int n, SearchSpace* ss) {
         } else if (param_class == 1) { // ParamInt
             col = PROTECT(allocVector(INTSXP, n));
         } else if (param_class == 2) { // ParamFct
-            col = PROTECT(allocVector(INTSXP, n));
-            // Set levels attribute
-            SEXP levels = PROTECT(allocVector(STRSXP, ss->n_levels[j]));
-            for (int k = 0; k < ss->n_levels[j]; k++) {
-                SET_STRING_ELT(levels, k, mkChar(ss->level_names[j][k]));
-            }
-            setAttrib(col, R_LevelsSymbol, levels);
-            // Set class attribute
-            SEXP class = PROTECT(allocVector(STRSXP, 1));
-            SET_STRING_ELT(class, 0, mkChar("factor"));
-            setAttrib(col, R_ClassSymbol, class);
-            UNPROTECT(2); // levels, class
+            col = PROTECT(allocVector(STRSXP, n));
         } else { // ParamLgl
             col = PROTECT(allocVector(LGLSXP, n));
         }
@@ -340,22 +326,9 @@ void print_dt(SEXP dt, int nrows_max) {
                 case REALSXP:
                     Rprintf("%10.4f ", REAL(col)[i]);
                     break;
-                case INTSXP: {
-                    SEXP class_attr = getAttrib(col, R_ClassSymbol);
-                    if (!isNull(class_attr) && strcmp(CHAR(STRING_ELT(class_attr, 0)), "factor") == 0) {
-                        // Factor: print level name
-                        SEXP levels = getAttrib(col, R_LevelsSymbol);
-                        int idx = INTEGER(col)[i] - 1;
-                        if (idx >= 0 && idx < length(levels)) {
-                            Rprintf("%10s ", CHAR(STRING_ELT(levels, idx)));
-                        } else {
-                            Rprintf("%10s ", "NA");
-                        }
-                    } else {
-                        Rprintf("%10d ", INTEGER(col)[i]);
-                    }
+                case INTSXP:
+                    Rprintf("%10d ", INTEGER(col)[i]);
                     break;
-                }
                 case LGLSXP:
                     Rprintf("%10s ", LOGICAL(col)[i] ? "TRUE" : "FALSE");
                     break;
@@ -375,11 +348,12 @@ void print_dt(SEXP dt, int nrows_max) {
 
 // Generate neighbors for all current points in an existing data.table
 void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
-    DEBUG_PRINT("generate_s_neighs_x\n");
+    DEBUG_PRINT("generate_neighs\n");
     
     // Copy current points to neighbors -- we replicate each candidate n_neighs times
     // we iterate over the parameters / cols first
     for (int j = 0; j < ss->n_params; j++) {
+        DEBUG_PRINT("generate_neighs: param %d\n", j);
         int param_class = ss->param_classes[j];
         SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
         SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
@@ -401,9 +375,10 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
                     neigh_col[i_neigh] = pop_col[i_pop];
                 }
             }
-        } else if (param_class == 2) { // ParamFct
-            int* pop_col = INTEGER(s_pop_col);
-            int* neigh_col = INTEGER(s_neigh_col);
+        } else if (param_class == 2) {    // ParamFct
+            DEBUG_PRINT("ParamFct copy: s_pop_col type = %d, s_neigh_col type = %d\n", TYPEOF(s_pop_col), TYPEOF(s_neigh_col));
+            SEXP* pop_col = (SEXP*)DATAPTR(s_pop_col);
+            SEXP* neigh_col = (SEXP*)DATAPTR(s_neigh_col);
             for (int i_pop = 0; i_pop < n_searches; i_pop++) {
                 for (int k = 0; k < n_neighs; k++) {
                     int i_neigh = i_pop * n_neighs + k;
@@ -431,6 +406,7 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
         for (int k = 0; k < ss->n_mutable_params; k++) {
             int j = ss->mutable_indices[k];
             SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
+            DEBUG_PRINT("Checking parameter %d (%s) for NA, type = %d\n", j, ss->param_names[j], TYPEOF(s_neigh_col));
             if (!is_na_value(s_neigh_col, i_neigh)) {
                 valid_mutable_indices[n_valid_mutable++] = j;
             }
@@ -478,14 +454,19 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
                 }
             } else if (param_class == 2) {    // ParamFct
                 // sample uniformly from the other levels
-                int *neigh_col = INTEGER(s_neigh_col);
-                int current_level = neigh_col[i_neigh]; // 1-based
+                SEXP* neigh_col = (SEXP*)DATAPTR(s_neigh_col);
                 int n_levels = ss->n_levels[j];
                 if (n_levels > 1) {
-                  // use shift trick to sample uniformly from the other levels
-                  int new_level = random_int(1, n_levels - 1); // 1-based, excluding current
-                  if (new_level >= current_level) new_level++; // Shift up to skip current level
-                  neigh_col[i_neigh] = new_level;
+                    // Find current level index
+                    const char* current_level = CHAR(neigh_col[i_neigh]);
+                    int current_idx = 0;
+                    while (current_idx < n_levels && strcmp(current_level, ss->level_names[j][current_idx]) != 0) {
+                        current_idx++;
+                    }
+                    // Sample from other levels using shift trick
+                    int new_idx = random_int(0, n_levels - 2);
+                    if (new_idx >= current_idx) new_idx++;
+                    neigh_col[i_neigh] = mkChar(ss->level_names[j][new_idx]);
                 }
             } else { // ParamLgl
                 // flip the value
@@ -520,7 +501,7 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
             }
         }
         
-        DEBUG_PRINT("Best neighbor for search %d is at index %d with value %f\n", i, best_idx, best_y);
+        DEBUG_PRINT("Best neighbor for search %d is at index %d with value %f\n", pop_i, best_i, best_y);
    
         // Copy the best neighbor to the population
         for (int j = 0; j < ss->n_params; j++) {
@@ -537,8 +518,8 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
                 int* pop_col = INTEGER(s_pop_col);
                 pop_col[pop_i] = neigh_col[best_i];
             } else if (param_class == 2) { // ParamFct
-                int* neigh_col = INTEGER(s_neigh_col);
-                int* pop_col = INTEGER(s_pop_col);
+                SEXP* neigh_col = (SEXP*)DATAPTR(s_neigh_col);
+                SEXP* pop_col = (SEXP*)DATAPTR(s_pop_col);
                 pop_col[pop_i] = neigh_col[best_i];
             } else { // ParamLgl
                 int* neigh_col = LOGICAL(s_neigh_col);
@@ -550,6 +531,8 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
     
     DEBUG_PRINT("copy_best_neighs_to_pop done\n");
 }
+
+
 
 // R wrapper function - complete local search implementation
 SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
@@ -566,6 +549,7 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
 
     // Use duplicate to copy initial points
     SEXP s_pop_x = PROTECT(duplicate(s_initial_x));
+    // Convert any factor columns to character columns for ParamFct
     SEXP s_neighs_x = generate_dt(n_searches * n_neighs, &ss);
     SEXP s_eval_batch = get_r6_el_by_name(s_inst, "eval_batch");
 
