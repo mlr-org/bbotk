@@ -8,12 +8,9 @@
 /* 
 //FIXME:
     * make most funs static
-    * R_alloc automatically handles memory cleanup
     * have to be careful if there are trafos or other weird thing in the search space??
-    * terminator exception is not handled
     * we need to be sure that levels in R always are without gaps (ie no NA)
     * is the LS somehow elitist?
-    * we have to check that we have at least some mutable parameters
     * we really need unit tests
         numeric, mixed case, hierachical, with trafos
     * check that we use obj_mult correctly
