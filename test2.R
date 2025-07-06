@@ -9,23 +9,23 @@ loglevel = "warn"
 lgr::get_logger("mlr3/bbotk")$set_threshold(loglevel)
 
 
-square_function = function(xdt) {
+objfun = function(xdt) {
   data.table(objective = xdt$x1^2 + xdt$x2^2)
 }
 
-search_space = ps(
+ss = ps(
   x1 = p_dbl(lower = -2, upper = 2),
   x2 = p_dbl(lower = -2, upper = 2)
 )
 
-codomain = ps(objective = p_dbl(tags = "minimize"))
+cd = ps(objective = p_dbl(tags = "minimize"))
 
 # FIXME: sowoh die instance wie die objective checken ob die values korrekt sind
 
-objective = ObjectiveRFunDt$new(
-  fun = square_function,
-  domain = search_space,
-  codomain = codomain,
+obj = ObjectiveRFunDt$new(
+  fun = objfun,
+  domain = ss,
+  codomain = cd,
   check_values = FALSE
 )
 
@@ -37,8 +37,8 @@ mut_sd = 0.1
 tt = trm("evals", n_evals = n_searches * n_neighbors * n_steps)
 
 ii = OptimInstanceBatchSingleCrit$new(
-  objective = objective,
-  search_space = search_space,
+  objective = obj,
+  search_space = ss,
   terminator = tt,
   check_values = FALSE
 )
@@ -58,14 +58,14 @@ oo2 = opt("local_search_2",
   n_steps = n_steps
 )
 
-oo2$optimize(ii)
-result = ii$result
-aa = as.data.table(ii$archive$data)
-cat("Optimization completed!\n")
-cat("Best point found:\n")
-print(result)
-print("Number of evaluations:")
-print(nrow(aa))
+# oo2$optimize(ii)
+# result = ii$result
+# aa = as.data.table(ii$archive$data)
+# cat("Optimization completed!\n")
+# cat("Best point found:\n")
+# print(result)
+# print("Number of evaluations:")
+# print(nrow(aa))
 
 ##################################################
 
