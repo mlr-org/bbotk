@@ -5,9 +5,40 @@
 #include <string.h>
 #include <math.h>
 
+
+/* 
+Local Search 
+
+Implements a local search very similar to what is used in SMAC for acquisition function optimization
+of mixed type search spaces with hierarchical dependencies.
+
+We run "n_searches" in parallel. Each search runs "n_steps" iterations.
+For each search in every iteration we generate "n_neighs" neighbors.
+A neighbor is the current point, but with exactly one parameter mutated.
+
+-------------------------------------------------------
+
+Mutation works like this:
+For num params: we scale to 0,1, add Gaussian noise with sd "mut_sd", and scale back.
+We then clip to the lower and upper bounds.
+For int params: We do the same as for numeric parameters, but round at the end. 
+For factor params: We sample a new level from the unused levels of the parameter.
+For logical params: We flip the bit. 
+
+-------------------------------------------------------
+
+After the neighbors are generated, we evaluate them. 
+We go to the best neighbor, or stay at the current point if the best neighbor is worse. 
+
+-------------------------------------------------------
+
+The function always minimizes. If the objective is to be maximized, we multiply with "obj_mult"
+(which will be -1).
+
+*/
+
 /* 
 //FIXME:
-    * make most funs static
     * have to be careful if there are trafos or other weird thing in the search space??
     * we need to be sure that levels in R always are without gaps (ie no NA)
     * is the LS somehow elitist?
@@ -42,7 +73,7 @@ typedef struct {
 
 
 
-SEXP get_list_el_by_name(SEXP list, const char *name) {
+static SEXP get_list_el_by_name(SEXP list, const char *name) {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;
     for (i = 0; i < length(list); i++) {
@@ -54,7 +85,7 @@ SEXP get_list_el_by_name(SEXP list, const char *name) {
     return elmt;
 }
 
-SEXP get_dt_col_by_name(SEXP dt, const char *name) {
+static SEXP get_dt_col_by_name(SEXP dt, const char *name) {
     SEXP col_names = getAttrib(dt, R_NamesSymbol);
     for (int i = 0; i < length(dt); i++) {
         if (strcmp(CHAR(STRING_ELT(col_names, i)), name) == 0) {
@@ -64,7 +95,7 @@ SEXP get_dt_col_by_name(SEXP dt, const char *name) {
     return R_NilValue; // Column not found
 }
 
-SEXP get_r6_el_by_name(SEXP r6, const char *str) {
+static SEXP get_r6_el_by_name(SEXP r6, const char *str) {
     return Rf_findVar(Rf_install(str), r6);
 }
 
@@ -86,11 +117,11 @@ static SEXP catch_condition(SEXP s_condition, void *data) {
     return R_NilValue;
 }
 
-SEXP safe_eval(SEXP expr) {
+static SEXP safe_eval(SEXP expr) {
     return R_tryCatchError(try_eval, expr, catch_condition, NULL);
 }
 
-void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
+static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
 
     ss->n_params = asInteger(get_r6_el_by_name(s_ss, "length"));
     SEXP s_data = get_r6_el_by_name(s_ss, "data");
@@ -228,7 +259,7 @@ void print_search_space(SearchSpace* ss) {
 
 
 // Helper function to check if a value is NA
-int is_na_value(SEXP col, int idx) {
+static int is_na_value(SEXP col, int idx) {
     switch (TYPEOF(col)) {
         case REALSXP:
             return ISNA(REAL(col)[idx]);
@@ -246,23 +277,18 @@ int is_na_value(SEXP col, int idx) {
 
 // Helper function to get random number from R, they respect the RNG state and the seed
 // Helper function to get random integer between a and b (inclusive)
-int random_int(int a, int b) {
+static int random_int(int a, int b) {
     // Use proper integer arithmetic to avoid bias
     return a + (int)(unif_rand() * (b - a + 1));
 }
 
-// Helper function to get random double between min and max
-double random_unif(double min, double max) {
-    return min + unif_rand() * (max - min);
-}
-
 // Helper function to get random normal distribution
-double random_normal(double mean, double sd) {
+static double random_normal(double mean, double sd) {
     return rnorm(mean, sd);
 }
 
 // Helper function to create an uninitialized data.table with correct column types and attributes
-SEXP generate_dt(int n, SearchSpace* ss) {
+static SEXP generate_dt(int n, SearchSpace* ss) {
     SEXP dt = PROTECT(allocVector(VECSXP, ss->n_params));
     for (int j = 0; j < ss->n_params; j++) {
         int param_class = ss->param_classes[j];
@@ -350,7 +376,7 @@ void print_dt(SEXP dt, int nrows_max) {
 }
 */
 // Generate neighbors for all current points in an existing data.table
-void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
+static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
     DEBUG_PRINT("generate_neighs\n");
     
     // Copy current points to neighbors -- we replicate each candidate n_neighs times
@@ -461,7 +487,7 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
 }
 
 // Copy the best neighbor from each block into the population
-void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, SearchSpace* ss, double obj_mult) {
+static void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, SearchSpace* ss, double obj_mult) {
     DEBUG_PRINT("copy_best_neighs_to_pop\n");
     
     for (int pop_i = 0; pop_i < n_searches; pop_i++) {

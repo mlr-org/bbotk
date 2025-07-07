@@ -33,7 +33,7 @@ ii = OptimInstanceBatchSingleCrit$new(
   terminator = tt
 )
 
-oo = opt("local_search_2",
+oo = opt("local_search",
   n_searches = 2,
   n_neighbors = 2,
   mut_sd = 0.1,
