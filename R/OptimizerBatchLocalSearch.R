@@ -91,7 +91,7 @@ OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
       param_set$values = list(n_searches = 10L, n_steps = 10L, n_neighbors = 100L, mut_sd = 0.1)
 
       super$initialize(
-        id = "local_search_2",
+        id = "local_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
         properties = c("dependencies", "single-crit"),   # FIXME: we cannot handle deps?
