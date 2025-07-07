@@ -75,9 +75,8 @@ static SEXP try_eval(void *data) {
 }
 
 static SEXP catch_condition(SEXP s_condition, void *data) {
-    SEXP s_cls = Rf_getAttrib(s_condition, R_ClassSymbol);
-    const char *cls = CHAR(STRING_ELT(s_cls, 0));
-    Rprintf("Caught R condition of class: %s\n", cls);
+    DEBUG_PRINT("Caught R condition of class: %s\n", 
+        CHAR(STRING_ELT(Rf_getAttrib(s_condition, R_ClassSymbol);, 0)));
     
     // if the terminator stopped use, we stop, otherwise we raise error back to R
     if (!Rf_inherits(s_condition, "terminator_exception")) {
@@ -185,6 +184,7 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
 }
 
 // Print search space information in a readable format
+/* 
 void print_search_space(SearchSpace* ss) {
     Rprintf("=== Search Space Information ===\n");
     Rprintf("Number of parameters: %d\n", ss->n_params);
@@ -224,6 +224,8 @@ void print_search_space(SearchSpace* ss) {
     }
     Rprintf("================================================================\n");
 }
+*/
+
 
 // Helper function to check if a value is NA
 int is_na_value(SEXP col, int idx) {
@@ -300,6 +302,7 @@ SEXP generate_dt(int n, SearchSpace* ss) {
 }
 
 // Helper function to print a data.table (for debugging)
+/*
 void print_dt(SEXP dt, int nrows_max) {
     int ncol = length(dt);
     if (ncol == 0) {
@@ -345,7 +348,7 @@ void print_dt(SEXP dt, int nrows_max) {
         Rprintf("... (%d more rows)\n", nrow - nrows);
     }
 }
-
+*/
 // Generate neighbors for all current points in an existing data.table
 void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
     DEBUG_PRINT("generate_neighs\n");
