@@ -11,6 +11,7 @@ Local Search
 
 Implements a local search very similar to what is used in SMAC for acquisition function optimization
 of mixed type search spaces with hierarchical dependencies.
+https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py
 
 We run "n_searches" in parallel. Each search runs "n_steps" iterations.
 For each search in every iteration we generate "n_neighs" neighbors.
@@ -32,23 +33,19 @@ We go to the best neighbor, or stay at the current point if the best neighbor is
 
 -------------------------------------------------------
 
-The function always minimizes. If the objective is to be maximized, we multiply with "obj_mult"
-(which will be -1).
+The function always minimizes. If the objective is to be maximized, we handle it 
+by multiplying with "obj_mult" (which will be -1).
 
 */
 
 /* 
 //FIXME:
-    * have to be careful if there are trafos or other weird thing in the search space??
-    * we need to be sure that levels in R always are without gaps (ie no NA)
-    * is the LS somehow elitist?
-    * we really need unit tests
-        numeric, mixed case, hierachical, with trafos
-    * check that we use obj_mult correctly
+    * LS must be elitist
+    * we need to also mutate parent params
 */
 
 // Debug printer system - can be switched on/off
-#define DEBUG_ENABLED 0  // Set to 1 to enable debug output
+#define DEBUG_ENABLED 1  // Set to 1 to enable debug output
 
 #if DEBUG_ENABLED
 #define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)
@@ -107,7 +104,7 @@ static SEXP try_eval(void *data) {
 
 static SEXP catch_condition(SEXP s_condition, void *data) {
     DEBUG_PRINT("Caught R condition of class: %s\n", 
-        CHAR(STRING_ELT(Rf_getAttrib(s_condition, R_ClassSymbol);, 0)));
+        CHAR(STRING_ELT(Rf_getAttrib(s_condition, R_ClassSymbol), 0)));
     
     // if the terminator stopped use, we stop, otherwise we raise error back to R
     if (!Rf_inherits(s_condition, "terminator_exception")) {
@@ -328,7 +325,7 @@ static SEXP generate_dt(int n, SearchSpace* ss) {
 }
 
 // Helper function to print a data.table (for debugging)
-/*
+
 void print_dt(SEXP dt, int nrows_max) {
     int ncol = length(dt);
     if (ncol == 0) {
@@ -374,7 +371,7 @@ void print_dt(SEXP dt, int nrows_max) {
         Rprintf("... (%d more rows)\n", nrow - nrows);
     }
 }
-*/
+
 // Generate neighbors for all current points in an existing data.table
 static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
     DEBUG_PRINT("generate_neighs\n");
@@ -382,7 +379,6 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
     // Copy current points to neighbors -- we replicate each candidate n_neighs times
     // we iterate over the parameters / cols first
     for (int j = 0; j < ss->n_params; j++) {
-        DEBUG_PRINT("generate_neighs: param %d\n", j);
         int param_class = ss->param_classes[j];
         SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
         SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
@@ -401,6 +397,8 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
             }
         }
     }
+    DEBUG_PRINT("copied %d points to %d neighbors\n", n_searches, n_searches * n_neighs);
+    print_dt(s_neighs_x, 10);
     
     // Now mutate one parameter for each neighbor 
     for (int i_neigh = 0; i_neigh < n_searches * n_neighs; i_neigh++) {
@@ -411,7 +409,6 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
         for (int k = 0; k < ss->n_mutable_params; k++) {
             int j = ss->mutable_indices[k];
             SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
-            DEBUG_PRINT("Checking parameter %d (%s) for NA, type = %d\n", j, ss->param_names[j], TYPEOF(s_neigh_col));
             if (!is_na_value(s_neigh_col, i_neigh)) {
                 valid_mutable_indices[n_valid_mutable++] = j;
             }
@@ -487,13 +484,15 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
 }
 
 // Copy the best neighbor from each block into the population
-static void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, SearchSpace* ss, double obj_mult) {
+static void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y, 
+    SEXP s_pop_x, double *pop_y, SearchSpace* ss, double obj_mult) {
+
     DEBUG_PRINT("copy_best_neighs_to_pop\n");
     
     for (int pop_i = 0; pop_i < n_searches; pop_i++) {
         // Find the best neighbor in this block
         int best_i = -1; 
-        double best_y = INFINITY;
+        double best_y = pop_y[pop_i] * obj_mult;
         
         for (int k = 0; k < n_neighs; k++) {
             int neigh_i = pop_i * n_neighs + k;
@@ -504,31 +503,34 @@ static void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_
                 best_i = neigh_i;
             }
         }
-        
-        DEBUG_PRINT("Best neighbor for search %d is at index %d with value %f\n", pop_i, best_i, best_y);
-   
-        // Copy the best neighbor to the population
-        for (int j = 0; j < ss->n_params; j++) {
-            int param_class = ss->param_classes[j];
-            SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
-            SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
-            
-            if (param_class == 0) { // ParamDbl
-                REAL(s_pop_col)[pop_i] = REAL(s_neigh_col)[best_i];
-            } else if (param_class == 1) { // ParamInt
-                INTEGER(s_pop_col)[pop_i] = INTEGER(s_neigh_col)[best_i];
-            } else if (param_class == 2) { // ParamFct
-                SET_STRING_ELT(s_pop_col, pop_i, STRING_ELT(s_neigh_col, best_i));
-            } else { // ParamLgl
-                LOGICAL(s_pop_col)[pop_i] = LOGICAL(s_neigh_col)[best_i];
+
+        if (best_i == -1) {
+            DEBUG_PRINT("No better neighbor found, keep current point: %d\n", pop_i);
+            continue;
+        } else {
+            // Copy the best neighbor to the population
+            DEBUG_PRINT("Best neighbor for search %d is at index %d with value %f\n", pop_i, best_i, best_y);
+            for (int j = 0; j < ss->n_params; j++) {
+                int param_class = ss->param_classes[j];
+                SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
+                SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
+                
+                if (param_class == 0) { // ParamDbl
+                    REAL(s_pop_col)[pop_i] = REAL(s_neigh_col)[best_i];
+                } else if (param_class == 1) { // ParamInt
+                    INTEGER(s_pop_col)[pop_i] = INTEGER(s_neigh_col)[best_i];
+                } else if (param_class == 2) { // ParamFct
+                    SET_STRING_ELT(s_pop_col, pop_i, STRING_ELT(s_neigh_col, best_i));
+                } else { // ParamLgl
+                    LOGICAL(s_pop_col)[pop_i] = LOGICAL(s_neigh_col)[best_i];
+                }
             }
+            pop_y[pop_i] = best_y;
         }
     }
     
     DEBUG_PRINT("copy_best_neighs_to_pop done\n");
 }
-
-
 
 // R wrapper function - complete local search implementation
 SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
@@ -545,13 +547,31 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
 
     // Use duplicate to copy initial points
     SEXP s_pop_x = PROTECT(duplicate(s_initial_x));
-    // Convert any factor columns to character columns for ParamFct
+    print_dt(s_pop_x, 10);
+
     SEXP s_neighs_x = generate_dt(n_searches * n_neighs, &ss);
     SEXP s_eval_batch = get_r6_el_by_name(s_inst, "eval_batch");
 
+    SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_pop_x));
+    SEXP s_pop_y = PROTECT(safe_eval(s_call));
+
+    // we failed the terminator in the initial points, return 
+    if (s_pop_y == R_NilValue) {
+        UNPROTECT(3); // s_call, s_pop_x, s_pop_y
+        return R_NilValue;
+    }
+    // y-values for pop. we wil later write into this array
+    double *pop_y = (double *) R_alloc(n_searches, sizeof(double));
+    memcpy(pop_y, REAL(VECTOR_ELT(s_pop_y, 0)), n_searches * sizeof(double));
+    UNPROTECT(2); // s_call, s_pop_y
+
+    // we need to evaluate the initial points again, because we might have changed the factors
     // Main local search loop
-    for (int step = 0; step < n_steps; step++) {
+
+    for (int step = 0; step < n_steps;  step++) {
         DEBUG_PRINT("step=%i\n", step);
+        print_dt(s_pop_x, 10);
+
         // Generate neighbors for all current points in pre-allocated data.table
         generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
         // print_dt(s_neighs_x, 10);
@@ -559,12 +579,13 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
         // Create the function call
         SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_neighs_x));
         SEXP s_neighs_y = PROTECT(safe_eval(s_call));
-        if (s_neighs_y == R_NilValue) { 
-            UNPROTECT(2); // s_call, s_neighs_y
-            break;        
+        // copy if we have a valid result, otherwise we stop the loop
+        if (s_neighs_y != R_NilValue) { 
+            double* neighs_y = REAL(VECTOR_ELT(s_neighs_y, 0));
+            copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x, pop_y, &ss, obj_mult);
+        } else {
+            step = n_steps;
         }
-        double* neighs_y = REAL(VECTOR_ELT(s_neighs_y, 0));
-        copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x, &ss, obj_mult);
         UNPROTECT(2); // s_call, s_neighs_y
     }
 
