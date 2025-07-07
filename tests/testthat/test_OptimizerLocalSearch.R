@@ -205,3 +205,45 @@ test_that("OptimizerBatchLocalSearch works with errors", {
   optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
   expect_error(optimizer$optimize(instance))
 })
+
+test_that("OptimizerBatchLocalSearch works with minimization", {
+  domain = ps(
+    x1 = p_dbl(-5, 5),
+    x2 = p_dbl(-5, 5)
+  )
+
+  fun = function(xs) {
+    list(y =  xs$x1 * xs$x2)
+  }
+  codomain = ps(
+    y = p_dbl(lower = -25, upper = 25, tags = "minimize")
+  )
+  objective = ObjectiveRFun$new(fun = fun, domain = domain, codomain = codomain, properties = "single-crit")
+  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer$optimize(instance)
+
+  expect_true(all(instance$archive$data$x1 * instance$archive$data$x2 == instance$archive$data$y))
+  expect_equal(instance$archive$best()$y, min(instance$archive$data$y))
+})
+
+test_that("OptimizerBatchLocalSearch works with minimization", {
+  domain = ps(
+    x1 = p_dbl(-5, 5),
+    x2 = p_dbl(-5, 5)
+  )
+
+  fun = function(xs) {
+    list(y =  xs$x1 * xs$x2)
+  }
+  codomain = ps(
+    y = p_dbl(lower = -25, upper = 25, tags = "maximize")
+  )
+  objective = ObjectiveRFun$new(fun = fun, domain = domain, codomain = codomain, properties = "single-crit")
+  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer$optimize(instance)
+
+  expect_true(all(instance$archive$data$x1 * instance$archive$data$x2 == instance$archive$data$y))
+  expect_equal(instance$archive$best()$y, max(instance$archive$data$y))
+})
