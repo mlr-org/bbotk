@@ -360,41 +360,17 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
         int param_class = ss->param_classes[j];
         SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
         SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
-        if (param_class == 0) { // ParamDbl
-            double* pop_col = REAL(s_pop_col);
-            double* neigh_col = REAL(s_neigh_col);
-            for (int i_pop = 0; i_pop < n_searches; i_pop++) {
-                for (int k = 0; k < n_neighs; k++) {
-                    int i_neigh = i_pop * n_neighs + k;
-                    neigh_col[i_neigh] = pop_col[i_pop];
-                }
-            }
-        } else if (param_class == 1) { // ParamInt
-            int* pop_col = INTEGER(s_pop_col);
-            int* neigh_col = INTEGER(s_neigh_col);
-            for (int i_pop = 0; i_pop < n_searches; i_pop++) {
-                for (int k = 0; k < n_neighs; k++) {
-                    int i_neigh = i_pop * n_neighs + k;
-                    neigh_col[i_neigh] = pop_col[i_pop];
-                }
-            }
-        } else if (param_class == 2) {    // ParamFct
-            DEBUG_PRINT("ParamFct copy: s_pop_col type = %d, s_neigh_col type = %d\n", TYPEOF(s_pop_col), TYPEOF(s_neigh_col));
-            SEXP* pop_col = (SEXP*)DATAPTR(s_pop_col);
-            SEXP* neigh_col = (SEXP*)DATAPTR(s_neigh_col);
-            for (int i_pop = 0; i_pop < n_searches; i_pop++) {
-                for (int k = 0; k < n_neighs; k++) {
-                    int i_neigh = i_pop * n_neighs + k;
-                    neigh_col[i_neigh] = pop_col[i_pop];
-                }
-            }
-        } else { // ParamLgl
-            int* pop_col = LOGICAL(s_pop_col);
-            int* neigh_col = LOGICAL(s_neigh_col);
-            for (int i_pop = 0; i_pop < n_searches; i_pop++) {
-                for (int k = 0; k < n_neighs; k++) {
-                    int i_neigh = i_pop * n_neighs + k;
-                    neigh_col[i_neigh] = pop_col[i_pop];
+        for (int i_pop = 0; i_pop < n_searches; i_pop++) {
+            for (int k = 0; k < n_neighs; k++) {
+                int i_neigh = i_pop * n_neighs + k;        
+                if (param_class == 0) { // ParamDbl
+                    REAL(s_neigh_col)[i_neigh] = REAL(s_pop_col)[i_pop];
+                } else if (param_class == 1) { // ParamInt
+                    INTEGER(s_neigh_col)[i_neigh] = INTEGER(s_pop_col)[i_pop];
+                } else if (param_class == 2) {    // ParamFct
+                    SET_STRING_ELT(s_neigh_col, i_neigh, STRING_ELT(s_pop_col, i_pop));
+                } else { // ParamLgl
+                    LOGICAL(s_neigh_col)[i_neigh] = LOGICAL(s_pop_col)[i_pop];
                 }
             }
         }
@@ -457,11 +433,10 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
                 }
             } else if (param_class == 2) {    // ParamFct
                 // sample uniformly from the other levels
-                SEXP* neigh_col = (SEXP*)DATAPTR(s_neigh_col);
                 int n_levels = ss->n_levels[j];
                 if (n_levels > 1) {
                     // Find current level index
-                    const char* current_level = CHAR(neigh_col[i_neigh]);
+                    const char* current_level = CHAR(STRING_ELT(s_neigh_col, i_neigh));
                     int current_idx = 0;
                     while (current_idx < n_levels && strcmp(current_level, ss->level_names[j][current_idx]) != 0) {
                         current_idx++;
@@ -469,7 +444,7 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
                     // Sample from other levels using shift trick
                     int new_idx = random_int(0, n_levels - 2);
                     if (new_idx >= current_idx) new_idx++;
-                    neigh_col[i_neigh] = mkChar(ss->level_names[j][new_idx]);
+                    SET_STRING_ELT(s_neigh_col, i_neigh, mkChar(ss->level_names[j][new_idx]));
                 }
             } else { // ParamLgl
                 // flip the value
@@ -513,21 +488,13 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
             SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
             
             if (param_class == 0) { // ParamDbl
-                double* neigh_col = REAL(s_neigh_col);
-                double* pop_col = REAL(s_pop_col);
-                pop_col[pop_i] = neigh_col[best_i];
+                REAL(s_pop_col)[pop_i] = REAL(s_neigh_col)[best_i];
             } else if (param_class == 1) { // ParamInt
-                int* neigh_col = INTEGER(s_neigh_col);
-                int* pop_col = INTEGER(s_pop_col);
-                pop_col[pop_i] = neigh_col[best_i];
+                INTEGER(s_pop_col)[pop_i] = INTEGER(s_neigh_col)[best_i];
             } else if (param_class == 2) { // ParamFct
-                SEXP* neigh_col = (SEXP*)DATAPTR(s_neigh_col);
-                SEXP* pop_col = (SEXP*)DATAPTR(s_pop_col);
-                pop_col[pop_i] = neigh_col[best_i];
+                SET_STRING_ELT(s_pop_col, pop_i, STRING_ELT(s_neigh_col, best_i));
             } else { // ParamLgl
-                int* neigh_col = LOGICAL(s_neigh_col);
-                int* pop_col = LOGICAL(s_pop_col);
-                pop_col[pop_i] = neigh_col[best_i];
+                LOGICAL(s_pop_col)[pop_i] = LOGICAL(s_neigh_col)[best_i];
             }
         }
     }
