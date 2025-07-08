@@ -5,10 +5,10 @@
 \alias{OptimizerBatchCmaes}
 \title{Optimization via Covariance Matrix Adaptation Evolution Strategy}
 \description{
-\code{OptimizerBatchCmaes} class that implements CMA-ES. Calls \code{\link[adagio:cmaes]{adagio::pureCMAES()}}
-from package \CRANpkg{adagio}. The algorithm is typically applied to search
-space dimensions between three and fifty. Lower search space dimensions might
-crash.
+\code{OptimizerBatchCmaes} class that implements CMA-ES.
+Calls \code{cma_es()} from package \CRANpkg{cmaes}.
+The algorithm is typically applied to search space dimensions between three and fifty.
+Lower search space dimensions might crash.
 }
 \section{Dictionary}{
 
@@ -23,18 +23,20 @@ opt("cmaes")
 \section{Parameters}{
 
 \describe{
-\item{\code{sigma}}{\code{numeric(1)}}
 \item{\code{start_values}}{\code{character(1)}\cr
 Create \code{"random"} start values or based on \code{"center"} of search space?
 In the latter case, it is the center of the parameters before a trafo is applied.
 If set to \code{"custom"}, the start values can be passed via the \code{start} parameter.}
 \item{\code{start}}{\code{numeric()}\cr
-Custom start values. Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
+Custom start values.
+Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
 }
 
-For the meaning of the control parameters, see \code{\link[adagio:cmaes]{adagio::pureCMAES()}}. Note
-that we have removed all control parameters which refer to the termination of
-the algorithm and where our terminators allow to obtain the same behavior.
+For the meaning of the control parameters, see \code{cma_es()}.
+The parameters \code{maxit}, \code{stopfitness} and \code{stop.tolx} can be used additionally to our terminators.
+The default values of \code{maxit} is \code{100 * D^2} where \code{D} is the number of dimensions of the search space.
+The \code{stop.tolx} parameter stops when the step size is smaller than \code{1e-12 * sigma}.
+The \code{vectorized} parameter is always set to \code{TRUE}.
 }
 
 \section{Progress Bars}{

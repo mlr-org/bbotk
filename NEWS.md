@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* BREAKING CHANGE: Replace `adagio::pureCMAES()` with `cmaes::cma_es()` in `OptimizerBatchCmaes`.
+
 # bbotk 1.6.0
 
 # bbotk 1.5.0
