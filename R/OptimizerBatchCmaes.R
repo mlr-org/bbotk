@@ -116,7 +116,6 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
       start_values = pv$start_values
       start = pv$start
 
-
       par = if (pv$start_values == "custom") set_names(start, inst$search_space$ids()) else search_start(inst$search_space, type = start_values)
 
       if (length(par) < 2L) {
