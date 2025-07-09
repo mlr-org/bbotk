@@ -33,7 +33,7 @@
 #'
 #' @export
 #' @examples
-#' if (requireNamespace("adagio")) {
+#' if (requireNamespace("cmaes")) {
 #'   search_space = domain = ps(
 #'     x1 = p_dbl(-10, 10),
 #'     x2 = p_dbl(-5, 5)
