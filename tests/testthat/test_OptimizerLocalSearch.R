@@ -247,3 +247,20 @@ test_that("OptimizerBatchLocalSearch works with minimization", {
   expect_true(all(instance$archive$data$x1 * instance$archive$data$x2 == instance$archive$data$y))
   expect_equal(instance$archive$best()$y, max(instance$archive$data$y))
 })
+
+test_that("OptimizerBatchLocalSearch works", {
+  domain = ps(
+    x = p_dbl(lower = -1, upper = 1)
+  )
+  fun = function(xs) {
+    list(y = as.numeric(xs)^2)
+  }
+
+  objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
+  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
+  optimizer = opt("local_search", n_searches = 1L, n_steps = 1L, n_neighbors = 10L)
+  optimizer$optimize(instance)
+
+  expect_data_table(instance$archive$data, nrows = 500L)
+  expect_numeric(instance$archive$data$x, lower = -1, upper = 1)
+})
