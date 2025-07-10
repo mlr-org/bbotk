@@ -2,6 +2,13 @@
 
 # bbotk 1.6.0
 
+* BREAKING CHANGE: The mlr3 ecosystem has a base logger now which is named `mlr3`.
+  The `mlr3/bbotk` logger is a child of the `mlr3` logger and is used for logging messages from the `bbotk` and `mlr3tuning` package.
+* feat: Classes are now printed with the `cli` package.
+* fix: Prevent switching of `xss` and `constants`.
+* fix: Add saveguard on `OptimizerNloptr` bounds.
+* feat: Allow numerical gradient approximation in `OptimizerNloptr`.
+
 # bbotk 1.5.0
 
 * compatibility: irace 4.1.0
