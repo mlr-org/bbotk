@@ -45,13 +45,21 @@ by multiplying with "obj_mult" (which will be -1).
 */
 
 // Debug printer system - can be switched on/off
-#define DEBUG_ENABLED 0  // Set to 1 to enable debug output
+#define DEBUG_ENABLED 1  // Set to 1 to enable debug output
 
 #if DEBUG_ENABLED
 #define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)
 #else
 #define DEBUG_PRINT(fmt, ...) do {} while(0)
 #endif
+
+// Condition struct for parameter dependencies
+typedef struct {
+    int param_index;      // Index of the parameter that has the dependency
+    int parent_index;     // Index of the parent parameter
+    int type;             // 0=CondEqual, 1=CondAnyOf (or similar)
+    SEXP rhs;             // SEXP containing the RHS values (preserves original types)
+} Cond;
 
 // Data structures for search space information
 typedef struct {
@@ -62,10 +70,10 @@ typedef struct {
     int* n_levels;
     const char*** level_names;  // Array of arrays of level names for factors, only used for factors (not logicals)
     const char** param_names;  // Parameter names for data.table columns
-    int* mutable_params;  // 1 if parameter can be mutated, 0 if not (due to dependencies)
-    // for efficient random selection
-    int n_mutable_params;
-    int* mutable_indices;
+
+    // Array of condition objects
+    Cond* conds;
+    int n_conds;
 } SearchSpace;
 
 
@@ -116,6 +124,50 @@ static SEXP catch_condition(SEXP s_condition, void *data) {
 
 static SEXP safe_eval(SEXP expr) {
     return R_tryCatchError(try_eval, expr, catch_condition, NULL);
+}
+
+// Helper function to find parameter index by name
+static int find_param_index(const char* param_name, const char** param_names, int n_params) {
+    for (int j = 0; j < n_params; j++) {
+        if (strcmp(param_names[j], param_name) == 0) {
+            return j;
+        }
+    }
+    return -1; // Parameter not found
+}
+
+// Helper to extract conditions from the deps table and fill Cond array
+static void extract_conditions(SearchSpace* ss, SEXP s_deps) {
+    DEBUG_PRINT("extract_conditions\n");
+    SEXP s_deps_on = get_dt_col_by_name(s_deps, "on");
+    SEXP s_deps_id = get_dt_col_by_name(s_deps, "id");
+    SEXP s_deps_cond = get_dt_col_by_name(s_deps, "cond");
+    DEBUG_PRINT("s_deps_on: %d\n", length(s_deps_on));
+    DEBUG_PRINT("s_deps_id: %d\n", length(s_deps_id));
+    DEBUG_PRINT("s_deps_cond: %d\n", length(s_deps_cond));
+    ss->n_conds = length(s_deps_on);
+    Cond *conds = NULL;
+    if (ss->n_conds != 0) {
+      DEBUG_PRINT("allocating %d conds\n", ss->n_conds);
+      conds = (Cond*) R_alloc(ss->n_conds, sizeof(Cond));
+      for (int i = 0; i < ss->n_conds; i++) {
+        DEBUG_PRINT("i: %d\n", i);
+        const char *param_name = CHAR(STRING_ELT(s_deps_id, i));
+        conds[i].param_index = find_param_index(param_name, ss->param_names, ss->n_params);
+        const char *parent_name = CHAR(STRING_ELT(s_deps_on, i));
+        conds[i].parent_index = find_param_index(parent_name, ss->param_names, ss->n_params);
+        DEBUG_PRINT("conds[%d].param_index: %d, conds[%d].parent_index: %d\n", i, conds[i].param_index, i, conds[i].parent_index);
+
+        // Extract condition information
+        SEXP s_cond = VECTOR_ELT(s_deps_cond, i);
+        conds[i].type = Rf_inherits(s_cond, "CondEqual") ? 0 : 1; // 0=CondEqual, 1=CondAnyOf
+        DEBUG_PRINT("conds[%d].type: %d\n", i, conds[i].type);
+        // store RHS SEXP so we dont have to type-convert, but protect it from gc 
+        conds[i].rhs = PROTECT(get_list_el_by_name(s_cond, "rhs"));
+      }
+    }
+    ss->conds = conds;
+    DEBUG_PRINT("extract_conditions done\n");
 }
 
 static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
@@ -179,80 +231,11 @@ static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
             ss->level_names[i] = NULL;
         }
     }
-
-    // extract dependency information and determine which parameters can be mutated
-    // Initialize all parameters as mutable
-    ss->mutable_params = (int*) R_alloc(ss->n_params, sizeof(int));
-    for (int i = 0; i < ss->n_params; i++) ss->mutable_params[i] = 1;
+    
     SEXP s_deps = get_r6_el_by_name(s_ss, "deps");
-    SEXP s_deps_on = get_dt_col_by_name(s_deps, "on");
-    int n_deps_on = length(s_deps_on);
-    for (int i = 0; i < n_deps_on; i++) {
-        const char* parent_name = CHAR(STRING_ELT(s_deps_on, i));
-        for (int j = 0; j < ss->n_params; j++) {
-            if (strcmp(ss->param_names[j], parent_name) == 0) {
-                ss->mutable_params[j] = 0;
-                break;
-            }
-        }
-    }
-    // Count mutable parameters and create index array
-    ss->n_mutable_params = 0;
-    for (int i = 0; i < ss->n_params; i++) {
-        if (ss->mutable_params[i]) ss->n_mutable_params++;
-    }
-    ss->mutable_indices = (int*) R_alloc(ss->n_mutable_params, sizeof(int));
-    int idx = 0;
-    for (int i = 0; i < ss->n_params; i++) {
-        if (ss->mutable_params[i]) ss->mutable_indices[idx++] = i;
-    }
-    if (ss->n_mutable_params == 0) {
-        error("No mutable parameters found in search space");
-    }
+    extract_conditions(ss, s_deps);
 }
 
-// Print search space information in a readable format
-/*
-void print_search_space(SearchSpace* ss) {
-    Rprintf("=== Search Space Information ===\n");
-    Rprintf("Number of parameters: %d\n", ss->n_params);
-    Rprintf("\nParameter details:\n");
-    Rprintf("%-15s %-10s %-12s %-12s %-15s %-10s\n", "Name", "Type", "Lower", "Upper", "Levels", "Mutable");
-    Rprintf("----------------------------------------------------------------\n");
-
-    for (int i = 0; i < ss->n_params; i++) {
-        const char* type_name;
-        switch (ss->param_classes[i]) {
-            case 0: type_name = "ParamDbl"; break;
-            case 1: type_name = "ParamInt"; break;
-            case 2: type_name = "ParamFct"; break;
-            case 3: type_name = "ParamLgl"; break;
-            default: type_name = "Unknown"; break;
-        }
-
-        const char* mutable_status = ss->mutable_params[i] ? "Yes" : "No";
-
-        if (ss->param_classes[i] == 2 || ss->param_classes[i] == 3) {
-            // ParamFct or ParamLgl - show levels
-            Rprintf("%-15s %-10s %-12s %-12s ",
-                       ss->param_names[i], type_name, "N/A", "N/A");
-            if (ss->level_names[i] != NULL) {
-                for (int k = 0; k < ss->n_levels[i]; k++) {
-                    if (k > 0) Rprintf(",");
-                    Rprintf("%s", ss->level_names[i][k]);
-                }
-            }
-            Rprintf(" %-10s\n", mutable_status);
-        } else {
-            // Numeric - show bounds
-            Rprintf("%-15s %-10s %-12.4f %-12.4f %-15s %-10s\n",
-                       ss->param_names[i], type_name,
-                       ss->lower[i], ss->upper[i], "N/A", mutable_status);
-        }
-    }
-    Rprintf("================================================================\n");
-}
-*/
 
 
 // Helper function to check if a value is NA
@@ -403,14 +386,13 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
     // Now mutate one parameter for each neighbor
     for (int i_neigh = 0; i_neigh < n_searches * n_neighs; i_neigh++) {
         // Find valid mutable parameters for this neighbor (non-NA values)
-        int* valid_mutable_indices = (int*)R_alloc(ss->n_mutable_params, sizeof(int));
+        int* valid_mutable_indices = (int*)R_alloc(ss->n_params, sizeof(int));
         int n_valid_mutable = 0;
 
-        for (int k = 0; k < ss->n_mutable_params; k++) {
-            int j = ss->mutable_indices[k];
-            SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
+        for (int k = 0; k < ss->n_params; k++) {
+            SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, k);
             if (!is_na_value(s_neigh_col, i_neigh)) {
-                valid_mutable_indices[n_valid_mutable++] = j;
+                valid_mutable_indices[n_valid_mutable++] = k;
             }
         }
 
@@ -543,7 +525,7 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
 
     SearchSpace ss;
     extract_ss_info(s_ss, &ss);
-    // print_search_space(&ss);
+    //print_search_space(&ss);
 
     // Use duplicate to copy initial points
     SEXP s_pop_x = PROTECT(duplicate(s_initial_x));
@@ -555,41 +537,37 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_pop_x));
     SEXP s_pop_y = PROTECT(safe_eval(s_call));
 
-    // we failed the terminator in the initial points, return
-    if (s_pop_y == R_NilValue) {
-        UNPROTECT(3); // s_call, s_pop_x, s_pop_y
-        return R_NilValue;
-    }
-    // y-values for pop. we wil later write into this array
-    double *pop_y = (double *) R_alloc(n_searches, sizeof(double));
-    memcpy(pop_y, REAL(VECTOR_ELT(s_pop_y, 0)), n_searches * sizeof(double));
-    UNPROTECT(2); // s_call, s_pop_y
+    // we failed the terminator in the initial points, skip main loop
+    if (s_pop_y != R_NilValue) {
+        // y-values for pop. we wil later write into this array
+        double *pop_y = (double *) R_alloc(n_searches, sizeof(double));
+        memcpy(pop_y, REAL(VECTOR_ELT(s_pop_y, 0)), n_searches * sizeof(double));
+        UNPROTECT(2); // s_call, s_pop_y
 
-    // we need to evaluate the initial points again, because we might have changed the factors
-    // Main local search loop
+        // we need to evaluate the initial points again, because we might have changed the factors
+        // Main local search loop
+        for (int step = 0; step < n_steps;  step++) {
+            DEBUG_PRINT("step=%i\n", step);
+            print_dt(s_pop_x, 10);
 
-    for (int step = 0; step < n_steps;  step++) {
-        DEBUG_PRINT("step=%i\n", step);
-        print_dt(s_pop_x, 10);
+            // Generate neighbors for all current points in pre-allocated data.table
+            generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
+            // print_dt(s_neighs_x, 10);
 
-        // Generate neighbors for all current points in pre-allocated data.table
-        generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
-        // print_dt(s_neighs_x, 10);
-
-        // Create the function call
-        SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_neighs_x));
-        SEXP s_neighs_y = PROTECT(safe_eval(s_call));
-        // copy if we have a valid result, otherwise we stop the loop
-        if (s_neighs_y != R_NilValue) {
-            double* neighs_y = REAL(VECTOR_ELT(s_neighs_y, 0));
-            copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x, pop_y, &ss, obj_mult);
-        } else {
-            step = n_steps;
+            // Create the function call
+            SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_neighs_x));
+            SEXP s_neighs_y = PROTECT(safe_eval(s_call));
+            // copy if we have a valid result, otherwise we stop the loop
+            if (s_neighs_y != R_NilValue) {
+                double* neighs_y = REAL(VECTOR_ELT(s_neighs_y, 0));
+                copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x, pop_y, &ss, obj_mult);
+            } else {
+                step = n_steps;
+            }
+            UNPROTECT(2); // s_call, s_neighs_y
         }
-        UNPROTECT(2); // s_call, s_neighs_y
     }
-
-    UNPROTECT(2); // s_pop_x, s_neighs_x
+    UNPROTECT(2 + ss.n_conds); // s_pop_x, s_neighs_x, and all PROTECTed cond rhs_values
     DEBUG_PRINT("c_local_search done\n");
     return R_NilValue;
 }
