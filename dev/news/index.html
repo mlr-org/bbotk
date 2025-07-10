@@ -53,7 +53,12 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.6.0" id="bbotk-160">bbotk 1.6.0<a class="anchor" aria-label="anchor" href="#bbotk-160"></a></h2><p class="text-muted">CRAN release: 2025-06-03</p>
-</div>
+<ul><li>BREAKING CHANGE: The mlr3 ecosystem has a base logger now which is named <code>mlr3</code>. The <code>mlr3/bbotk</code> logger is a child of the <code>mlr3</code> logger and is used for logging messages from the <code>bbotk</code> and <code>mlr3tuning</code> package.</li>
+<li>feat: Classes are now printed with the <code>cli</code> package.</li>
+<li>fix: Prevent switching of <code>xss</code> and <code>constants</code>.</li>
+<li>fix: Add saveguard on <code>OptimizerNloptr</code> bounds.</li>
+<li>feat: Allow numerical gradient approximation in <code>OptimizerNloptr</code>.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.5.0" id="bbotk-150">bbotk 1.5.0<a class="anchor" aria-label="anchor" href="#bbotk-150"></a></h2><p class="text-muted">CRAN release: 2024-12-17</p>
 <ul><li>compatibility: irace 4.1.0</li>
