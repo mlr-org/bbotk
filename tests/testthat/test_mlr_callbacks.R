@@ -21,7 +21,8 @@ test_that("async callback works", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
 
   callback = callback_async("bbotk.test",
     on_worker_begin = function(callback, context) {
@@ -50,6 +51,7 @@ test_that("async callback works", {
   x = instance$archive$data$x
   expect_equal(head(x, 2), c(1, 1))
   expect_subset(2, tail(x, 2))
+  expect_rush_reset(instance$rush)
 })
 
 test_that("async freeze archive callback works", {
@@ -57,7 +59,8 @@ test_that("async freeze archive callback works", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
@@ -83,4 +86,5 @@ test_that("async freeze archive callback works", {
   expect_number(frozen_archive$n_evals)
 
   expect_data_table(as.data.table(frozen_archive))
+  expect_rush_reset(instance$rush)
 })

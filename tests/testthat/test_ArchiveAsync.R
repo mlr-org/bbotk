@@ -62,7 +62,8 @@ test_that("as.data.table.ArchiveAsync works", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,

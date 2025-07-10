@@ -3,7 +3,8 @@ test_that("initializing OptimInstanceAsyncSingleCrit works", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -37,6 +38,7 @@ test_that("rush controller can be passed to OptimInstanceAsyncSingleCrit", {
 
   expect_class(instance$rush, "Rush")
   expect_equal(instance$rush$network_id, "remote_network")
+  expect_rush_reset(instance$rush)
 })
 
 test_that("context is initialized correctly", {
@@ -44,7 +46,8 @@ test_that("context is initialized correctly", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
@@ -55,6 +58,7 @@ test_that("context is initialized correctly", {
   optimizer$optimize(instance)
 
   expect_r6(instance$objective$context, "ContextAsync")
+  expect_rush_reset(instance$rush)
 })
 
 test_that("point evaluation works", {
@@ -79,7 +83,8 @@ test_that("reconnect method works", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -97,4 +102,5 @@ test_that("reconnect method works", {
   instance$reconnect()
 
   expect_r6(instance, "OptimInstanceAsyncSingleCrit")
+  expect_rush_reset(instance$rush)
 })
