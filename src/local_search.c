@@ -58,7 +58,7 @@ typedef struct {
     int param_index;      // Index of the parameter that has the dependency
     int parent_index;     // Index of the parent parameter
     int type;             // 0=CondEqual, 1=CondAnyOf (or similar)
-    SEXP rhs;             // SEXP containing the RHS values (preserves original types)
+    SEXP s_rhs;             // SEXP containing the RHS values (preserves original types)
 } Cond;
 
 // Data structures for search space information
@@ -74,10 +74,27 @@ typedef struct {
     // Array of condition objects
     Cond* conds;
     int n_conds;
+    
+    // Topologically sorted parameter indices (parameters that depend on others come after them)
+    int* sorted_param_indices;
 } SearchSpace;
 
+// Helper function to get random number from R, they respect the RNG state and the seed
+// Helper function to get random integer between a and b (inclusive)
+static int random_int(int a, int b) {
+    // Use proper integer arithmetic to avoid bias
+    return a + (int)(unif_rand() * (b - a + 1));
+}
+
+// Helper function to get random normal distribution
+static double random_normal(double mean, double sd) {
+    return rnorm(mean, sd);
+}
 
 
+/************ General functions for R data types *********** */
+
+// extract list element by name
 static SEXP get_list_el_by_name(SEXP list, const char *name) {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;
@@ -87,34 +104,41 @@ static SEXP get_list_el_by_name(SEXP list, const char *name) {
             break;
         }
     }
+    DEBUG_PRINT("get_list_el_by_name: el-name: %s, list-type: %d, el-type: %d\n", 
+        name, TYPEOF(list), TYPEOF(elmt));
     return elmt;
 }
 
+// extract DT column by name
 static SEXP get_dt_col_by_name(SEXP dt, const char *name) {
     SEXP col_names = getAttrib(dt, R_NamesSymbol);
     for (int i = 0; i < length(dt); i++) {
         if (strcmp(CHAR(STRING_ELT(col_names, i)), name) == 0) {
+            DEBUG_PRINT("get_dt_col_by_name: el-name: %s, dt-type: %d, el-type: %d\n", 
+                name, TYPEOF(dt), TYPEOF(VECTOR_ELT(dt, i)));
             return VECTOR_ELT(dt, i);
         }
     }
     return R_NilValue; // Column not found
 }
 
+// extract R6 member by name
 static SEXP get_r6_el_by_name(SEXP r6, const char *str) {
     return Rf_findVar(Rf_install(str), r6);
 }
 
-////////// error handling //////////
+/************ try-eval-catch *********** */
 
+// internal function to evaluate an expression in the global environment
 static SEXP try_eval(void *data) {
     return Rf_eval((SEXP) data, R_GlobalEnv);
 }
 
+// internal function to handle what happens in the catch block
+// if the terminator triggers, we return NIL, otherwise we raise error back to R
 static SEXP catch_condition(SEXP s_condition, void *data) {
     DEBUG_PRINT("Caught R condition of class: %s\n",
         CHAR(STRING_ELT(Rf_getAttrib(s_condition, R_ClassSymbol), 0)));
-
-    // if the terminator stopped use, we stop, otherwise we raise error back to R
     if (!Rf_inherits(s_condition, "terminator_exception")) {
         SEXP stop_call = Rf_lang2(Rf_install("stop"), s_condition);
         Rf_eval(stop_call, R_GlobalEnv);
@@ -122,56 +146,27 @@ static SEXP catch_condition(SEXP s_condition, void *data) {
     return R_NilValue;
 }
 
+// main function so we can eval expression with try-catch
+// FIXME: we could set objective function call a bit more directly here?
 static SEXP safe_eval(SEXP expr) {
     return R_tryCatchError(try_eval, expr, catch_condition, NULL);
 }
 
-// Helper function to find parameter index by name
-static int find_param_index(const char* param_name, const char** param_names, int n_params) {
-    for (int j = 0; j < n_params; j++) {
-        if (strcmp(param_names[j], param_name) == 0) {
+
+
+/************ SearchSpace functions ********** */
+// Find parameter index by name, -1 if not found (should not happen)
+static int find_param_index(const char* param_name, SearchSpace* ss) {
+    for (int j = 0; j < ss->n_params; j++) {
+        if (strcmp(ss->param_names[j], param_name) == 0) {
             return j;
         }
     }
     return -1; // Parameter not found
 }
 
-// Helper to extract conditions from the deps table and fill Cond array
-static void extract_conditions(SearchSpace* ss, SEXP s_deps) {
-    DEBUG_PRINT("extract_conditions\n");
-    SEXP s_deps_on = get_dt_col_by_name(s_deps, "on");
-    SEXP s_deps_id = get_dt_col_by_name(s_deps, "id");
-    SEXP s_deps_cond = get_dt_col_by_name(s_deps, "cond");
-    DEBUG_PRINT("s_deps_on: %d\n", length(s_deps_on));
-    DEBUG_PRINT("s_deps_id: %d\n", length(s_deps_id));
-    DEBUG_PRINT("s_deps_cond: %d\n", length(s_deps_cond));
-    ss->n_conds = length(s_deps_on);
-    Cond *conds = NULL;
-    if (ss->n_conds != 0) {
-      DEBUG_PRINT("allocating %d conds\n", ss->n_conds);
-      conds = (Cond*) R_alloc(ss->n_conds, sizeof(Cond));
-      for (int i = 0; i < ss->n_conds; i++) {
-        DEBUG_PRINT("i: %d\n", i);
-        const char *param_name = CHAR(STRING_ELT(s_deps_id, i));
-        conds[i].param_index = find_param_index(param_name, ss->param_names, ss->n_params);
-        const char *parent_name = CHAR(STRING_ELT(s_deps_on, i));
-        conds[i].parent_index = find_param_index(parent_name, ss->param_names, ss->n_params);
-        DEBUG_PRINT("conds[%d].param_index: %d, conds[%d].parent_index: %d\n", i, conds[i].param_index, i, conds[i].parent_index);
-
-        // Extract condition information
-        SEXP s_cond = VECTOR_ELT(s_deps_cond, i);
-        conds[i].type = Rf_inherits(s_cond, "CondEqual") ? 0 : 1; // 0=CondEqual, 1=CondAnyOf
-        DEBUG_PRINT("conds[%d].type: %d\n", i, conds[i].type);
-        // store RHS SEXP so we dont have to type-convert, but protect it from gc 
-        conds[i].rhs = PROTECT(get_list_el_by_name(s_cond, "rhs"));
-      }
-    }
-    ss->conds = conds;
-    DEBUG_PRINT("extract_conditions done\n");
-}
-
+// convert paradox SearchSpace to C SearchSpace
 static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
-
     ss->n_params = asInteger(get_r6_el_by_name(s_ss, "length"));
     SEXP s_data = get_r6_el_by_name(s_ss, "data");
 
@@ -232,43 +227,157 @@ static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
         }
     }
     
+    DEBUG_PRINT("extracting conditions\n");
     SEXP s_deps = get_r6_el_by_name(s_ss, "deps");
-    extract_conditions(ss, s_deps);
+    SEXP s_deps_on = get_dt_col_by_name(s_deps, "on");
+    SEXP s_deps_id = get_dt_col_by_name(s_deps, "id");
+    DEBUG_PRINT("s_deps_id type: %d\n", TYPEOF(s_deps_id));
+    SEXP s_deps_cond = get_dt_col_by_name(s_deps, "cond");
+    ss->n_conds = length(s_deps_on);
+    Cond *conds = NULL;
+    if (ss->n_conds != 0) {
+      conds = (Cond*) R_alloc(ss->n_conds, sizeof(Cond));
+      for (int i = 0; i < ss->n_conds; i++) {
+        const char *param_name = CHAR(STRING_ELT(s_deps_id, i));
+        conds[i].param_index = find_param_index(param_name, ss);
+        const char *parent_name = CHAR(STRING_ELT(s_deps_on, i));
+        conds[i].parent_index = find_param_index(parent_name, ss);
+        // Extract condition information
+        SEXP s_cond = VECTOR_ELT(s_deps_cond, i);
+        conds[i].type = Rf_inherits(s_cond, "CondEqual") ? 0 : 1; // 0=CondEqual, 1=CondAnyOf
+        // store RHS SEXP so we dont have to type-convert, but protect it from gc 
+        conds[i].s_rhs = PROTECT(get_list_el_by_name(s_cond, "rhs"));
+        DEBUG_PRINT("cond %d: param_index %d, parent_index %d, type %d, rhs type %d\n", 
+            i, conds[i].param_index, conds[i].parent_index, conds[i].type, TYPEOF(conds[i].s_rhs));
+      }
+    }
+    ss->conds = conds;
 }
 
+/************ Condition functions ********** */
 
+// topological sort of parameters based on dependencies
+// if param B depends on param A, then B comes after A in the sort
+static void toposort_params(SearchSpace* ss) {
+    int* sorted = (int*) R_alloc(ss->n_params, sizeof(int));
+    int* deps = (int*) R_alloc(ss->n_params, sizeof(int));
+    int count = 0;
+    // Count dependencies for each parameter
+    for (int i = 0; i < ss->n_conds; i++) {
+        deps[ss->conds[i].param_index]++;
+    }
+    // Add parameters with no dependencies first
+    for (int i = 0; i < ss->n_params; i++) {
+        if (deps[i] == 0) sorted[count++] = i;
+    }
+    // For each param in the sorted list, we decrement the deps of all params that depend on it
+    // the add all params to the sorted list that have no deps left, then iterate again
+    for (int i = 0; i < count; i++) {
+        for (int j = 0; j < ss->n_conds; j++) {
+            if (ss->conds[j].parent_index == sorted[i]) {
+                int dep = ss->conds[j].param_index;
+                if (--deps[dep] == 0) sorted[count++] = dep;
+            }
+        }
+    }
+    ss->sorted_param_indices = sorted;
+}
 
-// Helper function to check if a value is NA
-static int is_na_value(SEXP col, int idx) {
-    switch (TYPEOF(col)) {
-        case REALSXP:
-            return ISNA(REAL(col)[idx]);
-        case INTSXP:  // covers integers
-            return ISNA(INTEGER(col)[idx]);
-        case LGLSXP:
-            return ISNA(LOGICAL(col)[idx]);
-        case STRSXP:
-            return STRING_ELT(col, idx) == NA_STRING;
-        default:
-            DEBUG_PRINT("is_na_value: unknown type %d\n", TYPEOF(col));
-            return 0; // Should not happen for our use case
+// Reorder conditions based on topological sort
+// Conditions come in "blocks", so all conds for param A are next to each other
+static void reorder_conds_by_toposort(SearchSpace* ss) {
+    if (ss->n_conds <= 1) return;
+    Cond* reordered_conds = (Cond*) R_alloc(ss->n_conds, sizeof(Cond));
+    int reordered_count = 0;
+    // go thru params in topological order, collect all conds for current param
+    for (int i = 0; i < ss->n_params; i++) {
+        int param_index = ss->sorted_param_indices[i];
+        // Find all conditions for this parameter
+        for (int j = 0; j < ss->n_conds; j++) {
+            if (ss->conds[j].param_index == param_index) {
+                reordered_conds[reordered_count++] = ss->conds[j];
+            }
+        }
+    }
+    // copy back to original array
+    for (int i = 0; i < ss->n_conds; i++) {
+        ss->conds[i] = reordered_conds[i];
     }
 }
 
-// Helper function to get random number from R, they respect the RNG state and the seed
-// Helper function to get random integer between a and b (inclusive)
-static int random_int(int a, int b) {
-    // Use proper integer arithmetic to avoid bias
-    return a + (int)(unif_rand() * (b - a + 1));
+
+// Check if a condition is satisfied for a given row
+static int is_condition_satisfied(SEXP s_neigh_x, int i, Cond *cond, SearchSpace* ss) {
+    SEXP s_parent_col = VECTOR_ELT(s_neigh_x, cond->parent_index);
+    int parent_class = ss->param_classes[cond->parent_index];
+    SEXP s_rhs = cond->s_rhs;
+    DEBUG_PRINT("is_condition_satisfied: row %d, param_idx %d, parent_index %d, parent_class %d, cond-type %d\n", 
+        i, cond->param_index, cond->parent_index, parent_class, cond->type);
+    if (cond->type == 0) { // CondEqual, check if parent value equals the RHS value
+        if (parent_class == 0) { // ParamDbl
+            return fabs(REAL(s_parent_col)[i] - REAL(s_rhs)[0]) < 1e-8; 
+        } else if (parent_class == 1) { // ParamInt
+            return INTEGER(s_parent_col)[i] == INTEGER(s_rhs)[0]; 
+        } else if (parent_class == 2) { // ParamFct
+            return strcmp(CHAR(STRING_ELT(s_parent_col, i)), CHAR(STRING_ELT(s_rhs, 0))) == 0; 
+        } else { // ParamLgl
+            return LOGICAL(s_parent_col)[i] == LOGICAL(s_rhs)[0]; 
+        }
+    } else { // CondAnyOf, check if parent value is in the RHS values
+        int n_rhs = length(s_rhs);
+        for (int k = 0; k < n_rhs; k++) {
+            int match = 0;
+            if (parent_class == 0) { // ParamDbl
+                match = (fabs(REAL(s_parent_col)[i] - REAL(s_rhs)[k]) < 1e-8); 
+            } else if (parent_class == 1) { // ParamInt
+                match = (INTEGER(s_parent_col)[i] == INTEGER(s_rhs)[k]); 
+            } else if (parent_class == 2) { // ParamFct
+                match = (strcmp(CHAR(STRING_ELT(s_parent_col, i)), CHAR(STRING_ELT(s_rhs, k))) == 0); 
+            } else { // ParamLgl
+                match = (LOGICAL(s_parent_col)[i] == LOGICAL(s_rhs)[k]); 
+            }
+            if (match) return 1; // Found a match
+        }
+        return 0; // No match found
+    }
 }
 
-// Helper function to get random normal distribution
-static double random_normal(double mean, double sd) {
-    return rnorm(mean, sd);
+/************ DT functions ********** */
+
+// Check if a DT element is NA
+static int dt_is_na(SEXP s_vec, int i, int j) {
+    SEXP s_col = VECTOR_ELT(s_vec, j);
+    switch (TYPEOF(s_vec)) {
+        case REALSXP:
+            return ISNA(REAL(s_vec)[i]);
+        case INTSXP:  // covers integers    
+            return ISNA(INTEGER(s_vec)[i]);
+        case LGLSXP:
+            return ISNA(LOGICAL(s_vec)[i]);
+        case STRSXP:
+            return STRING_ELT(s_vec, i) == NA_STRING;
+    }
+    return 0; // should not happen
 }
 
-// Helper function to create an uninitialized data.table with correct column types and attributes
-static SEXP generate_dt(int n, SearchSpace* ss) {
+// Set a DT element to NA
+static void dt_set_na(SEXP s_dt, int row_i, int param_j) {
+    SEXP s_col = VECTOR_ELT(s_dt, param_j);
+    switch (TYPEOF(s_col)) {
+        case REALSXP:
+            REAL(s_col)[row_i] = NA_REAL; break;
+        case INTSXP:
+            INTEGER(s_col)[row_i] = NA_INTEGER; break;
+        case STRSXP:
+            SET_STRING_ELT(s_col, row_i, NA_STRING); break;
+        case LGLSXP:
+            LOGICAL(s_col)[row_i] = NA_LOGICAL; break;
+    }
+}
+
+// Create an uninitialized data.table with col types from SearchSpace
+// Return DT is PROTECTed and must be unprotected by the caller
+static SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
     SEXP dt = PROTECT(allocVector(VECSXP, ss->n_params));
     for (int j = 0; j < ss->n_params; j++) {
         int param_class = ss->param_classes[j];
@@ -303,13 +412,11 @@ static SEXP generate_dt(int n, SearchSpace* ss) {
     setAttrib(dt, Rf_install(".internal.selfref"), selfref);
 
     UNPROTECT(3); // col_names, class_attr, selfref
-    // Note: dt remains protected and will be unprotected by the caller
     return dt;
 }
 
-// Helper function to print a data.table (for debugging)
-
-void print_dt(SEXP dt, int nrows_max) {
+// print a data.table (for debugging)
+void dt_print(SEXP dt, int nrows_max) {
     int ncol = length(dt);
     if (ncol == 0) {
         Rprintf("<empty data.table>\n");
@@ -355,6 +462,66 @@ void print_dt(SEXP dt, int nrows_max) {
     }
 }
 
+// Helper function to set a parameter to a random value
+static void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, double mut_sd) {
+    int param_class = ss->param_classes[param_j];
+    SEXP s_neigh_col = VECTOR_ELT(s_dt, param_j);
+    if (param_class == 0) { // ParamDbl
+        // normalize to [0,1], add noise, rescale to [lower, upper], clip to [lower, upper]
+        double *neigh_col = REAL(s_neigh_col);
+        double value = neigh_col[row_i];
+        double lower = ss->lower[param_j];
+        double upper = ss->upper[param_j];
+        double range = upper - lower;
+        if (range > 1e-8) { // avoid division by zero, be safe
+          value = (value - lower) / range;
+          value += random_normal(0.0, mut_sd);
+          value = value * range + lower;
+          if (value < lower) value = lower;
+          if (value > upper) value = upper;
+          neigh_col[row_i] = value;
+        }
+    } else if (param_class == 1) { // ParamInt
+        // same as ParamDbl but round and cast to int
+        int *neigh_col = INTEGER(s_neigh_col);
+        double value = (double) neigh_col[row_i];
+        double lower = ss->lower[param_j];
+        double upper = ss->upper[param_j];
+        double range = upper - lower;
+        if (range > 1e-8) { // avoid division by zero, be safe
+            value = (value - lower) / range;
+            value += random_normal(0.0, mut_sd);
+            value = (int) round(value * range + lower);
+            if (value < lower) value = (int)lower;
+            if (value > upper) value = (int)upper;
+            neigh_col[row_i] = value;
+        }
+    } else if (param_class == 2) {    // ParamFct
+        // sample uniformly from the other levels
+        int n_levels = ss->n_levels[param_j];
+        if (n_levels > 1) {
+            // Find current level index
+            const char* current_level = CHAR(STRING_ELT(s_neigh_col, row_i));
+            int current_idx = 0;
+            while (current_idx < n_levels && 
+              strcmp(current_level, ss->level_names[param_j][current_idx]) != 0) 
+            {
+                current_idx++;
+            }
+            // Sample from other levels using shift trick
+            int new_idx = random_int(0, n_levels - 2);
+            if (new_idx >= current_idx) new_idx++;
+            SET_STRING_ELT(s_neigh_col, row_i, mkChar(ss->level_names[param_j][new_idx]));
+        }
+    } else if (param_class == 3) { // ParamLgl
+        // flip the value
+        LOGICAL(s_neigh_col)[row_i] ^= 1;
+    }
+}
+
+
+/************ Local search functions ********** */
+
 // Generate neighbors for all current points in an existing data.table
 static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
     DEBUG_PRINT("generate_neighs\n");
@@ -381,7 +548,7 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
         }
     }
     DEBUG_PRINT("copied %d points to %d neighbors\n", n_searches, n_searches * n_neighs);
-    print_dt(s_neighs_x, 10);
+    dt_print(s_neighs_x, 10);
 
     // Now mutate one parameter for each neighbor
     for (int i_neigh = 0; i_neigh < n_searches * n_neighs; i_neigh++) {
@@ -389,10 +556,9 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
         int* valid_mutable_indices = (int*)R_alloc(ss->n_params, sizeof(int));
         int n_valid_mutable = 0;
 
-        for (int k = 0; k < ss->n_params; k++) {
-            SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, k);
-            if (!is_na_value(s_neigh_col, i_neigh)) {
-                valid_mutable_indices[n_valid_mutable++] = k;
+        for (int j = 0; j < ss->n_params; j++) {
+            if (!dt_is_na(s_neighs_x, i_neigh, j)) {
+                valid_mutable_indices[n_valid_mutable++] = j;
             }
         }
 
@@ -403,60 +569,32 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
 
             DEBUG_PRINT("Neighbor %d: selected parameter %d (%s) for mutation from %d valid options\n",
                 i_neigh, j, ss->param_names[j], n_valid_mutable);
-
-            int param_class = ss->param_classes[j];
-            SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
-            if (param_class == 0) { // ParamDbl
-                // normalize to [0,1], add noise, rescale to [lower, upper], clip to [lower, upper]
-                double *neigh_col = REAL(s_neigh_col);
-                double value = neigh_col[i_neigh];
-                double lower = ss->lower[j];
-                double upper = ss->upper[j];
-                double range = upper - lower;
-                if (range > 1e-8) { // avoid division by zero, be safe
-                  value = (value - lower) / range;
-                  value += random_normal(0.0, mut_sd);
-                  value = value * range + lower;
-                  if (value < lower) value = lower;
-                  if (value > upper) value = upper;
-                  neigh_col[i_neigh] = value;
+            dt_set_random(s_neighs_x, i_neigh, j, ss, mut_sd);        
+            dt_print(s_neighs_x, 10);
+          
+            
+            // Check conditions for this neighbor after mutation
+            int* param_ok = (int*) R_alloc(ss->n_params, sizeof(int));
+            // Initialize all flags to 1 (conditions satisfied)
+            for (int p = 0; p < ss->n_params; p++) {
+                param_ok[p] = 1;
+            }
+            DEBUG_PRINT("param_condition_flags init done\n");
+            
+            // Iterate through topologically sorted conditions
+            for (int c = 0; c < ss->n_conds; c++) {
+                Cond* cond = &ss->conds[c];
+                if (!is_condition_satisfied(s_neighs_x, i_neigh, cond, ss)) {
+                    param_ok[cond->param_index] = 0;   
+                } 
+            }
+            for (int j = 0; j < ss->n_params; j++) {
+                if (!param_ok[j]) {
+                    dt_set_na(s_neighs_x, i_neigh, j);
                 }
-            } else if (param_class == 1) { // ParamInt
-                // same as ParamDbl but round and cast to int
-                int *neigh_col = INTEGER(s_neigh_col);
-                double value = (double) neigh_col[i_neigh];
-                double lower = ss->lower[j];
-                double upper = ss->upper[j];
-                double range = upper - lower;
-                if (range > 1e-8) { // avoid division by zero, be safe
-                    value = (value - lower) / range;
-                    value += random_normal(0.0, mut_sd);
-                    value = (int) round(value * range + lower);
-                    if (value < lower) value = (int)lower;
-                    if (value > upper) value = (int)upper;
-                    neigh_col[i_neigh] = value;
+                if (param_ok[j] && dt_is_na(s_neighs_x, i_neigh, j)) {
+                    dt_set_random(s_neighs_x, i_neigh, j, ss, mut_sd);
                 }
-            } else if (param_class == 2) {    // ParamFct
-                // sample uniformly from the other levels
-                int n_levels = ss->n_levels[j];
-                if (n_levels > 1) {
-                    // Find current level index
-                    const char* current_level = CHAR(STRING_ELT(s_neigh_col, i_neigh));
-                    int current_idx = 0;
-                    while (current_idx < n_levels && strcmp(current_level, ss->level_names[j][current_idx]) != 0) {
-                        current_idx++;
-                    }
-                    // Sample from other levels using shift trick
-                    int new_idx = random_int(0, n_levels - 2);
-                    if (new_idx >= current_idx) new_idx++;
-                    SET_STRING_ELT(s_neigh_col, i_neigh, mkChar(ss->level_names[j][new_idx]));
-                }
-            } else { // ParamLgl
-                // flip the value
-                int *neigh_col = LOGICAL(s_neigh_col);
-                int value = neigh_col[i_neigh];
-                value = value ^ 1;
-                neigh_col[i_neigh] = value;
             }
         } else {
             DEBUG_PRINT("Neighbor %d: no valid mutable parameters found (all are NA)\n", i_neigh);
@@ -525,13 +663,16 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
 
     SearchSpace ss;
     extract_ss_info(s_ss, &ss);
+    toposort_params(&ss);
+    reorder_conds_by_toposort(&ss);
+
     //print_search_space(&ss);
 
     // Use duplicate to copy initial points
     SEXP s_pop_x = PROTECT(duplicate(s_initial_x));
-    print_dt(s_pop_x, 10);
+    dt_print(s_pop_x, 10);
 
-    SEXP s_neighs_x = generate_dt(n_searches * n_neighs, &ss);
+    SEXP s_neighs_x = dt_generate_PROTECT(n_searches * n_neighs, &ss);
     SEXP s_eval_batch = get_r6_el_by_name(s_inst, "eval_batch");
 
     SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_pop_x));
@@ -548,7 +689,7 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
         // Main local search loop
         for (int step = 0; step < n_steps;  step++) {
             DEBUG_PRINT("step=%i\n", step);
-            print_dt(s_pop_x, 10);
+            dt_print(s_pop_x, 10);
 
             // Generate neighbors for all current points in pre-allocated data.table
             generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
