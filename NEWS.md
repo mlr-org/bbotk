@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* BREAKING CHANGE: Replace `adagio::pureCMAES()` with `cmaes::cma_es()` in `OptimizerBatchCmaes`.
+
 # bbotk 1.6.0
 
 * BREAKING CHANGE: The mlr3 ecosystem has a base logger now which is named `mlr3`.

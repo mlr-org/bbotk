@@ -1,5 +1,5 @@
 test_that("OptimizerBatchCmaes", {
-  skip_if_not_installed("adagio")
+  skip_if_not_installed("cmaes")
 
   search_space = domain = ps(
     x1 = p_dbl(-10, 10),
@@ -22,15 +22,15 @@ test_that("OptimizerBatchCmaes", {
     search_space = search_space,
     terminator = trm("evals", n_evals = 10L))
 
-  z = test_optimizer(instance, "cmaes", real_evals = 10L)
+  z = test_optimizer(instance, "cmaes", mu = 5, lambda = 5, real_evals = 10L)
 
   expect_class(z$optimizer, "OptimizerBatchCmaes")
   expect_snapshot(z$optimizer)
 
-  expect_error(test_optimizer_2d("cmaes", term_evals = 10L), "multi-crit objectives")
+  expect_error(test_optimizer_2d("cmaes",  mu = 5, lambda = 5, term_evals = 10L), "multi-crit objectives")
 
   instance$archive$clear()
-  optimizer = opt("cmaes", start_values = "custom", start = c(-9.1, 1.3))
+  optimizer = opt("cmaes",  mu = 5, lambda = 5, start_values = "custom", start = c(-9.1, 1.3))
   optimizer$optimize(instance)
   # start values are used for the initial mean vector so a deterministic test is not applicable
 })
