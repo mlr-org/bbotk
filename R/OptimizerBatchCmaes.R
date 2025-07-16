@@ -92,6 +92,9 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
         diag.pop      = p_lgl(default = FALSE),
         diag.value    = p_lgl(default = FALSE),
         stop.tolx     = p_dbl(), # undocumented stop criterion
+        restart_strategy = p_fct(levels = c("none", "ipop"), init = "none"),
+        n_iterations     = p_int(lower = 1L, init = 1L),
+        population_multiplier = p_int(lower = 1, init = 2L),
         start_values  = p_fct(default = "random", levels = c("random", "center", "custom")),
         start         = p_uty(default = NULL, depends = start_values == "custom")
       )
@@ -115,31 +118,45 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
       pv = self$param_set$values
       start_values = pv$start_values
       start = pv$start
-
+      n_iterations = if (pv$restart_strategy == "ipop") pv$n_iterations else 1L
 
       par = if (pv$start_values == "custom") set_names(start, inst$search_space$ids()) else search_start(inst$search_space, type = start_values)
 
       if (length(par) < 2L) {
         warning("CMA-ES is typically applied to search space dimensions between three and fifty. A lower search space dimension might crash.")
+
+      # set package defaults if not set by user
+      # restarts needs lambda and mu to be set
+      if (is.null(pv$lambda)) pv$lambda = 4 + floor(3 * log(length(par)))
+      if (is.null(pv$mu)) pv$mu = floor(pv$lambda / 2)
       }
 
-      control = pv[names(pv) %nin% c("start_values", "start")]
+      control = pv[names(pv) %nin% c("start_values", "start", "restart_strategy", "n_iterations", "population_multiplier")]
       control$vectorized = TRUE
 
-      wrapper = function(xmat, inst) {
+      wrapper = function(xmat, inst, n) {
         xdt = as.data.table(t(xmat))
+        set(xdt, j = "ipop_cmaes_iteration", value = n)
         res = inst$eval_batch(xdt)
         y = res[, inst$objective$codomain$target_ids, with = FALSE][[1]]
         y * inst$objective_multiplicator
       }
 
-      invoke(cmaes::cma_es,
-        par = par,
-        fn = wrapper,
-        lower = inst$search_space$lower,
-        upper = inst$search_space$upper,
-        control = control,
-        inst = inst)
+      for (n in seq_len(n_iterations)) {
+
+        invoke(cmaes::cma_es,
+          par = par,
+          fn = wrapper,
+          lower = inst$search_space$lower,
+          upper = inst$search_space$upper,
+          control = control,
+          inst = inst,
+          n = n)
+
+        control$mu = control$mu * pv$population_multiplier
+        control$lambda = control$lambda * pv$population_multiplier
+        par = search_start(inst$search_space, type = "random")
+      }
     }
   )
 )
