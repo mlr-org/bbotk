@@ -53,6 +53,55 @@ by multiplying with "obj_mult" (which will be -1).
 #define DEBUG_PRINT(fmt, ...) do {} while(0)
 #endif
 
+// print a data.table (for debugging)
+void dt_print(SEXP dt, int nrows_max) {
+#if DEBUG_ENABLED
+    int ncol = length(dt);
+    if (ncol == 0) {
+        Rprintf("<empty data.table>\n");
+        return;
+    }
+    SEXP s_col_names = getAttrib(dt, R_NamesSymbol);
+    int nrow = length(VECTOR_ELT(dt, 0));
+    if (nrow == 0) {
+        Rprintf("<data.table with 0 rows>\n");
+        return;
+    }
+    int nrows = nrow < nrows_max ? nrow : nrows_max;
+    // Print column names
+    for (int j = 0; j < ncol; j++) {
+        Rprintf("%10s ", CHAR(STRING_ELT(s_col_names, j)));
+    }
+    Rprintf("\n");
+    // Print rows
+    for (int i = 0; i < nrows; i++) {
+        for (int j = 0; j < ncol; j++) {
+            SEXP col = VECTOR_ELT(dt, j);
+            switch(TYPEOF(col)) {
+                case REALSXP:
+                    Rprintf("%10.4f ", REAL(col)[i]);
+                    break;
+                case INTSXP:
+                    Rprintf("%10d ", INTEGER(col)[i]);
+                    break;
+                case LGLSXP:
+                    Rprintf("%10s ", LOGICAL(col)[i] ? "TRUE" : "FALSE");
+                    break;
+                case STRSXP:
+                    Rprintf("%10s ", CHAR(STRING_ELT(col, i)));
+                    break;
+                default:
+                    Rprintf("%10s ", "?");
+            }
+        }
+        Rprintf("\n");
+    }
+    if (nrow > nrows) {
+        Rprintf("... (%d more rows)\n", nrow - nrows);
+    }
+#endif
+}
+
 // Condition struct for parameter dependencies
 typedef struct {
     int param_index;      // Index of the parameter that has the dependency
@@ -99,7 +148,7 @@ static SEXP get_list_el_by_name(SEXP list, const char *name) {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;
     for (i = 0; i < length(list); i++) {
-        if(strcmp(CHAR(STRING_ELT(names, i)), name) == 0) {
+        if(strncmp(CHAR(STRING_ELT(names, i)), name, strlen(name)) == 0) {
             elmt = VECTOR_ELT(list, i);
             break;
         }
@@ -113,7 +162,7 @@ static SEXP get_list_el_by_name(SEXP list, const char *name) {
 static SEXP get_dt_col_by_name(SEXP dt, const char *name) {
     SEXP col_names = getAttrib(dt, R_NamesSymbol);
     for (int i = 0; i < length(dt); i++) {
-        if (strcmp(CHAR(STRING_ELT(col_names, i)), name) == 0) {
+        if (strncmp(CHAR(STRING_ELT(col_names, i)), name, strlen(name)) == 0) {
             DEBUG_PRINT("get_dt_col_by_name: el-name: %s, dt-type: %d, el-type: %d\n", 
                 name, TYPEOF(dt), TYPEOF(VECTOR_ELT(dt, i)));
             return VECTOR_ELT(dt, i);
@@ -158,7 +207,7 @@ static SEXP safe_eval(SEXP expr) {
 // Find parameter index by name, -1 if not found (should not happen)
 static int find_param_index(const char* param_name, SearchSpace* ss) {
     for (int j = 0; j < ss->n_params; j++) {
-        if (strcmp(ss->param_names[j], param_name) == 0) {
+        if (strncmp(ss->param_names[j], param_name, strlen(param_name)) == 0) {
             return j;
         }
     }
@@ -171,8 +220,8 @@ static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
     SEXP s_data = get_r6_el_by_name(s_ss, "data");
 
     // copy lower and upper bounds
-    ss->lower = (double*) R_alloc(ss->n_params, sizeof(double));
-    ss->upper = (double*) R_alloc(ss->n_params, sizeof(double));
+    ss->lower = (double*) R_Calloc(ss->n_params, double);
+    ss->upper = (double*) R_Calloc(ss->n_params, double);
     double* lower = REAL(get_dt_col_by_name(s_data, "lower"));
     double* upper = REAL(get_dt_col_by_name(s_data, "upper"));
     for (int i = 0; i < ss->n_params; i++) {
@@ -182,43 +231,43 @@ static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
 
     // copy nlevels
     // FIXME: it is weird that this is a double in paradox not an int
-    ss->n_levels = (int*) R_alloc(ss->n_params, sizeof(int));
+    ss->n_levels = (int*) R_Calloc(ss->n_params, int);
     double* nlevels = REAL(get_dt_col_by_name(s_data, "nlevels"));
     for (int i = 0; i < ss->n_params; i++) {
         ss->n_levels[i] = (int)nlevels[i];
     }
 
     // copy param_classes
-    ss->param_classes = (int*) R_alloc(ss->n_params, sizeof(int));
+    ss->param_classes = (int*) R_Calloc(ss->n_params, int);
     SEXP s_classes = get_dt_col_by_name(s_data, "class");
     for (int i = 0; i < ss->n_params; i++) {
         const char* class_name = CHAR(STRING_ELT(s_classes, i));
-        if (strcmp(class_name, "ParamDbl") == 0) {
+        if (strncmp(class_name, "ParamDbl", 8) == 0) {
             ss->param_classes[i] = 0;
-        } else if (strcmp(class_name, "ParamInt") == 0) {
+        } else if (strncmp(class_name, "ParamInt", 8) == 0) {
             ss->param_classes[i] = 1;
-        } else if (strcmp(class_name, "ParamFct") == 0) {
+        } else if (strncmp(class_name, "ParamFct", 8) == 0) {
             ss->param_classes[i] = 2;
-        } else if (strcmp(class_name, "ParamLgl") == 0) {
+        } else if (strncmp(class_name, "ParamLgl", 8) == 0) {
             ss->param_classes[i] = 3;
         }
     }
 
     // copy param_names (just store pointers to R's string pool)
-    ss->param_names = (const char**) R_alloc(ss->n_params, sizeof(const char*));
+    ss->param_names = (const char**) R_Calloc(ss->n_params, const char*);
     SEXP s_ids = get_dt_col_by_name(s_data, "id");
     for (int i = 0; i < ss->n_params; i++) {
         ss->param_names[i] = CHAR(STRING_ELT(s_ids, i));
     }
 
     // copy level_names (just store pointers to R's string pool)
-    ss->level_names = (const char***) R_alloc(ss->n_params, sizeof(const char**));
+    ss->level_names = (const char***) R_Calloc(ss->n_params, const char**);
     SEXP s_ps_levels = get_dt_col_by_name(s_data, "levels");
     for (int i = 0; i < ss->n_params; i++) {
         if (ss->param_classes[i] == 2 ) { // ParamFct
             SEXP s_p_levels = VECTOR_ELT(s_ps_levels, i);
             int n_levels = ss->n_levels[i];
-            ss->level_names[i] = (const char**) R_alloc(n_levels, sizeof(const char*));
+            ss->level_names[i] = (const char**) R_Calloc(n_levels, const char*);
             for (int k = 0; k < n_levels; k++) {
                 ss->level_names[i][k] = CHAR(STRING_ELT(s_p_levels, k));
             }
@@ -236,7 +285,7 @@ static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
     ss->n_conds = length(s_deps_on);
     Cond *conds = NULL;
     if (ss->n_conds != 0) {
-      conds = (Cond*) R_alloc(ss->n_conds, sizeof(Cond));
+      conds = (Cond*) R_Calloc(ss->n_conds, Cond);
       for (int i = 0; i < ss->n_conds; i++) {
         const char *param_name = CHAR(STRING_ELT(s_deps_id, i));
         conds[i].param_index = find_param_index(param_name, ss);
@@ -259,8 +308,8 @@ static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
 // topological sort of parameters based on dependencies
 // if param B depends on param A, then B comes after A in the sort
 static void toposort_params(SearchSpace* ss) {
-    int* sorted = (int*) R_alloc(ss->n_params, sizeof(int));
-    int* deps = (int*) R_alloc(ss->n_params, sizeof(int));
+    int* sorted = (int*) R_Calloc(ss->n_params, int);
+    int* deps = (int*) R_Calloc(ss->n_params, int);
     int count = 0;
     // Count dependencies for each parameter
     for (int i = 0; i < ss->n_conds; i++) {
@@ -287,7 +336,7 @@ static void toposort_params(SearchSpace* ss) {
 // Conditions come in "blocks", so all conds for param A are next to each other
 static void reorder_conds_by_toposort(SearchSpace* ss) {
     if (ss->n_conds <= 1) return;
-    Cond* reordered_conds = (Cond*) R_alloc(ss->n_conds, sizeof(Cond));
+    Cond* reordered_conds = (Cond*) R_Calloc(ss->n_conds, Cond);
     int reordered_count = 0;
     // go thru params in topological order, collect all conds for current param
     for (int i = 0; i < ss->n_params; i++) {
@@ -346,7 +395,6 @@ static int is_condition_satisfied(SEXP s_neigh_x, int i, Cond *cond, SearchSpace
 
 // Check if a DT element is NA
 static int dt_is_na(SEXP s_vec, int i, int j) {
-    SEXP s_col = VECTOR_ELT(s_vec, j);
     switch (TYPEOF(s_vec)) {
         case REALSXP:
             return ISNA(REAL(s_vec)[i]);
@@ -415,53 +463,6 @@ static SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
     return dt;
 }
 
-// print a data.table (for debugging)
-void dt_print(SEXP dt, int nrows_max) {
-    int ncol = length(dt);
-    if (ncol == 0) {
-        Rprintf("<empty data.table>\n");
-        return;
-    }
-    SEXP s_col_names = getAttrib(dt, R_NamesSymbol);
-    int nrow = length(VECTOR_ELT(dt, 0));
-    if (nrow == 0) {
-        Rprintf("<data.table with 0 rows>\n");
-        return;
-    }
-    int nrows = nrow < nrows_max ? nrow : nrows_max;
-    // Print column names
-    for (int j = 0; j < ncol; j++) {
-        Rprintf("%10s ", CHAR(STRING_ELT(s_col_names, j)));
-    }
-    Rprintf("\n");
-    // Print rows
-    for (int i = 0; i < nrows; i++) {
-        for (int j = 0; j < ncol; j++) {
-            SEXP col = VECTOR_ELT(dt, j);
-            switch(TYPEOF(col)) {
-                case REALSXP:
-                    Rprintf("%10.4f ", REAL(col)[i]);
-                    break;
-                case INTSXP:
-                    Rprintf("%10d ", INTEGER(col)[i]);
-                    break;
-                case LGLSXP:
-                    Rprintf("%10s ", LOGICAL(col)[i] ? "TRUE" : "FALSE");
-                    break;
-                case STRSXP:
-                    Rprintf("%10s ", CHAR(STRING_ELT(col, i)));
-                    break;
-                default:
-                    Rprintf("%10s ", "?");
-            }
-        }
-        Rprintf("\n");
-    }
-    if (nrow > nrows) {
-        Rprintf("... (%d more rows)\n", nrow - nrows);
-    }
-}
-
 // Helper function to set a parameter to a random value
 static void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, double mut_sd) {
     int param_class = ss->param_classes[param_j];
@@ -504,7 +505,7 @@ static void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, do
             const char* current_level = CHAR(STRING_ELT(s_neigh_col, row_i));
             int current_idx = 0;
             while (current_idx < n_levels && 
-              strcmp(current_level, ss->level_names[param_j][current_idx]) != 0) 
+              strncmp(current_level, ss->level_names[param_j][current_idx], strlen(current_level)) != 0) 
             {
                 current_idx++;
             }
@@ -553,7 +554,7 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
     // Now mutate one parameter for each neighbor
     for (int i_neigh = 0; i_neigh < n_searches * n_neighs; i_neigh++) {
         // Find valid mutable parameters for this neighbor (non-NA values)
-        int* valid_mutable_indices = (int*)R_alloc(ss->n_params, sizeof(int));
+        int* valid_mutable_indices = (int*) R_Calloc(ss->n_params, int);
         int n_valid_mutable = 0;
 
         for (int j = 0; j < ss->n_params; j++) {
@@ -574,7 +575,7 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
           
             
             // Check conditions for this neighbor after mutation
-            int* param_ok = (int*) R_alloc(ss->n_params, sizeof(int));
+            int* param_ok = (int*) R_Calloc(ss->n_params, int);
             // Initialize all flags to 1 (conditions satisfied)
             for (int p = 0; p < ss->n_params; p++) {
                 param_ok[p] = 1;
@@ -591,8 +592,7 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
             for (int j = 0; j < ss->n_params; j++) {
                 if (!param_ok[j]) {
                     dt_set_na(s_neighs_x, i_neigh, j);
-                }
-                if (param_ok[j] && dt_is_na(s_neighs_x, i_neigh, j)) {
+                } else if (dt_is_na(s_neighs_x, i_neigh, j)) {
                     dt_set_random(s_neighs_x, i_neigh, j, ss, mut_sd);
                 }
             }
@@ -681,7 +681,7 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     // we failed the terminator in the initial points, skip main loop
     if (s_pop_y != R_NilValue) {
         // y-values for pop. we wil later write into this array
-        double *pop_y = (double *) R_alloc(n_searches, sizeof(double));
+        double *pop_y = (double *) R_Calloc(n_searches, double);
         memcpy(pop_y, REAL(VECTOR_ELT(s_pop_y, 0)), n_searches * sizeof(double));
         UNPROTECT(2); // s_call, s_pop_y
 
