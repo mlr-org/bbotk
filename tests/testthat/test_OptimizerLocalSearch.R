@@ -169,6 +169,9 @@ test_that("OptimizerBatchLocalSearch works with chained dependencies on factor p
     x2 = p_fct(c("a", "b"), depends = x3 == "a"),
     x3 = p_fct(c("a", "b"))
   )
+  # example: x1 = a, x2 = a, x3 = b
+  # x1 check suceeds, x2 fails
+  # then x2 is set to NA, which invalidates x1 -> need to check again
 
   fun = function(xs) {
     list(y = as.numeric(length(xs)))
@@ -183,6 +186,28 @@ test_that("OptimizerBatchLocalSearch works with chained dependencies on factor p
   if (nrow(instance$archive$data[x2 == "b"])) expect_set_equal(instance$archive$data[x2 == "b"]$x1, NA)
   if (nrow(instance$archive$data[x3 == "b"])) expect_set_equal(instance$archive$data[x3 == "b"]$x2, NA)
   if (nrow(instance$archive$data[x1 == "a"])) expect_set_equal(instance$archive$data[x1 == "a"]$y, 3)
+})
+
+test_that("OptimizerBatchLocalSearch works with star dependencies on factor parameters", {
+  domain = ps(
+    x1 = p_fct(c("a", "b"), depends = x3 == "a"),
+    x2 = p_fct(c("a", "b"), depends = x3 == "a"),
+    x3 = p_fct(c("a", "b"))
+  )
+
+  fun = function(xs) {
+    list(y = as.numeric(length(xs)))
+  }
+  objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
+  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer$optimize(instance)
+
+  expect_data_table(instance$archive$data, nrows = 510L)
+  expect_character(instance$archive$data$x3, any.missing = FALSE)
+  if (nrow(instance$archive$data[x3 == "b"])) expect_set_equal(instance$archive$data[x3 == "b"]$x1, NA)
+  if (nrow(instance$archive$data[x3 == "b"])) expect_set_equal(instance$archive$data[x3 == "b"]$x2, NA)
+  if (nrow(instance$archive$data[x3 == "a"])) expect_set_equal(instance$archive$data[x3 == "a"]$y, 3)
 })
 
 test_that("OptimizerBatchLocalSearch works with dependencies on factor parameters with multiple values", {

@@ -53,6 +53,42 @@ by multiplying with "obj_mult" (which will be -1).
 #define DEBUG_PRINT(fmt, ...) do {} while(0)
 #endif
 
+// print a data.table row (for debugging)
+void dt_print_row(SEXP dt, int row) {
+#if DEBUG_ENABLED
+    int ncol = length(dt);
+    if (ncol == 0) {
+        Rprintf("<empty data.table>\n");
+        return;
+    }
+    SEXP s_col_names = getAttrib(dt, R_NamesSymbol);
+    // Print column names
+    for (int j = 0; j < ncol; j++) {
+        Rprintf("%10s ", CHAR(STRING_ELT(s_col_names, j)));
+    }
+    Rprintf("\n");
+    for (int j = 0; j < ncol; j++) {
+        SEXP col = VECTOR_ELT(dt, j);
+        switch(TYPEOF(col)) {
+            case REALSXP:
+                Rprintf("%10.4f ", REAL(col)[row]);
+                break;
+            case INTSXP:
+                Rprintf("%10d ", INTEGER(col)[row]);
+                break;
+            case LGLSXP:
+                Rprintf("%10s ", LOGICAL(col)[row] ? "TRUE" : "FALSE");
+                break;
+            case STRSXP:
+                Rprintf("%10s ", CHAR(STRING_ELT(col, row)));
+                break;
+            default:
+                Rprintf("%10s ", "?");
+        }
+    }
+    Rprintf("\n");
+#endif
+}
 // print a data.table (for debugging)
 void dt_print(SEXP dt, int nrows_max) {
 #if DEBUG_ENABLED
@@ -394,18 +430,19 @@ static int is_condition_satisfied(SEXP s_neigh_x, int i, Cond *cond, SearchSpace
 /************ DT functions ********** */
 
 // Check if a DT element is NA
-static int dt_is_na(SEXP s_vec, int i, int j) {
-    switch (TYPEOF(s_vec)) {
+static int dt_is_na(SEXP dt, int i, int j) {
+    SEXP col = VECTOR_ELT(dt, j);
+    switch(TYPEOF(col)) {
         case REALSXP:
-            return ISNA(REAL(s_vec)[i]);
-        case INTSXP:  // covers integers    
-            return ISNA(INTEGER(s_vec)[i]);
+            return ISNA(REAL(col)[i]);
+        case INTSXP:
+            return ISNA(INTEGER(col)[i]);
         case LGLSXP:
-            return ISNA(LOGICAL(s_vec)[i]);
+            return ISNA(LOGICAL(col)[i]);
         case STRSXP:
-            return STRING_ELT(s_vec, i) == NA_STRING;
+            return STRING_ELT(col, i) == NA_STRING;
     }
-    return 0; // should not happen
+    return -1;
 }
 
 // Set a DT element to NA
@@ -571,7 +608,7 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
             DEBUG_PRINT("Neighbor %d: selected parameter %d (%s) for mutation from %d valid options\n",
                 i_neigh, j, ss->param_names[j], n_valid_mutable);
             dt_set_random(s_neighs_x, i_neigh, j, ss, mut_sd);        
-            dt_print(s_neighs_x, 10);
+            dt_print_row(s_neighs_x, i_neigh);
           
             
             // Check conditions for this neighbor after mutation
@@ -582,19 +619,35 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
             }
             DEBUG_PRINT("param_condition_flags init done\n");
             
-            // Iterate through topologically sorted conditions
-            for (int c = 0; c < ss->n_conds; c++) {
-                Cond* cond = &ss->conds[c];
-                if (!is_condition_satisfied(s_neighs_x, i_neigh, cond, ss)) {
-                    param_ok[cond->param_index] = 0;   
-                } 
-            }
-            for (int j = 0; j < ss->n_params; j++) {
-                if (!param_ok[j]) {
-                    dt_set_na(s_neighs_x, i_neigh, j);
-                } else if (dt_is_na(s_neighs_x, i_neigh, j)) {
-                    dt_set_random(s_neighs_x, i_neigh, j, ss, mut_sd);
+            int check = 1;
+            while (check) {
+                check = 0;
+                // Iterate through topologically sorted conditions
+                for (int c = 0; c < ss->n_conds; c++) {
+                    Cond* cond = &ss->conds[c];
+                    if (!is_condition_satisfied(s_neighs_x, i_neigh, cond, ss)) {
+                        DEBUG_PRINT("not satisfied\n");
+                        param_ok[cond->param_index] = 0;   
+                    } else {
+                        DEBUG_PRINT("satisfied\n");
+                    }
                 }
+                for (int j = 0; j < ss->n_params; j++) {
+                    if (!param_ok[j]) {
+                        if(!dt_is_na(s_neighs_x, i_neigh, j)) {
+                            dt_set_na(s_neighs_x, i_neigh, j);
+                            DEBUG_PRINT("Setting parameter %s to NA.\n", ss->param_names[j]);
+                            // setting a value to NA might invalidate other
+                            // parameters
+                            check = 1;
+                        }
+                    }
+                    else if (dt_is_na(s_neighs_x, i_neigh, j)) {
+                        dt_set_random(s_neighs_x, i_neigh, j, ss, mut_sd);
+                        DEBUG_PRINT("Setting parameter %s to random value.\n", ss->param_names[j]);
+                    }
+                }
+                dt_print_row(s_neighs_x, i_neigh);
             }
         } else {
             DEBUG_PRINT("Neighbor %d: no valid mutable parameters found (all are NA)\n", i_neigh);
