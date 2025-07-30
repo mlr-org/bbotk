@@ -325,7 +325,7 @@ test_that("OptimizerBatchLocalSearch works with minimization", {
   expect_equal(instance$archive$best()$y, min(instance$archive$data$y))
 })
 
-test_that("OptimizerBatchLocalSearch works with minimization", {
+test_that("OptimizerBatchLocalSearch works with maximization", {
   domain = ps(
     x1 = p_dbl(-5, 5),
     x2 = p_dbl(-5, 5)

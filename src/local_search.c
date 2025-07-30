@@ -5,6 +5,8 @@
 #include <string.h>
 #include <math.h>
 
+#include <assert.h>
+
 
 /*
 Local Search
@@ -365,6 +367,7 @@ static void toposort_params(SearchSpace* ss) {
             }
         }
     }
+    assert(count == ss->n_params);
     ss->sorted_param_indices = sorted;
 }
 
@@ -384,6 +387,7 @@ static void reorder_conds_by_toposort(SearchSpace* ss) {
             }
         }
     }
+    assert(reordered_count == ss->n_conds);
     // copy back to original array
     for (int i = 0; i < ss->n_conds; i++) {
         ss->conds[i] = reordered_conds[i];
@@ -442,7 +446,6 @@ static int dt_is_na(SEXP dt, int i, int j) {
         case STRSXP:
             return STRING_ELT(col, i) == NA_STRING;
     }
-    return -1;
 }
 
 // Set a DT element to NA
@@ -530,8 +533,8 @@ static void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, do
             value = (value - lower) / range;
             value += random_normal(0.0, mut_sd);
             value = (int) round(value * range + lower);
-            if (value < lower) value = (int)lower;
-            if (value > upper) value = (int)upper;
+            if (value < lower) value = (int) lower;
+            if (value > upper) value = (int) upper;
             neigh_col[row_i] = value;
         }
     } else if (param_class == 2) {    // ParamFct
@@ -637,8 +640,7 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
                         if(!dt_is_na(s_neighs_x, i_neigh, j)) {
                             dt_set_na(s_neighs_x, i_neigh, j);
                             DEBUG_PRINT("Setting parameter %s to NA.\n", ss->param_names[j]);
-                            // setting a value to NA might invalidate other
-                            // parameters
+                            // setting a value to NA might invalidate other parameters
                             check = 1;
                         }
                     }
@@ -716,8 +718,13 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
 
     SearchSpace ss;
     extract_ss_info(s_ss, &ss);
-    toposort_params(&ss);
-    reorder_conds_by_toposort(&ss);
+    // This is currently unnecessary -- have to iterate after parameter changes
+    // because parameters are all checked before any changes are made. This
+    // means that the order doesn't matter and toposorting brings no benefit.
+    // Could change implementation to check and change parameter values at the
+    // same time; then toposorting is required.
+    //toposort_params(&ss);
+    //reorder_conds_by_toposort(&ss);
 
     //print_search_space(&ss);
 
