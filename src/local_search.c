@@ -1,4 +1,5 @@
 #include "local_search.h"
+#include "rc_helpers.h"
 
 #include <Rmath.h>
 #include <stdlib.h>
@@ -268,38 +269,7 @@ void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss) {
 
 /************ General functions for R data types *********** */
 
-// extract list element by name
-SEXP get_list_el_by_name(SEXP list, const char *name) {
-    SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
-    int i;
-    for (i = 0; i < length(list); i++) {
-        if(strncmp(CHAR(STRING_ELT(names, i)), name, strlen(name)) == 0) {
-            elmt = VECTOR_ELT(list, i);
-            break;
-        }
-    }
-    DEBUG_PRINT("get_list_el_by_name: el-name: %s, list-type: %d, el-type: %d\n",
-        name, TYPEOF(list), TYPEOF(elmt));
-    return elmt;
-}
 
-// extract DT column by name
-SEXP get_dt_col_by_name(SEXP dt, const char *name) {
-    SEXP col_names = getAttrib(dt, R_NamesSymbol);
-    for (int i = 0; i < length(dt); i++) {
-        if (strncmp(CHAR(STRING_ELT(col_names, i)), name, strlen(name)) == 0) {
-            DEBUG_PRINT("get_dt_col_by_name: el-name: %s, dt-type: %d, el-type: %d\n",
-                name, TYPEOF(dt), TYPEOF(VECTOR_ELT(dt, i)));
-            return VECTOR_ELT(dt, i);
-        }
-    }
-    return R_NilValue; // Column not found
-}
-
-// extract R6 member by name
-SEXP get_r6_el_by_name(SEXP r6, const char *str) {
-    return Rf_findVar(Rf_install(str), r6);
-}
 
 /************ try-eval-catch *********** */
 
@@ -341,14 +311,14 @@ int find_param_index(const char* param_name, SearchSpace* ss) {
 
 // convert paradox SearchSpace to C SearchSpace
 void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
-    ss->n_params = asInteger(get_r6_el_by_name(s_ss, "length"));
-    SEXP s_data = get_r6_el_by_name(s_ss, "data");
+    ss->n_params = asInteger(RC_get_r6_el_by_name(s_ss, "length"));
+    SEXP s_data = RC_get_r6_el_by_name(s_ss, "data");
 
     // copy lower and upper bounds
     ss->lower = (double*) R_Calloc(ss->n_params, double);
     ss->upper = (double*) R_Calloc(ss->n_params, double);
-    double* lower = REAL(get_dt_col_by_name(s_data, "lower"));
-    double* upper = REAL(get_dt_col_by_name(s_data, "upper"));
+    double* lower = REAL(RC_get_dt_col_by_name(s_data, "lower"));
+    double* upper = REAL(RC_get_dt_col_by_name(s_data, "upper"));
     for (int i = 0; i < ss->n_params; i++) {
         ss->lower[i] = lower[i];
         ss->upper[i] = upper[i];
@@ -357,14 +327,14 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
     // copy nlevels
     // FIXME: it is weird that this is a double in paradox not an int
     ss->n_levels = (int*) R_Calloc(ss->n_params, int);
-    double* nlevels = REAL(get_dt_col_by_name(s_data, "nlevels"));
+    double* nlevels = REAL(RC_get_dt_col_by_name(s_data, "nlevels"));
     for (int i = 0; i < ss->n_params; i++) {
         ss->n_levels[i] = (int)nlevels[i];
     }
 
     // copy param_classes
     ss->param_classes = (int*) R_Calloc(ss->n_params, int);
-    SEXP s_classes = get_dt_col_by_name(s_data, "class");
+    SEXP s_classes = RC_get_dt_col_by_name(s_data, "class");
     for (int i = 0; i < ss->n_params; i++) {
         const char* class_name = CHAR(STRING_ELT(s_classes, i));
         if (strncmp(class_name, "ParamDbl", 8) == 0) {
@@ -380,14 +350,14 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
 
     // copy param_names (just store pointers to R's string pool)
     ss->param_names = (const char**) R_Calloc(ss->n_params, const char*);
-    SEXP s_ids = get_dt_col_by_name(s_data, "id");
+    SEXP s_ids = RC_get_dt_col_by_name(s_data, "id");
     for (int i = 0; i < ss->n_params; i++) {
         ss->param_names[i] = CHAR(STRING_ELT(s_ids, i));
     }
 
     // copy level_names (just store pointers to R's string pool)
     ss->level_names = (const char***) R_Calloc(ss->n_params, const char**);
-    SEXP s_ps_levels = get_dt_col_by_name(s_data, "levels");
+    SEXP s_ps_levels = RC_get_dt_col_by_name(s_data, "levels");
     for (int i = 0; i < ss->n_params; i++) {
         if (ss->param_classes[i] == 2 ) { // ParamFct
             SEXP s_p_levels = VECTOR_ELT(s_ps_levels, i);
@@ -402,11 +372,11 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
     }
 
     DEBUG_PRINT("extracting conditions\n");
-    SEXP s_deps = get_r6_el_by_name(s_ss, "deps");
-    SEXP s_deps_on = get_dt_col_by_name(s_deps, "on");
-    SEXP s_deps_id = get_dt_col_by_name(s_deps, "id");
+    SEXP s_deps = RC_get_r6_el_by_name(s_ss, "deps");
+    SEXP s_deps_on = RC_get_dt_col_by_name(s_deps, "on");
+    SEXP s_deps_id = RC_get_dt_col_by_name(s_deps, "id");
     DEBUG_PRINT("s_deps_id type: %d\n", TYPEOF(s_deps_id));
-    SEXP s_deps_cond = get_dt_col_by_name(s_deps, "cond");
+    SEXP s_deps_cond = RC_get_dt_col_by_name(s_deps, "cond");
     ss->n_conds = length(s_deps_on);
     Cond *conds = NULL;
     if (ss->n_conds != 0) {
@@ -420,7 +390,7 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
         SEXP s_cond = VECTOR_ELT(s_deps_cond, i);
         conds[i].type = Rf_inherits(s_cond, "CondEqual") ? 0 : 1; // 0=CondEqual, 1=CondAnyOf
         // store RHS SEXP so we dont have to type-convert, but protect it from gc
-        conds[i].s_rhs = PROTECT(get_list_el_by_name(s_cond, "rhs"));
+        conds[i].s_rhs = PROTECT(RC_get_list_el_by_name(s_cond, "rhs"));
         DEBUG_PRINT("cond %d: param_index %d, parent_index %d, type %d, rhs type %d\n",
             i, conds[i].param_index, conds[i].parent_index, conds[i].type, TYPEOF(conds[i].s_rhs));
       }
@@ -689,11 +659,11 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
 // R wrapper function - complete local search implementation
 SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
 
-    int n_searches = asInteger(get_list_el_by_name(s_ctrl, "n_searches"));
-    int n_neighs = asInteger(get_list_el_by_name(s_ctrl, "n_neighbors"));
-    double mut_sd = asReal(get_list_el_by_name(s_ctrl, "mut_sd"));
-    double obj_mult = asReal(get_list_el_by_name(s_ctrl, "obj_mult"));
-    int n_steps = asInteger(get_list_el_by_name(s_ctrl, "n_steps"));
+    int n_searches = asInteger(RC_get_list_el_by_name(s_ctrl, "n_searches"));
+    int n_neighs = asInteger(RC_get_list_el_by_name(s_ctrl, "n_neighbors"));
+    double mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
+    double obj_mult = asReal(RC_get_list_el_by_name(s_ctrl, "obj_mult"));
+    int n_steps = asInteger(RC_get_list_el_by_name(s_ctrl, "n_steps"));
 
     SearchSpace ss;
     extract_ss_info(s_ss, &ss);
@@ -707,7 +677,7 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     dt_print(s_pop_x, 10);
 
     SEXP s_neighs_x = dt_generate_PROTECT(n_searches * n_neighs, &ss);
-    SEXP s_eval_batch = get_r6_el_by_name(s_inst, "eval_batch");
+    SEXP s_eval_batch = RC_get_r6_el_by_name(s_inst, "eval_batch");
 
     SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_pop_x));
     SEXP s_pop_y = PROTECT(safe_eval(s_call));

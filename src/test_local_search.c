@@ -4,7 +4,6 @@
 #include <Rinternals.h>
 #include <Rmath.h>
 
-extern SEXP get_list_el_by_name(SEXP list, const char *name);
 extern int random_int(int a, int b);
 extern double random_normal(double mean, double sd);
 extern SEXP dt_generate_PROTECT(int n, SearchSpace *ss);
@@ -25,11 +24,11 @@ SEXP c_test_get_list_el_by_name(SEXP test_list) {
   SEXP s_testres = RC_named_list_create_PROTECT(3);
   SEXP s_x;
   // simple test to see if we can retrieve elements from a list by name
-  s_x = get_list_el_by_name(test_list, "a");
+  s_x = RC_get_list_el_by_name(test_list, "a");
   set_test_result(s_testres, 0, "ok1", asInteger(s_x) == 1);
-  s_x = get_list_el_by_name(test_list, "b");
+  s_x = RC_get_list_el_by_name(test_list, "b");
   set_test_result(s_testres, 1, "ok2", strcmp(RC_asString(s_x), "foo") == 0);
-  s_x = get_list_el_by_name(test_list, "c");
+  s_x = RC_get_list_el_by_name(test_list, "c");
   set_test_result(s_testres, 2, "ok3", Rf_isNull(s_x));
   UNPROTECT(1); // s_testres
   return s_testres;
