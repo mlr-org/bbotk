@@ -168,20 +168,20 @@ typedef struct {
 
 // Helper function to get random number from R, they respect the RNG state and the seed
 // Helper function to get random integer between a and b (inclusive)
-static int random_int(int a, int b) {
+int random_int(int a, int b) {
     // Use proper integer arithmetic to avoid bias
     return a + (int)(unif_rand() * (b - a + 1));
 }
 
 // Helper function to get random normal distribution
-static double random_normal(double mean, double sd) {
+double random_normal(double mean, double sd) {
     return rnorm(mean, sd);
 }
 
 /************ DT functions ********** */
 
 // Check if a DT element is NA
-static int dt_is_na(SEXP dt, int i, int j) {
+int dt_is_na(SEXP dt, int i, int j) {
     SEXP col = VECTOR_ELT(dt, j);
     switch(TYPEOF(col)) {
         case REALSXP:
@@ -199,7 +199,7 @@ static int dt_is_na(SEXP dt, int i, int j) {
 }
 
 // Set a DT element to NA
-static void dt_set_na(SEXP s_dt, int row_i, int param_j) {
+void dt_set_na(SEXP s_dt, int row_i, int param_j) {
     SEXP s_col = VECTOR_ELT(s_dt, param_j);
     switch (TYPEOF(s_col)) {
         case REALSXP:
@@ -215,7 +215,7 @@ static void dt_set_na(SEXP s_dt, int row_i, int param_j) {
 
 // Create an uninitialized data.table with col types from SearchSpace
 // Return DT is PROTECTed and must be unprotected by the caller
-static SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
+SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
     SEXP dt = PROTECT(allocVector(VECSXP, ss->n_params));
     for (int j = 0; j < ss->n_params; j++) {
         int param_class = ss->param_classes[j];
@@ -254,7 +254,7 @@ static SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
 }
 
 // Helper function to set a parameter to a random value
-static void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, double mut_sd) {
+void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, double mut_sd) {
     int param_class = ss->param_classes[param_j];
     SEXP s_neigh_col = VECTOR_ELT(s_dt, param_j);
     if (param_class == 0) { // ParamDbl
@@ -315,7 +315,7 @@ static void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, do
 /************ General functions for R data types *********** */
 
 // extract list element by name
-static SEXP get_list_el_by_name(SEXP list, const char *name) {
+SEXP get_list_el_by_name(SEXP list, const char *name) {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;
     for (i = 0; i < length(list); i++) {
@@ -330,7 +330,7 @@ static SEXP get_list_el_by_name(SEXP list, const char *name) {
 }
 
 // extract DT column by name
-static SEXP get_dt_col_by_name(SEXP dt, const char *name) {
+SEXP get_dt_col_by_name(SEXP dt, const char *name) {
     SEXP col_names = getAttrib(dt, R_NamesSymbol);
     for (int i = 0; i < length(dt); i++) {
         if (strncmp(CHAR(STRING_ELT(col_names, i)), name, strlen(name)) == 0) {
@@ -343,20 +343,20 @@ static SEXP get_dt_col_by_name(SEXP dt, const char *name) {
 }
 
 // extract R6 member by name
-static SEXP get_r6_el_by_name(SEXP r6, const char *str) {
+SEXP get_r6_el_by_name(SEXP r6, const char *str) {
     return Rf_findVar(Rf_install(str), r6);
 }
 
 /************ try-eval-catch *********** */
 
 // internal function to evaluate an expression in the global environment
-static SEXP try_eval(void *data) {
+SEXP try_eval(void *data) {
     return Rf_eval((SEXP) data, R_GlobalEnv);
 }
 
 // internal function to handle what happens in the catch block
 // if the terminator triggers, we return NIL, otherwise we raise error back to R
-static SEXP catch_condition(SEXP s_condition, void *data) {
+SEXP catch_condition(SEXP s_condition, void *data) {
     DEBUG_PRINT("Caught R condition of class: %s\n",
         CHAR(STRING_ELT(Rf_getAttrib(s_condition, R_ClassSymbol), 0)));
     if (!Rf_inherits(s_condition, "terminator_exception")) {
@@ -368,7 +368,7 @@ static SEXP catch_condition(SEXP s_condition, void *data) {
 
 // main function so we can eval expression with try-catch
 // FIXME: we could set objective function call a bit more directly here?
-static SEXP safe_eval(SEXP expr) {
+SEXP safe_eval(SEXP expr) {
     return R_tryCatchError(try_eval, expr, catch_condition, NULL);
 }
 
@@ -376,7 +376,7 @@ static SEXP safe_eval(SEXP expr) {
 
 /************ SearchSpace functions ********** */
 // Find parameter index by name, -1 if not found (should not happen)
-static int find_param_index(const char* param_name, SearchSpace* ss) {
+int find_param_index(const char* param_name, SearchSpace* ss) {
     for (int j = 0; j < ss->n_params; j++) {
         if (strncmp(ss->param_names[j], param_name, strlen(param_name)) == 0) {
             return j;
@@ -386,7 +386,7 @@ static int find_param_index(const char* param_name, SearchSpace* ss) {
 }
 
 // convert paradox SearchSpace to C SearchSpace
-static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
+void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
     ss->n_params = asInteger(get_r6_el_by_name(s_ss, "length"));
     SEXP s_data = get_r6_el_by_name(s_ss, "data");
 
@@ -478,7 +478,7 @@ static void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
 
 // topological sort of parameters based on dependencies
 // if param B depends on param A, then B comes after A in the sort
-static void toposort_params(SearchSpace* ss) {
+void toposort_params(SearchSpace* ss) {
     int* sorted = (int*) R_Calloc(ss->n_params, int);
     int* deps = (int*) R_Calloc(ss->n_params, int);
     int count = 0;
@@ -506,7 +506,7 @@ static void toposort_params(SearchSpace* ss) {
 
 // Reorder conditions based on topological sort
 // Conditions come in "blocks", so all conds for param A are next to each other
-static void reorder_conds_by_toposort(SearchSpace* ss) {
+void reorder_conds_by_toposort(SearchSpace* ss) {
     if (ss->n_conds <= 1) return;
     Cond* reordered_conds = (Cond*) R_Calloc(ss->n_conds, Cond);
     int reordered_count = 0;
@@ -529,7 +529,7 @@ static void reorder_conds_by_toposort(SearchSpace* ss) {
 
 
 // Check if a condition is satisfied for a given row
-static int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss) {
+int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss) {
     SEXP s_parent_col = VECTOR_ELT(s_neighs_x, cond->parent_index);
     int parent_class = ss->param_classes[cond->parent_index];
     SEXP s_rhs = cond->s_rhs;
@@ -576,7 +576,7 @@ static int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpac
 
 // fix a parameter value by either setting it to a random value if it's NA, or
 // setting it to NA
-static void fix_param_value(SEXP s_neighs_x, int i_neigh, int param_idx, SearchSpace* ss, double mut_sd) {
+void fix_param_value(SEXP s_neighs_x, int i_neigh, int param_idx, SearchSpace* ss, double mut_sd) {
     if(dt_is_na(s_neighs_x, i_neigh, param_idx)) {
         dt_set_random(s_neighs_x, i_neigh, param_idx, ss, mut_sd);
         DEBUG_PRINT("Setting parameter %s to random value.\n", ss->param_names[param_idx]);
@@ -589,7 +589,7 @@ static void fix_param_value(SEXP s_neighs_x, int i_neigh, int param_idx, SearchS
 /************ Local search functions ********** */
 
 // Generate neighbors for all current points in an existing data.table
-static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
+void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
     DEBUG_PRINT("generate_neighs\n");
 
     // Copy current points to neighbors -- we replicate each candidate n_neighs times
@@ -680,7 +680,7 @@ static void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_n
 }
 
 // Copy the best neighbor from each block into the population
-static void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y,
+void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y,
     SEXP s_pop_x, double *pop_y, SearchSpace* ss, double obj_mult) {
 
     DEBUG_PRINT("copy_best_neighs_to_pop\n");
