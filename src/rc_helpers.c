@@ -15,3 +15,12 @@ SEXP RC_named_list_create_PROTECT(int n) {
 }
 
 const char *RC_asString(SEXP s_x) { return CHAR(STRING_ELT(s_x, 0)); }
+
+R_xlen_t RC_dt_nrows(SEXP s_dt) {
+  if (XLENGTH(s_dt) == 0) {
+    return 0;
+  } else {
+    return XLENGTH(VECTOR_ELT(s_dt, 0));
+  }
+}
+

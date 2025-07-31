@@ -45,4 +45,4 @@ test_that("c_test_dt_utils", {
   )
   testres = .Call("c_test_dt_utils", search_space)
   check_test_results(testres)
-}) 
+})

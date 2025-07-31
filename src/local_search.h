@@ -4,6 +4,58 @@
 #include <R.h>
 #include <Rinternals.h>
 
+
+/*
+Local Search
+
+Implements a local search very similar to what is used in SMAC for acquisition function optimization
+of mixed type search spaces with hierarchical dependencies.
+https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py
+
+We run "n_searches" in parallel. Each search runs "n_steps" iterations.
+For each search in every iteration we generate "n_neighs" neighbors.
+A neighbor is the current point, but with exactly one parameter mutated.
+
+-------------------------------------------------------
+
+Mutation works like this:
+For num params: we scale to 0,1, add Gaussian noise with sd "mut_sd", and scale back.
+We then clip to the lower and upper bounds.
+For int params: We do the same as for numeric parameters, but round at the end.
+For factor params: We sample a new level from the unused levels of the parameter.
+For logical params: We flip the bit.
+
+-------------------------------------------------------
+
+After the neighbors are generated, we evaluate them.
+We go to the best neighbor, or stay at the current point if the best neighbor is worse.
+
+-------------------------------------------------------
+
+The function always minimizes. If the objective is to be maximized, we handle it
+by multiplying with "obj_mult" (which will be -1).
+
+*/
+
+/*
+//FIXME:
+    * LS must be elitist
+    * we need to also mutate parent params
+*/
+
+// Debug printer system - can be switched on/off
+#define DEBUG_ENABLED 1  // Set to 1 to enable debug output
+
+#if DEBUG_ENABLED
+#define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)
+#else
+#define DEBUG_PRINT(fmt, ...) do {} while(0)
+#endif
+
+
+
+
+
 // Condition struct for parameter dependencies
 typedef struct {
   int param_index;  // Index of the parameter that has the dependency

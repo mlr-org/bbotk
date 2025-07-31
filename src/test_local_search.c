@@ -110,7 +110,7 @@ SEXP c_test_dt_utils(SEXP s_ss) {
 
   // Test dt_generate
   SEXP s_dt = dt_generate_PROTECT(2, &ss); // dt_generate returns a PROTECTed SEXP
-  set_test_result(s_res, 0, "generate_nrows", Rf_nrows(s_dt) == 2);
+  set_test_result(s_res, 0, "generate_nrows", RC_dt_nrows(s_dt) == 2);
   set_test_result(s_res, 1, "generate_ncols", Rf_length(s_dt) == ss.n_params);
 
   // Test dt_set_na and dt_is_na

@@ -1,59 +1,10 @@
-#include <R.h>
-#include <Rinternals.h>
+#include "local_search.h"
+
 #include <Rmath.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
 #include <assert.h>
-
-
-/*
-Local Search
-
-Implements a local search very similar to what is used in SMAC for acquisition function optimization
-of mixed type search spaces with hierarchical dependencies.
-https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py
-
-We run "n_searches" in parallel. Each search runs "n_steps" iterations.
-For each search in every iteration we generate "n_neighs" neighbors.
-A neighbor is the current point, but with exactly one parameter mutated.
-
--------------------------------------------------------
-
-Mutation works like this:
-For num params: we scale to 0,1, add Gaussian noise with sd "mut_sd", and scale back.
-We then clip to the lower and upper bounds.
-For int params: We do the same as for numeric parameters, but round at the end.
-For factor params: We sample a new level from the unused levels of the parameter.
-For logical params: We flip the bit.
-
--------------------------------------------------------
-
-After the neighbors are generated, we evaluate them.
-We go to the best neighbor, or stay at the current point if the best neighbor is worse.
-
--------------------------------------------------------
-
-The function always minimizes. If the objective is to be maximized, we handle it
-by multiplying with "obj_mult" (which will be -1).
-
-*/
-
-/*
-//FIXME:
-    * LS must be elitist
-    * we need to also mutate parent params
-*/
-
-// Debug printer system - can be switched on/off
-#define DEBUG_ENABLED 1  // Set to 1 to enable debug output
-
-#if DEBUG_ENABLED
-#define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)
-#else
-#define DEBUG_PRINT(fmt, ...) do {} while(0)
-#endif
 
 // print a data.table row (for debugging)
 void dt_print_row(SEXP dt, int row) {
@@ -140,31 +91,6 @@ void dt_print(SEXP dt, int nrows_max) {
 #endif
 }
 
-// Condition struct for parameter dependencies
-typedef struct {
-    int param_index;      // Index of the parameter that has the dependency
-    int parent_index;     // Index of the parent parameter
-    int type;             // 0=CondEqual, 1=CondAnyOf (or similar)
-    SEXP s_rhs;             // SEXP containing the RHS values (preserves original types)
-} Cond;
-
-// Data structures for search space information
-typedef struct {
-    int n_params;
-    int* param_classes;  // 0=ParamDbl, 1=ParamInt, 2=ParamFct, 3=ParamLgl
-    double* lower;
-    double* upper;
-    int* n_levels;
-    const char*** level_names;  // Array of arrays of level names for factors, only used for factors (not logicals)
-    const char** param_names;  // Parameter names for data.table columns
-
-    // Array of condition objects
-    Cond* conds;
-    int n_conds;
-
-    // Topologically sorted parameter indices (parameters that depend on others come after them)
-    int* sorted_param_indices;
-} SearchSpace;
 
 // Helper function to get random number from R, they respect the RNG state and the seed
 // Helper function to get random integer between a and b (inclusive)
@@ -181,17 +107,17 @@ double random_normal(double mean, double sd) {
 /************ DT functions ********** */
 
 // Check if a DT element is NA
-int dt_is_na(SEXP dt, int i, int j) {
-    SEXP col = VECTOR_ELT(dt, j);
-    switch(TYPEOF(col)) {
+int dt_is_na(SEXP s_dt, int row_i, int param_j) {
+    SEXP s_col = VECTOR_ELT(s_dt, param_j);
+    switch(TYPEOF(s_col)) {
         case REALSXP:
-            return ISNA(REAL(col)[i]);
+            return ISNA(REAL(s_col)[row_i]);
         case INTSXP:
-            return ISNA(INTEGER(col)[i]);
+            return INTEGER(s_col)[row_i] == NA_INTEGER;
         case LGLSXP:
-            return ISNA(LOGICAL(col)[i]);
+            return LOGICAL(s_col)[row_i] == NA_LOGICAL;
         case STRSXP:
-            return STRING_ELT(col, i) == NA_STRING;
+            return STRING_ELT(s_col, row_i) == NA_STRING;
     }
     // this should never happen...
     assert(0);
@@ -216,7 +142,7 @@ void dt_set_na(SEXP s_dt, int row_i, int param_j) {
 // Create an uninitialized data.table with col types from SearchSpace
 // Return DT is PROTECTed and must be unprotected by the caller
 SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
-    SEXP dt = PROTECT(allocVector(VECSXP, ss->n_params));
+    SEXP s_dt = PROTECT(allocVector(VECSXP, ss->n_params));
     for (int j = 0; j < ss->n_params; j++) {
         int param_class = ss->param_classes[j];
         SEXP col;
@@ -229,32 +155,41 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
         } else { // ParamLgl
             col = PROTECT(allocVector(LGLSXP, n));
         }
-        SET_VECTOR_ELT(dt, j, col);
+        SET_VECTOR_ELT(s_dt, j, col);
         UNPROTECT(1); // col
-    }
+    } 
     // Set column names
-    SEXP col_names = PROTECT(allocVector(STRSXP, ss->n_params));
-    for (int j = 0; j < ss->n_params; j++) {
-        SET_STRING_ELT(col_names, j, mkChar(ss->param_names[j]));
+    SEXP s_colnames = PROTECT(allocVector(STRSXP, ss->n_params));
+    for (int j  = 0; j < ss->n_params; j++) {
+        SET_STRING_ELT(s_colnames, j, mkChar(ss->param_names[j]));
     }
-    setAttrib(dt, R_NamesSymbol, col_names);
+    setAttrib(s_dt, R_NamesSymbol, s_colnames);
     // Set class to data.table
     SEXP class_attr = PROTECT(allocVector(STRSXP, 2));
     SET_STRING_ELT(class_attr, 0, mkChar("data.table"));
     SET_STRING_ELT(class_attr, 1, mkChar("data.frame"));
-    setAttrib(dt, R_ClassSymbol, class_attr);
+    setAttrib(s_dt, R_ClassSymbol, class_attr);
+
+    // set row names
+    SEXP s_rownames = PROTECT(allocVector(INTSXP, n));
+    for (int i = 0; i < n; i++) {
+      INTEGER(s_rownames)[i] = i + 1;
+    }
+    setAttrib(s_dt, R_RowNamesSymbol, s_rownames);  
 
     // Set .internal.selfref attribute for data.table
     SEXP selfref = PROTECT(allocVector(INTSXP, 1));
     INTEGER(selfref)[0] = NA_INTEGER;
-    setAttrib(dt, Rf_install(".internal.selfref"), selfref);
+    setAttrib(s_dt, Rf_install(".internal.selfref"), selfref);
 
-    UNPROTECT(3); // col_names, class_attr, selfref
-    return dt;
+    UNPROTECT(4); // colnames, rownames, class_attr, selfref
+    return s_dt;
 }
 
-// Helper function to set a parameter to a random value
-void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, double mut_sd) {
+// Helper function mutate a single element of a config (in a DT)
+void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, double mut_sd) {
+    // we only mutate elements that are not NA
+    assert(!dt_is_na(s_dt, row_i, param_j));
     int param_class = ss->param_classes[param_j];
     SEXP s_neigh_col = VECTOR_ELT(s_dt, param_j);
     if (param_class == 0) { // ParamDbl
@@ -309,6 +244,25 @@ void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, double mu
         LOGICAL(s_neigh_col)[row_i] ^= 1;
     }
 }
+
+// Set a single element of a config (in a DT) to a random value
+void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss) {
+  assert(dt_is_na(s_dt, row_i, param_j));
+  int param_class = ss->param_classes[param_j];
+  SEXP s_col = VECTOR_ELT(s_dt, param_j);
+  if (param_class == 0) { // ParamDbl
+    REAL(s_col)[row_i] = runif(ss->lower[param_j], ss->upper[param_j]);
+  } else if (param_class == 1) { // ParamInt
+    INTEGER(s_col)[row_i] = random_int(ss->lower[param_j], ss->upper[param_j]);
+  } else if (param_class == 2) {    // ParamFct
+      int lev = random_int(0, ss->n_levels[param_j] - 1);
+      SET_STRING_ELT(s_col, row_i, mkChar(ss->level_names[param_j][lev]));
+  } else if (param_class == 3) { // ParamLgl
+      LOGICAL(s_col)[row_i] = random_int(0, 1);
+  }
+}
+
+
 
 
 
@@ -574,17 +528,21 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss) 
     return is_satisfied;
 }
 
-// fix a parameter value by either setting it to a random value if it's NA, or
-// setting it to NA
-void fix_param_value(SEXP s_neighs_x, int i_neigh, int param_idx, SearchSpace* ss, double mut_sd) {
-    if(dt_is_na(s_neighs_x, i_neigh, param_idx)) {
-        dt_set_random(s_neighs_x, i_neigh, param_idx, ss, mut_sd);
-        DEBUG_PRINT("Setting parameter %s to random value.\n", ss->param_names[param_idx]);
-    } else {
-        dt_set_na(s_neighs_x, i_neigh, param_idx);
-        DEBUG_PRINT("Setting parameter %s to NA.\n", ss->param_names[param_idx]);
+
+
+// fix a parameter value which is in conflict with its condition value´
+// case 1: if any condition is not satisfied, set the parameter to NA
+// case 2: if all conditions are satisfied, but the parameter is NA, set it to a random value
+void check_and_fix_param_value(SEXP s_neighs_x, int neigh_i, int param_j, int all_conds_satisfied, SearchSpace* ss) {
+    if(!all_conds_satisfied) {
+      DEBUG_PRINT("Setting parameter %s to NA.\n", ss->param_names[param_j]);
+      dt_set_na(s_neighs_x, neigh_i, param_j);
+    } else if (dt_is_na(s_neighs_x, neigh_i, param_j)) {
+      DEBUG_PRINT("Setting parameter %s to random value.\n", ss->param_names[param_j]);
+      dt_set_random(s_neighs_x, neigh_i, param_j, ss);
     }
 }
+
 
 /************ Local search functions ********** */
 
@@ -635,7 +593,7 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
 
             DEBUG_PRINT("Neighbor %d: selected parameter %d (%s) for mutation from %d valid options\n",
                 i_neigh, j, ss->param_names[j], n_valid_mutable);
-            dt_set_random(s_neighs_x, i_neigh, j, ss, mut_sd);
+            dt_mutate_element(s_neighs_x, i_neigh, j, ss, mut_sd);
             DEBUG_PRINT("before checks:\n");
             dt_print_row(s_neighs_x, i_neigh);
 
@@ -647,11 +605,10 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
             for (int c = 0; c < ss->n_conds; c++) {
                 Cond* cond = &ss->conds[c];
                 if (param_index_current != cond->param_index) {
-                    // finished processing all conditions for a particular
-                    // parameter -- if not all conditions are satisfied, change
-                    // value accordingly
-                    if (param_index_current > -1 && !all_conds_satisfied) {
-                        fix_param_value(s_neighs_x, i_neigh, param_index_current, ss, mut_sd);
+                    // finished processing all conditions for a particular parameter 
+                    // now see and fix if its value is in conflict with its conditions
+                    if (param_index_current > -1) {
+                        check_and_fix_param_value(s_neighs_x, i_neigh, param_index_current, all_conds_satisfied, ss);
                     }
                     // reset values for next parameter
                     all_conds_satisfied = 1;
@@ -665,11 +622,12 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
                     DEBUG_PRINT("satisfied:\n");
                     dt_print_row(s_neighs_x, i_neigh);
                 }
-                // explicit check for the last condition
-                if (c == ss->n_conds - 1 && !all_conds_satisfied) {
-                    fix_param_value(s_neighs_x, i_neigh, param_index_current, ss, mut_sd);
-                }
             }
+            // explicit check for the last condition
+            if (ss->n_conds > 0) {
+                check_and_fix_param_value(s_neighs_x, i_neigh, param_index_current, all_conds_satisfied, ss);
+            }
+            
             DEBUG_PRINT("after checks:\n");
             dt_print_row(s_neighs_x, i_neigh);
         } else {
