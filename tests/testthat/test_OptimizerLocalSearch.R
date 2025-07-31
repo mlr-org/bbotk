@@ -174,7 +174,7 @@ test_that("OptimizerBatchLocalSearch works with chained dependencies on factor p
   # then x2 is set to NA, which invalidates x1 -> need to check again
 
   fun = function(xs) {
-    list(y = as.numeric(length(xs)))
+    list(y = 3 - as.numeric(length(xs)))
   }
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
@@ -185,7 +185,8 @@ test_that("OptimizerBatchLocalSearch works with chained dependencies on factor p
   expect_character(instance$archive$data$x3, any.missing = FALSE)
   if (nrow(instance$archive$data[x2 == "b"])) expect_set_equal(instance$archive$data[x2 == "b"]$x1, NA)
   if (nrow(instance$archive$data[x3 == "b"])) expect_set_equal(instance$archive$data[x3 == "b"]$x2, NA)
-  if (nrow(instance$archive$data[x1 == "a"])) expect_set_equal(instance$archive$data[x1 == "a"]$y, 3)
+  if (nrow(instance$archive$data[x1 == "a"])) expect_set_equal(instance$archive$data[x1 == "a"]$y, 0)
+  if (nrow(instance$archive$data[x1 == "b"])) expect_set_equal(instance$archive$data[x1 == "b"]$y, 0)
 })
 
 test_that("OptimizerBatchLocalSearch works with star dependencies on factor parameters", {
