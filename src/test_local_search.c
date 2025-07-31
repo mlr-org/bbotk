@@ -10,7 +10,8 @@ extern double random_normal(double mean, double sd);
 extern SEXP dt_generate_PROTECT(int n, SearchSpace *ss);
 extern void dt_set_na(SEXP s_dt, int row_i, int param_j);
 extern int dt_is_na(SEXP s_dt, int row_i, int param_j);
-extern void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace *ss, double mut_sd);
+extern void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace *ss);
+extern void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace *ss, double mut_sd);
 
 // sets test result as a bool scalar, so we can later pass it to
 // testthat::expect_true
@@ -103,7 +104,7 @@ SEXP c_test_extract_ss_info(SEXP s_ss) {
 }
 
 SEXP c_test_dt_utils(SEXP s_ss) {
-  SEXP s_res = RC_named_list_create_PROTECT(10);
+  SEXP s_res = RC_named_list_create_PROTECT(16);
   SearchSpace ss;
   extract_ss_info(s_ss, &ss);
   GetRNGstate();
@@ -125,15 +126,48 @@ SEXP c_test_dt_utils(SEXP s_ss) {
 
 
   // Test dt_set_random
-  dt_set_random(s_dt, 0, 0, &ss, 0.1);
-  dt_set_random(s_dt, 0, 1, &ss, 0.1);
-  dt_set_random(s_dt, 0, 2, &ss, 0.1);
-  dt_set_random(s_dt, 0, 3, &ss, 0.1);
+  dt_set_random(s_dt, 0, 0, &ss);
+  dt_set_random(s_dt, 0, 1, &ss);
+  dt_set_random(s_dt, 0, 2, &ss);
+  dt_set_random(s_dt, 0, 3, &ss);
   set_test_result(s_res, 6, "set_random_dbl", dt_is_na(s_dt, 0, 0) == 0);
   set_test_result(s_res, 7, "set_random_int", dt_is_na(s_dt, 0, 1) == 0);
   set_test_result(s_res, 8, "set_random_fct", dt_is_na(s_dt, 0, 2) == 0);
   set_test_result(s_res, 9, "set_random_lgl", dt_is_na(s_dt, 0, 3) == 0);
 
+  // Test dt_mutate_element
+  // First set some known values
+  SEXP s_col0 = VECTOR_ELT(s_dt, 0); // ParamDbl
+  SEXP s_col1 = VECTOR_ELT(s_dt, 1); // ParamInt  
+  SEXP s_col2 = VECTOR_ELT(s_dt, 2); // ParamFct
+  SEXP s_col3 = VECTOR_ELT(s_dt, 3); // ParamLgl
+
+  REAL(s_col0)[1] = 0.5;
+  INTEGER(s_col1)[1] = 5;
+  SET_STRING_ELT(s_col2, 1, mkChar("b"));
+  LOGICAL(s_col3)[1] = 1;
+
+  // Test mutation
+  dt_mutate_element(s_dt, 1, 0, &ss, 0.1); // ParamDbl
+  dt_mutate_element(s_dt, 1, 1, &ss, 2.0); // ParamInt
+  dt_mutate_element(s_dt, 1, 2, &ss, 0.1); // ParamFct
+  dt_mutate_element(s_dt, 1, 3, &ss, 0.1); // ParamLgl
+
+  // Check that values were changed but still within bounds
+  double dbl_val = REAL(s_col0)[1];
+  set_test_result(s_res, 10, "mutate_dbl_changed", dbl_val != 0.5);
+  set_test_result(s_res, 11, "mutate_dbl_bounds", dbl_val >= ss.lower[0] && dbl_val <= ss.upper[0]);
+
+  int int_val = INTEGER(s_col1)[1];
+  set_test_result(s_res, 12, "mutate_int_changed", int_val != 5);
+  set_test_result(s_res, 13, "mutate_int_bounds", int_val >= ss.lower[1] && int_val <= ss.upper[1]);
+
+  const char* fct_val = CHAR(STRING_ELT(s_col2, 1));
+  set_test_result(s_res, 14, "mutate_fct_changed", strcmp(fct_val, "a") == 0);
+
+  int lgl_val = LOGICAL(s_col3)[1];
+  set_test_result(s_res, 15, "mutate_lgl_changed", lgl_val == 0);
+  
   PutRNGstate();
   UNPROTECT(2); // s_res, s_dt
   return s_res;

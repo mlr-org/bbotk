@@ -41,6 +41,8 @@ by multiplying with "obj_mult" (which will be -1).
 //FIXME:
     * LS must be elitist
     * we need to also mutate parent params
+    * sd=0.1 might not work for ints? 
+    * we need to putrngstate 
 */
 
 // Debug printer system - can be switched on/off

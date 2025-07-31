@@ -40,7 +40,7 @@ test_that("c_test_dt_utils", {
   search_space = paradox::ps(
     x1 = paradox::p_dbl(0, 1),
     x2 = paradox::p_int(0, 10),
-    x3 = paradox::p_fct(c("a", "b", "c")),
+    x3 = paradox::p_fct(c("a", "b")),
     x4 = paradox::p_lgl()
   )
   testres = .Call("c_test_dt_utils", search_space)
