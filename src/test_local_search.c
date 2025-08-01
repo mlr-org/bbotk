@@ -14,6 +14,7 @@ extern void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace *ss
 extern void toposort_params(SearchSpace *ss);
 extern void reorder_conds_by_toposort(SearchSpace *ss);
 extern void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
+extern int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss);
 
 // sets test result as a bool scalar, so we can later pass it to
 // testthat::expect_true
@@ -200,6 +201,17 @@ SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expect
   }
   set_test_result(s_res, 1, "reorder_conds", ok);
   
+  UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
+  return s_res;
+}
+
+SEXP c_test_is_condition_satisfied(SEXP s_dt_row, SEXP s_ss, SEXP s_cond_idx, SEXP s_expected_satisfied) {
+  SearchSpace ss;
+  extract_ss_info_PROTECT(s_ss, &ss);
+  SEXP s_res = RC_named_list_create_PROTECT(1);
+  Cond *cond = &ss.conds[asInteger(s_cond_idx)];
+  int ok = is_condition_satisfied(s_dt_row, 0, cond, &ss);
+  set_test_result(s_res, 0, "cond_satisfied", ok == asInteger(s_expected_satisfied));
   UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
   return s_res;
 }

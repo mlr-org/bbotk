@@ -103,3 +103,63 @@ test_that("c_test_toposort_params", {
   testres = .Call("c_test_toposort_params", ps5, c(3L, 0L, 2L, 1L), c(0L, 2L, 1L, 1L))
   check_test_results(testres)
 })
+
+test_that("c_test_is_condition_satisfied", {
+  # simple case
+  ps = paradox::ps(
+    A = paradox::p_fct(c("a1", "a2")),
+    B = paradox::p_dbl(0, 1)
+  )
+  ps$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
+  dt = data.frame(A = "a1", B = 0.5)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 1L)
+  dt = data.frame(A = "a2", B = 0.5)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 0L)
+  
+  # Test CondAnyOf condition
+  ps2 = paradox::ps(
+    A = paradox::p_fct(c("a1", "a2", "a3")),
+    B = paradox::p_int(0, 10)
+  )
+  ps2$add_dep("B", on = "A", cond = paradox::CondAnyOf$new(c("a1", "a2")))
+  dt = data.frame(A = "a1", B = 5)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 1L)
+  dt = data.frame(A = "a3", B = 5) 
+  testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 0L)
+
+  # Test numeric parameter conditions
+  ps3 = paradox::ps(
+    A = paradox::p_dbl(0, 10),
+    B = paradox::p_int(0, 5)
+  )
+  ps3$add_dep("B", on = "A", cond = paradox::CondEqual$new(5))
+  dt = data.frame(A = 5, B = 3)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps3, 0L, 1L)
+  dt = data.frame(A = 4.9, B = 3)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps3, 0L, 0L)
+
+  # Test logical parameter conditions
+  ps4 = paradox::ps(
+    A = paradox::p_lgl(),
+    B = paradox::p_dbl(0, 1)
+  )
+  ps4$add_dep("B", on = "A", cond = paradox::CondEqual$new(TRUE))
+  dt = data.frame(A = TRUE, B = 0.5)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps4, 0L, 1L)
+  dt = data.frame(A = FALSE, B = 0.5)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps4, 0L, 0L)
+
+  # Test NA handling
+  ps5 = paradox::ps(
+    A = paradox::p_fct(c("a1", "a2")),
+    B = paradox::p_dbl(0, 1)
+  )
+  ps5$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
+  dt = data.frame(A = NA, B = NA)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 1L)
+  dt = data.frame(A = "a1", B = NA)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L)
+  dt = data.frame(A = NA_character_, B = 0.5)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L) 
+  check_test_results(testres)
+})

@@ -13,6 +13,7 @@ extern SEXP c_test_random_normal();
 extern SEXP c_test_extract_ss_info(SEXP);
 extern SEXP c_test_dt_utils(SEXP);
 extern SEXP c_test_toposort_params(SEXP, SEXP, SEXP);
+extern SEXP c_test_is_condition_satisfied(SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"c_is_dominated", (DL_FUNC)&c_is_dominated, 1},
@@ -24,6 +25,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"c_test_extract_ss_info", (DL_FUNC)&c_test_extract_ss_info, 1},
     {"c_test_dt_utils", (DL_FUNC)&c_test_dt_utils, 1},
     {"c_test_toposort_params", (DL_FUNC)&c_test_toposort_params, 3},
+    {"c_test_is_condition_satisfied", (DL_FUNC)&c_test_is_condition_satisfied, 4},
 
     {NULL, NULL, 0}};
 
