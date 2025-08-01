@@ -155,11 +155,89 @@ test_that("c_test_is_condition_satisfied", {
     B = paradox::p_dbl(0, 1)
   )
   ps5$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
-  dt = data.frame(A = NA, B = NA)
-  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 1L)
-  dt = data.frame(A = "a1", B = NA)
+  
+  dt = data.frame(A = NA, B = NA) # parent is non-active, condition is not satisfied
   testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L)
-  dt = data.frame(A = NA_character_, B = 0.5)
+  dt = data.frame(A = "a1", B = NA) # parent is active and correct, B=NA does not matter
+  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 1L)
+  dt = data.frame(A = NA_character_, B = 0.5) # parent is non-active, condition is not satisfied
   testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L) 
   check_test_results(testres)
+})
+
+test_that("c_test_generate_neighs", {
+  # No dependencies
+  ss = paradox::ps(
+    x1 = paradox::p_dbl(0, 1),
+    x2 = paradox::p_int(0, 10),
+    x3 = paradox::p_fct(c("a", "b", "c")),
+    x4 = paradox::p_lgl()
+  )
+  pop = data.table::data.table(
+    x1 = 0.5,
+    x2 = 5L,
+    x3 = "a",
+    x4 = TRUE
+  )
+  pop_copy = data.table::copy(pop)
+
+  set.seed(1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.5)
+
+  expect_true(is.data.table(neighs))
+  expect_equal(nrow(neighs), 10)
+  expect_equal(ncol(neighs), 4)
+  # check col types
+  expect_true(is.numeric(neighs$x1))
+  expect_true(is.integer(neighs$x2))
+  expect_true(is.character(neighs$x3))
+  expect_true(is.logical(neighs$x4))
+  # check that values are within bounds
+  expect_true(all(neighs$x1 >= 0 & neighs$x1 <= 1))
+  expect_true(all(neighs$x2 >= 0 & neighs$x2 <= 10))
+  expect_true(all(neighs$x1 >= 0 & neighs$x1 <= 1))
+  expect_true(all(neighs$x2 >= 0 & neighs$x2 <= 10))
+  expect_true(all(is.integer(neighs$x2)))
+  expect_true(all(neighs$x3 %in% c("a", "b", "c")))
+  expect_true(all(is.logical(neighs$x4)))
+
+  # check that exactly 1 param was mutated per row
+  for (i in 1:nrow(neighs)) {
+    diffs = mapply("!=", as.data.frame(neighs[i,]), as.data.frame(pop))
+    diffs[1] = abs(neighs[i,]$x1 - pop$x1) > 1e-8  # special handling for numeric
+    expect_equal(sum(diffs), 1)
+  }
+ 
+  # With dependencies
+  ss = paradox::ps(
+    A = paradox::p_fct(c("a1", "a2")),
+    B = paradox::p_dbl(0, 1)
+  )
+  ss$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
+
+  # Case 1: condition is met (A="a1"), B has a value. If A is mutated to "a2", B must become NA.
+  pop = data.table::data.table(A = "a1", B = 0.5)
+
+  set.seed(1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1)
+
+  mutated_A_to_a2 = which(neighs$A == "a2")
+  expect_true(length(mutated_A_to_a2) > 0) # check A was mutated to "a2"
+  expect_true(all(is.na(neighs[mutated_A_to_a2, ]$B)))
+
+  not_mutated_A = which(neighs$A == "a1")
+  expect_true(all(!is.na(neighs[not_mutated_A, ]$B)))
+
+  # Case 2: condition not met (A="a2"), B is NA. The only mutable param is A.
+  # So A must be mutated to "a1" in ALL neighbors.
+  # When A is mutated to "a1", B must get a value.
+  pop = data.table::data.table(A = "a2", B = NA_real_)
+  set.seed(1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.1)
+  # All neighbors should have A mutated to "a1"
+  expect_true(all(neighs$A == "a1"))
+  # All neighbors should have a non-NA value for B
+  expect_true(all(!is.na(neighs$B)))
+  # and be within bounds
+  expect_true(all(neighs$B >= 0 & neighs$B <= 1))
 })

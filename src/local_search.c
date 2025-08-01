@@ -454,6 +454,10 @@ void reorder_conds_by_toposort(SearchSpace* ss) {
 
 
 // Check if a condition is satisfied for a given row
+// whether a confition is satisfied ONLY depends on the value of the parent parameter, 
+// not the condition-param itself
+// if the parent parameter is NA the condition is not satisfied, as the parent is non-active
+// (i dont think we want to allow that a subordinate is only active when the super parameter is non-active)
 int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss) {
     SEXP s_parent_col = VECTOR_ELT(s_neighs_x, cond->parent_index);
     int parent_class = ss->param_classes[cond->parent_index];
@@ -461,9 +465,9 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss) 
     int is_satisfied = 0;
     DEBUG_PRINT("is_condition_satisfied: row %d, param %s, parent %s, parent_class %d, cond-type %d\n",
         i, ss->param_names[cond->param_index], ss->param_names[cond->parent_index], parent_class, cond->type);
-    // if both parameter values are NA, the condition is always satisifed
-    if (dt_is_na(s_neighs_x, i, cond->parent_index) && dt_is_na(s_neighs_x, i, cond->param_index)) {
-        return 1;
+    // if the parent parameter is NA and hence non-active, the condition is not satisfied
+    if (dt_is_na(s_neighs_x, i, cond->parent_index)) {
+        return 0;
     }
 
     if (cond->type == 0) { // CondEqual, check if parent value equals the RHS value
@@ -490,16 +494,8 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss) 
             }
         }
     }
-    if (is_satisfied && !dt_is_na(s_neighs_x, i, cond->parent_index) && dt_is_na(s_neighs_x, i, cond->param_index)) {
-        // if the condition is satisfied and the parent parameter is not NA, the
-        // checked parameter must also be not NA or the condition cannot be
-        // satisfied
-        return 0;
-    }
     return is_satisfied;
 }
-
-
 
 // fix a parameter value which is in conflict with its condition value´
 // case 1: if any condition is not satisfied, set the parameter to NA

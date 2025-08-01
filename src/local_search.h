@@ -92,7 +92,25 @@ typedef struct {
   int *sorted_param_indices;
 } SearchSpace;
 
-void extract_ss_info(SEXP s_ss, SearchSpace *ss);
+
+int random_int(int a, int b);
+double random_normal(double mean, double sd);
+
+SEXP dt_generate_PROTECT(int n, SearchSpace *ss);
+void dt_set_na(SEXP s_dt, int row_i, int param_j);
+int dt_is_na(SEXP s_dt, int row_i, int param_j);
+void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace *ss);
+void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace *ss, double mut_sd);
+
+void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
 int find_param_index(const char *param_name, SearchSpace *ss);
+void toposort_params(SearchSpace *ss);
+void reorder_conds_by_toposort(SearchSpace *ss);
+int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss);
+
+void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd);
+void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y,
+  SEXP s_pop_x, double *pop_y, SearchSpace* ss, double obj_mult);
+SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x);
 
 #endif // LOCAL_SEARCH_H

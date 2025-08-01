@@ -4,17 +4,6 @@
 #include <Rinternals.h>
 #include <Rmath.h>
 
-extern int random_int(int a, int b);
-extern double random_normal(double mean, double sd);
-extern SEXP dt_generate_PROTECT(int n, SearchSpace *ss);
-extern void dt_set_na(SEXP s_dt, int row_i, int param_j);
-extern int dt_is_na(SEXP s_dt, int row_i, int param_j);
-extern void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace *ss);
-extern void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace *ss, double mut_sd);
-extern void toposort_params(SearchSpace *ss);
-extern void reorder_conds_by_toposort(SearchSpace *ss);
-extern void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
-extern int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss);
 
 // sets test result as a bool scalar, so we can later pass it to
 // testthat::expect_true
@@ -214,4 +203,24 @@ SEXP c_test_is_condition_satisfied(SEXP s_dt_row, SEXP s_ss, SEXP s_cond_idx, SE
   set_test_result(s_res, 0, "cond_satisfied", ok == asInteger(s_expected_satisfied));
   UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
   return s_res;
+}
+
+SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_pop_x, SEXP s_n_neighs, SEXP s_mut_sd) {
+    SearchSpace ss;
+    extract_ss_info_PROTECT(s_ss, &ss);
+    toposort_params(&ss);
+    reorder_conds_by_toposort(&ss);
+
+    int n_searches = RC_dt_nrows(s_pop_x);
+    int n_neighs = asInteger(s_n_neighs);
+    double mut_sd = asReal(s_mut_sd);
+
+    SEXP s_neighs_x = dt_generate_PROTECT(n_searches * n_neighs, &ss);
+    
+    GetRNGstate();
+    generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
+    PutRNGstate();
+
+    UNPROTECT(1 + ss.n_conds); // s_neighs_x and ss.conds
+    return s_neighs_x;
 }
