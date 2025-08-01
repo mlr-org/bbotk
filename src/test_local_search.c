@@ -12,6 +12,7 @@ extern int dt_is_na(SEXP s_dt, int row_i, int param_j);
 extern void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace *ss);
 extern void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace *ss, double mut_sd);
 extern void toposort_params(SearchSpace *ss);
+extern void reorder_conds_by_toposort(SearchSpace *ss);
 extern void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
 
 // sets test result as a bool scalar, so we can later pass it to
@@ -174,22 +175,31 @@ SEXP c_test_dt_utils(SEXP s_ss) {
   return s_res;
 }
 
-SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_sort) {
+SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expected_cond_sort) {
 
-  SEXP s_res = RC_named_list_create_PROTECT(1);
+  SEXP s_res = RC_named_list_create_PROTECT(2);
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
   toposort_params(&ss);
 
   int ok = 1;
   for (int i = 0; i < ss.n_params; i++) {
-    if (ss.sorted_param_indices[i] != INTEGER(s_expected_sort)[i]) {
-      ok = 0;
-      break;
+    if (ss.sorted_param_indices[i] != INTEGER(s_expected_param_sort)[i]) {
+      ok = 0; break;
     }
   }
   set_test_result(s_res, 0, "toposort_params", ok);
 
+  reorder_conds_by_toposort(&ss);
+
+  ok = 1;
+  for (int i = 0; i < ss.n_conds; i++) {
+    if (ss.conds[i].param_index != INTEGER(s_expected_cond_sort)[i]) {
+      ok = 0; break;
+    }
+  }
+  set_test_result(s_res, 1, "reorder_conds", ok);
+  
   UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
   return s_res;
 }

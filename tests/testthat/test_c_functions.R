@@ -55,7 +55,7 @@ test_that("c_test_toposort_params", {
     x3 = paradox::p_dbl(0, 1)
   )
   # actually, the order is undefined here.... but our algo will use the vars in their order in the SS
-  testres = .Call("c_test_toposort_params", ps1, c(0L, 1L, 2L))
+  testres = .Call("c_test_toposort_params", ps1, c(0L, 1L, 2L), integer(0))
   check_test_results(testres)
 
   # Simple dependency (B -> A)
@@ -64,7 +64,7 @@ test_that("c_test_toposort_params", {
     B = paradox::p_fct(c("a", "b"))
   )
   ps2$add_dep("A", on = "B", cond = paradox::CondEqual$new("a"))
-  testres = .Call("c_test_toposort_params", ps2, c(1L, 0L))
+  testres = .Call("c_test_toposort_params", ps2, c(1L, 0L), c(0L))
   check_test_results(testres)
 
   # Chain of dependencies (C -> B -> A)
@@ -75,7 +75,7 @@ test_that("c_test_toposort_params", {
   )
   ps3$add_dep("A", on = "B", cond = paradox::CondEqual$new("b1"))
   ps3$add_dep("B", on = "C", cond = paradox::CondEqual$new("c1"))
-  testres = .Call("c_test_toposort_params", ps3, c(2L, 1L, 0L))
+  testres = .Call("c_test_toposort_params", ps3, c(2L, 1L, 0L), c(1L, 0L))
   check_test_results(testres)
 
   # Multiple dependencies (A -> C, B -> C)
@@ -86,7 +86,7 @@ test_that("c_test_toposort_params", {
   )
   ps4$add_dep("C", on = "A", cond = paradox::CondEqual$new("a"))
   ps4$add_dep("C", on = "B", cond = paradox::CondEqual$new("c"))
-  testres = .Call("c_test_toposort_params", ps4, c(0L, 1L, 2L))
+  testres = .Call("c_test_toposort_params", ps4, c(0L, 1L, 2L), c(2L, 2L))
   check_test_results(testres)
 
   # Complex dependencies (D -> A, C -> A, D -> B, C -> B)
@@ -100,6 +100,6 @@ test_that("c_test_toposort_params", {
   ps5$add_dep("B", on = "D", cond = paradox::CondEqual$new("a"))
   ps5$add_dep("A", on = "D", cond = paradox::CondEqual$new("a"))
   ps5$add_dep("C", on = "A", cond = paradox::CondEqual$new("a"))
-  testres = .Call("c_test_toposort_params", ps5, c(3L, 0L, 2L, 1L))
+  testres = .Call("c_test_toposort_params", ps5, c(3L, 0L, 2L, 1L), c(0L, 2L, 1L, 1L))
   check_test_results(testres)
 })
