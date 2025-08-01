@@ -240,4 +240,88 @@ test_that("c_test_generate_neighs", {
   expect_true(all(!is.na(neighs$B)))
   # and be within bounds
   expect_true(all(neighs$B >= 0 & neighs$B <= 1))
+
+  # More complex dependencies
+  # Chain of dependencies (C -> B -> A)
+  ss = paradox::ps(
+    A = paradox::p_dbl(0, 1),
+    B = paradox::p_fct(c("b1", "b2")),
+    C = paradox::p_fct(c("c1", "c2"))
+  )
+  ss$add_dep("A", on = "B", cond = paradox::CondEqual$new("b1"))
+  ss$add_dep("B", on = "C", cond = paradox::CondEqual$new("c1"))
+
+  # Case 3.1: Start with everything active. Mutate C to "c2". B and A must become NA.
+  pop = data.table::data.table(A = 0.5, B = "b1", C = "c1")
+  set.seed(1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1)
+
+  mutated_C_to_c2 = which(neighs$C == "c2")
+  expect_true(length(mutated_C_to_c2) > 0)
+  expect_true(all(is.na(neighs[mutated_C_to_c2, ]$B)))
+  expect_true(all(is.na(neighs[mutated_C_to_c2, ]$A)))
+
+  # Case 3.2: Start with everything active. Mutate B to "b2". A must become NA.
+  mutated_B_to_b2 = which(neighs$B == "b2" & neighs$C == "c1")
+  expect_true(length(mutated_B_to_b2) > 0)
+  expect_true(all(is.na(neighs[mutated_B_to_b2, ]$A)))
+  expect_true(all(neighs[mutated_B_to_b2, ]$C == "c1")) # C should not change
+
+  # Case 3.3: Start with C="c2", B and A are NA. Only C is mutable.
+  # It must be mutated to "c1".
+  # Then B must get a value.
+  # If B gets "b1", A must get a value.
+  pop = data.table::data.table(A = NA_real_, B = NA_character_, C = "c2")
+  set.seed(1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.1)
+
+  expect_true(all(neighs$C == "c1"))
+  expect_true(all(!is.na(neighs$B)))
+
+  b1_indices = which(neighs$B == "b1")
+  b2_indices = which(neighs$B == "b2")
+  expect_true(length(b1_indices) + length(b2_indices) == nrow(neighs))
+
+  if (length(b1_indices) > 0) {
+    expect_true(all(!is.na(neighs[b1_indices, ]$A)))
+    expect_true(all(neighs[b1_indices, ]$A >= 0 & neighs[b1_indices, ]$A <= 1))
+  }
+  if (length(b2_indices) > 0) {
+    expect_true(all(is.na(neighs[b2_indices, ]$A)))
+  }
+
+  # Multiple dependencies (C depends on A and B)
+  ss = paradox::ps(
+    A = paradox::p_fct(c("a", "b")),
+    B = paradox::p_fct(c("c", "d")),
+    C = paradox::p_dbl(0, 1)
+  )
+  ss$add_dep("C", on = "A", cond = paradox::CondEqual$new("a"))
+  ss$add_dep("C", on = "B", cond = paradox::CondEqual$new("c"))
+
+  # Case 4.1: Start with everything active. Mutating A or B deactivates C.
+  pop = data.table::data.table(A = "a", B = "c", C = 0.5)
+  set.seed(1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1)
+
+  mutated_A = which(neighs$A == "b")
+  expect_true(length(mutated_A) > 0)
+  expect_true(all(is.na(neighs[mutated_A, ]$C)))
+  expect_true(all(neighs[mutated_A, ]$B == "c"))
+
+  mutated_B = which(neighs$B == "d")
+  expect_true(length(mutated_B) > 0)
+  expect_true(all(is.na(neighs[mutated_B, ]$C)))
+  expect_true(all(neighs[mutated_B, ]$A == "a"))
+
+  # Case 4.2: Start with C inactive because of A. Mutating A to "a" makes C active.
+  pop = data.table::data.table(A = "b", B = "c", C = NA_real_)
+  set.seed(1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1)
+
+  # some neighbors will have B mutated to "d" which keeps C inactive
+  mutated_A_to_a = which(neighs$A == "a" & neighs$B == "c")
+  expect_true(length(mutated_A_to_a) > 0)
+  expect_true(all(!is.na(neighs[mutated_A_to_a, ]$C)))
+  expect_true(all(neighs[mutated_A_to_a, ]$C >= 0 & neighs[mutated_A_to_a, ]$C <= 1))
 })
