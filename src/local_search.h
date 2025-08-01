@@ -39,8 +39,6 @@ by multiplying with "obj_mult" (which will be -1).
 
 /*
 //FIXME:
-    * LS must be elitist
-    * we need to also mutate parent params
     * sd=0.1 might not work for ints? 
     * we need to putrngstate 
     * we need to implement the stopping crit from python
@@ -48,6 +46,7 @@ by multiplying with "obj_mult" (which will be -1).
     * we need to change the interface so that LS is not an bbotk optimizer, but a basic function
     which takes as objective as basic R function obj(dt), xs is a dt and we return a vector y.
     * I domt think we use R_Calloc correctly. the mem is not freed automatically
+    * unit test maximization
     
 */
 
@@ -110,7 +109,7 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss);
 
 void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd);
 void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y,
-  SEXP s_pop_x, double *pop_y, SearchSpace* ss, double obj_mult);
+  SEXP s_pop_x, double *pop_y, SearchSpace* ss);
 SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x);
 
 #endif // LOCAL_SEARCH_H

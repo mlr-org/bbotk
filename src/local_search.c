@@ -605,19 +605,19 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
 }
 
 // Copy the best neighbor from each block into the population
-void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y,
-    SEXP s_pop_x, double *pop_y, SearchSpace* ss, double obj_mult) {
+void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y, 
+  SEXP s_pop_x, double *pop_y, SearchSpace* ss) {
 
     DEBUG_PRINT("copy_best_neighs_to_pop\n");
 
     for (int pop_i = 0; pop_i < n_searches; pop_i++) {
         // Find the best neighbor in this block
         int best_i = -1;
-        double best_y = pop_y[pop_i] * obj_mult;
+        double best_y = pop_y[pop_i];
 
         for (int k = 0; k < n_neighs; k++) {
             int neigh_i = pop_i * n_neighs + k;
-            double current_y = neighs_y[neigh_i] * obj_mult;
+            double current_y = neighs_y[neigh_i];
 
             if (current_y < best_y) {
                 best_y = current_y;
@@ -653,6 +653,24 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
     DEBUG_PRINT("copy_best_neighs_to_pop done\n");
 }
 
+
+int evaluate_batch(int n, SEXP s_x, SEXP s_eval_batch, double obj_mult, double* y) {
+    SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_x));
+    SEXP s_y = PROTECT(safe_eval(s_call));
+    int eval_ok = 0;
+    if (s_y != R_NilValue) {
+        memcpy(y, REAL(VECTOR_ELT(s_y, 0)), n * sizeof(double));
+        // multiply by obj_mult to handle maximization
+        for (int i = 0; i < n; i++) {
+            y[i] *= obj_mult;
+        }
+        eval_ok = 1;
+    }
+    UNPROTECT(2); // s_call, s_y
+    return eval_ok;
+}
+
+
 // R wrapper function - complete local search implementation
 SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
 
@@ -676,17 +694,14 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     SEXP s_neighs_x = dt_generate_PROTECT(n_searches * n_neighs, &ss);
     SEXP s_eval_batch = RC_get_r6_el_by_name(s_inst, "eval_batch");
 
-    SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_pop_x));
-    SEXP s_pop_y = PROTECT(safe_eval(s_call));
+    // y-values for pop. we wil later write into this array
+    double *pop_y = (double *) R_Calloc(n_searches, double);
+    double *neighs_y = (double *) R_Calloc(n_searches*n_neighs, double);
+    int eval_ok;
+    eval_ok = evaluate_batch(n_searches, s_pop_x, s_eval_batch, obj_mult, pop_y);
 
     // we failed the terminator in the initial points, skip main loop
-    if (s_pop_y != R_NilValue) {
-        // y-values for pop. we wil later write into this array
-        double *pop_y = (double *) R_Calloc(n_searches, double);
-        memcpy(pop_y, REAL(VECTOR_ELT(s_pop_y, 0)), n_searches * sizeof(double));
-        UNPROTECT(2); // s_call, s_pop_y
-
-        // we need to evaluate the initial points again, because we might have changed the factors
+    if (eval_ok) {
         // Main local search loop
         for (int step = 0; step < n_steps;  step++) {
             DEBUG_PRINT("step=%i\n", step);
@@ -695,18 +710,14 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
             // Generate neighbors for all current points in pre-allocated data.table
             generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
             // print_dt(s_neighs_x, 10);
+            eval_ok = evaluate_batch(n_searches*n_neighs, s_neighs_x, s_eval_batch, obj_mult, neighs_y);
 
-            // Create the function call
-            SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_neighs_x));
-            SEXP s_neighs_y = PROTECT(safe_eval(s_call));
             // copy if we have a valid result, otherwise we stop the loop
-            if (s_neighs_y != R_NilValue) {
-                double* neighs_y = REAL(VECTOR_ELT(s_neighs_y, 0));
-                copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x, pop_y, &ss, obj_mult);
+            if (eval_ok) {
+                copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x, pop_y, &ss);
             } else {
-                step = n_steps;
+                break;
             }
-            UNPROTECT(2); // s_call, s_neighs_y
         }
     }
     UNPROTECT(2 + ss.n_conds); // s_pop_x, s_neighs_x, and all PROTECTed cond rhs_values

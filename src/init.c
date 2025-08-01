@@ -15,7 +15,7 @@ extern SEXP c_test_dt_utils(SEXP);
 extern SEXP c_test_toposort_params(SEXP, SEXP, SEXP);
 extern SEXP c_test_is_condition_satisfied(SEXP, SEXP, SEXP, SEXP);
 extern SEXP c_test_generate_neighs(SEXP, SEXP, SEXP, SEXP);
-extern SEXP c_test_copy_best_neighs_to_pop(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP c_test_copy_best_neighs_to_pop(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"c_is_dominated", (DL_FUNC)&c_is_dominated, 1},
@@ -29,7 +29,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"c_test_toposort_params", (DL_FUNC)&c_test_toposort_params, 3},
     {"c_test_is_condition_satisfied", (DL_FUNC)&c_test_is_condition_satisfied, 4},
     {"c_test_generate_neighs", (DL_FUNC)&c_test_generate_neighs, 4},
-    {"c_test_copy_best_neighs_to_pop", (DL_FUNC)&c_test_copy_best_neighs_to_pop, 8},
+    {"c_test_copy_best_neighs_to_pop", (DL_FUNC)&c_test_copy_best_neighs_to_pop, 7},
     {NULL, NULL, 0}};
 
 void R_init_bbotk(DllInfo *dll) {

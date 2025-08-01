@@ -225,20 +225,19 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_pop_x, SEXP s_n_neighs, SEXP s_mut
     return s_neighs_x;
 }
 
-SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_pop_x, SEXP s_pop_y, SEXP s_neighs_x, SEXP s_neighs_y, SEXP s_n_searches, SEXP s_n_neighs, SEXP s_obj_mult) {
+SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_pop_x, SEXP s_pop_y, SEXP s_neighs_x, SEXP s_neighs_y, SEXP s_n_searches, SEXP s_n_neighs) {
     SearchSpace ss;
     extract_ss_info_PROTECT(s_ss, &ss);
 
     int n_searches = asInteger(s_n_searches);
     int n_neighs = asInteger(s_n_neighs);
-    double obj_mult = asReal(s_obj_mult);
 
     SEXP s_pop_x_copy = PROTECT(duplicate(s_pop_x));
     SEXP s_pop_y_copy = PROTECT(duplicate(s_pop_y));
     double *pop_y_copy = REAL(s_pop_y_copy);
     double *neighs_y = REAL(s_neighs_y);
 
-    copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, &ss, obj_mult);
+    copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, &ss);
 
     SEXP s_res = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(s_res, 0, s_pop_x_copy);
