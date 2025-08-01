@@ -310,7 +310,8 @@ int find_param_index(const char* param_name, SearchSpace* ss) {
 }
 
 // convert paradox SearchSpace to C SearchSpace
-void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
+// the function proectes the rhs parts of the conditions, caller must unprotect them (ss->conds times)
+void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
     ss->n_params = asInteger(RC_get_r6_el_by_name(s_ss, "length"));
     SEXP s_data = RC_get_r6_el_by_name(s_ss, "data");
 
@@ -666,7 +667,7 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     int n_steps = asInteger(RC_get_list_el_by_name(s_ctrl, "n_steps"));
 
     SearchSpace ss;
-    extract_ss_info(s_ss, &ss);
+    extract_ss_info_PROTECT(s_ss, &ss);
     toposort_params(&ss);
     reorder_conds_by_toposort(&ss);
 

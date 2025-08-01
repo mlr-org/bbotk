@@ -4,8 +4,6 @@
 #include <R.h>
 #include <Rinternals.h>
 
-void RC_set_test_result(SEXP s_testres, int i, const char *text, int value);
-
 // convert a charvec(1) to string
 const char *RC_asString(SEXP s_x);
 

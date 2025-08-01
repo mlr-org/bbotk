@@ -11,6 +11,8 @@ extern void dt_set_na(SEXP s_dt, int row_i, int param_j);
 extern int dt_is_na(SEXP s_dt, int row_i, int param_j);
 extern void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace *ss);
 extern void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace *ss, double mut_sd);
+extern void toposort_params(SearchSpace *ss);
+extern void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
 
 // sets test result as a bool scalar, so we can later pass it to
 // testthat::expect_true
@@ -63,7 +65,7 @@ SEXP c_test_extract_ss_info(SEXP s_ss) {
   SEXP s_res = RC_named_list_create_PROTECT(19);
 
   SearchSpace ss;
-  extract_ss_info(s_ss, &ss);
+  extract_ss_info_PROTECT(s_ss, &ss);
 
   set_test_result(s_res, 0, "ok0", ss.n_params == 4);
 
@@ -98,14 +100,14 @@ SEXP c_test_extract_ss_info(SEXP s_ss) {
   k = find_param_index("x3", &ss);
   set_test_result(s_res, 18, "ok18", k == 2);
 
-  UNPROTECT(1);
+  UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
   return s_res;
 }
 
 SEXP c_test_dt_utils(SEXP s_ss) {
   SEXP s_res = RC_named_list_create_PROTECT(16);
   SearchSpace ss;
-  extract_ss_info(s_ss, &ss);
+  extract_ss_info_PROTECT(s_ss, &ss);
   GetRNGstate();
 
   // Test dt_generate
@@ -168,6 +170,26 @@ SEXP c_test_dt_utils(SEXP s_ss) {
   set_test_result(s_res, 15, "mutate_lgl_changed", lgl_val == 0);
   
   PutRNGstate();
-  UNPROTECT(2); // s_res, s_dt
+  UNPROTECT(2 + ss.n_conds); // s_res, s_dt, ss.conds
+  return s_res;
+}
+
+SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_sort) {
+
+  SEXP s_res = RC_named_list_create_PROTECT(1);
+  SearchSpace ss;
+  extract_ss_info_PROTECT(s_ss, &ss);
+  toposort_params(&ss);
+
+  int ok = 1;
+  for (int i = 0; i < ss.n_params; i++) {
+    if (ss.sorted_param_indices[i] != INTEGER(s_expected_sort)[i]) {
+      ok = 0;
+      break;
+    }
+  }
+  set_test_result(s_res, 0, "toposort_params", ok);
+
+  UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
   return s_res;
 }

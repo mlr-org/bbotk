@@ -43,6 +43,12 @@ by multiplying with "obj_mult" (which will be -1).
     * we need to also mutate parent params
     * sd=0.1 might not work for ints? 
     * we need to putrngstate 
+    * we need to implement the stopping crit from python
+    * read the python code and compare
+    * we need to change the interface so that LS is not an bbotk optimizer, but a basic function
+    which takes as objective as basic R function obj(dt), xs is a dt and we return a vector y.
+    * I domt think we use R_Calloc correctly. the mem is not freed automatically
+    
 */
 
 // Debug printer system - can be switched on/off
