@@ -325,3 +325,30 @@ test_that("c_test_generate_neighs", {
   expect_true(all(!is.na(neighs[mutated_A_to_a, ]$C)))
   expect_true(all(neighs[mutated_A_to_a, ]$C >= 0 & neighs[mutated_A_to_a, ]$C <= 1))
 })
+
+test_that("c_test_copy_best_neighs_to_pop", {
+  ss = paradox::ps(
+    x = paradox::p_dbl(0, 1)
+  )
+  pop_x = data.table::data.table(x = c(0.5, 0.8))
+  pop_y = c(10, 20)
+
+  neighs_x = data.table::data.table(x = c(0.1, 0.2, 0.3, 0.9, 0.7, 0.6))
+  neighs_y = c(5, 12, 8, 25, 18, 15)
+
+  # Minimization (obj_mult = 1)
+  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y, 2L, 3L, 1.0)
+  expect_equal(res$pop_x$x, c(0.1, 0.6))
+  expect_equal(res$pop_y, c(5, 15))
+
+  # Maximization (obj_mult = -1)
+  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y, 2L, 3L, -1.0)
+  expect_equal(res$pop_x$x, c(0.2, 0.9))
+  expect_equal(res$pop_y, c(12, 25))
+
+  # No improvement
+  neighs_y_no_improve = c(11, 12, 13, 21, 22, 23)
+  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y_no_improve, 2L, 3L, 1.0)
+  expect_equal(res$pop_x$x, pop_x$x)
+  expect_equal(res$pop_y, pop_y)
+})
