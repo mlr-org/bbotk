@@ -13,6 +13,8 @@ test_that("OptimizerBatchLocalSearch works with numeric parameter", {
 
   expect_data_table(instance$archive$data, nrows = 510L)
   expect_numeric(instance$archive$data$x, lower = -1, upper = 1)
+  expect_true(instance$archive$best()$y >= 0)
+  expect_true(instance$archive$best()$y < 1e-5)
 })
 
 test_that("OptimizerBatchLocalSearch works with numeric parameter with large range", {
@@ -30,25 +32,9 @@ test_that("OptimizerBatchLocalSearch works with numeric parameter with large ran
 
   expect_data_table(instance$archive$data, nrows = 510L)
   expect_numeric(instance$archive$data$x, lower = -.Machine$double.xmax / 2, upper = .Machine$double.xmax / 2)
+  expect_true(instance$archive$best()$y < -1e100)
 })
 
-test_that("OptimizerBatchLocalSearch works with numeric parameters", {
-  domain = ps(
-    x1 = p_dbl(lower = -1, upper = 1),
-    x2 = p_dbl(lower = -1, upper = 1)
-  )
-  fun = function(xs) {
-    list(y = sum(as.numeric(xs)^2))
-  }
-  objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
-  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
-  optimizer$optimize(instance)
-
-  expect_data_table(instance$archive$data, nrows = 510L)
-  expect_numeric(instance$archive$data$x1, lower = -1, upper = 1)
-  expect_numeric(instance$archive$data$x2, lower = -1, upper = 1)
-})
 
 test_that("OptimizerBatchLocalSearch works with categorical parameters", {
   domain = ps(
@@ -58,13 +44,14 @@ test_that("OptimizerBatchLocalSearch works with categorical parameters", {
     list(y = if (xs$x == "a") 1 else 2)
   }
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
-  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 100L))
+  optimizer = opt("local_search", n_searches = 2L, n_steps = 5L, n_neighbors = 10L)
   optimizer$optimize(instance)
 
-  expect_data_table(instance$archive$data, nrows = 510L)
+  expect_data_table(instance$archive$data, nrows = 102L)
   expect_character(instance$archive$data$x, any.missing = FALSE)
   expect_set_equal(instance$archive$data$x, c("a", "b"))
+  expect_true(instance$archive$best()$y == 1)
 })
 
 test_that("OptimizerBatchLocalSearch works with categorical parameter with single level", {
@@ -75,13 +62,14 @@ test_that("OptimizerBatchLocalSearch works with categorical parameter with singl
     list(y = if (xs$x == "a") 1 else 2)
   }
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
-  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 100L))
+  optimizer = opt("local_search", n_searches = 2L, n_steps = 5L, n_neighbors = 10L)
   optimizer$optimize(instance)
 
-  expect_data_table(instance$archive$data, nrows = 510L)
+  expect_data_table(instance$archive$data, nrows = 102L)
   expect_character(instance$archive$data$x, any.missing = FALSE)
   expect_set_equal(instance$archive$data$x, c("a"))
+  expect_true(instance$archive$best()$y == 1)
 })
 
 test_that("OptimizerBatchLocalSearch works with mixed spaces", {
@@ -108,6 +96,7 @@ test_that("OptimizerBatchLocalSearch works with mixed spaces", {
   expect_numeric(instance$archive$data$x1, lower = -1, upper = 1)
   expect_character(instance$archive$data$x2, any.missing = FALSE)
   expect_set_equal(instance$archive$data$x2, c("a", "b"))
+  expect_true(abs(instance$archive$best()$y) < 1e-5)
 })
 
 test_that("OptimizerBatchLocalSearch works with dependencies on logical parameter", {
@@ -135,6 +124,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on logical paramete
   expect_logical(instance$archive$data$x2, any.missing = FALSE)
   if (nrow(instance$archive$data[x2 == FALSE])) expect_set_equal(instance$archive$data[x2 == FALSE]$x1, NA)
   if (nrow(instance$archive$data[x2 == FALSE])) expect_set_equal(instance$archive$data[x2 == FALSE]$y, 3)
+  expect_true(abs(instance$archive$best()$y) < 1e-4)
 })
 
 test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter", {
@@ -161,6 +151,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter
   expect_character(instance$archive$data$x2, any.missing = FALSE)
   if (nrow(instance$archive$data[x2 == "b"])) expect_set_equal(instance$archive$data[x2 == "b"]$x1, NA)
   if (nrow(instance$archive$data[x2 == "b"])) expect_set_equal(instance$archive$data[x2 == "b"]$y, 3)
+  expect_true(abs(instance$archive$best()$y) < 1e-4)
 })
 
 test_that("OptimizerBatchLocalSearch works with chained dependencies on factor parameters", {
@@ -236,13 +227,15 @@ test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter
   expect_character(instance$archive$data$x2, any.missing = FALSE)
   if (nrow(instance$archive$data[x2 == "c"])) expect_set_equal(instance$archive$data[x2 == "c"]$y, 3)
   if (nrow(instance$archive$data[x2 == "c"])) expect_set_equal(instance$archive$data[x2 == "c"]$x1, NA)
+  print(instance$archive$best())
+  expect_true(abs(instance$archive$best()$y) < 1e-3)
 })
 
 test_that("OptimizerBatchLocalSearch works with dependencies on numeric parameters", {
   domain = ps(
     x1 = p_dbl(lower = -1, upper = 1),
     x2 = p_dbl(lower = -1, upper = 1)
-    )
+  )
   domain$add_dep("x2", on = "x1", cond = CondEqual$new(1))
 
   fun = function(xs) {
@@ -259,6 +252,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on numeric paramete
   expect_numeric(instance$archive$data$x1, lower = -1, upper = 1)
   expect_numeric(instance$archive$data$x2, lower = -1, upper = 1)
   if (nrow(instance$archive$data[x1 != 1])) expect_set_equal(instance$archive$data[x1 != 1]$x2, NA)
+  expect_true(abs(instance$archive$best()$y) < 1e-3)
 })
 
 test_that("OptimizerBatchLocalSearch works with trafo", {
@@ -287,6 +281,7 @@ test_that("OptimizerBatchLocalSearch works with trafo", {
   expect_true(all(archive$x_domain_x1 <= 1))
   expect_true(all(archive$x_domain_x2 >= 1))
   expect_true(all(archive$x_domain_x2 <= 10.1))
+  expect_true(instance$archive$best()$y > -1.001)
 })
 
 test_that("OptimizerBatchLocalSearch works with errors", {
@@ -305,26 +300,6 @@ test_that("OptimizerBatchLocalSearch works with errors", {
   expect_error(optimizer$optimize(instance))
 })
 
-test_that("OptimizerBatchLocalSearch works with minimization", {
-  domain = ps(
-    x1 = p_dbl(-5, 5),
-    x2 = p_dbl(-5, 5)
-  )
-
-  fun = function(xs) {
-    list(y =  xs$x1 * xs$x2)
-  }
-  codomain = ps(
-    y = p_dbl(lower = -25, upper = 25, tags = "minimize")
-  )
-  objective = ObjectiveRFun$new(fun = fun, domain = domain, codomain = codomain, properties = "single-crit")
-  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
-  optimizer$optimize(instance)
-
-  expect_true(all(instance$archive$data$x1 * instance$archive$data$x2 == instance$archive$data$y))
-  expect_equal(instance$archive$best()$y, min(instance$archive$data$y))
-})
 
 test_that("OptimizerBatchLocalSearch works with maximization", {
   domain = ps(

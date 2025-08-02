@@ -44,12 +44,11 @@ by multiplying with "obj_mult" (which will be -1).
     * read the python code and compare
     * we need to change the interface so that LS is not an bbotk optimizer, but a basic function
     which takes as objective as basic R function obj(dt), xs is a dt and we return a vector y.
-    * unit test maximization
     
 */
 
 // Debug printer system - can be switched on/off
-#define DEBUG_ENABLED 1  // Set to 1 to enable debug output
+#define DEBUG_ENABLED 0  // Set to 1 to enable debug output
 
 #if DEBUG_ENABLED
 #define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)
