@@ -8,7 +8,7 @@ test_that("OptimizerBatchLocalSearch works with numeric parameter", {
 
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -27,7 +27,7 @@ test_that("OptimizerBatchLocalSearch works with numeric parameter with large ran
 
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -45,7 +45,7 @@ test_that("OptimizerBatchLocalSearch works with categorical parameters", {
   }
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 100L))
-  optimizer = opt("local_search", n_searches = 2L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 2L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 102L)
@@ -63,7 +63,7 @@ test_that("OptimizerBatchLocalSearch works with categorical parameter with singl
   }
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 100L))
-  optimizer = opt("local_search", n_searches = 2L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 2L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 102L)
@@ -89,7 +89,7 @@ test_that("OptimizerBatchLocalSearch works with mixed spaces", {
 
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -116,7 +116,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on logical paramete
 
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -143,7 +143,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter
   }
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -169,7 +169,7 @@ test_that("OptimizerBatchLocalSearch works with chained dependencies on factor p
   }
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -192,7 +192,7 @@ test_that("OptimizerBatchLocalSearch works with star dependencies on factor para
   }
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -219,7 +219,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
 
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -245,7 +245,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on numeric paramete
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
 
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -272,7 +272,7 @@ test_that("OptimizerBatchLocalSearch works with trafo", {
   )
   objective = ObjectiveRFun$new(fun = fun, domain = domain, codomain = codomain, properties = "single-crit")
   instance = oi(objective = objective, search_space = search_space, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 510L)
@@ -296,7 +296,7 @@ test_that("OptimizerBatchLocalSearch works with errors", {
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
 
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   expect_error(optimizer$optimize(instance))
 })
 
@@ -315,7 +315,7 @@ test_that("OptimizerBatchLocalSearch works with maximization", {
   )
   objective = ObjectiveRFun$new(fun = fun, domain = domain, codomain = codomain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighbors = 10L)
+    optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_true(all(instance$archive$data$x1 * instance$archive$data$x2 == instance$archive$data$y))
@@ -332,7 +332,7 @@ test_that("OptimizerBatchLocalSearch evaluates the right number of points", {
 
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 1L, n_steps = 1L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 1L, n_steps = 1L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 11L)
@@ -340,7 +340,7 @@ test_that("OptimizerBatchLocalSearch evaluates the right number of points", {
   expect_data_table(instance$archive$data[batch_nr == 2], nrows = 10L)
 
   instance$clear()
-  optimizer = opt("local_search", n_searches = 1L, n_steps = 2L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 1L, n_steps = 2L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 21L)
@@ -350,7 +350,7 @@ test_that("OptimizerBatchLocalSearch evaluates the right number of points", {
 
   objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 2L, n_steps = 1L, n_neighbors = 10L)
+  optimizer = opt("local_search", n_searches = 2L, n_steps = 1L, n_neighs = 10L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, nrows = 22L)

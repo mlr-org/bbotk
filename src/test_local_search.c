@@ -14,7 +14,7 @@ void set_test_result(SEXP s_testres, int i, const char *text, int value) {
 }
 
 SEXP c_test_get_list_el_by_name(SEXP test_list) {
-  SEXP s_testres = RC_named_list_create_PROTECT(3);
+  SEXP s_testres = RC_named_list_create_emptynames_PROTECT(3);
   SEXP s_x;
   // simple test to see if we can retrieve elements from a list by name
   s_x = RC_get_list_el_by_name(test_list, "a");
@@ -28,7 +28,7 @@ SEXP c_test_get_list_el_by_name(SEXP test_list) {
 }
 
 SEXP c_test_random_int() {
-  SEXP s_res = RC_named_list_create_PROTECT(2);
+  SEXP s_res = RC_named_list_create_emptynames_PROTECT(2);
   GetRNGstate();
   int k;
   k = random_int(5, 5);
@@ -41,7 +41,7 @@ SEXP c_test_random_int() {
 }
 
 SEXP c_test_random_normal() {
-  SEXP s_res = RC_named_list_create_PROTECT(1);
+  SEXP s_res = RC_named_list_create_emptynames_PROTECT(1);
   GetRNGstate();
   double val = random_normal(0.0, 1.0);
   // This is a weak test, but it's hard to test a random number generator.
@@ -53,7 +53,7 @@ SEXP c_test_random_normal() {
 }
 
 SEXP c_test_extract_ss_info(SEXP s_ss) {
-  SEXP s_res = RC_named_list_create_PROTECT(19);
+  SEXP s_res = RC_named_list_create_emptynames_PROTECT(19);
 
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
@@ -96,7 +96,7 @@ SEXP c_test_extract_ss_info(SEXP s_ss) {
 }
 
 SEXP c_test_dt_utils(SEXP s_ss) {
-  SEXP s_res = RC_named_list_create_PROTECT(16);
+  SEXP s_res = RC_named_list_create_emptynames_PROTECT(16);
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
   GetRNGstate();
@@ -167,7 +167,7 @@ SEXP c_test_dt_utils(SEXP s_ss) {
 
 SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expected_cond_sort) {
 
-  SEXP s_res = RC_named_list_create_PROTECT(2);
+  SEXP s_res = RC_named_list_create_emptynames_PROTECT(2);
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
   toposort_params(&ss);
@@ -197,7 +197,7 @@ SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expect
 SEXP c_test_is_condition_satisfied(SEXP s_dt_row, SEXP s_ss, SEXP s_cond_idx, SEXP s_expected_satisfied) {
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
-  SEXP s_res = RC_named_list_create_PROTECT(1);
+  SEXP s_res = RC_named_list_create_emptynames_PROTECT(1);
   Cond *cond = &ss.conds[asInteger(s_cond_idx)];
   int ok = is_condition_satisfied(s_dt_row, 0, cond, &ss);
   set_test_result(s_res, 0, "cond_satisfied", ok == asInteger(s_expected_satisfied));

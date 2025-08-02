@@ -112,6 +112,7 @@ Collate:
     'bbotk_reflections.R'
     'bibentries.R'
     'helper.R'
+    'local_search.R'
     'mlr_callbacks.R'
     'nds_selection.R'
     'reexport.R'

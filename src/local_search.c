@@ -655,12 +655,12 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
 }
 
 
-int evaluate_batch(int n, SEXP s_x, SEXP s_eval_batch, double obj_mult, double* y) {
-    SEXP s_call = PROTECT(Rf_lang2(s_eval_batch, s_x));
+int eval_obj(int n, SEXP s_x, SEXP s_obj, double obj_mult, double* y) {
+    SEXP s_call = PROTECT(Rf_lang2(s_obj, s_x));
     SEXP s_y = PROTECT(safe_eval(s_call));
     int eval_ok = 0;
     if (s_y != R_NilValue) {
-        memcpy(y, REAL(VECTOR_ELT(s_y, 0)), n * sizeof(double));
+        memcpy(y, REAL(s_y), n * sizeof(double));
         // multiply by obj_mult to handle maximization
         for (int i = 0; i < n; i++) {
             y[i] *= obj_mult;
@@ -672,15 +672,59 @@ int evaluate_batch(int n, SEXP s_x, SEXP s_eval_batch, double obj_mult, double* 
 }
 
 
-// R wrapper function - complete local search implementation
-SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
+SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, int n_searches, SearchSpace* ss, double obj_mult) {
+    // find the best point in the population
+    double best_y = pop_y[0];
+    int best_i = 0;
+    for (int i = 0; i < n_searches; i++) {
+        if (pop_y[i] < best_y) {
+            best_y = pop_y[i];
+            best_i = i;
+        }
+    }
+    best_y *= obj_mult; // convert to original scale
+    SEXP s_res = RC_named_list_create_PROTECT(2, (const char*[]){"x", "y"});
+    SEXP s_res_x = RC_named_list_create_PROTECT(ss->n_params, ss->param_names);
 
+
+    for (int j = 0; j < ss->n_params; j++) {
+      int param_class = ss->param_classes[j];
+      SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
+
+      if (param_class == 0) { // ParamDbl
+          SET_VECTOR_ELT(s_res_x, j, ScalarReal(REAL(s_pop_col)[best_i]));
+      } else if (param_class == 1) { // ParamInt
+          SET_VECTOR_ELT(s_res_x, j, ScalarInteger(INTEGER(s_pop_col)[best_i]));
+      } else if (param_class == 2) { // ParamFct
+          SET_VECTOR_ELT(s_res_x, j, ScalarString(STRING_ELT(s_pop_col, best_i)));
+      } else { // ParamLgl
+          SET_VECTOR_ELT(s_res_x, j, ScalarLogical(LOGICAL(s_pop_col)[best_i]));
+      }
+    }
+    SET_VECTOR_ELT(s_res, 0, s_res_x);
+    SET_VECTOR_ELT(s_res, 1, ScalarReal(best_y));
+    UNPROTECT(1); // s_res_x
+    return s_res;
+}
+
+
+// R wrapper function - complete local search implementation
+SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     GetRNGstate();
+    int minimize = asInteger(RC_get_list_el_by_name(s_ctrl, "minimize"));
+    int obj_mult = minimize ? 1 : -1;
     int n_searches = asInteger(RC_get_list_el_by_name(s_ctrl, "n_searches"));
-    int n_neighs = asInteger(RC_get_list_el_by_name(s_ctrl, "n_neighbors"));
-    double mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
-    double obj_mult = asReal(RC_get_list_el_by_name(s_ctrl, "obj_mult"));
     int n_steps = asInteger(RC_get_list_el_by_name(s_ctrl, "n_steps"));
+    int n_neighs = asInteger(RC_get_list_el_by_name(s_ctrl, "n_neighs"));
+    double mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
+
+    assert(n_searches > 0);
+    assert(n_steps > 0);
+    assert(n_neighs > 0);
+    assert(mut_sd > 0);
+
+    DEBUG_PRINT("c_local_search: minimize=%d, obj_mult  =%d, n_searches=%d, n_steps=%d, n_neighs=%d, mut_sd=%f\n",
+        minimize, obj_mult, n_searches, n_steps, n_neighs, mut_sd);
 
     SearchSpace ss;
     extract_ss_info_PROTECT(s_ss, &ss);
@@ -694,13 +738,12 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     dt_print(s_pop_x, 10);
 
     SEXP s_neighs_x = dt_generate_PROTECT(n_searches * n_neighs, &ss);
-    SEXP s_eval_batch = RC_get_r6_el_by_name(s_inst, "eval_batch");
 
     // y-values for pop. we wil later write into this array
     double *pop_y = (double*) R_alloc(n_searches, sizeof(double));
     double *neighs_y = (double*) R_alloc(n_searches*n_neighs, sizeof(double));
     int eval_ok;
-    eval_ok = evaluate_batch(n_searches, s_pop_x, s_eval_batch, obj_mult, pop_y);
+    eval_ok = eval_obj(n_searches, s_pop_x, s_obj, obj_mult, pop_y);
 
     // we failed the terminator in the initial points, skip main loop
     if (eval_ok) {
@@ -712,7 +755,7 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
             // Generate neighbors for all current points in pre-allocated data.table
             generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
             // print_dt(s_neighs_x, 10);
-            eval_ok = evaluate_batch(n_searches*n_neighs, s_neighs_x, s_eval_batch, obj_mult, neighs_y);
+            eval_ok = eval_obj(n_searches*n_neighs, s_neighs_x, s_obj, obj_mult, neighs_y);
 
             // copy if we have a valid result, otherwise we stop the loop
             if (eval_ok) {
@@ -722,8 +765,9 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
             }
         }
     }
-    UNPROTECT(2 + ss.n_conds); // s_pop_x, s_neighs_x, and all PROTECTed cond rhs_values
-    DEBUG_PRINT("c_local_search done\n");
+
     PutRNGstate();
-    return R_NilValue;
+    SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, pop_y, n_searches, &ss, obj_mult);
+    UNPROTECT(3+ss.n_conds); // s_pop_x, s_neighs_x, s_res and all PROTECTed cond rhs_value 
+    return s_res;
 }

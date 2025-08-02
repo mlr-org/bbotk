@@ -44,6 +44,9 @@ by multiplying with "obj_mult" (which will be -1).
     * read the python code and compare
     * we need to change the interface so that LS is not an bbotk optimizer, but a basic function
     which takes as objective as basic R function obj(dt), xs is a dt and we return a vector y.
+    * check docs of all exposed R functions
+    * check that we always set "package" in our .Call calls
+    * allow to set initial points in LS R function
     
 */
 
@@ -107,6 +110,6 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss);
 void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd);
 void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y,
   SEXP s_pop_x, double *pop_y, SearchSpace* ss);
-SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x);
+SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x);
 
 #endif // LOCAL_SEARCH_H

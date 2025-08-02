@@ -3,9 +3,10 @@
 #include <Rinternals.h>
 #include <stdlib.h> // for NULL
 
+#include "local_search.h"
+
 /* .Call calls */
 extern SEXP c_is_dominated(SEXP);
-extern SEXP c_local_search(SEXP, SEXP, SEXP, SEXP);
 
 extern SEXP c_test_random_int();
 extern SEXP c_test_get_list_el_by_name(SEXP);

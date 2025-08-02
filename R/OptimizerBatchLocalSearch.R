@@ -85,10 +85,10 @@ OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
       param_set = ps(
         n_searches = p_int(lower = 1L, default = 10L),
         n_steps = p_int(lower = 1L, default = 10L),
-        n_neighbors = p_int(lower = 1L, default = 100L),
+        n_neighs = p_int(lower = 1L, default = 100L),
         mut_sd = p_dbl(lower = 0L, default = 0.1)
       )
-      param_set$values = list(n_searches = 10L, n_steps = 10L, n_neighbors = 100L, mut_sd = 0.1)
+      param_set$values = list(n_searches = 10L, n_steps = 10L, n_neighs = 100L, mut_sd = 0.1)
 
       super$initialize(
         id = "local_search",
@@ -102,12 +102,11 @@ OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
   ),
   private = list(
     .optimize = function(inst) {
-      ps = self$param_set
-      psv = ps$values
-      control = self$param_set$values
-      control$obj_mult = inst$objective_multiplicator
-      init_points = generate_design_random(inst$search_space, n = control$n_searches)$data
-      .Call("c_local_search", inst$search_space, control, inst, init_points, PACKAGE = "bbotk")
+      psv = self$param_set$values
+      minimize = "minimize" %in% inst$objective$codomain$tags
+      ctrl = local_search_control(minimize = minimize, n_searches = psv$n_searches, n_steps = psv$n_steps, n_neighs = psv$n_neighs, mut_sd = psv$mut_sd)
+      obj = function(xdt) inst$eval_batch(xdt)[[1]]
+      local_search(obj, inst$search_space, ctrl)
     }
   )
 )

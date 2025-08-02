@@ -8,7 +8,9 @@
 const char *RC_asString(SEXP s_x);
 
 // create named list, returned SEXP must be unprotected by the caller.
-SEXP RC_named_list_create_PROTECT(int n);
+SEXP RC_named_list_create_emptynames_PROTECT(int n);
+SEXP RC_named_list_create_PROTECT(int n, const char *names[]);
+
 // extract list element by name, returns R_NilValue if not found
 SEXP RC_get_list_el_by_name(SEXP s_list, const char *name);
 
