@@ -102,7 +102,7 @@ void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace *ss);
 void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace *ss, double mut_sd);
 
 void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
-int find_param_index(const char *param_name, SearchSpace *ss);
+int find_param_index(const char *param_name, const SearchSpace *ss);
 void toposort_params(SearchSpace *ss);
 void reorder_conds_by_toposort(SearchSpace *ss);
 int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss);

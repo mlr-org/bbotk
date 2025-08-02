@@ -300,7 +300,7 @@ SEXP safe_eval(SEXP expr) {
 
 /************ SearchSpace functions ********** */
 // Find parameter index by name, -1 if not found (should not happen)
-int find_param_index(const char* param_name, SearchSpace* ss) {
+int find_param_index(const char* param_name, const SearchSpace* ss) {
     for (int j = 0; j < ss->n_params; j++) {
         if (strncmp(ss->param_names[j], param_name, strlen(param_name)) == 0) {
             return j;
@@ -318,8 +318,8 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
     // copy lower and upper bounds
     ss->lower = (double*) R_Calloc(ss->n_params, double);
     ss->upper = (double*) R_Calloc(ss->n_params, double);
-    double* lower = REAL(RC_get_dt_col_by_name(s_data, "lower"));
-    double* upper = REAL(RC_get_dt_col_by_name(s_data, "upper"));
+    const double* lower = REAL(RC_get_dt_col_by_name(s_data, "lower"));
+    const double* upper = REAL(RC_get_dt_col_by_name(s_data, "upper"));
     for (int i = 0; i < ss->n_params; i++) {
         ss->lower[i] = lower[i];
         ss->upper[i] = upper[i];
@@ -674,6 +674,7 @@ int evaluate_batch(int n, SEXP s_x, SEXP s_eval_batch, double obj_mult, double* 
 // R wrapper function - complete local search implementation
 SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
 
+    GetRNGstate();
     int n_searches = asInteger(RC_get_list_el_by_name(s_ctrl, "n_searches"));
     int n_neighs = asInteger(RC_get_list_el_by_name(s_ctrl, "n_neighbors"));
     double mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
@@ -695,8 +696,8 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     SEXP s_eval_batch = RC_get_r6_el_by_name(s_inst, "eval_batch");
 
     // y-values for pop. we wil later write into this array
-    double *pop_y = (double *) R_Calloc(n_searches, double);
-    double *neighs_y = (double *) R_Calloc(n_searches*n_neighs, double);
+    double *pop_y = (double*) R_Calloc(n_searches, double);
+    double *neighs_y = (double*) R_Calloc(n_searches*n_neighs, double);
     int eval_ok;
     eval_ok = evaluate_batch(n_searches, s_pop_x, s_eval_batch, obj_mult, pop_y);
 
@@ -722,5 +723,6 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     }
     UNPROTECT(2 + ss.n_conds); // s_pop_x, s_neighs_x, and all PROTECTed cond rhs_values
     DEBUG_PRINT("c_local_search done\n");
+    PutRNGstate();
     return R_NilValue;
 }
