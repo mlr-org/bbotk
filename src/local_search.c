@@ -316,8 +316,8 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
     SEXP s_data = RC_get_r6_el_by_name(s_ss, "data");
 
     // copy lower and upper bounds
-    ss->lower = (double*) R_Calloc(ss->n_params, double);
-    ss->upper = (double*) R_Calloc(ss->n_params, double);
+    ss->lower = (double*) R_alloc(ss->n_params, sizeof(double));
+    ss->upper = (double*) R_alloc(ss->n_params, sizeof(double));
     const double* lower = REAL(RC_get_dt_col_by_name(s_data, "lower"));
     const double* upper = REAL(RC_get_dt_col_by_name(s_data, "upper"));
     for (int i = 0; i < ss->n_params; i++) {
@@ -327,14 +327,14 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
 
     // copy nlevels
     // FIXME: it is weird that this is a double in paradox not an int
-    ss->n_levels = (int*) R_Calloc(ss->n_params, int);
+    ss->n_levels = (int*) R_alloc(ss->n_params, sizeof(int));
     double* nlevels = REAL(RC_get_dt_col_by_name(s_data, "nlevels"));
     for (int i = 0; i < ss->n_params; i++) {
         ss->n_levels[i] = (int)nlevels[i];
     }
 
     // copy param_classes
-    ss->param_classes = (int*) R_Calloc(ss->n_params, int);
+    ss->param_classes = (int*) R_alloc(ss->n_params, sizeof(int));
     SEXP s_classes = RC_get_dt_col_by_name(s_data, "class");
     for (int i = 0; i < ss->n_params; i++) {
         const char* class_name = CHAR(STRING_ELT(s_classes, i));
@@ -350,20 +350,20 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
     }
 
     // copy param_names (just store pointers to R's string pool)
-    ss->param_names = (const char**) R_Calloc(ss->n_params, const char*);
+    ss->param_names = (const char**) R_alloc(ss->n_params, sizeof(char*));
     SEXP s_ids = RC_get_dt_col_by_name(s_data, "id");
     for (int i = 0; i < ss->n_params; i++) {
         ss->param_names[i] = CHAR(STRING_ELT(s_ids, i));
     }
 
     // copy level_names (just store pointers to R's string pool)
-    ss->level_names = (const char***) R_Calloc(ss->n_params, const char**);
+    ss->level_names = (const char***) R_alloc(ss->n_params, sizeof(char**));
     SEXP s_ps_levels = RC_get_dt_col_by_name(s_data, "levels");
     for (int i = 0; i < ss->n_params; i++) {
         if (ss->param_classes[i] == 2 ) { // ParamFct
             SEXP s_p_levels = VECTOR_ELT(s_ps_levels, i);
             int n_levels = ss->n_levels[i];
-            ss->level_names[i] = (const char**) R_Calloc(n_levels, const char*);
+            ss->level_names[i] = (const char**) R_alloc(n_levels, sizeof(char*));
             for (int k = 0; k < n_levels; k++) {
                 ss->level_names[i][k] = CHAR(STRING_ELT(s_p_levels, k));
             }
@@ -381,7 +381,7 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
     ss->n_conds = length(s_deps_on);
     Cond *conds = NULL;
     if (ss->n_conds != 0) {
-      conds = (Cond*) R_Calloc(ss->n_conds, Cond);
+      conds = (Cond*) R_alloc(ss->n_conds, sizeof(Cond));
       for (int i = 0; i < ss->n_conds; i++) {
         const char *param_name = CHAR(STRING_ELT(s_deps_id, i));
         conds[i].param_index = find_param_index(param_name, ss);
@@ -404,8 +404,9 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
 // topological sort of parameters based on dependencies
 // if param B depends on param A, then B comes after A in the sort
 void toposort_params(SearchSpace* ss) {
-    int* sorted = (int*) R_Calloc(ss->n_params, int);
-    int* deps = (int*) R_Calloc(ss->n_params, int);
+    int* sorted = (int*) R_alloc(ss->n_params, sizeof(int));
+    int* deps = (int*) R_alloc(ss->n_params, sizeof(int));
+    memset(deps, 0, ss->n_params * sizeof(int));
     int count = 0;
     // Count dependencies for each parameter
     for (int i = 0; i < ss->n_conds; i++) {
@@ -433,7 +434,7 @@ void toposort_params(SearchSpace* ss) {
 // Conditions come in "blocks", so all conds for param A are next to each other
 void reorder_conds_by_toposort(SearchSpace* ss) {
     if (ss->n_conds <= 1) return;
-    Cond* reordered_conds = (Cond*) R_Calloc(ss->n_conds, Cond);
+    Cond* reordered_conds = (Cond*) R_alloc(ss->n_conds, sizeof(Cond));
     int reordered_count = 0;
     // go thru params in topological order, collect all conds for current param
     for (int i = 0; i < ss->n_params; i++) {
@@ -544,7 +545,7 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
     // Now mutate one parameter for each neighbor
     for (int i_neigh = 0; i_neigh < n_searches * n_neighs; i_neigh++) {
         // Find valid mutable parameters for this neighbor (non-NA values)
-        int* valid_mutable_indices = (int*) R_Calloc(ss->n_params, int);
+        int* valid_mutable_indices = (int*) R_alloc(ss->n_params, sizeof(int));
         int n_valid_mutable = 0;
 
         for (int j = 0; j < ss->n_params; j++) {
@@ -696,8 +697,8 @@ SEXP c_local_search(SEXP s_ss, SEXP s_ctrl, SEXP s_inst, SEXP s_initial_x) {
     SEXP s_eval_batch = RC_get_r6_el_by_name(s_inst, "eval_batch");
 
     // y-values for pop. we wil later write into this array
-    double *pop_y = (double*) R_Calloc(n_searches, double);
-    double *neighs_y = (double*) R_Calloc(n_searches*n_neighs, double);
+    double *pop_y = (double*) R_alloc(n_searches, sizeof(double));
+    double *neighs_y = (double*) R_alloc(n_searches*n_neighs, sizeof(double));
     int eval_ok;
     eval_ok = evaluate_batch(n_searches, s_pop_x, s_eval_batch, obj_mult, pop_y);
 
