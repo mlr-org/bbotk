@@ -32,7 +32,7 @@ local_search_control = function(minimize = TRUE, n_searches = 10L, n_steps = 5L,
 local_search = function(objective, search_space, control = local_search_control()) {
   assert_class(control, "local_search_control")
   init_points = generate_design_random(search_space, n = control$n_searches)$data
-  .Call("c_local_search", objective, search_space, control, init_points)
+  .Call("c_local_search", objective, search_space, control, init_points, PACKAGE = "bbotk")
 }
 
 

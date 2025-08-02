@@ -11,17 +11,17 @@ check_test_results = function(testres) {
 
 test_that("c_test_get_list_el_by_name", {
   test_list = list(a = 1, b = "foo")
-  testres = .Call("c_test_get_list_el_by_name", test_list)
+  testres = .Call("c_test_get_list_el_by_name", test_list, PACKAGE = "bbotk")
   check_test_results(testres)
 })
 
 test_that("c_test_random_int", {
-  testres = .Call("c_test_random_int")
+  testres = .Call("c_test_random_int", PACKAGE = "bbotk")
   check_test_results(testres)
 })
 
 test_that("c_test_random_normal", {
-  testres = .Call("c_test_random_normal")
+  testres = .Call("c_test_random_normal", PACKAGE = "bbotk")
   check_test_results(testres)
 })
 
@@ -32,7 +32,7 @@ test_that("c_test_extract_ss_info", {
     x3 = paradox::p_fct(c("a", "b", "c")),
     x4 = paradox::p_lgl()
   )
-  testres = .Call("c_test_extract_ss_info", search_space)
+  testres = .Call("c_test_extract_ss_info", search_space, PACKAGE = "bbotk")
   check_test_results(testres)
 })
 
@@ -43,7 +43,7 @@ test_that("c_test_dt_utils", {
     x3 = paradox::p_fct(c("a", "b")),
     x4 = paradox::p_lgl()
   )
-  testres = .Call("c_test_dt_utils", search_space)
+  testres = .Call("c_test_dt_utils", search_space, PACKAGE = "bbotk")
   check_test_results(testres)
 })
 
@@ -55,7 +55,7 @@ test_that("c_test_toposort_params", {
     x3 = paradox::p_dbl(0, 1)
   )
   # actually, the order is undefined here.... but our algo will use the vars in their order in the SS
-  testres = .Call("c_test_toposort_params", ps1, c(0L, 1L, 2L), integer(0))
+  testres = .Call("c_test_toposort_params", ps1, c(0L, 1L, 2L), integer(0), PACKAGE = "bbotk")
   check_test_results(testres)
 
   # Simple dependency (B -> A)
@@ -64,7 +64,7 @@ test_that("c_test_toposort_params", {
     B = paradox::p_fct(c("a", "b"))
   )
   ps2$add_dep("A", on = "B", cond = paradox::CondEqual$new("a"))
-  testres = .Call("c_test_toposort_params", ps2, c(1L, 0L), c(0L))
+  testres = .Call("c_test_toposort_params", ps2, c(1L, 0L), c(0L), PACKAGE = "bbotk")
   check_test_results(testres)
 
   # Chain of dependencies (C -> B -> A)
@@ -75,7 +75,7 @@ test_that("c_test_toposort_params", {
   )
   ps3$add_dep("A", on = "B", cond = paradox::CondEqual$new("b1"))
   ps3$add_dep("B", on = "C", cond = paradox::CondEqual$new("c1"))
-  testres = .Call("c_test_toposort_params", ps3, c(2L, 1L, 0L), c(1L, 0L))
+  testres = .Call("c_test_toposort_params", ps3, c(2L, 1L, 0L), c(1L, 0L), PACKAGE = "bbotk")
   check_test_results(testres)
 
   # Multiple dependencies (A -> C, B -> C)
@@ -86,7 +86,7 @@ test_that("c_test_toposort_params", {
   )
   ps4$add_dep("C", on = "A", cond = paradox::CondEqual$new("a"))
   ps4$add_dep("C", on = "B", cond = paradox::CondEqual$new("c"))
-  testres = .Call("c_test_toposort_params", ps4, c(0L, 1L, 2L), c(2L, 2L))
+  testres = .Call("c_test_toposort_params", ps4, c(0L, 1L, 2L), c(2L, 2L), PACKAGE = "bbotk")
   check_test_results(testres)
 
   # Complex dependencies (D -> A, C -> A, D -> B, C -> B)
@@ -100,7 +100,7 @@ test_that("c_test_toposort_params", {
   ps5$add_dep("B", on = "D", cond = paradox::CondEqual$new("a"))
   ps5$add_dep("A", on = "D", cond = paradox::CondEqual$new("a"))
   ps5$add_dep("C", on = "A", cond = paradox::CondEqual$new("a"))
-  testres = .Call("c_test_toposort_params", ps5, c(3L, 0L, 2L, 1L), c(0L, 2L, 1L, 1L))
+  testres = .Call("c_test_toposort_params", ps5, c(3L, 0L, 2L, 1L), c(0L, 2L, 1L, 1L), PACKAGE = "bbotk")
   check_test_results(testres)
 })
 
@@ -112,9 +112,9 @@ test_that("c_test_is_condition_satisfied", {
   )
   ps$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
   dt = data.frame(A = "a1", B = 0.5)
-  testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 1L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 1L, PACKAGE = "bbotk")
   dt = data.frame(A = "a2", B = 0.5)
-  testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 0L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 0L, PACKAGE = "bbotk")
   
   # Test CondAnyOf condition
   ps2 = paradox::ps(
@@ -123,9 +123,9 @@ test_that("c_test_is_condition_satisfied", {
   )
   ps2$add_dep("B", on = "A", cond = paradox::CondAnyOf$new(c("a1", "a2")))
   dt = data.frame(A = "a1", B = 5)
-  testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 1L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 1L, PACKAGE = "bbotk")
   dt = data.frame(A = "a3", B = 5) 
-  testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 0L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 0L, PACKAGE = "bbotk")
 
   # Test numeric parameter conditions
   ps3 = paradox::ps(
@@ -134,9 +134,9 @@ test_that("c_test_is_condition_satisfied", {
   )
   ps3$add_dep("B", on = "A", cond = paradox::CondEqual$new(5))
   dt = data.frame(A = 5, B = 3)
-  testres = .Call("c_test_is_condition_satisfied", dt, ps3, 0L, 1L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps3, 0L, 1L, PACKAGE = "bbotk")
   dt = data.frame(A = 4.9, B = 3)
-  testres = .Call("c_test_is_condition_satisfied", dt, ps3, 0L, 0L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps3, 0L, 0L, PACKAGE = "bbotk")
 
   # Test logical parameter conditions
   ps4 = paradox::ps(
@@ -145,9 +145,9 @@ test_that("c_test_is_condition_satisfied", {
   )
   ps4$add_dep("B", on = "A", cond = paradox::CondEqual$new(TRUE))
   dt = data.frame(A = TRUE, B = 0.5)
-  testres = .Call("c_test_is_condition_satisfied", dt, ps4, 0L, 1L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps4, 0L, 1L, PACKAGE = "bbotk")
   dt = data.frame(A = FALSE, B = 0.5)
-  testres = .Call("c_test_is_condition_satisfied", dt, ps4, 0L, 0L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps4, 0L, 0L, PACKAGE = "bbotk")
 
   # Test NA handling
   ps5 = paradox::ps(
@@ -157,11 +157,11 @@ test_that("c_test_is_condition_satisfied", {
   ps5$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
   
   dt = data.frame(A = NA, B = NA) # parent is non-active, condition is not satisfied
-  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L, PACKAGE = "bbotk")
   dt = data.frame(A = "a1", B = NA) # parent is active and correct, B=NA does not matter
-  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 1L)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 1L, PACKAGE = "bbotk")
   dt = data.frame(A = NA_character_, B = 0.5) # parent is non-active, condition is not satisfied
-  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L) 
+  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L, PACKAGE = "bbotk") 
   check_test_results(testres)
 })
 
@@ -182,7 +182,7 @@ test_that("c_test_generate_neighs", {
   pop_copy = data.table::copy(pop)
 
   set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.5)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.5, PACKAGE = "bbotk")
 
   expect_true(is.data.table(neighs))
   expect_equal(nrow(neighs), 10)
@@ -219,7 +219,7 @@ test_that("c_test_generate_neighs", {
   pop = data.table::data.table(A = "a1", B = 0.5)
 
   set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1, PACKAGE = "bbotk")
 
   mutated_A_to_a2 = which(neighs$A == "a2")
   expect_true(length(mutated_A_to_a2) > 0) # check A was mutated to "a2"
@@ -233,7 +233,7 @@ test_that("c_test_generate_neighs", {
   # When A is mutated to "a1", B must get a value.
   pop = data.table::data.table(A = "a2", B = NA_real_)
   set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.1, PACKAGE = "bbotk")
   # All neighbors should have A mutated to "a1"
   expect_true(all(neighs$A == "a1"))
   # All neighbors should have a non-NA value for B
@@ -254,7 +254,7 @@ test_that("c_test_generate_neighs", {
   # Case 3.1: Start with everything active. Mutate C to "c2". B and A must become NA.
   pop = data.table::data.table(A = 0.5, B = "b1", C = "c1")
   set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1, PACKAGE = "bbotk")
 
   mutated_C_to_c2 = which(neighs$C == "c2")
   expect_true(length(mutated_C_to_c2) > 0)
@@ -273,7 +273,7 @@ test_that("c_test_generate_neighs", {
   # If B gets "b1", A must get a value.
   pop = data.table::data.table(A = NA_real_, B = NA_character_, C = "c2")
   set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.1, PACKAGE = "bbotk")
 
   expect_true(all(neighs$C == "c1"))
   expect_true(all(!is.na(neighs$B)))
@@ -302,7 +302,7 @@ test_that("c_test_generate_neighs", {
   # Case 4.1: Start with everything active. Mutating A or B deactivates C.
   pop = data.table::data.table(A = "a", B = "c", C = 0.5)
   set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1, PACKAGE = "bbotk")
 
   mutated_A = which(neighs$A == "b")
   expect_true(length(mutated_A) > 0)
@@ -317,7 +317,7 @@ test_that("c_test_generate_neighs", {
   # Case 4.2: Start with C inactive because of A. Mutating A to "a" makes C active.
   pop = data.table::data.table(A = "b", B = "c", C = NA_real_)
   set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1)
+  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1, PACKAGE = "bbotk")
 
   # some neighbors will have B mutated to "d" which keeps C inactive
   mutated_A_to_a = which(neighs$A == "a" & neighs$B == "c")
@@ -336,13 +336,13 @@ test_that("c_test_copy_best_neighs_to_pop", {
   neighs_x = data.table::data.table(x = c(0.1, 0.2, 0.3, 0.9, 0.7, 0.6))
   neighs_y = c(5, 12, 8, 25, 18, 15)
 
-  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y, 2L, 3L)
+  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y, 2L, 3L, PACKAGE = "bbotk")
   expect_equal(res$pop_x$x, c(0.1, 0.6))
   expect_equal(res$pop_y, c(5, 15))
 
   # No improvement
   neighs_y_no_improve = c(11, 12, 13, 21, 22, 23)
-  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y_no_improve, 2L, 3L)
+  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y_no_improve, 2L, 3L, PACKAGE = "bbotk")
   expect_equal(res$pop_x$x, pop_x$x)
   expect_equal(res$pop_y, pop_y)
 })
