@@ -37,13 +37,14 @@ test_that("c_test_extract_ss_info", {
 })
 
 test_that("c_test_dt_utils", {
-  search_space = paradox::ps(
+  ss = paradox::ps(
     x1 = paradox::p_dbl(0, 1),
     x2 = paradox::p_int(0, 10),
     x3 = paradox::p_fct(c("a", "b")),
     x4 = paradox::p_lgl()
   )
-  testres = .Call("c_test_dt_utils", search_space, PACKAGE = "bbotk")
+  ctrl = local_search_control(mut_sd = 2)
+  testres = .Call("c_test_dt_utils", ss, ctrl, PACKAGE = "bbotk")
   check_test_results(testres)
 })
 
@@ -166,6 +167,7 @@ test_that("c_test_is_condition_satisfied", {
 })
 
 test_that("c_test_generate_neighs", {
+  set.seed(1)
   # No dependencies
   ss = paradox::ps(
     x1 = paradox::p_dbl(0, 1),
@@ -173,6 +175,7 @@ test_that("c_test_generate_neighs", {
     x3 = paradox::p_fct(c("a", "b", "c")),
     x4 = paradox::p_lgl()
   )
+  ctrl = local_search_control(n_neighs = 30, mut_sd = 2)
   pop = data.table::data.table(
     x1 = 0.5,
     x2 = 5L,
@@ -180,13 +183,11 @@ test_that("c_test_generate_neighs", {
     x4 = TRUE
   )
   pop_copy = data.table::copy(pop)
-
-  set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.5, PACKAGE = "bbotk")
+  neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
   expect_true(is.data.table(neighs))
-  expect_equal(nrow(neighs), 10)
-  expect_equal(ncol(neighs), 4)
+  expect_equal(nrow(neighs), 1 * ctrl$n_neighs)
+  expect_equal(ncol(neighs), ncol(pop))
   # check col types
   expect_true(is.numeric(neighs$x1))
   expect_true(is.integer(neighs$x2))
@@ -218,8 +219,7 @@ test_that("c_test_generate_neighs", {
   # Case 1: condition is met (A="a1"), B has a value. If A is mutated to "a2", B must become NA.
   pop = data.table::data.table(A = "a1", B = 0.5)
 
-  set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1, PACKAGE = "bbotk")
+  neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
   mutated_A_to_a2 = which(neighs$A == "a2")
   expect_true(length(mutated_A_to_a2) > 0) # check A was mutated to "a2"
@@ -232,8 +232,7 @@ test_that("c_test_generate_neighs", {
   # So A must be mutated to "a1" in ALL neighbors.
   # When A is mutated to "a1", B must get a value.
   pop = data.table::data.table(A = "a2", B = NA_real_)
-  set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.1, PACKAGE = "bbotk")
+  neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
   # All neighbors should have A mutated to "a1"
   expect_true(all(neighs$A == "a1"))
   # All neighbors should have a non-NA value for B
@@ -253,8 +252,7 @@ test_that("c_test_generate_neighs", {
 
   # Case 3.1: Start with everything active. Mutate C to "c2". B and A must become NA.
   pop = data.table::data.table(A = 0.5, B = "b1", C = "c1")
-  set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1, PACKAGE = "bbotk")
+  neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
   mutated_C_to_c2 = which(neighs$C == "c2")
   expect_true(length(mutated_C_to_c2) > 0)
@@ -272,8 +270,7 @@ test_that("c_test_generate_neighs", {
   # Then B must get a value.
   # If B gets "b1", A must get a value.
   pop = data.table::data.table(A = NA_real_, B = NA_character_, C = "c2")
-  set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 10L, 0.1, PACKAGE = "bbotk")
+  neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
   expect_true(all(neighs$C == "c1"))
   expect_true(all(!is.na(neighs$B)))
@@ -301,8 +298,7 @@ test_that("c_test_generate_neighs", {
 
   # Case 4.1: Start with everything active. Mutating A or B deactivates C.
   pop = data.table::data.table(A = "a", B = "c", C = 0.5)
-  set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1, PACKAGE = "bbotk")
+  neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
   mutated_A = which(neighs$A == "b")
   expect_true(length(mutated_A) > 0)
@@ -316,8 +312,7 @@ test_that("c_test_generate_neighs", {
 
   # Case 4.2: Start with C inactive because of A. Mutating A to "a" makes C active.
   pop = data.table::data.table(A = "b", B = "c", C = NA_real_)
-  set.seed(1)
-  neighs = .Call("c_test_generate_neighs", ss, pop, 20L, 0.1, PACKAGE = "bbotk")
+  neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
   # some neighbors will have B mutated to "d" which keeps C inactive
   mutated_A_to_a = which(neighs$A == "a" & neighs$B == "c")
@@ -330,19 +325,21 @@ test_that("c_test_copy_best_neighs_to_pop", {
   ss = paradox::ps(
     x = paradox::p_dbl(0, 1)
   )
+  ctrl = local_search_control(n_searches = 2, n_neighs = 3)
+
   pop_x = data.table::data.table(x = c(0.5, 0.8))
   pop_y = c(10, 20)
 
   neighs_x = data.table::data.table(x = c(0.1, 0.2, 0.3, 0.9, 0.7, 0.6))
   neighs_y = c(5, 12, 8, 25, 18, 15)
 
-  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y, 2L, 3L, PACKAGE = "bbotk")
+  res = .Call("c_test_copy_best_neighs_to_pop", ss, ctrl, pop_x, pop_y, neighs_x, neighs_y, PACKAGE = "bbotk")
   expect_equal(res$pop_x$x, c(0.1, 0.6))
   expect_equal(res$pop_y, c(5, 15))
 
   # No improvement
-  neighs_y_no_improve = c(11, 12, 13, 21, 22, 23)
-  res = .Call("c_test_copy_best_neighs_to_pop", ss, pop_x, pop_y, neighs_x, neighs_y_no_improve, 2L, 3L, PACKAGE = "bbotk")
+  neighs_y = c(11, 12, 13, 21, 22, 23)
+  res = .Call("c_test_copy_best_neighs_to_pop", ss, ctrl, pop_x, pop_y, neighs_x, neighs_y, PACKAGE = "bbotk")
   expect_equal(res$pop_x$x, pop_x$x)
   expect_equal(res$pop_y, pop_y)
 })

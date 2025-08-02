@@ -188,7 +188,7 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
 }
 
 // Helper function mutate a single element of a config (in a DT)
-void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, double mut_sd) {
+void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace* ss, const Control* ctrl) {
     // we only mutate elements that are not NA
     assert(!dt_is_na(s_dt, row_i, param_j));
     int param_class = ss->param_classes[param_j];
@@ -202,7 +202,7 @@ void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, doubl
         double range = upper - lower;
         if (range > 1e-8) { // avoid division by zero, be safe
           value = (value - lower) / range;
-          value += random_normal(0.0, mut_sd);
+          value += random_normal(0.0, ctrl->mut_sd);
           value = value * range + lower;
           if (value < lower) value = lower;
           if (value > upper) value = upper;
@@ -217,7 +217,7 @@ void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, doubl
         double range = upper - lower;
         if (range > 1e-8) { // avoid division by zero, be safe
             value = (value - lower) / range;
-            value += random_normal(0.0, mut_sd);
+            value += random_normal(0.0, ctrl->mut_sd);
             value = (int) round(value * range + lower);
             if (value < lower) value = (int) lower;
             if (value > upper) value = (int) upper;
@@ -247,7 +247,7 @@ void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace* ss, doubl
 }
 
 // Set a single element of a config (in a DT) to a random value
-void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace* ss) {
+void dt_set_random(SEXP s_dt, int row_i, int param_j, const SearchSpace* ss) {
   assert(dt_is_na(s_dt, row_i, param_j));
   int param_class = ss->param_classes[param_j];
   SEXP s_col = VECTOR_ELT(s_dt, param_j);
@@ -399,6 +399,20 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
     ss->conds = conds;
 }
 
+void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
+    ctrl->minimize = asInteger(RC_get_list_el_by_name(s_ctrl, "minimize"));
+    ctrl->obj_mult = ctrl->minimize ? 1 : -1;
+    ctrl->n_searches = asInteger(RC_get_list_el_by_name(s_ctrl, "n_searches"));
+    ctrl->n_steps = asInteger(RC_get_list_el_by_name(s_ctrl, "n_steps"));
+    ctrl->n_neighs = asInteger(RC_get_list_el_by_name(s_ctrl, "n_neighs"));
+    ctrl->mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
+    assert(ctrl->n_searches > 0);
+    assert(ctrl->n_steps > 0);
+    assert(ctrl->n_neighs > 0);
+    assert(ctrl->mut_sd > 0);
+} 
+
+
 /************ Condition functions ********** */
 
 // topological sort of parameters based on dependencies
@@ -459,7 +473,7 @@ void reorder_conds_by_toposort(SearchSpace* ss) {
 // not the condition-param itself
 // if the parent parameter is NA the condition is not satisfied, as the parent is non-active
 // (i dont think we want to allow that a subordinate is only active when the super parameter is non-active)
-int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss) {
+int is_condition_satisfied(SEXP s_neighs_x, int i, const Cond *cond, const SearchSpace* ss) {
     SEXP s_parent_col = VECTOR_ELT(s_neighs_x, cond->parent_index);
     int parent_class = ss->param_classes[cond->parent_index];
     SEXP s_rhs = cond->s_rhs;
@@ -498,24 +512,12 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss) 
     return is_satisfied;
 }
 
-// fix a parameter value which is in conflict with its condition value´
-// case 1: if any condition is not satisfied, set the parameter to NA
-// case 2: if all conditions are satisfied, but the parameter is NA, set it to a random value
-void check_and_fix_param_value(SEXP s_neighs_x, int neigh_i, int param_j, int all_conds_satisfied, SearchSpace* ss) {
-    if(!all_conds_satisfied) {
-      DEBUG_PRINT("Setting parameter %s to NA.\n", ss->param_names[param_j]);
-      dt_set_na(s_neighs_x, neigh_i, param_j);
-    } else if (dt_is_na(s_neighs_x, neigh_i, param_j)) {
-      DEBUG_PRINT("Setting parameter %s to random value.\n", ss->param_names[param_j]);
-      dt_set_random(s_neighs_x, neigh_i, param_j, ss);
-    }
-}
 
 
 /************ Local search functions ********** */
 
 // Generate neighbors for all current points in an existing data.table
-void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd) {
+void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, const SearchSpace* ss, const Control* ctrl) {
     DEBUG_PRINT("generate_neighs\n");
 
     // Copy current points to neighbors -- we replicate each candidate n_neighs times
@@ -524,9 +526,9 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
         int param_class = ss->param_classes[j];
         SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
         SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
-        for (int i_pop = 0; i_pop < n_searches; i_pop++) {
-            for (int k = 0; k < n_neighs; k++) {
-                int i_neigh = i_pop * n_neighs + k;
+        for (int i_pop = 0; i_pop < ctrl->n_searches; i_pop++) {
+            for (int k = 0; k < ctrl->n_neighs; k++) {
+                int i_neigh = i_pop * ctrl->n_neighs + k;
                 if (param_class == 0) { // ParamDbl
                     REAL(s_neigh_col)[i_neigh] = REAL(s_pop_col)[i_pop];
                 } else if (param_class == 1) { // ParamInt
@@ -539,11 +541,11 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
             }
         }
     }
-    DEBUG_PRINT("copied %d points to %d neighbors\n", n_searches, n_searches * n_neighs);
+    DEBUG_PRINT("copied %d points to %d neighbors\n", ctrl->n_searches, ctrl->n_searches * ctrl->n_neighs);
     dt_print(s_neighs_x, 10);
 
     // Now mutate one parameter for each neighbor
-    for (int i_neigh = 0; i_neigh < n_searches * n_neighs; i_neigh++) {
+    for (int i_neigh = 0; i_neigh < ctrl->n_searches * ctrl->n_neighs; i_neigh++) {
         // Find valid mutable parameters for this neighbor (non-NA values)
         int* valid_mutable_indices = (int*) R_alloc(ss->n_params, sizeof(int));
         int n_valid_mutable = 0;
@@ -561,43 +563,10 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
 
             DEBUG_PRINT("Neighbor %d: selected parameter %d (%s) for mutation from %d valid options\n",
                 i_neigh, j, ss->param_names[j], n_valid_mutable);
-            dt_mutate_element(s_neighs_x, i_neigh, j, ss, mut_sd);
+            dt_mutate_element(s_neighs_x, i_neigh, j, ss, ctrl);
             DEBUG_PRINT("before checks:\n");
             dt_print_row(s_neighs_x, i_neigh);
-
-
-            // Iterate through topologically sorted conditions and make changes
-            // as necessary
-            int param_index_current = -1;
-            int all_conds_satisfied = 1;
-            for (int c = 0; c < ss->n_conds; c++) {
-                Cond* cond = &ss->conds[c];
-                if (param_index_current != cond->param_index) {
-                    // finished processing all conditions for a particular parameter 
-                    // now see and fix if its value is in conflict with its conditions
-                    if (param_index_current > -1) {
-                        check_and_fix_param_value(s_neighs_x, i_neigh, param_index_current, all_conds_satisfied, ss);
-                    }
-                    // reset values for next parameter
-                    all_conds_satisfied = 1;
-                    param_index_current = cond->param_index;
-                }
-                if (!is_condition_satisfied(s_neighs_x, i_neigh, cond, ss)) {
-                    all_conds_satisfied = 0;
-                    DEBUG_PRINT("not satisfied:\n");
-                    dt_print_row(s_neighs_x, i_neigh);
-                } else {
-                    DEBUG_PRINT("satisfied:\n");
-                    dt_print_row(s_neighs_x, i_neigh);
-                }
-            }
-            // explicit check for the last condition
-            if (ss->n_conds > 0) {
-                check_and_fix_param_value(s_neighs_x, i_neigh, param_index_current, all_conds_satisfied, ss);
-            }
-            
-            DEBUG_PRINT("after checks:\n");
-            dt_print_row(s_neighs_x, i_neigh);
+            dt_repair_row(s_neighs_x, i_neigh, ss);
         } else {
             DEBUG_PRINT("Neighbor %d: no valid mutable parameters found (all are NA)\n", i_neigh);
         }
@@ -606,18 +575,18 @@ void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x
 }
 
 // Copy the best neighbor from each block into the population
-void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y, 
-  SEXP s_pop_x, double *pop_y, SearchSpace* ss) {
+void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, 
+  SEXP s_pop_x, double *pop_y, const SearchSpace* ss, const Control* ctrl) {
 
     DEBUG_PRINT("copy_best_neighs_to_pop\n");
 
-    for (int pop_i = 0; pop_i < n_searches; pop_i++) {
+    for (int pop_i = 0; pop_i < ctrl->n_searches; pop_i++) {
         // Find the best neighbor in this block
         int best_i = -1;
         double best_y = pop_y[pop_i];
 
-        for (int k = 0; k < n_neighs; k++) {
-            int neigh_i = pop_i * n_neighs + k;
+        for (int k = 0; k < ctrl->n_neighs; k++) {
+            int neigh_i = pop_i * ctrl->n_neighs + k;
             double current_y = neighs_y[neigh_i];
 
             if (current_y < best_y) {
@@ -655,7 +624,7 @@ void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, doub
 }
 
 
-int eval_obj(int n, SEXP s_x, SEXP s_obj, double obj_mult, double* y) {
+int eval_obj(int n, SEXP s_x, SEXP s_obj, double* y, const Control* ctrl) {
     SEXP s_call = PROTECT(Rf_lang2(s_obj, s_x));
     SEXP s_y = PROTECT(safe_eval(s_call));
     int eval_ok = 0;
@@ -663,7 +632,7 @@ int eval_obj(int n, SEXP s_x, SEXP s_obj, double obj_mult, double* y) {
         memcpy(y, REAL(s_y), n * sizeof(double));
         // multiply by obj_mult to handle maximization
         for (int i = 0; i < n; i++) {
-            y[i] *= obj_mult;
+            y[i] *= ctrl->obj_mult;
         }
         eval_ok = 1;
     }
@@ -672,17 +641,17 @@ int eval_obj(int n, SEXP s_x, SEXP s_obj, double obj_mult, double* y) {
 }
 
 
-SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, int n_searches, SearchSpace* ss, double obj_mult) {
+SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const SearchSpace* ss, const Control* ctrl) {
     // find the best point in the population
     double best_y = pop_y[0];
     int best_i = 0;
-    for (int i = 0; i < n_searches; i++) {
+    for (int i = 0; i < ctrl->n_searches; i++) {
         if (pop_y[i] < best_y) {
             best_y = pop_y[i];
             best_i = i;
         }
     }
-    best_y *= obj_mult; // convert to original scale
+    best_y *= ctrl->obj_mult; // convert to original scale
     SEXP s_res = RC_named_list_create_PROTECT(2, (const char*[]){"x", "y"});
     SEXP s_res_x = RC_named_list_create_PROTECT(ss->n_params, ss->param_names);
 
@@ -707,29 +676,82 @@ SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, int n_searc
     return s_res;
 }
 
+// void restart_stagnated_searches(int n_searches, SEXP s_pop_x, int *stagnate_count_per_search, SearchSpace* ss) {
+//     for (int i = 0; i < n_searches; i++) {
+//       if (stagnate_count_per_search[i] == stagnation_max) {
+//         // restart the search
+//         stagnate_count_per_search[i] = 0;
+//         // set the point to a random value
+//         dt_set_random(s_pop_x, i, ss);
+//       }
+//     }
+// }
+
+void dt_set_random_row(SEXP s_dt, int row_i, const SearchSpace* ss) {
+  for (int j = 0; j < ss->n_params; j++) {
+    dt_set_random(s_dt, row_i, j, ss);
+  }
+}
+
+// fix a parameter value which is in conflict with its condition value´
+// case 1: if any condition is not satisfied, set the parameter to NA
+// case 2: if all conditions are satisfied, but the parameter is NA, set it to a random value
+void check_and_fix_param_value(SEXP s_neighs_x, int neigh_i, int param_j, int all_conds_satisfied, const SearchSpace* ss) {
+  if(!all_conds_satisfied) {
+    DEBUG_PRINT("Setting parameter %s to NA.\n", ss->param_names[param_j]);
+    dt_set_na(s_neighs_x, neigh_i, param_j);
+  } else if (dt_is_na(s_neighs_x, neigh_i, param_j)) {
+    DEBUG_PRINT("Setting parameter %s to random value.\n", ss->param_names[param_j]);
+    dt_set_random(s_neighs_x, neigh_i, param_j, ss);
+  }
+}
+
+
+void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace* ss) {
+  // Iterate through topologically sorted conditions 
+  int param_index_current = -1;
+  int all_conds_satisfied = 1;
+  for (int c = 0; c < ss->n_conds; c++) {
+      Cond* cond = &ss->conds[c];
+      if (param_index_current != cond->param_index) {
+          // finished processing all conditions for a particular parameter 
+          // now see and fix if its value is in conflict with its conditions
+          if (param_index_current > -1) {
+              check_and_fix_param_value(s_dt, row_i, param_index_current, all_conds_satisfied, ss);
+          }
+          // reset values for next parameter
+          all_conds_satisfied = 1;
+          param_index_current = cond->param_index;
+      }
+      if (!is_condition_satisfied(s_dt, row_i, cond, ss)) {
+          all_conds_satisfied = 0;
+          DEBUG_PRINT("not satisfied:\n");
+          dt_print_row(s_dt, row_i);
+      } else {
+          DEBUG_PRINT("satisfied:\n");
+          dt_print_row(s_dt, row_i);
+      }
+  }
+  // explicit check for the last condition
+  if (ss->n_conds > 0) {
+      check_and_fix_param_value(s_dt, row_i, param_index_current, all_conds_satisfied, ss);
+  }
+
+  DEBUG_PRINT("after repair:\n");
+  dt_print_row(s_dt, row_i);
+}
+
 
 // R wrapper function - complete local search implementation
 SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     GetRNGstate();
-    int minimize = asInteger(RC_get_list_el_by_name(s_ctrl, "minimize"));
-    int obj_mult = minimize ? 1 : -1;
-    int n_searches = asInteger(RC_get_list_el_by_name(s_ctrl, "n_searches"));
-    int n_steps = asInteger(RC_get_list_el_by_name(s_ctrl, "n_steps"));
-    int n_neighs = asInteger(RC_get_list_el_by_name(s_ctrl, "n_neighs"));
-    double mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
-
-    assert(n_searches > 0);
-    assert(n_steps > 0);
-    assert(n_neighs > 0);
-    assert(mut_sd > 0);
-
-    DEBUG_PRINT("c_local_search: minimize=%d, obj_mult  =%d, n_searches=%d, n_steps=%d, n_neighs=%d, mut_sd=%f\n",
-        minimize, obj_mult, n_searches, n_steps, n_neighs, mut_sd);
 
     SearchSpace ss;
     extract_ss_info_PROTECT(s_ss, &ss);
     toposort_params(&ss);
     reorder_conds_by_toposort(&ss);
+    Control ctrl;
+    extract_ctrl_info(s_ctrl, &ctrl);
 
     //print_search_space(&ss);
 
@@ -737,29 +759,32 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     SEXP s_pop_x = PROTECT(duplicate(s_initial_x));
     dt_print(s_pop_x, 10);
 
-    SEXP s_neighs_x = dt_generate_PROTECT(n_searches * n_neighs, &ss);
+    SEXP s_neighs_x = dt_generate_PROTECT(ctrl.n_searches * ctrl.n_neighs, &ss);
 
     // y-values for pop. we wil later write into this array
-    double *pop_y = (double*) R_alloc(n_searches, sizeof(double));
-    double *neighs_y = (double*) R_alloc(n_searches*n_neighs, sizeof(double));
+    double *pop_y = (double*) R_alloc(ctrl.n_searches, sizeof(double));
+    double *neighs_y = (double*) R_alloc(ctrl.n_searches*ctrl.n_neighs, sizeof(double));
+    // int *stagnate_count_per_search = (int*) R_alloc(n_searches, sizeof(int));
     int eval_ok;
-    eval_ok = eval_obj(n_searches, s_pop_x, s_obj, obj_mult, pop_y);
+    eval_ok = eval_obj(ctrl.n_searches, s_pop_x, s_obj, pop_y, &ctrl);
 
     // we failed the terminator in the initial points, skip main loop
     if (eval_ok) {
         // Main local search loop
-        for (int step = 0; step < n_steps;  step++) {
+        for (int step = 0; step < ctrl.n_steps;  step++) {
             DEBUG_PRINT("step=%i\n", step);
             dt_print(s_pop_x, 10);
 
+            // restart stagnant searches
+            // restart_stagnated_searches(stagnate_count_per_search, n_searches);
             // Generate neighbors for all current points in pre-allocated data.table
-            generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
+            generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
             // print_dt(s_neighs_x, 10);
-            eval_ok = eval_obj(n_searches*n_neighs, s_neighs_x, s_obj, obj_mult, neighs_y);
+            eval_ok = eval_obj(ctrl.n_searches*ctrl.n_neighs, s_neighs_x, s_obj, neighs_y, &ctrl);
 
             // copy if we have a valid result, otherwise we stop the loop
             if (eval_ok) {
-                copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x, pop_y, &ss);
+                copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x, pop_y, &ss, &ctrl);
             } else {
                 break;
             }
@@ -767,7 +792,7 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     }
 
     PutRNGstate();
-    SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, pop_y, n_searches, &ss, obj_mult);
+    SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, pop_y, &ss, &ctrl);
     UNPROTECT(3+ss.n_conds); // s_pop_x, s_neighs_x, s_res and all PROTECTed cond rhs_value 
     return s_res;
 }

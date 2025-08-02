@@ -44,11 +44,11 @@ by multiplying with "obj_mult" (which will be -1).
     * read the python code and compare
     * check docs of all exposed R functions
     * allow to set initial points in LS R function
-    
+    * if we stagnate for a single LS, we could restart it?
 */
 
 // Debug printer system - can be switched on/off
-#define DEBUG_ENABLED 0  // Set to 1 to enable debug output
+#define DEBUG_ENABLED 1  // Set to 1 to enable debug output
 
 #if DEBUG_ENABLED
 #define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)
@@ -89,24 +89,41 @@ typedef struct {
 } SearchSpace;
 
 
+// control info for local search
+typedef struct {
+  int minimize;
+  double obj_mult;
+  int n_searches;
+  int n_steps;
+  int n_neighs;
+  double mut_sd;
+  int stagnation_max;
+} Control;
+
+
 int random_int(int a, int b);
 double random_normal(double mean, double sd);
 
 SEXP dt_generate_PROTECT(int n, SearchSpace *ss);
 void dt_set_na(SEXP s_dt, int row_i, int param_j);
 int dt_is_na(SEXP s_dt, int row_i, int param_j);
-void dt_set_random(SEXP s_dt, int row_i, int param_j, SearchSpace *ss);
-void dt_mutate_element(SEXP s_dt, int row_i, int param_j, SearchSpace *ss, double mut_sd);
+void dt_set_random(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss);
+void dt_set_random_row(SEXP s_dt, int row_i, const SearchSpace *ss);
+void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss, const Control* ctrl);
+void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace *ss);
+void check_and_fix_param_value(SEXP s_dt, int row_i, int param_j, int all_conds_satisfied, const SearchSpace *ss);
 
 void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
 int find_param_index(const char *param_name, const SearchSpace *ss);
+void extract_ctrl_info(SEXP s_ctrl, Control* ctrl);
 void toposort_params(SearchSpace *ss);
 void reorder_conds_by_toposort(SearchSpace *ss);
-int is_condition_satisfied(SEXP s_neighs_x, int i, Cond *cond, SearchSpace* ss);
+int is_condition_satisfied(SEXP s_neighs_x, int i, const Cond *cond, const SearchSpace* ss);
 
-void generate_neighs(int n_searches, int n_neighs, SEXP s_pop_x, SEXP s_neighs_x, SearchSpace* ss, double mut_sd);
-void copy_best_neighs_to_pop(int n_searches, int n_neighs, SEXP s_neighs_x, double* neighs_y,
-  SEXP s_pop_x, double *pop_y, SearchSpace* ss);
+
+void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, const SearchSpace* ss, const Control* ctrl);
+void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y,
+  SEXP s_pop_x, double *pop_y, const SearchSpace* ss, const Control* ctrl);
 SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x);
 
 #endif // LOCAL_SEARCH_H

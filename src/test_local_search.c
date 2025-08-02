@@ -52,7 +52,7 @@ SEXP c_test_random_normal() {
   return s_res;
 }
 
-SEXP c_test_extract_ss_info(SEXP s_ss) {
+SEXP c_test_extract_ss_info(SEXP s_ss, SEXP s_ctrl) {
   SEXP s_res = RC_named_list_create_emptynames_PROTECT(19);
 
   SearchSpace ss;
@@ -95,11 +95,13 @@ SEXP c_test_extract_ss_info(SEXP s_ss) {
   return s_res;
 }
 
-SEXP c_test_dt_utils(SEXP s_ss) {
+SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   SEXP s_res = RC_named_list_create_emptynames_PROTECT(16);
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
   GetRNGstate();
+  Control ctrl;
+  extract_ctrl_info(s_ctrl, &ctrl);
 
   // Test dt_generate
   SEXP s_dt = dt_generate_PROTECT(2, &ss); // dt_generate returns a PROTECTed SEXP
@@ -140,10 +142,10 @@ SEXP c_test_dt_utils(SEXP s_ss) {
   LOGICAL(s_col3)[1] = 1;
 
   // Test mutation
-  dt_mutate_element(s_dt, 1, 0, &ss, 0.1); // ParamDbl
-  dt_mutate_element(s_dt, 1, 1, &ss, 2.0); // ParamInt
-  dt_mutate_element(s_dt, 1, 2, &ss, 0.1); // ParamFct
-  dt_mutate_element(s_dt, 1, 3, &ss, 0.1); // ParamLgl
+  dt_mutate_element(s_dt, 1, 0, &ss, &ctrl); // ParamDbl
+  dt_mutate_element(s_dt, 1, 1, &ss, &ctrl); // ParamInt
+  dt_mutate_element(s_dt, 1, 2, &ss, &ctrl); // ParamFct
+  dt_mutate_element(s_dt, 1, 3, &ss, &ctrl); // ParamLgl
 
   // Check that values were changed but still within bounds
   double dbl_val = REAL(s_col0)[1];
@@ -205,39 +207,45 @@ SEXP c_test_is_condition_satisfied(SEXP s_dt_row, SEXP s_ss, SEXP s_cond_idx, SE
   return s_res;
 }
 
-SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_pop_x, SEXP s_n_neighs, SEXP s_mut_sd) {
+SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     SearchSpace ss;
     extract_ss_info_PROTECT(s_ss, &ss);
     toposort_params(&ss);
     reorder_conds_by_toposort(&ss);
+    Control ctrl;
+    extract_ctrl_info(s_ctrl, &ctrl);
+    
 
     int n_searches = RC_dt_nrows(s_pop_x);
-    int n_neighs = asInteger(s_n_neighs);
-    double mut_sd = asReal(s_mut_sd);
+    // there might be some bogus setting in ctrl.n_searches, so we overwrite it
+    ctrl.n_searches = n_searches;
+    DEBUG_PRINT("n_searches: %d, n_neighs: %d\n", n_searches, ctrl.n_neighs);
 
-    SEXP s_neighs_x = dt_generate_PROTECT(n_searches * n_neighs, &ss);
+    SEXP s_neighs_x = dt_generate_PROTECT(n_searches * ctrl.n_neighs, &ss);
     
     GetRNGstate();
-    generate_neighs(n_searches, n_neighs, s_pop_x, s_neighs_x, &ss, mut_sd);
+    generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
     PutRNGstate();
 
     UNPROTECT(1 + ss.n_conds); // s_neighs_x and ss.conds
     return s_neighs_x;
 }
 
-SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_pop_x, SEXP s_pop_y, SEXP s_neighs_x, SEXP s_neighs_y, SEXP s_n_searches, SEXP s_n_neighs) {
+SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_pop_y, SEXP s_neighs_x, SEXP s_neighs_y) {
     SearchSpace ss;
     extract_ss_info_PROTECT(s_ss, &ss);
-
-    int n_searches = asInteger(s_n_searches);
-    int n_neighs = asInteger(s_n_neighs);
+    Control ctrl;
+    extract_ctrl_info(s_ctrl, &ctrl);
 
     SEXP s_pop_x_copy = PROTECT(duplicate(s_pop_x));
     SEXP s_pop_y_copy = PROTECT(duplicate(s_pop_y));
     double *pop_y_copy = REAL(s_pop_y_copy);
     double *neighs_y = REAL(s_neighs_y);
 
-    copy_best_neighs_to_pop(n_searches, n_neighs, s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, &ss);
+    // there might be some bogus setting in ctrl.n_searches, so we overwrite it
+    ctrl.n_searches = RC_dt_nrows(s_pop_x);
+
+    copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, &ss, &ctrl);
 
     SEXP s_res = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(s_res, 0, s_pop_x_copy);
