@@ -14,25 +14,28 @@ local_search_control(
 )
 }
 \arguments{
-\item{n_searches}{\link{integer(1)}
+\item{minimize}{(\code{logical(1)})\cr
+Whether to minimize the objective.}
+
+\item{n_searches}{(\code{integer(1)})\cr
 Number of local searches.}
 
-\item{n_steps}{\link{integer(1)}
+\item{n_steps}{(\code{integer(1)})\cr
 Number of steps per local search.}
 
-\item{n_neighs}{\link{integer(1)}
+\item{n_neighs}{(\code{integer(1)})\cr
 Number of neighbors per local search.}
 
-\item{mut_sd}{\link{numeric(1)}
+\item{mut_sd}{(\code{numeric(1)})\cr
 Standard deviation of the mutation.}
 
-\item{stagnate_max}{\link{integer(1)}
-Maximum number of no-improvement steps for a local search before it is randomly restarted}
+\item{stagnate_max}{(\code{integer(1)})\cr
+Maximum number of no-improvement steps for a local search before it is randomly restarted.}
 }
 \value{
-\link{local_search_control}
+(\code{local_search_control})\cr
 List with control params as S3 object.
 }
 \description{
-Control parameters for local search optimizer
+Control parameters for local search optimizer, see \code{\link[=local_search]{local_search()}} for details.
 }
