@@ -45,11 +45,11 @@ by multiplying with "obj_mult" (which will be -1).
     * check docs of all exposed R functions
     * allow to set initial points in LS R function
     * if we stagnate for a single LS, we could restart it?
-    * properly document the function interface. maybe we need to have an "internal" check one?
+    * properly document the objective function interface. maybe we need to have an "internal" check once for input and output?
 */
 
 // Debug printer system - can be switched on/off
-#define DEBUG_ENABLED 1  // Set to 1 to enable debug output
+#define DEBUG_ENABLED 0  // Set to 1 to enable debug output
 
 #if DEBUG_ENABLED
 #define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)

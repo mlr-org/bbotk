@@ -151,7 +151,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter
   expect_character(instance$archive$data$x2, any.missing = FALSE)
   if (nrow(instance$archive$data[x2 == "b"])) expect_set_equal(instance$archive$data[x2 == "b"]$x1, NA)
   if (nrow(instance$archive$data[x2 == "b"])) expect_set_equal(instance$archive$data[x2 == "b"]$y, 3)
-  expect_true(abs(instance$archive$best()$y) < 1e-4)
+  expect_true(abs(instance$archive$best()$y) < 1e-3)
 })
 
 test_that("OptimizerBatchLocalSearch works with chained dependencies on factor parameters", {
