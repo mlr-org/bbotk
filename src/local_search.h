@@ -5,47 +5,17 @@
 #include <Rinternals.h>
 
 
-/*
-Local Search
-
-Implements a local search very similar to what is used in SMAC for acquisition function optimization
-of mixed type search spaces with hierarchical dependencies.
-https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py
-
-We run "n_searches" in parallel. Each search runs "n_steps" iterations.
-For each search in every iteration we generate "n_neighs" neighbors.
-A neighbor is the current point, but with exactly one parameter mutated.
-
--------------------------------------------------------
-
-Mutation works like this:
-For num params: we scale to 0,1, add Gaussian noise with sd "mut_sd", and scale back.
-We then clip to the lower and upper bounds.
-For int params: We do the same as for numeric parameters, but round at the end.
-For factor params: We sample a new level from the unused levels of the parameter.
-For logical params: We flip the bit.
-
--------------------------------------------------------
-
-After the neighbors are generated, we evaluate them.
-We go to the best neighbor, or stay at the current point if the best neighbor is worse.
-
--------------------------------------------------------
-
-The function always minimizes. If the objective is to be maximized, we handle it
-by multiplying with "obj_mult" (which will be -1).
-
-*/
+// see docs in R/local_search.R for how the LS operates as an algorithm
 
 /*
 //FIXME:
     * sd=0.1 might not work for ints? 
-    * we need to implement the stopping crit from python
     * read the python code and compare
     * check docs of all exposed R functions
     * allow to set initial points in LS R function
-    * if we stagnate for a single LS, we could restart it?
     * properly document the objective function interface. maybe we need to have an "internal" check once for input and output?
+    * check that the local search also work with trafos where we convert to complex objects
+    * unit test for LS init points
 */
 
 // Debug printer system - can be switched on/off
