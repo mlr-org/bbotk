@@ -112,6 +112,7 @@ void dt_set_random(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss);
 void dt_set_random_row(SEXP s_dt, int row_i, const SearchSpace *ss);
 void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss, const Control* ctrl);
 void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace *ss);
+void restart_stagnated_searches(SEXP s_pop_x, int *stagnate_count, const SearchSpace* ss, const Control* ctrl);
 void check_and_fix_param_value(SEXP s_dt, int row_i, int param_j, int all_conds_satisfied, const SearchSpace *ss);
 
 void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);

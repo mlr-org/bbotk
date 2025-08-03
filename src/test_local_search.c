@@ -285,3 +285,37 @@ SEXP c_test_dt_repair_row(SEXP s_ss, SEXP s_dt) {
     UNPROTECT(1 + ss.n_conds); // s_dt_copy, ss.conds
     return s_dt_copy;
 }
+
+SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_stagnate_count) {
+    SearchSpace ss;
+    extract_ss_info_PROTECT(s_ss, &ss);
+    toposort_params(&ss);
+    reorder_conds_by_toposort(&ss);
+    Control ctrl;
+    extract_ctrl_info(s_ctrl, &ctrl);
+    
+    // there might be some bogus setting in ctrl.n_searches, so we overwrite it
+    ctrl.n_searches = RC_dt_nrows(s_pop_x);
+
+    SEXP s_pop_x_copy = PROTECT(duplicate(s_pop_x));
+    int *stagnate_count = INTEGER(s_stagnate_count);
+
+    GetRNGstate();
+    restart_stagnated_searches(s_pop_x_copy, stagnate_count, &ss, &ctrl);
+    PutRNGstate();
+
+    UNPROTECT(1 + ss.n_conds); // s_pop_x_copy, ss.conds
+    return s_pop_x_copy;
+}
+
+SEXP c_test_dt_set_random_row(SEXP s_ss, SEXP s_dt) {
+    SearchSpace ss;
+    extract_ss_info_PROTECT(s_ss, &ss);
+    // We make a copy of the DT to avoid modifying the original R object
+    SEXP s_dt_copy = PROTECT(duplicate(s_dt));
+    GetRNGstate();
+    dt_set_random_row(s_dt_copy, 0, &ss); // test on the first row
+    PutRNGstate();
+    UNPROTECT(1 + ss.n_conds); // s_dt_copy, ss.conds
+    return s_dt_copy;
+}
