@@ -241,11 +241,12 @@ SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s
     SEXP s_pop_y_copy = PROTECT(duplicate(s_pop_y));
     double *pop_y_copy = REAL(s_pop_y_copy);
     double *neighs_y = REAL(s_neighs_y);
+    int *stagnate_count = (int*) R_alloc(ctrl.n_searches, sizeof(int));
 
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
 
-    copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, &ss, &ctrl);
+    copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, stagnate_count, &ss, &ctrl);
 
     SEXP s_res = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(s_res, 0, s_pop_x_copy);
@@ -258,5 +259,15 @@ SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s
     UNPROTECT(1); // s_names
 
     UNPROTECT(3 + ss.n_conds); // s_pop_x_copy, s_pop_y_copy, s_res, and ss.conds
+    return s_res;
+}
+
+SEXP c_test_get_best_pop_element(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_pop_y) {
+    SearchSpace ss; extract_ss_info_PROTECT(s_ss, &ss);
+    Control ctrl; extract_ctrl_info(s_ctrl, &ctrl);
+    // there might be some bogus setting in ctrl.n_searches, so we overwrite it
+    ctrl.n_searches = RC_dt_nrows(s_pop_x);
+    SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, REAL(s_pop_y), &ss, &ctrl);  
+    UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
     return s_res;
 }

@@ -45,6 +45,7 @@ by multiplying with "obj_mult" (which will be -1).
     * check docs of all exposed R functions
     * allow to set initial points in LS R function
     * if we stagnate for a single LS, we could restart it?
+    * properly document the function interface. maybe we need to have an "internal" check one?
 */
 
 // Debug printer system - can be switched on/off
@@ -97,7 +98,7 @@ typedef struct {
   int n_steps;
   int n_neighs;
   double mut_sd;
-  int stagnation_max;
+  int stagnate_max;
 } Control;
 
 
@@ -122,8 +123,9 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, const Cond *cond, const Searc
 
 
 void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, const SearchSpace* ss, const Control* ctrl);
-void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y,
-  SEXP s_pop_x, double *pop_y, const SearchSpace* ss, const Control* ctrl);
+void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y, 
+  int* stagnate_count, const SearchSpace* ss, const Control* ctrl);
 SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x);
+SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const SearchSpace* ss, const Control* ctrl);
 
 #endif // LOCAL_SEARCH_H

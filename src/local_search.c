@@ -248,7 +248,6 @@ void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace* ss,
 
 // Set a single element of a config (in a DT) to a random value
 void dt_set_random(SEXP s_dt, int row_i, int param_j, const SearchSpace* ss) {
-  assert(dt_is_na(s_dt, row_i, param_j));
   int param_class = ss->param_classes[param_j];
   SEXP s_col = VECTOR_ELT(s_dt, param_j);
   if (param_class == 0) { // ParamDbl
@@ -406,6 +405,7 @@ void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
     ctrl->n_steps = asInteger(RC_get_list_el_by_name(s_ctrl, "n_steps"));
     ctrl->n_neighs = asInteger(RC_get_list_el_by_name(s_ctrl, "n_neighs"));
     ctrl->mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
+    ctrl->stagnate_max = asInteger(RC_get_list_el_by_name(s_ctrl, "stagnate_max"));
     assert(ctrl->n_searches > 0);
     assert(ctrl->n_steps > 0);
     assert(ctrl->n_neighs > 0);
@@ -576,7 +576,8 @@ void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, const SearchSpace* ss, const
 
 // Copy the best neighbor from each block into the population
 void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, 
-  SEXP s_pop_x, double *pop_y, const SearchSpace* ss, const Control* ctrl) {
+  SEXP s_pop_x, double *pop_y, int* stagnate_count, 
+  const SearchSpace* ss, const Control* ctrl) {
 
     DEBUG_PRINT("copy_best_neighs_to_pop\n");
 
@@ -597,6 +598,7 @@ void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y,
 
         if (best_i == -1) {
             DEBUG_PRINT("No better neighbor found, keep current point: %d\n", pop_i);
+            stagnate_count[pop_i]++;
             continue;
         } else {
             // Copy the best neighbor to the population
@@ -615,6 +617,7 @@ void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y,
                 } else { // ParamLgl
                     LOGICAL(s_pop_col)[pop_i] = LOGICAL(s_neigh_col)[best_i];
                 }
+                stagnate_count[pop_i] = 0;
             }
             pop_y[pop_i] = best_y;
         }
@@ -676,16 +679,16 @@ SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const Searc
     return s_res;
 }
 
-// void restart_stagnated_searches(int n_searches, SEXP s_pop_x, int *stagnate_count_per_search, SearchSpace* ss) {
-//     for (int i = 0; i < n_searches; i++) {
-//       if (stagnate_count_per_search[i] == stagnation_max) {
-//         // restart the search
-//         stagnate_count_per_search[i] = 0;
-//         // set the point to a random value
-//         dt_set_random(s_pop_x, i, ss);
-//       }
-//     }
-// }
+void restart_stagnated_searches(SEXP s_pop_x, int *stagnate_count, const SearchSpace* ss, const Control* ctrl) {
+  for (int i = 0; i < ctrl->n_searches; i++) {
+    if (stagnate_count[i] >= ctrl->stagnate_max) { // restart if stagnated for too long
+      DEBUG_PRINT("restarted search %d, stagnate_count: %d, stagnate_max: %d\n", i, stagnate_count[i], ctrl->stagnate_max);
+      dt_set_random_row(s_pop_x, i, ss);
+      dt_repair_row(s_pop_x, i, ss);
+      stagnate_count[i] = 0;
+    }
+  }
+}
 
 void dt_set_random_row(SEXP s_dt, int row_i, const SearchSpace* ss) {
   for (int j = 0; j < ss->n_params; j++) {
@@ -764,7 +767,8 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     // y-values for pop. we wil later write into this array
     double *pop_y = (double*) R_alloc(ctrl.n_searches, sizeof(double));
     double *neighs_y = (double*) R_alloc(ctrl.n_searches*ctrl.n_neighs, sizeof(double));
-    // int *stagnate_count_per_search = (int*) R_alloc(n_searches, sizeof(int));
+    int *stagnate_count = (int*) R_alloc(ctrl.n_searches, sizeof(int));
+    memset(stagnate_count, 0, ctrl.n_searches * sizeof(int));
     int eval_ok;
     eval_ok = eval_obj(ctrl.n_searches, s_pop_x, s_obj, pop_y, &ctrl);
 
@@ -775,16 +779,14 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
             DEBUG_PRINT("step=%i\n", step);
             dt_print(s_pop_x, 10);
 
-            // restart stagnant searches
-            // restart_stagnated_searches(stagnate_count_per_search, n_searches);
-            // Generate neighbors for all current points in pre-allocated data.table
+            restart_stagnated_searches(s_pop_x, stagnate_count, &ss, &ctrl);
             generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
             // print_dt(s_neighs_x, 10);
             eval_ok = eval_obj(ctrl.n_searches*ctrl.n_neighs, s_neighs_x, s_obj, neighs_y, &ctrl);
 
             // copy if we have a valid result, otherwise we stop the loop
             if (eval_ok) {
-                copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x, pop_y, &ss, &ctrl);
+                copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x, pop_y, stagnate_count, &ss, &ctrl);
             } else {
                 break;
             }

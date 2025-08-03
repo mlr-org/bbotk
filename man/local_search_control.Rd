@@ -9,7 +9,8 @@ local_search_control(
   n_searches = 10L,
   n_steps = 5L,
   n_neighs = 10L,
-  mut_sd = 0.1
+  mut_sd = 0.1,
+  stagnate_max = 10
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ Number of neighbors per local search.}
 
 \item{mut_sd}{\link{numeric(1)}
 Standard deviation of the mutation.}
+
+\item{stagnate_max}{\link{integer(1)}
+Maximum number of no-improvement steps for a local search before it is randomly restarted}
 }
 \value{
 \link{local_search_control}

@@ -8,14 +8,20 @@
 #'   Number of neighbors per local search.
 #' @param mut_sd [numeric(1)]
 #'   Standard deviation of the mutation.
+#' @param stagnate_max [integer(1)]
+#'   Maximum number of no-improvement steps for a local search before it is randomly restarted
 #' @return [local_search_control]
 #'   List with control params as S3 object.
-local_search_control = function(minimize = TRUE, n_searches = 10L, n_steps = 5L, n_neighs = 10L, mut_sd = 0.1) {
+local_search_control = function(minimize = TRUE, n_searches = 10L, 
+  n_steps = 5L, n_neighs = 10L, mut_sd = 0.1, stagnate_max = 10) {
+
   assert_int(n_searches, lower = 1L)
   assert_int(n_steps, lower = 1L)
   assert_int(n_neighs, lower = 1L)
   assert_number(mut_sd, lower = 0)
-  res = list(n_searches = n_searches, n_steps = n_steps, n_neighs = n_neighs, mut_sd = mut_sd, minimize = minimize)
+  assert_int(stagnate_max, lower = 1L)
+  res = list(n_searches = n_searches, n_steps = n_steps, n_neighs = n_neighs, mut_sd = mut_sd,
+    minimize = minimize, stagnate_max = stagnate_max)
   set_class(res, "local_search_control")
 }
 

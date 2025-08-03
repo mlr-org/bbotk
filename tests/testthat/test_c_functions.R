@@ -343,3 +343,31 @@ test_that("c_test_copy_best_neighs_to_pop", {
   expect_equal(res$pop_x$x, pop_x$x)
   expect_equal(res$pop_y, pop_y)
 })
+
+test_that("c_test_get_best_pop_element", {
+  # test minimization
+  ss = paradox::ps(
+    x1 = paradox::p_dbl(0, 1)
+  )
+  ctrl = local_search_control(minimize = TRUE)
+  pop_x = data.table::data.table(x1 = c(0.1, 0.5, 0.9))
+  pop_y = c(10, 5, 20) 
+  best = .Call("c_test_get_best_pop_element", ss, ctrl, pop_x, pop_y, PACKAGE = "bbotk")
+  expect_equal(best$y, 5)
+  expect_equal(best$x, as.list(pop_x[2, ]))
+
+  # test maximizatio; internally we assume that the evaln multiplies with -1
+  ctrl$minimize = FALSE
+  pop_y = pop_y * -1
+  best = .Call("c_test_get_best_pop_element", ss, ctrl, pop_x, pop_y, PACKAGE = "bbotk")
+  expect_equal(best$y, 20)
+  expect_equal(best$x, as.list(pop_x[3, ]))
+
+  # test with NA value in best row
+  pop_x[3, x1 := NA_real_]
+  best = .Call("c_test_get_best_pop_element", ss, ctrl, pop_x, pop_y, PACKAGE = "bbotk")
+  expect_equal(best$y, 20)
+  expect_equal(best$x, as.list(pop_x[3, ]))
+
+})
+
