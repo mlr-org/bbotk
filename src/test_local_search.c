@@ -271,3 +271,17 @@ SEXP c_test_get_best_pop_element(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_po
     UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
     return s_res;
 }
+
+SEXP c_test_dt_repair_row(SEXP s_ss, SEXP s_dt) {
+    SearchSpace ss;
+    extract_ss_info_PROTECT(s_ss, &ss);
+    toposort_params(&ss);
+    reorder_conds_by_toposort(&ss);
+    // We make a copy of the DT to avoid modifying the original R object
+    SEXP s_dt_copy = PROTECT(duplicate(s_dt));
+    GetRNGstate();
+    dt_repair_row(s_dt_copy, 0, &ss);
+    PutRNGstate();
+    UNPROTECT(1 + ss.n_conds); // s_dt_copy, ss.conds
+    return s_dt_copy;
+}

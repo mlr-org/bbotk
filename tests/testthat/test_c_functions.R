@@ -371,3 +371,64 @@ test_that("c_test_get_best_pop_element", {
 
 })
 
+
+test_that("c_test_dt_repair_row", {
+  # Simple dependency: B depends on A.
+  ss = paradox::ps(
+    A = paradox::p_fct(c("a1", "a2")),
+    B = paradox::p_dbl(0, 1)
+  )
+  ss$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
+
+  # Case 1: Condition not met (A="a2"), B has a value. B should become NA.
+  dt1 = data.table::data.table(A = "a2", B = 0.5)
+  dt2 = .Call("c_test_dt_repair_row", ss, dt1, PACKAGE = "bbotk")
+  expect_equal(dt2, data.table::data.table(A = "a2", B = NA_real_))
+
+  # Case 2: Condition met (A="a1"), but B is NA. B should get a valid (non-NA) value.
+  dt1 = data.table::data.table(A = "a1", B = NA_real_)
+  dt2 = .Call("c_test_dt_repair_row", ss, dt1, PACKAGE = "bbotk")
+  expect_equal(dt2$A, "a1")
+  expect_true(is.numeric(dt2$B) && !is.na(dt2$B))
+  expect_true(dt2$B >= 0 && dt2$B <= 1)
+
+  # Chained dependencies (C -> B -> A)
+  ss = paradox::ps(
+    A = paradox::p_dbl(0, 1),
+    B = paradox::p_fct(c("b1", "b2")),
+    C = paradox::p_fct(c("c1", "c2"))
+  )
+  ss$add_dep("A", on = "B", cond = paradox::CondEqual$new("b1"))
+  ss$add_dep("B", on = "C", cond = paradox::CondEqual$new("c1"))
+
+  # Case 3: Deactivating C should deactivate B and A.
+  dt1 = data.table::data.table(A = 0.5, B = "b1", C = "c2")
+  dt2 = .Call("c_test_dt_repair_row", ss, dt1, PACKAGE = "bbotk")
+  expect_equal(dt2$C, "c2")
+  expect_true(is.na(dt2$B))
+  expect_true(is.na(dt2$A))
+
+  # Multiple dependencies (C depends on A and B)
+  ss = paradox::ps(
+    A = paradox::p_fct(c("a", "b")),
+    B = paradox::p_fct(c("c", "d")),
+    C = paradox::p_dbl(0, 1)
+  )
+  ss$add_dep("C", on = "A", cond = paradox::CondEqual$new("a"))
+  ss$add_dep("C", on = "B", cond = paradox::CondEqual$new("c"))
+
+  # Case 4.1: Only one condition met. C should be NA.
+  dt1 = data.table::data.table(A = "a", B = "d", C = 0.5)
+  dt2 = .Call("c_test_dt_repair_row", ss, dt1, PACKAGE = "bbotk")
+  expect_equal(dt2$A, "a")
+  expect_equal(dt2$B, "d")
+  expect_true(is.na(dt2$C))
+
+  # Case 4.2: Both conditions met, C is NA. C should get a value.
+  dt1 = data.table::data.table(A = "a", B = "c", C = NA_real_)
+  dt2 = .Call("c_test_dt_repair_row", ss, dt1, PACKAGE = "bbotk")
+  expect_equal(dt2$A, "a")
+  expect_equal(dt2$B, "c")
+  expect_true(!is.na(dt2$C))
+})
+

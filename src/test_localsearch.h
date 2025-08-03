@@ -11,3 +11,4 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x);
 SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_pop_y, 
   SEXP s_neighs_x, SEXP s_neighs_y);
 SEXP c_test_get_best_pop_element(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_pop_y);
+SEXP c_test_dt_repair_row(SEXP s_ss, SEXP s_dt);
