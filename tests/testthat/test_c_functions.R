@@ -430,5 +430,48 @@ test_that("c_test_dt_repair_row", {
   expect_equal(dt2$A, "a")
   expect_equal(dt2$B, "c")
   expect_true(!is.na(dt2$C))
+  expect_true(dt2$C >= 0 && dt2$C <= 1)
+})
+
+test_that("c_test_restart_stagnated_searches", {
+  set.seed(1)
+  ss = paradox::ps(
+    x = paradox::p_dbl(0, 1)
+  )
+  ctrl = local_search_control(stagnate_max = 2)
+  pop_x = data.table::data.table(x = c(0.1, 0.5, 0.9))
+  stagnate_count = c(1L, 2L, 0L) # 2nd search should be restarted
+  restarted_pop = .Call("c_test_restart_stagnated_searches", ss, ctrl, pop_x, stagnate_count, PACKAGE = "bbotk")
+  # The first and third rows should be unchanged
+  expect_equal(restarted_pop[1, ], pop_x[1, ])
+  expect_equal(restarted_pop[3, ], pop_x[3, ])
+  # The second row should be different (restarted)
+  expect_true(restarted_pop[2, ]$x != pop_x[2, ]$x)
+  # The new value should be within bounds
+  expect_true(restarted_pop[2, ]$x >= 0 && restarted_pop[2, ]$x <= 1)
+})
+
+test_that("c_test_dt_set_random_row", {
+  set.seed(1)
+  ss = paradox::ps(
+    x1 = paradox::p_dbl(0, 1),
+    x2 = paradox::p_int(0, 10),
+    x3 = paradox::p_fct(c("a", "b", "c")),
+    x4 = paradox::p_lgl()
+  )
+   # NB: the condition should not matter for dt_set_random_row
+  ss$add_dep("x1", on = "x3", cond = paradox::CondEqual$new("a"))
+  # A DT with one row of "wrong" values that should be overwritten
+  dt = data.table::data.table(x1 = 2, x2 = 11L, x3 = "d", x4 = NA)
+  
+  random_dt = .Call("c_test_dt_set_random_row", ss, dt, PACKAGE = "bbotk")
+
+  # Check that values are within bounds
+  expect_true(random_dt$x1 >= 0 && random_dt$x1 <= 1)
+  expect_true(random_dt$x2 >= 0 && random_dt$x2 <= 10)
+  expect_true(is.integer(random_dt$x2))
+  expect_true(random_dt$x3 %in% c("a", "b", "c"))
+  expect_true(is.logical(random_dt$x4))
+  expect_true(!is.na(random_dt$x4))
 })
 
