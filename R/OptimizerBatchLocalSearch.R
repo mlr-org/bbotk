@@ -5,6 +5,7 @@
 #'
 #' @description
 #' Implements a simple Local Search, see [local_search()] for details.
+#' Currently, setting initial points is not supported.
 #'
 #' @templateVar id local_search
 #' @template section_dictionary_optimizers

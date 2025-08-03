@@ -19,7 +19,7 @@ local_search_control = function(minimize = TRUE, n_searches = 10L,
   n_steps = 5L, n_neighs = 10L, mut_sd = 0.1, stagnate_max = 10) {
 
   assert_int(n_searches, lower = 1L)
-  assert_int(n_steps, lower = 1L)
+  assert_int(n_steps, lower = 0L)
   assert_int(n_neighs, lower = 1L)
   assert_number(mut_sd, lower = 0)
   assert_int(stagnate_max, lower = 1L)

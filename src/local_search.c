@@ -407,7 +407,7 @@ void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
     ctrl->mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
     ctrl->stagnate_max = asInteger(RC_get_list_el_by_name(s_ctrl, "stagnate_max"));
     assert(ctrl->n_searches > 0);
-    assert(ctrl->n_steps > 0);
+    assert(ctrl->n_steps >= 0);
     assert(ctrl->n_neighs > 0);
     assert(ctrl->mut_sd > 0);
 } 

@@ -6,6 +6,7 @@
 \title{Optimization via Local Search}
 \description{
 Implements a simple Local Search, see \code{\link[=local_search]{local_search()}} for details.
+Currently, setting initial points is not supported.
 }
 \section{Dictionary}{
 
