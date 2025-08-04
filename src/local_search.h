@@ -11,10 +11,7 @@
 //FIXME:
     * sd=0.1 might not work for ints? 
     * read the python code and compare
-    * check docs of all exposed R functions
-    * properly document the objective function interface. maybe we need to have an "internal" check once for input and output?
-    * check that the local search also work with trafos where we convert to complex objects
-    * unit test for LS init points
+    * check docs of all exposed R functions --> prwtty much done, ask marc
 */
 
 // Debug printer system - can be switched on/off
