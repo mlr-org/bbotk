@@ -14,6 +14,8 @@
 #'   Factor by which to adapt the mutation sigma.
 #' @param mut_sigma_max (`numeric(1)`)\cr
 #'   Maximum mutation sigma.
+#' @param lahc_buf_size (`integer(1)`)\cr
+#'   Size of the LAHC buffer.
 #' @param stagnate_max (`integer(1)`)\cr
 #'   Maximum number of no-improvement steps for a local search before it is randomly restarted.
 #' @return (`local_search_control`)\cr
@@ -21,7 +23,7 @@
 #' 
 local_search_control = function(minimize = TRUE, n_searches = 10L, n_steps = 5L, n_neighs = 10L, 
   mut_sigma_init = 0.1, mut_sigma_factor = 1.2, mut_sigma_max = 0.5, 
-  stagnate_max = 10) 
+  lahc_buf_size = 10, stagnate_max = 10) 
 {
   assert_int(n_searches, lower = 1L)
   assert_int(n_steps, lower = 0L)
@@ -29,10 +31,11 @@ local_search_control = function(minimize = TRUE, n_searches = 10L, n_steps = 5L,
   assert_number(mut_sigma_init, lower = 0)
   assert_number(mut_sigma_factor, lower = 1)
   assert_number(mut_sigma_max, lower = 0)
+  assert_int(lahc_buf_size, lower = 1L)
   assert_int(stagnate_max, lower = 1L)
   res = list(minimize = minimize, n_searches = n_searches, n_steps = n_steps, n_neighs = n_neighs, 
     mut_sigma_init = mut_sigma_init, mut_sigma_factor = mut_sigma_factor, mut_sigma_max = mut_sigma_max, 
-    stagnate_max = stagnate_max)
+    lahc_buf_size = lahc_buf_size, stagnate_max = stagnate_max)
   set_class(res, "local_search_control")
 }
 

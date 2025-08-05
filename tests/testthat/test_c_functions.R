@@ -341,8 +341,8 @@ test_that("c_test_copy_best_neighs_to_pop", {
   # No improvement
   neighs_y = c(11, 12, 13, 21, 22, 23)
   res = .Call("c_test_copy_best_neighs_to_pop", ss, ctrl, pop_x, pop_y, neighs_x, neighs_y, PACKAGE = "bbotk")
-  expect_equal(res$pop_x$x, pop_x$x)
-  expect_equal(res$pop_y, pop_y)
+  expect_equal(res$pop_x$x, c(0.1, 0.9))
+  expect_equal(res$pop_y, c(11, 21))
 })
 
 test_that("c_test_get_best_pop_element", {

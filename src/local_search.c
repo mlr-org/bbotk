@@ -411,6 +411,7 @@ void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
     ctrl->mut_sigma_init = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sigma_init"));
     ctrl->mut_sigma_factor = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sigma_factor"));
     ctrl->mut_sigma_max = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sigma_max"));
+    ctrl->lahc_buf_size = asInteger(RC_get_list_el_by_name(s_ctrl, "lahc_buf_size"));
     ctrl->stagnate_max = asInteger(RC_get_list_el_by_name(s_ctrl, "stagnate_max"));
     assert(ctrl->n_searches > 0);
     assert(ctrl->n_steps >= 0);
@@ -418,6 +419,8 @@ void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
     assert(ctrl->mut_sigma_init >= 0);
     assert(ctrl->mut_sigma_factor > 1);
     assert(ctrl->mut_sigma_max > 0);
+    assert(ctrl->lahc_buf_size > 0);
+    assert(ctrl->stagnate_max >= 0);
 } 
 
 
@@ -606,61 +609,65 @@ void adapt_mut_sigmas(LS_State* ls_state, const SearchSpace* ss, const Control* 
   }
 }
 
-// Copy the best neighbor from each block into the population
-void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y, 
-  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) {
-
-    DEBUG_PRINT("copy_best_neighs_to_pop\n");
-
-    for (int search_i = 0; search_i < ctrl->n_searches; search_i++) {
-        // Find the best neighbor in this block
-        int best_row_idx = -1;
-        double best_y = pop_y[search_i];
-
-        for (int neigh_i = 0; neigh_i < ctrl->n_neighs; neigh_i++) {
-            DEBUG_PRINT("Search %d, Neighbor %d\n", search_i, neigh_i);
-            int row_idx = search_i * ctrl->n_neighs + neigh_i;
-            double current_y = neighs_y[row_idx];
-
-            if (current_y < best_y) {
-                best_y = current_y;
-                best_row_idx = row_idx;
-            }
-        }
-
-        if (best_row_idx == -1) {
-            DEBUG_PRINT("No better neighbor found, keep current point: %d\n", search_i);
-            ls_state->stagnate_count[search_i]++;
-            ls_state->selected_neigh_idx[search_i] = -1;
-            continue;
-        } else {
-            // Copy the best neighbor to the population
-            DEBUG_PRINT("Best neighbor for search %d is at index %d with value %f\n", search_i, best_row_idx, best_y);
-            for (int j = 0; j < ss->n_params; j++) {
-                DEBUG_PRINT("Copying param %d; best_row_idx: %d\n", j, best_row_idx);
-                int param_class = ss->param_classes[j];
-                SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
-                SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
-
-                if (param_class == 0) { // ParamDbl
-                    DEBUG_PRINT("Copying double value %f\n", REAL(s_neigh_col)[best_row_idx]);
-                    REAL(s_pop_col)[search_i] = REAL(s_neigh_col)[best_row_idx];
-                } else if (param_class == 1) { // ParamInt
-                    INTEGER(s_pop_col)[search_i] = INTEGER(s_neigh_col)[best_row_idx];
-                } else if (param_class == 2) { // ParamFct
-                    SET_STRING_ELT(s_pop_col, search_i, STRING_ELT(s_neigh_col, best_row_idx));
-                } else { // ParamLgl
-                    LOGICAL(s_pop_col)[search_i] = LOGICAL(s_neigh_col)[best_row_idx];
-                }
-                DEBUG_PRINT("Copied param %d to pop\n", j);
-                ls_state->stagnate_count[search_i] = 0;
-                ls_state->selected_neigh_idx[search_i] = best_row_idx;
-            }
-            pop_y[search_i] = best_y;
-        }
+void find_best_neigh_per_search(SEXP s_neighs_x, double* neighs_y, LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) {
+  DEBUG_PRINT("find_best_neigh_per_search\n");
+  for (int search_i = 0; search_i < ctrl->n_searches; search_i++) {
+    // init with first neigh, then search from second
+    int best_row_idx = search_i * ctrl->n_neighs;
+    double best_y = neighs_y[best_row_idx];
+    for (int neigh_i = 1; neigh_i < ctrl->n_neighs; neigh_i++) {
+      DEBUG_PRINT("Search %d, Neighbor %d\n", search_i, neigh_i);
+      int row_idx = search_i * ctrl->n_neighs + neigh_i;
+      double current_y = neighs_y[row_idx];
+      if (current_y < best_y) {
+          best_y = current_y;
+          best_row_idx = row_idx;
+      }
     }
+    ls_state->selected_neigh_idx[search_i] = best_row_idx;
+  }
+}
 
-    DEBUG_PRINT("copy_best_neighs_to_pop done\n");
+
+// Copy the best neighbor from each block into the population
+void copy_selected_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y, 
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) 
+{
+  DEBUG_PRINT("copy_selected_neighs_to_pop\n");
+  for (int search_i = 0; search_i < ctrl->n_searches; search_i++) {
+    int best_row_idx = ls_state->selected_neigh_idx[search_i];
+    if (best_row_idx == -1) {
+      DEBUG_PRINT("No better neighbor found, keep current point: %d\n", search_i);
+    } else {
+      // Copy the best neighbor to the population
+      DEBUG_PRINT("Best neighbor for search %d is at index %d with value %f\n", search_i, best_row_idx, neighs_y[best_row_idx]);
+      for (int j = 0; j < ss->n_params; j++) {
+        DEBUG_PRINT("Copying param %d; best_row_idx: %d\n", j, best_row_idx);
+        int param_class = ss->param_classes[j];
+        SEXP s_neigh_col = VECTOR_ELT(s_neighs_x, j);
+        SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
+
+        if (param_class == 0) { // ParamDbl
+            DEBUG_PRINT("Copying double value %f\n", REAL(s_neigh_col)[best_row_idx]);
+            REAL(s_pop_col)[search_i] = REAL(s_neigh_col)[best_row_idx];
+        } else if (param_class == 1) { // ParamInt
+            INTEGER(s_pop_col)[search_i] = INTEGER(s_neigh_col)[best_row_idx];
+        } else if (param_class == 2) { // ParamFct
+            SET_STRING_ELT(s_pop_col, search_i, STRING_ELT(s_neigh_col, best_row_idx));
+        } else { // ParamLgl
+            LOGICAL(s_pop_col)[search_i] = LOGICAL(s_neigh_col)[best_row_idx];
+        }
+        if (neighs_y[best_row_idx] < pop_y[search_i]) {
+          ls_state->stagnate_count[search_i] = 0;
+        } else {
+          ls_state->stagnate_count[search_i]++;
+        }
+        pop_y[search_i] = neighs_y[best_row_idx];
+        DEBUG_PRINT("Copied param %d to pop\n", j);
+      }
+    }
+  }
+  DEBUG_PRINT("copy_selected_neighs_to_pop done\n");
 }
 
 
@@ -723,6 +730,7 @@ void restart_stagnated_searches(SEXP s_pop_x, const LS_State* ls_state, const Se
       DEBUG_PRINT("restarted search %d, stagnate_count: %d, stagnate_max: %d\n", i, ls_state->stagnate_count[i], ctrl->stagnate_max);
       dt_set_random_row(s_pop_x, i, ss);
       dt_repair_row(s_pop_x, i, ss);
+      ls_state->ls_step[i] = 0;
       ls_state->stagnate_count[i] = 0;
     }
   }
@@ -783,15 +791,36 @@ void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace* ss) {
 }
 
 void init_ls_state(LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) {
+  ls_state->ls_step = (int*) R_alloc(ctrl->n_searches, sizeof(int));
+  memset(ls_state->ls_step, 0, ctrl->n_searches * sizeof(int));
   ls_state->mut_param_indices = (int*) R_alloc(ctrl->n_searches * ctrl->n_neighs, sizeof(int));
   ls_state->selected_neigh_idx = (int*) R_alloc(ctrl->n_searches, sizeof(int));
   ls_state->mut_sigmas = (double*) R_alloc(ctrl->n_searches * ss->n_params, sizeof(double));
   for (int i = 0; i < ctrl->n_searches * ss->n_params; i++) {
     ls_state->mut_sigmas[i] = ctrl->mut_sigma_init;
   }
+  ls_state->lahc_buffer = (double*) R_alloc(ctrl->n_searches * ctrl->lahc_buf_size, sizeof(double));
   ls_state->stagnate_count = (int *) R_alloc(ctrl->n_searches, sizeof(int));
   memset(ls_state->stagnate_count, 0, ctrl->n_searches * sizeof(int));
 }
+
+void lahc_accept(SEXP s_pop_x, double *pop_y, SEXP s_neighs_x, double *neighs_y, 
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) 
+{
+  for (int i = 0; i < ctrl->n_searches; i++) {
+    int best_row_idx = ls_state->selected_neigh_idx[i];
+    double y_current = pop_y[i];
+    double y_neigh = neighs_y[best_row_idx];
+    int buffer_idx = i * ctrl->lahc_buf_size + ls_state->ls_step[i] % ctrl->lahc_buf_size;
+    // check if we accept and if we dont we store that
+    if (y_neigh > y_current && y_neigh > ls_state->lahc_buffer[buffer_idx]) {
+      ls_state->selected_neigh_idx[i] = -1;
+    }
+    // set pre-move value
+    ls_state->lahc_buffer[buffer_idx]  = y_current;
+  }
+}
+
 
 // R wrapper function - complete local search implementation
 SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
@@ -821,6 +850,11 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
 
     // we failed the terminator in the initial points, skip main loop
     if (eval_ok) {
+        for (int search_i = 0; search_i < ctrl.n_searches; search_i++) {
+          for (int k = 0; k < ctrl.lahc_buf_size; k++) {
+            ls_state.lahc_buffer[search_i * ctrl.lahc_buf_size + k] = pop_y[search_i];
+          }
+        }
         // Main local search loop
         for (int step = 0; step < ctrl.n_steps;  step++) {
             DEBUG_PRINT("step=%i\n", step);
@@ -833,8 +867,13 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
 
             // copy if we have a valid result, otherwise we stop the loop
             if (!eval_ok) break;
-            copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x, pop_y, &ls_state, &ss, &ctrl);
+            find_best_neigh_per_search(s_neighs_x, neighs_y, &ls_state, &ss, &ctrl);
+            lahc_accept(s_pop_x, pop_y, s_neighs_x, neighs_y, &ls_state, &ss, &ctrl);
+            copy_selected_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x, pop_y, &ls_state, &ss, &ctrl);
             adapt_mut_sigmas(&ls_state, &ss, &ctrl);
+            for (int i = 0; i < ctrl.n_searches; i++) {
+              ls_state.ls_step[i]++;
+            }
         }
     }
 

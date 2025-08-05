@@ -32,6 +32,7 @@ OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
         mut_sigma_init = p_dbl(lower = 0L, default = ls_default$mut_sigma_init),
         mut_sigma_factor = p_dbl(lower = 1L, default = ls_default$mut_sigma_factor),
         mut_sigma_max = p_dbl(lower = 0L, default = ls_default$mut_sigma_max),
+        lahc_buf_size = p_int(lower = 1L, default = ls_default$lahc_buf_size),
         stagnate_max = p_int(lower = 1L, default = ls_default$stagnate_max)
       )
       param_set$values = ls_default

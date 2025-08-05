@@ -12,6 +12,7 @@ local_search_control(
   mut_sigma_init = 0.1,
   mut_sigma_factor = 1.2,
   mut_sigma_max = 0.5,
+  lahc_buf_size = 10,
   stagnate_max = 10
 )
 }
@@ -36,6 +37,9 @@ Factor by which to adapt the mutation sigma.}
 
 \item{mut_sigma_max}{(\code{numeric(1)})\cr
 Maximum mutation sigma.}
+
+\item{lahc_buf_size}{(\code{integer(1)})\cr
+Size of the LAHC buffer.}
 
 \item{stagnate_max}{(\code{integer(1)})\cr
 Maximum number of no-improvement steps for a local search before it is randomly restarted.}

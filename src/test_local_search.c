@@ -254,8 +254,8 @@ SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s
 
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
-
-    copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, &ls_state, &ss, &ctrl);
+    find_best_neigh_per_search(s_neighs_x, neighs_y, &ls_state, &ss, &ctrl);
+    copy_selected_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, &ls_state, &ss, &ctrl);
 
     SEXP s_res = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(s_res, 0, s_pop_x_copy);

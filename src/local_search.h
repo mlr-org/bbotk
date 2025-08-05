@@ -13,7 +13,15 @@
     * read the python code and compare
     * check docs of all exposed R functions --> prwtty much done, ask marc
     * somehow remobve the exposed test code for package releases
-*/
+    * make step size smaller on stagnate / when param was not chnaged much? just tiny decrease in general?
+    * we really need to check what we need to reset on restart
+    * we probably want to better init descendents which get activated by repair, and not be completely random
+    * somehow learn a bit where to go? expecially for factor vars?
+    * we need to make sure that the LAHC buffer is re-inited when we restart a search
+    * when we do the stagnatiuon coount / check is this somehow affected by how we accept in LAHC?
+      dongt consider LAHC but simply if we strictly improve
+    * better separate the tests for find_best_neigh_per_search and copy_selected_neighs_to_pop and lahc_accept
+    */
 
 // Debug printer system - can be switched on/off
 #define DEBUG_ENABLED 0  // Set to 1 to enable debug output
@@ -68,11 +76,14 @@ typedef struct {
   double mut_sigma_factor;
   double mut_sigma_max;
   int stagnate_max;
+  int lahc_buf_size;
 } Control;
 
 
 // 
 typedef struct {
+  // for each search, the step number of the current trajectory.
+  int* ls_step;
   // for each genrated neigh, in the same, order (so search * neighs length), 
   // the index of the parameter that was mutated. -1 if no param was mutated.
   int* mut_param_indices;
@@ -84,6 +95,8 @@ typedef struct {
   double* mut_sigmas;
   // for each search, the number of recent no-improvement steps.
   int* stagnate_count;
+  // for each search * lahc_buf_size, the buffer for the LAHC algorithm.
+  double* lahc_buffer;
 } LS_State;
 
 
@@ -115,7 +128,11 @@ void check_and_fix_param_value(SEXP s_dt, int row_i, int param_j, int all_conds_
 void init_ls_state(LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
 void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, 
   LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
-void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y, 
+void find_best_neigh_per_search(SEXP s_neighs_x, double* neighs_y, 
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
+void lahc_accept(SEXP s_pop_x, double *pop_y, SEXP s_neighs_x, double *neighs_y, 
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);   
+void copy_selected_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y, 
   LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
 void restart_stagnated_searches(SEXP s_pop_x, const 
   LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
