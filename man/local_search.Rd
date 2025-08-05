@@ -48,6 +48,9 @@ of mixed type search spaces with hierarchical dependencies.
 https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py
 The function always minimizes. If the objective is to be maximized, we handle it
 by multiplying with "obj_mult" (which will be -1).
+
+Currently, automatically applying the search space transformations is not supported,
+if you need this, do this yourself in the objective function or use \link{OptimInstanceBatchLocalSearch}.
 }
 \details{
 We run "n_searches" in parallel. Each search runs "n_steps" iterations.

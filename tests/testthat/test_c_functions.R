@@ -37,13 +37,14 @@ test_that("c_test_extract_ss_info", {
 })
 
 test_that("c_test_dt_utils", {
+  set.seed(1)
   ss = paradox::ps(
     x1 = paradox::p_dbl(0, 1),
     x2 = paradox::p_int(0, 10),
     x3 = paradox::p_fct(c("a", "b")),
     x4 = paradox::p_lgl()
   )
-  ctrl = local_search_control(mut_sd = 2)
+  ctrl = local_search_control()
   testres = .Call("c_test_dt_utils", ss, ctrl, PACKAGE = "bbotk")
   check_test_results(testres)
 })
@@ -175,7 +176,7 @@ test_that("c_test_generate_neighs", {
     x3 = paradox::p_fct(c("a", "b", "c")),
     x4 = paradox::p_lgl()
   )
-  ctrl = local_search_control(n_neighs = 30, mut_sd = 2)
+  ctrl = local_search_control(n_neighs = 30, mut_sigma_init = 0.5)
   pop = data.table::data.table(
     x1 = 0.5,
     x2 = 5L,
@@ -438,7 +439,7 @@ test_that("c_test_restart_stagnated_searches", {
   ss = paradox::ps(
     x = paradox::p_dbl(0, 1)
   )
-  ctrl = local_search_control(stagnate_max = 2)
+  ctrl = local_search_control(n_searches = 3, n_neighs = 1, stagnate_max = 2)
   pop_x = data.table::data.table(x = c(0.1, 0.5, 0.9))
   stagnate_count = c(1L, 2L, 0L) # 2nd search should be restarted
   restarted_pop = .Call("c_test_restart_stagnated_searches", ss, ctrl, pop_x, stagnate_count, PACKAGE = "bbotk")

@@ -12,10 +12,11 @@
     * sd=0.1 might not work for ints? 
     * read the python code and compare
     * check docs of all exposed R functions --> prwtty much done, ask marc
+    * somehow remobve the exposed test code for package releases
 */
 
 // Debug printer system - can be switched on/off
-#define DEBUG_ENABLED 0  // Set to 1 to enable debug output
+#define DEBUG_ENABLED 1  // Set to 1 to enable debug output
 
 #if DEBUG_ENABLED
 #define DEBUG_PRINT(fmt, ...) Rprintf(fmt, ##__VA_ARGS__)
@@ -63,9 +64,29 @@ typedef struct {
   int n_searches;
   int n_steps;
   int n_neighs;
-  double mut_sd;
+  double mut_sigma_init;
+  double mut_sigma_factor;
+  double mut_sigma_max;
   int stagnate_max;
 } Control;
+
+
+// 
+typedef struct {
+  // for each genrated neigh, in the same, order (so search * neighs length), 
+  // the index of the parameter that was mutated. -1 if no param was mutated.
+  int* mut_param_indices;
+  // for each search, the index (into the 's_neighs_x' dt) of the selected neighbor. 
+  // -1 if no neighbor was selected.
+  int* selected_neigh_idx;
+  // for each search * param, the sigma of the mutated parameter.
+  // ordered in blocks of params per search, in block same order as SS
+  double* mut_sigmas;
+  // for each search, the number of recent no-improvement steps.
+  int* stagnate_count;
+} LS_State;
+
+
 
 
 int random_int(int a, int b);
@@ -76,10 +97,6 @@ void dt_set_na(SEXP s_dt, int row_i, int param_j);
 int dt_is_na(SEXP s_dt, int row_i, int param_j);
 void dt_set_random(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss);
 void dt_set_random_row(SEXP s_dt, int row_i, const SearchSpace *ss);
-void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss, const Control* ctrl);
-void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace *ss);
-void restart_stagnated_searches(SEXP s_pop_x, int *stagnate_count, const SearchSpace* ss, const Control* ctrl);
-void check_and_fix_param_value(SEXP s_dt, int row_i, int param_j, int all_conds_satisfied, const SearchSpace *ss);
 
 void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
 int find_param_index(const char *param_name, const SearchSpace *ss);
@@ -89,10 +106,22 @@ void reorder_conds_by_toposort(SearchSpace *ss);
 int is_condition_satisfied(SEXP s_neighs_x, int i, const Cond *cond, const SearchSpace* ss);
 
 
-void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, const SearchSpace* ss, const Control* ctrl);
+void dt_mutate_element(SEXP s_dt, int search_i, int neigh_i, int param_j, 
+  LS_State* ls_state, const SearchSpace *ss, const Control* ctrl);
+void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace *ss);
+void check_and_fix_param_value(SEXP s_dt, int row_i, int param_j, int all_conds_satisfied, const SearchSpace *ss);
+
+
+void init_ls_state(LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
+void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, 
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
 void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y, 
-  int* stagnate_count, const SearchSpace* ss, const Control* ctrl);
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
+void restart_stagnated_searches(SEXP s_pop_x, const 
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
+void adapt_mut_sigmas(LS_State* ls_state, const SearchSpace* ss, const Control* ctrl);
+SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, 
+  const SearchSpace* ss, const Control* ctrl);
 SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x);
-SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const SearchSpace* ss, const Control* ctrl);
 
 #endif // LOCAL_SEARCH_H

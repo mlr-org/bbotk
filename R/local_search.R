@@ -8,22 +8,31 @@
 #'   Number of steps per local search.
 #' @param n_neighs (`integer(1)`)\cr
 #'   Number of neighbors per local search.
-#' @param mut_sd (`numeric(1)`)\cr
-#'   Standard deviation of the mutation.
+#' @param mut_sigma_init (`numeric(1)`)\cr
+#'   Initial mutation sigma.
+#' @param mut_sigma_factor (`numeric(1)`)\cr
+#'   Factor by which to adapt the mutation sigma.
+#' @param mut_sigma_max (`numeric(1)`)\cr
+#'   Maximum mutation sigma.
 #' @param stagnate_max (`integer(1)`)\cr
 #'   Maximum number of no-improvement steps for a local search before it is randomly restarted.
 #' @return (`local_search_control`)\cr
 #'   List with control params as S3 object.
 #' 
-local_search_control = function(minimize = TRUE, n_searches = 10L, 
-  n_steps = 5L, n_neighs = 10L, mut_sd = 0.1, stagnate_max = 10) {
-
+local_search_control = function(minimize = TRUE, n_searches = 10L, n_steps = 5L, n_neighs = 10L, 
+  mut_sigma_init = 0.1, mut_sigma_factor = 1.2, mut_sigma_max = 0.5, 
+  stagnate_max = 10) 
+{
   assert_int(n_searches, lower = 1L)
   assert_int(n_steps, lower = 0L)
   assert_int(n_neighs, lower = 1L)
-  assert_number(mut_sd, lower = 0)
+  assert_number(mut_sigma_init, lower = 0)
+  assert_number(mut_sigma_factor, lower = 1)
+  assert_number(mut_sigma_max, lower = 0)
   assert_int(stagnate_max, lower = 1L)
-  res = list(minimize = minimize, n_searches = n_searches, n_steps = n_steps, n_neighs = n_neighs, mut_sd = mut_sd, stagnate_max = stagnate_max)
+  res = list(minimize = minimize, n_searches = n_searches, n_steps = n_steps, n_neighs = n_neighs, 
+    mut_sigma_init = mut_sigma_init, mut_sigma_factor = mut_sigma_factor, mut_sigma_max = mut_sigma_max, 
+    stagnate_max = stagnate_max)
   set_class(res, "local_search_control")
 }
 
@@ -36,9 +45,9 @@ local_search_control = function(minimize = TRUE, n_searches = 10L,
 #' https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py
 #' The function always minimizes. If the objective is to be maximized, we handle it
 #' by multiplying with "obj_mult" (which will be -1).
-#' 
-#' 'Currently, automatically applying the search space transformations is not supported,
-#'  if you need this, do this yourself in the objective function or use [OptimInstanceBatchLocalSearch].
+#'
+#' Currently, automatically applying the search space transformations is not supported,
+#' if you need this, do this yourself in the objective function or use [OptimInstanceBatchLocalSearch].
 #'
 #' @details
 #' We run "n_searches" in parallel. Each search runs "n_steps" iterations.

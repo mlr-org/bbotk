@@ -102,9 +102,15 @@ SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   GetRNGstate();
   Control ctrl;
   extract_ctrl_info(s_ctrl, &ctrl);
+  LS_State ls_state;
+  init_ls_state(&ls_state, &ss, &ctrl);
+
 
   // Test dt_generate
   SEXP s_dt = dt_generate_PROTECT(2, &ss); // dt_generate returns a PROTECTed SEXP
+  // overwrite ctrl.n_searches and ctrl.n_neighs, we set them here to align with s_dt size
+  ctrl.n_searches = 1;
+  ctrl.n_neighs = 2;
   set_test_result(s_res, 0, "generate_nrows", RC_dt_nrows(s_dt) == 2);
   set_test_result(s_res, 1, "generate_ncols", Rf_length(s_dt) == ss.n_params);
 
@@ -142,10 +148,10 @@ SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   LOGICAL(s_col3)[1] = 1;
 
   // Test mutation
-  dt_mutate_element(s_dt, 1, 0, &ss, &ctrl); // ParamDbl
-  dt_mutate_element(s_dt, 1, 1, &ss, &ctrl); // ParamInt
-  dt_mutate_element(s_dt, 1, 2, &ss, &ctrl); // ParamFct
-  dt_mutate_element(s_dt, 1, 3, &ss, &ctrl); // ParamLgl
+  dt_mutate_element(s_dt, 0, 1, 0, &ls_state, &ss, &ctrl); // ParamDbl
+  dt_mutate_element(s_dt, 0, 1, 1, &ls_state, &ss, &ctrl); // ParamInt
+  dt_mutate_element(s_dt, 0, 1, 2, &ls_state, &ss, &ctrl); // ParamFct
+  dt_mutate_element(s_dt, 0, 1, 3, &ls_state, &ss, &ctrl); // ParamLgl
 
   // Check that values were changed but still within bounds
   double dbl_val = REAL(s_col0)[1];
@@ -214,6 +220,8 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     reorder_conds_by_toposort(&ss);
     Control ctrl;
     extract_ctrl_info(s_ctrl, &ctrl);
+    LS_State ls_state;
+    init_ls_state(&ls_state, &ss, &ctrl);
     
 
     int n_searches = RC_dt_nrows(s_pop_x);
@@ -224,7 +232,7 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     SEXP s_neighs_x = dt_generate_PROTECT(n_searches * ctrl.n_neighs, &ss);
     
     GetRNGstate();
-    generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
+    generate_neighs(s_pop_x, s_neighs_x, &ls_state, &ss, &ctrl);
     PutRNGstate();
 
     UNPROTECT(1 + ss.n_conds); // s_neighs_x and ss.conds
@@ -236,17 +244,18 @@ SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s
     extract_ss_info_PROTECT(s_ss, &ss);
     Control ctrl;
     extract_ctrl_info(s_ctrl, &ctrl);
+    LS_State ls_state;
+    init_ls_state(&ls_state, &ss, &ctrl);
 
     SEXP s_pop_x_copy = PROTECT(duplicate(s_pop_x));
     SEXP s_pop_y_copy = PROTECT(duplicate(s_pop_y));
     double *pop_y_copy = REAL(s_pop_y_copy);
     double *neighs_y = REAL(s_neighs_y);
-    int *stagnate_count = (int*) R_alloc(ctrl.n_searches, sizeof(int));
 
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
 
-    copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, stagnate_count, &ss, &ctrl);
+    copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, &ls_state, &ss, &ctrl);
 
     SEXP s_res = PROTECT(allocVector(VECSXP, 2));
     SET_VECTOR_ELT(s_res, 0, s_pop_x_copy);
@@ -293,15 +302,19 @@ SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEX
     reorder_conds_by_toposort(&ss);
     Control ctrl;
     extract_ctrl_info(s_ctrl, &ctrl);
+    LS_State ls_state;
+    init_ls_state(&ls_state, &ss, &ctrl);
+    for (int i = 0; i < ctrl.n_searches; i++) {
+      ls_state.stagnate_count[i] = INTEGER(s_stagnate_count)[i];
+    }
     
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
 
     SEXP s_pop_x_copy = PROTECT(duplicate(s_pop_x));
-    int *stagnate_count = INTEGER(s_stagnate_count);
 
     GetRNGstate();
-    restart_stagnated_searches(s_pop_x_copy, stagnate_count, &ss, &ctrl);
+    restart_stagnated_searches(s_pop_x_copy, &ls_state, &ss, &ctrl);
     PutRNGstate();
 
     UNPROTECT(1 + ss.n_conds); // s_pop_x_copy, ss.conds

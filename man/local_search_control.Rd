@@ -9,7 +9,9 @@ local_search_control(
   n_searches = 10L,
   n_steps = 5L,
   n_neighs = 10L,
-  mut_sd = 0.1,
+  mut_sigma_init = 0.1,
+  mut_sigma_factor = 1.2,
+  mut_sigma_max = 0.5,
   stagnate_max = 10
 )
 }
@@ -26,8 +28,14 @@ Number of steps per local search.}
 \item{n_neighs}{(\code{integer(1)})\cr
 Number of neighbors per local search.}
 
-\item{mut_sd}{(\code{numeric(1)})\cr
-Standard deviation of the mutation.}
+\item{mut_sigma_init}{(\code{numeric(1)})\cr
+Initial mutation sigma.}
+
+\item{mut_sigma_factor}{(\code{numeric(1)})\cr
+Factor by which to adapt the mutation sigma.}
+
+\item{mut_sigma_max}{(\code{numeric(1)})\cr
+Maximum mutation sigma.}
 
 \item{stagnate_max}{(\code{integer(1)})\cr
 Maximum number of no-improvement steps for a local search before it is randomly restarted.}
