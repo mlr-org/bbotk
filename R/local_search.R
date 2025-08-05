@@ -14,9 +14,16 @@
 #'   Maximum number of no-improvement steps for a local search before it is randomly restarted.
 #' @return (`local_search_control`)\cr
 #'   List with control params as S3 object.
-#' 
-local_search_control = function(minimize = TRUE, n_searches = 10L, 
-  n_steps = 5L, n_neighs = 10L, mut_sd = 0.1, stagnate_max = 10) {
+#'
+#' @export
+local_search_control = function(
+  minimize = TRUE,
+  n_searches = 10L,
+  n_steps = 5L,
+  n_neighs = 10L,
+  mut_sd = 0.1,
+  stagnate_max = 10L
+  ) {
 
   assert_int(n_searches, lower = 1L)
   assert_int(n_steps, lower = 0L)
@@ -36,7 +43,7 @@ local_search_control = function(minimize = TRUE, n_searches = 10L,
 #' https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py
 #' The function always minimizes. If the objective is to be maximized, we handle it
 #' by multiplying with "obj_mult" (which will be -1).
-#' 
+#'
 #' 'Currently, automatically applying the search space transformations is not supported,
 #'  if you need this, do this yourself in the objective function or use [OptimInstanceBatchLocalSearch].
 #'
@@ -53,21 +60,21 @@ local_search_control = function(minimize = TRUE, n_searches = 10L,
 #' For logical params: We flip the bit.
 #'
 #' Hierarchical dependencies are handled like this:
-#' Only active params can be mutated. After a mutation has happened, we check the 
+#' Only active params can be mutated. After a mutation has happened, we check the
 #' conditions of the search space in topological order. If a condition is not met,
-#' we set the param to NA (making it inactive); if all conditions are met for 
+#' we set the param to NA (making it inactive); if all conditions are met for
 #' a param, but it currently has is NA, we set it a random valid value.
 #'
 #' After the neighbors are generated, we evaluate them.
 #' We go to the best neighbor, or stay at the current point if the best neighbor is worse.
 #'
-#' There is a restart mechanism to avoid local minima. For each search, we keep track of 
+#' There is a restart mechanism to avoid local minima. For each search, we keep track of
 #' the number of no-improvement steps. If this number exceeds "stagnate_max", we restart the search
 #' with a random point.
 #'
 #' @param objective (`function(xdt)`)\cr
 #'   Objective to optimize.
-#'   The first arg (name 'xdt' is not enforced) will be a data.table with (scalar) columns 
+#'   The first arg (name 'xdt' is not enforced) will be a data.table with (scalar) columns
 #'   corresponding exaxctly the search space, in the same order.
 #'   The function should must return numeric vector of exactly the same length as the number of rows in the dt,
 #'   containing the objective values.

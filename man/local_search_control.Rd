@@ -10,7 +10,7 @@ local_search_control(
   n_steps = 5L,
   n_neighs = 10L,
   mut_sd = 0.1,
-  stagnate_max = 10
+  stagnate_max = 10L
 )
 }
 \arguments{
