@@ -591,6 +591,7 @@ void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, LS_State* ls_state, const Se
 void adapt_mut_sigmas(LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) {
   for (int search_i = 0; search_i < ctrl->n_searches; search_i++) {
     int best_row_idx = ls_state->selected_neigh_idx[search_i];
+    DEBUG_PRINT("adapt_mut_sigmas: search %d, best_row_idx: %d\n", search_i, best_row_idx);
     // could happen that no better neighbor was found
     if (best_row_idx != -1) {
       // if a strictly better neighbor was found, there must be a mutated parameter
@@ -630,6 +631,7 @@ void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, do
         if (best_row_idx == -1) {
             DEBUG_PRINT("No better neighbor found, keep current point: %d\n", search_i);
             ls_state->stagnate_count[search_i]++;
+            ls_state->selected_neigh_idx[search_i] = -1;
             continue;
         } else {
             // Copy the best neighbor to the population
@@ -652,6 +654,7 @@ void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, do
                 }
                 DEBUG_PRINT("Copied param %d to pop\n", j);
                 ls_state->stagnate_count[search_i] = 0;
+                ls_state->selected_neigh_idx[search_i] = best_row_idx;
             }
             pop_y[search_i] = best_y;
         }

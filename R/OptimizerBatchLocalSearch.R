@@ -29,7 +29,9 @@ OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
         n_searches = p_int(lower = 1L, default = ls_default$n_searches),
         n_steps = p_int(lower = 1L, default = ls_default$n_steps),
         n_neighs = p_int(lower = 1L, default = ls_default$n_neighs),
-        mut_sd = p_dbl(lower = 0L, default = ls_default$mut_sd),
+        mut_sigma_init = p_dbl(lower = 0L, default = ls_default$mut_sigma_init),
+        mut_sigma_factor = p_dbl(lower = 1L, default = ls_default$mut_sigma_factor),
+        mut_sigma_max = p_dbl(lower = 0L, default = ls_default$mut_sigma_max),
         stagnate_max = p_int(lower = 1L, default = ls_default$stagnate_max)
       )
       param_set$values = ls_default
