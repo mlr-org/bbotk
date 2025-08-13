@@ -48,7 +48,7 @@ Suggests:
     rush (>= 0.2.0),
     testthat (>= 3.0.0)
 Remotes:
-    mlr-org/mlr3misc@common_baseclass
+    mlr-org/mlr3misc@common_baseclass,
     mlr-org/mlr3@common_baseclass
 Config/testthat/edition: 3
 Config/testthat/parallel: false
