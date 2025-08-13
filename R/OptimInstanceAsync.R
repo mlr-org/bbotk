@@ -62,9 +62,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
         search_space = search_space,
         terminator = terminator,
         callbacks = callbacks,
-        archive = archive,
-        label = label,
-        man = man)
+        archive = archive)
     },
 
     #' @description

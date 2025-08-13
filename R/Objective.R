@@ -210,12 +210,11 @@ Objective = R6Class("Objective",
 
     deep_clone = function(name, value) {
       if (name == "context") return(NULL)
-      if (!is.environment(value)) return(value)
       switch(name,
-        domain = value$clone(deep = TRUE),
-        codomain = value$clone(deep = TRUE),
-        constants = value$clone(deep = TRUE),
-        value
+        "domain" = value$clone(deep = TRUE),
+        "codomain" = value$clone(deep = TRUE),
+        "constants" = value$clone(deep = TRUE),
+        super$deep_clone(name, value)
       )
     },
 

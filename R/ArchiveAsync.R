@@ -32,9 +32,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
       super$initialize(
         search_space = search_space,
         codomain = codomain,
-        check_values = check_values,
-        label = "Rush Data Storage",
-        man = "bbotk::ArchiveAsync")
+        check_values = check_values)
     },
 
     #' @description

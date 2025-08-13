@@ -35,9 +35,7 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
         terminator = terminator,
         check_values = check_values,
         callbacks = callbacks,
-        archive = archive,
-        label = "Batch Multi Criteria Instance",
-        man = "bbotk::OptimInstanceBatchMultiCrit")
+        archive = archive)
     },
 
     #' @description

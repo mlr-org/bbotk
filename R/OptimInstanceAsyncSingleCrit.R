@@ -41,9 +41,7 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
         check_values = check_values,
         callbacks = callbacks,
         archive = archive,
-        rush = rush,
-        label = "Async Single Criteria Instance",
-        man = "bbotk::OptimInstanceAsyncSingleCrit")
+        rush = rush)
     },
 
     #' @description

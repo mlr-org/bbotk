@@ -65,9 +65,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
         codomain = codomain,
         properties = properties,
         constants = constants,
-        check_values = check_values,
-        label = "Objective Custom R Function",
-        man = "bbotk::ObjectiveRFun")
+        check_values = check_values)
     },
 
     #' @description

@@ -64,8 +64,7 @@ ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
         codomain = codomain,
         properties = properties,
         constants = constants,
-        check_values = check_values,
-        label = "Objective Custom R Function Eval List")
+        check_values = check_values)
     },
 
     #' @description

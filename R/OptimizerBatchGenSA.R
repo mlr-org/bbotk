@@ -86,9 +86,7 @@ OptimizerBatchGenSA = R6Class("OptimizerBatchGenSA", inherit = OptimizerBatch,
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
-        packages = "GenSA",
-        label = "Generalized Simulated Annealing",
-        man = "bbotk::mlr_optimizers_gensa"
+        packages = "GenSA"
       )
     }
   ),
