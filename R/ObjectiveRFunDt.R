@@ -41,7 +41,9 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
         codomain = codomain,
         properties = properties,
         constants = constants,
-        check_values = check_values)
+        check_values = check_values,
+        label = "Objective Custom R Function Eval Data Table",
+        man = "bbotk::ObjectiveRFunDt")
     },
 
     #' @description

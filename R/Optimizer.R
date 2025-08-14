@@ -81,7 +81,7 @@ Optimizer = R6Class("Optimizer",
         cli_li("Properties: {self$properties}")
         cli_li("Packages: {.pkg {self$packages}}")
       })
-    },
+    }
   ),
 
   active = list(

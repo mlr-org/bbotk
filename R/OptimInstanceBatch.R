@@ -51,7 +51,9 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
         search_space = search_space,
         terminator = terminator,
         callbacks = callbacks,
-        archive = archive
+        archive = archive,
+        label = label,
+        man = man
       )
 
       # disable objective function if search space is not all numeric

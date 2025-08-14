@@ -41,9 +41,7 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
         properties = c("dependencies", "single-crit", "multi-crit", "async"),
-        packages = "rush",
-        label = "Asynchronous Grid Search",
-        man = "bbotk::mlr_optimizers_async_grid_search"
+        packages = "rush"
       )
     },
 

@@ -40,7 +40,9 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
         check_values = check_values,
         rush = rush,
         callbacks = callbacks,
-        archive = archive)
+        archive = archive,
+        label = "Async Multi Criteria Instance",
+        man = "bbotk::OptimInstanceAsyncMultiCrit")
     },
 
     #' @description

@@ -122,7 +122,7 @@ Terminator = R6Class("Terminator",
         stop("$unit is read-only.")
       }
       private$.unit
-    },
+    }
   ),
 
   private = list(

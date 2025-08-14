@@ -39,7 +39,9 @@ OptimInstanceBatchSingleCrit = R6Class("OptimInstanceBatchSingleCrit",
         terminator = terminator,
         check_values = check_values,
         callbacks = callbacks,
-        archive = archive)
+        archive = archive,
+        label = "Batch Single Criterion Instance",
+        man = "bbotk::OptimInstanceBatchSingleCrit")
     },
 
     #' @description
