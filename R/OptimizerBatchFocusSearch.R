@@ -50,9 +50,7 @@ OptimizerBatchFocusSearch = R6Class("OptimizerBatchFocusSearch",
         id = "focus_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit"),  # NOTE: think about multi-crit variant
-        label = "Focus Search",
-        man = "bbotk::mlr_optimizers_focus_search"
+        properties = c("dependencies", "single-crit")  # NOTE: think about multi-crit variant
       )
     }
   ),

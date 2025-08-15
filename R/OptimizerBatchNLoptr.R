@@ -119,9 +119,7 @@ OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
-        packages = "nloptr",
-        label = "Non-linear Optimization",
-        man = "bbotk::mlr_optimizers_nloptr"
+        packages = "nloptr"
       )
     }
   ),

@@ -84,9 +84,7 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
-        packages = "adagio",
-        label = "Covariance Matrix Adaptation Evolution Strategy",
-        man = "bbotk::mlr_optimizers_cmaes"
+        packages = "adagio"
       )
     }
   ),

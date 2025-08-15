@@ -4,7 +4,7 @@
       terminator
     Output
       
-      -- <TerminatorStagnation> - Stagnation -----------------------------------------
+      -- <TerminatorStagnation> - Terminator that stops when optimization does not imp
       * Parameters: iters=10, threshold=100
       * Terminators:
 

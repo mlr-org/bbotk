@@ -4,7 +4,7 @@
       terminator
     Output
       
-      -- <TerminatorPerfReached> - Performance Level ---------------------------------
+      -- <TerminatorPerfReached> - Performance Level Terminator ----------------------
       * Parameters: level=0.2
       * Terminators:
 

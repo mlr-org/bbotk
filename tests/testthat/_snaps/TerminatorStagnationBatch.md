@@ -4,7 +4,7 @@
       terminator
     Output
       
-      -- <TerminatorStagnationBatch> - Stagnation Batch ------------------------------
+      -- <TerminatorStagnationBatch> - Terminator that stops when optimization does no
       * Parameters: n=1, threshold=0
       * Terminators:
 
@@ -14,7 +14,7 @@
       terminator
     Output
       
-      -- <TerminatorStagnationBatch> - Stagnation Batch ------------------------------
+      -- <TerminatorStagnationBatch> - Terminator that stops when optimization does no
       * Parameters: n=2, threshold=0
       * Terminators:
 

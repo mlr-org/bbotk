@@ -37,9 +37,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
         id = "clock_time",
         param_set = param_set,
         properties = c("single-crit", "multi-crit"),
-        unit = "seconds",
-        label = "Clock Time",
-        man = "bbotk::mlr_terminators_clock_time"
+        unit = "seconds"
       )
     },
 

@@ -43,9 +43,7 @@ OptimizerBatchRandomSearch = R6Class("OptimizerBatchRandomSearch",
         id = "random_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit", "multi-crit"),
-        label = "Random Search",
-        man = "bbotk::mlr_optimizers_random_search"
+        properties = c("dependencies", "single-crit", "multi-crit")
       )
     }
   ),

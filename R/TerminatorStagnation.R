@@ -44,9 +44,7 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
       super$initialize(
         id = "stagnation",
         param_set = param_set,
-        properties = "single-crit",
-        label = "Stagnation",
-        man = "bbotk::mlr_terminators_stagnation"
+        properties = "single-crit"
       )
     },
 

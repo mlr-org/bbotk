@@ -4,7 +4,7 @@
       z$optimizer
     Output
       
-      -- <OptimizerBatchDesignPoints> - Design Points --------------------------------
+      -- <OptimizerBatchDesignPoints> - Optimization via Design Points ---------------
       * Parameters: batch_size=1, design=<data.table>
       * Parameter classes: <ParamLgl>, <ParamInt>, <ParamDbl>, <ParamFct>, and
       <ParamUty>
@@ -17,7 +17,7 @@
       z$optimizer
     Output
       
-      -- <OptimizerBatchDesignPoints> - Design Points --------------------------------
+      -- <OptimizerBatchDesignPoints> - Optimization via Design Points ---------------
       * Parameters: batch_size=1, design=<data.table>
       * Parameter classes: <ParamLgl>, <ParamInt>, <ParamDbl>, <ParamFct>, and
       <ParamUty>

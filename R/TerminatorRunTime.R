@@ -41,9 +41,8 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         id = "run_time",
         param_set = param_set,
         properties = c("single-crit", "multi-crit"),
-        unit = "seconds",
-        label = "Run Time",
-        man = "bbotk::mlr_terminators_run_time")
+        unit = "seconds"
+      )
     },
 
     #' @description

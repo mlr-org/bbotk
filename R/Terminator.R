@@ -34,10 +34,8 @@
 #'
 #' @export
 Terminator = R6Class("Terminator",
+  inherit = Mlr3Component,
   public = list(
-    #' @template field_id
-    id = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -47,13 +45,17 @@ Terminator = R6Class("Terminator",
     #'
     #' @param unit (`character()`)\cr
     #'   Unit of steps.
-    initialize = function(id, param_set = ps(), properties = character(), unit = "percent", label = NA_character_, man = NA_character_) {
-      self$id = assert_string(id, min.chars = 1L)
-      private$.param_set = assert_param_set(param_set)
-      private$.properties = assert_subset(properties, bbotk_reflections$terminator_properties)
+    initialize = function(id, param_set = ps(), properties = character(), unit = "percent", label, man) {
+      if (!missing(label) || !missing(man)) {
+        mlr3component_deprecation_msg("label and man are deprecated for Terminator construction and will be removed in the future.")
+      }
+
+      super$initialize(dict_entry = id, dict_shortaccess = "trm",
+        param_set = param_set, properties = properties
+      )
+
+      assert_subset(properties, bbotk_reflections$terminator_properties)
       private$.unit = assert_string(unit)
-      private$.label = assert_string(label, na.ok = TRUE)
-      private$.man = assert_string(man, na.ok = TRUE)
     },
 
     #' @description
@@ -113,24 +115,6 @@ Terminator = R6Class("Terminator",
   ),
 
   active = list(
-
-    param_set = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.param_set)) {
-        stop("$param_set is read-only.")
-      }
-      private$.param_set
-    },
-
-    #' @field properties (`character()`)\cr
-    #'   Set of properties of the terminator.
-    #'   Must be a subset of [`bbotk_reflections$terminator_properties`][bbotk_reflections].
-    properties = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.properties)) {
-        stop("$properties is read-only.")
-      }
-      private$.properties
-    },
-
     #' @field unit (`character()`)\cr
     #'   Unit of steps.
     unit = function(rhs) {
@@ -138,16 +122,6 @@ Terminator = R6Class("Terminator",
         stop("$unit is read-only.")
       }
       private$.unit
-    },
-
-    label = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.label
-    },
-
-    man = function(rhs) {
-assert_ro_binding(rhs)
-      private$.man
     }
   ),
 
@@ -157,11 +131,6 @@ assert_ro_binding(rhs)
       current_steps = if (self$is_terminated(archive)) 100 else 0
       c("max_steps" = max_steps, "current_steps" = current_steps)
     },
-
-    .param_set = NULL,
-    .properties = NULL,
-    .unit = NULL,
-    .label = NULL,
-    .man = NULL
+    .unit = NULL
   )
 )

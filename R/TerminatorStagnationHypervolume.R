@@ -41,9 +41,7 @@ TerminatorStagnationHypervolume = R6Class("TerminatorStagnationHypervolume",
       super$initialize(
         id = "stagnation_hypervolume",
         param_set = param_set,
-        properties = "multi-crit",
-        label = "Stagnation Hypervolume",
-        man = "bbotk::mlr_terminators_stagnation_hypervolume"
+        properties = "multi-crit"
       )
     },
 

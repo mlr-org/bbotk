@@ -54,9 +54,7 @@ TerminatorCombo = R6Class("TerminatorCombo",
         id = "combo",
         param_set = param_set,
         properties = properties,
-        unit = "percent",
-        label = "Combination",
-        man = "bbotk::mlr_terminators_combo")
+        unit = "percent")
     },
 
     #' @description

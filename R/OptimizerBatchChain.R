@@ -120,9 +120,7 @@ OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
         param_set = ParamSetCollection$new(param_sets),
         param_classes = Reduce(intersect, mlr3misc::map(optimizers, "param_classes")),
         properties = Reduce(intersect, mlr3misc::map(optimizers, "properties")),
-        packages = unique(unlist(mlr3misc::map(optimizers, "packages"))),
-        label = "Chain Multiple Optimizers Sequentially",
-        man = "bbotk::mlr_optimizers_chain"
+        packages = unique(unlist(mlr3misc::map(optimizers, "packages")))
       )
       private$.optimizers = optimizers
       private$.terminators = terminators

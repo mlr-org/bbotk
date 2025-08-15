@@ -58,9 +58,8 @@ TerminatorEvals = R6Class("TerminatorEvals",
         id = "evals",
         param_set = param_set,
         properties = c("single-crit", "multi-crit"),
-        unit = "evaluations",
-        label = "Number of Evaluation",
-        man = "bbotk::mlr_terminators_evals")
+        unit = "evaluations"
+      )
     },
 
     #' @description

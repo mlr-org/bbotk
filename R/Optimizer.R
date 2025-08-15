@@ -23,13 +23,16 @@
 #'
 #' @export
 Optimizer = R6Class("Optimizer",
+  inherit = Mlr3Component,
   public = list(
-
-    #' @template field_id
-    id = NULL,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @param id (`character(1)`)\cr
+    #'   Dictionary entry of the optimizer.
+    #'
+    #' @param param_set ([paradox::ParamSet])\cr
+    #'   Parameter set of the optimizer.
     #'
     #' @param param_classes (`character()`)\cr
     #'   Supported parameter classes that the optimizer can optimize, as given in the [`paradox::ParamSet`] `$class` field.
@@ -38,35 +41,28 @@ Optimizer = R6Class("Optimizer",
     #'   Set of properties of the optimizer.
     #'   Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
     #'
-     #' @param packages (`character()`)\cr
+    #' @param packages (`character()`)\cr
     #'   Set of required packages.
     #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
     initialize = function(
-      id = "optimizer",
+      id,
       param_set,
       param_classes,
       properties,
-      packages = character(),
-      label = NA_character_,
-      man = NA_character_
-      ) {
-      self$id = assert_string(id, min.chars = 1L)
-      private$.param_set = assert_param_set(param_set)
+      packages = character(0),
+      label,
+      man
+    ) {
+      if (!missing(label) || !missing(man)) {
+        mlr3component_deprecation_msg("label and man are deprecated for Optimizer construction and will be removed in the future.")
+      }
+
+      super$initialize(dict_entry = id, dict_shortaccess = "opt",
+        param_set = param_set, packages = packages, properties = properties
+      )
       private$.param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
       # has to have at least multi-crit or single-crit property
-      private$.properties = assert_subset(properties, bbotk_reflections$optimizer_properties, empty.ok = FALSE)
-      private$.packages = union("bbotk", assert_character(packages, any.missing = FALSE, min.chars = 1L))
-      private$.label = assert_string(label, na.ok = TRUE)
-      private$.man = assert_string(man, na.ok = TRUE)
-
-      check_packages_installed(self$packages, msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self)))
-    },
-
-    #' @description
-    #' Helper for print outputs.
-    #' @param ... (ignored).
-    format = function(...) {
-      sprintf("<%s>", class(self)[1L])
+      assert_subset(properties, bbotk_reflections$optimizer_properties, empty.ok = FALSE)
     },
 
     #' @description
@@ -85,24 +81,10 @@ Optimizer = R6Class("Optimizer",
         cli_li("Properties: {self$properties}")
         cli_li("Packages: {.pkg {self$packages}}")
       })
-    },
-
-    #' @description
-    #' Opens the corresponding help page referenced by field `$man`.
-    help = function() {
-      open_help(self$man)
     }
   ),
 
   active = list(
-
-    param_set = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.param_set)) {
-        stop("$param_set is read-only.")
-      }
-      private$.param_set
-    },
-
     #' @field param_classes (`character()`)\cr
     #'   Supported parameter classes that the optimizer can optimize, as given in the [`paradox::ParamSet`] `$class` field.
     param_classes = function(rhs) {
@@ -110,36 +92,6 @@ Optimizer = R6Class("Optimizer",
         stop("$param_classes is read-only.")
       }
       private$.param_classes
-    },
-
-    #' @field properties (`character()`)\cr
-    #'   Set of properties of the optimizer.
-    #'   Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
-    properties = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.properties)) {
-        stop("$properties is read-only.")
-      }
-      private$.properties
-    },
-
-    #' @field packages (`character()`)\cr
-    #'   Set of required packages.
-    #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
-    packages = function(rhs) {
-      if (!missing(rhs) && !identical(rhs, private$.packages)) {
-        stop("$packages is read-only.")
-      }
-      private$.packages
-    },
-
-    label = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.label
-    },
-
-    man = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.man
     }
   ),
 
@@ -150,12 +102,7 @@ Optimizer = R6Class("Optimizer",
       assign_result_default(inst)
     },
 
-    .param_set = NULL,
-    .param_classes = NULL,
-    .properties = NULL,
-    .packages = NULL,
-    .label = NULL,
-    .man = NULL
+    .param_classes = NULL
   )
 )
 

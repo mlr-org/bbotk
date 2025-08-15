@@ -4,7 +4,7 @@
       terminator
     Output
       
-      -- <TerminatorClockTime> - Clock Time ------------------------------------------
+      -- <TerminatorClockTime> - Clock Time Terminator -------------------------------
       * Parameters: stop_time=<POSIXct>
       * Terminators:
 
