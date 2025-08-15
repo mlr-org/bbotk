@@ -47,7 +47,7 @@ Terminator = R6Class("Terminator",
     #'   Unit of steps.
     initialize = function(id, param_set = ps(), properties = character(), unit = "percent", label, man) {
       if (!missing(label) || !missing(man)) {
-        deprecated_component("label and man are deprecated for Terminator construction and will be removed in the future.")
+        mlr3component_deprecation_msg("label and man are deprecated for Terminator construction and will be removed in the future.")
       }
 
       super$initialize(dict_entry = id, dict_shortaccess = "trm",
