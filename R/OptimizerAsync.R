@@ -68,6 +68,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     rush = rush::RushWorker$new(instance$rush$network_id, remote = FALSE)
     instance$rush = rush
     instance$archive$rush = rush
+    worker_type = "debug_local"
 
     call_back("on_worker_begin", instance$objective$callbacks, instance$objective$context)
 
