@@ -47,7 +47,7 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-\dontshow{if (requireNamespace("GenSA")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("GenSA")) withAutoprint(\{ # examplesIf}
 \dontshow{\}) # examplesIf}
 library(paradox)
 
