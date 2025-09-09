@@ -23,10 +23,8 @@ TerminatorNone = R6Class("TerminatorNone",
     initialize = function() {
       super$initialize(
         id = "none",
-        properties = c("single-crit", "multi-crit"),
-        label = "None",
-        man = "bbotk::mlr_terminators_none"
-        )
+        properties = c("single-crit", "multi-crit")
+      )
     },
 
     #' @description

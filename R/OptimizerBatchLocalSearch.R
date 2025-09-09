@@ -96,9 +96,7 @@ OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
         id = "local_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit"), # NOTE: think about multi-crit version
-        label = "Local Search",
-        man = "bbotk::mlr_optimizers_local_search"
+        properties = c("dependencies", "single-crit") # NOTE: think about multi-crit version
       )
     }
   ),

@@ -76,9 +76,7 @@ OptimizerBatchDesignPoints = R6Class("OptimizerBatchDesignPoints", inherit = Opt
         id = "design_points",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"),
-        properties = c("dependencies", "single-crit", "multi-crit"),
-        label = "Design Points",
-        man = "bbotk::mlr_optimizers_design_points"
+        properties = c("dependencies", "single-crit", "multi-crit")
       )
     }
   ),

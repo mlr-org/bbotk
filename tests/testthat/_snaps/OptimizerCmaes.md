@@ -4,9 +4,9 @@
       z$optimizer
     Output
       
-      -- <OptimizerBatchCmaes> - Covariance Matrix Adaptation Evolution Strategy -----
+      -- <OptimizerBatchCmaes> - Optimization via Covariance Matrix Adaptation Evoluti
       * Parameters: start_values=random
       * Parameter classes: <ParamDbl>
       * Properties: single-crit
-      * Packages: bbotk and adagio
+      * Packages: adagio and bbotk
 

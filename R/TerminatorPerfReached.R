@@ -39,9 +39,7 @@ TerminatorPerfReached = R6Class("TerminatorPerfReached",
       super$initialize(
         id = "perf_reached",
         param_set = param_set,
-        properties = "single-crit",
-        label = "Performance Level",
-        man = "bbotk::mlr_terminators_perf_reached"
+        properties = "single-crit"
       )
     },
 
