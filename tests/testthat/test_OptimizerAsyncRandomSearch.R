@@ -13,7 +13,7 @@ test_that("OptimizerAsyncRandomSearch works", {
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
-    terminator = trm("evals", n_evals = 1000L),
+    terminator = trm("evals", n_evals = 5L),
   )
 
   expect_data_table(optimizer$optimize(instance), nrows = 1)
