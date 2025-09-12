@@ -3,6 +3,8 @@ test_that("OptimizerAsyncRandomSearch works", {
   skip_if_not_installed("rush")
   flush_redis()
 
+  options(bbotk.tiny_logging = TRUE)
+
   optimizer = opt("async_random_search")
   expect_class(optimizer, "OptimizerAsync")
 

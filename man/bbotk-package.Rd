@@ -8,6 +8,15 @@
 \description{
 Features highly configurable search spaces via the 'paradox' package and optimizes every user-defined objective function. The package includes several optimization algorithms e.g. Random Search, Iterated Racing, Bayesian Optimization (in 'mlr3mbo') and Hyperband (in 'mlr3hyperband'). bbotk is the base package of 'mlr3tuning', 'mlr3fselect' and 'miesmuschel'.
 }
+\section{Package Options}{
+
+\itemize{
+\item \code{"bbotk.debug"}: If set to \code{TRUE}, asynchronous optimization is run in the main process.
+\item \code{"bbotk.tiny_logging"}: If set to \code{TRUE}, the logging is simplified to only show points and results.
+NA values are removed.
+}
+}
+
 \seealso{
 Useful links:
 \itemize{

@@ -63,7 +63,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   # send design to workers
   if (!is.null(design)) instance$archive$push_points(transpose_list(design))
 
-  if (getOption("bbotk_local", FALSE)) {
+  if (getOption("bbotk.debug", FALSE)) {
     # debug mode runs .optimize() in main process
     rush = rush::RushWorker$new(instance$rush$network_id, remote = FALSE)
     instance$rush = rush
@@ -113,6 +113,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     worker_type)
 
   n_running_workers = 0
+  n_evals = 0
   # wait until optimization is finished
   # check terminated workers when the terminator is "none"
   while(TRUE) {
@@ -128,8 +129,18 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     # fetch new results for printing
     new_results = instance$rush$fetch_new_tasks()
     if (nrow(new_results)) {
-      lg$info("Results of %i configuration(s):", nrow(new_results))
-      lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      if (getOption("bbotk.tiny_logging", FALSE)) {
+        for (i in seq_row(new_results)) {
+          lg$info("Evaluation %i: %s", n_evals + i, as_short_string(keep(as.list(new_results[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]), function(x) !is.na(x))))
+        }
+      } else {
+        lg$info("Results %i to %i", n_evals + 1, n_evals + nrow(new_results))
+
+        setcolorder(new_results, c(instance$archive$cols_y, instance$archive$cols_x, "timestamp_xs", "timestamp_ys"))
+        cns = setdiff(colnames(new_results), c("pid", "x_domain", "keys"))
+        lg$info(capture.output(print(new_results[, cns, with = FALSE], class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      }
+      n_evals = n_evals + nrow(new_results)
     }
 
     if (instance$rush$all_workers_lost && !instance$is_terminated && !instance$rush$all_workers_terminated) {
@@ -147,7 +158,14 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   get_private(optimizer)$.assign_result(instance)
   lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
   lg$info("Result:")
-  lg$info(capture.output(print(instance$result, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+
+  if (getOption("bbotk.tiny_logging", FALSE)) {
+    for (i in seq_row(instance$result)) {
+      lg$info(as_short_string(as.list(instance$result[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE])))
+    }
+  } else {
+    lg$info(capture.output(print(instance$result, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+  }
 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
   return(instance$result)
