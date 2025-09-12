@@ -161,12 +161,13 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 
   if (getOption("bbotk.tiny_logging", FALSE)) {
     for (i in seq_row(instance$result)) {
-      lg$info(as_short_string(as.list(instance$result[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE])))
+      lg$info(as_short_string(keep(as.list(instance$result[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]), function(x) !is.na(x))))
     }
   } else {
     lg$info(capture.output(print(instance$result, class = FALSE, row.names = FALSE, print.keys = FALSE)))
   }
 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
+  instance$rush$stop_workers(type = "kill")
   return(instance$result)
 }
