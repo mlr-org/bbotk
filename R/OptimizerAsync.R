@@ -130,8 +130,13 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     new_results = instance$rush$fetch_new_tasks()
     if (nrow(new_results)) {
       if (getOption("bbotk.tiny_logging", FALSE)) {
+        cns = c(instance$archive$cols_y, instance$archive$cols_x)
+        if ("internal_tuned_values" %in% colnames(new_results)) {
+          cns = c(cns, names(new_results$internal_tuned_values[[1]]))
+          new_results = unnest(new_results, "internal_tuned_values")
+        }
         for (i in seq_row(new_results)) {
-          lg$info("Evaluation %i: %s", n_evals + i, as_short_string(keep(as.list(new_results[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]), function(x) !is.na(x))))
+          lg$info("Evaluation %i: %s", n_evals + i, as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))))
         }
       } else {
         lg$info("Results %i to %i", n_evals + 1, n_evals + nrow(new_results))
