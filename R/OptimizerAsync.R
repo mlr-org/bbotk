@@ -130,7 +130,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     new_results = instance$rush$fetch_new_tasks()
     if (nrow(new_results)) {
       if (getOption("bbotk.tiny_logging", FALSE)) {
-        cns = c(instance$archive$cols_y, instance$archive$cols_x)
+        cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x, "runtime_learners", "warnings", "errors"), colnames(new_results))
         if ("internal_tuned_values" %in% colnames(new_results)) {
           cns = c(cns, names(new_results$internal_tuned_values[[1]]))
           new_results = unnest(new_results, "internal_tuned_values")
