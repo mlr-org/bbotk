@@ -113,7 +113,6 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     worker_type)
 
   n_running_workers = 0
-  n_evals = 0
   # wait until optimization is finished
   # check terminated workers when the terminator is "none"
   while(TRUE) {
@@ -128,6 +127,10 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 
     # fetch new results for printing
     new_results = instance$rush$fetch_new_tasks()
+    task_keys = instance$rush$tasks
+    ids = which(task_keys %in% new_results$keys)
+    best = instance$archive$best()
+    best_ids = which(task_keys %in% best$keys)
     if (nrow(new_results)) {
       if (getOption("bbotk.tiny_logging", FALSE)) {
         cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x, "runtime_learners", "warnings", "errors"), colnames(new_results))
@@ -136,16 +139,20 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
           new_results = unnest(new_results, "internal_tuned_values")
         }
         for (i in seq_row(new_results)) {
-          lg$info("Evaluation %i: %s", n_evals + i, as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))))
+          lg$info("Evaluation %i: %s (Current best %s: %s)",
+            ids[i],
+            as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
+            as_short_string(best_ids),
+            as_short_string(keep(as.list(best[, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))
+          )
         }
       } else {
-        lg$info("Results %i to %i", n_evals + 1, n_evals + nrow(new_results))
+        #lg$info("Results %i to %i", , n_evals + nrow(new_results))
 
         setcolorder(new_results, c(instance$archive$cols_y, instance$archive$cols_x, "timestamp_xs", "timestamp_ys"))
         cns = setdiff(colnames(new_results), c("pid", "x_domain", "keys"))
         lg$info(capture.output(print(new_results[, cns, with = FALSE], class = FALSE, row.names = FALSE, print.keys = FALSE)))
       }
-      n_evals = n_evals + nrow(new_results)
     }
 
     if (instance$rush$all_workers_lost && !instance$is_terminated && !instance$rush$all_workers_terminated) {
