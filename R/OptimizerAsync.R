@@ -91,6 +91,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     } else if (worker_type == "remote") {
       # remote workers
       rush$start_remote_workers(
+        n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
@@ -98,6 +99,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     } else if (worker_type == "local") {
       # local workers
       rush$start_local_workers(
+        n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
