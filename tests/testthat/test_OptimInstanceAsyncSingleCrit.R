@@ -124,7 +124,7 @@ test_that("tiny logging works", {
   )
 
   optimizer = opt("async_random_search")
-  expect_snapshot(optimizer$optimize(instance))
+  expect_data_table(optimizer$optimize(instance))
 
   expect_rush_reset(instance$rush)
 })
