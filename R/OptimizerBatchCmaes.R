@@ -5,7 +5,7 @@
 #'
 #' @description
 #' `OptimizerBatchCmaes` class that implements CMA-ES.
-#' Calls `cma_es()` from package \CRANpkg{cmaes}.
+#' Calls `cmaes()` from package \CRANpkg{libcmaesr}.
 #' The algorithm is typically applied to search space dimensions between three and fifty.
 #' Lower search space dimensions might crash.
 #'
@@ -23,7 +23,7 @@
 #'   Only applicable if `start_values` parameter is set to `"custom"`.}
 #' }
 #'
-#' For the meaning of the control parameters, see `cma_es()`.
+#' For the meaning of the control parameters, see `cmaes()`.
 #' The parameters `maxit`, `stopfitness` and `stop.tolx` can be used additionally to our terminators.
 #' The default values of `maxit` is `100 * D^2` where `D` is the number of dimensions of the search space.
 #' The `stop.tolx` parameter stops when the step size is smaller than `1e-12 * sigma`.
@@ -33,7 +33,7 @@
 #'
 #' @export
 #' @examples
-#' if (requireNamespace("cmaes")) {
+#' if (requireNamespace("libcmaesr")) {
 #'   search_space = domain = ps(
 #'     x1 = p_dbl(-10, 10),
 #'     x2 = p_dbl(-5, 5)
@@ -74,24 +74,7 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        fnscale       = p_dbl(default = 1),
-        maxit         = p_int(lower  = 1L),
-        stopfitness   = p_dbl(default = -Inf),
-        keep.best     = p_lgl(default = TRUE),
-        sigma         = p_uty(default = 0.5),
-        mu            = p_int(lower = 1L),
-        lambda        = p_int(lower = 1L),
-        weights       = p_uty(),
-        damps         = p_dbl(),
-        cs            = p_dbl(),
-        ccum          = p_dbl(),
-        ccov.1        = p_dbl(lower = 0),
-        ccov.mu       = p_dbl(lower = 0),
-        diag.sigma    = p_lgl(default = FALSE),
-        diag.eigen    = p_lgl(default = FALSE),
-        diag.pop      = p_lgl(default = FALSE),
-        diag.value    = p_lgl(default = FALSE),
-        stop.tolx     = p_dbl(), # undocumented stop criterion
+        max_fevals    = p_int(lower = 1L, init = 1000L),
         start_values  = p_fct(default = "random", levels = c("random", "center", "custom")),
         start         = p_uty(default = NULL, depends = start_values == "custom")
       )
@@ -115,30 +98,32 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
       pv = self$param_set$values
       start_values = pv$start_values
       start = pv$start
+      direction = inst$objective$codomain$direction
 
-      par = if (pv$start_values == "custom") set_names(start, inst$search_space$ids()) else search_start(inst$search_space, type = start_values)
+      lower = inst$search_space$lower
+      upper = inst$search_space$upper
+      x0 = if (pv$start_values == "custom") set_names(start, inst$search_space$ids()) else search_start(inst$search_space, type = start_values)
 
-      if (length(par) < 2L) {
-        warning("CMA-ES is typically applied to search space dimensions between three and fifty. A lower search space dimension might crash.")
-      }
-
-      control = pv[names(pv) %nin% c("start_values", "start")]
-      control$vectorized = TRUE
-
-      wrapper = function(xmat, inst) {
-        xdt = as.data.table(t(xmat))
+      wrapper = function(xmat) {
+        xdt = set_names(as.data.table(xmat), inst$objective$domain$ids())
         res = inst$eval_batch(xdt)
         y = res[, inst$objective$codomain$target_ids, with = FALSE][[1]]
-        y * inst$objective_multiplicator
+        y * direction
       }
 
-      invoke(cmaes::cma_es,
-        par = par,
-        fn = wrapper,
-        lower = inst$search_space$lower,
-        upper = inst$search_space$upper,
-        control = control,
-        inst = inst)
+      control = libcmaesr::cmaes_control(
+        maximize = direction == -1L,
+        algo = "abipop",
+        max_fevals = pv$max_fevals
+      )
+
+      libcmaesr::cmaes(
+        objective = wrapper,
+        x0 = x0,
+        lower = lower,
+        upper = upper,
+        batch = TRUE,
+        control = control)
     }
   )
 )

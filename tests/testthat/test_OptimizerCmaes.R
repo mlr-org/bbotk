@@ -20,9 +20,9 @@ test_that("OptimizerBatchCmaes", {
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 10L))
+    terminator = trm("evals", n_evals = 100L))
 
-  z = test_optimizer(instance, "cmaes", mu = 5, lambda = 5, real_evals = 10L)
+  z = test_optimizer(instance, "cmaes", max_fevals = 100L)
 
   expect_class(z$optimizer, "OptimizerBatchCmaes")
   expect_snapshot(z$optimizer)
