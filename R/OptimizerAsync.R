@@ -115,7 +115,6 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     worker_type)
 
   n_running_workers = 0
-  n_evals = 0
   # wait until optimization is finished
   # check terminated workers when the terminator is "none"
   while(TRUE) {
@@ -126,23 +125,20 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       lg$info("%i worker(s) started", n_running_workers)
     }
 
+    # print logger messages from workers
     instance$rush$print_log()
 
-    # fetch new results for printing
-    new_results = instance$rush$fetch_new_tasks()
-    if (nrow(new_results)) {
-      if (getOption("bbotk.tiny_logging", FALSE)) {
-        for (i in seq_row(new_results)) {
-          lg$info("Evaluation %i: %s", n_evals + i, as_short_string(keep(as.list(new_results[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]), function(x) !is.na(x))))
-        }
-      } else {
-        lg$info("Results %i to %i", n_evals + 1, n_evals + nrow(new_results))
-
+    # print evaluations
+    if (getOption("bbotk.tiny_logging", FALSE)) {
+      tiny_logging(instance, optimizer)
+    } else {
+      new_results = instance$rush$fetch_new_tasks()
+      if (nrow(new_results)) {
+        lg$info("Results of %i configuration(s):", nrow(new_results))
         setcolorder(new_results, c(instance$archive$cols_y, instance$archive$cols_x, "timestamp_xs", "timestamp_ys"))
         cns = setdiff(colnames(new_results), c("pid", "x_domain", "keys"))
         lg$info(capture.output(print(new_results[, cns, with = FALSE], class = FALSE, row.names = FALSE, print.keys = FALSE)))
       }
-      n_evals = n_evals + nrow(new_results)
     }
 
     if (instance$rush$all_workers_lost && !instance$is_terminated && !instance$rush$all_workers_terminated) {
@@ -161,10 +157,9 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
   lg$info("Result:")
 
+  # print result
   if (getOption("bbotk.tiny_logging", FALSE)) {
-    for (i in seq_row(instance$result)) {
-      lg$info(as_short_string(keep(as.list(instance$result[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]), function(x) !is.na(x))))
-    }
+    tiny_result(instance, optimizer)
   } else {
     lg$info(capture.output(print(instance$result, class = FALSE, row.names = FALSE, print.keys = FALSE)))
   }
@@ -173,3 +168,64 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   instance$rush$stop_workers(type = "kill")
   return(instance$result)
 }
+
+#' @title Tiny Logging
+#'
+#' @description
+#' Used internally in [OptimizerAsync].
+#' Adapts tiny logging to the different instance types.
+#'
+#' @param instance [OptimInstanceAsync].
+#' @param optimizer [OptimizerAsync].
+#' @keywords internal
+#'
+#' @export
+tiny_logging = function(instance, optimizer) {
+  UseMethod("tiny_logging")
+}
+
+#' @export
+tiny_logging.OptimInstanceAsync = function(instance, optimizer) {
+  new_results = instance$rush$fetch_new_tasks()
+
+  if (nrow(new_results)) {
+    task_keys = instance$rush$tasks
+    ids = which(task_keys %in% new_results$keys)
+    best = instance$archive$best()
+    best_ids = which(task_keys %in% best$keys)
+
+    cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x), colnames(new_results))
+
+    for (i in seq_row(new_results)) {
+      lg$info("Evaluation %i: %s (Current best %s: %s)",
+        ids[i],
+        as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
+        as_short_string(best_ids),
+        # works for single and multi-criterion
+        paste0(map_chr(seq_row(best), function(i) as_short_string(keep(as.list(best[i, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))), collapse = " & ")
+      )
+    }
+  }
+}
+
+#' @title Tiny Result
+#'
+#' @description
+#' Used internally in [OptimizerAsync].
+#' Adapts tiny result to the different instance types.
+#'
+#' @param instance [OptimInstanceAsync].
+#' @param optimizer [OptimizerAsync].
+#' @keywords internal
+#' @export
+tiny_result = function(instance, optimizer) {
+  UseMethod("tiny_result")
+}
+
+#' @export
+tiny_result.OptimInstanceAsync = function(instance, optimizer) {
+  for (i in seq_row(instance$result)) {
+    lg$info(as_short_string(keep(as.list(instance$result[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]), function(x) !is.na(x))))
+  }
+}
+
