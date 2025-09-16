@@ -127,30 +127,13 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 
     instance$rush$print_log()
 
-    # fetch new results for printing
-    new_results = instance$rush$fetch_new_tasks()
-    task_keys = instance$rush$tasks
-    ids = which(task_keys %in% new_results$keys)
-    best = instance$archive$best()
-    best_ids = which(task_keys %in% best$keys)
-    if (nrow(new_results)) {
-      if (getOption("bbotk.tiny_logging", FALSE)) {
-        cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x, "runtime_learners", "warnings", "errors"), colnames(new_results))
-        if ("internal_tuned_values" %in% colnames(new_results)) {
-          cns = c(cns, names(new_results$internal_tuned_values[[1]]))
-          new_results = unnest(new_results, "internal_tuned_values")
-        }
-        for (i in seq_row(new_results)) {
-          lg$info("Evaluation %i: %s (Current best %s: %s)",
-            ids[i],
-            as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
-            as_short_string(best_ids),
-            as_short_string(keep(as.list(best[, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))
-          )
-        }
-      } else {
-        #lg$info("Results %i to %i", , n_evals + nrow(new_results))
+    if (getOption("bbotk.tiny_logging", FALSE)) {
+      tiny_logging(instance, optimizer)
+    } else {
+      new_results = instance$rush$fetch_new_tasks()
 
+      if (nrow(new_results)) {
+        lg$info("Results of %i configuration(s):", nrow(new_results))
         setcolorder(new_results, c(instance$archive$cols_y, instance$archive$cols_x, "timestamp_xs", "timestamp_ys"))
         cns = setdiff(colnames(new_results), c("pid", "x_domain", "keys"))
         lg$info(capture.output(print(new_results[, cns, with = FALSE], class = FALSE, row.names = FALSE, print.keys = FALSE)))
@@ -184,4 +167,65 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
   instance$rush$stop_workers(type = "kill")
   return(instance$result)
+}
+
+#' @title Tiny Logging
+#'
+#' @description
+#' Used internally in [OptimizerAsync].
+#' Adapts tiny logging to the different instance types.
+#'
+#' @param instance [OptimInstanceAsync].
+#' @param optimizer [OptimizerAsync].
+#' @keywords internal
+#'
+#' @export
+tiny_logging = function(instance, optimizer) {
+  UseMethod("tiny_logging")
+}
+
+#' @export
+tiny_logging.OptimInstanceAsync = function(instance, optimizer) {
+  new_results = instance$rush$fetch_new_tasks()
+  task_keys = instance$rush$tasks
+  ids = which(task_keys %in% new_results$keys)
+  best = instance$archive$best()
+  best_ids = which(task_keys %in% best$keys)
+
+  cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x), colnames(new_results))
+
+  for (i in seq_row(new_results)) {
+    lg$info("Evaluation %i: %s (Current best %s: %s)",
+      ids[i],
+      as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
+      as_short_string(best_ids),
+      as_short_string(keep(as.list(best[, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))
+    )
+  }
+}
+
+#' @export
+tiny_logging.TuningInstanceAsync = function(instance, optimizer) {
+  new_results = instance$rush$fetch_new_tasks()
+  task_keys = instance$rush$tasks
+  ids = which(task_keys %in% new_results$keys)
+  best = instance$archive$best()
+  best_ids = which(task_keys %in% best$keys)
+
+  cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x, "runtime_learners", "warnings", "errors"), colnames(new_results))
+
+  # unnest internal_tuned_values
+  if ("internal_tuned_values" %in% colnames(new_results)) {
+    cns = c(cns, names(new_results$internal_tuned_values[[1]]))
+    new_results = unnest(new_results, "internal_tuned_values")
+  }
+
+  for (i in seq_row(new_results)) {
+    lg$info("Evaluation %i: %s (Current best %s: %s)",
+      ids[i],
+      as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
+      as_short_string(best_ids),
+      as_short_string(keep(as.list(best[, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))
+    )
+  }
 }
