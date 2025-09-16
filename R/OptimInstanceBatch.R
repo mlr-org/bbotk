@@ -180,7 +180,6 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
 
 objective_function = function(x, inst, direction) {
   xs = set_names(as.list(x), inst$search_space$ids())
-  inst$search_space$assert(xs)
   xdt = as.data.table(xs)
   res = inst$eval_batch(xdt)
   y = as.numeric(res[, inst$objective$codomain$target_ids, with = FALSE])

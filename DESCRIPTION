@@ -34,7 +34,7 @@ Imports:
     mlr3misc (>= 0.15.1),
     R6
 Suggests:
-    adagio,
+    cmaes,
     emoa,
     GenSA,
     irace (>= 4.0.0),
