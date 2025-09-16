@@ -187,45 +187,23 @@ tiny_logging = function(instance, optimizer) {
 #' @export
 tiny_logging.OptimInstanceAsync = function(instance, optimizer) {
   new_results = instance$rush$fetch_new_tasks()
-  task_keys = instance$rush$tasks
-  ids = which(task_keys %in% new_results$keys)
-  best = instance$archive$best()
-  best_ids = which(task_keys %in% best$keys)
 
-  cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x), colnames(new_results))
+  if (nrow(new_results)) {
+    task_keys = instance$rush$tasks
+    ids = which(task_keys %in% new_results$keys)
+    best = instance$archive$best()
+    best_ids = which(task_keys %in% best$keys)
 
-  for (i in seq_row(new_results)) {
-    lg$info("Evaluation %i: %s (Current best %s: %s)",
-      ids[i],
-      as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
-      as_short_string(best_ids),
-      as_short_string(keep(as.list(best[, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))
-    )
+    cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x), colnames(new_results))
+
+    for (i in seq_row(new_results)) {
+      lg$info("Evaluation %i: %s (Current best %s: %s)",
+        ids[i],
+        as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
+        as_short_string(best_ids),
+          as_short_string(keep(as.list(best[, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))
+        )
+    }
   }
 }
 
-#' @export
-tiny_logging.TuningInstanceAsync = function(instance, optimizer) {
-  new_results = instance$rush$fetch_new_tasks()
-  task_keys = instance$rush$tasks
-  ids = which(task_keys %in% new_results$keys)
-  best = instance$archive$best()
-  best_ids = which(task_keys %in% best$keys)
-
-  cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x, "runtime_learners", "warnings", "errors"), colnames(new_results))
-
-  # unnest internal_tuned_values
-  if ("internal_tuned_values" %in% colnames(new_results)) {
-    cns = c(cns, names(new_results$internal_tuned_values[[1]]))
-    new_results = unnest(new_results, "internal_tuned_values")
-  }
-
-  for (i in seq_row(new_results)) {
-    lg$info("Evaluation %i: %s (Current best %s: %s)",
-      ids[i],
-      as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
-      as_short_string(best_ids),
-      as_short_string(keep(as.list(best[, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))
-    )
-  }
-}
