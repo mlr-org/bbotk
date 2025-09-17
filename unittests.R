@@ -1,0 +1,5 @@
+library(testthat)
+library(devtools)
+roxygen2::roxygenize()
+load_all()
+test(filter = "c_functions")
