@@ -152,6 +152,10 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     }
   }
 
+  # move queued and running tasks to failed
+  failed_tasks = c(rush$queued_tasks, rush$running_tasks)
+  rush$push_failed(failed_tasks, condition = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE))
+
   # assign result
   get_private(optimizer)$.assign_result(instance)
   lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
