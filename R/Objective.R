@@ -18,6 +18,7 @@
 #' @template param_constants
 #' @template param_label
 #' @template param_man
+#' @template param_packages
 #'
 #' @export
 Objective = R6Class("Objective",
@@ -62,6 +63,7 @@ Objective = R6Class("Objective",
       domain,
       codomain = ps(y = p_dbl(tags = "minimize")),
       constants = ps(),
+      packages = character(),
       check_values = TRUE,
       label = NA_character_,
       man = NA_character_
@@ -77,6 +79,7 @@ Objective = R6Class("Objective",
       assert_names(self$codomain$ids(), disjunct.from = c("x_domain", "timestamp", "batch_nr"))
       self$properties = assert_subset(properties, bbotk_reflections$objective_properties)
       self$constants = assert_param_set(constants)
+      private$.packages = assert_character(packages)
       self$check_values = assert_flag(check_values)
 
       private$.label = assert_string(label, na.ok = TRUE)
@@ -188,7 +191,7 @@ Objective = R6Class("Objective",
     },
 
     #' @field packages (`character()`)\cr
-    #'   Set of required packages.
+    #' Set of required packages to run the objective function.
     packages = function(rhs) {
       assert_ro_binding(rhs)
       private$.packages

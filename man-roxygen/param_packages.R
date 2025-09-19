@@ -1,2 +1,2 @@
 #' @param packages (`character()`)\cr
-#' Packages to be loaded by the workers.
+#' Set of required packages to run the objective function.
