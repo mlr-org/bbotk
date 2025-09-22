@@ -155,7 +155,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   # move queued and running tasks to failed
   failed_tasks = c(rush$queued_tasks, rush$running_tasks)
   if (length(failed_tasks)) {
-    rush$push_failed(failed_tasks, condition = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE))
+    rush$push_failed(failed_tasks, conditions = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE))
   }
 
 
