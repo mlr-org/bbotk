@@ -6,7 +6,7 @@
 \title{Optimization via Covariance Matrix Adaptation Evolution Strategy}
 \description{
 \code{OptimizerBatchCmaes} class that implements CMA-ES.
-Calls \code{cma_es()} from package \CRANpkg{cmaes}.
+Calls \code{cmaes()} from package \CRANpkg{libcmaesr}.
 The algorithm is typically applied to search space dimensions between three and fifty.
 Lower search space dimensions might crash.
 }
@@ -32,7 +32,7 @@ Custom start values.
 Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
 }
 
-For the meaning of the control parameters, see \code{cma_es()}.
+For the meaning of the control parameters, see \code{cmaes()}.
 The parameters \code{maxit}, \code{stopfitness} and \code{stop.tolx} can be used additionally to our terminators.
 The default values of \code{maxit} is \code{100 * D^2} where \code{D} is the number of dimensions of the search space.
 The \code{stop.tolx} parameter stops when the step size is smaller than \code{1e-12 * sigma}.
@@ -48,7 +48,7 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-if (requireNamespace("cmaes")) {
+if (requireNamespace("libcmaesr")) {
   search_space = domain = ps(
     x1 = p_dbl(-10, 10),
     x2 = p_dbl(-5, 5)
