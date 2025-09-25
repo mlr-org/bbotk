@@ -132,7 +132,7 @@ SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   // Test dt_mutate_element
   // First set some known values
   SEXP s_col0 = VECTOR_ELT(s_dt, 0); // ParamDbl
-  SEXP s_col1 = VECTOR_ELT(s_dt, 1); // ParamInt  
+  SEXP s_col1 = VECTOR_ELT(s_dt, 1); // ParamInt
   SEXP s_col2 = VECTOR_ELT(s_dt, 2); // ParamFct
   SEXP s_col3 = VECTOR_ELT(s_dt, 3); // ParamLgl
 
@@ -161,7 +161,7 @@ SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
 
   int lgl_val = LOGICAL(s_col3)[1];
   set_test_result(s_res, 15, "mutate_lgl_changed", lgl_val == 0);
-  
+
   PutRNGstate();
   UNPROTECT(2 + ss.n_conds); // s_res, s_dt, ss.conds
   return s_res;
@@ -191,7 +191,7 @@ SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expect
     }
   }
   set_test_result(s_res, 1, "reorder_conds", ok);
-  
+
   UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
   return s_res;
 }
@@ -214,7 +214,7 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     reorder_conds_by_toposort(&ss);
     Control ctrl;
     extract_ctrl_info(s_ctrl, &ctrl);
-    
+
 
     int n_searches = RC_dt_nrows(s_pop_x);
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
@@ -222,7 +222,7 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     DEBUG_PRINT("n_searches: %d, n_neighs: %d\n", n_searches, ctrl.n_neighs);
 
     SEXP s_neighs_x = dt_generate_PROTECT(n_searches * ctrl.n_neighs, &ss);
-    
+
     GetRNGstate();
     generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
     PutRNGstate();
@@ -267,7 +267,7 @@ SEXP c_test_get_best_pop_element(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_po
     Control ctrl; extract_ctrl_info(s_ctrl, &ctrl);
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
-    SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, REAL(s_pop_y), &ss, &ctrl);  
+    SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, REAL(s_pop_y), &ss, &ctrl);
     UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
     return s_res;
 }
@@ -293,18 +293,21 @@ SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEX
     reorder_conds_by_toposort(&ss);
     Control ctrl;
     extract_ctrl_info(s_ctrl, &ctrl);
-    
+
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
 
     SEXP s_pop_x_copy = PROTECT(duplicate(s_pop_x));
+    // Create a dummy objective vector to satisfy restart API and allow resetting values
+    SEXP s_pop_y_dummy = PROTECT(allocVector(REALSXP, ctrl.n_searches));
+    double *pop_y_dummy = REAL(s_pop_y_dummy);
     int *stagnate_count = INTEGER(s_stagnate_count);
 
     GetRNGstate();
-    restart_stagnated_searches(s_pop_x_copy, stagnate_count, &ss, &ctrl);
+    restart_stagnated_searches(s_pop_x_copy, pop_y_dummy, stagnate_count, &ss, &ctrl);
     PutRNGstate();
 
-    UNPROTECT(1 + ss.n_conds); // s_pop_x_copy, ss.conds
+    UNPROTECT(2 + ss.n_conds); // s_pop_x_copy, s_pop_y_dummy, ss.conds
     return s_pop_x_copy;
 }
 
