@@ -7,7 +7,8 @@ test_that("OptimizerAsyncRandomSearch works", {
   optimizer = opt("async_design_points", design = design)
   expect_class(optimizer, "OptimizerAsync")
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,

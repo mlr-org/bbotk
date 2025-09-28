@@ -11,7 +11,8 @@ test_that("on_optimization_begin works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
@@ -23,6 +24,7 @@ test_that("on_optimization_begin works", {
   optimizer$optimize(instance)
   expect_class(instance$objective$context, "ContextAsync")
   expect_equal(instance$terminator$param_set$values$n_evals, 20)
+  expect_rush_reset(instance$rush)
 })
 
 test_that("on_optimization_end works", {
@@ -36,7 +38,8 @@ test_that("on_optimization_end works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
@@ -47,6 +50,7 @@ test_that("on_optimization_end works", {
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
   expect_equal(instance$terminator$param_set$values$n_evals, 200)
+  expect_rush_reset(instance$rush)
 })
 
 # stager in worker_loop() ------------------------------------------------------
@@ -63,7 +67,8 @@ test_that("on_worker_begin works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
@@ -75,6 +80,7 @@ test_that("on_worker_begin works", {
   optimizer$optimize(instance)
 
   expect_subset(1, instance$archive$data$x)
+  expect_rush_reset(instance$rush)
 })
 
 
@@ -90,7 +96,8 @@ test_that("on_worker_end works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
@@ -102,6 +109,7 @@ test_that("on_worker_end works", {
   optimizer$optimize(instance)
 
   expect_subset(1, instance$archive$data$x)
+  expect_rush_reset(instance$rush)
 })
 
 # stages in $.eval_point() -----------------------------------------------------
@@ -122,7 +130,8 @@ test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
@@ -136,6 +145,7 @@ test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
   expect_equal(unique(instance$archive$data$x), 1)
   expect_equal(unique(instance$archive$data$y), 0)
   expect_equal(unique(unlist(instance$archive$data$x_domain)), 0)
+  expect_rush_reset(instance$rush)
 })
 
 # stages in $assign_result() in OptimInstanceAsyncSingleCrit -------------------
@@ -152,7 +162,8 @@ test_that("on_result_begin in OptimInstanceAsyncSingleCrit works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
@@ -165,6 +176,7 @@ test_that("on_result_begin in OptimInstanceAsyncSingleCrit works", {
 
   expect_equal(instance$result$x, 1)
   expect_equal(instance$result$y, 2)
+  expect_rush_reset(instance$rush)
 })
 
 test_that("on_result_end in OptimInstanceAsyncSingleCrit works", {
@@ -178,7 +190,8 @@ test_that("on_result_end in OptimInstanceAsyncSingleCrit works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
@@ -190,6 +203,7 @@ test_that("on_result_end in OptimInstanceAsyncSingleCrit works", {
   optimizer$optimize(instance)
 
   expect_equal(instance$result$y, 2)
+  expect_rush_reset(instance$rush)
 })
 
 test_that("on_result in OptimInstanceAsyncSingleCrit works", {
@@ -203,7 +217,8 @@ test_that("on_result in OptimInstanceAsyncSingleCrit works", {
     }
   )}, "deprecated")
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
@@ -215,6 +230,7 @@ test_that("on_result in OptimInstanceAsyncSingleCrit works", {
   optimizer$optimize(instance)
 
   expect_equal(instance$result, 2)
+  expect_rush_reset(instance$rush)
 })
 
 # stages in $assign_result() in OptimInstanceAsyncMultiCrit --------------------
@@ -231,7 +247,8 @@ test_that("on_result_begin in OptimInstanceAsyncMultiCrit works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D_2D,
     search_space = PS_2D,
@@ -245,6 +262,7 @@ test_that("on_result_begin in OptimInstanceAsyncMultiCrit works", {
   expect_equal(instance$result$x2, 1)
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 2)
+  expect_rush_reset(instance$rush)
 })
 
 test_that("on_result_end in OptimInstanceAsyncMultiCrit works", {
@@ -259,7 +277,8 @@ test_that("on_result_end in OptimInstanceAsyncMultiCrit works", {
     }
   )
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D_2D,
     search_space = PS_2D,
@@ -271,6 +290,7 @@ test_that("on_result_end in OptimInstanceAsyncMultiCrit works", {
   optimizer$optimize(instance)
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 3)
+  expect_rush_reset(instance$rush)
 })
 
 test_that("on_result in OptimInstanceAsyncMultiCrit works", {
@@ -285,7 +305,8 @@ test_that("on_result in OptimInstanceAsyncMultiCrit works", {
     }
   )}, "deprecated")
 
-  rush::rush_plan(n_workers = 2)
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D_2D,
     search_space = PS_2D,
@@ -297,5 +318,6 @@ test_that("on_result in OptimInstanceAsyncMultiCrit works", {
   optimizer$optimize(instance)
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 3)
+  expect_rush_reset(instance$rush)
 })
 

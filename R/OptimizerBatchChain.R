@@ -31,6 +31,7 @@
 #' @template section_progress_bars
 #'
 #' @export
+#' @examplesIf requireNamespace("GenSA")
 #' @examples
 #'library(paradox)
 #'

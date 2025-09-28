@@ -120,6 +120,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     },
 
     .eval_queue = function() {
+      self$objective$context$queue = TRUE
       while (!self$is_terminated && self$archive$n_queued) {
         task = self$archive$pop_point()
         if (!is.null(task)) {
@@ -138,6 +139,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
           self$archive$push_result(task$key, private$.ys, x_domain = private$.xs_trafoed)
         }
       }
+      self$objective$context$queue = FALSE
     },
 
     # initialize context for optimization
