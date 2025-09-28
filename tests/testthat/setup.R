@@ -8,7 +8,7 @@ old_opts = options(
 old_opts = lapply(old_opts, function(x) if (is.null(x)) FALSE else x)
 
 lg_bbotk = lgr::get_logger("mlr3/bbotk")
-lg_rush = lgr::get_logger("rush")
+lg_rush = lgr::get_logger("mlr3/rush")
 
 old_threshold_bbotk = lg_bbotk$threshold
 old_threshold_rush = lg_rush$threshold

@@ -47,6 +47,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
+\dontshow{if (requireNamespace("GenSA")) withAutoprint(\{ # examplesIf}
+\dontshow{\}) # examplesIf}
 library(paradox)
 
 domain = ps(x = p_dbl(lower = -1, upper = 1))
