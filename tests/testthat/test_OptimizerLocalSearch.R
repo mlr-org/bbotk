@@ -369,6 +369,7 @@ test_that("OptimizerBatchLocalSearch restarts work", {
     } else if (i == 2) {
       y = 2
     } else if (i == 3) {
+      # set off restart
       y = 3
     } else if (i == 4) {
       y = 500
@@ -382,12 +383,8 @@ test_that("OptimizerBatchLocalSearch restarts work", {
   }
   objective = ObjectiveRFunMany$new(fun = fun, domain = domain, properties = "single-crit")
   instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 500L))
-  optimizer = opt("local_search", n_searches = 1L, n_steps = 5L, n_neighs = 5L, stagnate_max = 1L, mut_sd = 1e-4)
+  optimizer = opt("local_search", n_searches = 1L, n_steps = 5L, n_neighs = 5L, stagnate_max = 1L, mut_sd = 1e-10)
   optimizer$optimize(instance)
 
-  expect_data_table(instance$archive$data, nrows = 510L)
-  expect_numeric(instance$archive$data$x, lower = -1, upper = 1)
-  expect_true(instance$archive$best()$y >= 0)
-  expect_true(instance$archive$best()$y < 1e-5)
-
+  expect_length(unique(round(instance$archive$data$x, 3)), 2)
 })
