@@ -7,6 +7,11 @@
 #' @importFrom utils capture.output head tail
 #' @importFrom methods formalArgs
 #' @importFrom stats setNames
+#'
+#' @section Package Options:
+#' * `"bbotk.debug"`: If set to `TRUE`, asynchronous optimization is run in the main process.
+#' * `"bbotk.tiny_logging"`: If set to `TRUE`, the logging is simplified to only show points and results.
+#'   NA values are removed.
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
