@@ -386,5 +386,7 @@ test_that("OptimizerBatchLocalSearch restarts work", {
   optimizer = opt("local_search", n_searches = 1L, n_steps = 5L, n_neighs = 5L, stagnate_max = 1L, mut_sd = 1e-10)
   optimizer$optimize(instance)
 
+  # mutate sd is very small, so we expect only 2 unique values in x
+  # restart will set off a new search with a new random x
   expect_length(unique(round(instance$archive$data$x, 3)), 2)
 })
