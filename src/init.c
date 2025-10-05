@@ -24,7 +24,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"c_test_copy_best_neighs_to_pop", (DL_FUNC)&c_test_copy_best_neighs_to_pop, 6},
     {"c_test_get_best_pop_element", (DL_FUNC)&c_test_get_best_pop_element, 4},
     {"c_test_dt_repair_row", (DL_FUNC)&c_test_dt_repair_row, 2},
-    {"c_test_restart_stagnated_searches", (DL_FUNC)&c_test_restart_stagnated_searches, 4},
+    {"c_test_restart_stagnated_searches", (DL_FUNC)&c_test_restart_stagnated_searches, 5},
     {"c_test_dt_set_random_row", (DL_FUNC)&c_test_dt_set_random_row, 2},
     {NULL, NULL, 0}};
 

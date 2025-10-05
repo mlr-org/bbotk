@@ -290,7 +290,7 @@ SEXP c_test_dt_repair_row(SEXP s_ss, SEXP s_dt) {
     return s_dt_copy;
 }
 
-SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_stagnate_count) {
+SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_pop_y, SEXP s_stagnate_count) {
     SearchSpace ss;
     extract_ss_info_PROTECT(s_ss, &ss);
     toposort_params(&ss);
@@ -302,6 +302,7 @@ SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEX
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
 
     SEXP s_pop_x_copy = PROTECT(duplicate(s_pop_x));
+<<<<<<< HEAD
     // Create a dummy objective vector to satisfy restart API and allow resetting values
     SEXP s_pop_y_dummy = PROTECT(allocVector(REALSXP, ctrl.n_searches));
     double *pop_y_dummy = REAL(s_pop_y_dummy);
@@ -313,6 +314,24 @@ SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEX
 
     UNPROTECT(2 + ss.n_conds); // s_pop_x_copy, s_pop_y_dummy, ss.conds
     return s_pop_x_copy;
+=======
+    SEXP s_pop_y_copy = PROTECT(duplicate(s_pop_y));
+
+    double *pop_y = REAL(s_pop_y_copy);
+    int *stagnate_count = INTEGER(s_stagnate_count);
+
+    GetRNGstate();
+    restart_stagnated_searches(s_pop_x_copy, pop_y, stagnate_count, &ss, &ctrl);
+    PutRNGstate();
+
+    // return s_pop_x_copy and s_pop_y_copy as list
+    SEXP s_res = PROTECT(allocVector(VECSXP, 2));
+    SET_VECTOR_ELT(s_res, 0, s_pop_x_copy);
+    SET_VECTOR_ELT(s_res, 1, s_pop_y_copy);
+
+    UNPROTECT(3 + ss.n_conds); // s_pop_x_copy, s_pop_y_copy, s_res, ss.conds
+    return s_res;
+>>>>>>> ls-in-c
 }
 
 SEXP c_test_dt_set_random_row(SEXP s_ss, SEXP s_dt) {
