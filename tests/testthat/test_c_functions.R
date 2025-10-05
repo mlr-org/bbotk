@@ -116,7 +116,7 @@ test_that("c_test_is_condition_satisfied", {
   testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 1L, PACKAGE = "bbotk")
   dt = data.frame(A = "a2", B = 0.5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 0L, PACKAGE = "bbotk")
-  
+
   # Test CondAnyOf condition
   ps2 = paradox::ps(
     A = paradox::p_fct(c("a1", "a2", "a3")),
@@ -125,7 +125,7 @@ test_that("c_test_is_condition_satisfied", {
   ps2$add_dep("B", on = "A", cond = paradox::CondAnyOf$new(c("a1", "a2")))
   dt = data.frame(A = "a1", B = 5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 1L, PACKAGE = "bbotk")
-  dt = data.frame(A = "a3", B = 5) 
+  dt = data.frame(A = "a3", B = 5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 0L, PACKAGE = "bbotk")
 
   # Test numeric parameter conditions
@@ -156,13 +156,13 @@ test_that("c_test_is_condition_satisfied", {
     B = paradox::p_dbl(0, 1)
   )
   ps5$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
-  
+
   dt = data.frame(A = NA, B = NA) # parent is non-active, condition is not satisfied
   testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L, PACKAGE = "bbotk")
   dt = data.frame(A = "a1", B = NA) # parent is active and correct, B=NA does not matter
   testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 1L, PACKAGE = "bbotk")
   dt = data.frame(A = NA_character_, B = 0.5) # parent is non-active, condition is not satisfied
-  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L, PACKAGE = "bbotk") 
+  testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L, PACKAGE = "bbotk")
   check_test_results(testres)
 })
 
@@ -208,7 +208,7 @@ test_that("c_test_generate_neighs", {
     diffs[1] = abs(neighs[i,]$x1 - pop$x1) > 1e-8  # special handling for numeric
     expect_equal(sum(diffs), 1)
   }
- 
+
   # With dependencies
   ss = paradox::ps(
     A = paradox::p_fct(c("a1", "a2")),
@@ -351,7 +351,7 @@ test_that("c_test_get_best_pop_element", {
   )
   ctrl = local_search_control(minimize = TRUE)
   pop_x = data.table::data.table(x1 = c(0.1, 0.5, 0.9))
-  pop_y = c(10, 5, 20) 
+  pop_y = c(10, 5, 20)
   best = .Call("c_test_get_best_pop_element", ss, ctrl, pop_x, pop_y, PACKAGE = "bbotk")
   expect_equal(best$y, 5)
   expect_equal(best$x, as.list(pop_x[2, ]))
@@ -440,15 +440,22 @@ test_that("c_test_restart_stagnated_searches", {
   )
   ctrl = local_search_control(stagnate_max = 2)
   pop_x = data.table::data.table(x = c(0.1, 0.5, 0.9))
+  pop_y = c(10, 5, 20)
   stagnate_count = c(1L, 2L, 0L) # 2nd search should be restarted
-  restarted_pop = .Call("c_test_restart_stagnated_searches", ss, ctrl, pop_x, stagnate_count, PACKAGE = "bbotk")
+  res = .Call("c_test_restart_stagnated_searches", ss, ctrl, pop_x, pop_y, stagnate_count, PACKAGE = "bbotk")
+  restarted_pop_x = res[[1]]
+  restarted_pop_y = res[[2]]
   # The first and third rows should be unchanged
-  expect_equal(restarted_pop[1, ], pop_x[1, ])
-  expect_equal(restarted_pop[3, ], pop_x[3, ])
+  expect_equal(restarted_pop_x[1, ], pop_x[1, ])
+  expect_equal(restarted_pop_x[3, ], pop_x[3, ])
+  expect_equal(restarted_pop_y[1], pop_y[1])
+  expect_equal(restarted_pop_y[3], pop_y[3])
+  expect_equal(restarted_pop_y, pop_y)
   # The second row should be different (restarted)
-  expect_true(restarted_pop[2, ]$x != pop_x[2, ]$x)
+  expect_true(restarted_pop_x[2, ]$x != pop_x[2, ]$x)
+  expect_equal(restarted_pop_y[2], Inf)
   # The new value should be within bounds
-  expect_true(restarted_pop[2, ]$x >= 0 && restarted_pop[2, ]$x <= 1)
+  expect_true(restarted_pop_x[2, ]$x >= 0 && restarted_pop_x[2, ]$x <= 1)
 })
 
 test_that("c_test_dt_set_random_row", {
@@ -463,7 +470,7 @@ test_that("c_test_dt_set_random_row", {
   ss$add_dep("x1", on = "x3", cond = paradox::CondEqual$new("a"))
   # A DT with one row of "wrong" values that should be overwritten
   dt = data.table::data.table(x1 = 2, x2 = 11L, x3 = "d", x4 = NA)
-  
+
   random_dt = .Call("c_test_dt_set_random_row", ss, dt, PACKAGE = "bbotk")
 
   # Check that values are within bounds

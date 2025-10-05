@@ -158,7 +158,7 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
         }
         SET_VECTOR_ELT(s_dt, j, col);
         UNPROTECT(1); // col
-    } 
+    }
     // Set column names
     SEXP s_colnames = PROTECT(allocVector(STRSXP, ss->n_params));
     for (int j  = 0; j < ss->n_params; j++) {
@@ -176,7 +176,7 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
     for (int i = 0; i < n; i++) {
       INTEGER(s_rownames)[i] = i + 1;
     }
-    setAttrib(s_dt, R_RowNamesSymbol, s_rownames);  
+    setAttrib(s_dt, R_RowNamesSymbol, s_rownames);
 
     // Set .internal.selfref attribute for data.table
     SEXP selfref = PROTECT(allocVector(INTSXP, 1));
@@ -410,7 +410,7 @@ void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
     assert(ctrl->n_steps >= 0);
     assert(ctrl->n_neighs > 0);
     assert(ctrl->mut_sd > 0);
-} 
+}
 
 
 /************ Condition functions ********** */
@@ -469,7 +469,7 @@ void reorder_conds_by_toposort(SearchSpace* ss) {
 
 
 // Check if a condition is satisfied for a given row
-// whether a confition is satisfied ONLY depends on the value of the parent parameter, 
+// whether a confition is satisfied ONLY depends on the value of the parent parameter,
 // not the condition-param itself
 // if the parent parameter is NA the condition is not satisfied, as the parent is non-active
 // (i dont think we want to allow that a subordinate is only active when the super parameter is non-active)
@@ -575,8 +575,10 @@ void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, const SearchSpace* ss, const
 }
 
 // Copy the best neighbor from each block into the population
-void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, 
-  SEXP s_pop_x, double *pop_y, int* stagnate_count, 
+// Also update global best-so-far when an improvement is found
+void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y,
+  SEXP s_pop_x, double *pop_y, int* stagnate_count,
+  double *global_best_y, SEXP s_global_best_x,
   const SearchSpace* ss, const Control* ctrl) {
 
     DEBUG_PRINT("copy_best_neighs_to_pop\n");
@@ -620,6 +622,23 @@ void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y,
                 stagnate_count[pop_i] = 0;
             }
             pop_y[pop_i] = best_y;
+            // Update global best if improved
+            if (best_y < *global_best_y) {
+                *global_best_y = best_y;
+                for (int j = 0; j < ss->n_params; j++) {
+                    int param_class = ss->param_classes[j];
+                    SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
+                    if (param_class == 0) { // ParamDbl
+                        SET_VECTOR_ELT(s_global_best_x, j, ScalarReal(REAL(s_pop_col)[pop_i]));
+                    } else if (param_class == 1) { // ParamInt
+                        SET_VECTOR_ELT(s_global_best_x, j, ScalarInteger(INTEGER(s_pop_col)[pop_i]));
+                    } else if (param_class == 2) { // ParamFct
+                        SET_VECTOR_ELT(s_global_best_x, j, ScalarString(STRING_ELT(s_pop_col, pop_i)));
+                    } else { // ParamLgl
+                        SET_VECTOR_ELT(s_global_best_x, j, ScalarLogical(LOGICAL(s_pop_col)[pop_i]));
+                    }
+                }
+            }
         }
     }
 
@@ -679,12 +698,14 @@ SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const Searc
     return s_res;
 }
 
-void restart_stagnated_searches(SEXP s_pop_x, int *stagnate_count, const SearchSpace* ss, const Control* ctrl) {
+void restart_stagnated_searches(SEXP s_pop_x, double *pop_y, int *stagnate_count, const SearchSpace* ss, const Control* ctrl) {
   for (int i = 0; i < ctrl->n_searches; i++) {
     if (stagnate_count[i] >= ctrl->stagnate_max) { // restart if stagnated for too long
       DEBUG_PRINT("restarted search %d, stagnate_count: %d, stagnate_max: %d\n", i, stagnate_count[i], ctrl->stagnate_max);
       dt_set_random_row(s_pop_x, i, ss);
       dt_repair_row(s_pop_x, i, ss);
+      // Force acceptance of a neighbor by setting current objective to +Inf
+      pop_y[i] = R_PosInf;
       stagnate_count[i] = 0;
     }
   }
@@ -711,13 +732,13 @@ void check_and_fix_param_value(SEXP s_neighs_x, int neigh_i, int param_j, int al
 
 
 void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace* ss) {
-  // Iterate through topologically sorted conditions 
+  // Iterate through topologically sorted conditions
   int param_index_current = -1;
   int all_conds_satisfied = 1;
   for (int c = 0; c < ss->n_conds; c++) {
       Cond* cond = &ss->conds[c];
       if (param_index_current != cond->param_index) {
-          // finished processing all conditions for a particular parameter 
+          // finished processing all conditions for a particular parameter
           // now see and fix if its value is in conflict with its conditions
           if (param_index_current > -1) {
               check_and_fix_param_value(s_dt, row_i, param_index_current, all_conds_satisfied, ss);
@@ -772,6 +793,34 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     int eval_ok;
     eval_ok = eval_obj(ctrl.n_searches, s_pop_x, s_obj, pop_y, &ctrl);
 
+    // Initialize global best from current population
+    double global_best_y = R_PosInf;
+    int global_best_i = -1;
+    if (eval_ok) {
+        for (int i = 0; i < ctrl.n_searches; i++) {
+            if (pop_y[i] < global_best_y) {
+                global_best_y = pop_y[i];
+                global_best_i = i;
+            }
+        }
+    }
+    SEXP s_global_best_x = RC_named_list_create_PROTECT(ss.n_params, ss.param_names);
+    if (global_best_i >= 0) {
+        for (int j = 0; j < ss.n_params; j++) {
+            int param_class = ss.param_classes[j];
+            SEXP s_pop_col = VECTOR_ELT(s_pop_x, j);
+            if (param_class == 0) {
+                SET_VECTOR_ELT(s_global_best_x, j, ScalarReal(REAL(s_pop_col)[global_best_i]));
+            } else if (param_class == 1) {
+                SET_VECTOR_ELT(s_global_best_x, j, ScalarInteger(INTEGER(s_pop_col)[global_best_i]));
+            } else if (param_class == 2) {
+                SET_VECTOR_ELT(s_global_best_x, j, ScalarString(STRING_ELT(s_pop_col, global_best_i)));
+            } else {
+                SET_VECTOR_ELT(s_global_best_x, j, ScalarLogical(LOGICAL(s_pop_col)[global_best_i]));
+            }
+        }
+    }
+
     // we failed the terminator in the initial points, skip main loop
     if (eval_ok) {
         // Main local search loop
@@ -779,14 +828,14 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
             DEBUG_PRINT("step=%i\n", step);
             dt_print(s_pop_x, 10);
 
-            restart_stagnated_searches(s_pop_x, stagnate_count, &ss, &ctrl);
+            restart_stagnated_searches(s_pop_x, pop_y, stagnate_count, &ss, &ctrl);
             generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
             // print_dt(s_neighs_x, 10);
             eval_ok = eval_obj(ctrl.n_searches*ctrl.n_neighs, s_neighs_x, s_obj, neighs_y, &ctrl);
 
             // copy if we have a valid result, otherwise we stop the loop
             if (eval_ok) {
-                copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x, pop_y, stagnate_count, &ss, &ctrl);
+                copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x, pop_y, stagnate_count, &global_best_y, s_global_best_x, &ss, &ctrl);
             } else {
                 break;
             }
@@ -794,7 +843,11 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     }
 
     PutRNGstate();
-    SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, pop_y, &ss, &ctrl);
-    UNPROTECT(3+ss.n_conds); // s_pop_x, s_neighs_x, s_res and all PROTECTed cond rhs_value 
+    // Build result from global best (convert y back to original scale)
+    double best_y_out = global_best_y * ctrl.obj_mult;
+    SEXP s_res = RC_named_list_create_PROTECT(2, (const char*[]){"x", "y"});
+    SET_VECTOR_ELT(s_res, 0, s_global_best_x);
+    SET_VECTOR_ELT(s_res, 1, ScalarReal(best_y_out));
+    UNPROTECT(4 + ss.n_conds); // s_pop_x, s_neighs_x, s_global_best_x, s_res, and cond rhs
     return s_res;
 }

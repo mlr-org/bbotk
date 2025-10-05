@@ -9,7 +9,7 @@
 
 /*
 //FIXME:
-    * sd=0.1 might not work for ints? 
+    * sd=0.1 might not work for ints?
     * read the python code and compare
     * check docs of all exposed R functions --> prwtty much done, ask marc
 */
@@ -78,7 +78,7 @@ void dt_set_random(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss);
 void dt_set_random_row(SEXP s_dt, int row_i, const SearchSpace *ss);
 void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss, const Control* ctrl);
 void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace *ss);
-void restart_stagnated_searches(SEXP s_pop_x, int *stagnate_count, const SearchSpace* ss, const Control* ctrl);
+void restart_stagnated_searches(SEXP s_pop_x, double *pop_y, int *stagnate_count, const SearchSpace* ss, const Control* ctrl);
 void check_and_fix_param_value(SEXP s_dt, int row_i, int param_j, int all_conds_satisfied, const SearchSpace *ss);
 
 void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace *ss);
@@ -90,8 +90,8 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, const Cond *cond, const Searc
 
 
 void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, const SearchSpace* ss, const Control* ctrl);
-void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y, 
-  int* stagnate_count, const SearchSpace* ss, const Control* ctrl);
+void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y,
+  int* stagnate_count, double *global_best_y, SEXP s_global_best_x, const SearchSpace* ss, const Control* ctrl);
 SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x);
 SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const SearchSpace* ss, const Control* ctrl);
 
