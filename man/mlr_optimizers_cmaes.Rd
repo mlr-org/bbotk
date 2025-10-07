@@ -21,17 +21,46 @@ opt("cmaes")
 \section{Parameters}{
 
 \describe{
+\item{\code{x0}}{\code{numeric()}\cr
+Initial parameter values.
+Use \code{start_values} parameter to create \code{"random"} or \code{"center"} initial values.}
 \item{\code{start_values}}{\code{character(1)}\cr
 Create \code{"random"} start values or based on \code{"center"} of search space?
 In the latter case, it is the center of the parameters before a trafo is applied.
-If set to \code{"custom"}, the start values can be passed via the \code{start} parameter.}
-\item{\code{start}}{\code{numeric()}\cr
-Custom start values.
-Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
+Custom start values can be passed via the \code{x0} parameter.}
 }
 
 For the meaning of the control parameters, see \code{libcmaesr::cmaes_control()}.
-The parameters \code{maxfevals}, \code{ftarget}, \code{f_tolerance} and \code{x_tolerance} can be used additionally to our terminators.
+}
+
+\section{Internal Termination Parameters}{
+
+The algorithm can terminated with all \link{Terminator}s.
+Additionally, the following internal termination parameters can be used:
+
+\describe{
+\item{\code{max_fevals}}{\code{integer(1)}\cr
+Maximum number of function evaluations.
+Original default is \code{100}.
+Deactivate with \code{NA}.
+Overwritten with \code{NA}.}
+\item{\code{max_iter}}{\code{integer(1)}\cr
+Maximum number of iterations.
+Deactivate with \code{NA}.
+Default is \code{NA}.}
+\item{\code{ftarget}}{\code{numeric(1)}\cr
+Target function value.
+Deactivate with \code{NA}.
+Default is \code{NA}.}
+\item{\code{f_tolerance}}{\code{numeric(1)}\cr
+Function tolerance.
+Deactivate with \code{NA}.
+Default is \code{NA}.}
+\item{\code{x_tolerance}}{\code{numeric(1)}\cr
+Parameter tolerance.
+Deactivate with \code{NA}.
+Default is \code{NA}.}
+}
 }
 
 \section{Progress Bars}{

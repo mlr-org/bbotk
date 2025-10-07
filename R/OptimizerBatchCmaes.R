@@ -12,17 +12,44 @@
 #'
 #' @section Parameters:
 #' \describe{
+#' \item{`x0`}{`numeric()`\cr
+#'   Initial parameter values.
+#'   Use `start_values` parameter to create `"random"` or `"center"` initial values.}
 #' \item{`start_values`}{`character(1)`\cr
 #'   Create `"random"` start values or based on `"center"` of search space?
 #'   In the latter case, it is the center of the parameters before a trafo is applied.
-#'   If set to `"custom"`, the start values can be passed via the `start` parameter.}
-#' \item{`start`}{`numeric()`\cr
-#'   Custom start values.
-#'   Only applicable if `start_values` parameter is set to `"custom"`.}
+#'   Custom start values can be passed via the `x0` parameter.}
 #' }
 #'
 #' For the meaning of the control parameters, see `libcmaesr::cmaes_control()`.
-#' The parameters `maxfevals`, `ftarget`, `f_tolerance` and `x_tolerance` can be used additionally to our terminators.
+#'
+#' @section Internal Termination Parameters:
+#' The algorithm can terminated with all [Terminator]s.
+#' Additionally, the following internal termination parameters can be used:
+#'
+#' \describe{
+#' \item{`max_fevals`}{`integer(1)`\cr
+#'   Maximum number of function evaluations.
+#'   Original default is `100`.
+#'   Deactivate with `NA`.
+#'   Overwritten with `NA`.}
+#' \item{`max_iter`}{`integer(1)`\cr
+#'   Maximum number of iterations.
+#'   Deactivate with `NA`.
+#'   Default is `NA`.}
+#' \item{`ftarget`}{`numeric(1)`\cr
+#'   Target function value.
+#'   Deactivate with `NA`.
+#'   Default is `NA`.}
+#' \item{`f_tolerance`}{`numeric(1)`\cr
+#'   Function tolerance.
+#'   Deactivate with `NA`.
+#'   Default is `NA`.}
+#' \item{`x_tolerance`}{`numeric(1)`\cr
+#'   Parameter tolerance.
+#'   Deactivate with `NA`.
+#'   Default is `NA`.}
+#' }
 #'
 #' @template section_progress_bars
 #'
@@ -69,7 +96,23 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        algo          = p_fct(default = "acmaes", levels = c("cmaes", "ipop", "bipop", "acmaes", "aipop", "abipop", "sepcmaes",  "sepipop", "sepbipop", "sepacmaes", "sepaipop", "sepabipop", "vdcma", "vdipopcma", "vdbipopcma")),
+        x0            = p_uty(default = NULL),
+        algo          = p_fct(default = "acmaes", levels = c(
+          "cmaes",
+          "ipop",
+          "bipop",
+          "acmaes",
+          "aipop",
+          "abipop",
+          "sepcmaes",
+          "sepipop",
+          "sepbipop",
+          "sepacmaes",
+          "sepaipop",
+          "sepabipop",
+          "vdcma",
+          "vdipopcma",
+          "vdbipopcma")),
         lambda        = p_int(lower = 1L, default = NA_integer_, special_vals = list(NA_integer_)),
         sigma         = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
         max_restarts  = p_int(lower = 1L, special_vals = list(NA), default = NA),
@@ -77,15 +120,14 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
         tpa_dsigma    = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
         seed          = p_int(default = NA_integer_, special_vals = list(NA_integer_)),
         quiet         = p_lgl(default = FALSE),
+        # bbotk parameters
+        start_values  = p_fct(init = "random", levels = c("random", "center")),
         # internal termination criteria
-        max_fevals    = p_int(lower = 1L, default = 100L, special_vals = list(NA_integer_)),
+        max_fevals    = p_int(lower = 1L, init = NA_integer_, special_vals = list(NA_integer_)),
         max_iter      = p_int(lower = 1L, default = NA_integer_, special_vals = list(NA_integer_)),
         ftarget       = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
         f_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
-        x_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
-        # bbotk parameters
-        start_values  = p_fct(init = "random", levels = c("random", "center", "custom")),
-        start         = p_uty(default = NULL, depends = start_values == "custom")
+        x_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_))
       )
 
       super$initialize(
@@ -103,16 +145,14 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
-      start_values = pv$start_values
-      start = pv$start
       direction = inst$objective$codomain$direction
-
       lower = inst$search_space$lower
       upper = inst$search_space$upper
-      x0 = if (pv$start_values == "custom") {
-        set_names(start, inst$search_space$ids())
+
+      x0 = if (!is.null(pv$x0)) {
+        set_names(pv$x0, inst$search_space$ids())
       } else {
-        search_start(inst$search_space, type = start_values)
+        search_start(inst$search_space, type = pv$start_values)
       }
 
       wrapper = function(xmat) {
