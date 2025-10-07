@@ -8,15 +8,11 @@
 \code{OptimizerBatchFocusSearch} class that implements a Focus Search.
 
 Focus Search starts with evaluating \code{n_points} drawn uniformly at random.
-For 1 to \code{maxit} batches, \code{n_points} are then drawn uniformly at random and
-if the best value of a batch outperforms the previous best value over all
-batches evaluated so far, the search space is shrinked around this new best
-point prior to the next batch being sampled and evaluated.
+For 1 to \code{maxit} batches, \code{n_points} are then drawn uniformly at random and if the best value of a batch outperforms the previous best value over all batches evaluated so far, the search space is shrinked around this new best point prior to the next batch being sampled and evaluated.
 
 For details on the shrinking, see \link{shrink_ps}.
 
-Depending on the \link{Terminator} this procedure simply restarts after \code{maxit} is
-reached.
+Depending on the \link{Terminator} this procedure simply restarts after \code{maxit} is reached.
 }
 \section{Dictionary}{
 

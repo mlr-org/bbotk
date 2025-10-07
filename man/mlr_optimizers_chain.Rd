@@ -47,10 +47,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-\dontshow{if (requireNamespace("GenSA")) withAutoprint(\{ # examplesIf}
+\dontshow{if (requireNamespace("GenSA", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \dontshow{\}) # examplesIf}
-library(paradox)
-
 domain = ps(x = p_dbl(lower = -1, upper = 1))
 
 search_space = ps(x = p_dbl(lower = -1, upper = 1))
@@ -58,40 +56,40 @@ search_space = ps(x = p_dbl(lower = -1, upper = 1))
 codomain = ps(y = p_dbl(tags = "minimize"))
 
 objective_function = function(xs) {
- list(y = as.numeric(xs)^2)
+  list(y = as.numeric(xs)^2)
 }
 
 objective = ObjectiveRFun$new(
- fun = objective_function,
- domain = domain,
- codomain = codomain
+  fun = objective_function,
+  domain = domain,
+  codomain = codomain
 )
 
 terminator = trm("evals", n_evals = 10)
 
 # run optimizers sequentially
 instance = OptimInstanceBatchSingleCrit$new(
- objective = objective,
- search_space = search_space,
- terminator = terminator
+  objective = objective,
+  search_space = search_space,
+  terminator = terminator
 )
 
 optimizer = opt("chain",
- optimizers = list(opt("random_search"), opt("grid_search")),
- terminators = list(trm("evals", n_evals = 5), trm("evals", n_evals = 5))
+  optimizers = list(opt("random_search"), opt("grid_search")),
+  terminators = list(trm("evals", n_evals = 5), trm("evals", n_evals = 5))
 )
 
 optimizer$optimize(instance)
 
 # random restarts
 instance = OptimInstanceBatchSingleCrit$new(
- objective = objective,
- search_space = search_space,
- terminator = trm("none")
+  objective = objective,
+  search_space = search_space,
+  terminator = trm("none")
 )
 optimizer = opt("chain",
- optimizers = list(opt("gensa"), opt("gensa")),
- terminators = list(trm("evals", n_evals = 10), trm("evals", n_evals = 10))
+  optimizers = list(opt("gensa"), opt("gensa")),
+  terminators = list(trm("evals", n_evals = 10), trm("evals", n_evals = 10))
 )
 optimizer$optimize(instance)
 }

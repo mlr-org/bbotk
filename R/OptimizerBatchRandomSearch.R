@@ -17,7 +17,7 @@
 #' @section Parameters:
 #' \describe{
 #' \item{`batch_size`}{`integer(1)`\cr
-#' Maximum number of points to try in a batch.}
+#'   Maximum number of points to try in a batch.}
 #' }
 #'
 #' @template section_progress_bars
@@ -35,9 +35,8 @@ OptimizerBatchRandomSearch = R6Class("OptimizerBatchRandomSearch",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        batch_size = p_int(tags = "required")
+        batch_size = p_int(init = 1L, tags = "required")
       )
-      param_set$values = list(batch_size = 1L)
 
       super$initialize(
         id = "random_search",

@@ -3,7 +3,7 @@
 \name{mlr_optimizers_gensa}
 \alias{mlr_optimizers_gensa}
 \alias{OptimizerBatchGenSA}
-\title{Optimization via Generalized Simulated Annealing}
+\title{Generalized Simulated Annealing}
 \source{
 Tsallis C, Stariolo DA (1996).
 \dQuote{Generalized simulated annealing.}
@@ -16,8 +16,8 @@ Xiang Y, Gubian S, Suomela B, Hoeng J (2013).
 \doi{10.32614/rj-2013-002}.
 }
 \description{
-\code{OptimizerBatchGenSA} class that implements generalized simulated annealing. Calls
-\code{\link[GenSA:GenSA]{GenSA::GenSA()}} from package \CRANpkg{GenSA}.
+\code{OptimizerBatchGenSA} class that implements generalized simulated annealing.
+Calls \code{\link[GenSA:GenSA]{GenSA::GenSA()}} from package \CRANpkg{GenSA}.
 }
 \section{Dictionary}{
 
@@ -32,21 +32,48 @@ opt("gensa")
 \section{Parameters}{
 
 \describe{
-\item{\code{smooth}}{\code{logical(1)}}
-\item{\code{temperature}}{\code{numeric(1)}}
-\item{\code{acceptance.param}}{\code{numeric(1)}}
-\item{\code{verbose}}{\code{logical(1)}}
-\item{\code{trace.mat}}{\code{logical(1)}}
+\item{\code{par}}{\code{numeric()}\cr
+Initial parameter values.
+Default is \code{NULL}, in which case, default values will be generated automatically.}
+\item{\code{start_values}}{\code{character(1)}\cr
+Create \code{"random"} start values or based on \code{"center"} of search space?
+In the latter case, it is the center of the parameters before a trafo is applied.
+By default, \code{nloptr} will generate start values automatically.
+Custom start values can be passed via the \code{par} parameter.}
 }
 
-For the meaning of the control parameters, see \code{\link[GenSA:GenSA]{GenSA::GenSA()}}. Note that we
-have removed all control parameters which refer to the termination of the
-algorithm and where our terminators allow to obtain the same behavior.
-
-In contrast to the \code{\link[GenSA:GenSA]{GenSA::GenSA()}} defaults, we set \code{trace.mat = FALSE}.
+For the meaning of the control parameters, see \code{\link[GenSA:GenSA]{GenSA::GenSA()}}.
 Note that \code{\link[GenSA:GenSA]{GenSA::GenSA()}} uses \code{smooth = TRUE} as a default.
-In the case of using this optimizer for Hyperparameter Optimization you may
-want to set \code{smooth = FALSE}.
+In the case of using this optimizer for Hyperparameter Optimization you may want to set \code{smooth = FALSE}.
+}
+
+\section{Internal Termination Parameters}{
+
+The algorithm can terminated with all \link{Terminator}s.
+Additionally, the following internal termination parameters can be used:
+
+\describe{
+\item{\code{maxit}}{\code{integer(1)}\cr
+Maximum number of iterations.
+Original default is \code{5000}.
+Overwritten with \code{.Machine$integer.max}.}
+\item{\code{threshold.stop}}{\code{numeric(1)}\cr
+Threshold stop.
+Deactivated with \code{NULL}.
+Default is \code{NULL}.}
+\item{\code{nb.stop.improvement}}{\code{integer(1)}\cr
+Number of stop improvement.
+Deactivated with \code{-1L}.
+Default is \code{-1L}.}
+\item{\code{max.call}}{\code{integer(1)}\cr
+Maximum number of calls.
+Original default is \code{1e7}.
+Overwritten with \code{.Machine$integer.max}.}
+\item{\code{max.time}}{\code{integer(1)}\cr
+Maximum time.
+Deactivate with \code{NULL}.
+Default is \code{NULL}.}
+}
 }
 
 \section{Progress Bars}{
@@ -58,37 +85,36 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-if (requireNamespace("GenSA")) {
+\dontshow{if (requireNamespace("GenSA", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{\}) # examplesIf}
+search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 
-  search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
+codomain = ps(y = p_dbl(tags = "minimize"))
 
-  codomain = ps(y = p_dbl(tags = "minimize"))
-
-  objective_function = function(xs) {
-    list(y = as.numeric(xs)^2)
-  }
-
-  objective = ObjectiveRFun$new(
-    fun = objective_function,
-    domain = domain,
-    codomain = codomain)
-
-  instance = OptimInstanceBatchSingleCrit$new(
-    objective = objective,
-    search_space = search_space,
-    terminator = trm("evals", n_evals = 10))
-
-  optimizer = opt("gensa")
-
-  # Modifies the instance by reference
-  optimizer$optimize(instance)
-
-  # Returns best scoring evaluation
-  instance$result
-
-  # Allows access of data.table of full path of all evaluations
-  as.data.table(instance$archive$data)
+objective_function = function(xs) {
+  list(y = as.numeric(xs)^2)
 }
+
+objective = ObjectiveRFun$new(
+  fun = objective_function,
+  domain = domain,
+  codomain = codomain)
+
+instance = OptimInstanceBatchSingleCrit$new(
+  objective = objective,
+  search_space = search_space,
+  terminator = trm("evals", n_evals = 10))
+
+optimizer = opt("gensa")
+
+# Modifies the instance by reference
+optimizer$optimize(instance)
+
+# Returns best scoring evaluation
+instance$result
+
+# Allows access of data.table of full path of all evaluations
+as.data.table(instance$archive$data)
 }
 \section{Super classes}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchGenSA}

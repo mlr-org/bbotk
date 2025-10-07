@@ -53,11 +53,14 @@ test_that("OptimizerBatchChain", {
   expect_set_equal(optimizer$packages, c("bbotk", "GenSA"))
   expect_identical(optimizer$properties, "single-crit")
   expect_identical(optimizer$param_classes, "ParamDbl")
+
+  expected_ids = c(
+    paste0("OptimizerBatchRandomSearch_1.", opt("random_search")$param_set$ids()),
+    paste0("OptimizerBatchGenSA_1.", opt("gensa")$param_set$ids()))
+
   expect_set_equal(
     optimizer$param_set$ids(),
-    c("OptimizerBatchRandomSearch_1.batch_size", "OptimizerBatchGenSA_1.smooth", "OptimizerBatchGenSA_1.temperature",
-      "OptimizerBatchGenSA_1.visiting.param", "OptimizerBatchGenSA_1.acceptance.param", "OptimizerBatchGenSA_1.simple.function",
-      "OptimizerBatchGenSA_1.verbose", "OptimizerBatchGenSA_1.trace.mat")
+    expected_ids
   )
 })
 
