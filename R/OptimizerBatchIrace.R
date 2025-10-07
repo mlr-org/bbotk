@@ -1,37 +1,62 @@
-#' @title Optimization via Iterated Racing
+#' @title Iterated Racing
 #'
 #' @include Optimizer.R
 #' @name mlr_optimizers_irace
 #'
 #' @description
-#' `OptimizerBatchIrace` class that implements iterated racing. Calls
-#' [irace::irace()] from package \CRANpkg{irace}.
+#' `OptimizerBatchIrace` class that implements iterated racing.
+#' Calls [irace::irace()] from package \CRANpkg{irace}.
 #'
 #' @section Parameters:
 #' \describe{
 #' \item{`instances`}{`list()`\cr
-#' A list of instances where the configurations executed on.}
+#'   A list of instances where the configurations executed on.}
 #' \item{`targetRunnerParallel`}{`function()`\cr
-#' A function that executes the objective function with a specific parameter
-#' configuration and instance. A default function is provided, see section
-#' "Target Runner and Instances".}
+#'   A function that executes the objective function with a specific parameter configuration and instance.
+#'   A default function is provided, see section "Target Runner and Instances".}
 #' }
 #'
-#' For the meaning of all other parameters, see [irace::defaultScenario()]. Note
-#' that we have removed all control parameters which refer to the termination of
-#' the algorithm. Use [TerminatorEvals] instead. Other terminators do not work
-#' with `OptimizerBatchIrace`.
+#' For the meaning of all other parameters, see [irace::defaultScenario()].
 #'
-#' In contrast to [irace::defaultScenario()], we set `digits = 15`.
-#' This represents double parameters with a higher precision and avoids rounding errors.
+#' @section Internal Termination Parameters:
+#' The algorithm can terminated with [TerminatorEvals].
+#' Other [Terminator]s do not work with `OptimizerBatchIrace`.
+#' Additionally, the following internal termination parameters can be used:
+#'
+#' \describe{
+#' \item{`maxExperiments`}{`integer(1)`\cr
+#'   Maximum number of runs (invocations of targetRunner) that will be performed.
+#'   It determines the maximum budget of experiments for the tuning.
+#'   Default is 0.}
+#' \item{`minExperiments`}{`integer(1)`\cr
+#'   Minimum number of runs (invocations of targetRunner) that will be performed.
+#'   It determines the minimum budget of experiments for the tuning.
+#'   The actual budget depends on the number of parameters and minSurvival.
+#'   Default is NA.}
+#' \item{`maxTime`}{`integer(1)`\cr
+#'   Maximum total execution time for the executions of targetRunner.
+#'   targetRunner must return two values: cost and time.
+#'   This value and the one returned by targetRunner must use the same units (seconds, minutes, iterations, evaluations, ...).
+#'   Default is 0.}
+#' \item{`budgetEstimation`}{`numeric(1)`\cr
+#'   Fraction (smaller than 1) of the budget used to estimate the mean computation time of a configuration.
+#'   Only used when maxTime > 0
+#'   Default is 0.05.}
+#' \item{`minMeasurableTime`}{`numeric(1)`\cr
+#'   Minimum time unit that is still (significantly) measureable.
+#'   Default is 0.01.}
+#' }
+#'
+#' @section Initial parameter values:
+#' - `digits`:
+#'   - Adjusted default: 15.
+#'   - This represents double parameters with a higher precision and avoids rounding errors.
 #'
 #' @section Target Runner and Instances:
-#' The irace package uses a `targetRunner` script or R function to evaluate a
-#' configuration on a particular instance. Usually it is not necessary to
-#' specify a `targetRunner` function when using `OptimizerBatchIrace`. A default
-#' function is used that forwards several configurations and instances to the
-#' user defined objective function. As usually, the user defined function has
-#' a `xs`, `xss` or `xdt` parameter depending on the used [Objective] class.
+#' The irace package uses a `targetRunner` script or R function to evaluate a configuration on a particular instance.
+#' Usually it is not necessary to specify a `targetRunner` function when using `OptimizerBatchIrace`.
+#' A default function is used that forwards several configurations and instances to the user defined objective function.
+#' As usually, the user defined function has  a `xs`, `xss` or `xdt` parameter depending on the used [Objective] class.
 #' For irace, the function needs an additional `instances` parameter.
 #'
 #' ```
@@ -52,9 +77,8 @@
 #'    Identifies configurations across races and steps.
 #'
 #' @section Result:
-#' The optimization result (`instance$result`) is the best performing elite of
-#' the final race. The reported performance is the average performance estimated
-#' on all used instances.
+#' The optimization result (`instance$result`) is the best performing elite of the final race.
+#' The reported performance is the average performance estimated on all used instances.
 #'
 #' @templateVar id irace
 #' @template section_dictionary_optimizers
@@ -122,9 +146,9 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
     initialize = function() {
       param_set = ps(
         instances = p_uty(tags = "required"),
-        targetRunnerParallel = p_uty(tags = "required"),
+        targetRunnerParallel = p_uty(init = target_runner_default, tags = "required"),
         debugLevel = p_int(default = 0, lower = 0),
-        logFile = p_uty(),
+        logFile = p_uty(init = tempfile(fileext = ".Rdata")),
         seed = p_int(),
         postselection = p_dbl(default = 0, lower = 0, upper = 1),
         elitist = p_int(default = 1, lower = 0, upper = 1),
@@ -136,7 +160,7 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
         mu = p_int(default = 5, lower = 1),
         softRestart = p_int(default = 1, lower = 0, upper = 1),
         softRestartThreshold = p_dbl(),
-        digits = p_int(lower = 1, upper = 15, tags = "required"),
+        digits = p_int(lower = 1, upper = 15, init = 15, tags = "required"),
         testType = p_fct(default = "F-test", levels = c("F-test", "t-test", "t-test-bonferroni", "t-test-holm")),
         firstTest = p_int(default = 5, lower = 0),
         eachTest = p_int(default = 1, lower = 1),
@@ -150,10 +174,6 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
         boundAsTimeout = p_dbl(default = 1),
         deterministic = p_lgl(default = FALSE)
       )
-      param_set$values$debugLevel = 0
-      param_set$values$logFile = tempfile(fileext = ".Rdata")
-      param_set$values$targetRunnerParallel = target_runner_default
-      param_set$values$digits = 15
 
       super$initialize(
         id = "irace",
@@ -186,10 +206,11 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
       digits = pv$digits
       pv$digits = NULL
 
-      scenario = c(list(
+      scenario = list(
         parameters = paradox_to_irace(inst$search_space, pv$digits),
         maxExperiments = terminator$param_set$values$n_evals,
-        targetRunnerData = list(inst = inst)), pv)
+        targetRunnerData = list(inst = inst))
+      scenario = insert_named(scenario, pv)
 
       # run irace
       res = invoke(irace::irace, scenario = scenario, .opts = allow_partial_matching)

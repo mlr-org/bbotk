@@ -63,11 +63,12 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   # send design to workers
   if (!is.null(design)) instance$archive$push_points(transpose_list(design))
 
-  if (getOption("bbotk_local", FALSE)) {
+  if (getOption("bbotk.debug", FALSE)) {
     # debug mode runs .optimize() in main process
     rush = rush::RushWorker$new(instance$rush$network_id, remote = FALSE)
     instance$rush = rush
     instance$archive$rush = rush
+    worker_type = "debug_local"
 
     call_back("on_worker_begin", instance$objective$callbacks, instance$objective$context)
 
@@ -90,6 +91,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     } else if (worker_type == "remote") {
       # remote workers
       rush$start_remote_workers(
+        n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
@@ -97,6 +99,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     } else if (worker_type == "local") {
       # local workers
       rush$start_local_workers(
+        n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
@@ -122,13 +125,20 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       lg$info("%i worker(s) started", n_running_workers)
     }
 
+    # print logger messages from workers
     instance$rush$print_log()
 
-    # fetch new results for printing
-    new_results = instance$rush$fetch_new_tasks()
-    if (nrow(new_results)) {
-      lg$info("Results of %i configuration(s):", nrow(new_results))
-      lg$info(capture.output(print(new_results, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+    # print evaluations
+    if (getOption("bbotk.tiny_logging", FALSE)) {
+      tiny_logging(instance, optimizer)
+    } else {
+      new_results = instance$rush$fetch_new_tasks()
+      if (nrow(new_results)) {
+        lg$info("Results of %i configuration(s):", nrow(new_results))
+        setcolorder(new_results, c(instance$archive$cols_y, instance$archive$cols_x, "timestamp_xs", "timestamp_ys"))
+        cns = setdiff(colnames(new_results), c("pid", "x_domain", "keys"))
+        lg$info(capture.output(print(new_results[, cns, with = FALSE], class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      }
     }
 
     if (instance$rush$all_workers_lost && !instance$is_terminated && !instance$rush$all_workers_terminated) {
@@ -142,12 +152,87 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     }
   }
 
+  # move queued and running tasks to failed
+  failed_tasks = c(rush$queued_tasks, rush$running_tasks)
+  if (length(failed_tasks)) {
+    rush$push_failed(failed_tasks, conditions = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE))
+  }
+
+
   # assign result
   get_private(optimizer)$.assign_result(instance)
   lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
   lg$info("Result:")
-  lg$info(capture.output(print(instance$result, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+
+  # print result
+  if (getOption("bbotk.tiny_logging", FALSE)) {
+    tiny_result(instance, optimizer)
+  } else {
+    lg$info(capture.output(print(instance$result, class = FALSE, row.names = FALSE, print.keys = FALSE)))
+  }
 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
+  instance$rush$stop_workers(type = "kill")
   return(instance$result)
 }
+
+#' @title Tiny Logging
+#'
+#' @description
+#' Used internally in [OptimizerAsync].
+#' Adapts tiny logging to the different instance types.
+#'
+#' @param instance [OptimInstanceAsync].
+#' @param optimizer [OptimizerAsync].
+#' @keywords internal
+#'
+#' @export
+tiny_logging = function(instance, optimizer) {
+  UseMethod("tiny_logging")
+}
+
+#' @export
+tiny_logging.OptimInstanceAsync = function(instance, optimizer) {
+  new_results = instance$rush$fetch_new_tasks()
+
+  if (nrow(new_results)) {
+    task_keys = instance$rush$tasks
+    ids = which(task_keys %in% new_results$keys)
+    best = instance$archive$best()
+    best_ids = which(task_keys %in% best$keys)
+
+    cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x), colnames(new_results))
+
+    for (i in seq_row(new_results)) {
+      lg$info("Evaluation %i: %s (Current best %s: %s)",
+        ids[i],
+        as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
+        as_short_string(best_ids),
+        # works for single and multi-criterion
+        paste0(map_chr(seq_row(best), function(i) as_short_string(keep(as.list(best[i, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))), collapse = " & ")
+      )
+    }
+  }
+}
+
+#' @title Tiny Result
+#'
+#' @description
+#' Used internally in [OptimizerAsync].
+#' Adapts tiny result to the different instance types.
+#'
+#' @param instance [OptimInstanceAsync].
+#' @param optimizer [OptimizerAsync].
+#' @keywords internal
+#' @export
+tiny_result = function(instance, optimizer) {
+  UseMethod("tiny_result")
+}
+
+#' @export
+tiny_result.OptimInstanceAsync = function(instance, optimizer) {
+  for (i in seq_row(instance$result)) {
+    lg$info(as_short_string(keep(as.list(instance$result[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]), function(x) !is.na(x))))
+  }
+}
+

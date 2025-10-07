@@ -1,32 +1,57 @@
-#' @title Optimization via Generalized Simulated Annealing
+#' @title Generalized Simulated Annealing
 #'
 #' @include Optimizer.R
 #' @name mlr_optimizers_gensa
 #'
 #' @description
-#' `OptimizerBatchGenSA` class that implements generalized simulated annealing. Calls
-#' [GenSA::GenSA()] from package \CRANpkg{GenSA}.
+#' `OptimizerBatchGenSA` class that implements generalized simulated annealing.
+#' Calls [GenSA::GenSA()] from package \CRANpkg{GenSA}.
 #'
 #' @templateVar id gensa
 #' @template section_dictionary_optimizers
 #'
 #' @section Parameters:
 #' \describe{
-#' \item{`smooth`}{`logical(1)`}
-#' \item{`temperature`}{`numeric(1)`}
-#' \item{`acceptance.param`}{`numeric(1)`}
-#' \item{`verbose`}{`logical(1)`}
-#' \item{`trace.mat`}{`logical(1)`}
+#' \item{`par`}{`numeric()`\cr
+#'   Initial parameter values.
+#'   Default is `NULL`, in which case, default values will be generated automatically.}
+#' \item{`start_values`}{`character(1)`\cr
+#'   Create `"random"` start values or based on `"center"` of search space?
+#'   In the latter case, it is the center of the parameters before a trafo is applied.
+#'   By default, `nloptr` will generate start values automatically.
+#'   Custom start values can be passed via the `par` parameter.}
 #' }
 #'
-#' For the meaning of the control parameters, see [GenSA::GenSA()]. Note that we
-#' have removed all control parameters which refer to the termination of the
-#' algorithm and where our terminators allow to obtain the same behavior.
-#'
-#' In contrast to the [GenSA::GenSA()] defaults, we set `trace.mat = FALSE`.
+#' For the meaning of the control parameters, see [GenSA::GenSA()].
 #' Note that [GenSA::GenSA()] uses `smooth = TRUE` as a default.
-#' In the case of using this optimizer for Hyperparameter Optimization you may
-#' want to set `smooth = FALSE`.
+#' In the case of using this optimizer for Hyperparameter Optimization you may want to set `smooth = FALSE`.
+#'
+#' @section Internal Termination Parameters:
+#' The algorithm can terminated with all [Terminator]s.
+#' Additionally, the following internal termination parameters can be used:
+#'
+#' \describe{
+#' \item{`maxit`}{`integer(1)`\cr
+#'   Maximum number of iterations.
+#'   Original default is `5000`.
+#'   Overwritten with `.Machine$integer.max`.}
+#' \item{`threshold.stop`}{`numeric(1)`\cr
+#'   Threshold stop.
+#'   Deactivated with `NULL`.
+#'   Default is `NULL`.}
+#' \item{`nb.stop.improvement`}{`integer(1)`\cr
+#'   Number of stop improvement.
+#'   Deactivated with `-1L`.
+#'   Default is `-1L`.}
+#' \item{`max.call`}{`integer(1)`\cr
+#'   Maximum number of calls.
+#'   Original default is `1e7`.
+#'   Overwritten with `.Machine$integer.max`.}
+#' \item{`max.time`}{`integer(1)`\cr
+#'   Maximum time.
+#'   Deactivate with `NULL`.
+#'   Default is `NULL`.}
+#' }
 #'
 #' @template section_progress_bars
 #'
@@ -73,13 +98,22 @@ OptimizerBatchGenSA = R6Class("OptimizerBatchGenSA", inherit = OptimizerBatch,
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
+        par = p_uty(default = NULL),
         smooth = p_lgl(default = TRUE),
         temperature = p_dbl(default = 5230),
         visiting.param = p_dbl(default = 2.62, lower = 2.01, upper = 2.99),  # see https://journal.r-project.org/archive/2013-1/xiang-gubian-suomela-etal.pdf
         acceptance.param = p_dbl(default = -5, upper = -0.01),  # see https://journal.r-project.org/archive/2013-1/xiang-gubian-suomela-etal.pdf
         simple.function = p_lgl(default = FALSE),
         verbose = p_lgl(default = FALSE),
-        trace.mat = p_lgl(default = TRUE)
+        trace.mat = p_lgl(default = TRUE),
+        # bbotk parameters
+        start_values = p_fct(levels = c("random", "center")),
+        # internal termination criteria
+        maxit = p_int(lower = 1L, init = .Machine$integer.max),
+        threshold.stop = p_dbl(lower = 0),
+        nb.stop.improvement = p_int(lower = 1L, init = -1L, special_vals = list(-1L)),
+        max.call = p_int(lower = 1L, init = .Machine$integer.max),
+        max.time = p_int(lower = 0L)
       )
       super$initialize(
         id = "gensa",
@@ -95,12 +129,21 @@ OptimizerBatchGenSA = R6Class("OptimizerBatchGenSA", inherit = OptimizerBatch,
 
   private = list(
     .optimize = function(inst) {
-      v = self$param_set$values
-      v$maxit = .Machine$integer.max  # make sure GenSA does not stop
-      v$nb.stop.improvement = .Machine$integer.max   # make sure GenSA does not stop
-      GenSA::GenSA(par = NULL, fn = inst$objective_function,
-        lower = inst$search_space$lower, upper = inst$search_space$upper,
-        control = v)
+      pv = self$param_set$values
+
+      if (!is.null(pv$start_values) && is.null(pv$par)) {
+        pv$par = search_start(inst$search_space, type = pv$start_values)
+      }
+      pv$start_values = NULL
+      par = pv$par
+      pv$par = NULL
+
+      GenSA::GenSA(
+        par = par,
+        fn = inst$objective_function,
+        lower = inst$search_space$lower,
+        upper = inst$search_space$upper,
+        control = pv)
     }
   )
 )

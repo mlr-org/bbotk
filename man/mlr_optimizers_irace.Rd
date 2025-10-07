@@ -3,7 +3,7 @@
 \name{mlr_optimizers_irace}
 \alias{mlr_optimizers_irace}
 \alias{OptimizerBatchIrace}
-\title{Optimization via Iterated Racing}
+\title{Iterated Racing}
 \source{
 Lopez-Ibanez M, Dubois-Lacoste J, Caceres LP, Birattari M, Stuetzle T (2016).
 \dQuote{The irace package: Iterated racing for automatic algorithm configuration.}
@@ -11,8 +11,8 @@ Lopez-Ibanez M, Dubois-Lacoste J, Caceres LP, Birattari M, Stuetzle T (2016).
 \doi{https://doi.org/10.1016/j.orp.2016.09.002}.
 }
 \description{
-\code{OptimizerBatchIrace} class that implements iterated racing. Calls
-\code{\link[irace:irace]{irace::irace()}} from package \CRANpkg{irace}.
+\code{OptimizerBatchIrace} class that implements iterated racing.
+Calls \code{\link[irace:irace]{irace::irace()}} from package \CRANpkg{irace}.
 }
 \section{Parameters}{
 
@@ -20,28 +20,61 @@ Lopez-Ibanez M, Dubois-Lacoste J, Caceres LP, Birattari M, Stuetzle T (2016).
 \item{\code{instances}}{\code{list()}\cr
 A list of instances where the configurations executed on.}
 \item{\code{targetRunnerParallel}}{\verb{function()}\cr
-A function that executes the objective function with a specific parameter
-configuration and instance. A default function is provided, see section
-"Target Runner and Instances".}
+A function that executes the objective function with a specific parameter configuration and instance.
+A default function is provided, see section "Target Runner and Instances".}
 }
 
-For the meaning of all other parameters, see \code{\link[irace:defaultScenario]{irace::defaultScenario()}}. Note
-that we have removed all control parameters which refer to the termination of
-the algorithm. Use \link{TerminatorEvals} instead. Other terminators do not work
-with \code{OptimizerBatchIrace}.
+For the meaning of all other parameters, see \code{\link[irace:defaultScenario]{irace::defaultScenario()}}.
+}
 
-In contrast to \code{\link[irace:defaultScenario]{irace::defaultScenario()}}, we set \code{digits = 15}.
-This represents double parameters with a higher precision and avoids rounding errors.
+\section{Internal Termination Parameters}{
+
+The algorithm can terminated with \link{TerminatorEvals}.
+Other \link{Terminator}s do not work with \code{OptimizerBatchIrace}.
+Additionally, the following internal termination parameters can be used:
+
+\describe{
+\item{\code{maxExperiments}}{\code{integer(1)}\cr
+Maximum number of runs (invocations of targetRunner) that will be performed.
+It determines the maximum budget of experiments for the tuning.
+Default is 0.}
+\item{\code{minExperiments}}{\code{integer(1)}\cr
+Minimum number of runs (invocations of targetRunner) that will be performed.
+It determines the minimum budget of experiments for the tuning.
+The actual budget depends on the number of parameters and minSurvival.
+Default is NA.}
+\item{\code{maxTime}}{\code{integer(1)}\cr
+Maximum total execution time for the executions of targetRunner.
+targetRunner must return two values: cost and time.
+This value and the one returned by targetRunner must use the same units (seconds, minutes, iterations, evaluations, ...).
+Default is 0.}
+\item{\code{budgetEstimation}}{\code{numeric(1)}\cr
+Fraction (smaller than 1) of the budget used to estimate the mean computation time of a configuration.
+Only used when maxTime > 0
+Default is 0.05.}
+\item{\code{minMeasurableTime}}{\code{numeric(1)}\cr
+Minimum time unit that is still (significantly) measureable.
+Default is 0.01.}
+}
+}
+
+\section{Initial parameter values}{
+
+\itemize{
+\item \code{digits}:
+\itemize{
+\item Adjusted default: 15.
+\item This represents double parameters with a higher precision and avoids rounding errors.
+}
+}
 }
 
 \section{Target Runner and Instances}{
 
-The irace package uses a \code{targetRunner} script or R function to evaluate a
-configuration on a particular instance. Usually it is not necessary to
-specify a \code{targetRunner} function when using \code{OptimizerBatchIrace}. A default
-function is used that forwards several configurations and instances to the
-user defined objective function. As usually, the user defined function has
-a \code{xs}, \code{xss} or \code{xdt} parameter depending on the used \link{Objective} class.
+The irace package uses a \code{targetRunner} script or R function to evaluate a configuration on a particular instance.
+Usually it is not necessary to specify a \code{targetRunner} function when using \code{OptimizerBatchIrace}.
+A default function is used that forwards several configurations and instances to the user defined objective function.
+As usually, the user defined function has  a \code{xs}, \code{xss} or \code{xdt} parameter depending on the used \link{Objective} class.
 For irace, the function needs an additional \code{instances} parameter.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{fun = function(xs, instances) \{
@@ -67,9 +100,8 @@ Identifies configurations across races and steps.
 
 \section{Result}{
 
-The optimization result (\code{instance$result}) is the best performing elite of
-the final race. The reported performance is the average performance estimated
-on all used instances.
+The optimization result (\code{instance$result}) is the best performing elite of the final race.
+The reported performance is the average performance estimated on all used instances.
 }
 
 \section{Dictionary}{
