@@ -43,7 +43,7 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-if (requireNamespace("cmaes")) {
+if (requireNamespace("libcmaesr")) {
   search_space = domain = ps(
     x1 = p_dbl(-10, 10),
     x2 = p_dbl(-5, 5)

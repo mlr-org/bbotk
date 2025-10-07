@@ -84,12 +84,9 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
         f_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
         x_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
         # bbotk parameters
-        start_values  = p_fct(default = "random", levels = c("random", "center", "custom")),
+        start_values  = p_fct(init = "random", levels = c("random", "center", "custom")),
         start         = p_uty(default = NULL, depends = start_values == "custom")
       )
-      param_set$values$start_values = "random"
-      param_set$values$start = NULL
-      param_set$values$max_restarts = NA
 
       super$initialize(
         id = "cmaes",
@@ -112,17 +109,21 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
 
       lower = inst$search_space$lower
       upper = inst$search_space$upper
-      x0 = if (pv$start_values == "custom") set_names(start, inst$search_space$ids()) else search_start(inst$search_space, type = start_values)
+      x0 = if (pv$start_values == "custom") {
+        set_names(start, inst$search_space$ids())
+      } else {
+        search_start(inst$search_space, type = start_values)
+      }
 
       wrapper = function(xmat) {
-        xdt = set_names(as.data.table(xmat), inst$objective$domain$ids())
+        xdt = set_names(as.data.table(xmat), inst$search_space$ids())
         res = inst$eval_batch(xdt)
         y = res[, inst$objective$codomain$target_ids, with = FALSE][[1]]
         y * direction
       }
 
       control = invoke(libcmaesr::cmaes_control, maximize = direction == -1L,
-        .args = pv[which(names(pv) %nin% formalArgs(libcmaesr::cmaes_control))])
+        .args = pv[which(names(pv) %in% formalArgs(libcmaesr::cmaes_control))])
 
       libcmaesr::cmaes(
         objective = wrapper,

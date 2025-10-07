@@ -34,7 +34,6 @@ Imports:
     mlr3misc (>= 0.15.1),
     R6
 Suggests:
-    cmaes,
     emoa,
     GenSA,
     irace (>= 4.0.0),
@@ -53,7 +52,7 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Collate:
     'Archive.R'
     'ArchiveAsync.R'
