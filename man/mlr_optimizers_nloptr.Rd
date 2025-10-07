@@ -82,9 +82,9 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
+\dontshow{if (requireNamespace("nloptr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{\}) # examplesIf}
 \donttest{
-if (requireNamespace("nloptr")) {
-
   search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 
   codomain = ps(y = p_dbl(tags = "minimize"))
@@ -117,7 +117,6 @@ if (requireNamespace("nloptr")) {
 
   # Allows access of data.table of full path of all evaluations
   as.data.table(instance$archive)
-}
 }
 
 }

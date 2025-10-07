@@ -123,6 +123,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
+\dontshow{if (requireNamespace("irace", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{\}) # examplesIf}
 # runtime of the example is too long
 \donttest{
 
