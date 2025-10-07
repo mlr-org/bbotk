@@ -75,11 +75,13 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
     initialize = function() {
       param_set = ps(
         max_fevals    = p_int(lower = 1L, init = 1000L),
+        max_restarts  = p_int(lower = 1L, special_vals = list(NA), default = NA),
         start_values  = p_fct(default = "random", levels = c("random", "center", "custom")),
         start         = p_uty(default = NULL, depends = start_values == "custom")
       )
       param_set$values$start_values = "random"
       param_set$values$start = NULL
+      param_set$values$max_restarts = NA
 
       super$initialize(
         id = "cmaes",
@@ -114,7 +116,8 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
       control = libcmaesr::cmaes_control(
         maximize = direction == -1L,
         algo = "abipop",
-        max_fevals = pv$max_fevals
+        max_fevals = pv$max_fevals,
+        max_restarts = pv$max_restarts
       )
 
       libcmaesr::cmaes(
