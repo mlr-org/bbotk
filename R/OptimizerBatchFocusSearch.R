@@ -7,15 +7,11 @@
 #' `OptimizerBatchFocusSearch` class that implements a Focus Search.
 #'
 #' Focus Search starts with evaluating `n_points` drawn uniformly at random.
-#' For 1 to `maxit` batches, `n_points` are then drawn uniformly at random and
-#' if the best value of a batch outperforms the previous best value over all
-#' batches evaluated so far, the search space is shrinked around this new best
-#' point prior to the next batch being sampled and evaluated.
+#' For 1 to `maxit` batches, `n_points` are then drawn uniformly at random and if the best value of a batch outperforms the previous best value over all batches evaluated so far, the search space is shrinked around this new best point prior to the next batch being sampled and evaluated.
 #'
 #' For details on the shrinking, see [shrink_ps].
 #'
-#' Depending on the [Terminator] this procedure simply restarts after `maxit` is
-#' reached.
+#' Depending on the [Terminator] this procedure simply restarts after `maxit` is reached.
 #'
 #' @templateVar id focus_search
 #' @template section_dictionary_optimizers
@@ -23,9 +19,9 @@
 #' @section Parameters:
 #' \describe{
 #' \item{`n_points`}{`integer(1)`\cr
-#' Number of points to evaluate in each random search batch.}
+#'   Number of points to evaluate in each random search batch.}
 #' \item{`maxit`}{`integer(1)`\cr
-#' Number of random search batches to run.}
+#'   Number of random search batches to run.}
 #' }
 #'
 #' @template section_progress_bars
