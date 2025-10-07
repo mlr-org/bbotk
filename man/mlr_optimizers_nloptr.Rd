@@ -3,7 +3,7 @@
 \name{mlr_optimizers_nloptr}
 \alias{mlr_optimizers_nloptr}
 \alias{OptimizerBatchNLoptr}
-\title{Optimization via Non-linear Optimization}
+\title{Non-linear Optimization}
 \source{
 Johnson, G S (2020).
 \dQuote{The NLopt nonlinear-optimization package.}
@@ -16,34 +16,61 @@ Calls \code{\link[nloptr:nloptr]{nloptr::nloptr()}} from package \CRANpkg{nloptr
 \section{Parameters}{
 
 \describe{
-\item{\code{algorithm}}{\code{character(1)}}
-\item{\code{eval_g_ineq}}{\verb{function()}}
-\item{\code{xtol_rel}}{\code{numeric(1)}}
-\item{\code{xtol_abs}}{\code{numeric(1)}}
-\item{\code{ftol_rel}}{\code{numeric(1)}}
-\item{\code{ftol_abs}}{\code{numeric(1)}}
+\item{\code{algorithm}}{\code{character(1)}\cr
+Algorithm to use.
+See \code{\link[nloptr:nloptr.print.options]{nloptr::nloptr.print.options()}} for available algorithms.}
+\item{\code{x0}}{\code{numeric()}\cr
+Initial parameter values.
+Use \code{start_values} parameter to create \code{"random"} or \code{"center"} start values.}
 \item{\code{start_values}}{\code{character(1)}\cr
 Create \code{"random"} start values or based on \code{"center"} of search space?
 In the latter case, it is the center of the parameters before a trafo is applied.
-If set to \code{"custom"}, the start values can be passed via the \code{start} parameter.}
-\item{\code{start}}{\code{numeric()}\cr
-Custom start values. Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
+Custom start values can be passed via the \code{x0} parameter.}
 \item{\code{approximate_eval_grad_f}}{\code{logical(1)}\cr
 Should gradients be numerically approximated via finite differences (\link[nloptr:nl.grad]{nloptr::nl.grad}).
 Only required for certain algorithms.
-Note that function evaluations required for the numerical gradient approximation will be logged as usual
-and are not treated differently than regular function evaluations by, e.g., \link{Terminator}s.}
+Note that function evaluations required for the numerical gradient approximation will be logged as usual and are not treated differently than regular function evaluations by, e.g., \link{Terminator}s.}
 }
 
-For the meaning of the control parameters, see \code{\link[nloptr:nloptr]{nloptr::nloptr()}} and
-\code{\link[nloptr:nloptr.print.options]{nloptr::nloptr.print.options()}}.
+For the meaning of other control parameters, see \code{\link[nloptr:nloptr]{nloptr::nloptr()}} and \code{\link[nloptr:nloptr.print.options]{nloptr::nloptr.print.options()}}.
+}
 
-The termination conditions \code{stopval}, \code{maxtime} and \code{maxeval} of
-\code{\link[nloptr:nloptr]{nloptr::nloptr()}} are deactivated and replaced by the \link{Terminator}
-subclasses. The x and function value tolerance termination conditions
-(\code{xtol_rel = 10^-4}, \code{xtol_abs = rep(0.0, length(x0))}, \code{ftol_rel = 0.0} and
-\code{ftol_abs = 0.0}) are still available and implemented with their package
-defaults. To deactivate these conditions, set them to \code{-1}.
+\section{Internal Termination Parameters}{
+
+The algorithm can terminated with all \link{Terminator}s.
+Additionally, the following internal termination parameters can be used:
+
+\describe{
+\item{\code{stopval}}{\code{numeric(1)}\cr
+Stop value.
+Deactivate with \code{-Inf}.
+Default is \code{-Inf}.}
+\item{\code{maxtime}}{\code{integer(1)}\cr
+Maximum time.
+Deactivate with \code{-1L}.
+Default is \code{-1L}.}
+\item{\code{maxeval}}{\code{integer(1)}\cr
+Maximum number of evaluations.
+Deactivate with \code{-1L}.
+Default is \code{-1L}.}
+\item{\code{xtol_rel}}{\code{numeric(1)}\cr
+Relative tolerance.
+Original default is 10^-4.
+Deactivate with \code{-1}.
+Overwritten with \code{-1}.}
+\item{\code{xtol_abs}}{\code{numeric(1)}\cr
+Absolute tolerance.
+Deactivate with \code{-1}.
+Default is \code{-1}.}
+\item{\code{ftol_rel}}{\code{numeric(1)}\cr
+Relative tolerance.
+Deactivate with \code{-1}.
+Default is \code{-1}.}
+\item{\code{ftol_abs}}{\code{numeric(1)}\cr
+Absolute tolerance.
+Deactivate with \code{-1}.
+Default is \code{-1}.}
+}
 }
 
 \section{Progress Bars}{
