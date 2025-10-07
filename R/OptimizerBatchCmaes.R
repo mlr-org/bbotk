@@ -6,8 +6,6 @@
 #' @description
 #' `OptimizerBatchCmaes` class that implements CMA-ES.
 #' Calls `cmaes()` from package \CRANpkg{libcmaesr}.
-#' The algorithm is typically applied to search space dimensions between three and fifty.
-#' Lower search space dimensions might crash.
 #'
 #' @templateVar id cmaes
 #' @template section_dictionary_optimizers
@@ -23,11 +21,8 @@
 #'   Only applicable if `start_values` parameter is set to `"custom"`.}
 #' }
 #'
-#' For the meaning of the control parameters, see `cmaes()`.
-#' The parameters `maxit`, `stopfitness` and `stop.tolx` can be used additionally to our terminators.
-#' The default values of `maxit` is `100 * D^2` where `D` is the number of dimensions of the search space.
-#' The `stop.tolx` parameter stops when the step size is smaller than `1e-12 * sigma`.
-#' The `vectorized` parameter is always set to `TRUE`.
+#' For the meaning of the control parameters, see `libcmaesr::cmaes_control()`.
+#' The parameters `maxfevals`, `ftarget`, `f_tolerance` and `x_tolerance` can be used additionally to our terminators.
 #'
 #' @template section_progress_bars
 #'
@@ -50,7 +45,7 @@
 #'     domain = domain,
 #'     codomain = codomain)
 #'
-#'   instance = OptimInstanceBatchSingleCrit$new(
+#'   instance = oi(
 #'     objective = objective,
 #'     search_space = search_space,
 #'     terminator = trm("evals", n_evals = 10))
@@ -74,8 +69,21 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        max_fevals    = p_int(lower = 1L, init = 1000L),
+        algo          = p_fct(default = "acmaes", levels = c("cmaes", "ipop", "bipop", "acmaes", "aipop", "abipop", "sepcmaes",  "sepipop", "sepbipop", "sepacmaes", "sepaipop", "sepabipop", "vdcma", "vdipopcma", "vdbipopcma")),
+        lambda        = p_int(lower = 1L, default = NA_integer_, special_vals = list(NA_integer_)),
+        sigma         = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
         max_restarts  = p_int(lower = 1L, special_vals = list(NA), default = NA),
+        tpa           = p_int(default = NA_integer_, special_vals = list(NA_integer_)),
+        tpa_dsigma    = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
+        seed          = p_int(default = NA_integer_, special_vals = list(NA_integer_)),
+        quiet         = p_lgl(default = FALSE),
+        # internal termination criteria
+        max_fevals    = p_int(lower = 1L, default = 100L, special_vals = list(NA_integer_)),
+        max_iter      = p_int(lower = 1L, default = NA_integer_, special_vals = list(NA_integer_)),
+        ftarget       = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
+        f_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
+        x_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
+        # bbotk parameters
         start_values  = p_fct(default = "random", levels = c("random", "center", "custom")),
         start         = p_uty(default = NULL, depends = start_values == "custom")
       )
@@ -113,12 +121,8 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
         y * direction
       }
 
-      control = libcmaesr::cmaes_control(
-        maximize = direction == -1L,
-        algo = "abipop",
-        max_fevals = pv$max_fevals,
-        max_restarts = pv$max_restarts
-      )
+      control = invoke(libcmaesr::cmaes_control, maximize = direction == -1L,
+        .args = pv[which(names(pv) %nin% formalArgs(libcmaesr::cmaes_control))])
 
       libcmaesr::cmaes(
         objective = wrapper,
