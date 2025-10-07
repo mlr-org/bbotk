@@ -31,53 +31,51 @@
 #' @template section_progress_bars
 #'
 #' @export
-#' @examplesIf requireNamespace("GenSA")
+#' @examplesIf requireNamespace("GenSA", quietly = TRUE)
 #' @examples
-#'library(paradox)
+#' domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#'domain = ps(x = p_dbl(lower = -1, upper = 1))
+#' search_space = ps(x = p_dbl(lower = -1, upper = 1))
 #'
-#'search_space = ps(x = p_dbl(lower = -1, upper = 1))
+#' codomain = ps(y = p_dbl(tags = "minimize"))
 #'
-#'codomain = ps(y = p_dbl(tags = "minimize"))
+#' objective_function = function(xs) {
+#'   list(y = as.numeric(xs)^2)
+#' }
 #'
-#'objective_function = function(xs) {
-#'  list(y = as.numeric(xs)^2)
-#'}
+#' objective = ObjectiveRFun$new(
+#'   fun = objective_function,
+#'   domain = domain,
+#'   codomain = codomain
+#' )
 #'
-#'objective = ObjectiveRFun$new(
-#'  fun = objective_function,
-#'  domain = domain,
-#'  codomain = codomain
-#')
+#' terminator = trm("evals", n_evals = 10)
 #'
-#'terminator = trm("evals", n_evals = 10)
+#' # run optimizers sequentially
+#' instance = OptimInstanceBatchSingleCrit$new(
+#'   objective = objective,
+#'   search_space = search_space,
+#'   terminator = terminator
+#' )
 #'
-#'# run optimizers sequentially
-#'instance = OptimInstanceBatchSingleCrit$new(
-#'  objective = objective,
-#'  search_space = search_space,
-#'  terminator = terminator
-#')
+#' optimizer = opt("chain",
+#'   optimizers = list(opt("random_search"), opt("grid_search")),
+#'   terminators = list(trm("evals", n_evals = 5), trm("evals", n_evals = 5))
+#' )
 #'
-#'optimizer = opt("chain",
-#'  optimizers = list(opt("random_search"), opt("grid_search")),
-#'  terminators = list(trm("evals", n_evals = 5), trm("evals", n_evals = 5))
-#')
+#' optimizer$optimize(instance)
 #'
-#'optimizer$optimize(instance)
-#'
-#'# random restarts
-#'instance = OptimInstanceBatchSingleCrit$new(
-#'  objective = objective,
-#'  search_space = search_space,
-#'  terminator = trm("none")
-#')
-#'optimizer = opt("chain",
-#'  optimizers = list(opt("gensa"), opt("gensa")),
-#'  terminators = list(trm("evals", n_evals = 10), trm("evals", n_evals = 10))
-#')
-#'optimizer$optimize(instance)
+#' # random restarts
+#' instance = OptimInstanceBatchSingleCrit$new(
+#'   objective = objective,
+#'   search_space = search_space,
+#'   terminator = trm("none")
+#' )
+#' optimizer = opt("chain",
+#'   optimizers = list(opt("gensa"), opt("gensa")),
+#'   terminators = list(trm("evals", n_evals = 10), trm("evals", n_evals = 10))
+#' )
+#' optimizer$optimize(instance)
 OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
   public = list(
 

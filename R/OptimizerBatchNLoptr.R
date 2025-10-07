@@ -69,10 +69,9 @@
 #' `r format_bib("johnson_2014")`
 #'
 #' @export
+#' @examplesIf requireNamespace("nloptr", quietly = TRUE)
 #' @examples
 #' \donttest{
-#' if (requireNamespace("nloptr")) {
-#'
 #'   search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
 #'
 #'   codomain = ps(y = p_dbl(tags = "minimize"))
@@ -105,7 +104,6 @@
 #'
 #'   # Allows access of data.table of full path of all evaluations
 #'   as.data.table(instance$archive)
-#' }
 #' }
 #'
 OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,

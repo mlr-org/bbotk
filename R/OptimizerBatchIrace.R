@@ -89,6 +89,7 @@
 #' `r format_bib("lopez_2016")`
 #'
 #' @export
+#' @examplesIf requireNamespace("irace", quietly = TRUE)
 #' @examples
 #' # runtime of the example is too long
 #' \donttest{
