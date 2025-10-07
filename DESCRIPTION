@@ -38,6 +38,7 @@ Suggests:
     GenSA,
     irace (>= 4.0.0),
     knitr,
+    libcmaesr,
     mirai,
     nloptr,
     processx,
