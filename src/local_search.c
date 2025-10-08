@@ -329,7 +329,7 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
     ss->n_levels = (int*) R_alloc(ss->n_params, sizeof(int));
     double* nlevels = REAL(RC_get_dt_col_by_name(s_data, "nlevels"));
     for (int i = 0; i < ss->n_params; i++) {
-        ss->n_levels[i] = (int)nlevels[i];
+        ss->n_levels[i] = (int)lround(nlevels[i]);
     }
 
     // copy param_classes

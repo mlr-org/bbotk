@@ -4,7 +4,7 @@
 #include <stdlib.h> // for NULL
 
 #include "local_search.h"
-#include "test_localsearch.h"
+#include "test_local_search.h"
 
 /* .Call calls */
 extern SEXP c_is_dominated(SEXP);
