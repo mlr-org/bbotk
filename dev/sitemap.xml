@@ -44,6 +44,8 @@
 <url><loc>https://bbotk.mlr-org.com/dev/reference/callback_batch.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/index.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/is_dominated.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/dev/reference/local_search.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/dev/reference/local_search_control.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_async_design_points.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/mlr_optimizers_async_grid_search.html</loc></url>
