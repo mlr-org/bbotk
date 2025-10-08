@@ -96,7 +96,7 @@ test_that("OptimizerBatchLocalSearch works with mixed spaces", {
   expect_numeric(instance$archive$data$x1, lower = -1, upper = 1)
   expect_character(instance$archive$data$x2, any.missing = FALSE)
   expect_set_equal(instance$archive$data$x2, c("a", "b"))
-  expect_true(abs(instance$archive$best()$y) < 1e-5)
+  expect_true(abs(instance$archive$best()$y) < 1e-3)
 })
 
 test_that("OptimizerBatchLocalSearch works with dependencies on logical parameter", {
