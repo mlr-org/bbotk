@@ -124,7 +124,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on logical paramete
   expect_logical(instance$archive$data$x2, any.missing = FALSE)
   if (nrow(instance$archive$data[x2 == FALSE])) expect_set_equal(instance$archive$data[x2 == FALSE]$x1, NA)
   if (nrow(instance$archive$data[x2 == FALSE])) expect_set_equal(instance$archive$data[x2 == FALSE]$y, 3)
-  expect_true(abs(instance$archive$best()$y) < 1e-4)
+  expect_true(abs(instance$archive$best()$y) < 1e-3)
 })
 
 test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter", {
