@@ -61,6 +61,8 @@ reference:
       - mlr_optimizers
       - opt
       - opts
+      - local_search
+      - local_search_control
   - title: Archive
     contents:
       - starts_with("Archive")

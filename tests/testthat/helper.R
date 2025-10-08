@@ -247,3 +247,9 @@ flush_redis = function() {
   r = redux::hiredis(config)
   r$FLUSHDB()
 }
+
+check_test_results = function(testres) {
+  for (i in seq_along(testres)) {
+    expect_true(testres[[i]], info = names(testres)[i], label = names(testres)[i])
+  }
+}
