@@ -1,4 +1,4 @@
-#' @title Optimization via Local Search
+#' @title Local Search
 #'
 #' @include Optimizer.R
 #' @name mlr_optimizers_local_search

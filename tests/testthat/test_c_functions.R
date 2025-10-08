@@ -1,14 +1,3 @@
-library(testthat)
-
-check_test_results = function(testres) {
-  for (i in seq_along(testres)) {
-    expect_true(testres[[i]], info = names(testres)[i], label = names(testres)[i])
-  }
-}
-
-
-
-
 test_that("c_test_get_list_el_by_name", {
   test_list = list(a = 1, b = "foo")
   testres = .Call("c_test_get_list_el_by_name", test_list, PACKAGE = "bbotk")
@@ -43,7 +32,7 @@ test_that("c_test_dt_utils", {
     x3 = paradox::p_fct(c("a", "b")),
     x4 = paradox::p_lgl()
   )
-  ctrl = local_search_control(mut_sd = 2)
+  ctrl = local_search_control(mut_sd = 100)
   testres = .Call("c_test_dt_utils", ss, ctrl, PACKAGE = "bbotk")
   check_test_results(testres)
 })
@@ -450,7 +439,6 @@ test_that("c_test_restart_stagnated_searches", {
   expect_equal(restarted_pop_x[3, ], pop_x[3, ])
   expect_equal(restarted_pop_y[1], pop_y[1])
   expect_equal(restarted_pop_y[3], pop_y[3])
-  expect_equal(restarted_pop_y, pop_y)
   # The second row should be different (restarted)
   expect_true(restarted_pop_x[2, ]$x != pop_x[2, ]$x)
   expect_equal(restarted_pop_y[2], Inf)

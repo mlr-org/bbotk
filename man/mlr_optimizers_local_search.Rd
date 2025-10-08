@@ -3,7 +3,7 @@
 \name{mlr_optimizers_local_search}
 \alias{mlr_optimizers_local_search}
 \alias{OptimizerBatchLocalSearch}
-\title{Optimization via Local Search}
+\title{Local Search}
 \description{
 Implements a simple Local Search, see \code{\link[=local_search]{local_search()}} for details.
 Currently, setting initial points is not supported.
