@@ -8,5 +8,5 @@
       * Parameters: start_values=random
       * Parameter classes: <ParamDbl>
       * Properties: single-crit
-      * Packages: bbotk and adagio
+      * Packages: bbotk and libcmaesr
 
