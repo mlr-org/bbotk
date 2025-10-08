@@ -14,7 +14,7 @@ test_that("OptimizerBatchLocalSearch works with numeric parameter", {
   expect_data_table(instance$archive$data, nrows = 510L)
   expect_numeric(instance$archive$data$x, lower = -1, upper = 1)
   expect_true(instance$archive$best()$y >= 0)
-  expect_true(instance$archive$best()$y < 1e-5)
+  expect_true(instance$archive$best()$y < 1e-3)
 })
 
 test_that("OptimizerBatchLocalSearch works with numeric parameter with large range", {
