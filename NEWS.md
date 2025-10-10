@@ -1,4 +1,4 @@
-# bbotk 1.6.1
+# bbotk 1.7.0
 
 * BREAKING CHANGE: Replace `OptimizerBatchLocalSearch` with a faster C implementation.
 * feat: Add `par` parameter to `OptimizerGenSA`.
