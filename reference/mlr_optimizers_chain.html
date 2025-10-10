@@ -35,7 +35,7 @@ TerminatorNone and setting identical additional Terminators during construction.
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.6.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,57 +174,55 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paradox.mlr-org.com" class="external-link">paradox</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">domain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">domain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">search_space</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">search_space</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">codomain</span> <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/ps.html" class="external-link">ps</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">p_dbl</a></span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">codomain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span>y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"minimize"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">objective_function</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">xs</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">xs</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span> fun <span class="op">=</span> <span class="va">objective_function</span>,</span></span>
-<span class="r-in"><span> domain <span class="op">=</span> <span class="va">domain</span>,</span></span>
-<span class="r-in"><span> codomain <span class="op">=</span> <span class="va">codomain</span></span></span>
+<span class="r-in"><span>  fun <span class="op">=</span> <span class="va">objective_function</span>,</span></span>
+<span class="r-in"><span>  domain <span class="op">=</span> <span class="va">domain</span>,</span></span>
+<span class="r-in"><span>  codomain <span class="op">=</span> <span class="va">codomain</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">terminator</span> <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># run optimizers sequentially</span></span></span>
 <span class="r-in"><span><span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="OptimInstanceBatchSingleCrit.html">OptimInstanceBatchSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span> objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
-<span class="r-in"><span> search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
-<span class="r-in"><span> terminator <span class="op">=</span> <span class="va">terminator</span></span></span>
+<span class="r-in"><span>  objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
+<span class="r-in"><span>  search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
+<span class="r-in"><span>  terminator <span class="op">=</span> <span class="va">terminator</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"chain"</span>,</span></span>
-<span class="r-in"><span> optimizers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"random_search"</span><span class="op">)</span>, <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"grid_search"</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span> terminators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  optimizers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"random_search"</span><span class="op">)</span>, <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"grid_search"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  terminators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             x  x_domain          y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;    &lt;list&gt;      &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.08496082 &lt;list[1]&gt; 0.00721834</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x  x_domain           y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;    &lt;list&gt;       &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 0.03711327 &lt;list[1]&gt; 0.001377395</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># random restarts</span></span></span>
 <span class="r-in"><span><span class="va">instance</span> <span class="op">=</span> <span class="va"><a href="OptimInstanceBatchSingleCrit.html">OptimInstanceBatchSingleCrit</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span> objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
-<span class="r-in"><span> search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
-<span class="r-in"><span> terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
+<span class="r-in"><span>  search_space <span class="op">=</span> <span class="va">search_space</span>,</span></span>
+<span class="r-in"><span>  terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"none"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"chain"</span>,</span></span>
-<span class="r-in"><span> optimizers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span>, <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span> terminators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  optimizers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span>, <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"gensa"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  terminators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                x  x_domain            y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;num&gt;    &lt;list&gt;        &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -3.266831e-13 &lt;list[1]&gt; 1.067219e-25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -3.252607e-17 &lt;list[1]&gt; 1.057945e-33</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

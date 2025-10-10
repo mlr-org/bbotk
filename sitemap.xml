@@ -45,6 +45,8 @@
 <url><loc>https://bbotk.mlr-org.com/reference/callback_batch.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/index.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/is_dominated.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/local_search.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/local_search_control.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_async_design_points.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_optimizers_async_grid_search.html</loc></url>
@@ -79,6 +81,8 @@
 <url><loc>https://bbotk.mlr-org.com/reference/search_start.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/shrink_ps.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/terminated_error.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/tiny_logging.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/tiny_result.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/trafo_xs.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/transform_xdt_to_xss.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/trm.html</loc></url>
