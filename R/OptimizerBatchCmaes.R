@@ -4,34 +4,58 @@
 #' @name mlr_optimizers_cmaes
 #'
 #' @description
-#' `OptimizerBatchCmaes` class that implements CMA-ES. Calls [adagio::pureCMAES()]
-#' from package \CRANpkg{adagio}. The algorithm is typically applied to search
-#' space dimensions between three and fifty. Lower search space dimensions might
-#' crash.
+#' `OptimizerBatchCmaes` class that implements CMA-ES.
+#' Calls `cmaes()` from package \CRANpkg{libcmaesr}.
 #'
 #' @templateVar id cmaes
 #' @template section_dictionary_optimizers
 #'
 #' @section Parameters:
 #' \describe{
-#' \item{`sigma`}{`numeric(1)`}
+#' \item{`x0`}{`numeric()`\cr
+#'   Initial parameter values.
+#'   Use `start_values` parameter to create `"random"` or `"center"` initial values.}
 #' \item{`start_values`}{`character(1)`\cr
-#' Create `"random"` start values or based on `"center"` of search space?
-#' In the latter case, it is the center of the parameters before a trafo is applied.
-#' If set to `"custom"`, the start values can be passed via the `start` parameter.}
-#' \item{`start`}{`numeric()`\cr
-#' Custom start values. Only applicable if `start_values` parameter is set to `"custom"`.}
+#'   Create `"random"` start values or based on `"center"` of search space?
+#'   In the latter case, it is the center of the parameters before a trafo is applied.
+#'   Custom start values can be passed via the `x0` parameter.}
 #' }
 #'
-#' For the meaning of the control parameters, see [adagio::pureCMAES()]. Note
-#' that we have removed all control parameters which refer to the termination of
-#' the algorithm and where our terminators allow to obtain the same behavior.
+#' For the meaning of the control parameters, see `libcmaesr::cmaes_control()`.
+#'
+#' @section Internal Termination Parameters:
+#' The algorithm can terminated with all [Terminator]s.
+#' Additionally, the following internal termination parameters can be used:
+#'
+#' \describe{
+#' \item{`max_fevals`}{`integer(1)`\cr
+#'   Maximum number of function evaluations.
+#'   Original default is `100`.
+#'   Deactivate with `NA`.
+#'   Overwritten with `NA`.}
+#' \item{`max_iter`}{`integer(1)`\cr
+#'   Maximum number of iterations.
+#'   Deactivate with `NA`.
+#'   Default is `NA`.}
+#' \item{`ftarget`}{`numeric(1)`\cr
+#'   Target function value.
+#'   Deactivate with `NA`.
+#'   Default is `NA`.}
+#' \item{`f_tolerance`}{`numeric(1)`\cr
+#'   Function tolerance.
+#'   Deactivate with `NA`.
+#'   Default is `NA`.}
+#' \item{`x_tolerance`}{`numeric(1)`\cr
+#'   Parameter tolerance.
+#'   Deactivate with `NA`.
+#'   Default is `NA`.}
+#' }
 #'
 #' @template section_progress_bars
 #'
 #' @export
 #' @examples
-#' if (requireNamespace("adagio")) {
+#' if (requireNamespace("libcmaesr")) {
 #'   search_space = domain = ps(
 #'     x1 = p_dbl(-10, 10),
 #'     x2 = p_dbl(-5, 5)
@@ -48,7 +72,7 @@
 #'     domain = domain,
 #'     codomain = codomain)
 #'
-#'   instance = OptimInstanceBatchSingleCrit$new(
+#'   instance = oi(
 #'     objective = objective,
 #'     search_space = search_space,
 #'     terminator = trm("evals", n_evals = 10))
@@ -72,19 +96,46 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        sigma = p_dbl(default = 0.5),
-        start_values = p_fct(default = "random", levels = c("random", "center", "custom")),
-        start = p_uty(default = NULL, depends = start_values == "custom")
+        x0            = p_uty(default = NULL),
+        algo          = p_fct(default = "acmaes", levels = c(
+          "cmaes",
+          "ipop",
+          "bipop",
+          "acmaes",
+          "aipop",
+          "abipop",
+          "sepcmaes",
+          "sepipop",
+          "sepbipop",
+          "sepacmaes",
+          "sepaipop",
+          "sepabipop",
+          "vdcma",
+          "vdipopcma",
+          "vdbipopcma")),
+        lambda        = p_int(lower = 1L, default = NA_integer_, special_vals = list(NA_integer_)),
+        sigma         = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
+        max_restarts  = p_int(lower = 1L, special_vals = list(NA), default = NA),
+        tpa           = p_int(default = NA_integer_, special_vals = list(NA_integer_)),
+        tpa_dsigma    = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
+        seed          = p_int(default = NA_integer_, special_vals = list(NA_integer_)),
+        quiet         = p_lgl(default = FALSE),
+        # bbotk parameters
+        start_values  = p_fct(init = "random", levels = c("random", "center")),
+        # internal termination criteria
+        max_fevals    = p_int(lower = 1L, init = NA_integer_, special_vals = list(NA_integer_)),
+        max_iter      = p_int(lower = 1L, default = NA_integer_, special_vals = list(NA_integer_)),
+        ftarget       = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
+        f_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_)),
+        x_tolerance   = p_dbl(default = NA_real_, special_vals = list(NA_real_))
       )
-      param_set$values$start_values = "random"
-      param_set$values$start = NULL
 
       super$initialize(
         id = "cmaes",
         param_set = param_set,
         param_classes = "ParamDbl",
         properties = "single-crit",
-        packages = "adagio",
+        packages = "libcmaesr",
         label = "Covariance Matrix Adaptation Evolution Strategy",
         man = "bbotk::mlr_optimizers_cmaes"
       )
@@ -94,29 +145,33 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
+      direction = inst$objective$codomain$direction
+      lower = inst$search_space$lower
+      upper = inst$search_space$upper
 
-      if (pv$start_values == "custom") {
-        pv$par = pv$start
-        pv$start_values = NULL
-        pv$start = NULL
+      x0 = if (!is.null(pv$x0)) {
+        set_names(pv$x0, inst$search_space$ids())
       } else {
-        pv$par = search_start(inst$search_space, type = pv$start_values)
-        pv$start_values = NULL
-        pv$start = NULL
+        search_start(inst$search_space, type = pv$start_values)
       }
 
-      pv$stopeval = .Machine$integer.max # make sure pureCMAES does not stop
-      pv$stopfitness = -Inf
-
-      if (length(pv$par) < 2L) {
-        warning("CMA-ES is typically applied to search space dimensions between three and fifty. A lower search space dimension might crash.")
+      wrapper = function(xmat) {
+        xdt = set_names(as.data.table(xmat), inst$search_space$ids())
+        res = inst$eval_batch(xdt)
+        y = res[, inst$objective$codomain$target_ids, with = FALSE][[1]]
+        y * direction
       }
 
-      invoke(adagio::pureCMAES,
-        fun = inst$objective_function,
-        lower = inst$search_space$lower,
-        upper = inst$search_space$upper,
-        .args = pv)
+      control = invoke(libcmaesr::cmaes_control, maximize = direction == -1L,
+        .args = pv[which(names(pv) %in% formalArgs(libcmaesr::cmaes_control))])
+
+      libcmaesr::cmaes(
+        objective = wrapper,
+        x0 = x0,
+        lower = lower,
+        upper = upper,
+        batch = TRUE,
+        control = control)
     }
   )
 )

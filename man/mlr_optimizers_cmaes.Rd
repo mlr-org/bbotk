@@ -5,10 +5,8 @@
 \alias{OptimizerBatchCmaes}
 \title{Optimization via Covariance Matrix Adaptation Evolution Strategy}
 \description{
-\code{OptimizerBatchCmaes} class that implements CMA-ES. Calls \code{\link[adagio:cmaes]{adagio::pureCMAES()}}
-from package \CRANpkg{adagio}. The algorithm is typically applied to search
-space dimensions between three and fifty. Lower search space dimensions might
-crash.
+\code{OptimizerBatchCmaes} class that implements CMA-ES.
+Calls \code{cmaes()} from package \CRANpkg{libcmaesr}.
 }
 \section{Dictionary}{
 
@@ -23,18 +21,46 @@ opt("cmaes")
 \section{Parameters}{
 
 \describe{
-\item{\code{sigma}}{\code{numeric(1)}}
+\item{\code{x0}}{\code{numeric()}\cr
+Initial parameter values.
+Use \code{start_values} parameter to create \code{"random"} or \code{"center"} initial values.}
 \item{\code{start_values}}{\code{character(1)}\cr
 Create \code{"random"} start values or based on \code{"center"} of search space?
 In the latter case, it is the center of the parameters before a trafo is applied.
-If set to \code{"custom"}, the start values can be passed via the \code{start} parameter.}
-\item{\code{start}}{\code{numeric()}\cr
-Custom start values. Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
+Custom start values can be passed via the \code{x0} parameter.}
 }
 
-For the meaning of the control parameters, see \code{\link[adagio:cmaes]{adagio::pureCMAES()}}. Note
-that we have removed all control parameters which refer to the termination of
-the algorithm and where our terminators allow to obtain the same behavior.
+For the meaning of the control parameters, see \code{libcmaesr::cmaes_control()}.
+}
+
+\section{Internal Termination Parameters}{
+
+The algorithm can terminated with all \link{Terminator}s.
+Additionally, the following internal termination parameters can be used:
+
+\describe{
+\item{\code{max_fevals}}{\code{integer(1)}\cr
+Maximum number of function evaluations.
+Original default is \code{100}.
+Deactivate with \code{NA}.
+Overwritten with \code{NA}.}
+\item{\code{max_iter}}{\code{integer(1)}\cr
+Maximum number of iterations.
+Deactivate with \code{NA}.
+Default is \code{NA}.}
+\item{\code{ftarget}}{\code{numeric(1)}\cr
+Target function value.
+Deactivate with \code{NA}.
+Default is \code{NA}.}
+\item{\code{f_tolerance}}{\code{numeric(1)}\cr
+Function tolerance.
+Deactivate with \code{NA}.
+Default is \code{NA}.}
+\item{\code{x_tolerance}}{\code{numeric(1)}\cr
+Parameter tolerance.
+Deactivate with \code{NA}.
+Default is \code{NA}.}
+}
 }
 
 \section{Progress Bars}{
@@ -46,7 +72,7 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-if (requireNamespace("adagio")) {
+if (requireNamespace("libcmaesr")) {
   search_space = domain = ps(
     x1 = p_dbl(-10, 10),
     x2 = p_dbl(-5, 5)
@@ -63,7 +89,7 @@ if (requireNamespace("adagio")) {
     domain = domain,
     codomain = codomain)
 
-  instance = OptimInstanceBatchSingleCrit$new(
+  instance = oi(
     objective = objective,
     search_space = search_space,
     terminator = trm("evals", n_evals = 10))

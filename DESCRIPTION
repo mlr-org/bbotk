@@ -34,11 +34,11 @@ Imports:
     mlr3misc (>= 0.15.1),
     R6
 Suggests:
-    adagio,
     emoa,
     GenSA,
     irace (>= 4.0.0),
     knitr,
+    libcmaesr,
     mirai,
     nloptr,
     processx,

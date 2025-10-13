@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* BREAKING CHANGE: Replace `adagio::pureCMAES()` with `libcmaesr::cmaes()` in `OptimizerBatchCmaes`.
+
 # bbotk 1.7.0
 
 * BREAKING CHANGE: Replace `OptimizerBatchLocalSearch` with a faster C implementation.
