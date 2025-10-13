@@ -52,7 +52,7 @@ SEXP c_test_random_normal() {
   return s_res;
 }
 
-SEXP c_test_extract_ss_info(SEXP s_ss, SEXP s_ctrl) {
+SEXP c_test_extract_ss_info(SEXP s_ss) {
   SEXP s_res = RC_named_list_create_emptynames_PROTECT(19);
 
   SearchSpace ss;

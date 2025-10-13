@@ -283,8 +283,9 @@ SEXP catch_condition(SEXP s_condition, void *data) {
     DEBUG_PRINT("Caught R condition of class: %s\n",
         CHAR(STRING_ELT(Rf_getAttrib(s_condition, R_ClassSymbol), 0)));
     if (!Rf_inherits(s_condition, "terminator_exception")) {
-        SEXP stop_call = Rf_lang2(Rf_install("stop"), s_condition);
+        SEXP stop_call = PROTECT(Rf_lang2(Rf_install("stop"), s_condition));
         Rf_eval(stop_call, R_GlobalEnv);
+        UNPROTECT(1); // stop_call
     }
     return R_NilValue;
 }
