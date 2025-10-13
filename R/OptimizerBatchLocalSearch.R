@@ -10,7 +10,7 @@
 #' @templateVar id local_search
 #' @template section_dictionary_optimizers
 #'
-#' @section Parameters:\cr
+#' @section Parameters:
 #' The same as for [local_search_control()], with the same defaults (except for `minimize`).
 #'
 #' @template section_progress_bars

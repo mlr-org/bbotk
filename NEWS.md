@@ -1,6 +1,18 @@
 # bbotk (development version)
 
-* BREAKING CHANGE: Replace `adagio::pureCMAES()` with `cmaes::cma_es()` in `OptimizerBatchCmaes`.
+* BREAKING CHANGE: Replace `adagio::pureCMAES()` with `libcmaesr::cmaes()` in `OptimizerBatchCmaes`.
+
+# bbotk 1.7.0
+
+* BREAKING CHANGE: Replace `OptimizerBatchLocalSearch` with a faster C implementation.
+* feat: Add `par` parameter to `OptimizerGenSA`.
+* BREAKING CHANGE: Replace `start` parameter from  `OptimizerNloptr` with `x0` parameter.
+* feat: Expose internal termination criteria of `Optimizer`s.
+* feat: Store required packages in `Objective$packages`.
+* feat: Fail queued and running points when optimization is terminated.
+* fix: Pass `n_workers` to `rush`.
+* feat: Kill `rush` worker after optimization.
+* feat: Add tiny logging mode.
 
 # bbotk 1.6.0
 

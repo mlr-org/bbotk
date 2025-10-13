@@ -19,7 +19,7 @@ opt("local_search")
 }
 
 \section{Parameters}{
-\cr
+
 The same as for \code{\link[=local_search_control]{local_search_control()}}, with the same defaults (except for \code{minimize}).
 }
 
