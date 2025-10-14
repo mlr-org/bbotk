@@ -326,12 +326,15 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
     }
 
     // copy nlevels
-    // paradox stores nlevels as double because for ParamDbl nlevels is Inf
-    // The code below only works because we never access the nlevels of ParamDbl
     ss->n_levels = (int*) R_alloc(ss->n_params, sizeof(int));
     double* nlevels = REAL(RC_get_dt_col_by_name(s_data, "nlevels"));
     for (int i = 0; i < ss->n_params; i++) {
-        ss->n_levels[i] = (int)nlevels[i];
+        if (!R_FINITE(nlevels[i])) {
+            // For ParamDbl, nlevels is Inf - set to 0 since we never access it
+            ss->n_levels[i] = 0;
+        } else {
+            ss->n_levels[i] = (int)nlevels[i];
+        }
     }
 
     // copy param_classes
