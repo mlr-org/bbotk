@@ -846,6 +846,6 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     SEXP s_res = PROTECT(RC_named_list_create(2, (const char*[]){"x", "y"}));
     SET_VECTOR_ELT(s_res, 0, s_global_best_x);
     SET_VECTOR_ELT(s_res, 1, ScalarReal(best_y_out));
-    UNPROTECT(6 + ss.n_conds); // s_pop_x, s_neighs_x, s_global_best_x, s_res, and cond rhs
+    UNPROTECT(4 + ss.n_conds); // s_pop_x, s_neighs_x, s_global_best_x, s_res, and cond rhs
     return s_res;
 }
