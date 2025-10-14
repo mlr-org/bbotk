@@ -141,8 +141,8 @@ void dt_set_na(SEXP s_dt, int row_i, int param_j) {
 }
 
 // Create an uninitialized data.table with col types from SearchSpace
-// Return DT is PROTECTed and must be unprotected by the caller
-SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
+// Return DT must be protected by the caller
+SEXP dt_generate(int n, SearchSpace* ss) {
     SEXP s_dt = PROTECT(allocVector(VECSXP, ss->n_params));
     for (int j = 0; j < ss->n_params; j++) {
         int param_class = ss->param_classes[j];
@@ -161,10 +161,11 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
     }
     // Set column names
     SEXP s_colnames = PROTECT(allocVector(STRSXP, ss->n_params));
-    for (int j  = 0; j < ss->n_params; j++) {
+    for (int j = 0; j < ss->n_params; j++) {
         SET_STRING_ELT(s_colnames, j, mkChar(ss->param_names[j]));
     }
     setAttrib(s_dt, R_NamesSymbol, s_colnames);
+
     // Set class to data.table
     SEXP class_attr = PROTECT(allocVector(STRSXP, 2));
     SET_STRING_ELT(class_attr, 0, mkChar("data.table"));
@@ -182,8 +183,7 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
     SEXP selfref = PROTECT(allocVector(INTSXP, 1));
     INTEGER(selfref)[0] = NA_INTEGER;
     setAttrib(s_dt, Rf_install(".internal.selfref"), selfref);
-
-    UNPROTECT(4); // colnames, rownames, class_attr, selfref
+    UNPROTECT(5); // s_colnames class_attr s_rownames selfref s_dt
     return s_dt;
 }
 
@@ -668,7 +668,7 @@ int eval_obj(int n, SEXP s_x, SEXP s_obj, double* y, const Control* ctrl) {
 }
 
 
-SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const SearchSpace* ss, const Control* ctrl) {
+SEXP get_best_pop_element(SEXP s_pop_x, const double* pop_y, const SearchSpace* ss, const Control* ctrl) {
     // find the best point in the population
     double best_y = pop_y[0];
     int best_i = 0;
@@ -679,8 +679,8 @@ SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const Searc
         }
     }
     best_y *= ctrl->obj_mult; // convert to original scale
-    SEXP s_res = RC_named_list_create_PROTECT(2, (const char*[]){"x", "y"});
-    SEXP s_res_x = RC_named_list_create_PROTECT(ss->n_params, ss->param_names);
+    SEXP s_res = PROTECT(RC_named_list_create(2, (const char*[]){"x", "y"}));
+    SEXP s_res_x = PROTECT(RC_named_list_create(ss->n_params, ss->param_names));
 
 
     for (int j = 0; j < ss->n_params; j++) {
@@ -699,7 +699,7 @@ SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const Searc
     }
     SET_VECTOR_ELT(s_res, 0, s_res_x);
     SET_VECTOR_ELT(s_res, 1, ScalarReal(best_y));
-    UNPROTECT(1); // s_res_x
+    UNPROTECT(2); // s_res_x, s_res
     return s_res;
 }
 
@@ -788,7 +788,7 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     SEXP s_pop_x = PROTECT(duplicate(s_initial_x));
     dt_print(s_pop_x, 10);
 
-    SEXP s_neighs_x = dt_generate_PROTECT(ctrl.n_searches * ctrl.n_neighs, &ss);
+    SEXP s_neighs_x = PROTECT(dt_generate(ctrl.n_searches * ctrl.n_neighs, &ss));
 
     // y-values for pop. we wil later write into this array
     double *pop_y = (double*) R_alloc(ctrl.n_searches, sizeof(double));
@@ -809,7 +809,7 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
             }
         }
     }
-    SEXP s_global_best_x = RC_named_list_create_PROTECT(ss.n_params, ss.param_names);
+    SEXP s_global_best_x = PROTECT(RC_named_list_create(ss.n_params, ss.param_names));
     if (global_best_i >= 0) {
         for (int j = 0; j < ss.n_params; j++) {
             int param_class = ss.param_classes[j];
@@ -850,9 +850,9 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     PutRNGstate();
     // Build result from global best (convert y back to original scale)
     double best_y_out = global_best_y * ctrl.obj_mult;
-    SEXP s_res = RC_named_list_create_PROTECT(2, (const char*[]){"x", "y"});
+    SEXP s_res = PROTECT(RC_named_list_create(2, (const char*[]){"x", "y"}));
     SET_VECTOR_ELT(s_res, 0, s_global_best_x);
     SET_VECTOR_ELT(s_res, 1, ScalarReal(best_y_out));
-    UNPROTECT(4 + ss.n_conds); // s_pop_x, s_neighs_x, s_global_best_x, s_res, and cond rhs
+    UNPROTECT(6 + ss.n_conds); // s_pop_x, s_neighs_x, s_global_best_x, s_res, and cond rhs
     return s_res;
 }

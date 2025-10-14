@@ -71,7 +71,7 @@ typedef struct {
 int random_int(int a, int b);
 double random_normal(double mean, double sd);
 
-SEXP dt_generate_PROTECT(int n, SearchSpace *ss);
+SEXP dt_generate(int n, SearchSpace *ss);
 void dt_set_na(SEXP s_dt, int row_i, int param_j);
 int dt_is_na(SEXP s_dt, int row_i, int param_j);
 void dt_set_random(SEXP s_dt, int row_i, int param_j, const SearchSpace *ss);
@@ -93,6 +93,6 @@ void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, const SearchSpace* ss, const
 void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y,
   int* stagnate_count, double *global_best_y, SEXP s_global_best_x, const SearchSpace* ss, const Control* ctrl);
 SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x);
-SEXP get_best_pop_element_PROTECT(SEXP s_pop_x, const double* pop_y, const SearchSpace* ss, const Control* ctrl);
+SEXP get_best_pop_element(SEXP s_pop_x, const double* pop_y, const SearchSpace* ss, const Control* ctrl);
 
 #endif // LOCAL_SEARCH_H

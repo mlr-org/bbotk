@@ -14,7 +14,7 @@ void set_test_result(SEXP s_testres, int i, const char *text, int value) {
 }
 
 SEXP c_test_get_list_el_by_name(SEXP test_list) {
-  SEXP s_testres = RC_named_list_create_emptynames_PROTECT(3);
+  SEXP s_testres = PROTECT(RC_named_list_create_emptynames(3));
   SEXP s_x;
   // simple test to see if we can retrieve elements from a list by name
   s_x = RC_get_list_el_by_name(test_list, "a");
@@ -28,7 +28,7 @@ SEXP c_test_get_list_el_by_name(SEXP test_list) {
 }
 
 SEXP c_test_random_int() {
-  SEXP s_res = RC_named_list_create_emptynames_PROTECT(2);
+  SEXP s_res = PROTECT(RC_named_list_create_emptynames(2));
   GetRNGstate();
   int k;
   k = random_int(5, 5);
@@ -41,7 +41,7 @@ SEXP c_test_random_int() {
 }
 
 SEXP c_test_random_normal() {
-  SEXP s_res = RC_named_list_create_emptynames_PROTECT(1);
+  SEXP s_res = PROTECT(RC_named_list_create_emptynames(1));
   GetRNGstate();
   double val = random_normal(0.0, 1.0);
   // This is a weak test, but it's hard to test a random number generator.
@@ -53,7 +53,7 @@ SEXP c_test_random_normal() {
 }
 
 SEXP c_test_extract_ss_info(SEXP s_ss) {
-  SEXP s_res = RC_named_list_create_emptynames_PROTECT(19);
+  SEXP s_res = PROTECT(RC_named_list_create_emptynames(19));
 
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
@@ -96,7 +96,7 @@ SEXP c_test_extract_ss_info(SEXP s_ss) {
 }
 
 SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
-  SEXP s_res = RC_named_list_create_emptynames_PROTECT(16);
+  SEXP s_res = PROTECT(RC_named_list_create_emptynames(16));
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
   GetRNGstate();
@@ -104,7 +104,7 @@ SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   extract_ctrl_info(s_ctrl, &ctrl);
 
   // Test dt_generate
-  SEXP s_dt = dt_generate_PROTECT(2, &ss); // dt_generate returns a PROTECTed SEXP
+  SEXP s_dt = PROTECT(dt_generate(2, &ss));
   set_test_result(s_res, 0, "generate_nrows", RC_dt_nrows(s_dt) == 2);
   set_test_result(s_res, 1, "generate_ncols", Rf_length(s_dt) == ss.n_params);
 
@@ -163,13 +163,13 @@ SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   set_test_result(s_res, 15, "mutate_lgl_changed", lgl_val == 0);
 
   PutRNGstate();
-  UNPROTECT(2 + ss.n_conds); // s_res, s_dt, ss.conds
+  UNPROTECT(3 + ss.n_conds); // s_res, s_dt, ss.conds
   return s_res;
 }
 
 SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expected_cond_sort) {
 
-  SEXP s_res = RC_named_list_create_emptynames_PROTECT(2);
+  SEXP s_res = PROTECT(RC_named_list_create_emptynames(2));
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
   toposort_params(&ss);
@@ -199,7 +199,7 @@ SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expect
 SEXP c_test_is_condition_satisfied(SEXP s_dt_row, SEXP s_ss, SEXP s_cond_idx, SEXP s_expected_satisfied) {
   SearchSpace ss;
   extract_ss_info_PROTECT(s_ss, &ss);
-  SEXP s_res = RC_named_list_create_emptynames_PROTECT(1);
+  SEXP s_res = PROTECT(RC_named_list_create_emptynames(1));
   Cond *cond = &ss.conds[asInteger(s_cond_idx)];
   int ok = is_condition_satisfied(s_dt_row, 0, cond, &ss);
   set_test_result(s_res, 0, "cond_satisfied", ok == asInteger(s_expected_satisfied));
@@ -221,13 +221,13 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     ctrl.n_searches = n_searches;
     DEBUG_PRINT("n_searches: %d, n_neighs: %d\n", n_searches, ctrl.n_neighs);
 
-    SEXP s_neighs_x = dt_generate_PROTECT(n_searches * ctrl.n_neighs, &ss);
+    SEXP s_neighs_x = PROTECT(dt_generate(n_searches * ctrl.n_neighs, &ss));
 
     GetRNGstate();
     generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
     PutRNGstate();
 
-    UNPROTECT(1 + ss.n_conds); // s_neighs_x and ss.conds
+    UNPROTECT(2 + ss.n_conds); // s_neighs_x and ss.conds
     return s_neighs_x;
 }
 
@@ -248,7 +248,7 @@ SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s
 
     // Prepare global best placeholders
     double global_best_y = R_PosInf;
-    SEXP s_global_best_x = RC_named_list_create_PROTECT(ss.n_params, ss.param_names);
+    SEXP s_global_best_x = PROTECT(RC_named_list_create(ss.n_params, ss.param_names));
 
     copy_best_neighs_to_pop(s_neighs_x, neighs_y, s_pop_x_copy, pop_y_copy, stagnate_count, &global_best_y, s_global_best_x, &ss, &ctrl);
 
@@ -262,7 +262,7 @@ SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s
     setAttrib(s_res, R_NamesSymbol, s_names);
     UNPROTECT(1); // s_names
 
-    UNPROTECT(4 + ss.n_conds); // s_pop_x_copy, s_pop_y_copy, s_res, s_global_best_x, and ss.conds
+    UNPROTECT(5 + ss.n_conds); // s_pop_x_copy, s_pop_y_copy, s_res, s_global_best_x, and ss.conds
     return s_res;
 }
 
@@ -271,8 +271,8 @@ SEXP c_test_get_best_pop_element(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_po
     Control ctrl; extract_ctrl_info(s_ctrl, &ctrl);
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
-    SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, REAL(s_pop_y), &ss, &ctrl);
-    UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
+    SEXP s_res = PROTECT(get_best_pop_element(s_pop_x, REAL(s_pop_y), &ss, &ctrl));
+    UNPROTECT(2 + ss.n_conds); // s_res, ss.conds
     return s_res;
 }
 
