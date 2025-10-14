@@ -2,25 +2,25 @@
 
 const char *RC_asString(SEXP s_x) { return CHAR(STRING_ELT(s_x, 0)); }
 
-SEXP RC_named_list_create_emptynames_PROTECT(int n) {
+SEXP RC_named_list_create_emptynames(int n) {
   SEXP s_res = PROTECT(allocVector(VECSXP, n));
   SEXP s_names = PROTECT(allocVector(STRSXP, n));
   for (int i = 0; i < n; i++) { // initialize names to empty strings
     SET_STRING_ELT(s_names, i, mkChar(""));
   }
   setAttrib(s_res, R_NamesSymbol, s_names);
-  UNPROTECT(1); // s_res
+  UNPROTECT(2); // s_res s_names
   return s_res;
 }
 
-SEXP RC_named_list_create_PROTECT(int n, const char *names[]) {
+SEXP RC_named_list_create(int n, const char *names[]) {
   SEXP s_res = PROTECT(allocVector(VECSXP, n));
   SEXP s_names = PROTECT(allocVector(STRSXP, n));
   for (int i = 0; i < n; i++) { // initialize names to empty strings
     SET_STRING_ELT(s_names, i, mkChar(names[i]));
   }
   setAttrib(s_res, R_NamesSymbol, s_names);
-  UNPROTECT(1); // s_res
+  UNPROTECT(2); // s_res s_names
   return s_res;
 }
 
