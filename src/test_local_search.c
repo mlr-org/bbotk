@@ -163,7 +163,7 @@ SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   set_test_result(s_res, 15, "mutate_lgl_changed", lgl_val == 0);
 
   PutRNGstate();
-  UNPROTECT(3 + ss.n_conds); // s_res, s_dt, ss.conds
+  UNPROTECT(2 + ss.n_conds); // s_res, s_dt, ss.conds
   return s_res;
 }
 
@@ -227,7 +227,7 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
     PutRNGstate();
 
-    UNPROTECT(2 + ss.n_conds); // s_neighs_x and ss.conds
+    UNPROTECT(1 + ss.n_conds); // s_neighs_x and ss.conds
     return s_neighs_x;
 }
 
@@ -260,9 +260,8 @@ SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s
     SET_STRING_ELT(s_names, 0, mkChar("pop_x"));
     SET_STRING_ELT(s_names, 1, mkChar("pop_y"));
     setAttrib(s_res, R_NamesSymbol, s_names);
-    UNPROTECT(1); // s_names
 
-    UNPROTECT(5 + ss.n_conds); // s_pop_x_copy, s_pop_y_copy, s_res, s_global_best_x, and ss.conds
+    UNPROTECT(5 + ss.n_conds); // s_pop_x_copy, s_pop_y_copy, s_global_best_x, s_res, s_names and ss.conds
     return s_res;
 }
 
@@ -272,7 +271,7 @@ SEXP c_test_get_best_pop_element(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_po
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
     SEXP s_res = PROTECT(get_best_pop_element(s_pop_x, REAL(s_pop_y), &ss, &ctrl));
-    UNPROTECT(2 + ss.n_conds); // s_res, ss.conds
+    UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
     return s_res;
 }
 

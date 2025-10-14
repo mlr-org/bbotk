@@ -470,3 +470,5 @@ test_that("c_test_dt_set_random_row", {
   expect_true(!is.na(random_dt$x4))
 })
 
+
+

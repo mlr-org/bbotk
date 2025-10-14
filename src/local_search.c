@@ -263,13 +263,6 @@ void dt_set_random(SEXP s_dt, int row_i, int param_j, const SearchSpace* ss) {
 }
 
 
-
-
-
-/************ General functions for R data types *********** */
-
-
-
 /************ try-eval-catch *********** */
 
 // internal function to evaluate an expression in the global environment
