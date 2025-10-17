@@ -159,7 +159,7 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
         }
         SET_VECTOR_ELT(s_dt, j, col);
         UNPROTECT(1); // col
-    } 
+    }
     // Set column names
     SEXP s_colnames = PROTECT(allocVector(STRSXP, ss->n_params));
     for (int j  = 0; j < ss->n_params; j++) {
@@ -177,7 +177,7 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
     for (int i = 0; i < n; i++) {
       INTEGER(s_rownames)[i] = i + 1;
     }
-    setAttrib(s_dt, R_RowNamesSymbol, s_rownames);  
+    setAttrib(s_dt, R_RowNamesSymbol, s_rownames);
 
     // Set .internal.selfref attribute for data.table
     SEXP selfref = PROTECT(allocVector(INTSXP, 1));
@@ -189,8 +189,8 @@ SEXP dt_generate_PROTECT(int n, SearchSpace* ss) {
 }
 
 // Helper function mutate a single element of a config (in a DT)
-void dt_mutate_element(SEXP s_dt, int search_i, int neigh_i, int param_j, 
-  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) 
+void dt_mutate_element(SEXP s_dt, int search_i, int neigh_i, int param_j,
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl)
 {
     int row_idx = search_i * ctrl->n_neighs + neigh_i;
     // we only mutate elements that are not NA
@@ -421,7 +421,7 @@ void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
     assert(ctrl->mut_sigma_max > 0);
     assert(ctrl->lahc_buf_size > 0);
     assert(ctrl->stagnate_max >= 0);
-} 
+}
 
 
 /************ Condition functions ********** */
@@ -480,7 +480,7 @@ void reorder_conds_by_toposort(SearchSpace* ss) {
 
 
 // Check if a condition is satisfied for a given row
-// whether a confition is satisfied ONLY depends on the value of the parent parameter, 
+// whether a confition is satisfied ONLY depends on the value of the parent parameter,
 // not the condition-param itself
 // if the parent parameter is NA the condition is not satisfied, as the parent is non-active
 // (i dont think we want to allow that a subordinate is only active when the super parameter is non-active)
@@ -528,7 +528,7 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, const Cond *cond, const Searc
 /************ Local search functions ********** */
 
 // Generate neighbors for all current points in an existing data.table
-void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) 
+void generate_neighs(SEXP s_pop_x, SEXP s_neighs_x, LS_State* ls_state, const SearchSpace* ss, const Control* ctrl)
 {
     DEBUG_PRINT("generate_neighs\n");
     memset(ls_state->mut_param_indices, -1, ctrl->n_searches * ctrl->n_neighs * sizeof(int));
@@ -630,8 +630,8 @@ void find_best_neigh_per_search(SEXP s_neighs_x, double* neighs_y, LS_State* ls_
 
 
 // Copy the best neighbor from each block into the population
-void copy_selected_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y, 
-  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) 
+void copy_selected_neighs_to_pop(SEXP s_neighs_x, double* neighs_y, SEXP s_pop_x, double *pop_y,
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl)
 {
   DEBUG_PRINT("copy_selected_neighs_to_pop\n");
   for (int search_i = 0; search_i < ctrl->n_searches; search_i++) {
@@ -757,13 +757,13 @@ void check_and_fix_param_value(SEXP s_neighs_x, int neigh_i, int param_j, int al
 
 
 void dt_repair_row(SEXP s_dt, int row_i, const SearchSpace* ss) {
-  // Iterate through topologically sorted conditions 
+  // Iterate through topologically sorted conditions
   int param_index_current = -1;
   int all_conds_satisfied = 1;
   for (int c = 0; c < ss->n_conds; c++) {
       Cond* cond = &ss->conds[c];
       if (param_index_current != cond->param_index) {
-          // finished processing all conditions for a particular parameter 
+          // finished processing all conditions for a particular parameter
           // now see and fix if its value is in conflict with its conditions
           if (param_index_current > -1) {
               check_and_fix_param_value(s_dt, row_i, param_index_current, all_conds_satisfied, ss);
@@ -804,9 +804,21 @@ void init_ls_state(LS_State* ls_state, const SearchSpace* ss, const Control* ctr
   memset(ls_state->stagnate_count, 0, ctrl->n_searches * sizeof(int));
 }
 
-void lahc_accept(SEXP s_pop_x, double *pop_y, SEXP s_neighs_x, double *neighs_y, 
-  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl) 
+void lahc_accept(SEXP s_pop_x, double *pop_y, SEXP s_neighs_x, double *neighs_y,
+  LS_State* ls_state, const SearchSpace* ss, const Control* ctrl)
 {
+    // FIXME
+    // for (int search_i = 0; search_i < ctrl->n_searches; search_i++) {
+    //     if (ls_state->ls_step[search_i] == 0) {
+    //       for (int k = 0; k < ctrl->lahc_buf_size; k++) {
+    //         ls_state->lahc_buffer[search_i * ctrl->lahc_buf_size + k] = pop_y[search_i];
+    //       }
+    //     }
+    //     int best_row_idx = ls_state->selected_neigh_idx[search_i];
+    //     double y_current = pop_y[search_i];
+    //     double y_neigh = neighs_y[best_row_idx];
+    //     int buffer_idx = search_i * ctrl->lahc_buf_size + ls_state->ls_step[search_i] % ctrl->lahc_buf_size;
+
   for (int i = 0; i < ctrl->n_searches; i++) {
     int best_row_idx = ls_state->selected_neigh_idx[i];
     double y_current = pop_y[i];
@@ -879,6 +891,6 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
 
     PutRNGstate();
     SEXP s_res = get_best_pop_element_PROTECT(s_pop_x, pop_y, &ss, &ctrl);
-    UNPROTECT(3+ss.n_conds); // s_pop_x, s_neighs_x, s_res and all PROTECTed cond rhs_value 
+    UNPROTECT(3+ss.n_conds); // s_pop_x, s_neighs_x, s_res and all PROTECTed cond rhs_value
     return s_res;
 }

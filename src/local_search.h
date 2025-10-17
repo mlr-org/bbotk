@@ -21,6 +21,8 @@
     * when we do the stagnatiuon coount / check is this somehow affected by how we accept in LAHC?
       dongt consider LAHC but simply if we strictly improve
     * better separate the tests for find_best_neigh_per_search and copy_selected_neighs_to_pop and lahc_accept
+    * implement symGEO mutate for ints
+    * pop_y is not correct after a restart? also in the other branch?
     */
 
 // Debug printer system - can be switched on/off
