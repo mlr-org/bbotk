@@ -203,7 +203,9 @@ test_that("Required packages are loaded", {
   )
 
   optimizer = opt("async_random_search")
-  expect_error(optimizer$optimize(instance), "irace is not loaded")
+  expect_error(optimizer$optimize(instance), "All workers have crashed")
+  Sys.sleep(1)
+  expect_match(instance$rush$fetch_failed_tasks()$message, "irace is not loaded")
 
   objective = ObjectiveRFun$new(
     fun = function(xs) {
