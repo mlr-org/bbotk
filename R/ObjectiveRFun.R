@@ -8,6 +8,7 @@
 #' @template param_codomain
 #' @template param_check_values
 #' @template param_constants
+#' @template param_packages
 #'
 #' @export
 #' @examples
@@ -52,6 +53,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
       id = "function",
       properties = character(),
       constants = ps(),
+      packages = character(),
       check_values = TRUE
       ) {
       if (is.null(codomain)) {
@@ -65,6 +67,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
         codomain = codomain,
         properties = properties,
         constants = constants,
+        packages = packages,
         check_values = check_values,
         label = "Objective Custom R Function",
         man = "bbotk::ObjectiveRFun")

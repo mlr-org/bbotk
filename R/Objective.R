@@ -192,6 +192,7 @@ Objective = R6Class("Objective",
 
     #' @field packages (`character()`)\cr
     #' Set of required packages to run the objective function.
+    #' Packages are loaded on each worker when the objective is called by [OptimizerAsync].
     packages = function(rhs) {
       assert_ro_binding(rhs)
       private$.packages

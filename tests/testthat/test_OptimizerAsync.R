@@ -173,3 +173,60 @@ test_that("Queued tasks are failed when optimization is terminated", {
   expect_data_table(instance$archive$data[list("failed"), on = "state"], min.rows = 1L)
   expect_rush_reset(instance$rush)
 })
+
+test_that("Required packages are loaded", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+  library(rush)
+
+  mirai::daemons(2)
+  rush::rush_plan(n_workers = 2, worker_type = "remote")
+
+  objective = ObjectiveRFun$new(
+    fun = function(xs) {
+      if("irace" %in% loadedNamespaces()) {
+        return(list(y = 1))
+      } else {
+        stop("irace is not loaded")
+      }
+    },
+    domain = PS_2D_domain,
+    properties = "single-crit"
+  )
+
+
+  instance = oi_async(
+    objective = objective,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+  )
+
+  optimizer = opt("async_random_search")
+  expect_error(optimizer$optimize(instance), "irace is not loaded")
+
+  objective = ObjectiveRFun$new(
+    fun = function(xs) {
+      if("irace" %in% loadedNamespaces()) {
+        return(list(y = 1))
+      } else {
+        stop("irace is not loaded")
+      }
+    },
+    domain = PS_2D_domain,
+    properties = "single-crit",
+    packages = "irace"
+  )
+
+
+  instance = oi_async(
+    objective = objective,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  expect_set_equal(instance$archive$data$y, 1)
+})

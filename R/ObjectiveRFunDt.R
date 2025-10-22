@@ -8,6 +8,8 @@
 #' @template param_xdt
 #' @template param_check_values
 #' @template param_constants
+#' @template param_packages
+#'
 #' @export
 ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
   inherit = Objective,
@@ -28,6 +30,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
       id = "function",
       properties = character(),
       constants = ps(),
+      packages = character(),
       check_values = TRUE
       ) {
       if (is.null(codomain)) {
@@ -41,6 +44,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
         codomain = codomain,
         properties = properties,
         constants = constants,
+        packages = packages,
         check_values = check_values,
         label = "Objective Custom R Function Eval Data Table",
         man = "bbotk::ObjectiveRFunDt")

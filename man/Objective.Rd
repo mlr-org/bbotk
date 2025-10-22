@@ -56,7 +56,8 @@ Dimension of domain.}
 Dimension of codomain.}
 
 \item{\code{packages}}{(\code{character()})\cr
-Set of required packages to run the objective function.}
+Set of required packages to run the objective function.
+Packages are loaded on each worker when the objective is called by \link{OptimizerAsync}.}
 }
 \if{html}{\out{</div>}}
 }

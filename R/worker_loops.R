@@ -17,6 +17,8 @@ bbotk_worker_loop = function(rush, optimizer, instance) {
   instance$rush = rush
   instance$archive$rush = rush
 
+  require_namespaces(instance$objective$packages)
+
   # reduce number of threads to 1
   old_dt = data.table::getDTthreads()
   on.exit(data.table::setDTthreads(old_dt), add = TRUE)

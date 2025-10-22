@@ -49,6 +49,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   id = "function",
   properties = character(),
   constants = ps(),
+  packages = character(),
   check_values = TRUE
 )}\if{html}{\out{</div>}}
 }
@@ -76,6 +77,9 @@ be minimized or maximized.  The default is to minimize each component.}
 
 \item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
+
+\item{\code{packages}}{(\code{character()})\cr
+Set of required packages to run the objective function.}
 
 \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for validity?}

@@ -8,6 +8,7 @@
 #' @template param_codomain
 #' @template param_check_values
 #' @template param_constants
+#' @template param_packages
 #'
 #' @export
 #' @examples
@@ -53,6 +54,7 @@ ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
       id = "function",
       properties = character(),
       constants = ps(),
+      packages = character(),
       check_values = TRUE
       ) {
       if (is.null(codomain)) codomain = ps(y = p_dbl(tags = "minimize"))
@@ -64,6 +66,7 @@ ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
         codomain = codomain,
         properties = properties,
         constants = constants,
+        packages = packages,
         check_values = check_values,
         label = "Objective Custom R Function Eval List")
     },
