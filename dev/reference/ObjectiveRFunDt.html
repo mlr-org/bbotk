@@ -92,6 +92,7 @@ Objective function.</p></dd>
 <span>  id <span class="op">=</span> <span class="st">"function"</span>,</span>
 <span>  properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  constants <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  packages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  check_values <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -129,6 +130,11 @@ be minimized or maximized.  The default is to minimize each component.</p></dd>
 <dt><code>constants</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.</p></dd>
+
+
+<dt><code>packages</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
+Set of required packages to run the objective function.</p></dd>
 
 
 <dt><code>check_values</code></dt>
