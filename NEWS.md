@@ -1,5 +1,8 @@
 # bbotk 1.7.1
 
+fix: Imbalanced protection and casting in C code.
+fix: Load required packages in worker loop.
+
 # bbotk 1.7.0
 
 * BREAKING CHANGE: Replace `OptimizerBatchLocalSearch` with a faster C implementation.
