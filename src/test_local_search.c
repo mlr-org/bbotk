@@ -27,7 +27,7 @@ SEXP c_test_get_list_el_by_name(SEXP test_list) {
   return s_testres;
 }
 
-SEXP c_test_random_int() {
+SEXP c_test_random_int(void) {
   SEXP s_res = PROTECT(RC_named_list_create_emptynames(2));
   GetRNGstate();
   int k;
@@ -40,7 +40,7 @@ SEXP c_test_random_int() {
   return s_res;
 }
 
-SEXP c_test_random_normal() {
+SEXP c_test_random_normal(void) {
   SEXP s_res = PROTECT(RC_named_list_create_emptynames(1));
   GetRNGstate();
   double val = random_normal(0.0, 1.0);
