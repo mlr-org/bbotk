@@ -56,7 +56,7 @@ SEXP c_test_extract_ss_info(SEXP s_ss) {
   SEXP s_res = PROTECT(RC_named_list_create_emptynames(19));
 
   SearchSpace ss;
-  extract_ss_info_PROTECT(s_ss, &ss);
+  extract_ss_info(s_ss, &ss);
 
   set_test_result(s_res, 0, "ok0", ss.n_params == 4);
 
@@ -91,14 +91,14 @@ SEXP c_test_extract_ss_info(SEXP s_ss) {
   k = find_param_index("x3", &ss);
   set_test_result(s_res, 18, "ok18", k == 2);
 
-  UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
+  UNPROTECT(1); // s_res
   return s_res;
 }
 
 SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   SEXP s_res = PROTECT(RC_named_list_create_emptynames(16));
   SearchSpace ss;
-  extract_ss_info_PROTECT(s_ss, &ss);
+  extract_ss_info(s_ss, &ss);
   GetRNGstate();
   Control ctrl;
   extract_ctrl_info(s_ctrl, &ctrl);
@@ -163,7 +163,7 @@ SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl) {
   set_test_result(s_res, 15, "mutate_lgl_changed", lgl_val == 0);
 
   PutRNGstate();
-  UNPROTECT(2 + ss.n_conds); // s_res, s_dt, ss.conds
+  UNPROTECT(2); // s_res, s_dt
   return s_res;
 }
 
@@ -171,7 +171,7 @@ SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expect
 
   SEXP s_res = PROTECT(RC_named_list_create_emptynames(2));
   SearchSpace ss;
-  extract_ss_info_PROTECT(s_ss, &ss);
+  extract_ss_info(s_ss, &ss);
   toposort_params(&ss);
 
   int ok = 1;
@@ -192,24 +192,24 @@ SEXP c_test_toposort_params(SEXP s_ss, SEXP s_expected_param_sort, SEXP s_expect
   }
   set_test_result(s_res, 1, "reorder_conds", ok);
 
-  UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
+  UNPROTECT(1); // s_res,
   return s_res;
 }
 
 SEXP c_test_is_condition_satisfied(SEXP s_dt_row, SEXP s_ss, SEXP s_cond_idx, SEXP s_expected_satisfied) {
   SearchSpace ss;
-  extract_ss_info_PROTECT(s_ss, &ss);
+  extract_ss_info(s_ss, &ss);
   SEXP s_res = PROTECT(RC_named_list_create_emptynames(1));
   Cond *cond = &ss.conds[asInteger(s_cond_idx)];
   int ok = is_condition_satisfied(s_dt_row, 0, cond, &ss);
   set_test_result(s_res, 0, "cond_satisfied", ok == asInteger(s_expected_satisfied));
-  UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
+  UNPROTECT(1); // s_res,
   return s_res;
 }
 
 SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     SearchSpace ss;
-    extract_ss_info_PROTECT(s_ss, &ss);
+    extract_ss_info(s_ss, &ss);
     toposort_params(&ss);
     reorder_conds_by_toposort(&ss);
     Control ctrl;
@@ -227,13 +227,13 @@ SEXP c_test_generate_neighs(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x) {
     generate_neighs(s_pop_x, s_neighs_x, &ss, &ctrl);
     PutRNGstate();
 
-    UNPROTECT(1 + ss.n_conds); // s_neighs_x and ss.conds
+    UNPROTECT(1); // s_neighs_x and
     return s_neighs_x;
 }
 
 SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_pop_y, SEXP s_neighs_x, SEXP s_neighs_y) {
     SearchSpace ss;
-    extract_ss_info_PROTECT(s_ss, &ss);
+    extract_ss_info(s_ss, &ss);
     Control ctrl;
     extract_ctrl_info(s_ctrl, &ctrl);
 
@@ -261,23 +261,23 @@ SEXP c_test_copy_best_neighs_to_pop(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s
     SET_STRING_ELT(s_names, 1, mkChar("pop_y"));
     setAttrib(s_res, R_NamesSymbol, s_names);
 
-    UNPROTECT(5 + ss.n_conds); // s_pop_x_copy, s_pop_y_copy, s_global_best_x, s_res, s_names and ss.conds
+    UNPROTECT(5); // s_pop_x_copy, s_pop_y_copy, s_global_best_x, s_res, s_names and
     return s_res;
 }
 
 SEXP c_test_get_best_pop_element(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_pop_y) {
-    SearchSpace ss; extract_ss_info_PROTECT(s_ss, &ss);
+    SearchSpace ss; extract_ss_info(s_ss, &ss);
     Control ctrl; extract_ctrl_info(s_ctrl, &ctrl);
     // there might be some bogus setting in ctrl.n_searches, so we overwrite it
     ctrl.n_searches = RC_dt_nrows(s_pop_x);
     SEXP s_res = PROTECT(get_best_pop_element(s_pop_x, REAL(s_pop_y), &ss, &ctrl));
-    UNPROTECT(1 + ss.n_conds); // s_res, ss.conds
+    UNPROTECT(1); // s_res,
     return s_res;
 }
 
 SEXP c_test_dt_repair_row(SEXP s_ss, SEXP s_dt) {
     SearchSpace ss;
-    extract_ss_info_PROTECT(s_ss, &ss);
+    extract_ss_info(s_ss, &ss);
     toposort_params(&ss);
     reorder_conds_by_toposort(&ss);
     // We make a copy of the DT to avoid modifying the original R object
@@ -285,13 +285,13 @@ SEXP c_test_dt_repair_row(SEXP s_ss, SEXP s_dt) {
     GetRNGstate();
     dt_repair_row(s_dt_copy, 0, &ss);
     PutRNGstate();
-    UNPROTECT(1 + ss.n_conds); // s_dt_copy, ss.conds
+    UNPROTECT(1); // s_dt_copy,
     return s_dt_copy;
 }
 
 SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEXP s_pop_y, SEXP s_stagnate_count) {
     SearchSpace ss;
-    extract_ss_info_PROTECT(s_ss, &ss);
+    extract_ss_info(s_ss, &ss);
     toposort_params(&ss);
     reorder_conds_by_toposort(&ss);
     Control ctrl;
@@ -315,18 +315,18 @@ SEXP c_test_restart_stagnated_searches(SEXP s_ss, SEXP s_ctrl, SEXP s_pop_x, SEX
     SET_VECTOR_ELT(s_res, 0, s_pop_x_copy);
     SET_VECTOR_ELT(s_res, 1, s_pop_y_copy);
 
-    UNPROTECT(3 + ss.n_conds); // s_pop_x_copy, s_pop_y_copy, s_res, ss.conds
+    UNPROTECT(3); // s_pop_x_copy, s_pop_y_copy, s_res,
     return s_res;
 }
 
 SEXP c_test_dt_set_random_row(SEXP s_ss, SEXP s_dt) {
     SearchSpace ss;
-    extract_ss_info_PROTECT(s_ss, &ss);
+    extract_ss_info(s_ss, &ss);
     // We make a copy of the DT to avoid modifying the original R object
     SEXP s_dt_copy = PROTECT(duplicate(s_dt));
     GetRNGstate();
     dt_set_random_row(s_dt_copy, 0, &ss); // test on the first row
     PutRNGstate();
-    UNPROTECT(1 + ss.n_conds); // s_dt_copy, ss.conds
+    UNPROTECT(1); // s_dt_copy,
     return s_dt_copy;
 }

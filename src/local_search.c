@@ -304,7 +304,7 @@ int find_param_index(const char* param_name, const SearchSpace* ss) {
 
 // convert paradox SearchSpace to C SearchSpace
 // the function proectes the rhs parts of the conditions, caller must unprotect them (ss->conds times)
-void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
+void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
     ss->n_params = asInteger(RC_get_r6_el_by_name(s_ss, "length"));
     SEXP s_data = RC_get_r6_el_by_name(s_ss, "data");
 
@@ -387,8 +387,7 @@ void extract_ss_info_PROTECT(SEXP s_ss, SearchSpace* ss) {
         // Extract condition information
         SEXP s_cond = VECTOR_ELT(s_deps_cond, i);
         conds[i].type = Rf_inherits(s_cond, "CondEqual") ? 0 : 1; // 0=CondEqual, 1=CondAnyOf
-        // store RHS SEXP so we dont have to type-convert, but protect it from gc
-        conds[i].s_rhs = PROTECT(RC_get_list_el_by_name(s_cond, "rhs"));
+        conds[i].s_rhs = RC_get_list_el_by_name(s_cond, "rhs");
         DEBUG_PRINT("cond %d: param_index %d, parent_index %d, type %d, rhs type %d\n",
             i, conds[i].param_index, conds[i].parent_index, conds[i].type, TYPEOF(conds[i].s_rhs));
       }
@@ -769,7 +768,7 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     GetRNGstate();
 
     SearchSpace ss;
-    extract_ss_info_PROTECT(s_ss, &ss);
+    extract_ss_info(s_ss, &ss);
     toposort_params(&ss);
     reorder_conds_by_toposort(&ss);
     Control ctrl;
@@ -846,6 +845,6 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     SEXP s_res = PROTECT(RC_named_list_create(2, (const char*[]){"x", "y"}));
     SET_VECTOR_ELT(s_res, 0, s_global_best_x);
     SET_VECTOR_ELT(s_res, 1, ScalarReal(best_y_out));
-    UNPROTECT(4 + ss.n_conds); // s_pop_x, s_neighs_x, s_global_best_x, s_res, and cond rhs
+    UNPROTECT(4); // s_pop_x, s_neighs_x, s_global_best_x, s_res
     return s_res;
 }
