@@ -303,10 +303,9 @@ int find_param_index(const char* param_name, const SearchSpace* ss) {
 }
 
 // convert paradox SearchSpace to C SearchSpace
-// the function proectes the rhs parts of the conditions, caller must unprotect them (ss->conds times)
 void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
     ss->n_params = asInteger(RC_get_r6_el_by_name(s_ss, "length"));
-    SEXP s_data = RC_get_r6_el_by_name(s_ss, "data");
+    SEXP s_data = PROTECT(RC_get_r6_el_by_name(s_ss, "data"));
 
     // copy lower and upper bounds
     ss->lower = (double*) R_alloc(ss->n_params, sizeof(double));
@@ -370,11 +369,11 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
     }
 
     DEBUG_PRINT("extracting conditions\n");
-    SEXP s_deps = RC_get_r6_el_by_name(s_ss, "deps");
-    SEXP s_deps_on = RC_get_dt_col_by_name(s_deps, "on");
-    SEXP s_deps_id = RC_get_dt_col_by_name(s_deps, "id");
+    SEXP s_deps = PROTECT(RC_get_r6_el_by_name(s_ss, "deps"));
+    SEXP s_deps_on = PROTECT(RC_get_dt_col_by_name(s_deps, "on"));
+    SEXP s_deps_id = PROTECT(RC_get_dt_col_by_name(s_deps, "id"));
     DEBUG_PRINT("s_deps_id type: %d\n", TYPEOF(s_deps_id));
-    SEXP s_deps_cond = RC_get_dt_col_by_name(s_deps, "cond");
+    SEXP s_deps_cond = PROTECT(RC_get_dt_col_by_name(s_deps, "cond"));
     ss->n_conds = length(s_deps_on);
     Cond *conds = NULL;
     if (ss->n_conds != 0) {
@@ -393,6 +392,7 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
       }
     }
     ss->conds = conds;
+    UNPROTECT(5); // s_data, s_deps, s_deps_on, s_deps_id, s_deps_cond
 }
 
 void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
