@@ -18,7 +18,8 @@
 #'
 #' @export
 #' @examples
-#' if (mlr3misc::require_namespaces(c("rush", "redux"), quietly = TRUE) && redux::redis_available()) {
+#' if (mlr3misc::require_namespaces(c("rush", "redux", "mirai"), quietly = TRUE) &&
+#'   redux::redis_available()) {
 #  # define the objective function
 #' fun = function(xs) {
 #'   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
@@ -42,6 +43,10 @@
 #'   codomain = codomain,
 #'   properties = "deterministic"
 #' )
+#'
+#' # start workers
+#' rush::rush_plan(worker_type = "remote")
+#' mirai::daemons(1)
 #'
 #' # initialize instance
 #' instance = oi_async(

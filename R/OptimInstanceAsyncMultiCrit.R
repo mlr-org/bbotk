@@ -17,7 +17,8 @@
 #' @export
 #' @examples
 #' # example only runs if a Redis server is available
-#' if (mlr3misc::require_namespaces(c("rush", "redux"), quietly = TRUE) && redux::redis_available()) {
+#' if (mlr3misc::require_namespaces(c("rush", "redux", "mirai"), quietly = TRUE) &&
+#'   redux::redis_available()) {
 #' # define the objective function
 #' fun = function(xs) {
 #'   data.table(
@@ -45,6 +46,10 @@
 #'   codomain = codomain,
 #'   properties = "deterministic"
 #' )
+#'
+#' # start workers
+#' rush::rush_plan(worker_type = "remote")
+#' mirai::daemons(1)
 #'
 #' # initialize instance
 #' instance = oi_async(
