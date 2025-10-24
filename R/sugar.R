@@ -141,7 +141,7 @@ oi = function(
 #' @template param_rush
 #'
 #' @export
-#' @examplesIf requireNamespace("rush", quietly = TRUE)
+#' @examplesIf mlr3misc::require_namespaces(c("rush", "redux"), quietly = TRUE) && redux::redis_available()
 #' @examples
 #' # example only runs if a Redis server is available
 #' \donttest{

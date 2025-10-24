@@ -27,7 +27,7 @@ Design points to try in search, one per row.}
 }
 
 \examples{
-\dontshow{if (requireNamespace("rush", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{if (mlr3misc::require_namespaces(c("rush", "redux"), quietly = TRUE) && redux::redis_available()) withAutoprint(\{ # examplesIf}
 \dontshow{\}) # examplesIf}
 # example only runs if a Redis server is available
 \donttest{
