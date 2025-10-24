@@ -56,7 +56,7 @@ objective = ObjectiveRFun$new(
 # initialize instance
 instance = oi_async(
   objective = objective,
-  terminator = trm("none")
+  terminator = trm("evals", n_evals = 20)
 )
 
 # load optimizer
