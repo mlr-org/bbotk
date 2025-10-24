@@ -69,8 +69,9 @@
 #' `r format_bib("johnson_2014")`
 #'
 #' @export
-#' @examplesIf requireNamespace("nloptr", quietly = TRUE)
 #' @examples
+#' # example only runs if nloptr is available
+#' if (mlr3misc::require_namespaces("nloptr", quietly = TRUE)) {
 #' # define the objective function
 #' fun = function(xs) {
 #'   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
@@ -112,6 +113,7 @@
 #'
 #' # best performing configuration
 #' instance$result
+#' }
 OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
   public = list(
 

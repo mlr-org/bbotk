@@ -30,8 +30,9 @@
 #' @template section_progress_bars
 #'
 #' @export
-#' @examplesIf requireNamespace("adagio", quietly = TRUE)
 #' @examples
+#' # example only runs if GenSA is available
+#' if (mlr3misc::require_namespaces("adagio", quietly = TRUE)) {
 #' # define the objective function
 #' fun = function(xs) {
 #'   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 - (xs[[3]] + 4)^2 + 10)
@@ -74,6 +75,7 @@
 #'
 #' # best performing configuration
 #' instance$result
+#' }
 OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
   inherit = OptimizerBatch,
   public = list(

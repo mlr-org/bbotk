@@ -123,8 +123,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-\dontshow{if (requireNamespace("irace", quietly = TRUE)) withAutoprint(\{ # examplesIf}
-\dontshow{\}) # examplesIf}
+# example only runs if irace is available
+if (mlr3misc::require_namespaces("irace", quietly = TRUE)) {
 # runtime of the example is too long
 \donttest{
 library(data.table)
@@ -171,6 +171,7 @@ instance$archive
 
 # best performing configuration
 instance$result
+}
 }
 }
 \section{Super classes}{

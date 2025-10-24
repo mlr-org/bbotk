@@ -85,8 +85,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-\dontshow{if (requireNamespace("GenSA", quietly = TRUE)) withAutoprint(\{ # examplesIf}
-\dontshow{\}) # examplesIf}
+# example only runs if GenSA is available
+if (mlr3misc::require_namespaces("GenSA", quietly = TRUE)) {
 # define the objective function
 fun = function(xs) {
   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
@@ -128,6 +128,7 @@ instance$archive
 
 # best performing configuration
 instance$result
+}
 }
 \section{Super classes}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchGenSA}

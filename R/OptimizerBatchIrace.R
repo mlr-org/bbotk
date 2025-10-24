@@ -89,8 +89,9 @@
 #' `r format_bib("lopez_2016")`
 #'
 #' @export
-#' @examplesIf requireNamespace("irace", quietly = TRUE)
 #' @examples
+#' # example only runs if irace is available
+#' if (mlr3misc::require_namespaces("irace", quietly = TRUE)) {
 #' # runtime of the example is too long
 #' \donttest{
 #' library(data.table)
@@ -137,6 +138,7 @@
 #'
 #' # best performing configuration
 #' instance$result
+#' }
 #' }
 OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
   inherit = OptimizerBatch,

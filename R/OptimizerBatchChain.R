@@ -31,8 +31,9 @@
 #' @template section_progress_bars
 #'
 #' @export
-#' @examplesIf requireNamespace("GenSA", quietly = TRUE)
 #' @examples
+#' # example only runs if GenSA is available
+#' if (mlr3misc::require_namespaces("GenSA", quietly = TRUE)) {
 #' # define the objective function
 #' fun = function(xs) {
 #'   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
@@ -77,6 +78,7 @@
 #'
 #' # best performing configuration
 #' instance$result
+#' }
 OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
   public = list(
 
