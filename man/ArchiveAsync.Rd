@@ -16,6 +16,57 @@ The \code{x_domain} column is unnested to separate columns.
 }
 }
 
+\examples{
+# example only runs if a Redis server is available
+\donttest{
+fun = function(xs) {
+  list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+}
+
+# set domain
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
+
+# set codomain
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
+
+# create objective
+objective = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain,
+  properties = "deterministic"
+)
+
+# initialize instance
+instance = oi_async(
+  objective = objective,
+  terminator = trm("evals", n_evals = 20)
+)
+
+# load optimizer
+optimizer = opt("async_random_search")
+
+# trigger optimization
+optimizer$optimize(instance)
+
+# all evaluated configuration
+instance$archive
+
+# best performing configuration
+instance$archive$best()
+
+# covert to data.table
+as.data.table(instance$archive)
+
+# reset the rush data base
+instance$rush$reset()
+}
+}
 \section{Super class}{
 \code{\link[bbotk:Archive]{bbotk::Archive}} -> \code{ArchiveAsync}
 }

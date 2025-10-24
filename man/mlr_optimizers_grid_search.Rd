@@ -47,35 +47,47 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
-
-codomain = ps(y = p_dbl(tags = "minimize"))
-
-objective_function = function(xs) {
-  list(y = as.numeric(xs)^2)
+# define the objective function
+fun = function(xs) {
+  list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
+# set domain
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
+
+# set codomain
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
+
+# create objective
 objective = ObjectiveRFun$new(
- fun = objective_function,
- domain = domain,
- codomain = codomain)
+  fun = fun,
+  domain = domain,
+  codomain = codomain,
+  properties = "deterministic"
+)
 
-instance = OptimInstanceBatchSingleCrit$new(
- objective = objective,
- search_space = search_space,
- terminator = trm("evals", n_evals = 10))
+# initialize instance
+instance = oi(
+  objective = objective,
+  terminator = trm("evals", n_evals = 20)
+)
 
+# load optimizer
+optimizer = opt("grid_search", resolution = 10)
 
-optimizer = opt("grid_search")
-
-# modifies the instance by reference
+# trigger optimization
 optimizer$optimize(instance)
 
-# returns best scoring evaluation
-instance$result
+# all evaluated configurations
+instance$archive
 
-# allows access of data.table of full path of all evaluations
-as.data.table(instance$archive$data)
+# best performing configuration
+instance$result
 }
 \section{Super classes}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchGridSearch}

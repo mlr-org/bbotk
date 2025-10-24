@@ -18,6 +18,7 @@
 #'
 #' @name bbotk_assertions
 #' @keywords internal
+#' @seealso [Terminator], [OptimInstance], [Optimizer], [Archive]
 NULL
 
 #' @export

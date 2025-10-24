@@ -12,6 +12,9 @@ The \link{Optimizer} writes the final result to the \code{.result} field by usin
 \code{.result} stores a \link[data.table:data.table]{data.table::data.table} consisting of x values in the \emph{search space}, (transformed) x values in the \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}.
 The user can access the results with active bindings (see below).
 }
+\seealso{
+\link{OptimInstanceBatch}, \link{OptimInstanceAsync}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

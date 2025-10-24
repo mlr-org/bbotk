@@ -21,6 +21,7 @@
 #' @template param_label
 #' @template param_man
 #'
+#' @seealso [OptimizerAsync], [OptimizerBatch]
 #' @export
 Optimizer = R6Class("Optimizer",
   public = list(
@@ -168,6 +169,7 @@ Optimizer = R6Class("Optimizer",
 #' @param inst [OptimInstance]
 #'
 #' @keywords internal
+#' @seealso [OptimInstance]
 #' @export
 assign_result_default = function(inst) {
   assert_r6(inst, "OptimInstance")

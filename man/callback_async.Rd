@@ -82,6 +82,9 @@ Stage called at the end of the optimization in the main process.
 Called in \code{Optimizer$optimize()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
 }
+\value{
+\link{CallbackAsync}
+}
 \description{
 Function to create a \link{CallbackAsync}.
 

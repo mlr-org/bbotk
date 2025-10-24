@@ -19,6 +19,9 @@ combined with a \link{Terminator}. Simply wrap the function in
 \CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
 }
 
+\seealso{
+\link{OptimizerAsync}, \link{OptimizerBatch}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

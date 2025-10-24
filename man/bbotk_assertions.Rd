@@ -84,4 +84,7 @@ Checks if the instance is applicable to the optimizer.
 If an assertion fails, an exception is raised. Otherwise, the input object is
 returned invisibly.
 }
+\seealso{
+\link{Terminator}, \link{OptimInstance}, \link{Optimizer}, \link{Archive}
+}
 \keyword{internal}

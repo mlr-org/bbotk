@@ -10,6 +10,9 @@ is_dominated(ymat)
 \item{ymat}{(\code{matrix()}) \cr
 A numeric matrix. Each column (!) contains one point.}
 }
+\value{
+\code{logical()} with \code{TRUE} if a point (column of \code{ymat}) is dominated.
+}
 \description{
 Returns which points from a set are dominated by another point in the set.
 }

@@ -21,7 +21,7 @@ from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
 }
 \value{
-\code{list()}.
+\code{list()} with transformed x values.
 }
 \description{
 Transforms a given \code{data.table()} to a list with transformed x values.

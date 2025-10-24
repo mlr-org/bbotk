@@ -16,6 +16,9 @@ combined with a \link{Terminator}. Simply wrap the function in
 \CRANpkg{progress} as backend; enable with \code{progressr::handlers("progress")}.
 }
 
+\seealso{
+\link{OptimizerBatchDesignPoints}, \link{OptimizerBatchGridSearch}, \link{OptimizerBatchRandomSearch}
+}
 \section{Super class}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerBatch}
 }

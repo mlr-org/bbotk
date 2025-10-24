@@ -7,6 +7,9 @@
 The \code{OptimInstanceBatch} specifies an optimization problem for an \link{OptimizerBatch}.
 The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCrit} or \link{OptimInstanceAsyncMultiCrit}.
 }
+\seealso{
+\code{\link[=oi]{oi()}}, \link{OptimInstanceBatchSingleCrit}, \link{OptimInstanceBatchMultiCrit}
+}
 \section{Super class}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceBatch}
 }

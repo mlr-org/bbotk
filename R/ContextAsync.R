@@ -8,6 +8,7 @@
 #' @details
 #' Changes to `$instance` and `$optimizer` in the stages executed on the workers are not reflected in the main process.
 #'
+#' @seealso [CallbackAsync]
 #' @export
 ContextAsync = R6Class("ContextAsync",
   inherit = Context,

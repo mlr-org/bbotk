@@ -15,6 +15,7 @@
 #' The private method `$.optimize()` is the actual optimization algorithm that runs on the workers.
 #' Usually, the method proposes new points, evaluates them, and updates the archive.
 #'
+#' @seealso [OptimizerAsyncDesignPoints], [OptimizerAsyncGridSearch], [OptimizerAsyncRandomSearch]
 #' @export
 OptimizerAsync = R6Class("OptimizerAsync",
   inherit = Optimizer,
@@ -187,6 +188,8 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 #' @keywords internal
 #'
 #' @export
+#' @examples
+#' options(bbotk.tiny_logging = TRUE)
 tiny_logging = function(instance, optimizer) {
   UseMethod("tiny_logging")
 }
@@ -225,6 +228,8 @@ tiny_logging.OptimInstanceAsync = function(instance, optimizer) {
 #' @param optimizer [OptimizerAsync].
 #' @keywords internal
 #' @export
+#' @examples
+#' options(bbotk.tiny_logging = TRUE)
 tiny_result = function(instance, optimizer) {
   UseMethod("tiny_result")
 }

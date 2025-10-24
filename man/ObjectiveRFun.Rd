@@ -8,9 +8,9 @@ Objective interface where the user can pass a custom R function that expects a l
 If the return of the function is unnamed, it is named with the ids of the codomain.
 }
 \examples{
-# define objective function
+# define the objective function
 fun = function(xs) {
-  -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
+  list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
 # set domain
@@ -20,15 +20,29 @@ domain = ps(
 )
 
 # set codomain
-codomain = ps(y = p_dbl(tags = "maximize"))
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
 
-# create Objective object
-obfun = ObjectiveRFun$new(
+# create objective
+objective = ObjectiveRFun$new(
   fun = fun,
   domain = domain,
   codomain = codomain,
   properties = "deterministic"
 )
+
+# evaluate objective function
+objective$eval(list(x1 = 1, x2 = 2))
+
+# evaluate multiple input values
+objective$eval_many(list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)))
+
+# evaluate multiple input values as data.table
+objective$eval_dt(data.table::data.table(x1 = 1:2, x2 = 3:4))
+}
+\seealso{
+\link{ObjectiveRFunMany}, \link{ObjectiveRFunDt}
 }
 \section{Super class}{
 \code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFun}

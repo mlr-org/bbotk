@@ -9,6 +9,9 @@ The \code{Objective} class describes a black-box objective function that maps an
 \details{
 \code{Objective} objects can have the following properties: \code{"noisy"}, \code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
 }
+\seealso{
+\link{ObjectiveRFun}, \link{ObjectiveRFunMany}, \link{ObjectiveRFunDt}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

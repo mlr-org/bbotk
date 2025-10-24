@@ -10,6 +10,7 @@
 #' @template param_callbacks
 #' @template param_keep_evals
 #'
+#' @seealso [OptimInstanceBatchMultiCrit]
 #' @export
 OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
   inherit = OptimInstanceBatchMultiCrit,

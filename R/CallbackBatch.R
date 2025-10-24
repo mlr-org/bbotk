@@ -7,6 +7,7 @@
 #' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
 #' For more information on optimization callbacks see [callback_batch()].
 #'
+#' @seealso [callback_batch()]
 #' @export
 #' @examples
 #' # write archive to disk
@@ -123,6 +124,7 @@ CallbackBatch = R6Class("CallbackBatch",
 #'  Called in `Optimizer$optimize()`.
 #'  The functions must have two arguments named `callback` and `context`.
 #'
+#' @return [CallbackBatch]
 #' @export
 #' @inherit CallbackBatch examples
 callback_batch = function(

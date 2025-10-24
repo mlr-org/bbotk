@@ -13,6 +13,7 @@
 #' @template param_label
 #' @template param_man
 #'
+#' @seealso [oi()], [OptimInstanceBatchSingleCrit], [OptimInstanceBatchMultiCrit]
 #' @export
 OptimInstanceBatch = R6Class("OptimInstanceBatch",
   inherit = OptimInstance,

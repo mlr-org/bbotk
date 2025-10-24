@@ -9,6 +9,7 @@
 #'
 #' @template section_progress_bars
 #'
+#' @seealso [OptimizerBatchDesignPoints], [OptimizerBatchGridSearch], [OptimizerBatchRandomSearch]
 #' @export
 OptimizerBatch = R6Class("OptimizerBatch",
   inherit = Optimizer,

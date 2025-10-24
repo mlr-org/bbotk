@@ -43,37 +43,48 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-library(data.table)
-search_space = domain = ps(x = p_dbl(lower = -1, upper = 1))
-
-codomain = ps(y = p_dbl(tags = "minimize"))
-
-objective_function = function(xs) {
-  list(y = as.numeric(xs)^2)
+# define the objective function
+fun = function(xs) {
+  list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 }
 
+# set domain
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
+
+# set codomain
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
+
+# create objective
 objective = ObjectiveRFun$new(
-  fun = objective_function,
+  fun = fun,
   domain = domain,
-  codomain = codomain)
+  codomain = codomain,
+  properties = "deterministic"
+)
 
-instance = OptimInstanceBatchSingleCrit$new(
+# initialize instance
+instance = oi(
   objective = objective,
-  search_space = search_space,
-  terminator = trm("evals", n_evals = 10))
+  terminator = trm("evals", n_evals = 20)
+)
 
-design = data.table(x = c(0, 1))
-
+# load optimizer
+design = data.table::data.table(x1 = c(0, 1), x2 = c(0, 1))
 optimizer = opt("design_points", design = design)
 
-# Modifies the instance by reference
+# trigger optimization
 optimizer$optimize(instance)
 
-# Returns best scoring evaluation
-instance$result
+# all evaluated configurations
+instance$archive
 
-# Allows access of data.table of full path of all evaluations
-as.data.table(instance$archive)
+# best performing configuration
+instance$result
 }
 \section{Super classes}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchDesignPoints}

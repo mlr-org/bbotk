@@ -6,6 +6,10 @@
 \description{
 Wraps \code{progressr::progressor()} function and stores current progress.
 }
+\seealso{
+\link{OptimInstance}
+}
+\keyword{internal}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{

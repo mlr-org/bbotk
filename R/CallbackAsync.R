@@ -7,6 +7,7 @@
 #' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
 #' For more information on optimization callbacks see [callback_async()].
 #'
+#' @seealso [callback_async()]
 #' @export
 CallbackAsync = R6Class("CallbackAsync",
   inherit = Callback,
@@ -138,6 +139,7 @@ CallbackAsync = R6Class("CallbackAsync",
 #'  Called in `Optimizer$optimize()`.
 #'  The functions must have two arguments named `callback` and `context`.
 #'
+#' @return [CallbackAsync]
 #' @export
 callback_async = function(
   id,

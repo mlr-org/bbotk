@@ -5,6 +5,7 @@
 #' See the section on active bindings for a list of modifiable objects.
 #' See [callback_batch()] for a list of stages which that `ContextBatch`.
 #'
+#' @seealso [CallbackBatch]
 #' @export
 ContextBatch = R6Class("ContextBatch",
   inherit = Context,

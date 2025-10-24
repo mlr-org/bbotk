@@ -15,4 +15,7 @@ tiny_logging(instance, optimizer)
 Used internally in \link{OptimizerAsync}.
 Adapts tiny logging to the different instance types.
 }
+\examples{
+options(bbotk.tiny_logging = TRUE)
+}
 \keyword{internal}

@@ -69,6 +69,9 @@ Stage called at the end of the optimization.
 Called in \code{Optimizer$optimize()}.
 The functions must have two arguments named \code{callback} and \code{context}.}
 }
+\value{
+\link{CallbackBatch}
+}
 \description{
 Function to create a \link{CallbackBatch}.
 

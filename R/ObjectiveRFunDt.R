@@ -10,7 +10,41 @@
 #' @template param_constants
 #' @template param_packages
 #'
+#' @seealso [ObjectiveRFun], [ObjectiveRFunMany]
 #' @export
+#' @examples
+#' # define objective function
+#' fun = function(xdt) {
+#'   data.table::data.table(y = xdt$x1 + xdt$x2)
+#' }
+#'
+#' # set domain
+#' domain = ps(
+#'   x1 = p_dbl(-10, 10),
+#'   x2 = p_dbl(-5, 5)
+#' )
+#'
+#' # set codomain
+#' codomain = ps(
+#'   y = p_dbl(tags = "maximize")
+#' )
+#'
+#' # create objective
+#' objective = ObjectiveRFunDt$new(
+#'   fun = fun,
+#'   domain = domain,
+#'   codomain = codomain,
+#'   properties = "deterministic"
+#' )
+#'
+#' # evaluate objective function
+#' objective$eval(list(x1 = 1, x2 = 2))
+#'
+#' # evaluate multiple input values
+#' objective$eval_many(list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)))
+#'
+#' # evaluate multiple input values as data.table
+#' objective$eval_dt(data.table::data.table(x1 = 1:2, x2 = 3:4))
 ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
   inherit = Objective,
   public = list(

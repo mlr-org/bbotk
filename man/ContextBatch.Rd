@@ -8,6 +8,9 @@ A \link{CallbackBatch} accesses and modifies data during the optimization via th
 See the section on active bindings for a list of modifiable objects.
 See \code{\link[=callback_batch]{callback_batch()}} for a list of stages which that \code{ContextBatch}.
 }
+\seealso{
+\link{CallbackBatch}
+}
 \section{Super class}{
 \code{\link[mlr3misc:Context]{mlr3misc::Context}} -> \code{ContextBatch}
 }

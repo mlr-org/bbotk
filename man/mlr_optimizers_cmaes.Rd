@@ -46,39 +46,50 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-if (requireNamespace("adagio")) {
-  search_space = domain = ps(
-    x1 = p_dbl(-10, 10),
-    x2 = p_dbl(-5, 5)
-  )
-
-  codomain = ps(y = p_dbl(tags = "maximize"))
-
-  objective_function = function(xs) {
-    c(y = -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
-  }
-
-  objective = ObjectiveRFun$new(
-    fun = objective_function,
-    domain = domain,
-    codomain = codomain)
-
-  instance = OptimInstanceBatchSingleCrit$new(
-    objective = objective,
-    search_space = search_space,
-    terminator = trm("evals", n_evals = 10))
-
-  optimizer = opt("cmaes")
-
-  # modifies the instance by reference
-  optimizer$optimize(instance)
-
-  # returns best scoring evaluation
-  instance$result
-
-  # allows access of data.table of full path of all evaluations
-  as.data.table(instance$archive$data)
+\dontshow{if (requireNamespace("adagio", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{\}) # examplesIf}
+# define the objective function
+fun = function(xs) {
+  list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 - (xs[[3]] + 4)^2 + 10)
 }
+
+# set domain
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5),
+  x3 = p_dbl(-5, 5)
+)
+
+# set codomain
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
+
+# create objective
+objective = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain,
+  properties = "deterministic"
+)
+
+# initialize instance
+instance = oi(
+  objective = objective,
+  terminator = trm("evals", n_evals = 20)
+)
+
+# load optimizer
+optimizer = opt("cmaes")
+
+# trigger optimization
+optimizer$optimize(instance)
+
+# all evaluated configurations
+instance$archive
+
+# best performing configuration
+instance$result
 }
 \section{Super classes}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchCmaes}

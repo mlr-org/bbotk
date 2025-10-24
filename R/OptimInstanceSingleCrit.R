@@ -10,6 +10,7 @@
 #' @template param_callbacks
 #' @template param_keep_evals
 #'
+#' @seealso [OptimInstanceBatchSingleCrit]
 #' @export
 OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
   inherit = OptimInstanceBatchSingleCrit,

@@ -7,6 +7,40 @@
 The \link{OptimInstanceBatchMultiCrit} specifies an optimization problem for an \link{OptimizerBatch}.
 The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceBatchMultiCrit}.
 }
+\examples{
+# define the objective function
+fun = function(xs) {
+  data.table(
+    y1 = xs$x1^2 +  xs$x2^2,
+    y2 = (xs$x1 - 2)^2 + (xs$x2 - 1)^2
+  )
+}
+
+# set domain
+domain = ps(
+  x1 = p_dbl(-5, 5),
+  x2 = p_dbl(-5, 5)
+)
+
+# set codomain
+codomain = ps(
+  y1 = p_dbl(tags = "minimize"),
+  y2 = p_dbl(tags = "minimize")
+)
+
+# create objective
+objective = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain,
+  properties = "deterministic"
+)
+
+# initialize instance
+instance = oi(
+  objective = objective,
+  terminator = trm("evals", n_evals = 100))
+}
 \section{Super classes}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceBatch]{bbotk::OptimInstanceBatch}} -> \code{OptimInstanceBatchMultiCrit}
 }
