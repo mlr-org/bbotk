@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.7.0.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.7.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,6 +114,131 @@
 
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># example only runs if a Redis server is available</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rush"</span>, <span class="st">"redux"</span>, <span class="st">"mirai"</span><span class="op">)</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span></span>
+<span class="r-in"><span>  <span class="fu">redux</span><span class="fu">::</span><span class="fu"><a href="https://richfitz.github.io/redux/reference/hiredis.html" class="external-link">redis_available</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># define the objective function</span></span></span>
+<span class="r-in"><span><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># set domain</span></span></span>
+<span class="r-in"><span><span class="va">domain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x1 <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># set codomain</span></span></span>
+<span class="r-in"><span><span class="va">codomain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create objective</span></span></span>
+<span class="r-in"><span><span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  fun <span class="op">=</span> <span class="va">fun</span>,</span></span>
+<span class="r-in"><span>  domain <span class="op">=</span> <span class="va">domain</span>,</span></span>
+<span class="r-in"><span>  codomain <span class="op">=</span> <span class="va">codomain</span>,</span></span>
+<span class="r-in"><span>  properties <span class="op">=</span> <span class="st">"deterministic"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># start workers</span></span></span>
+<span class="r-in"><span><span class="fu">rush</span><span class="fu">::</span><span class="fu"><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush_plan</a></span><span class="op">(</span>worker_type <span class="op">=</span> <span class="st">"remote"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">mirai</span><span class="fu">::</span><span class="fu"><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">daemons</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialize instance</span></span></span>
+<span class="r-in"><span><span class="va">instance</span> <span class="op">=</span> <span class="fu"><a href="oi_async.html">oi_async</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
+<span class="r-in"><span>  terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># load optimizer</span></span></span>
+<span class="r-in"><span><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"async_random_search"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># trigger optimization</span></span></span>
+<span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># all evaluated configurations</span></span></span>
+<span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># best performing configuration</span></span></span>
+<span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># covert to data.table</span></span></span>
+<span class="r-in"><span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        state         x1          x2             y        timestamp_xs   pid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;      &lt;num&gt;       &lt;num&gt;         &lt;num&gt;              &lt;POSc&gt; &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: finished -8.6401429 -0.22082921 -110.93643045 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: finished  2.6451261 -0.47433125    3.20480965 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: finished  6.6553863 -4.98604438  -15.61699363 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: finished  5.0158969 -1.16851633   -2.44996658 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: finished -4.2982254  4.20337792  -81.55629675 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: finished -5.3318011  3.07859096  -80.70457510 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: finished -1.2947935  4.44486001  -56.28160502 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: finished  4.4867714 -4.92985296    0.09163568 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: finished -4.1477403  2.28072295  -55.68074611 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: finished -5.6137151  4.91263287 -110.57841706 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: finished  0.5407374 -0.53103894    1.77478382 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: finished -5.7833451 -3.39854730  -50.73930118 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: finished -8.4307422  4.47890861 -154.73445725 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: finished  7.1022916 -0.75569363  -21.07029075 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: finished  5.9002467 -2.48642191   -5.47568658 2025-10-24 13:34:25  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: finished  4.0407162 -0.43184476   -0.75994399 2025-10-24 13:34:26  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: finished -7.4830553 -2.92798538  -79.93352300 2025-10-24 13:34:26  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: finished -3.9849409 -1.06526646  -29.56271169 2025-10-24 13:34:26  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: finished -2.3908942  0.02101378  -18.40647620 2025-10-24 13:34:26  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: finished  0.8103813  4.51596998  -47.90499748 2025-10-24 13:34:26  9760</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        state         x1          x2             y        timestamp_xs   pid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      worker_id        timestamp_ys                                 keys</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;char&gt;              &lt;POSc&gt;                               &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: papery_hog 2025-10-24 13:34:25 9b734495-fd3e-4fc6-8138-577c097d0e5d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: papery_hog 2025-10-24 13:34:25 d316281e-644d-4718-9e6a-c87407f138b6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: papery_hog 2025-10-24 13:34:25 e71ab7a0-e0bb-4bfb-8d1b-7c9d9eb15774</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: papery_hog 2025-10-24 13:34:25 493feb58-84af-4a86-a5d6-b54159ce1c61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: papery_hog 2025-10-24 13:34:25 f804026b-7854-4254-9739-59748e154651</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: papery_hog 2025-10-24 13:34:25 ad3da273-432d-4f52-949a-82808f8d3c56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: papery_hog 2025-10-24 13:34:25 c77d5d91-520d-4540-8509-6166011a165d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: papery_hog 2025-10-24 13:34:25 debf4a0b-8abb-49d3-b538-1aa0d478451e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: papery_hog 2025-10-24 13:34:25 4b8e75e8-3a77-4414-847e-1df935bfff7f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: papery_hog 2025-10-24 13:34:25 01bde442-c450-4af1-9314-90b57cb108c7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: papery_hog 2025-10-24 13:34:25 a8c96e17-3a66-4d58-8da1-71ad522e23fb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: papery_hog 2025-10-24 13:34:25 c98b0774-eedd-4ced-bd7b-e6570fdbb0f6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: papery_hog 2025-10-24 13:34:25 a6ce2308-2e62-48c3-b423-b3811ce711b7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: papery_hog 2025-10-24 13:34:25 ae9d9d2c-1d34-4002-8252-5549084624fa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: papery_hog 2025-10-24 13:34:25 e998dffd-98a7-48fd-952b-d5ecc5902d8d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: papery_hog 2025-10-24 13:34:26 f1a8a838-fa79-4e02-8a4c-47837dc1ad3c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: papery_hog 2025-10-24 13:34:26 42564844-b5a9-42db-a418-be21d7343917</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: papery_hog 2025-10-24 13:34:26 f1308bcc-716a-4240-a50c-22de6b6243cb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: papery_hog 2025-10-24 13:34:26 1b4ba92d-3bd0-4623-bd26-f6477986956b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: papery_hog 2025-10-24 13:34:26 6386be23-49f5-4ba4-8bbd-79e8b77abeb1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      worker_id        timestamp_ys                                 keys</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     x_domain_x1 x_domain_x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;num&gt;       &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  -8.6401429 -0.22082921</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:   2.6451261 -0.47433125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:   6.6553863 -4.98604438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:   5.0158969 -1.16851633</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  -4.2982254  4.20337792</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  -5.3318011  3.07859096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  -1.2947935  4.44486001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   4.4867714 -4.92985296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  -4.1477403  2.28072295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  -5.6137151  4.91263287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:   0.5407374 -0.53103894</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  -5.7833451 -3.39854730</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:  -8.4307422  4.47890861</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:   7.1022916 -0.75569363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:   5.9002467 -2.48642191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:   4.0407162 -0.43184476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:  -7.4830553 -2.92798538</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:  -3.9849409 -1.06526646</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:  -2.3908942  0.02101378</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:   0.8103813  4.51596998</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     x_domain_x1 x_domain_x2</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
