@@ -17,7 +17,7 @@ The points of the grid are evaluated in a random order."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,6 +150,474 @@ Maximum number of points to try in a batch.</p></dd>
 
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># example only runs if a Redis server is available</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rush"</span>, <span class="st">"redux"</span>, <span class="st">"mirai"</span><span class="op">)</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span></span>
+<span class="r-in"><span>  <span class="fu">redux</span><span class="fu">::</span><span class="fu"><a href="https://richfitz.github.io/redux/reference/hiredis.html" class="external-link">redis_available</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># define the objective function</span></span></span>
+<span class="r-in"><span><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># set domain</span></span></span>
+<span class="r-in"><span><span class="va">domain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x1 <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># set codomain</span></span></span>
+<span class="r-in"><span><span class="va">codomain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create objective</span></span></span>
+<span class="r-in"><span><span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  fun <span class="op">=</span> <span class="va">fun</span>,</span></span>
+<span class="r-in"><span>  domain <span class="op">=</span> <span class="va">domain</span>,</span></span>
+<span class="r-in"><span>  codomain <span class="op">=</span> <span class="va">codomain</span>,</span></span>
+<span class="r-in"><span>  properties <span class="op">=</span> <span class="st">"deterministic"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># start workers</span></span></span>
+<span class="r-in"><span><span class="fu">rush</span><span class="fu">::</span><span class="fu"><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush_plan</a></span><span class="op">(</span>worker_type <span class="op">=</span> <span class="st">"remote"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">mirai</span><span class="fu">::</span><span class="fu"><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">daemons</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialize instance</span></span></span>
+<span class="r-in"><span><span class="va">instance</span> <span class="op">=</span> <span class="fu"><a href="oi_async.html">oi_async</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
+<span class="r-in"><span>  terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># load optimizer</span></span></span>
+<span class="r-in"><span><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"async_grid_search"</span>, resolution <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># trigger optimization</span></span></span>
+<span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># all evaluated configurations</span></span></span>
+<span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># best performing configuration</span></span></span>
+<span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># covert to data.table</span></span></span>
+<span class="r-in"><span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         state         x1         x2          y        timestamp_xs   pid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;char&gt;      &lt;num&gt;      &lt;num&gt;      &lt;num&gt;              &lt;POSc&gt; &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: finished -10.000000 -5.0000000 -138.00000 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2: finished -10.000000 -3.8888889 -134.79012 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: finished -10.000000 -2.7777778 -134.04938 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: finished -10.000000 -1.6666667 -135.77778 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: finished -10.000000 -0.5555556 -139.97531 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   6: finished -10.000000  0.5555556 -146.64198 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   7: finished -10.000000  1.6666667 -155.77778 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   8: finished -10.000000  2.7777778 -167.38272 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   9: finished -10.000000  3.8888889 -181.45679 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  10: finished -10.000000  5.0000000 -198.00000 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  11: finished  -7.777778 -5.0000000  -89.60494 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  12: finished  -7.777778 -3.8888889  -86.39506 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  13: finished  -7.777778 -2.7777778  -85.65432 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  14: finished  -7.777778 -1.6666667  -87.38272 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  15: finished  -7.777778 -0.5555556  -91.58025 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  16: finished  -7.777778  0.5555556  -98.24691 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  17: finished  -7.777778  1.6666667 -107.38272 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  18: finished  -7.777778  2.7777778 -118.98765 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  19: finished  -7.777778  3.8888889 -133.06173 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  20: finished  -7.777778  5.0000000 -149.60494 2025-10-24 13:25:15  9655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  21:   failed  10.000000  5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  22:   failed  10.000000  3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  23:   failed  10.000000  2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  24:   failed  10.000000  1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  25:   failed  10.000000  0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  26:   failed  10.000000 -0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  27:   failed  10.000000 -1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  28:   failed  10.000000 -2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  29:   failed  10.000000 -3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  30:   failed  10.000000 -5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  31:   failed   7.777778  5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  32:   failed   7.777778  3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  33:   failed   7.777778  2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  34:   failed   7.777778  1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  35:   failed   7.777778  0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  36:   failed   7.777778 -0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  37:   failed   7.777778 -1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  38:   failed   7.777778 -2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  39:   failed   7.777778 -3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  40:   failed   7.777778 -5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  41:   failed   5.555556  5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  42:   failed   5.555556  3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  43:   failed   5.555556  2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  44:   failed   5.555556  1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  45:   failed   5.555556  0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  46:   failed   5.555556 -0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  47:   failed   5.555556 -1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  48:   failed   5.555556 -2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  49:   failed   5.555556 -3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  50:   failed   5.555556 -5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  51:   failed   3.333333  5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  52:   failed   3.333333  3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  53:   failed   3.333333  2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  54:   failed   3.333333  1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  55:   failed   3.333333  0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  56:   failed   3.333333 -0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  57:   failed   3.333333 -1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  58:   failed   3.333333 -2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  59:   failed   3.333333 -3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  60:   failed   3.333333 -5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  61:   failed   1.111111  5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  62:   failed   1.111111  3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  63:   failed   1.111111  2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  64:   failed   1.111111  1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  65:   failed   1.111111  0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  66:   failed   1.111111 -0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  67:   failed   1.111111 -1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  68:   failed   1.111111 -2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  69:   failed   1.111111 -3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  70:   failed   1.111111 -5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  71:   failed  -1.111111  5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  72:   failed  -1.111111  3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  73:   failed  -1.111111  2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  74:   failed  -1.111111  1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  75:   failed  -1.111111  0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  76:   failed  -1.111111 -0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  77:   failed  -1.111111 -1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  78:   failed  -1.111111 -2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  79:   failed  -1.111111 -3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  80:   failed  -1.111111 -5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  81:   failed  -3.333333  5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  82:   failed  -3.333333  3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  83:   failed  -3.333333  2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  84:   failed  -3.333333  1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  85:   failed  -3.333333  0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  86:   failed  -3.333333 -0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  87:   failed  -3.333333 -1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  88:   failed  -3.333333 -2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  89:   failed  -3.333333 -3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  90:   failed  -3.333333 -5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  91:   failed  -5.555556  5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  92:   failed  -5.555556  3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  93:   failed  -5.555556  2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  94:   failed  -5.555556  1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  95:   failed  -5.555556  0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  96:   failed  -5.555556 -0.5555556         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  97:   failed  -5.555556 -1.6666667         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  98:   failed  -5.555556 -2.7777778         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  99:   failed  -5.555556 -3.8888889         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100:   failed  -5.555556 -5.0000000         NA 2025-10-24 13:25:15    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         state         x1         x2          y        timestamp_xs   pid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 worker_id        timestamp_ys</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    &lt;char&gt;              &lt;POSc&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   6: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   7: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   8: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   9: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  10: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  11: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  12: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  13: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  14: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  15: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  16: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  17: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  18: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  19: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  20: academical_guineapig 2025-10-24 13:25:16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  21:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  22:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  23:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  24:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  25:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  26:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  27:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  28:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  29:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  30:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  31:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  32:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  33:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  34:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  35:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  36:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  37:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  38:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  39:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  40:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  41:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  42:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  43:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  44:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  45:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  46:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  47:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  48:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  49:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  50:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  51:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  52:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  53:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  54:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  55:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  56:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  57:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  58:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  59:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  60:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  61:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  62:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  63:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  64:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  65:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  66:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  67:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  68:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  69:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  70:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  71:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  72:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  73:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  74:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  75:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  76:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  77:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  78:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  79:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  80:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  81:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  82:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  83:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  84:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  85:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  86:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  87:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  88:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  89:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  90:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  91:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  92:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  93:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  94:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  95:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  96:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  97:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  98:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  99:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100:                 &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 worker_id        timestamp_ys</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      keys                 message x_domain_x1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    &lt;char&gt;                  &lt;char&gt;       &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 5d2fca32-f24e-42e4-85e8-c5a8ecd92609                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 5e6de97c-9eba-467e-8567-6afe8e577275                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: def8511d-551e-41df-a71b-6c4dca5dc63c                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 2f42140e-64ee-428a-9121-169890aada79                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: f6342d27-4c38-4ab3-be20-bb99f9e595db                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   6: 1dd89183-50ae-443a-9821-2efc17511184                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   7: 19b4f8b4-a935-41fc-84e7-af9748fd240b                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   8: 83f753bb-93d8-40c1-b979-888420f6942a                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   9: 20529871-8f4b-403c-918b-6fd7dbeca83f                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  10: e39960dc-4508-4db4-b05c-a78f5e3fcc2f                    &lt;NA&gt;  -10.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  11: 8e888e7c-5f53-4c4c-8054-460f99ed4fb5                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  12: 338d83c7-256f-4947-a845-a7e492e08b81                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  13: a44ecc4e-0ef1-47b8-a48d-9dcd6ef1163e                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  14: 72a1cc04-ac48-4937-9d08-44c90002e830                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  15: 30d23c81-3698-4567-ab5e-3da4a91c7315                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  16: 48c9b90e-8bef-4cbd-9e9f-687f5bef8f05                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  17: 1b8b4d40-96c6-4387-99c2-92a485517b47                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  18: 12bb685f-fc12-4427-aa8c-fba3d2bc5aad                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  19: 96688dd5-a5b9-4aa4-835a-60552026810d                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  20: 087b6831-ed1b-4f1e-9d06-929118061864                    &lt;NA&gt;   -7.777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  21: b77e37cd-8e4d-45bb-a412-583a959a1c19 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  22: 53b6583c-624d-4d2b-b2f0-cf54b3238ad9 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  23: cfd954cc-51aa-4a43-beeb-8f3f48a523fb Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  24: bcdba95d-e5d0-4afe-9e7b-8a89e4c9183b Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  25: 5a854060-9ff4-4f64-bfe4-f5e1340d977a Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  26: 87eadda3-689e-4adb-90a3-3e2b920dd764 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  27: daabf1bc-d905-495f-aade-b6a9d5e3b1b6 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  28: 4e38dca2-15c3-48a3-9190-71ff05d56322 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  29: d0d11e6d-70f9-46f0-93aa-14b0c92e3bff Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  30: ea86a4a6-2bbc-48b7-abfa-ea3b532bd370 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  31: 5e16fdc0-bec8-4a43-af79-01b717ea926e Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  32: 6e3a8724-5ff1-4112-841f-b0e67caabea8 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  33: 4c679d7a-a2e4-465b-915b-51b56050595c Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  34: 2b11b299-8c8b-406a-8c1f-5bc8066e32bd Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  35: 24cc5cdf-bef6-4940-b7ea-9d037e71e406 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  36: d6cf190e-84b6-440b-8633-57f5502cd5f2 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  37: f9a79416-efa4-4e50-a61e-912ee74a5714 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  38: d53aea30-07bc-461d-b073-aeafeb9deb7e Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  39: 1fc8e4c6-c5df-41bd-8519-76aa96b0c15c Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  40: a73a8561-a9cb-4def-8242-88d6561029ca Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  41: 5a8780c6-7f47-4068-a770-c8c0736601dd Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  42: c42d747a-a9a3-4a8c-a82a-6c577aa80106 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  43: 5e37546e-0062-406d-8206-7625f5253bea Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  44: 568d2330-a6fe-4714-8aa9-1a5e53d3b5ca Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  45: 5ade81fe-f502-4ae9-9faf-90b63bc51cec Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  46: 17237da8-5b18-42da-946d-cb7413a71582 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  47: 82705bcd-d543-4833-859e-e0df4a1ec18a Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  48: 60b7ffc1-1f30-48b2-bf22-f46ba3f964a4 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  49: f295f34f-917f-4193-ab30-ac6764469fc9 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  50: f18052e1-5f53-40d8-aa64-99f26be55659 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  51: 56b64b4d-d07c-4f76-9c5e-cc5027ab1111 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  52: 847f5dec-1780-466d-91be-cb98d63139b3 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  53: c46cd13a-7b24-4dd5-b165-b71f8be63b3f Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  54: 722165d3-0d52-49bf-a782-cc264ddf3c4e Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  55: f07ac0a3-f24c-40d9-a5f5-cbb228431946 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  56: 7a3e9056-d8b8-4c72-a075-958cff94850d Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  57: 31843c76-fac7-45e2-becf-39fdab44005e Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  58: 14f49793-69ec-4de9-bd94-1498cea7e8b6 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  59: c46b931c-30d0-4630-992d-d00fdaaedd11 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  60: 6a7a3798-0539-44b1-ab38-aecde56f1c97 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  61: 59cf6ec0-8433-4842-a362-640bacd8570c Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  62: f27db27f-1d6d-4aff-bb85-679dba4b0612 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  63: a58f8a26-5a19-4af1-b92d-07982fcd7015 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  64: cc7150e7-63e2-4fca-b2c4-a019a6eab91e Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  65: d156efec-dd44-4820-b4c3-86176fbbbc2a Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  66: afda6d81-d8ec-4226-b636-ed48b9faa993 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  67: bc850f59-83c2-4ddb-8891-cfea8f6cf3c6 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  68: 3a313cce-8c14-4a8e-83eb-eced8ce3479a Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  69: 770f5030-904b-44fc-a75a-a10b04b95cbc Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  70: 994b0a41-a1f2-4eb3-8d2f-38b0a9d157f8 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  71: e27bd82b-7edb-4e87-9a9b-a46c57b37ac6 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  72: 91092a8e-843b-41ab-b758-71f270ea5019 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  73: cc8c02ac-5c3b-4838-96c6-ec71e0b48aa0 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  74: 8147f0c4-722d-4e77-9017-6bf9226d45b5 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  75: d012f795-3039-4795-99d5-76ac49cbcce4 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  76: c246a656-1860-4578-93b4-fe3548e33af8 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  77: 3ec7d017-07b0-447b-9566-a13026bf1b8c Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  78: bff1aa69-2a0b-40fe-bb6a-b47434f24ac9 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  79: f0d1d2dd-245c-4d0c-afe8-d86b8c40c37e Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  80: edfa6f34-873e-470a-9fe6-bd055e72a100 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  81: b2811eda-c58a-4015-80e7-a4f81fdffa4b Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  82: 660052b4-5758-4f9b-8e61-a6fbe618649d Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  83: e11d1a56-39f4-4ac8-9432-d0c0884a4f3e Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  84: 9bb8fd2d-5d3b-42a9-b8c9-8d45db6efb84 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  85: 6f9d9e21-71da-411d-b8ff-4c4f01ff6d35 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  86: 17dc3d54-b240-45fc-a5e1-45c07295837c Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  87: 4543e20e-d5f9-4607-8fea-3e414103c929 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  88: dbc294e5-ae6d-4598-bd39-228e35fe7991 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  89: 9183ceb2-9c1a-452d-9c19-ba75f5054d05 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  90: 61c86208-4939-49ee-906e-b2ed29968087 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  91: 912f5dd5-7d82-4998-8d05-f91eb03ffc87 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  92: 4a908057-ac27-4100-ad7f-ac0d80f352de Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  93: 2c7e7e11-bcdf-4630-bc06-2dddcd7dcfac Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  94: 40218e96-fe01-4739-aceb-1974e4a290c7 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  95: 7de6e243-6c71-4f4c-b702-7c7ee7ff5037 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  96: c7b6f85c-61ff-483a-849d-43107ee00bf0 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  97: 9875bd35-72d9-4ba4-88fc-d655b296a3d1 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  98: 9482785c-bb18-4ac9-896a-4ec440c647fc Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  99: db227702-0c70-4406-807f-158fe50e4b84 Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100: 1779313e-8366-43f5-b440-b5e53c07d5ee Optimization terminated          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      keys                 message x_domain_x1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      x_domain_x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:  -5.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  -3.8888889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  -2.7777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  -1.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:  -0.5555556</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   6:   0.5555556</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   7:   1.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   8:   2.7777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   9:   3.8888889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  10:   5.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  11:  -5.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  12:  -3.8888889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  13:  -2.7777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  14:  -1.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  15:  -0.5555556</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  16:   0.5555556</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  17:   1.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  18:   2.7777778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  19:   3.8888889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  20:   5.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  21:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  22:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  23:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  24:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  25:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  26:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  27:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  28:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  29:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  30:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  31:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  32:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  33:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  34:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  35:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  36:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  37:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  38:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  39:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  40:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  41:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  42:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  43:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  44:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  45:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  46:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  47:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  48:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  49:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  50:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  51:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  52:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  53:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  54:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  55:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  56:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  57:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  58:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  59:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  60:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  61:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  62:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  63:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  64:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  65:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  66:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  67:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  68:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  69:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  70:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  71:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  72:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  73:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  74:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  75:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  76:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  77:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  78:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  79:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  80:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  81:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  82:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  83:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  84:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  85:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  86:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  87:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  88:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  89:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  90:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  91:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  92:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  93:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  94:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  95:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  96:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  97:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  98:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  99:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100:          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      x_domain_x2</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

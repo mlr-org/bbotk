@@ -19,7 +19,7 @@ Use the callback bbotk.async_freeze_archive to freeze the archive after the opti
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,6 +71,10 @@ Use the callback <a href="bbotk.async_freeze_archive.html">bbotk.async_freeze_ar
 Returns a tabular view of all performed function calls of the Objective.
 The <code>x_domain</code> column is unnested to separate columns.</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><a href="ArchiveAsync.html">ArchiveAsync</a></p></div>
+    </div>
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
     <p><code><a href="Archive.html">bbotk::Archive</a></code> -&gt; <code><a href="ArchiveAsync.html">bbotk::ArchiveAsync</a></code> -&gt; <code>ArchiveAsyncFrozen</code></p>
@@ -328,6 +332,132 @@ Whether to reset the cache of the finished points.</p></dd>
 
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># example only runs if a Redis server is available</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rush"</span>, <span class="st">"redux"</span>, <span class="st">"mirai"</span><span class="op">)</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span></span>
+<span class="r-in"><span>  <span class="fu">redux</span><span class="fu">::</span><span class="fu"><a href="https://richfitz.github.io/redux/reference/hiredis.html" class="external-link">redis_available</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># define the objective function</span></span></span>
+<span class="r-in"><span><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># set domain</span></span></span>
+<span class="r-in"><span><span class="va">domain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x1 <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  x2 <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># set codomain</span></span></span>
+<span class="r-in"><span><span class="va">codomain</span> <span class="op">=</span> <span class="fu">ps</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  y <span class="op">=</span> <span class="fu">p_dbl</span><span class="op">(</span>tags <span class="op">=</span> <span class="st">"maximize"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create objective</span></span></span>
+<span class="r-in"><span><span class="va">objective</span> <span class="op">=</span> <span class="va"><a href="ObjectiveRFun.html">ObjectiveRFun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  fun <span class="op">=</span> <span class="va">fun</span>,</span></span>
+<span class="r-in"><span>  domain <span class="op">=</span> <span class="va">domain</span>,</span></span>
+<span class="r-in"><span>  codomain <span class="op">=</span> <span class="va">codomain</span>,</span></span>
+<span class="r-in"><span>  properties <span class="op">=</span> <span class="st">"deterministic"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># start workers</span></span></span>
+<span class="r-in"><span><span class="fu">rush</span><span class="fu">::</span><span class="fu"><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush_plan</a></span><span class="op">(</span>worker_type <span class="op">=</span> <span class="st">"remote"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">mirai</span><span class="fu">::</span><span class="fu"><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">daemons</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialize instance</span></span></span>
+<span class="r-in"><span><span class="va">instance</span> <span class="op">=</span> <span class="fu"><a href="oi_async.html">oi_async</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  objective <span class="op">=</span> <span class="va">objective</span>,</span></span>
+<span class="r-in"><span>  terminator <span class="op">=</span> <span class="fu"><a href="trm.html">trm</a></span><span class="op">(</span><span class="st">"evals"</span>, n_evals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  callback <span class="op">=</span> <span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/clbk.html" class="external-link">clbk</a></span><span class="op">(</span><span class="st">"bbotk.async_freeze_archive"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># load optimizer</span></span></span>
+<span class="r-in"><span><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"async_random_search"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># trigger optimization</span></span></span>
+<span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># frozen archive</span></span></span>
+<span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># best performing configuration</span></span></span>
+<span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># covert to data.table</span></span></span>
+<span class="r-in"><span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        state         x1           x2            y        timestamp_xs   pid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;      &lt;num&gt;        &lt;num&gt;        &lt;num&gt;              &lt;POSc&gt; &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: finished  0.7355865  4.436809312  -46.9048744 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: finished -5.2465150  1.685353492  -64.4645163 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: finished -1.6100269  1.692733854  -25.0540453 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: finished -9.6485851  2.074896538 -151.4441090 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: finished  9.1534135  0.636737862  -54.3971877 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: finished -0.9507994 -4.878603549   -2.2363683 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: finished  2.7997505 -1.921276769    8.1967553 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: finished  7.9367603  3.130829856  -62.8321976 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: finished -5.3535132  0.132857377  -53.8889510 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: finished -1.1703927  1.581480915  -21.0413571 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: finished  5.5692991  1.671339287  -24.5613067 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: finished  9.4659255 -4.325706593  -47.4975413 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: finished -4.5022012 -3.621611151  -32.6650205 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: finished  6.4919932  0.400897277  -21.7441056 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: finished -1.5261497 -0.002130552  -11.4209531 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: finished  5.2346110 -2.546360991   -0.6684964 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: finished -8.1469277 -2.532682236  -93.1785285 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: finished  7.9586287 -3.273955223  -25.5803070 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: finished  5.3650967 -2.241232399   -1.8996043 2025-10-24 13:24:56  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: finished  4.8743111  3.778382706  -44.2081363 2025-10-24 13:24:57  8841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        state         x1           x2            y        timestamp_xs   pid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            worker_id        timestamp_ys                                 keys</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;char&gt;              &lt;POSc&gt;                               &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: limestone_drever 2025-10-24 13:24:56 0baee22c-2211-49b4-bed4-8c13d057e9ff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: limestone_drever 2025-10-24 13:24:56 ef3a8c03-1709-4ef0-b338-3eaffb36bae8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: limestone_drever 2025-10-24 13:24:56 337af343-ccfe-4947-b166-438802b7758e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: limestone_drever 2025-10-24 13:24:56 06746479-4770-4ca2-aa78-3c8aa7348bfa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: limestone_drever 2025-10-24 13:24:56 8f0f5e5c-751e-49d0-a2c7-97e041d61aa6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: limestone_drever 2025-10-24 13:24:56 0253dc51-6b61-4330-9ce8-c7f7d34f555f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: limestone_drever 2025-10-24 13:24:56 6dfb5c4d-f16f-4f99-9453-5093e7ffd8d4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: limestone_drever 2025-10-24 13:24:56 588b2f56-b478-4123-9e00-ecb082e81b81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: limestone_drever 2025-10-24 13:24:56 1bf747ec-19ae-47c1-8aeb-f191a1e87c9a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: limestone_drever 2025-10-24 13:24:56 611d7778-400d-4065-9408-4c3749d195ba</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: limestone_drever 2025-10-24 13:24:56 072cdb42-6313-4de8-81f3-866a35fa1e9a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: limestone_drever 2025-10-24 13:24:56 f2e06ad3-6d54-4e7d-9b3d-3db962adc4d4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: limestone_drever 2025-10-24 13:24:56 54205a69-bdef-4113-aafa-0effb7517815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: limestone_drever 2025-10-24 13:24:56 231f5297-a122-4175-851f-cf02974faded</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: limestone_drever 2025-10-24 13:24:56 b3166fc0-6a8e-48b9-a5bc-bebac7b70fd3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: limestone_drever 2025-10-24 13:24:56 ed943199-cf11-4fc9-bd39-81486adebced</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: limestone_drever 2025-10-24 13:24:56 995a3daf-75b1-42cd-a1d1-2b22ec1a8178</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: limestone_drever 2025-10-24 13:24:56 8f9fba6e-7364-48c6-8f63-d4beb354bc74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: limestone_drever 2025-10-24 13:24:56 376139e5-e94c-4e0b-bb2a-149d7b756f57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: limestone_drever 2025-10-24 13:24:57 f95e8aba-e62a-44fa-bbe3-3c14617ffdaa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            worker_id        timestamp_ys                                 keys</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     x_domain_x1  x_domain_x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;num&gt;        &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:   0.7355865  4.436809312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  -5.2465150  1.685353492</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  -1.6100269  1.692733854</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  -9.6485851  2.074896538</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:   9.1534135  0.636737862</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  -0.9507994 -4.878603549</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:   2.7997505 -1.921276769</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   7.9367603  3.130829856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  -5.3535132  0.132857377</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  -1.1703927  1.581480915</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:   5.5692991  1.671339287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:   9.4659255 -4.325706593</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:  -4.5022012 -3.621611151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:   6.4919932  0.400897277</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:  -1.5261497 -0.002130552</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:   5.2346110 -2.546360991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:  -8.1469277 -2.532682236</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:   7.9586287 -3.273955223</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:   5.3650967 -2.241232399</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:   4.8743111  3.778382706</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     x_domain_x1  x_domain_x2</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
