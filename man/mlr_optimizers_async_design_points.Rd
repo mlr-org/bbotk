@@ -60,7 +60,7 @@ instance = oi_async(
 )
 
 # load optimizer
-design = data.table(x1 = c(0, 1), x2 = c(0, 1))
+design = data.table::data.table(x1 = c(0, 1), x2 = c(0, 1))
 optimizer = opt("async_design_points", design = design)
 
 # trigger optimization
