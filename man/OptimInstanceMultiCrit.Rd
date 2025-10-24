@@ -6,6 +6,9 @@
 \description{
 \code{OptimInstanceMultiCrit} is a deprecated class that is now a wrapper around \link{OptimInstanceBatchMultiCrit}.
 }
+\seealso{
+\link{OptimInstanceBatchMultiCrit}
+}
 \section{Super classes}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceBatch]{bbotk::OptimInstanceBatch}} -> \code{\link[bbotk:OptimInstanceBatchMultiCrit]{bbotk::OptimInstanceBatchMultiCrit}} -> \code{OptimInstanceMultiCrit}
 }

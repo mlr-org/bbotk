@@ -16,6 +16,9 @@ Optionally, a set of points can be created, e.g. an initial design, and pushed t
 The private method \verb{$.optimize()} is the actual optimization algorithm that runs on the workers.
 Usually, the method proposes new points, evaluates them, and updates the archive.
 }
+\seealso{
+\link{OptimizerAsyncDesignPoints}, \link{OptimizerAsyncGridSearch}, \link{OptimizerAsyncRandomSearch}
+}
 \section{Super class}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerAsync}
 }

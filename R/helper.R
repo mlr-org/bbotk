@@ -6,6 +6,7 @@
 #' @param optim_instance [OptimInstance]\cr
 #' OptimInstance that terminated.
 #'
+#' @return A `'terminated_error'` condition (inherits from `'error'` and `'condition'`).
 #' @export
 terminated_error = function(optim_instance) {
   msg = sprintf(
@@ -24,7 +25,9 @@ terminated_error = function(optim_instance) {
 #'
 #' @param ymat (`matrix()`) \cr
 #'   A numeric matrix. Each column (!) contains one point.
+#'
 #' @useDynLib bbotk c_is_dominated
+#' @return `logical()` with `TRUE` if a point (column of `ymat`) is dominated.
 #' @export
 is_dominated = function(ymat) {
   assert_matrix(ymat, mode = "double")
@@ -40,7 +43,8 @@ is_dominated = function(ymat) {
 #'
 #' @template param_xdt
 #' @template param_search_space
-#' @return `list()`.
+#'
+#' @return `list()` with transformed x values.
 #' @keywords internal
 #' @export
 transform_xdt_to_xss = function(xdt, search_space) {
@@ -62,6 +66,7 @@ transform_xdt_to_xss = function(xdt, search_space) {
 #' @param search_space [paradox::ParamSet]\cr
 #'  Search space.
 #'
+#' @return `list()` with transformed x values.
 #' @export
 trafo_xs = function(xs, search_space) {
   xs = discard(xs, is_scalar_na)
@@ -81,7 +86,7 @@ trafo_xs = function(xs, search_space) {
 #' @param type (`character(1)`)\cr
 #' `random` start values or `center` of search space?
 #'
-#' @return named 'numeric()'
+#' @return named `numeric()` with start values.
 #'
 #' @keywords internal
 search_start = function(search_space, type = "random") {
@@ -130,5 +135,4 @@ allow_partial_matching = list(
   warnPartialMatchAttr = FALSE,
   warnPartialMatchDollar = FALSE
 )
-
 

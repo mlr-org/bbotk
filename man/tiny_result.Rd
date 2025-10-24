@@ -15,4 +15,7 @@ tiny_result(instance, optimizer)
 Used internally in \link{OptimizerAsync}.
 Adapts tiny result to the different instance types.
 }
+\examples{
+options(bbotk.tiny_logging = TRUE)
+}
 \keyword{internal}

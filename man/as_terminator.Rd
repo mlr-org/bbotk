@@ -31,3 +31,6 @@ If \code{TRUE}, ensures that the returned object is not the same as the input \c
 \description{
 Convert object to a \link{Terminator} or a list of \link{Terminator}.
 }
+\seealso{
+\link{Terminator}
+}

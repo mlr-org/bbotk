@@ -89,18 +89,20 @@
 #' `r format_bib("lopez_2016")`
 #'
 #' @export
-#' @examplesIf requireNamespace("irace", quietly = TRUE)
 #' @examples
+#' # example only runs if irace is available
+#' if (mlr3misc::require_namespaces("irace", quietly = TRUE)) {
 #' # runtime of the example is too long
 #' \donttest{
-#'
 #' library(data.table)
 #'
-#' search_space = domain = ps(
+#' # set domain
+#' domain = ps(
 #'   x1 = p_dbl(-5, 10),
 #'   x2 = p_dbl(0, 15)
 #' )
 #'
+#' # set codomain
 #' codomain = ps(y = p_dbl(tags = "minimize"))
 #'
 #' # branin function with noise
@@ -118,25 +120,25 @@
 #'  codomain = codomain,
 #'  constants = ps(instances = p_uty()))
 #'
-#' instance = OptimInstanceBatchSingleCrit$new(
+#' instance = oi(
 #'   objective = objective,
-#'   search_space = search_space,
 #'   terminator = trm("evals", n_evals = 96))
 #'
 #' # create instances of branin function
 #' instances = rnorm(10, mean = 0, sd = 0.1)
 #'
-#' # load optimizer irace and set branin instances
+#' # load optimizer and set branin instances
 #' optimizer = opt("irace", instances = instances)
 #'
-#' # modifies the instance by reference
+#' # trigger optimization
 #' optimizer$optimize(instance)
 #'
-#' # best scoring configuration
-#' instance$result
+#' # all evaluated configurations
+#' instance$archive
 #'
-#' # all evaluations
-#' as.data.table(instance$archive)
+#' # best performing configuration
+#' instance$result
+#' }
 #' }
 OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
   inherit = OptimizerBatch,

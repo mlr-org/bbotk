@@ -1,7 +1,7 @@
 #include "local_search.h"
 
-SEXP c_test_random_int();
-SEXP c_test_random_normal();
+SEXP c_test_random_int(void);
+SEXP c_test_random_normal(void);
 SEXP c_test_get_list_el_by_name(SEXP);
 SEXP c_test_extract_ss_info(SEXP s_ss);
 SEXP c_test_dt_utils(SEXP s_ss, SEXP s_ctrl);

@@ -13,4 +13,7 @@ assign_result_default(inst)
 Used internally in the \link{Optimizer}.
 It is the default way to determine the result by simply obtaining the best performing result from the archive.
 }
+\seealso{
+\link{OptimInstance}
+}
 \keyword{internal}

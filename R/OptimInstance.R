@@ -28,7 +28,7 @@
 #' @template field_label
 #' @template field_man
 #'
-#'
+#' @seealso [OptimInstanceBatch], [OptimInstanceAsync]
 #' @export
 OptimInstance = R6Class("OptimInstance",
   public = list(

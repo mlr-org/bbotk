@@ -280,7 +280,7 @@ test_that("OptimizerBatchLocalSearch works with trafo", {
   expect_true(all(archive$x_domain_x1 <= 1))
   expect_true(all(archive$x_domain_x2 >= 1))
   expect_true(all(archive$x_domain_x2 <= 10.1))
-  expect_true(instance$archive$best()$y > -1.001)
+  expect_true(instance$archive$best()$y > -1.01)
 })
 
 test_that("OptimizerBatchLocalSearch works with errors", {

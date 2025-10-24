@@ -10,6 +10,9 @@ The function \code{\link[=oi_async]{oi_async()}} creates an \link{OptimInstanceA
 \details{
 \code{OptimInstanceAsync} is an abstract base class that implements the base functionality each instance must provide.
 }
+\seealso{
+\code{\link[=oi_async]{oi_async()}}, \link{OptimInstanceAsyncSingleCrit}, \link{OptimInstanceAsyncMultiCrit}
+}
 \section{Super class}{
 \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceAsync}
 }

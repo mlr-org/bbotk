@@ -13,7 +13,62 @@
 #'   Returns a tabular view of all performed function calls of the Objective.
 #'   The `x_domain` column is unnested to separate columns.
 #'
+#' @seealso [ArchiveAsync]
 #' @export
+#' @examples
+#' # example only runs if a Redis server is available
+#' if (mlr3misc::require_namespaces(c("rush", "redux", "mirai"), quietly = TRUE) &&
+#'   redux::redis_available()) {
+#' # define the objective function
+#' fun = function(xs) {
+#'   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+#' }
+#'
+#' # set domain
+#' domain = ps(
+#'   x1 = p_dbl(-10, 10),
+#'   x2 = p_dbl(-5, 5)
+#' )
+#'
+#' # set codomain
+#' codomain = ps(
+#'   y = p_dbl(tags = "maximize")
+#' )
+#'
+#' # create objective
+#' objective = ObjectiveRFun$new(
+#'   fun = fun,
+#'   domain = domain,
+#'   codomain = codomain,
+#'   properties = "deterministic"
+#' )
+#'
+#' # start workers
+#' rush::rush_plan(worker_type = "remote")
+#' mirai::daemons(1)
+#'
+#' # initialize instance
+#' instance = oi_async(
+#'   objective = objective,
+#'   terminator = trm("evals", n_evals = 20),
+#'   callback = clbk("bbotk.async_freeze_archive")
+#' )
+#'
+#' # load optimizer
+#' optimizer = opt("async_random_search")
+#'
+#' # trigger optimization
+#' optimizer$optimize(instance)
+#'
+#' # frozen archive
+#' instance$archive
+#'
+#' # best performing configuration
+#' instance$archive$best()
+#'
+#' # covert to data.table
+#' as.data.table(instance$archive)
+#' }
 ArchiveAsyncFrozen = R6Class("ArchiveAsyncFrozen",
   inherit = ArchiveAsync,
   public = list(

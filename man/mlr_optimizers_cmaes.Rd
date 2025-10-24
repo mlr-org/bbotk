@@ -46,38 +46,50 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-if (requireNamespace("adagio")) {
-  search_space = domain = ps(
-    x1 = p_dbl(-10, 10),
-    x2 = p_dbl(-5, 5)
-  )
+# example only runs if GenSA is available
+if (mlr3misc::require_namespaces("adagio", quietly = TRUE)) {
+# define the objective function
+fun = function(xs) {
+  list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 - (xs[[3]] + 4)^2 + 10)
+}
 
-  codomain = ps(y = p_dbl(tags = "maximize"))
+# set domain
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5),
+  x3 = p_dbl(-5, 5)
+)
 
-  objective_function = function(xs) {
-    c(y = -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
-  }
+# set codomain
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
 
-  objective = ObjectiveRFun$new(
-    fun = objective_function,
-    domain = domain,
-    codomain = codomain)
+# create objective
+objective = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain,
+  properties = "deterministic"
+)
 
-  instance = OptimInstanceBatchSingleCrit$new(
-    objective = objective,
-    search_space = search_space,
-    terminator = trm("evals", n_evals = 10))
+# initialize instance
+instance = oi(
+  objective = objective,
+  terminator = trm("evals", n_evals = 20)
+)
 
-  optimizer = opt("cmaes")
+# load optimizer
+optimizer = opt("cmaes")
 
-  # modifies the instance by reference
-  optimizer$optimize(instance)
+# trigger optimization
+optimizer$optimize(instance)
 
-  # returns best scoring evaluation
-  instance$result
+# all evaluated configurations
+instance$archive
 
-  # allows access of data.table of full path of all evaluations
-  as.data.table(instance$archive$data)
+# best performing configuration
+instance$result
 }
 }
 \section{Super classes}{

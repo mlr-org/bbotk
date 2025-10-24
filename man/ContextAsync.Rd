@@ -11,6 +11,9 @@ See \code{\link[=callback_async]{callback_async()}} for a list of stages which a
 \details{
 Changes to \verb{$instance} and \verb{$optimizer} in the stages executed on the workers are not reflected in the main process.
 }
+\seealso{
+\link{CallbackAsync}
+}
 \section{Super class}{
 \code{\link[mlr3misc:Context]{mlr3misc::Context}} -> \code{ContextAsync}
 }

@@ -13,7 +13,7 @@ search_start(search_space, type = "random")
 \code{random} start values or \code{center} of search space?}
 }
 \value{
-named 'numeric()'
+named \code{numeric()} with start values.
 }
 \description{
 Returns a named numeric vector with start

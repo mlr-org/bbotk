@@ -21,6 +21,7 @@
 #'
 #' @template field_rush
 #'
+#' @seealso [oi_async()], [OptimInstanceAsyncSingleCrit], [OptimInstanceAsyncMultiCrit]
 #' @export
 OptimInstanceAsync = R6Class("OptimInstanceAsync",
   inherit = OptimInstance,

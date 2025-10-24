@@ -26,6 +26,61 @@ Design points to try in search, one per row.}
 }
 }
 
+\examples{
+# example only runs if a Redis server is available
+if (mlr3misc::require_namespaces(c("rush", "redux", "mirai"), quietly = TRUE) &&
+  redux::redis_available()) {
+# define the objective function
+fun = function(xs) {
+  list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
+}
+
+# set domain
+domain = ps(
+  x1 = p_dbl(-10, 10),
+  x2 = p_dbl(-5, 5)
+)
+
+# set codomain
+codomain = ps(
+  y = p_dbl(tags = "maximize")
+)
+
+# create objective
+objective = ObjectiveRFun$new(
+  fun = fun,
+  domain = domain,
+  codomain = codomain,
+  properties = "deterministic"
+)
+
+# start workers
+rush::rush_plan(worker_type = "remote")
+mirai::daemons(1)
+
+# initialize instance
+instance = oi_async(
+  objective = objective,
+  terminator = trm("evals", n_evals = 20)
+)
+
+# load optimizer
+design = data.table::data.table(x1 = c(0, 1), x2 = c(0, 1))
+optimizer = opt("async_design_points", design = design)
+
+# trigger optimization
+optimizer$optimize(instance)
+
+# all evaluated configurations
+instance$archive
+
+# best performing configuration
+instance$archive$best()
+
+# covert to data.table
+as.data.table(instance$archive)
+}
+}
 \section{Super classes}{
 \code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerAsync]{bbotk::OptimizerAsync}} -> \code{OptimizerAsyncDesignPoints}
 }

@@ -1,4 +1,7 @@
-# bbotk (development version)
+# bbotk 1.7.1
+
+fix: Imbalanced protection and casting in C code.
+fix: Load required packages in worker loop.
 
 # bbotk 1.7.0
 

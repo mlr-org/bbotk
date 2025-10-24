@@ -10,6 +10,9 @@ terminated_error(optim_instance)
 \item{optim_instance}{\link{OptimInstance}\cr
 OptimInstance that terminated.}
 }
+\value{
+A \code{'terminated_error'} condition (inherits from \code{'error'} and \code{'condition'}).
+}
 \description{
 Error class for termination.
 }

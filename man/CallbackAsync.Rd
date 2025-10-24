@@ -10,6 +10,9 @@ The \code{\link[=callback_async]{callback_async()}} function creates a \link{Cal
 Predefined callbacks are stored in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_callbacks} and can be retrieved with \code{\link[=clbk]{clbk()}}.
 For more information on optimization callbacks see \code{\link[=callback_async]{callback_async()}}.
 }
+\seealso{
+\code{\link[=callback_async]{callback_async()}}
+}
 \section{Super class}{
 \code{\link[mlr3misc:Callback]{mlr3misc::Callback}} -> \code{CallbackAsync}
 }

@@ -4,6 +4,9 @@
 #' Wraps `progressr::progressor()` function and stores current progress.
 #'
 #' @template param_archive
+#'
+#' @seealso [OptimInstance]
+#' @keywords internal
 Progressor = R6Class("Progressor",
   public = list(
 

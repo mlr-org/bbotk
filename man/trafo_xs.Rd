@@ -13,6 +13,9 @@ List of x-values.}
 \item{search_space}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Search space.}
 }
+\value{
+\code{list()} with transformed x values.
+}
 \description{
 Transforms a given \code{list()} to a list with transformed x values.
 }

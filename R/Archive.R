@@ -1,7 +1,7 @@
 #' @title Data Storage
 #'
 #' @description
-#' The `Archive`` class stores all evaluated points and performance scores
+#' The `Archive` class stores all evaluated points and performance scores
 #'
 #' @details
 #' The `Archive` is an abstract class that implements the base functionality each archive must provide.
@@ -17,6 +17,7 @@
 #' @template param_label
 #' @template param_man
 #'
+#' @seealso [ArchiveBatch], [ArchiveAsync]
 #' @export
 Archive = R6Class("Archive",
   public = list(

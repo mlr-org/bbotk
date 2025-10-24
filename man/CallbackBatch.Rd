@@ -18,6 +18,9 @@ callback_batch("bbotk.backup",
   }
 )
 }
+\seealso{
+\code{\link[=callback_batch]{callback_batch()}}
+}
 \section{Super class}{
 \code{\link[mlr3misc:Callback]{mlr3misc::Callback}} -> \code{CallbackBatch}
 }

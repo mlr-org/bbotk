@@ -8,6 +8,7 @@
 #' @param ... (any)\cr
 #'   Additional arguments.
 #'
+#' @seealso [Terminator]
 #' @export
 as_terminator = function(x, ...) { # nolint
   UseMethod("as_terminator")

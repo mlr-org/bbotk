@@ -31,51 +31,54 @@
 #' @template section_progress_bars
 #'
 #' @export
-#' @examplesIf requireNamespace("GenSA", quietly = TRUE)
 #' @examples
-#' domain = ps(x = p_dbl(lower = -1, upper = 1))
-#'
-#' search_space = ps(x = p_dbl(lower = -1, upper = 1))
-#'
-#' codomain = ps(y = p_dbl(tags = "minimize"))
-#'
-#' objective_function = function(xs) {
-#'   list(y = as.numeric(xs)^2)
+#' # example only runs if GenSA is available
+#' if (mlr3misc::require_namespaces("GenSA", quietly = TRUE)) {
+#' # define the objective function
+#' fun = function(xs) {
+#'   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
 #' }
 #'
+#' # set domain
+#' domain = ps(
+#'   x1 = p_dbl(-10, 10),
+#'   x2 = p_dbl(-5, 5)
+#' )
+#'
+#' # set codomain
+#' codomain = ps(
+#'   y = p_dbl(tags = "maximize")
+#' )
+#'
+#' # create objective
 #' objective = ObjectiveRFun$new(
-#'   fun = objective_function,
+#'   fun = fun,
 #'   domain = domain,
-#'   codomain = codomain
+#'   codomain = codomain,
+#'   properties = "deterministic"
 #' )
 #'
-#' terminator = trm("evals", n_evals = 10)
-#'
-#' # run optimizers sequentially
-#' instance = OptimInstanceBatchSingleCrit$new(
+#' # initialize instance
+#' instance = oi(
 #'   objective = objective,
-#'   search_space = search_space,
-#'   terminator = terminator
+#'   terminator = trm("evals", n_evals = 10)
 #' )
 #'
+#' # load optimizer
 #' optimizer = opt("chain",
 #'   optimizers = list(opt("random_search"), opt("grid_search")),
 #'   terminators = list(trm("evals", n_evals = 5), trm("evals", n_evals = 5))
 #' )
 #'
+#' # trigger optimization
 #' optimizer$optimize(instance)
 #'
-#' # random restarts
-#' instance = OptimInstanceBatchSingleCrit$new(
-#'   objective = objective,
-#'   search_space = search_space,
-#'   terminator = trm("none")
-#' )
-#' optimizer = opt("chain",
-#'   optimizers = list(opt("gensa"), opt("gensa")),
-#'   terminators = list(trm("evals", n_evals = 10), trm("evals", n_evals = 10))
-#' )
-#' optimizer$optimize(instance)
+#' # all evaluated configurations
+#' instance$archive
+#'
+#' # best performing configuration
+#' instance$result
+#' }
 OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
   public = list(
 

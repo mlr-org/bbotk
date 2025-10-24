@@ -20,6 +20,7 @@
 #' @template param_man
 #' @template param_packages
 #'
+#' @seealso [ObjectiveRFun], [ObjectiveRFunMany], [ObjectiveRFunDt]
 #' @export
 Objective = R6Class("Objective",
   public = list(
