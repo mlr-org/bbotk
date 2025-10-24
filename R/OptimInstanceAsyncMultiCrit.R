@@ -17,7 +17,7 @@
 #' @export
 #' @examples
 #' # example only runs if a Redis server is available
-#' \donttest{
+#' if (mlr3misc::require_namespaces(c("rush", "redux"), quietly = TRUE) && redux::redis_available()) {
 #' # define the objective function
 #' fun = function(xs) {
 #'   data.table(
