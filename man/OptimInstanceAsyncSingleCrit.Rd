@@ -8,6 +8,8 @@ The \code{OptimInstanceAsyncSingleCrit} specifies an optimization problem for an
 The function \code{\link[=oi_async]{oi_async()}} creates an \link{OptimInstanceAsyncSingleCrit}.
 }
 \examples{
+\dontshow{if (requireNamespace("rush", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{\}) # examplesIf}
 # example only runs if a Redis server is available
 \donttest{
 # define the objective function

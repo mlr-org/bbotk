@@ -24,6 +24,8 @@ opt("async_random_search")
 }
 
 \examples{
+\dontshow{if (requireNamespace("rush", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{\}) # examplesIf}
 # example only runs if a Redis server is available
 \donttest{
 # define the objective function

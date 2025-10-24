@@ -17,6 +17,8 @@ The \code{x_domain} column is unnested to separate columns.
 }
 
 \examples{
+\dontshow{if (requireNamespace("rush", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{\}) # examplesIf}
 # example only runs if a Redis server is available
 \donttest{
 fun = function(xs) {

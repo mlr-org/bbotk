@@ -15,6 +15,7 @@
 #' @template param_xdt
 #'
 #' @export
+#' @examplesIf requireNamespace("rush", quietly = TRUE)
 #' @examples
 #' # example only runs if a Redis server is available
 #' \donttest{
