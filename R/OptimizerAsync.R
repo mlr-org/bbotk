@@ -115,6 +115,9 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     as.character(rush::rush_config()$n_workers %??% ""),
     worker_type)
 
+  lg$info("Waiting for worker to start")
+  rush$wait_for_workers(1, timeout = getOption("bbotk_worker_timeout", 600))
+
   n_running_workers = 0
   # wait until optimization is finished
   # check terminated workers when the terminator is "none"
