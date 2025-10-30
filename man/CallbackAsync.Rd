@@ -35,6 +35,14 @@ Called in \code{OptimInstance$.eval_point()}.}
 Stage called after points are evaluated.
 Called in \code{OptimInstance$.eval_point()}.}
 
+\item{\code{on_optimizer_queue_before_eval}}{(\verb{function()})\cr
+Stage called after the optimizer proposes points.
+Called in \code{OptimInstance$.eval_queue()}.}
+
+\item{\code{on_optimizer_queue_after_eval}}{(\verb{function()})\cr
+Stage called after points are evaluated.
+Called in \code{OptimInstance$.eval_queue()}.}
+
 \item{\code{on_worker_end}}{(\verb{function()})\cr
 Stage called at the end of the optimization on the worker.
 Called in the worker loop.}

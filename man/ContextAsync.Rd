@@ -23,9 +23,6 @@ Changes to \verb{$instance} and \verb{$optimizer} in the stages executed on the 
 \item{\code{instance}}{(\link{OptimInstance}).}
 
 \item{\code{optimizer}}{(\link{Optimizer}).}
-
-\item{\code{queue}}{\code{logical(1)}\cr
-Whether the point is from the queue.}
 }
 \if{html}{\out{</div>}}
 }

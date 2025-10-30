@@ -33,6 +33,16 @@ CallbackAsync = R6Class("CallbackAsync",
     #' Called in `OptimInstance$.eval_point()`.
     on_optimizer_after_eval = NULL,
 
+    #' @field on_optimizer_queue_before_eval (`function()`)\cr
+    #' Stage called after the optimizer proposes points.
+    #' Called in `OptimInstance$.eval_queue()`.
+    on_optimizer_queue_before_eval = NULL,
+
+    #' @field on_optimizer_queue_after_eval (`function()`)\cr
+    #' Stage called after points are evaluated.
+    #' Called in `OptimInstance$.eval_queue()`.
+    on_optimizer_queue_after_eval = NULL,
+
     #' @field on_worker_end (`function()`)\cr
     #' Stage called at the end of the optimization on the worker.
     #' Called in the worker loop.
@@ -114,6 +124,16 @@ CallbackAsync = R6Class("CallbackAsync",
 #'  Called in `OptimInstance$.eval_point()`.
 #'  The functions must have two arguments named `callback` and `context`.
 #'  The outcome `y` is available in the `context`.
+#' @param on_optimizer_queue_before_eval (`function()`)\cr
+#'  Stage called before a point in the queue is evaluated.
+#'  Called in `OptimInstance$.eval_queue()`.
+#'  The functions must have two arguments named `callback` and `context`.
+#'  The argument of `instance$.eval_queue(xs)` and `xs_trafoed` and `extra` are available in the `context`.
+#' @param on_optimizer_queue_after_eval (`function()`)\cr
+#'  Stage called after a point in the queue is evaluated.
+#'  Called in `OptimInstance$.eval_queue()`.
+#'  The functions must have two arguments named `callback` and `context`.
+#'  The outcome `y` is available in the `context`.
 #' @param on_worker_end (`function()`)\cr
 #'  Stage called at the end of the optimization on the worker.
 #'  Called in the worker loop.
@@ -149,6 +169,8 @@ callback_async = function(
   on_worker_begin = NULL,
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
+  on_optimizer_queue_before_eval = NULL,
+  on_optimizer_queue_after_eval = NULL,
   on_worker_end = NULL,
   on_result_begin = NULL,
   on_result_end = NULL,
@@ -160,6 +182,8 @@ callback_async = function(
     on_worker_begin,
     on_optimizer_before_eval,
     on_optimizer_after_eval,
+    on_optimizer_queue_before_eval,
+    on_optimizer_queue_after_eval,
     on_worker_end,
     on_result_begin,
     on_result_end,
@@ -169,6 +193,8 @@ callback_async = function(
       "on_worker_begin",
       "on_optimizer_before_eval",
       "on_optimizer_after_eval",
+      "on_optimizer_queue_before_eval",
+      "on_optimizer_queue_after_eval",
       "on_worker_end",
       "on_result_begin",
       "on_result_end",
