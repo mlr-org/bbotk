@@ -165,7 +165,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 
   # assign result
   get_private(optimizer)$.assign_result(instance)
-  lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
+  lg$info("Finished optimizing after %i evaluation(s)", instance$rush$n_finished_tasks)
   lg$info("Result:")
 
   # print result
