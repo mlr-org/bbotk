@@ -16,7 +16,7 @@
 #' Usually, the method proposes new points, evaluates them, and updates the archive.
 #'
 #' @section Optimization:
-#' The [rush::rush_plan(n_workers, worker_type)] function defines the number of workers and their type.
+#' The [rush::rush_plan()] function defines the number of workers and their type.
 #' There are three types of workers:
 #'
 #' - "local": Workers are started as local processes with \CRANpkg{processx}.

@@ -18,16 +18,16 @@ Usually, the method proposes new points, evaluates them, and updates the archive
 }
 \section{Optimization}{
 
-The \link[rush:rush_plan(n_workers, worker_type)]{rush::rush_plan(n_workers, worker_type)} function defines the number of workers and their type.
+The \code{\link[rush:rush_plan]{rush::rush_plan()}} function defines the number of workers and their type.
 There are three types of workers:
 \itemize{
 \item "local": Workers are started as local processes with \CRANpkg{processx}.
-See \code{\link[rush:start_local_workers]{rush::start_local_workers()}} for more details.
+See \verb{$start_local_workers()} in \link[rush:Rush]{rush::Rush} for more details.
 \item "remote": Workers are started with \CRANpkg{mirai} on local or remote machines.
 \code{\link[mirai:daemons]{mirai::daemons()}} must be created before starting the optimization.
-See \code{\link[rush:start_remote_workers]{rush::start_remote_workers()}} for more details.
+See \verb{$start_remote_workers()} in \link[rush:Rush]{rush::Rush} for more details.
 \item "script": Workers are started by the user with a custom script.
-See \code{\link[rush:create_worker_script]{rush::create_worker_script()}} for more details.
+See \verb{$create_worker_script()} in \link[rush:Rush]{rush::Rush} for more details.
 }
 
 The workers are started when the \verb{$optimize()} method is called.
@@ -50,7 +50,7 @@ The debug mode is enabled by setting \code{options(bbotk.debug = TRUE)}.
 \section{Tiny Logging}{
 
 The tiny logging mode is enabled by setting the option \code{bbotk.tiny_logging} to \code{TRUE}.
-In the tiny logging mode, only the evaluated points are printed in a compact format.
+In the tiny logging mode, the evaluated points are printed in a compact format and the currently best performing point is shown.
 Deactivated depending parameters are not printed.
 }
 
