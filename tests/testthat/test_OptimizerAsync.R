@@ -115,7 +115,7 @@ test_that("OptimizerAsync throws an error when all workers are lost", {
   )
   optimizer = opt("async_random_search")
 
-  expect_error(optimizer$optimize(instance), "All workers have crashed.")
+  expect_error(optimizer$optimize(instance), "Optimization terminated without any finished evaluations")
 
   expect_rush_reset(instance$rush)
 })

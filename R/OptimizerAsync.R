@@ -15,6 +15,37 @@
 #' The private method `$.optimize()` is the actual optimization algorithm that runs on the workers.
 #' Usually, the method proposes new points, evaluates them, and updates the archive.
 #'
+#' @section Optimization:
+#' The [rush::rush_plan(n_workers, worker_type)] function defines the number of workers and their type.
+#' There are three types of workers:
+#'
+#' - "local": Workers are started as local processes with \CRANpkg{processx}.
+#'   See `$start_local_workers()` in [Rush] for more details.
+#' - "remote": Workers are started with \CRANpkg{mirai} on local or remote machines.
+#'   [mirai::daemons()] must be created before starting the optimization.
+#'   See `$start_remote_workers()` in [Rush] for more details.
+#' - "script": Workers are started by the user with a custom script.
+#'   See `$create_worker_script()` in [Rush] for more details.
+#'
+#' The workers are started when the `$optimize()` method is called.
+#' The main process waits until at least one worker is running.
+#' The optimization starts directly after the workers are running.
+#' The main process prints the evaluation results and other log messages from the workers.
+#' The optimization is terminated when the terminator criterion is satisfied.
+#' The result is assigned to the [OptimInstanceAsync] field.
+#' The main loop periodically checks the status of the workers.
+#' If all workers crash the optimization is terminated.
+#'
+#' @section Debug Mode:
+#' The debug mode runs the optimization loop in the main process.
+#' This is useful for debugging the optimization algorithm.
+#' The debug mode is enabled by setting `options(bbotk.debug = TRUE)`.
+#'
+#' @section Tiny Logging:
+#' The tiny logging mode is enabled by setting the option `bbotk.tiny_logging` to `TRUE`.
+#' In the tiny logging mode, the evaluated points are printed in a compact format and the currently best performing point is shown.
+#' Deactivated depending parameters are not printed.
+#'
 #' @seealso [OptimizerAsyncDesignPoints], [OptimizerAsyncGridSearch], [OptimizerAsyncRandomSearch]
 #' @export
 OptimizerAsync = R6Class("OptimizerAsync",
@@ -89,22 +120,28 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
         instance = instance)
+
+      rush$wait_for_workers(n = 1)
     } else if (worker_type == "remote") {
       # remote workers
-      rush$start_remote_workers(
+      worker_ids = rush$start_remote_workers(
         n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
         instance = instance)
+
+      rush$wait_for_workers(n = 1, worker_ids)
     } else if (worker_type == "local") {
       # local workers
-      rush$start_local_workers(
+      worker_ids = rush$start_local_workers(
         n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
         instance = instance)
+
+      rush$wait_for_workers(n = 1, worker_ids)
     }
   }
 
@@ -115,22 +152,19 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     as.character(rush::rush_config()$n_workers %??% ""),
     worker_type)
 
-  lg$info("Waiting for worker to start")
-  rush$wait_for_workers(1, timeout = getOption("bbotk_worker_timeout", 600))
-
   n_running_workers = 0
   # wait until optimization is finished
   # check terminated workers when the terminator is "none"
-  while(TRUE) {
+  while (!instance$is_terminated) {
     Sys.sleep(1)
 
     if (rush$n_running_workers > n_running_workers) {
       n_running_workers = rush$n_running_workers
-      lg$info("%i worker(s) started", n_running_workers)
+      lg$info("%i worker(s) running", n_running_workers)
     }
 
     # print logger messages from workers
-    instance$rush$print_log()
+    rush$print_log()
 
     # print evaluations
     if (getOption("bbotk.tiny_logging", FALSE)) {
@@ -145,23 +179,23 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       }
     }
 
-    if (instance$rush$all_workers_lost && !instance$is_terminated && !instance$rush$all_workers_terminated) {
-      stop("All workers have crashed.")
-    }
+    rush$detect_lost_workers()
 
-    if (instance$is_terminated) break
-    if (instance$rush$all_workers_terminated) {
+    if (!rush$n_running_workers) {
       lg$info("All workers have terminated.")
       break
     }
   }
 
   # move queued and running tasks to failed
-  failed_tasks = c(rush$queued_tasks, rush$running_tasks)
+  failed_tasks = unlist(rush$tasks_with_state(states = c("queued", "running")))
   if (length(failed_tasks)) {
     rush$push_failed(failed_tasks, conditions = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE))
   }
 
+  if (!instance$archive$n_finished) {
+    stopf("Optimization terminated without any finished evaluations.")
+  }
 
   # assign result
   get_private(optimizer)$.assign_result(instance)
