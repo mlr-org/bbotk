@@ -20,10 +20,6 @@ ContextAsync = R6Class("ContextAsync",
     #' @field optimizer ([Optimizer]).
     optimizer = NULL,
 
-    #' @field queue `logical(1)`\cr
-    #' Whether the point is from the queue.
-    queue = FALSE,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'

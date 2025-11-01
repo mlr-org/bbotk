@@ -20,3 +20,4 @@ test_that("OptimizerAsyncRandomSearch works", {
 
   expect_rush_reset(instance$rush)
 })
+

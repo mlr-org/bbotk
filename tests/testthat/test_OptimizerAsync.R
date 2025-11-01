@@ -115,7 +115,7 @@ test_that("OptimizerAsync throws an error when all workers are lost", {
   )
   optimizer = opt("async_random_search")
 
-  expect_error(optimizer$optimize(instance), "All workers have crashed.")
+  expect_error(optimizer$optimize(instance), "Optimization terminated without any finished evaluations")
 
   expect_rush_reset(instance$rush)
 })
@@ -203,7 +203,7 @@ test_that("Required packages are loaded", {
   )
 
   optimizer = opt("async_random_search")
-  expect_error(optimizer$optimize(instance), "All workers have crashed")
+  expect_error(optimizer$optimize(instance), "Optimization terminated without any finished evaluations")
   Sys.sleep(1)
   expect_match(instance$rush$fetch_failed_tasks()$message, "irace is not loaded")
 

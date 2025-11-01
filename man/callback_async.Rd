@@ -12,6 +12,8 @@ callback_async(
   on_worker_begin = NULL,
   on_optimizer_before_eval = NULL,
   on_optimizer_after_eval = NULL,
+  on_optimizer_queue_before_eval = NULL,
+  on_optimizer_queue_after_eval = NULL,
   on_worker_end = NULL,
   on_result_begin = NULL,
   on_result_end = NULL,
@@ -50,6 +52,18 @@ Or \code{xs} and \code{xs_trafoed} of \code{instance$.eval_queue()} are availabl
 \item{on_optimizer_after_eval}{(\verb{function()})\cr
 Stage called after points are evaluated.
 Called in \code{OptimInstance$.eval_point()}.
+The functions must have two arguments named \code{callback} and \code{context}.
+The outcome \code{y} is available in the \code{context}.}
+
+\item{on_optimizer_queue_before_eval}{(\verb{function()})\cr
+Stage called before a point in the queue is evaluated.
+Called in \code{OptimInstance$.eval_queue()}.
+The functions must have two arguments named \code{callback} and \code{context}.
+The argument of \code{instance$.eval_queue(xs)} and \code{xs_trafoed} and \code{extra} are available in the \code{context}.}
+
+\item{on_optimizer_queue_after_eval}{(\verb{function()})\cr
+Stage called after a point in the queue is evaluated.
+Called in \code{OptimInstance$.eval_queue()}.
 The functions must have two arguments named \code{callback} and \code{context}.
 The outcome \code{y} is available in the \code{context}.}
 
