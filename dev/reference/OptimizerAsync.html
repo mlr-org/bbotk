@@ -68,6 +68,43 @@ The private method <code>$.optimize()</code> is the actual optimization algorith
 Usually, the method proposes new points, evaluates them, and updates the archive.</p>
     </div>
     <div class="section level2">
+    <h2 id="optimization">Optimization<a class="anchor" aria-label="anchor" href="#optimization"></a></h2>
+
+
+<p>The <code><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush::rush_plan()</a></code> function defines the number of workers and their type.
+There are three types of workers:</p><ul><li><p>"local": Workers are started as local processes with <a href="https://CRAN.R-project.org/package=processx" class="external-link"><span class="pkg">processx</span></a>.
+See <code>$start_local_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
+<li><p>"remote": Workers are started with <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> on local or remote machines.
+<code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> must be created before starting the optimization.
+See <code>$start_remote_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
+<li><p>"script": Workers are started by the user with a custom script.
+See <code>$create_worker_script()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
+</ul><p>The workers are started when the <code>$optimize()</code> method is called.
+The main process waits until at least one worker is running.
+The optimization starts directly after the workers are running.
+The main process prints the evaluation results and other log messages from the workers.
+The optimization is terminated when the terminator criterion is satisfied.
+The result is assigned to the <a href="OptimInstanceAsync.html">OptimInstanceAsync</a> field.
+The main loop periodically checks the status of the workers.
+If all workers crash the optimization is terminated.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="debug-mode">Debug Mode<a class="anchor" aria-label="anchor" href="#debug-mode"></a></h2>
+
+
+<p>The debug mode runs the optimization loop in the main process.
+This is useful for debugging the optimization algorithm.
+The debug mode is enabled by setting <code>options(bbotk.debug = TRUE)</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="tiny-logging">Tiny Logging<a class="anchor" aria-label="anchor" href="#tiny-logging"></a></h2>
+
+
+<p>The tiny logging mode is enabled by setting the option <code>bbotk.tiny_logging</code> to <code>TRUE</code>.
+In the tiny logging mode, the evaluated points are printed in a compact format and the currently best performing point is shown.
+Deactivated depending parameters are not printed.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><a href="mlr_optimizers_async_design_points.html">OptimizerAsyncDesignPoints</a>, <a href="mlr_optimizers_async_grid_search.html">OptimizerAsyncGridSearch</a>, <a href="mlr_optimizers_async_random_search.html">OptimizerAsyncRandomSearch</a></p></div>
     </div>

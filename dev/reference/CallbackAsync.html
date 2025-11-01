@@ -100,6 +100,18 @@ Stage called after points are evaluated.
 Called in <code>OptimInstance$.eval_point()</code>.</p></dd>
 
 
+<dt><code>on_optimizer_queue_before_eval</code></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called after the optimizer proposes points.
+Called in <code>OptimInstance$.eval_queue()</code>.</p></dd>
+
+
+<dt><code>on_optimizer_queue_after_eval</code></dt>
+<dd><p>(<code>function()</code>)<br>
+Stage called after points are evaluated.
+Called in <code>OptimInstance$.eval_queue()</code>.</p></dd>
+
+
 <dt><code>on_worker_end</code></dt>
 <dd><p>(<code>function()</code>)<br>
 Stage called at the end of the optimization on the worker.
