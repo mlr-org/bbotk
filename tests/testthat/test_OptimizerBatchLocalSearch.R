@@ -359,7 +359,7 @@ test_that("OptimizerBatchLocalSearch evaluates the right number of points", {
 
 test_that("OptimizerBatchLocalSearch restarts work", {
   domain = ps(
-    x = p_dbl(lower = -1, upper = 1)
+    x = p_dbl(lower = -100, upper = 100)
   )
   i = 0
   fun = function(xss) {
