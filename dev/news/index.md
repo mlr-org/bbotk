@@ -2,6 +2,15 @@
 
 ## bbotk (development version)
 
+## bbotk 1.8.0
+
+CRAN release: 2025-11-06
+
+- feat: Add `on_optimizer_queue_before_eval` and
+  `on_optimizer_queue_after_eval` stages to `CallbackAsync` and
+  `CallbackBatch`.
+- fix: Start phase of `rush` worker.
+
 ## bbotk 1.7.1
 
 CRAN release: 2025-10-24
