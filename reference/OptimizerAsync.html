@@ -15,7 +15,7 @@ The optimization is performed asynchronously on a set of workers."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@ The optimization is performed asynchronously on a set of workers."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Asynchronous Optimizer</h1>
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/bbotk/blob/v1.7.1/R/OptimizerAsync.R" class="external-link"><code>R/OptimizerAsync.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/bbotk/blob/main/R/OptimizerAsync.R" class="external-link"><code>R/OptimizerAsync.R</code></a></small>
       <div class="d-none name"><code>OptimizerAsync.Rd</code></div>
     </div>
 
@@ -66,6 +66,43 @@ The method starts the optimization process by starting the workers and pushing t
 Optionally, a set of points can be created, e.g. an initial design, and pushed to the workers.
 The private method <code>$.optimize()</code> is the actual optimization algorithm that runs on the workers.
 Usually, the method proposes new points, evaluates them, and updates the archive.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="optimization">Optimization<a class="anchor" aria-label="anchor" href="#optimization"></a></h2>
+
+
+<p>The <code><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush::rush_plan()</a></code> function defines the number of workers and their type.
+There are three types of workers:</p><ul><li><p>"local": Workers are started as local processes with <a href="https://CRAN.R-project.org/package=processx" class="external-link"><span class="pkg">processx</span></a>.
+See <code>$start_local_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
+<li><p>"remote": Workers are started with <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> on local or remote machines.
+<code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> must be created before starting the optimization.
+See <code>$start_remote_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
+<li><p>"script": Workers are started by the user with a custom script.
+See <code>$create_worker_script()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
+</ul><p>The workers are started when the <code>$optimize()</code> method is called.
+The main process waits until at least one worker is running.
+The optimization starts directly after the workers are running.
+The main process prints the evaluation results and other log messages from the workers.
+The optimization is terminated when the terminator criterion is satisfied.
+The result is assigned to the <a href="OptimInstanceAsync.html">OptimInstanceAsync</a> field.
+The main loop periodically checks the status of the workers.
+If all workers crash the optimization is terminated.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="debug-mode">Debug Mode<a class="anchor" aria-label="anchor" href="#debug-mode"></a></h2>
+
+
+<p>The debug mode runs the optimization loop in the main process.
+This is useful for debugging the optimization algorithm.
+The debug mode is enabled by setting <code>options(bbotk.debug = TRUE)</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="tiny-logging">Tiny Logging<a class="anchor" aria-label="anchor" href="#tiny-logging"></a></h2>
+
+
+<p>The tiny logging mode is enabled by setting the option <code>bbotk.tiny_logging</code> to <code>TRUE</code>.
+In the tiny logging mode, the evaluated points are printed in a compact format and the currently best performing point is shown.
+Deactivated depending parameters are not printed.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -138,7 +175,7 @@ The result will be written into the instance object.</p><div class="section">
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
