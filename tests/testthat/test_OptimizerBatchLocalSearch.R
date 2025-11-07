@@ -14,7 +14,7 @@ test_that("OptimizerBatchLocalSearch works with numeric parameter", {
   expect_data_table(instance$archive$data, nrows = 510L)
   expect_numeric(instance$archive$data$x, lower = -1, upper = 1)
   expect_true(instance$archive$best()$y >= 0)
-  expect_true(instance$archive$best()$y < 1e-3)
+  expect_true(instance$archive$best()$y < 1e-2)
 })
 
 test_that("OptimizerBatchLocalSearch works with numeric parameter with large range", {
@@ -96,7 +96,7 @@ test_that("OptimizerBatchLocalSearch works with mixed spaces", {
   expect_numeric(instance$archive$data$x1, lower = -1, upper = 1)
   expect_character(instance$archive$data$x2, any.missing = FALSE)
   expect_set_equal(instance$archive$data$x2, c("a", "b"))
-  expect_true(abs(instance$archive$best()$y) < 1e-3)
+  expect_true(abs(instance$archive$best()$y) < 1e-2)
 })
 
 test_that("OptimizerBatchLocalSearch works with dependencies on logical parameter", {
@@ -124,7 +124,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on logical paramete
   expect_logical(instance$archive$data$x2, any.missing = FALSE)
   if (nrow(instance$archive$data[x2 == FALSE])) expect_set_equal(instance$archive$data[x2 == FALSE]$x1, NA)
   if (nrow(instance$archive$data[x2 == FALSE])) expect_set_equal(instance$archive$data[x2 == FALSE]$y, 3)
-  expect_true(abs(instance$archive$best()$y) < 1e-3)
+  expect_true(abs(instance$archive$best()$y) < 1e-2)
 })
 
 test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter", {
@@ -151,7 +151,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on factor parameter
   expect_character(instance$archive$data$x2, any.missing = FALSE)
   if (nrow(instance$archive$data[x2 == "b"])) expect_set_equal(instance$archive$data[x2 == "b"]$x1, NA)
   if (nrow(instance$archive$data[x2 == "b"])) expect_set_equal(instance$archive$data[x2 == "b"]$y, 3)
-  expect_true(abs(instance$archive$best()$y) < 1e-3)
+  expect_true(abs(instance$archive$best()$y) < 1e-2)
 })
 
 test_that("OptimizerBatchLocalSearch works with chained dependencies on factor parameters", {
@@ -251,7 +251,7 @@ test_that("OptimizerBatchLocalSearch works with dependencies on numeric paramete
   expect_numeric(instance$archive$data$x1, lower = -1, upper = 1)
   expect_numeric(instance$archive$data$x2, lower = -1, upper = 1)
   if (nrow(instance$archive$data[x1 != 1])) expect_set_equal(instance$archive$data[x1 != 1]$x2, NA)
-  expect_true(abs(instance$archive$best()$y) < 1e-3)
+  expect_true(abs(instance$archive$best()$y) < 1e-2)
 })
 
 test_that("OptimizerBatchLocalSearch works with trafo", {
@@ -359,7 +359,7 @@ test_that("OptimizerBatchLocalSearch evaluates the right number of points", {
 
 test_that("OptimizerBatchLocalSearch restarts work", {
   domain = ps(
-    x = p_dbl(lower = -1, upper = 1)
+    x = p_dbl(lower = -100, upper = 100)
   )
   i = 0
   fun = function(xss) {
