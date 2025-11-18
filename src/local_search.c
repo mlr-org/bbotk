@@ -496,13 +496,13 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, const Cond *cond, const Searc
         int n_rhs = length(s_rhs);
         for (int k = 0; k < n_rhs; k++) {
             if (parent_class == 0) { // ParamDbl
-                is_satisfied = (fabs(REAL(s_parent_col)[i] - REAL(s_rhs)[k]) < 1e-8);
+                if (fabs(REAL(s_parent_col)[i] - REAL(s_rhs)[k]) < 1e-8) { is_satisfied = 1; break; }
             } else if (parent_class == 1) { // ParamInt
-                is_satisfied = (INTEGER(s_parent_col)[i] == INTEGER(s_rhs)[k]);
+                if (INTEGER(s_parent_col)[i] == INTEGER(s_rhs)[k]) { is_satisfied = 1; break; }
             } else if (parent_class == 2) { // ParamFct
-                is_satisfied = (strcmp(CHAR(STRING_ELT(s_parent_col, i)), CHAR(STRING_ELT(s_rhs, k))) == 0);
+                if (strcmp(CHAR(STRING_ELT(s_parent_col, i)), CHAR(STRING_ELT(s_rhs, k))) == 0) { is_satisfied = 1; break; }
             } else { // ParamLgl
-                is_satisfied = (LOGICAL(s_parent_col)[i] == LOGICAL(s_rhs)[k]);
+                if (LOGICAL(s_parent_col)[i] == LOGICAL(s_rhs)[k]) { is_satisfied = 1; break; }
             }
         }
     }
