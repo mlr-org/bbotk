@@ -464,6 +464,18 @@ void reorder_conds_by_toposort(SearchSpace* ss) {
     }
 }
 
+// Helper function for is_condition_satisfied to avoid repetition of code
+int is_condition_satisfied_helper(int parent_class, SEXP s_parent_col, int i, SEXP s_rhs, int k) {
+    if (parent_class == 0) { // ParamDbl
+        return fabs(REAL(s_parent_col)[i] - REAL(s_rhs)[k]) < 1e-8;
+    } else if (parent_class == 1) { // ParamInt
+        return INTEGER(s_parent_col)[i] == INTEGER(s_rhs)[k];
+    } else if (parent_class == 2) { // ParamFct
+        return strcmp(CHAR(STRING_ELT(s_parent_col, i)), CHAR(STRING_ELT(s_rhs, k))) == 0;
+    } else { // ParamLgl
+        return LOGICAL(s_parent_col)[i] == LOGICAL(s_rhs)[k];
+    }
+}
 
 // Check if a condition is satisfied for a given row
 // whether a confition is satisfied ONLY depends on the value of the parent parameter,
@@ -483,27 +495,11 @@ int is_condition_satisfied(SEXP s_neighs_x, int i, const Cond *cond, const Searc
     }
 
     if (cond->type == 0) { // CondEqual, check if parent value equals the RHS value
-        if (parent_class == 0) { // ParamDbl
-            is_satisfied = fabs(REAL(s_parent_col)[i] - REAL(s_rhs)[0]) < 1e-8;
-        } else if (parent_class == 1) { // ParamInt
-            is_satisfied = INTEGER(s_parent_col)[i] == INTEGER(s_rhs)[0];
-        } else if (parent_class == 2) { // ParamFct
-            is_satisfied = strcmp(CHAR(STRING_ELT(s_parent_col, i)), CHAR(STRING_ELT(s_rhs, 0))) == 0;
-        } else { // ParamLgl
-            is_satisfied = LOGICAL(s_parent_col)[i] == LOGICAL(s_rhs)[0];
-        }
+        is_satisfied = is_condition_satisfied_helper(parent_class, s_parent_col, i, s_rhs, 0);
     } else { // CondAnyOf, check if parent value is in the RHS values
         int n_rhs = length(s_rhs);
         for (int k = 0; k < n_rhs; k++) {
-            if (parent_class == 0) { // ParamDbl
-                is_satisfied = (fabs(REAL(s_parent_col)[i] - REAL(s_rhs)[k]) < 1e-8);
-            } else if (parent_class == 1) { // ParamInt
-                is_satisfied = (INTEGER(s_parent_col)[i] == INTEGER(s_rhs)[k]);
-            } else if (parent_class == 2) { // ParamFct
-                is_satisfied = (strcmp(CHAR(STRING_ELT(s_parent_col, i)), CHAR(STRING_ELT(s_rhs, k))) == 0);
-            } else { // ParamLgl
-                is_satisfied = (LOGICAL(s_parent_col)[i] == LOGICAL(s_rhs)[k]);
-            }
+            is_satisfied |= is_condition_satisfied_helper(parent_class, s_parent_col, i, s_rhs, k);
         }
     }
     return is_satisfied;

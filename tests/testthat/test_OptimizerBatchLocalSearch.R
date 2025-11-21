@@ -390,3 +390,25 @@ test_that("OptimizerBatchLocalSearch restarts work", {
   # restart will set off a new search with a new random x
   expect_length(unique(round(instance$archive$data$x, 3)), 2)
 })
+
+test_that("OptimizerBatchLocalSearch works with CondAnyOf", {
+
+  domain = ps(
+    x1 = p_fct(c("a", "b", "c")),
+    x2 = p_dbl(lower = -1, upper = 1, depends = x1 %in% c("a", "b")),
+    x3 = p_dbl(lower = -1, upper = 1)
+  )
+
+  fun = function(xs) {
+    runif(1)
+  }
+
+  objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-crit")
+  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 50L))
+  optimizer = opt("local_search", n_searches = 10L, n_steps = 5L, n_neighs = 10L)
+  optimizer$optimize(instance)
+
+  dt = instance$archive$data
+  if (nrow(dt[x1 == "c"])) expect_true(all(is.na(dt[x1 == "c"]$x2)))
+  if (nrow(dt[x1 %in% c("a", "b")])) expect_true(all(!is.na(dt[x1 %in% c("a", "b")]$x2)))
+})

@@ -103,8 +103,11 @@ test_that("c_test_is_condition_satisfied", {
   ps$add_dep("B", on = "A", cond = paradox::CondEqual$new("a1"))
   dt = data.frame(A = "a1", B = 0.5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 1L, PACKAGE = "bbotk")
+  check_test_results(testres)
+
   dt = data.frame(A = "a2", B = 0.5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps, 0L, 0L, PACKAGE = "bbotk")
+  check_test_results(testres)
 
   # Test CondAnyOf condition
   ps2 = paradox::ps(
@@ -114,8 +117,15 @@ test_that("c_test_is_condition_satisfied", {
   ps2$add_dep("B", on = "A", cond = paradox::CondAnyOf$new(c("a1", "a2")))
   dt = data.frame(A = "a1", B = 5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 1L, PACKAGE = "bbotk")
+  check_test_results(testres)
+
+  dt = data.frame(A = "a2", B = 5)
+  testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 1L, PACKAGE = "bbotk")
+  check_test_results(testres)
+
   dt = data.frame(A = "a3", B = 5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps2, 0L, 0L, PACKAGE = "bbotk")
+  check_test_results(testres)
 
   # Test numeric parameter conditions
   ps3 = paradox::ps(
@@ -125,8 +135,11 @@ test_that("c_test_is_condition_satisfied", {
   ps3$add_dep("B", on = "A", cond = paradox::CondEqual$new(5))
   dt = data.frame(A = 5, B = 3)
   testres = .Call("c_test_is_condition_satisfied", dt, ps3, 0L, 1L, PACKAGE = "bbotk")
+  check_test_results(testres)
+
   dt = data.frame(A = 4.9, B = 3)
   testres = .Call("c_test_is_condition_satisfied", dt, ps3, 0L, 0L, PACKAGE = "bbotk")
+  check_test_results(testres)
 
   # Test logical parameter conditions
   ps4 = paradox::ps(
@@ -136,8 +149,11 @@ test_that("c_test_is_condition_satisfied", {
   ps4$add_dep("B", on = "A", cond = paradox::CondEqual$new(TRUE))
   dt = data.frame(A = TRUE, B = 0.5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps4, 0L, 1L, PACKAGE = "bbotk")
+  check_test_results(testres)
+
   dt = data.frame(A = FALSE, B = 0.5)
   testres = .Call("c_test_is_condition_satisfied", dt, ps4, 0L, 0L, PACKAGE = "bbotk")
+  check_test_results(testres)
 
   # Test NA handling
   ps5 = paradox::ps(
@@ -148,8 +164,12 @@ test_that("c_test_is_condition_satisfied", {
 
   dt = data.frame(A = NA, B = NA) # parent is non-active, condition is not satisfied
   testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L, PACKAGE = "bbotk")
+  check_test_results(testres)
+
   dt = data.frame(A = "a1", B = NA) # parent is active and correct, B=NA does not matter
   testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 1L, PACKAGE = "bbotk")
+  check_test_results(testres)
+
   dt = data.frame(A = NA_character_, B = 0.5) # parent is non-active, condition is not satisfied
   testres = .Call("c_test_is_condition_satisfied", dt, ps5, 0L, 0L, PACKAGE = "bbotk")
   check_test_results(testres)
