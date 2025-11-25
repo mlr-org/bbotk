@@ -17,7 +17,7 @@ The user can access the results with active bindings (see below).
 \link{EvalInstance}, \link{OptimInstanceBatch}, \link{OptimInstanceAsync}
 }
 \section{Super class}{
-\code{bbotk::EvalInstance} -> \code{OptimInstance}
+\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{OptimInstance}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

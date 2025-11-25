@@ -42,7 +42,7 @@ instance = oi(
   terminator = trm("evals", n_evals = 100))
 }
 \section{Super classes}{
-\code{bbotk::EvalInstance} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceBatch]{bbotk::OptimInstanceBatch}} -> \code{OptimInstanceBatchMultiCrit}
+\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceBatch]{bbotk::OptimInstanceBatch}} -> \code{OptimInstanceBatchMultiCrit}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

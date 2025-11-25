@@ -5,7 +5,7 @@
 \alias{OptimizerBatchCmaes}
 \title{Optimization via Covariance Matrix Adaptation Evolution Strategy}
 \description{
-\code{OptimizerBatchCmaes} class that implements CMA-ES. Calls \code{\link[adagio:pureCMAES]{adagio::pureCMAES()}}
+\code{OptimizerBatchCmaes} class that implements CMA-ES. Calls \code{\link[adagio:cmaes]{adagio::pureCMAES()}}
 from package \CRANpkg{adagio}. The algorithm is typically applied to search
 space dimensions between three and fifty. Lower search space dimensions might
 crash.
@@ -32,7 +32,7 @@ If set to \code{"custom"}, the start values can be passed via the \code{start} p
 Custom start values. Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
 }
 
-For the meaning of the control parameters, see \code{\link[adagio:pureCMAES]{adagio::pureCMAES()}}. Note
+For the meaning of the control parameters, see \code{\link[adagio:cmaes]{adagio::pureCMAES()}}. Note
 that we have removed all control parameters which refer to the termination of
 the algorithm and where our terminators allow to obtain the same behavior.
 }

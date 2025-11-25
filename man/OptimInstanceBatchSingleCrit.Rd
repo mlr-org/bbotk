@@ -39,7 +39,7 @@ instance = oi(
 )
 }
 \section{Super classes}{
-\code{bbotk::EvalInstance} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceBatch]{bbotk::OptimInstanceBatch}} -> \code{OptimInstanceBatchSingleCrit}
+\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceBatch]{bbotk::OptimInstanceBatch}} -> \code{OptimInstanceBatchSingleCrit}
 }
 \section{Methods}{
 \subsection{Public methods}{

@@ -14,7 +14,7 @@ The function \code{\link[=oi_async]{oi_async()}} creates an \link{OptimInstanceA
 \code{\link[=oi_async]{oi_async()}}, \link{OptimInstanceAsyncSingleCrit}, \link{OptimInstanceAsyncMultiCrit}
 }
 \section{Super classes}{
-\code{bbotk::EvalInstance} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceAsync}
+\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceAsync}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

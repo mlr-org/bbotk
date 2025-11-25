@@ -11,7 +11,7 @@ The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCr
 \code{\link[=oi]{oi()}}, \link{OptimInstanceBatchSingleCrit}, \link{OptimInstanceBatchMultiCrit}
 }
 \section{Super classes}{
-\code{bbotk::EvalInstance} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceBatch}
+\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceBatch}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
