@@ -186,6 +186,10 @@ ArchiveAsync = R6Class("ArchiveAsync",
       assert_count(n_select)
       tab = self$finished_data
 
+      if (any(self$codomain$direction == 0L)) {
+        stop("Cannot determine best points: codomain contains targets with direction = 0 (non-optimization targets). Use optimization targets only, or filter the archive manually.")
+      }
+
       if (self$codomain$target_length == 1L) {
         if (n_select == 1L) {
           # use which_max to find the best point
@@ -216,8 +220,13 @@ ArchiveAsync = R6Class("ArchiveAsync",
       tab = self$finished_data
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
+      direction = self$codomain$direction
+      if (any(direction == 0L)) {
+        stop("Cannot perform NDS selection: codomain contains targets with direction = 0 (non-optimization targets). Use optimization targets only.")
+      }
+
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-      minimize = map_lgl(self$codomain$target_tags, has_element, "minimize")
+      minimize = direction == 1L
       inds = nds_selection(points, n_select, ref_point, minimize)
       tab[inds, ]
     },

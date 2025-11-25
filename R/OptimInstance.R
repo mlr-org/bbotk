@@ -2,6 +2,7 @@
 #'
 #' @description
 #' The `OptimInstance` specifies an optimization problem for an [Optimizer].
+#' Inherits from [EvalInstance] and adds optimization-specific functionality.
 #'
 #' @details
 #' `OptimInstance` is an abstract base class that implements the base functionality each instance must provide.
@@ -20,26 +21,13 @@
 #'
 #' @template param_xdt
 #'
-#' @template field_objective
-#' @template field_search_space
-#' @template field_terminator
-#' @template field_archive
 #' @template field_progressor
-#' @template field_label
-#' @template field_man
 #'
-#' @seealso [OptimInstanceBatch], [OptimInstanceAsync]
+#' @seealso [EvalInstance], [OptimInstanceBatch], [OptimInstanceAsync]
 #' @export
 OptimInstance = R6Class("OptimInstance",
+  inherit = EvalInstance,
   public = list(
-
-    objective = NULL,
-
-    search_space = NULL,
-
-    terminator = NULL,
-
-    archive = NULL,
 
     progressor = NULL,
 
@@ -55,22 +43,21 @@ OptimInstance = R6Class("OptimInstance",
       label = NA_character_,
       man = NA_character_
       ) {
-      self$objective = assert_r6(objective, "Objective")
-      self$objective$callbacks = assert_callbacks(as_callbacks(callbacks))
-      self$search_space = assert_param_set(search_space)
-      self$terminator = assert_terminator(terminator, self)
+      assert_r6(objective, "Objective")
+      objective$callbacks = assert_callbacks(as_callbacks(callbacks))
+      assert_param_set(search_space)
+      terminator = assert_terminator(terminator, self)
       assert_flag(check_values)
-      self$archive = assert_r6(archive, "Archive")
+      assert_r6(archive, "Archive")
 
-      private$.label = assert_string(label, na.ok = TRUE)
-      private$.man = assert_string(man, na.ok = TRUE)
-    },
-
-    #' @description
-    #' Helper for print outputs.
-    #' @param ... (ignored).
-    format = function(...) {
-      sprintf("<%s>", class(self)[1L])
+      super$initialize(
+        objective = objective,
+        search_space = search_space,
+        terminator = terminator,
+        archive = archive,
+        label = label,
+        man = man
+      )
     },
 
     #' @description
@@ -118,10 +105,9 @@ OptimInstance = R6Class("OptimInstance",
     #' @description
     #' Reset terminator and clear all evaluation results from archive and results.
     clear = function() {
-      self$archive$clear()
+      super$clear()
       private$.result = NULL
       self$progressor = NULL
-      self$objective$context = NULL
       invisible(self)
     }
   ),
@@ -137,21 +123,6 @@ OptimInstance = R6Class("OptimInstance",
     #' x part of the result in the *search space*.
     result_x_search_space = function() {
       private$.result[, self$search_space$ids(), with = FALSE]
-    },
-
-    #' @field is_terminated (`logical(1)`).
-    is_terminated = function() {
-      self$terminator$is_terminated(self$archive)
-    },
-
-    label = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.label
-    },
-
-    man = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.man
     }
   ),
 
@@ -160,9 +131,6 @@ OptimInstance = R6Class("OptimInstance",
     .result_xdt = NULL,
     .result_extra = NULL,
     .result = NULL,
-
-    .label = NULL,
-    .man = NULL,
 
     deep_clone = function(name, value) {
       switch(name,
@@ -176,7 +144,18 @@ OptimInstance = R6Class("OptimInstance",
   )
 )
 
-# used by OptimInstance and OptimInstanceAsync
+#' @title Choose Search Space
+#'
+#' @description
+#' Determines the search space from an objective's domain, handling TuneTokens.
+#' Used internally by [OptimInstance] and [OptimInstanceAsync].
+#'
+#' @param objective ([Objective]) The objective function.
+#' @param search_space ([paradox::ParamSet] | `NULL`) Optional explicit search space.
+#'
+#' @return A [paradox::ParamSet] to use as the search space.
+#'
+#' @export
 choose_search_space = function(objective, search_space) {
   # create search space
   domain_search_space = objective$domain$search_space()
