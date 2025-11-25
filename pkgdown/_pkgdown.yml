@@ -53,6 +53,7 @@ reference:
       - as_terminator
   - title: Optimization Instance
     contents:
+      - EvalInstance
       - starts_with("OptimInstance")
       - starts_with("oi")
   - title: Optimizer
@@ -84,4 +85,4 @@ reference:
       - bbotk_worker_loop
       - trafo_xs
       - terminated_error
-
+      - choose_search_space
