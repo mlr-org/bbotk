@@ -5,7 +5,8 @@
 \title{Codomain of Function}
 \description{
 A \link[paradox:ParamSet]{paradox::ParamSet} defining the codomain of a function.
-The parameter set must contain at least one target parameter tagged with \code{"minimize"} or \code{"maximize"}.
+The parameter set must contain at least one target parameter tagged with
+\code{"minimize"}, \code{"maximize"}, or \code{"learn"}.
 The codomain may contain extra parameters which are ignored when calling the \link{Archive} methods \verb{$best()}, \verb{$nds_selection()} and \verb{$cols_y}.
 This class is usually constructed internally from a \link[paradox:ParamSet]{paradox::ParamSet} when \link{Objective} is initialized.
 }
@@ -59,7 +60,7 @@ Returns a numeric vector with values -1 and 1. Multiply with the outcome
 of a maximization problem to turn it into a minimization problem.}
 
 \item{\code{direction}}{(\code{integer()})\cr
-Returns \code{1} for minimization and \code{-1} for maximization.
+Returns \code{1} for minimization, \code{-1} for maximization, and \code{0} for learning.
 If the codomain contains multiple parameters an integer vector is returned.
 Multiply with the outcome of a maximization problem to turn it into a minimization problem.}
 }

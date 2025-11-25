@@ -5,6 +5,7 @@
 \title{Optimization Instance}
 \description{
 The \code{OptimInstance} specifies an optimization problem for an \link{Optimizer}.
+Inherits from \link{EvalInstance} and adds optimization-specific functionality.
 }
 \details{
 \code{OptimInstance} is an abstract base class that implements the base functionality each instance must provide.
@@ -13,23 +14,14 @@ The \link{Optimizer} writes the final result to the \code{.result} field by usin
 The user can access the results with active bindings (see below).
 }
 \seealso{
-\link{OptimInstanceBatch}, \link{OptimInstanceAsync}
+\link{EvalInstance}, \link{OptimInstanceBatch}, \link{OptimInstanceAsync}
+}
+\section{Super class}{
+\code{bbotk::EvalInstance} -> \code{OptimInstance}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{objective}}{(\link{Objective})\cr
-Objective function of the instance.}
-
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-Specification of the search space for the \link{Optimizer}.}
-
-\item{\code{terminator}}{\link{Terminator}\cr
-Termination criterion of the optimization.}
-
-\item{\code{archive}}{(\link{Archive})\cr
-Contains all performed function calls of the Objective.}
-
 \item{\code{progressor}}{(\code{progressor()})\cr
 Stores \code{progressor} function.}
 }
@@ -38,21 +30,11 @@ Stores \code{progressor} function.}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{label}}{(\code{character(1)})\cr
-Label for this object.
-Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
-String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
-The referenced help package can be opened via method \verb{$help()}.}
-
 \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Get result}
 
 \item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
-
-\item{\code{is_terminated}}{(\code{logical(1)}).}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,13 +42,19 @@ x part of the result in the \emph{search space}.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-OptimInstance-new}{\code{OptimInstance$new()}}
-\item \href{#method-OptimInstance-format}{\code{OptimInstance$format()}}
 \item \href{#method-OptimInstance-print}{\code{OptimInstance$print()}}
 \item \href{#method-OptimInstance-assign_result}{\code{OptimInstance$assign_result()}}
 \item \href{#method-OptimInstance-clear}{\code{OptimInstance$clear()}}
 \item \href{#method-OptimInstance-clone}{\code{OptimInstance$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href='../../bbotk/html/EvalInstance.html#method-EvalInstance-format'><code>bbotk::EvalInstance$format()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-new"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-new}{}}}
@@ -116,23 +104,6 @@ Can be used in tables, plot and text output instead of the ID.}
 \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstance-format"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstance-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$format(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
 }
 \if{html}{\out{</div>}}
 }
