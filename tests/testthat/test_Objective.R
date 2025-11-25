@@ -152,19 +152,19 @@ test_that("codomain assertions work", {
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize' or 'maximize'")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'")
 
   codomain = ps(y1 = p_lgl(tags = "minimize"))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
 
   codomain = ps(y1 = p_dbl(tags = c("minimize", "maximize")))
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains multiple target tags")
 
   codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_dbl(tags = "maximize"))
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl(), y2 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize' or 'maximize'")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'")
 
   codomain = ps(y1 = p_dbl(tags = "minimize"), time = p_dbl())
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
@@ -176,10 +176,10 @@ test_that("codomain assertions work", {
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
 
   codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_dbl(tags = c("minimize", "maximize")))
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains a 'minimize' and 'maximize' tag")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y2 in codomain contains multiple target tags")
 
   codomain = ps(y1 = p_dbl(tags = c("minimize", "maximize")), y2 = p_dbl(tags = c("minimize", "maximize")))
-  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains a 'minimize' and 'maximize' tag")
+  expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain contains multiple target tags")
 })
 
 test_that("check_values flag works", {
@@ -390,4 +390,62 @@ test_that("named objective value works", {
 
   expect_named(objective$eval(list(x = 1)), "y")
   expect_named(objective$eval_many(list(list(x = 1), list(x = 0))), "y")
+})
+
+test_that("codomain with learn tag works", {
+  domain = ps(x = p_dbl(lower = -1, upper = 1))
+
+  # learn tag alone
+  codomain = ps(y = p_dbl(tags = "learn"))
+  expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
+  expect_equal(Objective$new(domain = domain, codomain = codomain)$codomain$direction, c(y = 0L))
+
+  # learn tag with other tags
+  codomain = ps(y = p_dbl(tags = c("learn", "random_tag")))
+  expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
+
+  # multiple target tags error
+  codomain = ps(y = p_dbl(tags = c("learn", "minimize")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "multiple target tags")
+
+  codomain = ps(y = p_dbl(tags = c("learn", "maximize")))
+  expect_error(Objective$new(domain = domain, codomain = codomain), "multiple target tags")
+
+  # mixed codomain with learn and optimize targets
+  codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))
+  obj = Objective$new(domain = domain, codomain = codomain)
+  expect_r6(obj, "Objective")
+  expect_equal(obj$codomain$direction, c(y1 = 0L, y2 = 1L))
+
+  codomain = ps(y1 = p_dbl(tags = "maximize"), y2 = p_dbl(tags = "learn"))
+  obj = Objective$new(domain = domain, codomain = codomain)
+  expect_equal(obj$codomain$direction, c(y1 = -1L, y2 = 0L))
+})
+
+test_that("codomain direction property works", {
+  domain = ps(x = p_dbl(lower = -1, upper = 1))
+
+  # minimize
+  codomain = ps(y = p_dbl(tags = "minimize"))
+  obj = Objective$new(domain = domain, codomain = codomain)
+  expect_equal(obj$codomain$direction, c(y = 1L))
+
+  # maximize
+  codomain = ps(y = p_dbl(tags = "maximize"))
+  obj = Objective$new(domain = domain, codomain = codomain)
+  expect_equal(obj$codomain$direction, c(y = -1L))
+
+  # learn
+  codomain = ps(y = p_dbl(tags = "learn"))
+  obj = Objective$new(domain = domain, codomain = codomain)
+  expect_equal(obj$codomain$direction, c(y = 0L))
+
+  # multi-objective
+  codomain = ps(
+    y1 = p_dbl(tags = "minimize"),
+    y2 = p_dbl(tags = "maximize"),
+    y3 = p_dbl(tags = "learn")
+  )
+  obj = Objective$new(domain = domain, codomain = codomain)
+  expect_equal(obj$codomain$direction, c(y1 = 1L, y2 = -1L, y3 = 0L))
 })

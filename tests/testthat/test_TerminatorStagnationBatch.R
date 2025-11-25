@@ -45,3 +45,22 @@ test_that("man exists", {
   terminator = trm("stagnation_batch")
   expect_man_exists(terminator$man)
 })
+
+test_that("TerminatorStagnationBatch errors with direction=0 (learn tag)", {
+  terminator = TerminatorStagnationBatch$new()
+  codomain = ps(y = p_dbl(tags = "learn"))
+  archive = ArchiveBatch$new(ps(x = p_dbl()), codomain)
+
+  # add some evaluations across multiple batches
+  xdt = data.table(x = 0.5)
+  xss_trafoed = list(list(x = 0.5))
+  ydt = data.table(y = 0.25)
+  archive$add_evals(xdt, xss_trafoed, ydt)
+
+  xdt = data.table(x = 0.3)
+  xss_trafoed = list(list(x = 0.3))
+  ydt = data.table(y = 0.09)
+  archive$add_evals(xdt, xss_trafoed, ydt)
+
+  expect_error(terminator$is_terminated(archive), "direction != 0")
+})
