@@ -230,3 +230,27 @@ test_that("best method returns top n results with minimization and ties", {
 
   expect_equal(archive$best(n_select = 2)$y, c(0.25, 0.3))
 })
+
+test_that("best method errors with direction=0 (learn tag)", {
+  codomain = ps(y = p_dbl(tags = "learn"))
+  archive = ArchiveBatch$new(PS_2D, codomain)
+  xdt = data.table(x1 = runif(3), x2 = runif(3))
+  xss_trafoed = list(list(x1 = runif(3), x2 = runif(3)))
+  ydt = data.table(y = c(1, 0.5, 0.3))
+  archive$add_evals(xdt, xss_trafoed, ydt)
+
+  expect_error(archive$best(), "direction = 0")
+})
+
+test_that("nds_selection errors with direction=0 (learn tag)", {
+  skip_if_not_installed("emoa")
+
+  codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))
+  archive = ArchiveBatch$new(PS_2D, codomain)
+  xdt = data.table(x1 = runif(3), x2 = runif(3))
+  xss_trafoed = list(list(x1 = runif(3), x2 = runif(3)))
+  ydt = data.table(y1 = c(1, 0.5, 0.3), y2 = c(0.3, 0.5, 1))
+  archive$add_evals(xdt, xss_trafoed, ydt)
+
+  expect_error(archive$nds_selection(n_select = 2), "direction = 0")
+})

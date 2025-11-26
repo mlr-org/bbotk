@@ -82,3 +82,54 @@ test_that("as.data.table.ArchiveAsync works", {
 
   expect_rush_reset(instance$rush)
 })
+
+test_that("best method errors with direction=0 (learn tag)", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+
+  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  codomain = ps(y = p_dbl(tags = "learn"))
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = codomain,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 0.5, x2 = 0.5))
+  keys = archive$push_points(xss)
+  archive$pop_point()
+  archive$push_result(keys, ys = list(y = 0.5), x_domain = list(x1 = 0.5, x2 = 0.5))
+
+  expect_error(archive$best(), "direction = 0")
+
+  expect_rush_reset(rush, type = "terminate")
+})
+
+test_that("nds_selection errors with direction=0 (learn tag)", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  skip_if_not_installed("emoa")
+  flush_redis()
+
+  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = codomain,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 0.5, x2 = 0.5), list(x1 = 0.3, x2 = 0.3))
+  keys = archive$push_points(xss)
+  archive$pop_point()
+  archive$push_result(keys[1], ys = list(y1 = 0.5, y2 = 0.3), x_domain = list(x1 = 0.5, x2 = 0.5))
+  archive$pop_point()
+  archive$push_result(keys[2], ys = list(y1 = 0.3, y2 = 0.5), x_domain = list(x1 = 0.3, x2 = 0.3))
+
+  expect_error(archive$nds_selection(n_select = 1), "direction = 0")
+
+  expect_rush_reset(rush, type = "terminate")
+})

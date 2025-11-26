@@ -64,6 +64,7 @@ Collate:
     'Codomain.R'
     'ContextAsync.R'
     'ContextBatch.R'
+    'EvalInstance.R'
     'Objective.R'
     'ObjectiveRFun.R'
     'ObjectiveRFunDt.R'

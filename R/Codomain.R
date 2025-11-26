@@ -2,7 +2,8 @@
 #'
 #' @description
 #' A [paradox::ParamSet] defining the codomain of a function.
-#' The parameter set must contain at least one target parameter tagged with `"minimize"` or `"maximize"`.
+#' The parameter set must contain at least one target parameter tagged with
+#' `"minimize"`, `"maximize"`, or `"learn"`.
 #' The codomain may contain extra parameters which are ignored when calling the [Archive] methods `$best()`, `$nds_selection()` and `$cols_y`.
 #' This class is usually constructed internally from a [paradox::ParamSet] when [Objective] is initialized.
 #'
@@ -48,20 +49,20 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
 
       super$initialize(params)
 
-      # only check for codomain parameters tagged with minimize or maximize
+      # only check for codomain parameters tagged with minimize, maximize, or learn
       for (id in self$target_ids) {
         # all numeric
         if (!self$is_number[id]) {
           stopf("%s in codomain is not numeric", id)
         }
-        # every parameter's tags contain at most one of 'minimize' or 'maximize'
-        if (sum(self$tags[[id]] %in% c("minimize", "maximize")) > 1) {
-          stopf("%s in codomain contains a 'minimize' and 'maximize' tag", id)
+        # every parameter's tags contain at most one of the target tags
+        if (sum(self$tags[[id]] %in% c("minimize", "maximize", "learn")) > 1) {
+          stopf("%s in codomain contains multiple target tags", id)
         }
       }
 
-      # assert at least one target eter
-      if (!any(self$is_target) && self$length) stop("Codomain contains no parameter tagged with 'minimize' or 'maximize'")
+      # assert at least one target parameter
+      if (!any(self$is_target) && self$length) stop("Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'")
     }
   ),
 
@@ -83,10 +84,10 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #' IDs of contained target parameters.
     target_ids = function() {
       if ("any_tags" %in% names(formals(self$ids))) {
-        self$ids(any_tags = c("minimize", "maximize"))
+        self$ids(any_tags = c("minimize", "maximize", "learn"))
       } else {
         # old paradox
-        self$ids()[map_lgl(self$tags, function(x) any(c("minimize", "maximize") %in% x))]
+        self$ids()[map_lgl(self$tags, function(x) any(c("minimize", "maximize", "learn") %in% x))]
       }
     },
 
@@ -105,11 +106,15 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     },
 
     #' @field direction (`integer()`)\cr
-    #' Returns `1` for minimization and `-1` for maximization.
+    #' Returns `1` for minimization, `-1` for maximization, and `0` for learning.
     #' If the codomain contains multiple parameters an integer vector is returned.
     #' Multiply with the outcome of a maximization problem to turn it into a minimization problem.
     direction = function() {
-      ifelse(map_lgl(self$target_tags, has_element, "minimize"), 1L, -1L)
+      map_int(self$target_tags, function(tags) {
+        if ("minimize" %in% tags) 1L
+        else if ("maximize" %in% tags) -1L
+        else 0L  # learn
+      })
     }
   )
 )

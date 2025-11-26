@@ -82,7 +82,7 @@ as.data.table(instance$archive)
 }
 }
 \section{Super classes}{
-\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerAsync]{bbotk::OptimizerAsync}} -> \code{OptimizerAsyncDesignPoints}
+\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{bbotk::OptimizerAsync} -> \code{OptimizerAsyncDesignPoints}
 }
 \section{Methods}{
 \subsection{Public methods}{

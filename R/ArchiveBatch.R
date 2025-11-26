@@ -137,6 +137,10 @@ ArchiveBatch = R6Class("ArchiveBatch",
       assert_int(n_select, lower = 1L)
       assert_choice(ties_method, c("first", "random"))
 
+      if (any(self$codomain$direction == 0L)) {
+        stop("Cannot determine best points: codomain contains targets with direction = 0 (non-optimization targets). Use optimization targets only, or filter the archive manually.")
+      }
+
       tab = if (is.null(batch)) self$data else self$data[list(batch), , on = "batch_nr"]
 
       if (self$codomain$target_length == 1L) {
@@ -172,11 +176,16 @@ ArchiveBatch = R6Class("ArchiveBatch",
       if (!self$n_batch) return(data.table())
       assert_subset(batch, seq_len(self$n_batch))
 
+      direction = self$codomain$direction
+      if (any(direction == 0L)) {
+        stop("Cannot perform NDS selection: codomain contains targets with direction = 0 (non-optimization targets). Use optimization targets only.")
+      }
+
       tab = if (is.null(batch)) self$data else self$data[list(batch), , on = "batch_nr"]
       assert_int(n_select, lower = 1L, upper = nrow(tab))
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
-      minimize = map_lgl(self$codomain$target_tags, has_element, "minimize")
+      minimize = direction == 1L
       ii = nds_selection(points, n_select, ref_point, minimize)
       tab[ii, ]
     },

@@ -60,7 +60,14 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
       pv = self$param_set$values
       iters = pv$iters
       ycol = archive$cols_y
-      minimize = "minimize" %in% archive$codomain$tags
+      direction = archive$codomain$direction
+      if (length(direction) != 1L) {
+        stop("TerminatorStagnation only supports single-criterion optimization")
+      }
+      if (direction == 0L) {
+        stop("TerminatorStagnation requires optimization targets (direction != 0)")
+      }
+      minimize = direction == 1L
 
       # we cannot terminate until we have enough observations
       if (archive$n_evals <= pv$iters) {

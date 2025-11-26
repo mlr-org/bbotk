@@ -65,7 +65,11 @@ TerminatorStagnationHypervolume = R6Class("TerminatorStagnationHypervolume",
       points = t(as.matrix(archive$data[, ycols, , drop = FALSE, with = FALSE]))
 
       # switch sign in each dim to minimize
-      minimize = map_lgl(archive$codomain$target_tags, has_element, "minimize")
+      direction = archive$codomain$direction
+      if (any(direction == 0L)) {
+        stop("TerminatorStagnationHypervolume requires optimization targets (direction != 0)")
+      }
+      minimize = direction == 1L
       points = points * (minimize * 2 - 1)
 
       # points outside iters windows

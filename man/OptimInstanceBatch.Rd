@@ -10,8 +10,8 @@ The function \code{\link[=oi]{oi()}} creates an \link{OptimInstanceAsyncSingleCr
 \seealso{
 \code{\link[=oi]{oi()}}, \link{OptimInstanceBatchSingleCrit}, \link{OptimInstanceBatchMultiCrit}
 }
-\section{Super class}{
-\code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceBatch}
+\section{Super classes}{
+\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceBatch}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -51,9 +51,9 @@ Optimal outcome.}
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href='../../bbotk/html/EvalInstance.html#method-EvalInstance-format'><code>bbotk::EvalInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-assign_result'><code>bbotk::OptimInstance$assign_result()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="clear"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-clear'><code>bbotk::OptimInstance$clear()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-format'><code>bbotk::OptimInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-print'><code>bbotk::OptimInstance$print()</code></a></span></li>
 </ul>
 </details>

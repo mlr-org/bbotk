@@ -61,7 +61,14 @@ TerminatorStagnationBatch = R6Class("TerminatorStagnationBatch",
       ycol = archive$cols_y
       present_batch = archive$n_batch
       previous_batch = (archive$n_batch - 1):(archive$n_batch - pv$n)
-      minimize = "minimize" %in% archive$codomain$tags
+      direction = archive$codomain$direction
+      if (length(direction) != 1L) {
+        stop("TerminatorStagnationBatch only supports single-criterion optimization")
+      }
+      if (direction == 0L) {
+        stop("TerminatorStagnationBatch requires optimization targets (direction != 0)")
+      }
+      minimize = direction == 1L
 
       # we cannot terminate until we have enough observations
       if (archive$n_batch <= pv$n) {
