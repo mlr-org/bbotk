@@ -2,6 +2,10 @@
 
 ## bbotk (development version)
 
+## bbotk 1.8.1
+
+CRAN release: 2025-11-26
+
 - fix: Any Conditions work with `OptimizerLocalSearch` now.
 
 ## bbotk 1.8.0
