@@ -3,8 +3,9 @@
 A
 [paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html)
 defining the codomain of a function. The parameter set must contain at
-least one target parameter tagged with `"minimize"` or `"maximize"`. The
-codomain may contain extra parameters which are ignored when calling the
+least one target parameter tagged with `"minimize"`, `"maximize"`, or
+`"learn"`. The codomain may contain extra parameters which are ignored
+when calling the
 [Archive](https://bbotk.mlr-org.com/dev/reference/Archive.md) methods
 `$best()`, `$nds_selection()` and `$cols_y`. This class is usually
 constructed internally from a
@@ -50,10 +51,10 @@ is initialized.
 - `direction`:
 
   ([`integer()`](https://rdrr.io/r/base/integer.html))  
-  Returns `1` for minimization and `-1` for maximization. If the
-  codomain contains multiple parameters an integer vector is returned.
-  Multiply with the outcome of a maximization problem to turn it into a
-  minimization problem.
+  Returns `1` for minimization, `-1` for maximization, and `0` for
+  learning. If the codomain contains multiple parameters an integer
+  vector is returned. Multiply with the outcome of a maximization
+  problem to turn it into a minimization problem.
 
 ## Methods
 

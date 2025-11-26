@@ -59,6 +59,8 @@
 
 ## Optimization Instance
 
+- [`EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+  : Evaluation Instance Base Class
 - [`OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
   : Optimization Instance
 - [`OptimInstanceAsync`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.md)
@@ -190,3 +192,5 @@
   Calculate the transformed x-values
 - [`terminated_error()`](https://bbotk.mlr-org.com/dev/reference/terminated_error.md)
   : Termination Error
+- [`choose_search_space()`](https://bbotk.mlr-org.com/dev/reference/choose_search_space.md)
+  : Choose Search Space

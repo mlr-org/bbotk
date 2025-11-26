@@ -9,6 +9,8 @@ creates an OptimInstanceAsyncSingleCrit.
 
 ## Super classes
 
+[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+-\>
 [`bbotk::OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
 -\>
 [`bbotk::OptimInstanceAsync`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.md)
@@ -39,7 +41,7 @@ creates an OptimInstanceAsyncSingleCrit.
 
 Inherited methods
 
-- [`bbotk::OptimInstance$format()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-format)
+- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
 - [`bbotk::OptimInstanceAsync$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-clear)
 - [`bbotk::OptimInstanceAsync$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-print)
 - [`bbotk::OptimInstanceAsync$reconnect()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-reconnect)

@@ -2,6 +2,15 @@
 
 ## bbotk (development version)
 
+- feat: Allow `"learn"` tag (direction=0) alongside minimize/maximize in
+  `Codomain`.
+- feat: Add new base class `EvalInstance` from which `OptimInstance` now
+  inherits. `EvalInstance` keeps information about a process that
+  evaluates an `Objective` while not necessarily optimizing it.
+- feat: Exporting formerly internal
+  [`choose_search_space()`](https://bbotk.mlr-org.com/dev/reference/choose_search_space.md)
+  function.
+
 ## bbotk 1.8.1
 
 CRAN release: 2025-11-26

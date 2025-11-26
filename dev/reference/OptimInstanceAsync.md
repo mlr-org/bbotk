@@ -20,8 +20,10 @@ functionality each instance must provide.
 [OptimInstanceAsyncSingleCrit](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsyncSingleCrit.md),
 [OptimInstanceAsyncMultiCrit](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsyncMultiCrit.md)
 
-## Super class
+## Super classes
 
+[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+-\>
 [`bbotk::OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
 -\> `OptimInstanceAsync`
 
@@ -48,8 +50,8 @@ functionality each instance must provide.
 
 Inherited methods
 
+- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
 - [`bbotk::OptimInstance$assign_result()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-assign_result)
-- [`bbotk::OptimInstance$format()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-format)
 
 ------------------------------------------------------------------------
 

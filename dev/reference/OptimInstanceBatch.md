@@ -14,8 +14,10 @@ or
 [OptimInstanceBatchSingleCrit](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatchSingleCrit.md),
 [OptimInstanceBatchMultiCrit](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatchMultiCrit.md)
 
-## Super class
+## Super classes
 
+[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+-\>
 [`bbotk::OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
 -\> `OptimInstanceBatch`
 
@@ -66,9 +68,9 @@ or
 
 Inherited methods
 
+- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
 - [`bbotk::OptimInstance$assign_result()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-assign_result)
 - [`bbotk::OptimInstance$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-clear)
-- [`bbotk::OptimInstance$format()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-format)
 - [`bbotk::OptimInstance$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-print)
 
 ------------------------------------------------------------------------

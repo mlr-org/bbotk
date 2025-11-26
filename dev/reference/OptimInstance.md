@@ -2,6 +2,9 @@
 
 The `OptimInstance` specifies an optimization problem for an
 [Optimizer](https://bbotk.mlr-org.com/dev/reference/Optimizer.md).
+Inherits from
+[EvalInstance](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+and adds optimization-specific functionality.
 
 ## Details
 
@@ -18,31 +21,16 @@ user can access the results with active bindings (see below).
 
 ## See also
 
+[EvalInstance](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md),
 [OptimInstanceBatch](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.md),
 [OptimInstanceAsync](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.md)
 
+## Super class
+
+[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+-\> `OptimInstance`
+
 ## Public fields
-
-- `objective`:
-
-  ([Objective](https://bbotk.mlr-org.com/dev/reference/Objective.md))  
-  Objective function of the instance.
-
-- `search_space`:
-
-  ([paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html))  
-  Specification of the search space for the
-  [Optimizer](https://bbotk.mlr-org.com/dev/reference/Optimizer.md).
-
-- `terminator`:
-
-  [Terminator](https://bbotk.mlr-org.com/dev/reference/Terminator.md)  
-  Termination criterion of the optimization.
-
-- `archive`:
-
-  ([Archive](https://bbotk.mlr-org.com/dev/reference/Archive.md))  
-  Contains all performed function calls of the Objective.
 
 - `progressor`:
 
@@ -50,19 +38,6 @@ user can access the results with active bindings (see below).
   Stores `progressor` function.
 
 ## Active bindings
-
-- `label`:
-
-  (`character(1)`)  
-  Label for this object. Can be used in tables, plot and text output
-  instead of the ID.
-
-- `man`:
-
-  (`character(1)`)  
-  String in the format `[pkg]::[topic]` pointing to a manual page for
-  this object. The referenced help package can be opened via method
-  `$help()`.
 
 - `result`:
 
@@ -74,17 +49,11 @@ user can access the results with active bindings (see below).
   ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
   x part of the result in the *search space*.
 
-- `is_terminated`:
-
-  (`logical(1)`).
-
 ## Methods
 
 ### Public methods
 
 - [`OptimInstance$new()`](#method-OptimInstance-new)
-
-- [`OptimInstance$format()`](#method-OptimInstance-format)
 
 - [`OptimInstance$print()`](#method-OptimInstance-print)
 
@@ -93,6 +62,10 @@ user can access the results with active bindings (see below).
 - [`OptimInstance$clear()`](#method-OptimInstance-clear)
 
 - [`OptimInstance$clone()`](#method-OptimInstance-clone)
+
+Inherited methods
+
+- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
 
 ------------------------------------------------------------------------
 
@@ -167,22 +140,6 @@ Creates a new instance of this
   String in the format `[pkg]::[topic]` pointing to a manual page for
   this object. The referenced help package can be opened via method
   `$help()`.
-
-------------------------------------------------------------------------
-
-### Method [`format()`](https://rdrr.io/r/base/format.html)
-
-Helper for print outputs.
-
-#### Usage
-
-    OptimInstance$format(...)
-
-#### Arguments
-
-- `...`:
-
-  (ignored).
 
 ------------------------------------------------------------------------
 
