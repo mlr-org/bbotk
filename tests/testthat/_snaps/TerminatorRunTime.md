@@ -6,5 +6,4 @@
       
       -- <TerminatorRunTime> - Run Time ----------------------------------------------
       * Parameters: secs=1
-      * Terminators:
 

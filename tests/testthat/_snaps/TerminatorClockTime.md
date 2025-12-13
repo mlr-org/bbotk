@@ -6,5 +6,4 @@
       
       -- <TerminatorClockTime> - Clock Time ------------------------------------------
       * Parameters: stop_time=<POSIXct>
-      * Terminators:
 
