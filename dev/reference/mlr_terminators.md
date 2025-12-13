@@ -84,10 +84,8 @@ mlr_terminators$get("evals")
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=100, k=0
-#> • Terminators:
 trm("evals", n_evals = 10)
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=10, k=0
-#> • Terminators:
 ```

@@ -199,5 +199,4 @@ trm("combo",
 #> ── <TerminatorCombo> - Combination ─────────────────────────────────────────────
 #> • Parameters: any=FALSE
 #> • Terminators: <TerminatorClockTime> and <TerminatorEvals>
-#> • Terminators: <TerminatorClockTime> and <TerminatorEvals>
 ```
