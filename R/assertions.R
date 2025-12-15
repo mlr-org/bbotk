@@ -6,11 +6,11 @@
 #' implemented:
 #'
 #' * `assert_terminable(terminator, instance)`\cr
-#'   ([Terminator], [OptimInstance]) -> `NULL`\cr
+#'   ([Terminator], [EvalInstance]) -> `NULL`\cr
 #'   Checks if the terminator is applicable to the optimization.
 #'
 #' * `assert_instance_properties(optimizer, instance)`\cr
-#'   ([Optimizer], [OptimInstance]) -> `NULL`\cr
+#'   ([Optimizer], [EvalInstance]) -> `NULL`\cr
 #'   Checks if the instance is applicable to the optimizer.
 #'
 #' If an assertion fails, an exception is raised. Otherwise, the input object is
@@ -23,7 +23,7 @@ NULL
 
 #' @export
 #' @param terminator ([Terminator]).
-#' @param instance ([OptimInstance]).
+#' @param instance ([EvalInstance]).
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_terminator = function(terminator, instance = NULL, null_ok = FALSE) {
@@ -46,7 +46,7 @@ assert_terminators = function(terminators) {
 
 #' @export
 #' @param terminator ([Terminator]).
-#' @param instance ([OptimInstance]).
+#' @param instance ([EvalInstance]).
 #' @rdname bbotk_assertions
 assert_terminable = function(terminator, instance) {
   if ("OptimInstanceBatchMultiCrit" %in% class(instance)) {
@@ -100,12 +100,12 @@ assert_optimizer_batch = function(optimizer, null_ok = FALSE) {
 }
 
 #' @export
-#' @param inst ([OptimInstance])
+#' @param inst ([EvalInstance])
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_instance = function(inst, null_ok = FALSE) {
   if (null_ok && is.null(inst)) return(NULL)
-  assert_r6(inst, "OptimInstance")
+  assert_r6(inst, "EvalInstance")
 }
 
 #' @param inst ([OptimInstanceBatch])
@@ -127,10 +127,10 @@ assert_instance_async = function(inst, null_ok = FALSE) {
 
 #' @export
 #' @param optimizer ([Optimizer]).
-#' @param instance ([OptimInstance]).
+#' @param instance ([EvalInstance]).
 #' @rdname bbotk_assertions
 assert_instance_properties = function(optimizer, inst) {
-  assert_class(inst, "OptimInstance")
+  assert_class(inst, "EvalInstance")
 
   require_namespaces(optimizer$packages)
 

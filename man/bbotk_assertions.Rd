@@ -49,7 +49,7 @@ assert_archive_batch(archive, null_ok = FALSE)
 \arguments{
 \item{terminator}{(\link{Terminator}).}
 
-\item{instance}{(\link{OptimInstance}).}
+\item{instance}{(\link{EvalInstance}).}
 
 \item{null_ok}{(\code{logical(1)})\cr
 Is \code{NULL} a valid value?}
@@ -74,10 +74,10 @@ additional properties. Additionally, the following compound assertions are
 implemented:
 \itemize{
 \item \code{assert_terminable(terminator, instance)}\cr
-(\link{Terminator}, \link{OptimInstance}) -> \code{NULL}\cr
+(\link{Terminator}, \link{EvalInstance}) -> \code{NULL}\cr
 Checks if the terminator is applicable to the optimization.
 \item \code{assert_instance_properties(optimizer, instance)}\cr
-(\link{Optimizer}, \link{OptimInstance}) -> \code{NULL}\cr
+(\link{Optimizer}, \link{EvalInstance}) -> \code{NULL}\cr
 Checks if the instance is applicable to the optimizer.
 }
 
