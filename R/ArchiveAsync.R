@@ -101,7 +101,11 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' List of named lists of additional information.
     push_points = function(xss, extras = NULL) {
       if (self$check_values) map(xss, self$search_space$assert)
-      extras = map(extras, function(extra) c(list(timestamp_xs = Sys.time()), extra))
+      extras = if (is.null(extras)) {
+        list(list(timestamp_xs = Sys.time()))
+      } else {
+        map(extras, function(extra) c(list(timestamp_xs = Sys.time()), extra))
+      }
       self$rush$push_tasks(xss, extra = extras)
     },
 
