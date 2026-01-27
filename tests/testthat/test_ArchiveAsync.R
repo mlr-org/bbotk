@@ -133,3 +133,34 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
 
   expect_rush_reset(rush, type = "terminate")
 })
+
+test_that("push_points works with extras argument", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+
+  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  extras = list(list(extra_info = "point1", batch_id = 1), list(extra_info = "point2", batch_id = 1))
+  keys = archive$push_points(xss, extras = extras)
+  expect_character(keys, len = 2)
+
+  queued = archive$queued_data
+  expect_data_table(queued, nrows = 2)
+
+  # check that extras are stored along with timestamp_xs
+  expect_true("timestamp_xs" %in% names(queued))
+  expect_true("extra_info" %in% names(queued))
+  expect_true("batch_id" %in% names(queued))
+  expect_equal(sort(queued$extra_info), c("point1", "point2"))
+  expect_equal(queued$batch_id, c(1, 1))
+
+  expect_rush_reset(rush, type = "terminate")
+})
