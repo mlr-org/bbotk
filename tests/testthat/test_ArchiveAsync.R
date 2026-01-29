@@ -164,3 +164,30 @@ test_that("push_points works with extras argument", {
 
   expect_rush_reset(rush, type = "terminate")
 })
+
+test_that("push_finished_point works", {
+  skip_on_cran()
+  skip_if_not_installed("rush")
+  flush_redis()
+
+  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  yss = list(list(y1 = 1, y2 = 2), list(y1 = 3, y2 = 4))
+  xss_extra = list(list(extra_info = "point1", batch_id = 1), list(extra_info = "point2", batch_id = 1))
+  yss_extra = list(list(extra_info = "point1", batch_id = 1), list(extra_info = "point2", batch_id = 1))
+  archive$push_finished_points(xss, yss, xss_extra, yss_extra)
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 0)
+  expect_data_table(archive$finished_data, nrows = 2)
+  expect_data_table(archive$failed_data, nrows = 0)
+
+
+  expect_character(archive$data$extra_info, len = 2)
+})

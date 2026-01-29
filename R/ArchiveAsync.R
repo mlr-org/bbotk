@@ -156,6 +156,31 @@ ArchiveAsync = R6Class("ArchiveAsync",
     },
 
     #' @description
+    #' Push finished point to the archive.
+    #'
+    #' @param xss (list of named `list()`)\cr
+    #' List of named lists of point values.
+    #' @param yss (list of named `list()`)\cr
+    #' List of named lists of results.
+    #' @param xss_extra (`list()`)\cr
+    #' List of named lists of additional information.
+    #' @param yss_extra (`list()`)\cr
+    #' List of named lists of additional information.
+    push_finished_points = function(xss, yss, xss_extra, yss_extra) {
+      xss_extra = if (is.null(xss_extra)) {
+        list(list(timestamp_xs = Sys.time()))
+      } else {
+        map(xss_extra, function(extra) c(list(timestamp_xs = Sys.time()), extra))
+      }
+      yss_extra = if (is.null(yss_extra)) {
+        list(list(timestamp_ys = Sys.time()))
+      } else {
+        map(yss_extra, function(extra) c(list(timestamp_ys = Sys.time()), extra))
+      }
+      self$rush$push_finished_tasks(xss, yss, xss_extra, yss_extra)
+    },
+
+    #' @description
     #' Fetch points with a specific state.
     #'
     #' @param fields (`character()`)\cr
