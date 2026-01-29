@@ -166,7 +166,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' List of named lists of additional information.
     #' @param yss_extra (`list()`)\cr
     #' List of named lists of additional information.
-    push_finished_points = function(xss, yss, xss_extra, yss_extra) {
+    push_finished_points = function(xss, yss, xss_extra = NULL, yss_extra = NULL) {
       xss_extra = if (is.null(xss_extra)) {
         list(list(timestamp_xs = Sys.time()))
       } else {
