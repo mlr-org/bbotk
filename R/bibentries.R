@@ -61,5 +61,16 @@ bibentries = c(
     eprint        = "1903.04703",
     archivePrefix = "arXiv",
     primaryClass  = "cs.LG"
+  ),
+
+  lindauer_2022 = bibentry("article",
+    title        = "{SMAC3}: A Versatile Bayesian Optimization Package for Hyperparameter Optimization",
+    author       = "Marius Lindauer and Katharina Eggensperger and Matthias Feurer and Andre Biedenkapp and Difan Deng and Carolin Benjamins and Tim Ruhkopf and Rene Sass and Frank Hutter",
+    year         = "2022",
+    journal      = "Journal of Machine Learning Research",
+    volume       = "23",
+    number       = "54",
+    pages        = "1--9",
+    url          = "http://jmlr.org/papers/v23/21-0888.html"
   )
 )
