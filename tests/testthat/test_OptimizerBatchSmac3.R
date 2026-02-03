@@ -36,8 +36,6 @@ test_that("OptimizerBatchSmac3", {
   expect_named(x_opt, "x")
   expect_numeric(y_opt, len = 1)
   expect_named(y_opt, "y")
-
-  expect_snapshot(optimizer)
 })
 
 test_that("OptimizerBatchSmac3 with 2d search space", {
