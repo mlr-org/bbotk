@@ -66,8 +66,14 @@ test_that("point evaluation works", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  # evaluation takes place on the workers
-  rush = rush::RushWorker$new("test", remote = FALSE)
+
+    # FIXME: Remove after rush 1.0.0 is released
+  if (packageVersion("rush") <= "0.4.1") {
+    rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  } else {
+    rush = rush::rsh(network_id = "remote_network")
+  }
+
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,

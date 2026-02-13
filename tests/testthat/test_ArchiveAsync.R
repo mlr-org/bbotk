@@ -3,7 +3,12 @@ test_that("ArchiveAsync works with one point", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  # FIXME: Remove after rush 1.0.0 is released
+  if (packageVersion("rush") <= "0.4.1") {
+    rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  } else {
+    rush = rush::rsh(network_id = "remote_network")
+  }
 
   archive = ArchiveAsync$new(
     search_space = PS_2D,
@@ -54,7 +59,7 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 1)
   expect_equal(archive$data_with_state()$state, c("finished", "failed"))
 
-  expect_rush_reset(rush, type = "terminate")
+  expect_rush_reset(rush)
 })
 
 test_that("as.data.table.ArchiveAsync works", {
@@ -75,7 +80,14 @@ test_that("as.data.table.ArchiveAsync works", {
 
   data = as.data.table(instance$archive)
   expect_data_table(data, min.rows = 5)
-  expect_names(colnames(data), identical.to = c("state","x1","x2","y","timestamp_xs","pid","worker_id","timestamp_ys","keys","x_domain_x1","x_domain_x2"))
+
+  if (packageVersion("rush") <= "0.4.1") {
+    cns = c("state", "x1", "x2", "y", "timestamp_xs", "pid", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
+  } else {
+    cns = c("state", "x1", "x2", "y", "timestamp_xs", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
+  }
+
+  expect_names(colnames(data), identical.to = cns)
 
   data = as.data.table(instance$archive, unnest = NULL)
   expect_list(data$x_domain)
@@ -88,7 +100,13 @@ test_that("best method errors with direction=0 (learn tag)", {
   skip_if_not_installed("rush")
   flush_redis()
 
-  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  # FIXME: Remove after rush 1.0.0 is released
+  if (packageVersion("rush") <= "0.4.1") {
+    rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  } else {
+    rush = rush::rsh(network_id = "remote_network")
+  }
+
   codomain = ps(y = p_dbl(tags = "learn"))
 
   archive = ArchiveAsync$new(
@@ -104,7 +122,7 @@ test_that("best method errors with direction=0 (learn tag)", {
 
   expect_error(archive$best(), "direction = 0")
 
-  expect_rush_reset(rush, type = "terminate")
+  expect_rush_reset(rush)
 })
 
 test_that("nds_selection errors with direction=0 (learn tag)", {
@@ -113,7 +131,12 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
   skip_if_not_installed("emoa")
   flush_redis()
 
-  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  # FIXME: Remove after rush 1.0.0 is released
+  if (packageVersion("rush") <= "0.4.1") {
+    rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+  } else {
+    rush = rush::rsh(network_id = "remote_network")
+  }
   codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))
 
   archive = ArchiveAsync$new(
@@ -131,5 +154,5 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
 
   expect_error(archive$nds_selection(n_select = 1), "direction = 0")
 
-  expect_rush_reset(rush, type = "terminate")
+  expect_rush_reset(rush)
 })
