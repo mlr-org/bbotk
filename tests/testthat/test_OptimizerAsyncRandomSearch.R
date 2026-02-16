@@ -1,23 +1,23 @@
-test_that("OptimizerAsyncRandomSearch works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+skip_if_not(has_redis)
+skip_if_not_installed("rush")
 
-  options(bbotk.tiny_logging = TRUE)
+test_that("OptimizerAsyncRandomSearch works", {
+  rush = start_rush(n_workers = 2)
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   optimizer = opt("async_random_search")
   expect_class(optimizer, "OptimizerAsync")
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
+    rush = rush
   )
 
   expect_data_table(optimizer$optimize(instance), nrows = 1)
   expect_data_table(instance$archive$data, min.rows = 5)
-
-  expect_rush_reset(instance$rush)
 })
