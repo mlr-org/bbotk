@@ -265,7 +265,7 @@ start_rush_worker = function(n_workers = 2) {
   r = redux::hiredis(config)
   r$FLUSHDB()
 
-  network_id = uuid::UUIDgenerate()
+  network_id = paste(sample(LETTERS, 10), collapse = "")
   rush = if (packageVersion("rush") <= "0.4.1") {
     rush::RushWorker$new(network_id = network_id, config = config, remote = FALSE)
   } else {

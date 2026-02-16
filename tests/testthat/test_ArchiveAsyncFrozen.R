@@ -1,3 +1,5 @@
+skip_if_not(has_redis)
+
 test_that("ArchiveAsyncFrozen works", {
   rush = start_rush_worker()
   on.exit({
