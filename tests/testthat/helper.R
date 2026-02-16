@@ -249,7 +249,9 @@ start_rush = function(n_workers = 2, worker_type = "remote") { # FIXME: change t
     rush::rsh(config = config)
   }
 
-  mirai::daemons(n_workers)
+  if (worker_type == "mirai") {
+    mirai::daemons(n_workers)
+  }
 
   rush
 }
@@ -269,8 +271,6 @@ start_rush_worker = function(n_workers = 2) {
   } else {
     rush::RushWorker$new(network_id = network_id, config = config)
   }
-
-  mirai::daemons(n_workers)
 
   rush
 }
