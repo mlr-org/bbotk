@@ -280,8 +280,7 @@ Fetch points with a specific state.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$data_with_state(
   fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
-  states = c("queued", "running", "finished", "failed"),
-  reset_cache = FALSE
+  states = c("queued", "running", "finished", "failed")
 )}\if{html}{\out{</div>}}
 }
 
@@ -295,9 +294,6 @@ Defaults to \code{c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")}.}
 \item{\code{states}}{(\code{character()})\cr
 States of the tasks to be fetched.
 Defaults to \code{c("queued", "running", "finished", "failed")}.}
-
-\item{\code{reset_cache}}{(\code{logical(1)})\cr
-Whether to reset the cache of the finished points.}
 }
 \if{html}{\out{</div>}}
 }
