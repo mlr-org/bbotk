@@ -1,11 +1,12 @@
-test_that("OptimizerAsync starts local workers", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-  library(rush)
+skip_if_not(has_redis)
+skip_if_not_installed("rush")
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
+test_that("OptimizerAsync starts local workers", {
+  rush = start_rush(n_workers = 1, worker_type = "local") # FIXME: change to "processx" after rush 1.0.0 is released
+  on.exit({
+    rush$reset()
+    walk(rush$processes_processx, function(p) p$kill())
+  })
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -17,19 +18,16 @@ test_that("OptimizerAsync starts local workers", {
   optimizer$optimize(instance)
 
   expect_data_table(instance$rush$worker_info, nrows = 2)
-  expect_list(instance$rush$processes_mirai, len = 2)
+  expect_list(instance$rush$processes_processx, len = 2)
 
-  expect_rush_reset(instance$rush)
 })
 
 test_that("OptimizerAsync starts remote workers", {
-  skip_on_cran()
-  skip_if_not_installed(c("rush", "mirai"))
-  flush_redis()
-  library(rush)
-
-  mirai::daemons(2)
-  rush_plan(n_workers = 2, worker_type = "remote")
+  rush = start_rush(worker_type = "remote") # FIXME: change to "mirai" after rush 1.0.0 is released
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -43,40 +41,14 @@ test_that("OptimizerAsync starts remote workers", {
   expect_data_table(instance$rush$worker_info, nrows = 2)
   expect_list(instance$rush$processes_mirai, len = 2)
 
-  expect_rush_reset(instance$rush)
-})
-
-test_that("OptimizerAsync defaults to local worker", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-  library(rush)
-
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
-
-  instance = oi_async(
-    objective = OBJ_2D,
-    search_space = PS_2D,
-    terminator = trm("evals", n_evals = 50L),
-  )
-
-  optimizer = opt("async_random_search")
-  optimizer$optimize(instance)
-
-  expect_data_table(instance$rush$worker_info, nrows = 2)
-
-  expect_rush_reset(instance$rush)
 })
 
 test_that("OptimizerAsync assigns result", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-  library(rush)
-
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -87,18 +59,14 @@ test_that("OptimizerAsync assigns result", {
   optimizer$optimize(instance)
 
   expect_data_table(instance$result, nrows = 1)
-
-  expect_rush_reset(instance$rush)
 })
 
 test_that("OptimizerAsync throws an error when all workers are lost", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-  library(rush)
-
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   objective = ObjectiveRFun$new(
     fun = function(xs) {
@@ -117,17 +85,14 @@ test_that("OptimizerAsync throws an error when all workers are lost", {
 
   expect_error(optimizer$optimize(instance), "Optimization terminated without any finished evaluations")
 
-  expect_rush_reset(instance$rush)
 })
 
 test_that("restarting the optimization works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-  library(rush)
-
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -148,17 +113,14 @@ test_that("restarting the optimization works", {
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, min.rows = 30L)
-  expect_rush_reset(instance$rush)
 })
 
 test_that("Queued tasks are failed when optimization is terminated", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-  library(rush)
-
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   instance = oi_async(
     objective = OBJ_2D,
@@ -171,17 +133,14 @@ test_that("Queued tasks are failed when optimization is terminated", {
 
   expect_true(instance$rush$n_failed_tasks > 0L)
   expect_data_table(instance$archive$data[list("failed"), on = "state"], min.rows = 1L)
-  expect_rush_reset(instance$rush)
 })
 
 test_that("Required packages are loaded", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-  library(rush)
-
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   objective = ObjectiveRFun$new(
     fun = function(xs) {

@@ -1,14 +1,12 @@
-test_that("ArchiveAsync works with one point", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+skip_if_not(has_redis)
+skip_if_not_installed("rush")
 
-  # FIXME: Remove after rush 1.0.0 is released
-  if (packageVersion("rush") <= "0.4.1") {
-    rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
-  } else {
-    rush = rush::rsh(network_id = "remote_network")
-  }
+test_that("ArchiveAsync works with one point", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   archive = ArchiveAsync$new(
     search_space = PS_2D,
@@ -58,17 +56,15 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$finished_data, nrows = 1)
   expect_data_table(archive$failed_data, nrows = 1)
   expect_equal(archive$data_with_state()$state, c("finished", "failed"))
-
-  expect_rush_reset(rush)
 })
 
 test_that("as.data.table.ArchiveAsync works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
@@ -91,21 +87,14 @@ test_that("as.data.table.ArchiveAsync works", {
 
   data = as.data.table(instance$archive, unnest = NULL)
   expect_list(data$x_domain)
-
-  expect_rush_reset(instance$rush)
 })
 
 test_that("best method errors with direction=0 (learn tag)", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-
-  # FIXME: Remove after rush 1.0.0 is released
-  if (packageVersion("rush") <= "0.4.1") {
-    rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
-  } else {
-    rush = rush::rsh(network_id = "remote_network")
-  }
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   codomain = ps(y = p_dbl(tags = "learn"))
 
@@ -121,22 +110,15 @@ test_that("best method errors with direction=0 (learn tag)", {
   archive$push_result(keys, ys = list(y = 0.5), x_domain = list(x1 = 0.5, x2 = 0.5))
 
   expect_error(archive$best(), "direction = 0")
-
-  expect_rush_reset(rush)
 })
 
 test_that("nds_selection errors with direction=0 (learn tag)", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  skip_if_not_installed("emoa")
-  flush_redis()
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
-  # FIXME: Remove after rush 1.0.0 is released
-  if (packageVersion("rush") <= "0.4.1") {
-    rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
-  } else {
-    rush = rush::rsh(network_id = "remote_network")
-  }
   codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))
 
   archive = ArchiveAsync$new(
@@ -153,6 +135,4 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
   archive$push_result(keys[2], ys = list(y1 = 0.3, y2 = 0.5), x_domain = list(x1 = 0.3, x2 = 0.3))
 
   expect_error(archive$nds_selection(n_select = 1), "direction = 0")
-
-  expect_rush_reset(rush)
 })

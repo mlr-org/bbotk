@@ -15,3 +15,9 @@ old_threshold_rush = lg_rush$threshold
 
 lg_bbotk$set_threshold(0)
 lg_rush$set_threshold(0)
+
+has_redis = nzchar(Sys.which("redis-server"))
+
+if (has_redis) {
+  system(sprintf("redis-server --port 0 --unixsocket /tmp/redis-rush.sock --daemonize yes --pidfile /tmp/redis-rush.pid --dir %s", tempdir()))
+}

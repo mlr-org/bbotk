@@ -1,10 +1,10 @@
 test_that("ArchiveAsyncFrozen works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
@@ -29,5 +29,4 @@ test_that("ArchiveAsyncFrozen works", {
   expect_number(frozen_archive$n_evals)
 
   expect_data_table(as.data.table(frozen_archive))
-  expect_rush_reset(instance$rush)
 })
