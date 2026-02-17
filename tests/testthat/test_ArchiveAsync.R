@@ -1,11 +1,10 @@
-skip_if_not(has_redis)
 skip_if_not_installed("rush")
+skip_if_no_redis()
 
 test_that("ArchiveAsync works with one point", {
   rush = start_rush_worker()
   on.exit({
     rush$reset()
-    mirai::daemons(0)
   })
 
   archive = ArchiveAsync$new(
@@ -62,7 +61,6 @@ test_that("as.data.table.ArchiveAsync works", {
   rush = start_rush_worker()
   on.exit({
     rush$reset()
-    mirai::daemons(0)
   })
 
   instance = oi_async(
@@ -93,7 +91,6 @@ test_that("best method errors with direction=0 (learn tag)", {
   rush = start_rush_worker()
   on.exit({
     rush$reset()
-    mirai::daemons(0)
   })
 
   codomain = ps(y = p_dbl(tags = "learn"))
@@ -116,7 +113,6 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
   rush = start_rush_worker()
   on.exit({
     rush$reset()
-    mirai::daemons(0)
   })
 
   codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))

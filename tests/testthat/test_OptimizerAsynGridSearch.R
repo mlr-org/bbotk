@@ -1,5 +1,5 @@
-skip_if_not(has_redis)
 skip_if_not_installed("rush")
+skip_if_no_redis()
 
 test_that("OptimizerAsyncGridSearch works", {
   rush = start_rush(n_workers = 2)

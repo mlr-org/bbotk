@@ -1,5 +1,5 @@
-skip_if_not(has_redis)
 skip_if_not_installed("rush")
+skip_if_no_redis()
 
 test_that("OptimizerAsync starts local workers", {
   rush = start_rush(n_workers = 1, worker_type = "local") # FIXME: change to "processx" after rush 1.0.0 is released
@@ -12,18 +12,19 @@ test_that("OptimizerAsync starts local workers", {
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 50L),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
-  expect_data_table(instance$rush$worker_info, nrows = 2)
-  expect_list(instance$rush$processes_processx, len = 2)
+  expect_data_table(instance$rush$worker_info, nrows = 1)
+  expect_list(instance$rush$processes_processx, len = 1)
 
 })
 
 test_that("OptimizerAsync starts remote workers", {
-  rush = start_rush(worker_type = "remote") # FIXME: change to "mirai" after rush 1.0.0 is released
+  rush = start_rush(n_worker = 1, worker_type = "remote") # FIXME: change to "mirai" after rush 1.0.0 is released
   on.exit({
     rush$reset()
     mirai::daemons(0)
@@ -33,14 +34,14 @@ test_that("OptimizerAsync starts remote workers", {
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
-  expect_data_table(instance$rush$worker_info, nrows = 2)
-  expect_list(instance$rush$processes_mirai, len = 2)
-
+  expect_data_table(instance$rush$worker_info, nrows = 1)
+  expect_list(instance$rush$processes_mirai, len = 1)
 })
 
 test_that("OptimizerAsync assigns result", {
@@ -54,6 +55,7 @@ test_that("OptimizerAsync assigns result", {
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
+    rush = rush
   )
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
@@ -80,11 +82,11 @@ test_that("OptimizerAsync throws an error when all workers are lost", {
     objective = objective,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
+    rush = rush
   )
   optimizer = opt("async_random_search")
 
   expect_error(optimizer$optimize(instance), "Optimization terminated without any finished evaluations")
-
 })
 
 test_that("restarting the optimization works", {
@@ -98,6 +100,7 @@ test_that("restarting the optimization works", {
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -126,6 +129,7 @@ test_that("Queued tasks are failed when optimization is terminated", {
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("run_time", secs = 1),
+    rush = rush
   )
 
   optimizer = opt("async_design_points", design = data.table(x1 = runif(5000L), x2 = runif(5000L)))
@@ -159,6 +163,7 @@ test_that("Required packages are loaded", {
     objective = objective,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -184,10 +189,11 @@ test_that("Required packages are loaded", {
     objective = objective,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
-  expect_set_equal(instance$archive$data$y, 1)
+  expect_set_equal(instance$archive$data[list("finished"), on = "state"]$y, 1)
 })

@@ -1,7 +1,9 @@
-skip_if_not(has_redis)
+skip_if_not_installed("rush")
+skip_if_no_redis()
+
 
 test_that("ArchiveAsyncFrozen works", {
-  rush = start_rush_worker()
+  rush = start_rush()
   on.exit({
     rush$reset()
     mirai::daemons(0)
@@ -11,6 +13,7 @@ test_that("ArchiveAsyncFrozen works", {
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")

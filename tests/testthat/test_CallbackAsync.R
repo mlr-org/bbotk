@@ -1,10 +1,10 @@
-skip_if_not(has_redis)
 skip_if_not_installed("rush")
+skip_if_no_redis()
 
 # stages in $optimize() --------------------------------------------------------
 
 test_that("on_optimization_begin works", {
-  rush = start_rush_worker()
+  rush = start_rush()
   on.exit({
     rush$reset()
     mirai::daemons(0)
@@ -20,7 +20,8 @@ test_that("on_optimization_begin works", {
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -46,7 +47,8 @@ test_that("on_optimization_end works", {
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -74,7 +76,8 @@ test_that("on_worker_begin works", {
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -102,7 +105,8 @@ test_that("on_worker_end works", {
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -135,7 +139,8 @@ test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -166,7 +171,8 @@ test_that("on_result_begin in OptimInstanceAsyncSingleCrit works", {
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -219,7 +225,8 @@ test_that("on_result in OptimInstanceAsyncSingleCrit works", {
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -248,7 +255,8 @@ test_that("on_result_begin in OptimInstanceAsyncMultiCrit works", {
     objective = OBJ_2D_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -277,7 +285,8 @@ test_that("on_result_end in OptimInstanceAsyncMultiCrit works", {
     objective = OBJ_2D_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -304,7 +313,8 @@ test_that("on_result in OptimInstanceAsyncMultiCrit works", {
     objective = OBJ_2D_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")

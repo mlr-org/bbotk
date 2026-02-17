@@ -232,49 +232,6 @@ expect_dictionary = function(d, contains = NA_character_, min_items = 0L) {
   checkmate::expect_data_table(data.table::as.data.table(d), key = "key", nrows = length(keys))
 }
 
-start_rush = function(n_workers = 2, worker_type = "remote") { # FIXME: change to "mirai" after rush 1.0.0 is released
-  if (!redux::redis_available(path = "/tmp/redis-rush.sock")) {
-    stop("Redis is not available")
-  }
-
-  config = redux::redis_config(path = "/tmp/redis-rush.sock")
-  r = redux::hiredis(config)
-  r$FLUSHDB()
-
-  rush = if (packageVersion("rush") <= "0.4.1") {
-    rush::rush_plan(n_workers = n_workers, worker_type = worker_type)
-    rush::rsh(config = config)
-  } else {
-    rush::rush_plan(n_workers = n_workers, worker_type = worker_type)
-    rush::rsh(config = config)
-  }
-
-  if (worker_type == "mirai") {
-    mirai::daemons(n_workers)
-  }
-
-  rush
-}
-
-start_rush_worker = function(n_workers = 2) {
-  if (!redux::redis_available(path = "/tmp/redis-rush.sock")) {
-    stop("Redis is not available")
-  }
-
-  config = redux::redis_config(path = "/tmp/redis-rush.sock")
-  r = redux::hiredis(config)
-  r$FLUSHDB()
-
-  network_id = paste(sample(LETTERS, 10), collapse = "")
-  rush = if (packageVersion("rush") <= "0.4.1") {
-    rush::RushWorker$new(network_id = network_id, config = config, remote = FALSE)
-  } else {
-    rush::RushWorker$new(network_id = network_id, config = config)
-  }
-
-  rush
-}
-
 check_test_results = function(testres) {
   for (i in seq_along(testres)) {
     expect_true(testres[[i]], info = names(testres)[i], label = names(testres)[i])
