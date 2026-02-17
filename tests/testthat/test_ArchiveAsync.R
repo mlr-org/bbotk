@@ -57,36 +57,6 @@ test_that("ArchiveAsync works with one point", {
   expect_equal(archive$data_with_state()$state, c("finished", "failed"))
 })
 
-test_that("as.data.table.ArchiveAsync works", {
-  rush = start_rush_worker()
-  on.exit({
-    rush$reset()
-  })
-
-  instance = oi_async(
-    objective = OBJ_2D,
-    search_space = PS_2D,
-    terminator = trm("evals", n_evals = 5L),
-  )
-
-  optimizer = opt("async_random_search")
-  optimizer$optimize(instance)
-
-  data = as.data.table(instance$archive)
-  expect_data_table(data, min.rows = 5)
-
-  if (packageVersion("rush") <= "0.4.1") {
-    cns = c("state", "x1", "x2", "y", "timestamp_xs", "pid", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
-  } else {
-    cns = c("state", "x1", "x2", "y", "timestamp_xs", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
-  }
-
-  expect_names(colnames(data), identical.to = cns)
-
-  data = as.data.table(instance$archive, unnest = NULL)
-  expect_list(data$x_domain)
-})
-
 test_that("best method errors with direction=0 (learn tag)", {
   rush = start_rush_worker()
   on.exit({
@@ -131,4 +101,35 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
   archive$push_result(keys[2], ys = list(y1 = 0.3, y2 = 0.5), x_domain = list(x1 = 0.3, x2 = 0.3))
 
   expect_error(archive$nds_selection(n_select = 1), "direction = 0")
+})
+
+test_that("as.data.table.ArchiveAsync works", {
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+  })
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  data = as.data.table(instance$archive)
+  expect_data_table(data, min.rows = 5)
+
+  if (packageVersion("rush") <= "0.4.1") {
+    cns = c("state", "x1", "x2", "y", "timestamp_xs", "pid", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
+  } else {
+    cns = c("state", "x1", "x2", "y", "timestamp_xs", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
+  }
+
+  expect_names(colnames(data), identical.to = cns)
+
+  data = as.data.table(instance$archive, unnest = NULL)
+  expect_list(data$x_domain)
 })
