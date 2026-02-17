@@ -236,7 +236,7 @@ CRAN release: 2022-04-04
 - feat: `Optimizer` and `Terminator` objects have the optional field
   `$label` now.
 - feat:
-  [`as.data.table()`](https://rdatatable.gitlab.io/data.table/reference/as.data.table.html)
+  [`as.data.table()`](https://rdrr.io/pkg/data.table/man/as.data.table.html)
   functions for objects of class `Dictionary` have been extended with
   additional columns.
 - feat: Add a `as.data.table.DictionaryTerminator()` function.

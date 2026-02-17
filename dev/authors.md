@@ -20,14 +20,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/mlr-org/bbotk/blob/main/DESCRIPTION)
 
-Becker M, Richter J, Lang M, Bischl B, Binder M (2025). *bbotk:
+Becker M, Richter J, Lang M, Bischl B, Binder M (2026). *bbotk:
 Black-Box Optimization Toolkit*. R package version 1.8.1.9000,
 <https://bbotk.mlr-org.com>.
 
     @Manual{,
       title = {bbotk: Black-Box Optimization Toolkit},
       author = {Marc Becker and Jakob Richter and Michel Lang and Bernd Bischl and Martin Binder},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.8.1.9000},
       url = {https://bbotk.mlr-org.com},
     }

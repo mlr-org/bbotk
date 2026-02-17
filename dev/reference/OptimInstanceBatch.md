@@ -31,12 +31,12 @@ or
 
 - `result`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Get result
 
 - `result_x_search_space`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   x part of the result in the *search space*.
 
 - `result_x_domain`:
@@ -171,7 +171,7 @@ is raised. This function should be internally called by the
 
 - `xdt`:
 
-  ([`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html))  
   x values as `data.table()` with one point per row. Contains the value
   in the *search space* of the
   [OptimInstance](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)

@@ -68,7 +68,7 @@ Creates a new instance of this
   contains multiple x values, e.g.
   `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`. The function must
   return a
-  [`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+  [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
   that contains one y-column for single-criteria functions and multiple
   y-columns for multi-criteria functions, e.g. `data.table(y = 1:2)` or
   `data.table(y1 = 1:2, y2 = 3:4)`.
@@ -135,7 +135,7 @@ supplied by the user.
 
 #### Returns
 
-[`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+[`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
 that contains one y-column for single-criteria functions and multiple
 y-columns for multi-criteria functions, e.g. `data.table(y = 1:2)` or
 `data.table(y1 = 1:2, y2 = 3:4)`. It may also contain additional columns

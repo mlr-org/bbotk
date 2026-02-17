@@ -20,7 +20,7 @@ or with the associated sugar function
 
 - `design`:
 
-  [data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html)  
+  [data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html)  
   Design points to try in search, one per row.
 
 ## Super classes
@@ -75,7 +75,7 @@ Starts the asynchronous optimization.
 
 #### Returns
 
-[data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html).
+[data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html).
 
 ------------------------------------------------------------------------
 
@@ -151,14 +151,14 @@ as.data.table(instance$archive)
 }
 #>       state    x1    x2     y        timestamp_xs   pid
 #>      <char> <num> <num> <num>              <POSc> <int>
-#> 1: finished     0     0    -3 2025-12-13 11:48:12  8295
-#> 2: finished     1     1    -7 2025-12-13 11:48:12  8295
+#> 1: finished     0     0    -3 2026-02-17 15:05:10 14561
+#> 2: finished     1     1    -7 2026-02-17 15:05:10 14561
 #>                     worker_id        timestamp_ys
 #>                        <char>              <POSc>
-#> 1: emotionless_astrangiacoral 2025-12-13 11:48:13
-#> 2: emotionless_astrangiacoral 2025-12-13 11:48:13
+#> 1: emotionless_astrangiacoral 2026-02-17 15:05:11
+#> 2: emotionless_astrangiacoral 2026-02-17 15:05:11
 #>                                    keys x_domain_x1 x_domain_x2
 #>                                  <char>       <num>       <num>
-#> 1: baa1b736-cdfa-4912-992a-f47768a71741           0           0
-#> 2: 6f8a4c5b-8993-48a9-b211-1029ffc12809           1           1
+#> 1: 94ffcbee-dda6-4073-95ee-a2c6647ca9c4           0           0
+#> 2: a502cf2f-c688-471e-a872-81be6f48d4f3           1           1
 ```

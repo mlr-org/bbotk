@@ -247,7 +247,7 @@ instance$archive
 instance$result
 # }
 }
-#> # 2025-12-13 11:48:27 UTC: Initialization
+#> # 2026-02-17 15:05:26 UTC: Initialization
 #> # Elitist race
 #> # Elitist new instances: 1
 #> # Elitist limit: 2
@@ -260,7 +260,7 @@ instance$result
 #> # mu: 5
 #> # deterministic: FALSE
 #> 
-#> # 2025-12-13 11:48:27 UTC: Iteration 1 of 3
+#> # 2026-02-17 15:05:26 UTC: Iteration 1 of 3
 #> # experimentsUsed: 0
 #> # remainingBudget: 96
 #> # currentBudget: 32
@@ -271,7 +271,8 @@ instance$result
 #>      - The test is performed and some configurations are discarded.
 #>      = The test is performed but no configuration is discarded.
 #>      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#>      . All alive configurations are elite and nothing is discarded.
+#>      . Alive configurations were already evaluated on this instance and nothing is discarded.
+#>      : All alive configurations are elite, but some need to be evaluated on this instance.
 #> 
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
@@ -287,10 +288,10 @@ instance$result
 #>   .ID.               x1               x2 .PARENT.
 #> 5    5 1.28557488322258 1.74866303801537       NA
 #> 
-#> # 2025-12-13 11:48:27 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-17 15:05:27 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
 #> 5 1.28557488322258 1.74866303801537
-#> # 2025-12-13 11:48:27 UTC: Iteration 2 of 3
+#> # 2026-02-17 15:05:27 UTC: Iteration 2 of 3
 #> # experimentsUsed: 25
 #> # remainingBudget: 71
 #> # currentBudget: 35
@@ -301,28 +302,29 @@ instance$result
 #>      - The test is performed and some configurations are discarded.
 #>      = The test is performed but no configuration is discarded.
 #>      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#>      . All alive configurations are elite and nothing is discarded.
+#>      . Alive configurations were already evaluated on this instance and nothing is discarded.
+#>      : All alive configurations are elite, but some need to be evaluated on this instance.
 #> 
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          6|          5|          8|     3.515902613|          5|00:00:00|   NA|  NA|    NA|
-#> |x|          4|          5|          8|     3.515902613|          9|00:00:00|+1.00|1.00|0.0000|
-#> |x|          3|          5|          8|     3.515902613|         13|00:00:00|+1.00|1.00|0.0000|
-#> |x|          5|          5|          8|     3.515902613|         17|00:00:00|+1.00|1.00|0.0000|
-#> |-|          1|          2|          8|     3.515902613|         21|00:00:00|+1.00|1.00|0.0000|
+#> |x|          6|          5|          9|     2.612384843|          5|00:00:00|   NA|  NA|    NA|
+#> |x|          3|          5|          9|     2.612384843|          9|00:00:00|+1.00|1.00|0.0000|
+#> |x|          5|          5|          9|     2.612384843|         13|00:00:00|+1.00|1.00|0.0000|
+#> |x|          4|          5|          9|     2.612384843|         17|00:00:00|+1.00|1.00|0.0000|
+#> |-|          1|          2|          9|     2.612384843|         21|00:00:00|+1.00|1.00|0.0000|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> Best configuration for the instances in this race: 8
+#> Best configuration for the instances in this race: 9
 #> Best-so-far configuration:           5    mean value:      18.55226488
 #> Description of the best-so-far configuration:
 #>   .ID.               x1               x2 .PARENT.
 #> 5    5 1.28557488322258 1.74866303801537       NA
 #> 
-#> # 2025-12-13 11:48:28 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-17 15:05:27 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
 #> 5 1.28557488322258 1.74866303801537
-#> 8 3.70296034806964 3.16024788060649
-#> # 2025-12-13 11:48:28 UTC: Iteration 3 of 3
+#> 9 8.73834832730799 1.75747503641420
+#> # 2026-02-17 15:05:27 UTC: Iteration 3 of 3
 #> # experimentsUsed: 46
 #> # remainingBudget: 50
 #> # currentBudget: 50
@@ -333,29 +335,30 @@ instance$result
 #>      - The test is performed and some configurations are discarded.
 #>      = The test is performed but no configuration is discarded.
 #>      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#>      . All alive configurations are elite and nothing is discarded.
+#>      . Alive configurations were already evaluated on this instance and nothing is discarded.
+#>      : All alive configurations are elite, but some need to be evaluated on this instance.
 #> 
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          7|          7|          8|     3.515902613|          7|00:00:00|   NA|  NA|    NA|
-#> |x|          6|          7|          8|     3.515902613|         12|00:00:00|+1.00|1.00|0.0000|
-#> |x|          5|          7|          8|     3.515902613|         17|00:00:00|+1.00|1.00|0.0000|
-#> |x|          2|          7|          8|     3.515902613|         23|00:00:00|+1.00|1.00|0.0000|
-#> |-|          1|          2|          8|     3.515902613|         28|00:00:00|+1.00|1.00|0.0000|
-#> |.|          3|          2|          8|     3.515902613|         28|00:00:00|+1.00|1.00|0.0000|
-#> |.|          4|          2|          8|     3.515902613|         28|00:00:00|+1.00|1.00|0.0000|
+#> |x|          7|          7|          9|     2.612384843|          7|00:00:00|   NA|  NA|    NA|
+#> |x|          2|          7|          9|     2.612384843|         13|00:00:00|+1.00|1.00|0.0000|
+#> |x|          1|          7|          9|     2.612384843|         18|00:00:00|+1.00|1.00|0.0000|
+#> |x|          5|          7|          9|     2.612384843|         23|00:00:00|+1.00|1.00|0.0000|
+#> |-|          3|          2|          9|     2.612384843|         28|00:00:00|+1.00|1.00|0.0000|
+#> |.|          4|          2|          9|     2.612384843|         28|00:00:00|+1.00|1.00|0.0000|
+#> |.|          6|          2|          9|     2.612384843|         28|00:00:00|+1.00|1.00|0.0000|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> Best-so-far configuration:           8    mean value:      3.515902613
+#> Best-so-far configuration:           9    mean value:      2.612384843
 #> Description of the best-so-far configuration:
-#>   .ID.               x1               x2 .PARENT.
-#> 8    8 3.70296034806964 3.16024788060649        5
+#>   .ID.               x1              x2 .PARENT.
+#> 9    9 8.73834832730799 1.7574750364142        5
 #> 
-#> # 2025-12-13 11:48:28 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-17 15:05:27 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
-#> 8 3.70296034806964 3.16024788060649
+#> 9 8.73834832730799 1.75747503641420
 #> 5 1.28557488322258 1.74866303801537
-#> # 2025-12-13 11:48:28 UTC: Iteration 4 of 4
+#> # 2026-02-17 15:05:27 UTC: Iteration 4 of 4
 #> # experimentsUsed: 74
 #> # remainingBudget: 22
 #> # currentBudget: 22
@@ -366,30 +369,31 @@ instance$result
 #>      - The test is performed and some configurations are discarded.
 #>      = The test is performed but no configuration is discarded.
 #>      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#>      . All alive configurations are elite and nothing is discarded.
+#>      . Alive configurations were already evaluated on this instance and nothing is discarded.
+#>      : All alive configurations are elite, but some need to be evaluated on this instance.
 #> 
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          8|          4|          8|     3.515902613|          4|00:00:00|   NA|  NA|    NA|
-#> |x|          1|          4|          8|     3.515902613|          6|00:00:00|+1.00|1.00|0.0000|
-#> |x|          5|          4|          8|     3.515902613|          8|00:00:00|+1.00|1.00|0.0000|
-#> |x|          3|          4|          8|     3.515902613|         10|00:00:00|+1.00|1.00|0.0000|
-#> |-|          2|          2|          8|     3.515902613|         12|00:00:00|+1.00|1.00|0.0000|
-#> |.|          6|          2|          8|     3.515902613|         12|00:00:00|+1.00|1.00|0.0000|
-#> |.|          4|          2|          8|     3.515902613|         12|00:00:00|+1.00|1.00|0.0000|
-#> |.|          7|          2|          8|     3.515902613|         12|00:00:00|+1.00|1.00|0.0000|
+#> |x|          8|          4|          9|     2.612384843|          4|00:00:00|   NA|  NA|    NA|
+#> |x|          1|          4|          9|     2.612384843|          6|00:00:00|+1.00|1.00|0.0000|
+#> |x|          6|          4|          9|     2.612384843|          8|00:00:00|+1.00|1.00|0.0000|
+#> |x|          2|          4|          9|     2.612384843|         10|00:00:00|+1.00|1.00|0.0000|
+#> |-|          5|          2|          9|     2.612384843|         12|00:00:00|+1.00|1.00|0.0000|
+#> |.|          4|          2|          9|     2.612384843|         12|00:00:00|+1.00|1.00|0.0000|
+#> |.|          3|          2|          9|     2.612384843|         12|00:00:00|+1.00|1.00|0.0000|
+#> |.|          7|          2|          9|     2.612384843|         12|00:00:00|+1.00|1.00|0.0000|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> Best-so-far configuration:           8    mean value:      3.515902613
+#> Best-so-far configuration:           9    mean value:      2.612384843
 #> Description of the best-so-far configuration:
-#>   .ID.               x1               x2 .PARENT.
-#> 8    8 3.70296034806964 3.16024788060649        5
+#>   .ID.               x1              x2 .PARENT.
+#> 9    9 8.73834832730799 1.7574750364142        5
 #> 
-#> # 2025-12-13 11:48:28 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-17 15:05:27 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
-#> 8 3.70296034806964 3.16024788060649
+#> 9 8.73834832730799 1.75747503641420
 #> 5 1.28557488322258 1.74866303801537
-#> # 2025-12-13 11:48:28 UTC: Stopped because there is not enough budget left to race more than the minimum (3).
+#> # 2026-02-17 15:05:27 UTC: Stopped because there is not enough budget left to race more than the minimum (3).
 #> # You may either increase the budget or set 'minNbSurvival' to a lower value.
 #> # Iteration: 5
 #> # nbIterations: 5
@@ -399,11 +403,11 @@ instance$result
 #> # currentBudget: 10
 #> # number of elites: 2
 #> # nbConfigurations: 3
-#> # Total CPU user time: 1.506, CPU sys time: 0.018, Wall-clock time: 1.524
-#> # 2025-12-13 11:48:29 UTC: Starting post-selection:
-#> # Configurations selected: 8, 5, 1, 2.
+#> # Total CPU user time: 1.63, CPU sys time: 0.012, Wall-clock time: 1.645
+#> # 2026-02-17 15:05:28 UTC: Starting post-selection:
+#> # Configurations selected: 9, 5, 1, 2.
 #> # Pending instances: 1, 1, 4, 4.
-#> # 2025-12-13 11:48:29 UTC: seed: 624162489
+#> # 2026-02-17 15:05:28 UTC: seed: 624162489
 #> # Configurations: 4
 #> # Available experiments: 10
 #> # minSurvival: 1
@@ -413,30 +417,31 @@ instance$result
 #>      - The test is performed and some configurations are discarded.
 #>      = The test is performed but no configuration is discarded.
 #>      ! The test is performed and configurations could be discarded but elite configurations are preserved.
-#>      . All alive configurations are elite and nothing is discarded.
+#>      . Alive configurations were already evaluated on this instance and nothing is discarded.
+#>      : All alive configurations are elite, but some need to be evaluated on this instance.
 #> 
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          6|          4|          8|     3.515902613|          2|00:00:00|   NA|  NA|    NA|
-#> |.|          1|          4|          8|     3.515902613|          2|00:00:00|+1.00|1.00|0.0000|
-#> |.|          2|          4|          8|     3.515902613|          2|00:00:00|+1.00|1.00|0.0000|
-#> |.|          5|          4|          8|     3.515902613|          2|00:00:00|+1.00|1.00|0.0000|
-#> |.|          3|          4|          8|     3.515902613|          2|00:00:00|+1.00|1.00|0.0000|
-#> |.|          4|          4|          8|     3.515902613|          2|00:00:00|+1.00|1.00|0.0000|
-#> |x|          8|          4|          8|     3.515902613|          4|00:00:00|+1.00|1.00|0.0000|
-#> |-|          7|          1|          8|     3.515902613|          6|00:00:00|   NA|  NA|    NA|
+#> |x|          6|          4|          9|     2.612384843|          2|00:00:00|   NA|  NA|    NA|
+#> |.|          1|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
+#> |.|          2|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
+#> |.|          5|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
+#> |.|          3|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
+#> |.|          4|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
+#> |x|          8|          4|          9|     2.612384843|          4|00:00:00|+1.00|1.00|0.0000|
+#> |-|          7|          1|          9|     2.612384843|          6|00:00:00|   NA|  NA|    NA|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> Best-so-far configuration:           8    mean value:      3.515902613
+#> Best-so-far configuration:           9    mean value:      2.612384843
 #> Description of the best-so-far configuration:
-#>   .ID.               x1               x2 .PARENT.
-#> 8    8 3.70296034806964 3.16024788060649        5
+#>   .ID.               x1              x2 .PARENT.
+#> 9    9 8.73834832730799 1.7574750364142        5
 #> 
-#> # 2025-12-13 11:48:29 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#>                 x1               x2
-#> 8 3.70296034806964 3.16024788060649
-#> # Total CPU user time: 1.836, CPU sys time: 0.021, Wall-clock time: 1.857
-#>         x1       x2 configuration  x_domain        y
-#>      <num>    <num>         <int>    <list>    <num>
-#> 1: 3.70296 3.160248             8 <list[2]> 3.515903
+#> # 2026-02-17 15:05:28 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#>                 x1              x2
+#> 9 8.73834832730799 1.7574750364142
+#> # Total CPU user time: 1.951, CPU sys time: 0.015, Wall-clock time: 1.97
+#>          x1       x2 configuration  x_domain        y
+#>       <num>    <num>         <int>    <list>    <num>
+#> 1: 8.738348 1.757475             9 <list[2]> 2.612385
 ```

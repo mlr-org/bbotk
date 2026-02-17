@@ -31,7 +31,7 @@ or with the associated sugar function
 
 - `design`:
 
-  [data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html)  
+  [data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html)  
   Design points to try in search, one per row.
 
 ## Progress Bars
@@ -143,8 +143,8 @@ instance$archive
 #> ── <ArchiveBatch> - Data Table Storage ─────────────────────────────────────────
 #>       x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2
 #>    <num> <num> <num>              <POSc>    <int>       <num>       <num>
-#> 1:     0     0    -3 2025-12-13 11:48:23        1           0           0
-#> 2:     1     1    -7 2025-12-13 11:48:23        2           1           1
+#> 1:     0     0    -3 2026-02-17 15:05:22        1           0           0
+#> 2:     1     1    -7 2026-02-17 15:05:22        2           1           1
 
 # best performing configuration
 instance$result

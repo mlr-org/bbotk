@@ -13,7 +13,7 @@ functionality each instance must provide. The
 [Optimizer](https://bbotk.mlr-org.com/dev/reference/Optimizer.md) writes
 the final result to the `.result` field by using the `$assign_result()`
 method. `.result` stores a
-[data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+[data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html)
 consisting of x values in the *search space*, (transformed) x values in
 the *domain space* and y values in the *codomain space* of the
 [Objective](https://bbotk.mlr-org.com/dev/reference/Objective.md). The
@@ -41,12 +41,12 @@ user can access the results with active bindings (see below).
 
 - `result`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Get result
 
 - `result_x_search_space`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   x part of the result in the *search space*.
 
 ## Methods
@@ -173,9 +173,9 @@ For internal use.
 
 - `xdt`:
 
-  ([`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html))  
   x values as
-  [`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+  [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
   with one row. Contains the value in the *search space* of the
   OptimInstance object. Can contain additional columns for extra
   information.

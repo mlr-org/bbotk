@@ -1,11 +1,11 @@
 # Calculates the transformed x-values
 
 Transforms a given
-[`data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
-to a list with transformed x values. If no trafo is defined it will just
+[`data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html) to
+a list with transformed x values. If no trafo is defined it will just
 convert the
-[`data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
-to a list. Mainly for internal usage.
+[`data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html) to
+a list. Mainly for internal usage.
 
 ## Usage
 
@@ -17,7 +17,7 @@ transform_xdt_to_xss(xdt, search_space)
 
 - xdt:
 
-  ([`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Set of untransformed points / points from the *search space*. One
   point per row, e.g. `data.table(x1 = c(1, 3), x2 = c(2, 4))`. Column
   names have to match ids of the `search_space`. However, `xdt` can
