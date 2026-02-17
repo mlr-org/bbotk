@@ -1,9 +1,14 @@
+skip_if_not_installed("rush")
+skip_if_no_redis()
+
 # stages in $optimize() --------------------------------------------------------
 
 test_that("on_optimization_begin works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_optimization_begin = function(callback, context) {
@@ -11,26 +16,26 @@ test_that("on_optimization_begin works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
   expect_class(instance$objective$context, "ContextAsync")
   expect_equal(instance$terminator$param_set$values$n_evals, 20)
-  expect_rush_reset(instance$rush)
 })
 
 test_that("on_optimization_end works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_optimization_end = function(callback, context) {
@@ -38,27 +43,27 @@ test_that("on_optimization_end works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
   expect_equal(instance$terminator$param_set$values$n_evals, 200)
-  expect_rush_reset(instance$rush)
 })
 
 # stager in worker_loop() ------------------------------------------------------
 
 test_that("on_worker_begin works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_worker_begin = function(callback, context) {
@@ -67,27 +72,27 @@ test_that("on_worker_begin works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
   expect_subset(1, instance$archive$data$x)
-  expect_rush_reset(instance$rush)
 })
 
 
 test_that("on_worker_end works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_worker_end = function(callback, context) {
@@ -96,28 +101,28 @@ test_that("on_worker_end works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
   expect_subset(1, instance$archive$data$x)
-  expect_rush_reset(instance$rush)
 })
 
 # stages in $.eval_point() -----------------------------------------------------
 
 test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_optimizer_before_eval = function(callback, context) {
@@ -130,13 +135,12 @@ test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -145,15 +149,16 @@ test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
   expect_equal(unique(instance$archive$data$x), 1)
   expect_equal(unique(instance$archive$data$y), 0)
   expect_equal(unique(unlist(instance$archive$data$x_domain)), 0)
-  expect_rush_reset(instance$rush)
 })
 
 # stages in $assign_result() in OptimInstanceAsyncSingleCrit -------------------
 
 test_that("on_result_begin in OptimInstanceAsyncSingleCrit works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_result_begin = function(callback, context) {
@@ -162,13 +167,12 @@ test_that("on_result_begin in OptimInstanceAsyncSingleCrit works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -176,13 +180,14 @@ test_that("on_result_begin in OptimInstanceAsyncSingleCrit works", {
 
   expect_equal(instance$result$x, 1)
   expect_equal(instance$result$y, 2)
-  expect_rush_reset(instance$rush)
 })
 
 test_that("on_result_end in OptimInstanceAsyncSingleCrit works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_result_end = function(callback, context) {
@@ -190,26 +195,26 @@ test_that("on_result_end in OptimInstanceAsyncSingleCrit works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
   expect_equal(instance$result$y, 2)
-  expect_rush_reset(instance$rush)
 })
 
 test_that("on_result in OptimInstanceAsyncSingleCrit works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   expect_warning({callback = callback_async(id = "test",
     on_result = function(callback, context) {
@@ -217,28 +222,28 @@ test_that("on_result in OptimInstanceAsyncSingleCrit works", {
     }
   )}, "deprecated")
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
 
   expect_equal(instance$result, 2)
-  expect_rush_reset(instance$rush)
 })
 
 # stages in $assign_result() in OptimInstanceAsyncMultiCrit --------------------
 
 test_that("on_result_begin in OptimInstanceAsyncMultiCrit works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_result_begin = function(callback, context) {
@@ -247,13 +252,12 @@ test_that("on_result_begin in OptimInstanceAsyncMultiCrit works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -262,13 +266,14 @@ test_that("on_result_begin in OptimInstanceAsyncMultiCrit works", {
   expect_equal(instance$result$x2, 1)
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 2)
-  expect_rush_reset(instance$rush)
 })
 
 test_that("on_result_end in OptimInstanceAsyncMultiCrit works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   callback = callback_async(id = "test",
     on_result_end = function(callback, context) {
@@ -277,26 +282,26 @@ test_that("on_result_end in OptimInstanceAsyncMultiCrit works", {
     }
   )
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 3)
-  expect_rush_reset(instance$rush)
 })
 
 test_that("on_result in OptimInstanceAsyncMultiCrit works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
 
   expect_warning({callback = callback_async(id = "test",
     on_result = function(callback, context) {
@@ -305,19 +310,17 @@ test_that("on_result in OptimInstanceAsyncMultiCrit works", {
     }
   )}, "deprecated")
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
   optimizer$optimize(instance)
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 3)
-  expect_rush_reset(instance$rush)
 })
 

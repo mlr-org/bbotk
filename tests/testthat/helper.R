@@ -232,22 +232,6 @@ expect_dictionary = function(d, contains = NA_character_, min_items = 0L) {
   checkmate::expect_data_table(data.table::as.data.table(d), key = "key", nrows = length(keys))
 }
 
-expect_rush_reset = function(rush, type = "kill") {
-  rush$reset(type = type)
-  Sys.sleep(1)
-  # keys = rush$connector$command(c("KEYS", "*"))
-  # if (!test_list(keys, len = 0)) {
-  #   stopf("Found keys in redis after reset: %s", keys)
-  # }
-  mirai::daemons(0)
-}
-
-flush_redis = function() {
-  config = redux::redis_config()
-  r = redux::hiredis(config)
-  r$FLUSHDB()
-}
-
 check_test_results = function(testres) {
   for (i in seq_along(testres)) {
     expect_true(testres[[i]], info = names(testres)[i], label = names(testres)[i])

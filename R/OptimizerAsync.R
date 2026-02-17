@@ -111,7 +111,8 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   } else {
     # run .optimize() on workers
     rush = instance$rush
-    worker_type = rush::rush_config()$worker_type %??% "local"
+    # FIXME: change to "mirai" after rush 1.0.0 is released
+    worker_type = rush::rush_config()$worker_type %??% "remote"
 
     if (worker_type == "script") {
       # worker script
@@ -122,7 +123,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         instance = instance)
 
       rush$wait_for_workers(n = 1)
-    } else if (worker_type == "remote") {
+    } else if (worker_type %in% c("remote", "mirai")) { # FIXME: change to "mirai" after rush 1.0.0 is released
       # remote workers
       worker_ids = rush$start_remote_workers(
         n_workers = n_workers,
@@ -132,7 +133,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         instance = instance)
 
       rush$wait_for_workers(n = 1, worker_ids)
-    } else if (worker_type == "local") {
+    } else if (worker_type %in% c("local", "processx")) { # FIXME: change to "processx" after rush 1.0.0 is released
       # local workers
       worker_ids = rush$start_local_workers(
         n_workers = n_workers,
