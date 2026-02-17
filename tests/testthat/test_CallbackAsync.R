@@ -199,7 +199,8 @@ test_that("on_result_end in OptimInstanceAsyncSingleCrit works", {
     objective = OBJ_1D,
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
-    callbacks = list(callback)
+    callbacks = list(callback),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
