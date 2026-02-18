@@ -121,7 +121,6 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
     },
 
     .eval_queue = function() {
-      # trm none TRUE + TRUE / FALSE
       while (!self$is_terminated && self$archive$n_queued) {
         task = self$archive$pop_point()
         if (!is.null(task)) {
