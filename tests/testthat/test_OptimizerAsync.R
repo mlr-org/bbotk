@@ -2,7 +2,7 @@ skip_if_not_installed("rush")
 skip_if_no_redis()
 
 test_that("OptimizerAsync starts workers", {
-  rush = start_rush(n_worker = 1, worker_type = "remote") # FIXME: change to "mirai" after rush 1.0.0 is released
+  rush = start_rush(n_workers = 1, worker_type = "remote") # FIXME: change to "mirai" after rush 1.0.0 is released
   on.exit({
     rush$reset()
     mirai::daemons(0)

@@ -44,10 +44,11 @@ test_that("context is initialized correctly", {
 })
 
 test_that("point evaluation works", {
-  rush = start_rush()
+  # use worker to make its functions available
+  # FIXME: remove this after rush 1.0.0 is released
+  rush = start_rush_worker()
   on.exit({
     rush$reset()
-    mirai::daemons(0)
   })
 
   instance = oi_async(
