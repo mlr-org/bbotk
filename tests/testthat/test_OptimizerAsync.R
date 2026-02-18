@@ -1,28 +1,7 @@
 skip_if_not_installed("rush")
 skip_if_no_redis()
 
-# test_that("OptimizerAsync starts local workers", {
-#   rush = start_rush(n_workers = 1, worker_type = "local") # FIXME: change to "processx" after rush 1.0.0 is released
-#   on.exit({
-#     rush$reset()
-#     walk(rush$processes_processx, function(p) p$kill())
-#   })
-
-#   instance = oi_async(
-#     objective = OBJ_2D,
-#     search_space = PS_2D,
-#     terminator = trm("evals", n_evals = 50L),
-#     rush = rush
-#   )
-
-#   optimizer = opt("async_random_search")
-#   optimizer$optimize(instance)
-
-#   expect_data_table(instance$rush$worker_info, nrows = 1)
-#   expect_list(instance$rush$processes_processx, len = 1)
-# })
-
-test_that("OptimizerAsync starts remote workers", {
+test_that("OptimizerAsync starts workers", {
   rush = start_rush(n_worker = 1, worker_type = "remote") # FIXME: change to "mirai" after rush 1.0.0 is released
   on.exit({
     rush$reset()
