@@ -82,7 +82,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       # update progressor
       if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
 
-      if (self$is_terminated) stop(terminated_error(self))
+      if (self$is_terminated) terminated_error(self)
       assert_data_table(xdt)
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 

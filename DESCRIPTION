@@ -31,7 +31,7 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.15.1),
+    mlr3misc (>= 0.20.0),
     R6
 Suggests:
     adagio,
@@ -112,6 +112,7 @@ Collate:
     'bb_optimize.R'
     'bbotk_reflections.R'
     'bibentries.R'
+    'conditions.R'
     'helper.R'
     'local_search.R'
     'mlr_callbacks.R'

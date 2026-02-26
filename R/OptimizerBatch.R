@@ -60,7 +60,7 @@ optimize_batch_default = function(instance, optimizer) {
     instance$search_space$length, optimizer$format(), instance$terminator$format(with_params = TRUE))
   tryCatch({
     get_private(optimizer)$.optimize(instance)
-  }, terminated_error = function(cond) {})
+  }, Mlr3ErrorBbotkTerminated = function(cond) {})
 
   # assign result
   get_private(optimizer)$.assign_result(instance)
