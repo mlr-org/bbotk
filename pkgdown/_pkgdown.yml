@@ -85,4 +85,5 @@ reference:
       - bbotk_worker_loop
       - trafo_xs
       - terminated_error
+      - bbotk_conditions
       - choose_search_space
