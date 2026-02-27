@@ -13,7 +13,7 @@ bbotk_reflections
 \description{
 Environment which stores various information to allow objects to examine and
 introspect their structure and properties
-(c.f. \href{https://www.wikiwand.com/en/Reflection_(computer_programming)}{Reflections}).
+(c.f. \href{https://en.wikipedia.org/wiki/Reflective_programming}{Reflections}).
 
 This environment be modified by third-party packages.
 
