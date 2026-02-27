@@ -192,5 +192,8 @@
   Calculate the transformed x-values
 - [`terminated_error()`](https://bbotk.mlr-org.com/dev/reference/terminated_error.md)
   : Termination Error
+- [`error_bbotk()`](https://bbotk.mlr-org.com/dev/reference/bbotk_conditions.md)
+  [`error_bbotk_terminated()`](https://bbotk.mlr-org.com/dev/reference/bbotk_conditions.md)
+  : Condition Classes for bbotk
 - [`choose_search_space()`](https://bbotk.mlr-org.com/dev/reference/choose_search_space.md)
   : Choose Search Space

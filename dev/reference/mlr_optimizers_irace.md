@@ -247,7 +247,7 @@ instance$archive
 instance$result
 # }
 }
-#> # 2026-02-24 11:45:38 UTC: Initialization
+#> # 2026-02-27 14:19:40 UTC: Initialization
 #> # Elitist race
 #> # Elitist new instances: 1
 #> # Elitist limit: 2
@@ -260,7 +260,7 @@ instance$result
 #> # mu: 5
 #> # deterministic: FALSE
 #> 
-#> # 2026-02-24 11:45:39 UTC: Iteration 1 of 3
+#> # 2026-02-27 14:19:41 UTC: Iteration 1 of 3
 #> # experimentsUsed: 0
 #> # remainingBudget: 96
 #> # currentBudget: 32
@@ -288,10 +288,10 @@ instance$result
 #>   .ID.               x1               x2 .PARENT.
 #> 5    5 1.28557488322258 1.74866303801537       NA
 #> 
-#> # 2026-02-24 11:45:39 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-27 14:19:41 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
 #> 5 1.28557488322258 1.74866303801537
-#> # 2026-02-24 11:45:39 UTC: Iteration 2 of 3
+#> # 2026-02-27 14:19:41 UTC: Iteration 2 of 3
 #> # experimentsUsed: 25
 #> # remainingBudget: 71
 #> # currentBudget: 35
@@ -320,11 +320,11 @@ instance$result
 #>   .ID.               x1               x2 .PARENT.
 #> 5    5 1.28557488322258 1.74866303801537       NA
 #> 
-#> # 2026-02-24 11:45:39 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-27 14:19:41 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
 #> 5 1.28557488322258 1.74866303801537
 #> 9 8.73834832730799 1.75747503641420
-#> # 2026-02-24 11:45:39 UTC: Iteration 3 of 3
+#> # 2026-02-27 14:19:41 UTC: Iteration 3 of 3
 #> # experimentsUsed: 46
 #> # remainingBudget: 50
 #> # currentBudget: 50
@@ -354,11 +354,11 @@ instance$result
 #>   .ID.               x1              x2 .PARENT.
 #> 9    9 8.73834832730799 1.7574750364142        5
 #> 
-#> # 2026-02-24 11:45:39 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-27 14:19:42 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
 #> 9 8.73834832730799 1.75747503641420
 #> 5 1.28557488322258 1.74866303801537
-#> # 2026-02-24 11:45:39 UTC: Iteration 4 of 4
+#> # 2026-02-27 14:19:42 UTC: Iteration 4 of 4
 #> # experimentsUsed: 74
 #> # remainingBudget: 22
 #> # currentBudget: 22
@@ -389,11 +389,11 @@ instance$result
 #>   .ID.               x1              x2 .PARENT.
 #> 9    9 8.73834832730799 1.7574750364142        5
 #> 
-#> # 2026-02-24 11:45:40 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-27 14:19:42 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
 #> 9 8.73834832730799 1.75747503641420
 #> 5 1.28557488322258 1.74866303801537
-#> # 2026-02-24 11:45:40 UTC: Stopped because there is not enough budget left to race more than the minimum (3).
+#> # 2026-02-27 14:19:42 UTC: Stopped because there is not enough budget left to race more than the minimum (3).
 #> # You may either increase the budget or set 'minNbSurvival' to a lower value.
 #> # Iteration: 5
 #> # nbIterations: 5
@@ -403,11 +403,11 @@ instance$result
 #> # currentBudget: 10
 #> # number of elites: 2
 #> # nbConfigurations: 3
-#> # Total CPU user time: 1.518, CPU sys time: 0.013, Wall-clock time: 1.532
-#> # 2026-02-24 11:45:40 UTC: Starting post-selection:
+#> # Total CPU user time: 1.606, CPU sys time: 0.007, Wall-clock time: 1.613
+#> # 2026-02-27 14:19:43 UTC: Starting post-selection:
 #> # Configurations selected: 9, 5, 1, 2.
 #> # Pending instances: 1, 1, 4, 4.
-#> # 2026-02-24 11:45:40 UTC: seed: 624162489
+#> # 2026-02-27 14:19:43 UTC: seed: 624162489
 #> # Configurations: 4
 #> # Available experiments: 10
 #> # minSurvival: 1
@@ -437,10 +437,10 @@ instance$result
 #>   .ID.               x1              x2 .PARENT.
 #> 9    9 8.73834832730799 1.7574750364142        5
 #> 
-#> # 2026-02-24 11:45:41 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-02-27 14:19:43 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1              x2
 #> 9 8.73834832730799 1.7574750364142
-#> # Total CPU user time: 1.843, CPU sys time: 0.023, Wall-clock time: 1.867
+#> # Total CPU user time: 1.936, CPU sys time: 0.013, Wall-clock time: 1.949
 #>          x1       x2 configuration  x_domain        y
 #>       <num>    <num>         <int>    <list>    <num>
 #> 1: 8.738348 1.757475             9 <list[2]> 2.612385
