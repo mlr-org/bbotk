@@ -1,4 +1,4 @@
-# bbotk (development version)
+# bbotk 1.9.0
 
 * feat: Allow `"learn"` tag (direction=0) alongside minimize/maximize in `Codomain`.
 * feat: Add new base class `EvalInstance` from which `OptimInstance` now inherits. `EvalInstance` keeps information about a process that evaluates an `Objective` while not necessarily optimizing it.
