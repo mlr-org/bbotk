@@ -3,6 +3,9 @@
 * feat: Allow `"learn"` tag (direction=0) alongside minimize/maximize in `Codomain`.
 * feat: Add new base class `EvalInstance` from which `OptimInstance` now inherits. `EvalInstance` keeps information about a process that evaluates an `Objective` while not necessarily optimizing it.
 * feat: Exporting formerly internal `choose_search_space()` function.
+* feat: Use `mlr3misc` error classes for errors and warnings.
+* compatibility: Compatible with `rush` 1.0.0.
+* fix: Terminator print method works correctly now.
 
 # bbotk 1.8.1
 
