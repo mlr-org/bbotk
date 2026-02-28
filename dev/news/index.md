@@ -2,6 +2,8 @@
 
 ## bbotk (development version)
 
+## bbotk 1.9.0
+
 - feat: Allow `"learn"` tag (direction=0) alongside minimize/maximize in
   `Codomain`.
 - feat: Add new base class `EvalInstance` from which `OptimInstance` now
@@ -10,6 +12,9 @@
 - feat: Exporting formerly internal
   [`choose_search_space()`](https://bbotk.mlr-org.com/dev/reference/choose_search_space.md)
   function.
+- feat: Use `mlr3misc` error classes for errors and warnings.
+- compatibility: Compatible with `rush` 1.0.0.
+- fix: Terminator print method works correctly now.
 
 ## bbotk 1.8.1
 
