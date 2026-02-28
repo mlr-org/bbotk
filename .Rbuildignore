@@ -27,3 +27,4 @@
 ^CRAN-SUBMISSION$
 ^benchmark$
 .clangd
+.claude

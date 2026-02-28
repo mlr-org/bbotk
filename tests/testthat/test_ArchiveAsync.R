@@ -1,9 +1,11 @@
-test_that("ArchiveAsync works with one point", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+skip_if_not_installed("rush")
+skip_if_no_redis()
 
-  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
+test_that("ArchiveAsync works with one point", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
 
   archive = ArchiveAsync$new(
     search_space = PS_2D,
@@ -53,42 +55,14 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$finished_data, nrows = 1)
   expect_data_table(archive$failed_data, nrows = 1)
   expect_equal(archive$data_with_state()$state, c("finished", "failed"))
-
-  expect_rush_reset(rush, type = "terminate")
-})
-
-test_that("as.data.table.ArchiveAsync works", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
-
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
-  instance = oi_async(
-    objective = OBJ_2D,
-    search_space = PS_2D,
-    terminator = trm("evals", n_evals = 5L),
-  )
-
-  optimizer = opt("async_random_search")
-  optimizer$optimize(instance)
-
-  data = as.data.table(instance$archive)
-  expect_data_table(data, min.rows = 5)
-  expect_names(colnames(data), identical.to = c("state","x1","x2","y","timestamp_xs","pid","worker_id","timestamp_ys","keys","x_domain_x1","x_domain_x2"))
-
-  data = as.data.table(instance$archive, unnest = NULL)
-  expect_list(data$x_domain)
-
-  expect_rush_reset(instance$rush)
 })
 
 test_that("best method errors with direction=0 (learn tag)", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  flush_redis()
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
 
-  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
   codomain = ps(y = p_dbl(tags = "learn"))
 
   archive = ArchiveAsync$new(
@@ -103,17 +77,14 @@ test_that("best method errors with direction=0 (learn tag)", {
   archive$push_result(keys, ys = list(y = 0.5), x_domain = list(x1 = 0.5, x2 = 0.5))
 
   expect_error(archive$best(), "direction = 0")
-
-  expect_rush_reset(rush, type = "terminate")
 })
 
 test_that("nds_selection errors with direction=0 (learn tag)", {
-  skip_on_cran()
-  skip_if_not_installed("rush")
-  skip_if_not_installed("emoa")
-  flush_redis()
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
 
-  rush = rush::RushWorker$new(network_id = "remote_network", remote = FALSE)
   codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))
 
   archive = ArchiveAsync$new(
@@ -130,6 +101,35 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
   archive$push_result(keys[2], ys = list(y1 = 0.3, y2 = 0.5), x_domain = list(x1 = 0.3, x2 = 0.3))
 
   expect_error(archive$nds_selection(n_select = 1), "direction = 0")
+})
 
-  expect_rush_reset(rush, type = "terminate")
+test_that("as.data.table.ArchiveAsync works", {
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+  })
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  data = as.data.table(instance$archive)
+  expect_data_table(data, min.rows = 5)
+
+  if (packageVersion("rush") <= "0.4.1") {
+    cns = c("state", "x1", "x2", "y", "timestamp_xs", "pid", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
+  } else {
+    cns = c("state", "x1", "x2", "y", "timestamp_xs", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
+  }
+
+  expect_names(colnames(data), identical.to = cns)
+
+  data = as.data.table(instance$archive, unnest = NULL)
+  expect_list(data$x_domain)
 })

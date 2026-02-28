@@ -17,12 +17,11 @@ test_that("backup batch callback works", {
 
 test_that("async callback works", {
   skip_if(TRUE) # Does not work in testthat environment
-  skip_on_cran()
   skip_if_not_installed("rush")
-  flush_redis()
+  skip_if_no_redis()
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
+
+  rush = start_rush(n_workers = 2, worker_type = "remote")
 
   callback = callback_async("bbotk.test",
     on_worker_begin = function(callback, context) {
@@ -41,6 +40,7 @@ test_that("async callback works", {
     search_space = PS_1D,
     terminator = trm("evals", n_evals = 10),
     callbacks = callback,
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -51,21 +51,19 @@ test_that("async callback works", {
   x = instance$archive$data$x
   expect_equal(head(x, 2), c(1, 1))
   expect_subset(2, tail(x, 2))
-  expect_rush_reset(instance$rush)
 })
 
 test_that("async freeze archive callback works", {
-  skip_on_cran()
   skip_if_not_installed("rush")
-  flush_redis()
+  skip_if_no_redis()
 
-  mirai::daemons(2)
-  rush::rush_plan(n_workers = 2, worker_type = "remote")
+  rush = start_rush(n_workers = 2, worker_type = "remote")
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
     terminator = trm("evals", n_evals = 5L),
     callbacks = clbk("bbotk.async_freeze_archive"),
+    rush = rush
   )
 
   optimizer = opt("async_random_search")
@@ -86,5 +84,4 @@ test_that("async freeze archive callback works", {
   expect_number(frozen_archive$n_evals)
 
   expect_data_table(as.data.table(frozen_archive))
-  expect_rush_reset(instance$rush)
 })

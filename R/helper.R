@@ -6,17 +6,16 @@
 #' @param optim_instance [OptimInstance]\cr
 #' OptimInstance that terminated.
 #'
-#' @return A `'terminated_error'` condition (inherits from `'error'` and `'condition'`).
+#' @return A `Mlr3ErrorBbotkTerminated` condition.
 #' @export
 terminated_error = function(optim_instance) {
   msg = sprintf(
     fmt = "Objective (obj:%s, term:%s) terminated",
     optim_instance$objective$id,
-    format(optim_instance$terminator)
+    class(optim_instance$terminator)[[1L]]
   )
 
-  set_class(list(message = msg, call = NULL),
-    c("terminated_error", "error", "condition"))
+  error_bbotk_terminated(msg)
 }
 
 #' @title Calculate which points are dominated

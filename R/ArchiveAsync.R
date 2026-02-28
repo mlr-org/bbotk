@@ -157,14 +157,11 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @param states (`character()`)\cr
     #' States of the tasks to be fetched.
     #' Defaults to `c("queued", "running", "finished", "failed")`.
-    #' @param reset_cache (`logical(1)`)\cr
-    #' Whether to reset the cache of the finished points.
     data_with_state = function(
       fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
-      states = c("queued", "running", "finished", "failed"),
-      reset_cache = FALSE
+      states = c("queued", "running", "finished", "failed")
       ) {
-      self$rush$fetch_tasks_with_state(fields, states, reset_cache)
+      self$rush$fetch_tasks_with_state(fields, states)
     },
 
     #' @description
