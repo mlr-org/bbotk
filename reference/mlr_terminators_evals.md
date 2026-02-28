@@ -122,26 +122,22 @@ TerminatorEvals$new()
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=100, k=0
-#> • Terminators:
 
 # 5 evaluations in total
 trm("evals", n_evals = 5)
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=5, k=0
-#> • Terminators:
 
 # 3 * [dimension of search space] evaluations in total
 trm("evals", n_evals = 0, k = 3)
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=0, k=3
-#> • Terminators:
 
 # (3 * [dimension of search space] + 1) evaluations in total
 trm("evals", n_evals = 1, k = 3)
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=1, k=3
-#> • Terminators:
 ```

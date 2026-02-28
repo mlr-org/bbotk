@@ -15,7 +15,7 @@ If the return of the function is unnamed, it is named with the ids of the codoma
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.8.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,7 @@ Objective function.</p></dd>
 <p></p><div class="arguments"><dl><dt><code>fun</code></dt>
 <dd><p>(<code>function</code>)<br>
 R function that encodes objective and expects a list of lists that contains multiple x values, e.g. <code>list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))</code>.
-The function must return a <code><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code> that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.</p></dd>
+The function must return a <code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code> that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.</p></dd>
 
 
 <dt><code>domain</code></dt>
@@ -171,7 +171,7 @@ A list of lists that contains multiple x values, e.g. <code>list(list(x1 = 1, x2
 </div>
 <div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
-<p><code><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code> that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.
+<p><code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code> that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.
 It may also contain additional columns that will be stored in the archive if called through the <a href="OptimInstance.html">OptimInstance</a>.
 These extra columns are referred to as <em>extras</em>.</p>
 </div>
@@ -201,7 +201,7 @@ These extra columns are referred to as <em>extras</em>.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># define objective function</span></span></span>
 <span class="r-in"><span><span class="va">fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">xss</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xss</span>, <span class="kw">function</span><span class="op">(</span><span class="va">xs</span><span class="op">)</span> <span class="op">-</span><span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="op">(</span><span class="va">xs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># set domain</span></span></span>
@@ -237,7 +237,7 @@ These extra columns are referred to as <em>extras</em>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:   -40</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># evaluate multiple input values as data.table</span></span></span>
-<span class="r-in"><span><span class="va">objective</span><span class="op">$</span><span class="fu">eval_dt</span><span class="op">(</span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, x2 <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">objective</span><span class="op">$</span><span class="fu">eval_dt</span><span class="op">(</span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, x2 <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:   -27</span>

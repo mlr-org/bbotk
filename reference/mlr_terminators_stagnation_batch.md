@@ -120,10 +120,8 @@ TerminatorStagnationBatch$new()
 #> 
 #> ── <TerminatorStagnationBatch> - Stagnation Batch ──────────────────────────────
 #> • Parameters: n=1, threshold=0
-#> • Terminators:
 trm("stagnation_batch", n = 1, threshold = 1e-5)
 #> 
 #> ── <TerminatorStagnationBatch> - Stagnation Batch ──────────────────────────────
 #> • Parameters: n=1, threshold=1e-05
-#> • Terminators:
 ```

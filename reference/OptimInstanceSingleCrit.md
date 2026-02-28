@@ -9,6 +9,8 @@ around `OptimInstanceBatchSingleCrit`.
 
 ## Super classes
 
+[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
+-\>
 [`bbotk::OptimInstance`](https://bbotk.mlr-org.com/reference/OptimInstance.md)
 -\>
 [`bbotk::OptimInstanceBatch`](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.md)
@@ -26,8 +28,8 @@ around `OptimInstanceBatchSingleCrit`.
 
 Inherited methods
 
+- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/reference/EvalInstance.html#method-format)
 - [`bbotk::OptimInstance$clear()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-clear)
-- [`bbotk::OptimInstance$format()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-format)
 - [`bbotk::OptimInstance$print()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-print)
 - [`bbotk::OptimInstanceBatch$eval_batch()`](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.html#method-eval_batch)
 - [`bbotk::OptimInstanceBatch$objective_function()`](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.html#method-objective_function)

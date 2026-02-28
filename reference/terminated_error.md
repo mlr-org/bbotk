@@ -17,5 +17,4 @@ terminated_error(optim_instance)
 
 ## Value
 
-A `'terminated_error'` condition (inherits from `'error'` and
-`'condition'`).
+A `Mlr3ErrorBbotkTerminated` condition.

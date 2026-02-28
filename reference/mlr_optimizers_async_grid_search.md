@@ -83,7 +83,7 @@ Starts the asynchronous optimization.
 
 #### Returns
 
-[data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html).
+[data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html).
 
 ------------------------------------------------------------------------
 
@@ -158,129 +158,130 @@ as.data.table(instance$archive)
 }
 #>         state         x1         x2          y        timestamp_xs   pid
 #>        <char>      <num>      <num>      <num>              <POSc> <int>
-#>   1: finished -10.000000 -5.0000000 -138.00000 2025-11-26 11:04:04  8231
-#>   2: finished -10.000000 -3.8888889 -134.79012 2025-11-26 11:04:04  8231
-#>   3: finished -10.000000 -2.7777778 -134.04938 2025-11-26 11:04:04  8231
-#>   4: finished -10.000000 -1.6666667 -135.77778 2025-11-26 11:04:04  8231
-#>   5: finished -10.000000 -0.5555556 -139.97531 2025-11-26 11:04:04  8231
-#>   6: finished -10.000000  0.5555556 -146.64198 2025-11-26 11:04:04  8231
-#>   7: finished -10.000000  1.6666667 -155.77778 2025-11-26 11:04:04  8231
-#>   8: finished -10.000000  2.7777778 -167.38272 2025-11-26 11:04:04  8231
-#>   9: finished -10.000000  3.8888889 -181.45679 2025-11-26 11:04:04  8231
-#>  10: finished -10.000000  5.0000000 -198.00000 2025-11-26 11:04:04  8231
-#>  11: finished  -7.777778 -5.0000000  -89.60494 2025-11-26 11:04:04  8231
-#>  12: finished  -7.777778 -3.8888889  -86.39506 2025-11-26 11:04:04  8231
-#>  13: finished  -7.777778 -2.7777778  -85.65432 2025-11-26 11:04:04  8231
-#>  14: finished  -7.777778 -1.6666667  -87.38272 2025-11-26 11:04:04  8231
-#>  15: finished  -7.777778 -0.5555556  -91.58025 2025-11-26 11:04:04  8231
-#>  16: finished  -7.777778  0.5555556  -98.24691 2025-11-26 11:04:04  8231
-#>  17: finished  -7.777778  1.6666667 -107.38272 2025-11-26 11:04:04  8231
-#>  18: finished  -7.777778  2.7777778 -118.98765 2025-11-26 11:04:04  8231
-#>  19: finished  -7.777778  3.8888889 -133.06173 2025-11-26 11:04:04  8231
-#>  20: finished  -7.777778  5.0000000 -149.60494 2025-11-26 11:04:04  8231
-#>  21:   failed  10.000000  5.0000000         NA 2025-11-26 11:04:04    NA
-#>  22:   failed  10.000000  3.8888889         NA 2025-11-26 11:04:04    NA
-#>  23:   failed  10.000000  2.7777778         NA 2025-11-26 11:04:04    NA
-#>  24:   failed  10.000000  1.6666667         NA 2025-11-26 11:04:04    NA
-#>  25:   failed  10.000000  0.5555556         NA 2025-11-26 11:04:04    NA
-#>  26:   failed  10.000000 -0.5555556         NA 2025-11-26 11:04:04    NA
-#>  27:   failed  10.000000 -1.6666667         NA 2025-11-26 11:04:04    NA
-#>  28:   failed  10.000000 -2.7777778         NA 2025-11-26 11:04:04    NA
-#>  29:   failed  10.000000 -3.8888889         NA 2025-11-26 11:04:04    NA
-#>  30:   failed  10.000000 -5.0000000         NA 2025-11-26 11:04:04    NA
-#>  31:   failed   7.777778  5.0000000         NA 2025-11-26 11:04:04    NA
-#>  32:   failed   7.777778  3.8888889         NA 2025-11-26 11:04:04    NA
-#>  33:   failed   7.777778  2.7777778         NA 2025-11-26 11:04:04    NA
-#>  34:   failed   7.777778  1.6666667         NA 2025-11-26 11:04:04    NA
-#>  35:   failed   7.777778  0.5555556         NA 2025-11-26 11:04:04    NA
-#>  36:   failed   7.777778 -0.5555556         NA 2025-11-26 11:04:04    NA
-#>  37:   failed   7.777778 -1.6666667         NA 2025-11-26 11:04:04    NA
-#>  38:   failed   7.777778 -2.7777778         NA 2025-11-26 11:04:04    NA
-#>  39:   failed   7.777778 -3.8888889         NA 2025-11-26 11:04:04    NA
-#>  40:   failed   7.777778 -5.0000000         NA 2025-11-26 11:04:04    NA
-#>  41:   failed   5.555556  5.0000000         NA 2025-11-26 11:04:04    NA
-#>  42:   failed   5.555556  3.8888889         NA 2025-11-26 11:04:04    NA
-#>  43:   failed   5.555556  2.7777778         NA 2025-11-26 11:04:04    NA
-#>  44:   failed   5.555556  1.6666667         NA 2025-11-26 11:04:04    NA
-#>  45:   failed   5.555556  0.5555556         NA 2025-11-26 11:04:04    NA
-#>  46:   failed   5.555556 -0.5555556         NA 2025-11-26 11:04:04    NA
-#>  47:   failed   5.555556 -1.6666667         NA 2025-11-26 11:04:04    NA
-#>  48:   failed   5.555556 -2.7777778         NA 2025-11-26 11:04:04    NA
-#>  49:   failed   5.555556 -3.8888889         NA 2025-11-26 11:04:04    NA
-#>  50:   failed   5.555556 -5.0000000         NA 2025-11-26 11:04:04    NA
-#>  51:   failed   3.333333  5.0000000         NA 2025-11-26 11:04:04    NA
-#>  52:   failed   3.333333  3.8888889         NA 2025-11-26 11:04:04    NA
-#>  53:   failed   3.333333  2.7777778         NA 2025-11-26 11:04:04    NA
-#>  54:   failed   3.333333  1.6666667         NA 2025-11-26 11:04:04    NA
-#>  55:   failed   3.333333  0.5555556         NA 2025-11-26 11:04:04    NA
-#>  56:   failed   3.333333 -0.5555556         NA 2025-11-26 11:04:04    NA
-#>  57:   failed   3.333333 -1.6666667         NA 2025-11-26 11:04:04    NA
-#>  58:   failed   3.333333 -2.7777778         NA 2025-11-26 11:04:04    NA
-#>  59:   failed   3.333333 -3.8888889         NA 2025-11-26 11:04:04    NA
-#>  60:   failed   3.333333 -5.0000000         NA 2025-11-26 11:04:04    NA
-#>  61:   failed   1.111111  5.0000000         NA 2025-11-26 11:04:04    NA
-#>  62:   failed   1.111111  3.8888889         NA 2025-11-26 11:04:04    NA
-#>  63:   failed   1.111111  2.7777778         NA 2025-11-26 11:04:04    NA
-#>  64:   failed   1.111111  1.6666667         NA 2025-11-26 11:04:04    NA
-#>  65:   failed   1.111111  0.5555556         NA 2025-11-26 11:04:04    NA
-#>  66:   failed   1.111111 -0.5555556         NA 2025-11-26 11:04:04    NA
-#>  67:   failed   1.111111 -1.6666667         NA 2025-11-26 11:04:04    NA
-#>  68:   failed   1.111111 -2.7777778         NA 2025-11-26 11:04:04    NA
-#>  69:   failed   1.111111 -3.8888889         NA 2025-11-26 11:04:04    NA
-#>  70:   failed   1.111111 -5.0000000         NA 2025-11-26 11:04:04    NA
-#>  71:   failed  -1.111111  5.0000000         NA 2025-11-26 11:04:04    NA
-#>  72:   failed  -1.111111  3.8888889         NA 2025-11-26 11:04:04    NA
-#>  73:   failed  -1.111111  2.7777778         NA 2025-11-26 11:04:04    NA
-#>  74:   failed  -1.111111  1.6666667         NA 2025-11-26 11:04:04    NA
-#>  75:   failed  -1.111111  0.5555556         NA 2025-11-26 11:04:04    NA
-#>  76:   failed  -1.111111 -0.5555556         NA 2025-11-26 11:04:04    NA
-#>  77:   failed  -1.111111 -1.6666667         NA 2025-11-26 11:04:04    NA
-#>  78:   failed  -1.111111 -2.7777778         NA 2025-11-26 11:04:04    NA
-#>  79:   failed  -1.111111 -3.8888889         NA 2025-11-26 11:04:04    NA
-#>  80:   failed  -1.111111 -5.0000000         NA 2025-11-26 11:04:04    NA
-#>  81:   failed  -3.333333  5.0000000         NA 2025-11-26 11:04:04    NA
-#>  82:   failed  -3.333333  3.8888889         NA 2025-11-26 11:04:04    NA
-#>  83:   failed  -3.333333  2.7777778         NA 2025-11-26 11:04:04    NA
-#>  84:   failed  -3.333333  1.6666667         NA 2025-11-26 11:04:04    NA
-#>  85:   failed  -3.333333  0.5555556         NA 2025-11-26 11:04:04    NA
-#>  86:   failed  -3.333333 -0.5555556         NA 2025-11-26 11:04:04    NA
-#>  87:   failed  -3.333333 -1.6666667         NA 2025-11-26 11:04:04    NA
-#>  88:   failed  -3.333333 -2.7777778         NA 2025-11-26 11:04:04    NA
-#>  89:   failed  -3.333333 -3.8888889         NA 2025-11-26 11:04:04    NA
-#>  90:   failed  -3.333333 -5.0000000         NA 2025-11-26 11:04:04    NA
-#>  91:   failed  -5.555556  5.0000000         NA 2025-11-26 11:04:04    NA
-#>  92:   failed  -5.555556  3.8888889         NA 2025-11-26 11:04:04    NA
-#>  93:   failed  -5.555556  2.7777778         NA 2025-11-26 11:04:04    NA
-#>  94:   failed  -5.555556  1.6666667         NA 2025-11-26 11:04:04    NA
-#>  95:   failed  -5.555556  0.5555556         NA 2025-11-26 11:04:04    NA
-#>  96:   failed  -5.555556 -0.5555556         NA 2025-11-26 11:04:04    NA
-#>  97:   failed  -5.555556 -1.6666667         NA 2025-11-26 11:04:04    NA
-#>  98:   failed  -5.555556 -2.7777778         NA 2025-11-26 11:04:04    NA
-#>  99:   failed  -5.555556 -3.8888889         NA 2025-11-26 11:04:04    NA
-#> 100:   failed  -5.555556 -5.0000000         NA 2025-11-26 11:04:04    NA
+#>   1: finished -10.000000 -5.0000000 -138.00000 2026-02-28 07:01:01  9211
+#>   2: finished -10.000000 -3.8888889 -134.79012 2026-02-28 07:01:01  9211
+#>   3: finished -10.000000 -2.7777778 -134.04938 2026-02-28 07:01:01  9211
+#>   4: finished -10.000000 -1.6666667 -135.77778 2026-02-28 07:01:01  9211
+#>   5: finished -10.000000 -0.5555556 -139.97531 2026-02-28 07:01:01  9211
+#>   6: finished -10.000000  0.5555556 -146.64198 2026-02-28 07:01:01  9211
+#>   7: finished -10.000000  1.6666667 -155.77778 2026-02-28 07:01:01  9211
+#>   8: finished -10.000000  2.7777778 -167.38272 2026-02-28 07:01:01  9211
+#>   9: finished -10.000000  3.8888889 -181.45679 2026-02-28 07:01:01  9211
+#>  10: finished -10.000000  5.0000000 -198.00000 2026-02-28 07:01:01  9211
+#>  11: finished  -7.777778 -5.0000000  -89.60494 2026-02-28 07:01:01  9211
+#>  12: finished  -7.777778 -3.8888889  -86.39506 2026-02-28 07:01:01  9211
+#>  13: finished  -7.777778 -2.7777778  -85.65432 2026-02-28 07:01:01  9211
+#>  14: finished  -7.777778 -1.6666667  -87.38272 2026-02-28 07:01:01  9211
+#>  15: finished  -7.777778 -0.5555556  -91.58025 2026-02-28 07:01:01  9211
+#>  16: finished  -7.777778  0.5555556  -98.24691 2026-02-28 07:01:01  9211
+#>  17: finished  -7.777778  1.6666667 -107.38272 2026-02-28 07:01:01  9211
+#>  18: finished  -7.777778  2.7777778 -118.98765 2026-02-28 07:01:01  9211
+#>  19: finished  -7.777778  3.8888889 -133.06173 2026-02-28 07:01:01  9211
+#>  20: finished  -7.777778  5.0000000 -149.60494 2026-02-28 07:01:01  9211
+#>  21:   failed  10.000000  5.0000000         NA 2026-02-28 07:01:01    NA
+#>  22:   failed  10.000000  3.8888889         NA 2026-02-28 07:01:01    NA
+#>  23:   failed  10.000000  2.7777778         NA 2026-02-28 07:01:01    NA
+#>  24:   failed  10.000000  1.6666667         NA 2026-02-28 07:01:01    NA
+#>  25:   failed  10.000000  0.5555556         NA 2026-02-28 07:01:01    NA
+#>  26:   failed  10.000000 -0.5555556         NA 2026-02-28 07:01:01    NA
+#>  27:   failed  10.000000 -1.6666667         NA 2026-02-28 07:01:01    NA
+#>  28:   failed  10.000000 -2.7777778         NA 2026-02-28 07:01:01    NA
+#>  29:   failed  10.000000 -3.8888889         NA 2026-02-28 07:01:01    NA
+#>  30:   failed  10.000000 -5.0000000         NA 2026-02-28 07:01:01    NA
+#>  31:   failed   7.777778  5.0000000         NA 2026-02-28 07:01:01    NA
+#>  32:   failed   7.777778  3.8888889         NA 2026-02-28 07:01:01    NA
+#>  33:   failed   7.777778  2.7777778         NA 2026-02-28 07:01:01    NA
+#>  34:   failed   7.777778  1.6666667         NA 2026-02-28 07:01:01    NA
+#>  35:   failed   7.777778  0.5555556         NA 2026-02-28 07:01:01    NA
+#>  36:   failed   7.777778 -0.5555556         NA 2026-02-28 07:01:01    NA
+#>  37:   failed   7.777778 -1.6666667         NA 2026-02-28 07:01:01    NA
+#>  38:   failed   7.777778 -2.7777778         NA 2026-02-28 07:01:01    NA
+#>  39:   failed   7.777778 -3.8888889         NA 2026-02-28 07:01:01    NA
+#>  40:   failed   7.777778 -5.0000000         NA 2026-02-28 07:01:01    NA
+#>  41:   failed   5.555556  5.0000000         NA 2026-02-28 07:01:01    NA
+#>  42:   failed   5.555556  3.8888889         NA 2026-02-28 07:01:01    NA
+#>  43:   failed   5.555556  2.7777778         NA 2026-02-28 07:01:01    NA
+#>  44:   failed   5.555556  1.6666667         NA 2026-02-28 07:01:01    NA
+#>  45:   failed   5.555556  0.5555556         NA 2026-02-28 07:01:01    NA
+#>  46:   failed   5.555556 -0.5555556         NA 2026-02-28 07:01:01    NA
+#>  47:   failed   5.555556 -1.6666667         NA 2026-02-28 07:01:01    NA
+#>  48:   failed   5.555556 -2.7777778         NA 2026-02-28 07:01:01    NA
+#>  49:   failed   5.555556 -3.8888889         NA 2026-02-28 07:01:01    NA
+#>  50:   failed   5.555556 -5.0000000         NA 2026-02-28 07:01:01    NA
+#>  51:   failed   3.333333  5.0000000         NA 2026-02-28 07:01:01    NA
+#>  52:   failed   3.333333  3.8888889         NA 2026-02-28 07:01:01    NA
+#>  53:   failed   3.333333  2.7777778         NA 2026-02-28 07:01:01    NA
+#>  54:   failed   3.333333  1.6666667         NA 2026-02-28 07:01:01    NA
+#>  55:   failed   3.333333  0.5555556         NA 2026-02-28 07:01:01    NA
+#>  56:   failed   3.333333 -0.5555556         NA 2026-02-28 07:01:01    NA
+#>  57:   failed   3.333333 -1.6666667         NA 2026-02-28 07:01:01    NA
+#>  58:   failed   3.333333 -2.7777778         NA 2026-02-28 07:01:01    NA
+#>  59:   failed   3.333333 -3.8888889         NA 2026-02-28 07:01:01    NA
+#>  60:   failed   3.333333 -5.0000000         NA 2026-02-28 07:01:01    NA
+#>  61:   failed   1.111111  5.0000000         NA 2026-02-28 07:01:01    NA
+#>  62:   failed   1.111111  3.8888889         NA 2026-02-28 07:01:01    NA
+#>  63:   failed   1.111111  2.7777778         NA 2026-02-28 07:01:01    NA
+#>  64:   failed   1.111111  1.6666667         NA 2026-02-28 07:01:01    NA
+#>  65:   failed   1.111111  0.5555556         NA 2026-02-28 07:01:01    NA
+#>  66:   failed   1.111111 -0.5555556         NA 2026-02-28 07:01:01    NA
+#>  67:   failed   1.111111 -1.6666667         NA 2026-02-28 07:01:01    NA
+#>  68:   failed   1.111111 -2.7777778         NA 2026-02-28 07:01:01    NA
+#>  69:   failed   1.111111 -3.8888889         NA 2026-02-28 07:01:01    NA
+#>  70:   failed   1.111111 -5.0000000         NA 2026-02-28 07:01:01    NA
+#>  71:   failed  -1.111111  5.0000000         NA 2026-02-28 07:01:01    NA
+#>  72:   failed  -1.111111  3.8888889         NA 2026-02-28 07:01:01    NA
+#>  73:   failed  -1.111111  2.7777778         NA 2026-02-28 07:01:01    NA
+#>  74:   failed  -1.111111  1.6666667         NA 2026-02-28 07:01:01    NA
+#>  75:   failed  -1.111111  0.5555556         NA 2026-02-28 07:01:01    NA
+#>  76:   failed  -1.111111 -0.5555556         NA 2026-02-28 07:01:01    NA
+#>  77:   failed  -1.111111 -1.6666667         NA 2026-02-28 07:01:01    NA
+#>  78:   failed  -1.111111 -2.7777778         NA 2026-02-28 07:01:01    NA
+#>  79:   failed  -1.111111 -3.8888889         NA 2026-02-28 07:01:01    NA
+#>  80:   failed  -1.111111 -5.0000000         NA 2026-02-28 07:01:01    NA
+#>  81:   failed  -3.333333  5.0000000         NA 2026-02-28 07:01:01    NA
+#>  82:   failed  -3.333333  3.8888889         NA 2026-02-28 07:01:01    NA
+#>  83:   failed  -3.333333  2.7777778         NA 2026-02-28 07:01:01    NA
+#>  84:   failed  -3.333333  1.6666667         NA 2026-02-28 07:01:01    NA
+#>  85:   failed  -3.333333  0.5555556         NA 2026-02-28 07:01:01    NA
+#>  86:   failed  -3.333333 -0.5555556         NA 2026-02-28 07:01:01    NA
+#>  87:   failed  -3.333333 -1.6666667         NA 2026-02-28 07:01:01    NA
+#>  88:   failed  -3.333333 -2.7777778         NA 2026-02-28 07:01:01    NA
+#>  89:   failed  -3.333333 -3.8888889         NA 2026-02-28 07:01:01    NA
+#>  90:   failed  -3.333333 -5.0000000         NA 2026-02-28 07:01:01    NA
+#>  91:   failed  -5.555556  5.0000000         NA 2026-02-28 07:01:01    NA
+#>  92:   failed  -5.555556  3.8888889         NA 2026-02-28 07:01:01    NA
+#>  93:   failed  -5.555556  2.7777778         NA 2026-02-28 07:01:01    NA
+#>  94:   failed  -5.555556  1.6666667         NA 2026-02-28 07:01:01    NA
+#>  95:   failed  -5.555556  0.5555556         NA 2026-02-28 07:01:01    NA
+#>  96:   failed  -5.555556 -0.5555556         NA 2026-02-28 07:01:01    NA
+#>  97:   failed  -5.555556 -1.6666667         NA 2026-02-28 07:01:01    NA
+#>  98:   failed  -5.555556 -2.7777778         NA 2026-02-28 07:01:01    NA
+#>  99:   failed  -5.555556 -3.8888889         NA 2026-02-28 07:01:01    NA
+#> 100:   failed  -5.555556 -5.0000000         NA 2026-02-28 07:01:01    NA
 #>         state         x1         x2          y        timestamp_xs   pid
+#>        <char>      <num>      <num>      <num>              <POSc> <int>
 #>                 worker_id        timestamp_ys
 #>                    <char>              <POSc>
-#>   1: academical_guineapig 2025-11-26 11:04:05
-#>   2: academical_guineapig 2025-11-26 11:04:05
-#>   3: academical_guineapig 2025-11-26 11:04:05
-#>   4: academical_guineapig 2025-11-26 11:04:05
-#>   5: academical_guineapig 2025-11-26 11:04:05
-#>   6: academical_guineapig 2025-11-26 11:04:05
-#>   7: academical_guineapig 2025-11-26 11:04:05
-#>   8: academical_guineapig 2025-11-26 11:04:05
-#>   9: academical_guineapig 2025-11-26 11:04:05
-#>  10: academical_guineapig 2025-11-26 11:04:05
-#>  11: academical_guineapig 2025-11-26 11:04:05
-#>  12: academical_guineapig 2025-11-26 11:04:05
-#>  13: academical_guineapig 2025-11-26 11:04:05
-#>  14: academical_guineapig 2025-11-26 11:04:05
-#>  15: academical_guineapig 2025-11-26 11:04:05
-#>  16: academical_guineapig 2025-11-26 11:04:05
-#>  17: academical_guineapig 2025-11-26 11:04:05
-#>  18: academical_guineapig 2025-11-26 11:04:05
-#>  19: academical_guineapig 2025-11-26 11:04:05
-#>  20: academical_guineapig 2025-11-26 11:04:05
+#>   1: academical_guineapig 2026-02-28 07:01:02
+#>   2: academical_guineapig 2026-02-28 07:01:02
+#>   3: academical_guineapig 2026-02-28 07:01:02
+#>   4: academical_guineapig 2026-02-28 07:01:02
+#>   5: academical_guineapig 2026-02-28 07:01:02
+#>   6: academical_guineapig 2026-02-28 07:01:02
+#>   7: academical_guineapig 2026-02-28 07:01:02
+#>   8: academical_guineapig 2026-02-28 07:01:02
+#>   9: academical_guineapig 2026-02-28 07:01:02
+#>  10: academical_guineapig 2026-02-28 07:01:02
+#>  11: academical_guineapig 2026-02-28 07:01:02
+#>  12: academical_guineapig 2026-02-28 07:01:02
+#>  13: academical_guineapig 2026-02-28 07:01:02
+#>  14: academical_guineapig 2026-02-28 07:01:02
+#>  15: academical_guineapig 2026-02-28 07:01:02
+#>  16: academical_guineapig 2026-02-28 07:01:02
+#>  17: academical_guineapig 2026-02-28 07:01:02
+#>  18: academical_guineapig 2026-02-28 07:01:02
+#>  19: academical_guineapig 2026-02-28 07:01:02
+#>  20: academical_guineapig 2026-02-28 07:01:02
 #>  21:                 <NA>                <NA>
 #>  22:                 <NA>                <NA>
 #>  23:                 <NA>                <NA>
@@ -362,109 +363,111 @@ as.data.table(instance$archive)
 #>  99:                 <NA>                <NA>
 #> 100:                 <NA>                <NA>
 #>                 worker_id        timestamp_ys
+#>                    <char>              <POSc>
 #>                                      keys                 message x_domain_x1
 #>                                    <char>                  <char>       <num>
-#>   1: fc88a332-35f8-45fa-b86f-71a8c1fedbb5                    <NA>  -10.000000
-#>   2: 9558aace-1673-4b88-ab6b-5f9d3f54db1d                    <NA>  -10.000000
-#>   3: 4a97dada-3e7b-4856-8c85-88da47f2d2da                    <NA>  -10.000000
-#>   4: a7098d42-dd29-491d-b6f6-c7de78e7c9cd                    <NA>  -10.000000
-#>   5: 7312ee06-5f81-46be-bb68-95b2ab18f734                    <NA>  -10.000000
-#>   6: 7acdcc5d-7fa7-4cbf-a077-669cff087809                    <NA>  -10.000000
-#>   7: 4ab689ed-72d0-49ea-af97-94a4e1b1faac                    <NA>  -10.000000
-#>   8: b4814c1e-608b-439e-8be6-e41cfd1572b3                    <NA>  -10.000000
-#>   9: fd4963aa-19b3-48ce-b3aa-c4d10da9f271                    <NA>  -10.000000
-#>  10: 00154f09-3192-407e-9fea-40635460a657                    <NA>  -10.000000
-#>  11: 3d732707-387c-47b9-84d7-724edab7358c                    <NA>   -7.777778
-#>  12: c3cf7584-1d6a-4e6f-955f-24ab0d280060                    <NA>   -7.777778
-#>  13: 44ad5b1f-e007-4582-8046-dd232b1d108f                    <NA>   -7.777778
-#>  14: 09f94384-9786-4086-ac8a-370767aadfe3                    <NA>   -7.777778
-#>  15: a34290f3-68d3-4da3-9b20-116bb2aec31b                    <NA>   -7.777778
-#>  16: 83a69e88-efea-448b-9e51-252b9dbde45d                    <NA>   -7.777778
-#>  17: 34ad534a-9588-4d6d-833e-b13149e8e9e0                    <NA>   -7.777778
-#>  18: c8348dc8-01ae-4b74-90dd-1a419f14a49b                    <NA>   -7.777778
-#>  19: 085ebf71-41a5-47ab-bae9-55b1f49c1691                    <NA>   -7.777778
-#>  20: 17884c02-754d-470a-b459-998bb0e732d6                    <NA>   -7.777778
-#>  21: cee98a14-345a-4fce-9d19-8a8eae38820a Optimization terminated          NA
-#>  22: 8a847c8d-7641-4360-a6c0-0c0672bb7684 Optimization terminated          NA
-#>  23: 5e394a3d-5eaf-49c9-aab3-72f2dc30a5b8 Optimization terminated          NA
-#>  24: b18fe5f3-b478-470f-b34f-af00d4f9d768 Optimization terminated          NA
-#>  25: a7fbc219-0756-4589-816b-e74df59c4313 Optimization terminated          NA
-#>  26: ba410afe-4110-4692-9af6-d18afad6ff92 Optimization terminated          NA
-#>  27: 57f6eea4-0b15-4f9a-833b-c3b022b9cddf Optimization terminated          NA
-#>  28: 9d168276-d248-485e-8fe2-c954bf7de89d Optimization terminated          NA
-#>  29: 5e27d479-a3e7-4e7c-9e2d-6f4f8383b9a1 Optimization terminated          NA
-#>  30: 0a555dc2-7f0c-465b-a712-544944939d6b Optimization terminated          NA
-#>  31: 1619fc1b-a993-4482-b7b2-bb8ed3dccea8 Optimization terminated          NA
-#>  32: 19767b4b-3618-40f7-a2a9-a7e0954699a0 Optimization terminated          NA
-#>  33: 20ec4e05-c991-4318-8175-53533f5f4455 Optimization terminated          NA
-#>  34: 2528ac07-a6e3-44ab-a931-341aa7dfebbb Optimization terminated          NA
-#>  35: 0347c483-7c7c-49a0-a22e-dff5cd914d06 Optimization terminated          NA
-#>  36: 1fb77436-4101-43ad-9bd3-5f64d7e3d6e8 Optimization terminated          NA
-#>  37: bda32c31-9a8a-4acf-bdec-e4e88f5861ae Optimization terminated          NA
-#>  38: 82dcc159-9d8c-4163-82f1-9eeec52d2c5b Optimization terminated          NA
-#>  39: b9239ce5-18fb-45e6-9e97-d4a456461f04 Optimization terminated          NA
-#>  40: 37b22a2a-f959-4df3-a07a-abd86175c74d Optimization terminated          NA
-#>  41: 82e29c2b-bdb4-4be3-8641-550325c0dddf Optimization terminated          NA
-#>  42: cba898b5-be80-4b0f-8279-70624c2def13 Optimization terminated          NA
-#>  43: e6702581-dfbb-4f22-b625-e1663cc76ad2 Optimization terminated          NA
-#>  44: 90ad98c0-fb3c-4372-a20d-6851f5bee816 Optimization terminated          NA
-#>  45: 403e7652-494a-4e32-b833-664f25804275 Optimization terminated          NA
-#>  46: e3fe7760-0243-47d4-a6ad-a19420bf9c00 Optimization terminated          NA
-#>  47: af76b9fc-8817-45ab-a230-9df7b7fca241 Optimization terminated          NA
-#>  48: 16e2fd76-ede7-454b-9884-19a9bea2e5c3 Optimization terminated          NA
-#>  49: da151b37-26e3-4b52-9a91-3a35eb2104f4 Optimization terminated          NA
-#>  50: b4f50191-3934-49da-867a-4c5f9312f8ee Optimization terminated          NA
-#>  51: 0b6ffdd3-31ac-40f0-ba0a-aed8f3b25fb7 Optimization terminated          NA
-#>  52: 9d4c1a42-02af-44a5-8041-892472b28661 Optimization terminated          NA
-#>  53: 6f3d430c-a029-444e-bb23-c1b8b5d12d94 Optimization terminated          NA
-#>  54: 6b9d53e0-dd79-4404-84ff-da8448469c35 Optimization terminated          NA
-#>  55: eb399adb-33d8-4b2d-a84c-ced0f25861d6 Optimization terminated          NA
-#>  56: 994be52d-5733-40e9-a2c8-24227951634e Optimization terminated          NA
-#>  57: da778f32-3205-4bbb-9e97-bc1c7cbe12d5 Optimization terminated          NA
-#>  58: b4f19364-8a4d-4ab3-a2ae-e449934fa83e Optimization terminated          NA
-#>  59: a90ad9d1-b875-4ca9-967f-632b9ce80e24 Optimization terminated          NA
-#>  60: 419db46a-d906-40e4-8c99-9c1fda6e05f3 Optimization terminated          NA
-#>  61: e51706a7-f4be-4311-a511-71d3740f519b Optimization terminated          NA
-#>  62: 9e567472-4fe4-4784-a5ce-b87cc789dec1 Optimization terminated          NA
-#>  63: b1dd4268-ed31-4c6f-b844-b7d1f71d224c Optimization terminated          NA
-#>  64: b6e6da73-dcbf-4b9b-b4e4-d8e5fc3ea1fc Optimization terminated          NA
-#>  65: d4d08399-4c85-4ab8-8b48-ca3539dd0dc6 Optimization terminated          NA
-#>  66: 69ce5718-e700-4387-975d-42ba681d5ebe Optimization terminated          NA
-#>  67: b8aff454-1632-4395-b644-55c7184a53bc Optimization terminated          NA
-#>  68: 740b53ef-29a2-4437-9fba-04099483fa3c Optimization terminated          NA
-#>  69: d2a30ee1-b4c2-465d-9091-510dd06c3345 Optimization terminated          NA
-#>  70: 471d4d13-f75d-44e0-994b-562e24fba1d1 Optimization terminated          NA
-#>  71: ebdd210b-1039-47d9-a0c3-2c5fb8e566c9 Optimization terminated          NA
-#>  72: 48fd3b7a-94fa-4794-b128-9873ba8dbfbd Optimization terminated          NA
-#>  73: 019c93e8-9668-41c1-9785-62f2d2fa1ef0 Optimization terminated          NA
-#>  74: d0aaf4ba-8d4e-49a2-a440-6339597edb8b Optimization terminated          NA
-#>  75: bee6e1a9-240a-4bcd-abc2-e9c2ab348d99 Optimization terminated          NA
-#>  76: d039103c-ec5f-4cef-8307-520376963d74 Optimization terminated          NA
-#>  77: cea3b004-e7a9-411c-a790-f4496d5ec8e4 Optimization terminated          NA
-#>  78: d938f3c9-d291-4eec-8668-6d2bfb7b5eb5 Optimization terminated          NA
-#>  79: 567b181e-2002-4e7c-b92d-0ca10b52ab14 Optimization terminated          NA
-#>  80: 1eb9cdaf-3baa-4f81-89e3-68a23110023c Optimization terminated          NA
-#>  81: 46a4a8ce-86d3-4339-a2ed-4c358545458d Optimization terminated          NA
-#>  82: c966d5d2-ce02-49b7-86f5-39bfec5f5f86 Optimization terminated          NA
-#>  83: b9eba8fb-ea57-40c3-ba7f-acafb4f196d8 Optimization terminated          NA
-#>  84: 1182b6f8-8f0e-4a53-89d1-d21b611d6138 Optimization terminated          NA
-#>  85: bf6cce90-4a1b-45af-be4c-37adc5cf33d9 Optimization terminated          NA
-#>  86: 03fe4b1f-0a9d-46ca-9c06-da7d304a18cc Optimization terminated          NA
-#>  87: 835d8596-c2b6-4f31-94ce-c0130c254cf6 Optimization terminated          NA
-#>  88: 3ade0573-3dce-43d8-b6a2-01e3390ecc45 Optimization terminated          NA
-#>  89: 0cac2e93-5ce4-476c-9d11-3c5e3a1d644b Optimization terminated          NA
-#>  90: ea71652b-5591-4965-a567-9835a63fbca9 Optimization terminated          NA
-#>  91: 35a64d85-2a28-4118-a953-2eca18b2d6bf Optimization terminated          NA
-#>  92: b77fbc72-0da7-40d9-bb1b-69941485e21d Optimization terminated          NA
-#>  93: 7469f150-ea53-4121-8ab0-71fc4ab4ff83 Optimization terminated          NA
-#>  94: f9c9e251-eeb3-4f90-91cc-9b99a93ee7e0 Optimization terminated          NA
-#>  95: cf60363e-c414-436c-8e38-b079b1ea6343 Optimization terminated          NA
-#>  96: 6d557332-ac40-41b3-8c7e-930a32363220 Optimization terminated          NA
-#>  97: c8893216-7685-43db-8828-197b6f0a1679 Optimization terminated          NA
-#>  98: 6427970b-4ebc-4b8a-a87e-d08d65c9f06c Optimization terminated          NA
-#>  99: b3144e1e-cba2-43e4-af8d-6bcd770709d9 Optimization terminated          NA
-#> 100: f7bca1da-3971-4cf9-b7ef-5c2a61917e9e Optimization terminated          NA
+#>   1: 5e86d179-9dbd-4aa4-9af0-bb375fcccafa                    <NA>  -10.000000
+#>   2: 8772bbb2-8677-4a53-9608-82e440ab0ccf                    <NA>  -10.000000
+#>   3: 8eafb8d1-915b-4f50-9e79-abca7876e83c                    <NA>  -10.000000
+#>   4: f188108b-b27d-4ada-be34-4a70e19e6d4c                    <NA>  -10.000000
+#>   5: 98ca73ac-2234-4c62-b9d5-cc05fe7a01c0                    <NA>  -10.000000
+#>   6: 68b48dbd-b571-4063-a3a2-8794bd549182                    <NA>  -10.000000
+#>   7: 503b868a-f228-4313-9943-501e06e9432a                    <NA>  -10.000000
+#>   8: 61983684-6a44-4ffd-9905-507655fc3d2c                    <NA>  -10.000000
+#>   9: b67fe573-69da-42bb-a225-6783174e3da1                    <NA>  -10.000000
+#>  10: 98b0d341-241f-402a-a91c-65c18b3c5cfe                    <NA>  -10.000000
+#>  11: f74cc5a5-b604-4b27-acdb-07340d06555a                    <NA>   -7.777778
+#>  12: eeaa73f4-a8cf-4f72-b43c-a6a1c93196cd                    <NA>   -7.777778
+#>  13: 0c00749b-3d47-45d1-abd8-f4fc2ed295db                    <NA>   -7.777778
+#>  14: 6234d7c1-bbc7-4ed1-9787-84843890980c                    <NA>   -7.777778
+#>  15: 11d3d599-422f-4f00-a848-f74756ff530c                    <NA>   -7.777778
+#>  16: 371ee025-a10d-4b9f-b486-367773266cbb                    <NA>   -7.777778
+#>  17: 4e4f5e01-42c2-4907-bf1d-008d5235cd15                    <NA>   -7.777778
+#>  18: f84fc436-43e9-4d17-8f21-9bc225e66454                    <NA>   -7.777778
+#>  19: 1139e6a3-ff2d-46d9-9388-0403d200f233                    <NA>   -7.777778
+#>  20: 9370bd43-e700-4feb-bb6e-7dddb5a74738                    <NA>   -7.777778
+#>  21: 70337c8c-7f22-4529-8e81-cd001dc79897 Optimization terminated          NA
+#>  22: 31cc6d4f-efd6-4628-9879-9711626cf247 Optimization terminated          NA
+#>  23: 057fb893-c141-4fe4-93f6-f166dccdce15 Optimization terminated          NA
+#>  24: 1ff3ae3f-93b3-41e9-a69d-95289536a401 Optimization terminated          NA
+#>  25: ef607735-9e1c-4599-95c6-3efa08edc57f Optimization terminated          NA
+#>  26: 8f96abc9-6660-4aaa-81ba-ba3da332e571 Optimization terminated          NA
+#>  27: 474de77c-3a9a-4ee8-83f1-0ff2f55b4340 Optimization terminated          NA
+#>  28: 7673c237-0ae6-4f1c-a0d6-d87ef4bff8e3 Optimization terminated          NA
+#>  29: dd3f2bf0-3877-44ac-b66f-cf45bdc7e04a Optimization terminated          NA
+#>  30: 6e75cd1f-6bcd-431a-a5df-f19870562a96 Optimization terminated          NA
+#>  31: a318e00a-412f-4b3d-b2ac-11431aea333c Optimization terminated          NA
+#>  32: 04624805-ec8f-444b-a4dd-2a03487a9393 Optimization terminated          NA
+#>  33: 92cbc50c-da73-4a11-8241-cdfc00c77695 Optimization terminated          NA
+#>  34: f01dccde-144f-4652-b4ce-ad4bb415384e Optimization terminated          NA
+#>  35: f2604be4-2c2a-4265-bb33-9cede92bcf79 Optimization terminated          NA
+#>  36: c9e5464b-0073-475b-bc72-9fd9725089c1 Optimization terminated          NA
+#>  37: 58173cb6-89ff-4ca3-8fd6-7104f65f7886 Optimization terminated          NA
+#>  38: 293ff7ea-3749-48a9-8cff-d54225f3407e Optimization terminated          NA
+#>  39: 552a8f12-f08f-44f6-8667-182972719c7e Optimization terminated          NA
+#>  40: 338e77c2-4e80-4498-acdc-18e1ac65effd Optimization terminated          NA
+#>  41: cc3bcb43-0c2a-41cf-96f0-198c5dd5869d Optimization terminated          NA
+#>  42: 91c07788-593e-43d9-aae2-e608a36ae488 Optimization terminated          NA
+#>  43: 81e2a6d9-547d-46e1-809d-94479f69cde2 Optimization terminated          NA
+#>  44: f8e59407-d87d-4d76-bf70-851e7226effb Optimization terminated          NA
+#>  45: 15d00dc2-5083-4f10-8475-ef69081cfc52 Optimization terminated          NA
+#>  46: c4f129b9-f6c5-431c-ba65-bedd9e20bf18 Optimization terminated          NA
+#>  47: 203fa750-f487-459c-87c0-7c793621b08c Optimization terminated          NA
+#>  48: be54602e-c65f-4e60-8732-22b382b25151 Optimization terminated          NA
+#>  49: aaf5bc40-36f9-4672-b2db-554b0d876baf Optimization terminated          NA
+#>  50: ed2e0cd7-8cf0-492a-9bde-e8e8921948a1 Optimization terminated          NA
+#>  51: a5bd499a-6eac-4803-ab0e-5e7dc5a198fb Optimization terminated          NA
+#>  52: 39805f28-ec28-4285-869c-a88c5a9cd175 Optimization terminated          NA
+#>  53: 9290599d-5fa8-4646-8612-70bda72d5563 Optimization terminated          NA
+#>  54: 4cd214db-d70f-440c-a584-d10157b13074 Optimization terminated          NA
+#>  55: 12a3f1c3-7bdb-4571-b19f-3f681452cad5 Optimization terminated          NA
+#>  56: f5c4d406-53f4-41fe-8d48-5352b660f2d3 Optimization terminated          NA
+#>  57: b078b6c8-ce94-4fc3-b030-193922ff5f3c Optimization terminated          NA
+#>  58: 3a3f3418-5dc8-4826-88d0-ad850c56681c Optimization terminated          NA
+#>  59: 963681b7-116e-4004-b3d0-1dd47e445b35 Optimization terminated          NA
+#>  60: 199813d2-ffec-478e-a97f-1ab4498e7eb3 Optimization terminated          NA
+#>  61: 420f6be4-9e0f-4144-8fe1-e580b573f49d Optimization terminated          NA
+#>  62: ba065511-0c42-48d6-b57d-2901f4dde70c Optimization terminated          NA
+#>  63: 22b0eded-ac17-4ba5-8c68-dfbe39ddbd8b Optimization terminated          NA
+#>  64: a68fc484-d990-445b-8a9a-eebe7bd590ef Optimization terminated          NA
+#>  65: 046eedab-c1ef-46b6-a6f8-c27eddc8e850 Optimization terminated          NA
+#>  66: a2523249-e903-460b-8435-ac8afc5eff93 Optimization terminated          NA
+#>  67: 4e8ecaf1-d011-4791-b5ef-6dfa989be94b Optimization terminated          NA
+#>  68: d29e9d17-f8d8-480e-8472-cd299cd8ebe9 Optimization terminated          NA
+#>  69: 920f6cd3-19d6-489c-938e-c58dba5e80bc Optimization terminated          NA
+#>  70: 45b4a860-e654-4350-b1f7-be44d7141be1 Optimization terminated          NA
+#>  71: 9965dd8e-0f63-496f-9a55-ee819198e716 Optimization terminated          NA
+#>  72: d139ef27-285b-4436-b9e0-03f92e0833e0 Optimization terminated          NA
+#>  73: a2915943-9637-40b9-9e8a-8ed8796b0679 Optimization terminated          NA
+#>  74: 2ab255b6-0dc4-464f-b819-b2f7a3b2296a Optimization terminated          NA
+#>  75: e9f98e63-c592-481f-a787-af309ff4294d Optimization terminated          NA
+#>  76: b6507d5e-9851-4155-a8fd-8690371f58b4 Optimization terminated          NA
+#>  77: 5101d157-1b5c-4dc0-b45d-6d6c0dfcd086 Optimization terminated          NA
+#>  78: 663e1ac3-dcb3-458c-920d-f79b5cf47dea Optimization terminated          NA
+#>  79: 81df4c3c-7356-4b16-8aa4-9c281e27d9af Optimization terminated          NA
+#>  80: f7c6bd96-85af-4f11-ab31-4e99ec68b623 Optimization terminated          NA
+#>  81: 688430da-e1d7-4bb6-92ab-bc738b7815ba Optimization terminated          NA
+#>  82: 134a701c-2862-4ab6-ad37-43b1c7061462 Optimization terminated          NA
+#>  83: 876419a8-3662-4323-87d0-39dfef814ccd Optimization terminated          NA
+#>  84: dee84760-2337-46c0-a2a8-83b2dfdee7a4 Optimization terminated          NA
+#>  85: 479a191f-0c80-4561-bdf0-1e8e8f20b257 Optimization terminated          NA
+#>  86: fa416f1c-7cac-49af-acff-a888b7aad51d Optimization terminated          NA
+#>  87: 9b14f5bd-0e25-4403-abc7-6a6d35125fcf Optimization terminated          NA
+#>  88: 1820c490-1947-43be-974d-c8846ea0f78e Optimization terminated          NA
+#>  89: 83e54534-96fa-4744-9128-d21d95296b0c Optimization terminated          NA
+#>  90: 41555e0d-fb3a-4fad-ae48-d95da0cc0df5 Optimization terminated          NA
+#>  91: 43694d77-8b59-4fce-96e9-36e2c07bce87 Optimization terminated          NA
+#>  92: 576b886b-bf1c-457f-8142-ad82c86b028d Optimization terminated          NA
+#>  93: 194289f4-051f-4c1f-a116-8db1da5b2698 Optimization terminated          NA
+#>  94: 650c4d3c-cca5-47e3-b432-d6095144532a Optimization terminated          NA
+#>  95: a7e46ad8-cf43-4c60-a45f-8e83756c2282 Optimization terminated          NA
+#>  96: b983b298-97a4-42c9-b00d-e834bebdf78b Optimization terminated          NA
+#>  97: 5a96cbc2-f117-49a9-bd8c-73185d2ebeb8 Optimization terminated          NA
+#>  98: 45cb025c-b80f-4307-a62b-3678a217e00c Optimization terminated          NA
+#>  99: d3edcc38-aa00-4771-934c-0a6642826398 Optimization terminated          NA
+#> 100: ead9d68e-0e73-4421-96b7-9fcdc74a7cb4 Optimization terminated          NA
 #>                                      keys                 message x_domain_x1
+#>                                    <char>                  <char>       <num>
 #>      x_domain_x2
 #>            <num>
 #>   1:  -5.0000000
@@ -568,4 +571,5 @@ as.data.table(instance$archive)
 #>  99:          NA
 #> 100:          NA
 #>      x_domain_x2
+#>            <num>
 ```

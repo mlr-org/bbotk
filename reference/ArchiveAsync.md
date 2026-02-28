@@ -7,7 +7,7 @@ a [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) data base.
 
 - `as.data.table(archive)`  
   ArchiveAsync -\>
-  [`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)  
+  [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)  
   Returns a tabular view of all performed function calls of the
   Objective. The `x_domain` column is unnested to separate columns.
 
@@ -27,27 +27,27 @@ a [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) data base.
 
 - `data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all finished points.
 
 - `queued_data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all queued points.
 
 - `running_data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all running points.
 
 - `finished_data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all finished points.
 
 - `failed_data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all failed points.
 
 - `n_queued`:
@@ -264,8 +264,7 @@ Fetch points with a specific state.
 
     ArchiveAsync$data_with_state(
       fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
-      states = c("queued", "running", "finished", "failed"),
-      reset_cache = FALSE
+      states = c("queued", "running", "finished", "failed")
     )
 
 #### Arguments
@@ -281,11 +280,6 @@ Fetch points with a specific state.
   ([`character()`](https://rdrr.io/r/base/character.html))  
   States of the tasks to be fetched. Defaults to
   `c("queued", "running", "finished", "failed")`.
-
-- `reset_cache`:
-
-  (`logical(1)`)  
-  Whether to reset the cache of the finished points.
 
 ------------------------------------------------------------------------
 
@@ -316,7 +310,7 @@ multi-crit optimization, the Pareto set / front.
 
 #### Returns
 
-[`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+[`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
 
 ------------------------------------------------------------------------
 
@@ -343,7 +337,7 @@ contribution.
 
 #### Returns
 
-[`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+[`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
 
 ------------------------------------------------------------------------
 

@@ -56,7 +56,7 @@ workers are not reflected in the main process.
 
 - `result_xdt`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   The xdt passed to `instance$assign_result()`.
 
 - `result_y`:
@@ -67,19 +67,19 @@ workers are not reflected in the main process.
 
 - `result_ydt`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   The ydt passed to `instance$assign_result()`. Only available for multi
   criterion optimization.
 
 - `result_extra`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Additional information about the result passed to
   `instance$assign_result()`.
 
 - `result`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   The result of the optimization in `instance$assign_result()`.
 
 ## Methods

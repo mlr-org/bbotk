@@ -13,6 +13,7 @@
 <url><loc>https://bbotk.mlr-org.com/reference/Codomain.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/ContextAsync.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/ContextBatch.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/EvalInstance.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/Objective.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/ObjectiveRFun.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/ObjectiveRFunDt.html</loc></url>
@@ -38,11 +39,13 @@
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk.async_freeze_archive.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk.backup.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk_assertions.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/bbotk_conditions.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk_reflections.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/bbotk_worker_loop.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/branin.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/callback_async.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/callback_batch.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/choose_search_space.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/index.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/is_dominated.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/local_search.html</loc></url>

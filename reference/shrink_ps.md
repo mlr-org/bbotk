@@ -37,8 +37,8 @@ shrink_ps(param_set, x, check.feasible = FALSE)
 
 - x:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
-  [data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
+  [data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html)
   with one row containing the point to shrink around.
 
 - check.feasible:

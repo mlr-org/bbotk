@@ -115,10 +115,8 @@ TerminatorPerfReached$new()
 #> 
 #> ── <TerminatorPerfReached> - Performance Level ─────────────────────────────────
 #> • Parameters: level=0.1
-#> • Terminators:
 trm("perf_reached")
 #> 
 #> ── <TerminatorPerfReached> - Performance Level ─────────────────────────────────
 #> • Parameters: level=0.1
-#> • Terminators:
 ```

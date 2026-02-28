@@ -21,7 +21,7 @@ optimize_async_default(instance, optimizer, design = NULL, n_workers = NULL)
 
 - design:
 
-  [`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)  
+  [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)  
   (Initial) design send to the queue.
 
 - n_workers:

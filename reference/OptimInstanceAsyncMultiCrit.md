@@ -8,6 +8,8 @@ an OptimInstanceAsyncMultiCrit.
 
 ## Super classes
 
+[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
+-\>
 [`bbotk::OptimInstance`](https://bbotk.mlr-org.com/reference/OptimInstance.md)
 -\>
 [`bbotk::OptimInstanceAsync`](https://bbotk.mlr-org.com/reference/OptimInstanceAsync.md)
@@ -38,7 +40,7 @@ an OptimInstanceAsyncMultiCrit.
 
 Inherited methods
 
-- [`bbotk::OptimInstance$format()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-format)
+- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/reference/EvalInstance.html#method-format)
 - [`bbotk::OptimInstanceAsync$clear()`](https://bbotk.mlr-org.com/reference/OptimInstanceAsync.html#method-clear)
 - [`bbotk::OptimInstanceAsync$print()`](https://bbotk.mlr-org.com/reference/OptimInstanceAsync.html#method-print)
 - [`bbotk::OptimInstanceAsync$reconnect()`](https://bbotk.mlr-org.com/reference/OptimInstanceAsync.html#method-reconnect)
@@ -125,7 +127,7 @@ writes the best found points and estimated performance values here
 
 - `xdt`:
 
-  ([`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Set of untransformed points / points from the *search space*. One
   point per row, e.g. `data.table(x1 = c(1, 3), x2 = c(2, 4))`. Column
   names have to match ids of the `search_space`. However, `xdt` can
@@ -138,7 +140,7 @@ writes the best found points and estimated performance values here
 
 - `extra`:
 
-  ([`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Additional information.
 
 - `...`:

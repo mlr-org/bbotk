@@ -28,9 +28,9 @@ See
 - `as.data.table(dict, ..., objects = FALSE)`  
   [mlr3misc::Dictionary](https://mlr3misc.mlr-org.com/reference/Dictionary.html)
   -\>
-  [`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)  
+  [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)  
   Returns a
-  [`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+  [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
   with fields "key", "label", "properties" and "unit" as columns. If
   `objects` is set to `TRUE`, the constructed objects are returned in
   the list column named `object`.
@@ -83,10 +83,8 @@ mlr_terminators$get("evals")
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=100, k=0
-#> • Terminators:
 trm("evals", n_evals = 10)
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=10, k=0
-#> • Terminators:
 ```

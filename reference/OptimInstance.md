@@ -1,7 +1,9 @@
 # Optimization Instance
 
 The `OptimInstance` specifies an optimization problem for an
-[Optimizer](https://bbotk.mlr-org.com/reference/Optimizer.md).
+[Optimizer](https://bbotk.mlr-org.com/reference/Optimizer.md). Inherits
+from [EvalInstance](https://bbotk.mlr-org.com/reference/EvalInstance.md)
+and adds optimization-specific functionality.
 
 ## Details
 
@@ -10,7 +12,7 @@ functionality each instance must provide. The
 [Optimizer](https://bbotk.mlr-org.com/reference/Optimizer.md) writes the
 final result to the `.result` field by using the `$assign_result()`
 method. `.result` stores a
-[data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+[data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html)
 consisting of x values in the *search space*, (transformed) x values in
 the *domain space* and y values in the *codomain space* of the
 [Objective](https://bbotk.mlr-org.com/reference/Objective.md). The user
@@ -18,31 +20,16 @@ can access the results with active bindings (see below).
 
 ## See also
 
+[EvalInstance](https://bbotk.mlr-org.com/reference/EvalInstance.md),
 [OptimInstanceBatch](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.md),
 [OptimInstanceAsync](https://bbotk.mlr-org.com/reference/OptimInstanceAsync.md)
 
+## Super class
+
+[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
+-\> `OptimInstance`
+
 ## Public fields
-
-- `objective`:
-
-  ([Objective](https://bbotk.mlr-org.com/reference/Objective.md))  
-  Objective function of the instance.
-
-- `search_space`:
-
-  ([paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html))  
-  Specification of the search space for the
-  [Optimizer](https://bbotk.mlr-org.com/reference/Optimizer.md).
-
-- `terminator`:
-
-  [Terminator](https://bbotk.mlr-org.com/reference/Terminator.md)  
-  Termination criterion of the optimization.
-
-- `archive`:
-
-  ([Archive](https://bbotk.mlr-org.com/reference/Archive.md))  
-  Contains all performed function calls of the Objective.
 
 - `progressor`:
 
@@ -51,40 +38,21 @@ can access the results with active bindings (see below).
 
 ## Active bindings
 
-- `label`:
-
-  (`character(1)`)  
-  Label for this object. Can be used in tables, plot and text output
-  instead of the ID.
-
-- `man`:
-
-  (`character(1)`)  
-  String in the format `[pkg]::[topic]` pointing to a manual page for
-  this object. The referenced help package can be opened via method
-  `$help()`.
-
 - `result`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Get result
 
 - `result_x_search_space`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   x part of the result in the *search space*.
-
-- `is_terminated`:
-
-  (`logical(1)`).
 
 ## Methods
 
 ### Public methods
 
 - [`OptimInstance$new()`](#method-OptimInstance-new)
-
-- [`OptimInstance$format()`](#method-OptimInstance-format)
 
 - [`OptimInstance$print()`](#method-OptimInstance-print)
 
@@ -93,6 +61,10 @@ can access the results with active bindings (see below).
 - [`OptimInstance$clear()`](#method-OptimInstance-clear)
 
 - [`OptimInstance$clone()`](#method-OptimInstance-clone)
+
+Inherited methods
+
+- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/reference/EvalInstance.html#method-format)
 
 ------------------------------------------------------------------------
 
@@ -170,22 +142,6 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`format()`](https://rdrr.io/r/base/format.html)
-
-Helper for print outputs.
-
-#### Usage
-
-    OptimInstance$format(...)
-
-#### Arguments
-
-- `...`:
-
-  (ignored).
-
-------------------------------------------------------------------------
-
 ### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Printer.
@@ -216,9 +172,9 @@ internal use.
 
 - `xdt`:
 
-  ([`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html))  
   x values as
-  [`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+  [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
   with one row. Contains the value in the *search space* of the
   OptimInstance object. Can contain additional columns for extra
   information.

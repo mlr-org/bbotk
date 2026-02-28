@@ -121,10 +121,8 @@ TerminatorStagnation$new()
 #> 
 #> ── <TerminatorStagnation> - Stagnation ─────────────────────────────────────────
 #> • Parameters: iters=10, threshold=0
-#> • Terminators:
 trm("stagnation", iters = 5, threshold = 1e-5)
 #> 
 #> ── <TerminatorStagnation> - Stagnation ─────────────────────────────────────────
 #> • Parameters: iters=5, threshold=1e-05
-#> • Terminators:
 ```

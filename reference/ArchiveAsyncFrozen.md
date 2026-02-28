@@ -2,7 +2,7 @@
 
 Freezes the Redis data base of an
 [ArchiveAsync](https://bbotk.mlr-org.com/reference/ArchiveAsync.md) to a
-[`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html).
+[`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html).
 No further points can be added to the archive but the data can be
 accessed and analyzed. Useful when the Redis data base is not
 permanently available. Use the callback
@@ -14,7 +14,7 @@ to freeze the archive after the optimization has finished.
 - `as.data.table(archive)`  
   [ArchiveAsync](https://bbotk.mlr-org.com/reference/ArchiveAsync.md)
   -\>
-  [`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)  
+  [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)  
   Returns a tabular view of all performed function calls of the
   Objective. The `x_domain` column is unnested to separate columns.
 
@@ -32,27 +32,27 @@ to freeze the archive after the optimization has finished.
 
 - `data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all finished points.
 
 - `queued_data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all queued points.
 
 - `running_data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all running points.
 
 - `finished_data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all finished points.
 
 - `failed_data`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Data table with all failed points.
 
 - `n_queued`:
@@ -348,50 +348,52 @@ as.data.table(instance$archive)
 }
 #>        state         x1           x2            y        timestamp_xs   pid
 #>       <char>      <num>        <num>        <num>              <POSc> <int>
-#>  1: finished  0.7355865  4.436809312  -46.9048744 2025-11-26 11:03:42  7383
-#>  2: finished -5.2465150  1.685353492  -64.4645163 2025-11-26 11:03:42  7383
-#>  3: finished -1.6100269  1.692733854  -25.0540453 2025-11-26 11:03:42  7383
-#>  4: finished -9.6485851  2.074896538 -151.4441090 2025-11-26 11:03:42  7383
-#>  5: finished  9.1534135  0.636737862  -54.3971877 2025-11-26 11:03:43  7383
-#>  6: finished -0.9507994 -4.878603549   -2.2363683 2025-11-26 11:03:43  7383
-#>  7: finished  2.7997505 -1.921276769    8.1967553 2025-11-26 11:03:43  7383
-#>  8: finished  7.9367603  3.130829856  -62.8321976 2025-11-26 11:03:43  7383
-#>  9: finished -5.3535132  0.132857377  -53.8889510 2025-11-26 11:03:43  7383
-#> 10: finished -1.1703927  1.581480915  -21.0413571 2025-11-26 11:03:43  7383
-#> 11: finished  5.5692991  1.671339287  -24.5613067 2025-11-26 11:03:43  7383
-#> 12: finished  9.4659255 -4.325706593  -47.4975413 2025-11-26 11:03:43  7383
-#> 13: finished -4.5022012 -3.621611151  -32.6650205 2025-11-26 11:03:43  7383
-#> 14: finished  6.4919932  0.400897277  -21.7441056 2025-11-26 11:03:43  7383
-#> 15: finished -1.5261497 -0.002130552  -11.4209531 2025-11-26 11:03:43  7383
-#> 16: finished  5.2346110 -2.546360991   -0.6684964 2025-11-26 11:03:43  7383
-#> 17: finished -8.1469277 -2.532682236  -93.1785285 2025-11-26 11:03:43  7383
-#> 18: finished  7.9586287 -3.273955223  -25.5803070 2025-11-26 11:03:43  7383
-#> 19: finished  5.3650967 -2.241232399   -1.8996043 2025-11-26 11:03:43  7383
-#> 20: finished  4.8743111  3.778382706  -44.2081363 2025-11-26 11:03:43  7383
+#>  1: finished  0.7355865  4.436809312  -46.9048744 2026-02-28 07:00:41  8289
+#>  2: finished -5.2465150  1.685353492  -64.4645163 2026-02-28 07:00:41  8289
+#>  3: finished -1.6100269  1.692733854  -25.0540453 2026-02-28 07:00:41  8289
+#>  4: finished -9.6485851  2.074896538 -151.4441090 2026-02-28 07:00:41  8289
+#>  5: finished  9.1534135  0.636737862  -54.3971877 2026-02-28 07:00:41  8289
+#>  6: finished -0.9507994 -4.878603549   -2.2363683 2026-02-28 07:00:41  8289
+#>  7: finished  2.7997505 -1.921276769    8.1967553 2026-02-28 07:00:41  8289
+#>  8: finished  7.9367603  3.130829856  -62.8321976 2026-02-28 07:00:41  8289
+#>  9: finished -5.3535132  0.132857377  -53.8889510 2026-02-28 07:00:41  8289
+#> 10: finished -1.1703927  1.581480915  -21.0413571 2026-02-28 07:00:41  8289
+#> 11: finished  5.5692991  1.671339287  -24.5613067 2026-02-28 07:00:41  8289
+#> 12: finished  9.4659255 -4.325706593  -47.4975413 2026-02-28 07:00:41  8289
+#> 13: finished -4.5022012 -3.621611151  -32.6650205 2026-02-28 07:00:41  8289
+#> 14: finished  6.4919932  0.400897277  -21.7441056 2026-02-28 07:00:41  8289
+#> 15: finished -1.5261497 -0.002130552  -11.4209531 2026-02-28 07:00:41  8289
+#> 16: finished  5.2346110 -2.546360991   -0.6684964 2026-02-28 07:00:41  8289
+#> 17: finished -8.1469277 -2.532682236  -93.1785285 2026-02-28 07:00:41  8289
+#> 18: finished  7.9586287 -3.273955223  -25.5803070 2026-02-28 07:00:41  8289
+#> 19: finished  5.3650967 -2.241232399   -1.8996043 2026-02-28 07:00:41  8289
+#> 20: finished  4.8743111  3.778382706  -44.2081363 2026-02-28 07:00:41  8289
 #>        state         x1           x2            y        timestamp_xs   pid
+#>       <char>      <num>        <num>        <num>              <POSc> <int>
 #>            worker_id        timestamp_ys                                 keys
 #>               <char>              <POSc>                               <char>
-#>  1: limestone_drever 2025-11-26 11:03:42 c1cde00c-769b-460d-8c6f-343462678ffe
-#>  2: limestone_drever 2025-11-26 11:03:42 4c1845ca-0693-4e6c-a925-66b756f3b20e
-#>  3: limestone_drever 2025-11-26 11:03:42 bf878394-bb38-46e0-80c6-b9ce0f354cf5
-#>  4: limestone_drever 2025-11-26 11:03:42 b60c8565-d9c9-4bef-a19e-aadf367b89d2
-#>  5: limestone_drever 2025-11-26 11:03:43 8ab0b01b-2ec0-49e0-906a-7a3ea3777a36
-#>  6: limestone_drever 2025-11-26 11:03:43 9da17f9b-6817-4f85-a6eb-2b31881f072f
-#>  7: limestone_drever 2025-11-26 11:03:43 7bf091e7-d6b3-4290-a03f-74de5e7ad15c
-#>  8: limestone_drever 2025-11-26 11:03:43 71175179-b587-4e38-bdbf-7d22c9a406b5
-#>  9: limestone_drever 2025-11-26 11:03:43 687813b6-87af-426b-833a-b669185fcc91
-#> 10: limestone_drever 2025-11-26 11:03:43 c8f23f5b-1658-419f-8892-b94004b1f532
-#> 11: limestone_drever 2025-11-26 11:03:43 02fa0f52-d8bf-4319-8c75-c7a99af524ea
-#> 12: limestone_drever 2025-11-26 11:03:43 6c907415-732f-4706-ac47-ab5919c57e3d
-#> 13: limestone_drever 2025-11-26 11:03:43 d731c6d6-53f5-4373-b622-42d3675715c0
-#> 14: limestone_drever 2025-11-26 11:03:43 6ccf4559-b183-44a6-b1f7-92770738f01f
-#> 15: limestone_drever 2025-11-26 11:03:43 4d001266-70a1-411b-beeb-a0bf57592210
-#> 16: limestone_drever 2025-11-26 11:03:43 8926c634-2218-44dd-8417-1d8b36b86399
-#> 17: limestone_drever 2025-11-26 11:03:43 37df4720-1f72-4e2b-b7bb-512aabe7b301
-#> 18: limestone_drever 2025-11-26 11:03:43 3936b56e-67e8-4fea-8bda-24baaf55dceb
-#> 19: limestone_drever 2025-11-26 11:03:43 eba822ee-5b3d-4087-8d96-3386260e3d43
-#> 20: limestone_drever 2025-11-26 11:03:43 d7560086-a871-4ba7-848a-3c74f69607dc
+#>  1: limestone_drever 2026-02-28 07:00:41 6074a4c8-aaf6-462a-9e23-652f7bf1c389
+#>  2: limestone_drever 2026-02-28 07:00:41 02ef9b08-9f68-487d-a723-df803fa63ecd
+#>  3: limestone_drever 2026-02-28 07:00:41 36ec844c-2359-434c-9d6a-03dc5e4ff36a
+#>  4: limestone_drever 2026-02-28 07:00:41 21943b02-0096-4146-b77f-8579e5922c7e
+#>  5: limestone_drever 2026-02-28 07:00:41 b70e8665-09c3-4a8e-a4b7-858ae7c94622
+#>  6: limestone_drever 2026-02-28 07:00:41 461e2ebc-db06-4974-aff7-cd576fd971f1
+#>  7: limestone_drever 2026-02-28 07:00:41 1b152ce4-93ac-486d-8054-f9f69bbd1209
+#>  8: limestone_drever 2026-02-28 07:00:41 5050eb17-b4e0-4db7-a9e7-4f421a3d8da7
+#>  9: limestone_drever 2026-02-28 07:00:41 6e6a7960-99f9-45e9-b150-79eeb37f2165
+#> 10: limestone_drever 2026-02-28 07:00:41 3972e7c7-f578-4b0b-abb8-116f7275a15e
+#> 11: limestone_drever 2026-02-28 07:00:41 f0f01848-7099-4ed9-9907-f20fefe32326
+#> 12: limestone_drever 2026-02-28 07:00:41 dd8587d3-b55e-4468-8f5a-8c3f5f48d31a
+#> 13: limestone_drever 2026-02-28 07:00:41 ab38b377-e1c1-424d-96eb-406084b68e28
+#> 14: limestone_drever 2026-02-28 07:00:41 cbbb6fd4-1509-422f-8871-0085d19b7b8f
+#> 15: limestone_drever 2026-02-28 07:00:41 b11a6a02-e6b0-4130-99a4-1bf2f4d99bf8
+#> 16: limestone_drever 2026-02-28 07:00:41 088ba04d-1707-47b9-abf2-9e58165a133d
+#> 17: limestone_drever 2026-02-28 07:00:41 6db079a7-f056-446b-a945-0c0dfd58ac38
+#> 18: limestone_drever 2026-02-28 07:00:41 dd63cf95-5351-47aa-b864-cfd5d2aacb16
+#> 19: limestone_drever 2026-02-28 07:00:41 25577b62-1d90-4771-99fa-0b72b482f0a6
+#> 20: limestone_drever 2026-02-28 07:00:41 bd11f4e5-acef-42b3-b19d-6926b700ce4c
 #>            worker_id        timestamp_ys                                 keys
+#>               <char>              <POSc>                               <char>
 #>     x_domain_x1  x_domain_x2
 #>           <num>        <num>
 #>  1:   0.7355865  4.436809312
@@ -415,4 +417,5 @@ as.data.table(instance$archive)
 #> 19:   5.3650967 -2.241232399
 #> 20:   4.8743111  3.778382706
 #>     x_domain_x1  x_domain_x2
+#>           <num>        <num>
 ```

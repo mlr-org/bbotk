@@ -14,8 +14,10 @@ or
 [OptimInstanceBatchSingleCrit](https://bbotk.mlr-org.com/reference/OptimInstanceBatchSingleCrit.md),
 [OptimInstanceBatchMultiCrit](https://bbotk.mlr-org.com/reference/OptimInstanceBatchMultiCrit.md)
 
-## Super class
+## Super classes
 
+[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
+-\>
 [`bbotk::OptimInstance`](https://bbotk.mlr-org.com/reference/OptimInstance.md)
 -\> `OptimInstanceBatch`
 
@@ -29,12 +31,12 @@ or
 
 - `result`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Get result
 
 - `result_x_search_space`:
 
-  ([data.table::data.table](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
   x part of the result in the *search space*.
 
 - `result_x_domain`:
@@ -66,9 +68,9 @@ or
 
 Inherited methods
 
+- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/reference/EvalInstance.html#method-format)
 - [`bbotk::OptimInstance$assign_result()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-assign_result)
 - [`bbotk::OptimInstance$clear()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-clear)
-- [`bbotk::OptimInstance$format()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-format)
 - [`bbotk::OptimInstance$print()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-print)
 
 ------------------------------------------------------------------------
@@ -168,7 +170,7 @@ is raised. This function should be internally called by the
 
 - `xdt`:
 
-  ([`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html))  
   x values as `data.table()` with one point per row. Contains the value
   in the *search space* of the
   [OptimInstance](https://bbotk.mlr-org.com/reference/OptimInstance.md)

@@ -55,5 +55,4 @@ trm("evals", n_evals = 10)
 #> 
 #> ── <TerminatorEvals> - Number of Evaluation ────────────────────────────────────
 #> • Parameters: n_evals=10, k=0
-#> • Terminators:
 ```

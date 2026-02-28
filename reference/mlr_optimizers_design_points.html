@@ -25,7 +25,7 @@ of termination criteria."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.8.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,7 +90,7 @@ of termination criteria.</p>
 Maximum number of configurations to try in a batch.</p></dd>
 
 <dt><code>design</code></dt>
-<dd><p><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a><br>
+<dd><p><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a><br>
 Design points to try in search, one per row.</p></dd>
 
 
@@ -181,7 +181,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># load optimizer</span></span></span>
-<span class="r-in"><span><span class="va">design</span> <span class="op">=</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">design</span> <span class="op">=</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span> <span class="op">=</span> <span class="fu"><a href="opt.html">opt</a></span><span class="op">(</span><span class="st">"design_points"</span>, design <span class="op">=</span> <span class="va">design</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># trigger optimization</span></span></span>
@@ -196,8 +196,8 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;ArchiveBatch&gt;</span><span style="font-weight: bold;"> - Data Table Storage</span> <span style="color: #00BBBB;">─────────────────────────────────────────</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;num&gt; &lt;num&gt; &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     0     0    -3 2025-11-26 11:04:13        1           0           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     1     1    -7 2025-11-26 11:04:13        2           1           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     0     0    -3 2026-02-28 07:01:09        1           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     1     1    -7 2026-02-28 07:01:09        2           1           1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># best performing configuration</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>

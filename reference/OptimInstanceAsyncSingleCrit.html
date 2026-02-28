@@ -15,7 +15,7 @@ The function oi_async() creates an OptimInstanceAsyncSingleCrit."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.8.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@ The function <code><a href="oi_async.html">oi_async()</a></code> creates an Opti
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="OptimInstance.html">bbotk::OptimInstance</a></code> -&gt; <code><a href="OptimInstanceAsync.html">bbotk::OptimInstanceAsync</a></code> -&gt; <code>OptimInstanceAsyncSingleCrit</code></p>
+    <p><code><a href="EvalInstance.html">bbotk::EvalInstance</a></code> -&gt; <code><a href="OptimInstance.html">bbotk::OptimInstance</a></code> -&gt; <code><a href="OptimInstanceAsync.html">bbotk::OptimInstanceAsync</a></code> -&gt; <code>OptimInstanceAsyncSingleCrit</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -84,7 +84,7 @@ Optimal outcome.</p></dd>
 <ul><li><p><a href="#method-OptimInstanceAsyncSingleCrit-new"><code>OptimInstanceAsyncSingleCrit$new()</code></a></p></li>
 <li><p><a href="#method-OptimInstanceAsyncSingleCrit-assign_result"><code>OptimInstanceAsyncSingleCrit$assign_result()</code></a></p></li>
 <li><p><a href="#method-OptimInstanceAsyncSingleCrit-clone"><code>OptimInstanceAsyncSingleCrit$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href="OptimInstance.html#method-format"><code>bbotk::OptimInstance$format()</code></a></span></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href="EvalInstance.html#method-format"><code>bbotk::EvalInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="clear"><a href="OptimInstanceAsync.html#method-clear"><code>bbotk::OptimInstanceAsync$clear()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="print"><a href="OptimInstanceAsync.html#method-print"><code>bbotk::OptimInstanceAsync$print()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="reconnect"><a href="OptimInstanceAsync.html#method-reconnect"><code>bbotk::OptimInstanceAsync$reconnect()</code></a></span></li>
@@ -157,7 +157,7 @@ For internal use.</p><div class="section">
 <div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xdt</code></dt>
-<dd><p>(<code><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
+<dd><p>(<code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
 Set of untransformed points / points from the <em>search space</em>.
 One point per row, e.g. <code>data.table(x1 = c(1, 3), x2 = c(2, 4))</code>.
 Column names have to match ids of the <code>search_space</code>.
@@ -170,7 +170,7 @@ Optimal outcome.</p></dd>
 
 
 <dt><code>extra</code></dt>
-<dd><p>(<code><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
+<dd><p>(<code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
 Additional information.</p></dd>
 
 

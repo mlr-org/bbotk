@@ -189,6 +189,8 @@ as.data.table(instance$archive)
 
 ## Optimization Instance
 
+- [`EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
+  : Evaluation Instance Base Class
 - [`OptimInstance`](https://bbotk.mlr-org.com/reference/OptimInstance.md)
   : Optimization Instance
 - [`OptimInstanceAsync`](https://bbotk.mlr-org.com/reference/OptimInstanceAsync.md)
@@ -320,4 +322,9 @@ as.data.table(instance$archive)
   Calculate the transformed x-values
 - [`terminated_error()`](https://bbotk.mlr-org.com/reference/terminated_error.md)
   : Termination Error
+- [`error_bbotk()`](https://bbotk.mlr-org.com/reference/bbotk_conditions.md)
+  [`error_bbotk_terminated()`](https://bbotk.mlr-org.com/reference/bbotk_conditions.md)
+  : Condition Classes for bbotk
+- [`choose_search_space()`](https://bbotk.mlr-org.com/reference/choose_search_space.md)
+  : Choose Search Space
 

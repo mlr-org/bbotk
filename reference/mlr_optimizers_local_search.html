@@ -15,7 +15,7 @@ Currently, setting initial points is not supported."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.8.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,33 +162,33 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># trigger optimization</span></span></span>
 <span class="r-in"><span><span class="va">optimizer</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">instance</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          x1        x2  x_domain       y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;     &lt;num&gt;    &lt;list&gt;   &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2.197966 -2.625208 &lt;list[2]&gt; 9.82034</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          x1        x2  x_domain        y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;     &lt;num&gt;    &lt;list&gt;    &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2.652858 -2.625208 &lt;list[2]&gt; 9.433308</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># all evaluated configurations</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;ArchiveBatch&gt;</span><span style="font-weight: bold;"> - Data Table Storage</span> <span style="color: #00BBBB;">─────────────────────────────────────────</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         x1    x2      y           timestamp batch_nr x_domain_x1 x_domain_x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;num&gt; &lt;num&gt;  &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:   4.9  -2.0    0.5 2025-11-26 11:04:22        1         4.9        -2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  -8.7  -1.0 -108.1 2025-11-26 11:04:22        1        -8.7        -1.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  -2.6  -1.4  -13.5 2025-11-26 11:04:22        1        -2.6        -1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:   3.2  -0.9    4.2 2025-11-26 11:04:22        1         3.2        -0.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:   0.7  -4.8    5.1 2025-11-26 11:04:22        1         0.7        -4.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 106:   1.1  -0.5    2.8 2025-11-26 11:04:23        2         1.1        -0.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 107:   1.7   1.8  -13.5 2025-11-26 11:04:23        2         1.7         1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 108:   1.7   0.4   -1.7 2025-11-26 11:04:23        2         1.7         0.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 109:   0.2  -0.5    0.5 2025-11-26 11:04:23        2         0.2        -0.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 110:  -0.8  -0.5   -4.5 2025-11-26 11:04:23        2        -0.8        -0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;num&gt; &lt;num&gt; &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;       &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:   3.2  -0.9     4 2026-02-28 07:01:18        1         3.2        -0.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:   0.7  -4.8     5 2026-02-28 07:01:18        1         0.7        -4.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:   9.6   4.0   -97 2026-02-28 07:01:18        1         9.6         4.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:   1.0  -2.6     9 2026-02-28 07:01:18        1         1.0        -2.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:  -7.2   1.2   -93 2026-02-28 07:01:18        1        -7.2         1.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106:  -2.9   5.0   -78 2026-02-28 07:01:18        2        -2.9         5.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107:  -2.9   4.7   -73 2026-02-28 07:01:18        2        -2.9         4.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108:  -4.4   3.8   -77 2026-02-28 07:01:18        2        -4.4         3.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109:  -5.5   3.8   -92 2026-02-28 07:01:18        2        -5.5         3.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110:  -2.9   2.6   -45 2026-02-28 07:01:18        2        -2.9         2.6</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># best performing configuration</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">result</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          x1        x2  x_domain       y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;     &lt;num&gt;    &lt;list&gt;   &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2.197966 -2.625208 &lt;list[2]&gt; 9.82034</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          x1        x2  x_domain        y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;     &lt;num&gt;    &lt;list&gt;    &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2.652858 -2.625208 &lt;list[2]&gt; 9.433308</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

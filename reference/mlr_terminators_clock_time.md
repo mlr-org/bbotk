@@ -115,5 +115,4 @@ trm("clock_time", stop_time = stop_time)
 #> 
 #> ── <TerminatorClockTime> - Clock Time ──────────────────────────────────────────
 #> • Parameters: stop_time=<POSIXct>
-#> • Terminators:
 ```

@@ -15,7 +15,7 @@ The function oi() creates an OptimInstanceAsyncSingleCrit or OptimInstanceAsyncM
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.8.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,8 +62,8 @@ The function <code><a href="oi.html">oi()</a></code> creates an <a href="OptimIn
     <div class="dont-index"><p><code><a href="oi.html">oi()</a></code>, <a href="OptimInstanceBatchSingleCrit.html">OptimInstanceBatchSingleCrit</a>, <a href="OptimInstanceBatchMultiCrit.html">OptimInstanceBatchMultiCrit</a></p></div>
     </div>
     <div class="section level2">
-    <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
-    <p><code><a href="OptimInstance.html">bbotk::OptimInstance</a></code> -&gt; <code>OptimInstanceBatch</code></p>
+    <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
+    <p><code><a href="EvalInstance.html">bbotk::EvalInstance</a></code> -&gt; <code><a href="OptimInstance.html">bbotk::OptimInstance</a></code> -&gt; <code>OptimInstanceBatch</code></p>
     </div>
     <div class="section level2">
     <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
@@ -76,12 +76,12 @@ The function <code><a href="oi.html">oi()</a></code> creates an <a href="OptimIn
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
     <p></p><div class="r6-active-bindings"><dl><dt><code>result</code></dt>
-<dd><p>(<a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
+<dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 Get result</p></dd>
 
 
 <dt><code>result_x_search_space</code></dt>
-<dd><p>(<a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a>)<br>
+<dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 x part of the result in the <em>search space</em>.</p></dd>
 
 
@@ -111,9 +111,9 @@ Optimal outcome.</p></dd>
 <li><p><a href="#method-OptimInstanceBatch-eval_batch"><code>OptimInstanceBatch$eval_batch()</code></a></p></li>
 <li><p><a href="#method-OptimInstanceBatch-objective_function"><code>OptimInstanceBatch$objective_function()</code></a></p></li>
 <li><p><a href="#method-OptimInstanceBatch-clone"><code>OptimInstanceBatch$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href="OptimInstance.html#method-assign_result"><code>bbotk::OptimInstance$assign_result()</code></a></span></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href="EvalInstance.html#method-format"><code>bbotk::EvalInstance$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href="OptimInstance.html#method-assign_result"><code>bbotk::OptimInstance$assign_result()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="clear"><a href="OptimInstance.html#method-clear"><code>bbotk::OptimInstance$clear()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="format"><a href="OptimInstance.html#method-format"><code>bbotk::OptimInstance$format()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="print"><a href="OptimInstance.html#method-print"><code>bbotk::OptimInstance$print()</code></a></span></li>
 </ul></details></p><hr><a id="method-OptimInstanceBatch-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
@@ -196,7 +196,7 @@ function should be internally called by the <a href="Optimizer.html">Optimizer</
 <div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xdt</code></dt>
-<dd><p>(<code><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
+<dd><p>(<code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
 x values as <code>data.table()</code> with one point per row. Contains the value in
 the <em>search space</em> of the <a href="OptimInstance.html">OptimInstance</a> object. Can contain additional
 columns for extra information.</p></dd>

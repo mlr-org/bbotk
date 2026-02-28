@@ -1,5 +1,19 @@
 # Changelog
 
+## bbotk 1.9.0
+
+- feat: Allow `"learn"` tag (direction=0) alongside minimize/maximize in
+  `Codomain`.
+- feat: Add new base class `EvalInstance` from which `OptimInstance` now
+  inherits. `EvalInstance` keeps information about a process that
+  evaluates an `Objective` while not necessarily optimizing it.
+- feat: Exporting formerly internal
+  [`choose_search_space()`](https://bbotk.mlr-org.com/reference/choose_search_space.md)
+  function.
+- feat: Use `mlr3misc` error classes for errors and warnings.
+- compatibility: Compatible with `rush` 1.0.0.
+- fix: Terminator print method works correctly now.
+
 ## bbotk 1.8.1
 
 CRAN release: 2025-11-26
@@ -225,7 +239,7 @@ CRAN release: 2022-04-04
 - feat: `Optimizer` and `Terminator` objects have the optional field
   `$label` now.
 - feat:
-  [`as.data.table()`](https://rdatatable.gitlab.io/data.table/reference/as.data.table.html)
+  [`as.data.table()`](https://rdrr.io/pkg/data.table/man/as.data.table.html)
   functions for objects of class `Dictionary` have been extended with
   additional columns.
 - feat: Add a `as.data.table.DictionaryTerminator()` function.

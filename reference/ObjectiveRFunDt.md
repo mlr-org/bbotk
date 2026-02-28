@@ -130,7 +130,7 @@ filled with `NA`s in `xdt`.
 
 #### Returns
 
-[`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html)
+[`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
 that contains one y-column for single-criteria functions and multiple
 y-columns for multi-criteria functions, e.g. `data.table(y = 1:2)` or
 `data.table(y1 = 1:2, y2 = 3:4)`.
@@ -150,7 +150,7 @@ the user.
 
 - `xdt`:
 
-  ([`data.table::data.table()`](https://rdatatable.gitlab.io/data.table/reference/data.table.html))  
+  ([`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html))  
   Set of untransformed points / points from the *search space*. One
   point per row, e.g. `data.table(x1 = c(1, 3), x2 = c(2, 4))`. Column
   names have to match ids of the `search_space`. However, `xdt` can
