@@ -199,17 +199,17 @@ OptimizerBatchSmac3 = R6Class("OptimizerBatchSmac3",
 
         # surrogate model
         surrogate = p_fct(levels = c("rf", "gp")),
-        rf.n_trees = p_int(lower = 1L, depends = surrogate == "rf"),
-        rf.ratio_features = p_dbl(lower = 0, upper = 1, depends = surrogate == "rf"),
-        rf.min_samples_split = p_int(lower = 2L, depends = surrogate == "rf"),
-        rf.min_samples_leaf = p_int(lower = 1L, depends = surrogate == "rf"),
-        rf.max_depth = p_int(lower = 1L, depends = surrogate == "rf"),
-        gp.n_restarts = p_int(lower = 0L, depends = surrogate == "gp"),
+        rf.n_trees = p_int(lower = 1L, depends = quote(surrogate == "rf")),
+        rf.ratio_features = p_dbl(lower = 0, upper = 1, depends = quote(surrogate == "rf")),
+        rf.min_samples_split = p_int(lower = 2L, depends = quote(surrogate == "rf")),
+        rf.min_samples_leaf = p_int(lower = 1L, depends = quote(surrogate == "rf")),
+        rf.max_depth = p_int(lower = 1L, depends = quote(surrogate == "rf")),
+        gp.n_restarts = p_int(lower = 0L, depends = quote(surrogate == "gp")),
 
         # acquisition function
         acq_function = p_fct(levels = c("ei", "lcb", "pi", "ts")),
-        acq_function.xi = p_dbl(lower = 0, depends = acq_function %in% c("ei", "pi")),
-        acq_function.beta = p_dbl(lower = 0, depends = acq_function == "lcb"),
+        acq_function.xi = p_dbl(lower = 0, depends = quote(acq_function %in% c("ei", "pi"))),
+        acq_function.beta = p_dbl(lower = 0, depends = quote(acq_function == "lcb")),
 
         # initial design
         initial_design = p_fct(levels = c("sobol", "random", "lhc", "factorial", "default")),
@@ -219,13 +219,13 @@ OptimizerBatchSmac3 = R6Class("OptimizerBatchSmac3",
 
         # random design
         random_design = p_fct(levels = c("probability", "modulus")),
-        random_design.probability = p_dbl(lower = 0, upper = 1, depends = random_design == "probability"),
-        random_design.modulus = p_dbl(lower = 1, depends = random_design == "modulus"),
+        random_design.probability = p_dbl(lower = 0, upper = 1, depends = quote(random_design == "probability")),
+        random_design.modulus = p_dbl(lower = 1, depends = quote(random_design == "modulus")),
 
         # multi-fidelity
-        eta = p_int(lower = 2L, depends = facade == "smac4mf"),
-        min_budget = p_dbl(lower = 0, depends = facade == "smac4mf"),
-        max_budget = p_dbl(lower = 0, depends = facade == "smac4mf")
+        eta = p_int(lower = 2L, depends = quote(facade == "smac4mf")),
+        min_budget = p_dbl(lower = 0, depends = quote(facade == "smac4mf")),
+        max_budget = p_dbl(lower = 0, depends = quote(facade == "smac4mf"))
       )
 
       super$initialize(
