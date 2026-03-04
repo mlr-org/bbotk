@@ -19,16 +19,124 @@ All parameters of the search space must have default values.
 \section{Parameters}{
 
 \describe{
+
 \item{\code{n_init}}{\code{integer(1)}\cr
 Number of initial configurations to evaluate before starting the optimization.
 Defaults to \code{10} times the number of hyperparameters.}
+
 \item{\code{facade}}{\code{character(1)}\cr
-Facade to use.
-Either \code{"smac4bb"} (Black-Box Facade) or \code{"smac4hb"} (Hyperparameter Optimization Facade).
+Facade to use:
+\code{"smac4bb"} (Black-Box Facade, uses Gaussian Process),
+\code{"smac4hb"} (Hyperparameter Optimization Facade, uses Random Forest),
+\code{"smac4ac"} (Algorithm Configuration Facade),
+\code{"smac4mf"} (Multi-Fidelity Facade, uses Hyperband),
+\code{"smac4rs"} (Random Facade / ROAR, no surrogate model).
 Default is \code{"smac4bb"}.}
+
 \item{\code{output_directory}}{\code{character(1)}\cr
 Directory to store the output of SMAC3.
 Default is a temporary directory.}
+
+\item{\code{deterministic}}{\code{logical(1)}\cr
+Whether the objective function is deterministic.
+If \code{FALSE}, SMAC may re-evaluate configurations with different seeds.
+Default is \code{TRUE}.}
+
+\item{\code{crash_cost}}{\code{numeric(1)}\cr
+Cost assigned to crashed or failed trials.}
+
+\item{\code{seed}}{\code{integer(1)}\cr
+Seed for the random number generator in SMAC.
+Default is a random seed.}
+
+\item{\code{surrogate}}{\code{character(1)}\cr
+Surrogate model to use.
+\code{"rf"} (Random Forest) or \code{"gp"} (Gaussian Process).
+Default is the facade's default (GP for \code{"smac4bb"}, RF for \code{"smac4hb"} and \code{"smac4ac"}).}
+
+\item{\code{rf.n_trees}}{\code{integer(1)}\cr
+Number of trees in the Random Forest surrogate.
+Only used when \code{surrogate = "rf"}.
+Default is \code{10}.}
+
+\item{\code{rf.ratio_features}}{\code{numeric(1)}\cr
+Ratio of features used per tree in the Random Forest.
+Only used when \code{surrogate = "rf"}.
+Default is \code{1.0}.}
+
+\item{\code{rf.min_samples_split}}{\code{integer(1)}\cr
+Minimum number of samples to split a node in the Random Forest.
+Only used when \code{surrogate = "rf"}.
+Default is \code{2}.}
+
+\item{\code{rf.min_samples_leaf}}{\code{integer(1)}\cr
+Minimum number of samples per leaf in the Random Forest.
+Only used when \code{surrogate = "rf"}.
+Default is \code{1}.}
+
+\item{\code{rf.max_depth}}{\code{integer(1)}\cr
+Maximum depth of trees in the Random Forest.
+Only used when \code{surrogate = "rf"}.
+Default is \code{1048576}.}
+
+\item{\code{gp.n_restarts}}{\code{integer(1)}\cr
+Number of restarts for Gaussian Process hyperparameter optimization.
+Only used when \code{surrogate = "gp"}.
+Default is \code{10}.}
+
+\item{\code{acq_function}}{\code{character(1)}\cr
+Acquisition function to use.
+\code{"ei"} (Expected Improvement), \code{"lcb"} (Lower Confidence Bound),
+\code{"pi"} (Probability of Improvement), or \code{"ts"} (Thompson Sampling).
+Default is the facade's default.}
+
+\item{\code{acq_function.xi}}{\code{numeric(1)}\cr
+Exploration-exploitation trade-off parameter for Expected Improvement and
+Probability of Improvement.
+Only used when \code{acq_function} is \code{"ei"} or \code{"pi"}.
+Default is \code{0.0}.}
+
+\item{\code{acq_function.beta}}{\code{numeric(1)}\cr
+Exploration-exploitation trade-off parameter for Lower Confidence Bound.
+Only used when \code{acq_function = "lcb"}.
+Default is \code{1.0}.}
+
+\item{\code{initial_design}}{\code{character(1)}\cr
+Initial design strategy.
+\code{"sobol"}, \code{"random"}, \code{"lhc"} (Latin Hypercube), \code{"factorial"}, or \code{"default"}.
+Default is the facade's default.}
+
+\item{\code{max_config_calls}}{\code{integer(1)}\cr
+Maximum number of evaluations per configuration.
+Values larger than \code{1} are useful for stochastic objectives.
+Default is \code{1}.}
+
+\item{\code{random_design}}{\code{character(1)}\cr
+Strategy for interleaving random configurations during optimization.
+\code{"probability"} or \code{"modulus"}.
+Default is the facade's default.}
+
+\item{\code{random_design.probability}}{\code{numeric(1)}\cr
+Probability of sampling a random configuration instead of using the surrogate model.
+Only used when \code{random_design = "probability"}.}
+
+\item{\code{random_design.modulus}}{\code{numeric(1)}\cr
+Every \code{modulus}-th configuration is drawn randomly.
+Only used when \code{random_design = "modulus"}.}
+
+\item{\code{eta}}{\code{integer(1)}\cr
+Halving factor for Successive Halving / Hyperband.
+Only used when \code{facade = "smac4mf"}.
+Default is \code{3}.}
+
+\item{\code{min_budget}}{\code{numeric(1)}\cr
+Minimum budget for multi-fidelity optimization (e.g., epochs, subset fraction).
+Only used when \code{facade = "smac4mf"}.}
+
+\item{\code{max_budget}}{\code{numeric(1)}\cr
+Maximum budget for multi-fidelity optimization.
+Only used when \code{facade = "smac4mf"}.}
+
 }
 }
 
