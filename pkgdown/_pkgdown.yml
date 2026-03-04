@@ -87,3 +87,4 @@ reference:
       - terminated_error
       - bbotk_conditions
       - choose_search_space
+      - assert_python_packages
