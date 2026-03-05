@@ -44,6 +44,8 @@ reference:
   - title: Objective
     contents:
       - starts_with("Objective")
+      - mlr_test_functions
+      - otfun
   - title: Terminator
     contents:
       - starts_with("Terminator")

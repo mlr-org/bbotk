@@ -1,3 +1,5 @@
+#' @include ObjectiveRFun.R
+#'
 #' @title Dictionary of Optimization Test Functions
 #'
 #' @usage NULL
@@ -95,6 +97,7 @@ ObjectiveTestFunction = R6Class("ObjectiveTestFunction",
         constants = constants,
         check_values = FALSE
       )
+      # ObjectiveRFun hardcodes label, override via private field
       private$.label = label
       self$optimum = assert_number(optimum)
       self$optimum_x = assert_list(optimum_x, types = "list")
@@ -149,7 +152,7 @@ make_test_function(
   )
 )
 
-# Branin-Wu (multi-fidelity variant)
+# Branin-Wu (multi-fidelity variant; optimum values hold for fidelity = 1)
 make_test_function(
   id = "branin_wu",
   label = "Branin-Wu",
