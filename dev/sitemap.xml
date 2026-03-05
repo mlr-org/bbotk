@@ -17,6 +17,7 @@
 <url><loc>https://bbotk.mlr-org.com/dev/reference/ObjectiveRFun.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/ObjectiveRFunDt.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/ObjectiveRFunMany.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/dev/reference/ObjectiveTestFunction.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/OptimInstance.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsyncMultiCrit.html</loc></url>
@@ -73,12 +74,14 @@
 <url><loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_stagnation.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_stagnation_batch.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/mlr_terminators_stagnation_hypervolume.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/dev/reference/mlr_test_functions.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/nds_selection.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/oi.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/oi_async.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/opt.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/optimize_async_default.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/optimize_batch_default.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/dev/reference/otfun.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/reexports.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/search_start.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/dev/reference/shrink_ps.html</loc></url>

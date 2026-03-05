@@ -16,6 +16,13 @@
   : Objective interface for basic R functions.
 - [`ObjectiveRFunMany`](https://bbotk.mlr-org.com/dev/reference/ObjectiveRFunMany.md)
   : Objective Interface with Custom R Function
+- [`ObjectiveTestFunction`](https://bbotk.mlr-org.com/dev/reference/ObjectiveTestFunction.md)
+  : Objective Test Function
+- [`mlr_test_functions`](https://bbotk.mlr-org.com/dev/reference/mlr_test_functions.md)
+  : Dictionary of Optimization Test Functions
+- [`otfun()`](https://bbotk.mlr-org.com/dev/reference/otfun.md)
+  [`otfuns()`](https://bbotk.mlr-org.com/dev/reference/otfun.md) :
+  Syntactic Sugar for Optimization Test Functions
 
 ## Terminator
 

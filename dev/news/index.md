@@ -2,6 +2,12 @@
 
 ## bbotk (development version)
 
+- feat: Add `mlr_test_functions` dictionary with well-known 2-D
+  optimization test functions (Branin, Rosenbrock, Himmelblau,
+  Rastrigin, etc.) and sugar functions
+  [`otfun()`](https://bbotk.mlr-org.com/dev/reference/otfun.md) /
+  [`otfuns()`](https://bbotk.mlr-org.com/dev/reference/otfun.md).
+
 ## bbotk 1.9.0
 
 CRAN release: 2026-02-28
