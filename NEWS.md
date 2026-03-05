@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* feat: Add `mlr_test_functions` dictionary with well-known 2-D optimization test functions (Branin, Rosenbrock, Himmelblau, Rastrigin, etc.) and sugar functions `otfun()` / `otfuns()`.
+
 # bbotk 1.9.0
 
 * feat: Allow `"learn"` tag (direction=0) alongside minimize/maximize in `Codomain`.
