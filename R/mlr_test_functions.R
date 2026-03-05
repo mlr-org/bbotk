@@ -133,6 +133,36 @@ make_test_function = function(id, label, fun, domain, codomain = NULL, optimum, 
   })
 }
 
+# Forrester
+make_test_function(
+  id = "forrester",
+  label = "Forrester",
+  fun = function(xs) {
+    x = xs[["x"]]
+    list(y = (6 * x - 2)^2 * sin(12 * x - 4))
+  },
+  domain = ps(x = p_dbl(0, 1)),
+  optimum = -6.020740,
+  optimum_x = list(
+    list(x = 0.75724876)
+  )
+)
+
+# Gramacy-Lee
+make_test_function(
+  id = "gramacy_lee",
+  label = "Gramacy-Lee",
+  fun = function(xs) {
+    x = xs[["x"]]
+    list(y = sin(10 * pi * x) / (2 * x) + (x - 1)^4)
+  },
+  domain = ps(x = p_dbl(0.5, 2.5)),
+  optimum = -0.86901113,
+  optimum_x = list(
+    list(x = 0.54856344)
+  )
+)
+
 # Branin
 make_test_function(
   id = "branin",
