@@ -52,23 +52,25 @@ Sugar functions:
 ``` r
 as.data.table(mlr_test_functions)
 #> Key: <key>
-#>                 key           label     optimum optimum_x
-#>              <char>          <char>       <num>    <list>
-#>  1:           beale           Beale    0.000000 <list[1]>
-#>  2:          branin          Branin    0.397887 <list[3]>
-#>  3:       branin_wu       Branin-Wu    0.397887 <list[3]>
-#>  4:   cross_in_tray   Cross-in-Tray   -2.062610 <list[4]>
-#>  5:       eggholder       Eggholder -959.640700 <list[1]>
-#>  6: goldstein_price Goldstein-Price    3.000000 <list[1]>
-#>  7:      himmelblau      Himmelblau    0.000000 <list[4]>
-#>  8:    holder_table    Holder Table  -19.208500 <list[4]>
-#>  9:       mccormick       McCormick   -1.913300 <list[1]>
-#> 10:       rastrigin       Rastrigin    0.000000 <list[1]>
-#> 11:      rosenbrock      Rosenbrock    0.000000 <list[1]>
-#> 12:        schwefel        Schwefel    0.000000 <list[1]>
-#> 13:  six_hump_camel  Six-Hump Camel   -1.031600 <list[2]>
-#> 14:          sphere          Sphere    0.000000 <list[1]>
-#> 15: styblinski_tang Styblinski-Tang  -78.331980 <list[1]>
+#>                 key           label      optimum optimum_x
+#>              <char>          <char>        <num>    <list>
+#>  1:           beale           Beale    0.0000000 <list[1]>
+#>  2:          branin          Branin    0.3978870 <list[3]>
+#>  3:       branin_wu       Branin-Wu    0.3978870 <list[3]>
+#>  4:   cross_in_tray   Cross-in-Tray   -2.0626100 <list[4]>
+#>  5:       eggholder       Eggholder -959.6407000 <list[1]>
+#>  6:       forrester       Forrester   -6.0207400 <list[1]>
+#>  7: goldstein_price Goldstein-Price    3.0000000 <list[1]>
+#>  8:     gramacy_lee     Gramacy-Lee   -0.8690111 <list[1]>
+#>  9:      himmelblau      Himmelblau    0.0000000 <list[4]>
+#> 10:    holder_table    Holder Table  -19.2085000 <list[4]>
+#> 11:       mccormick       McCormick   -1.9133000 <list[1]>
+#> 12:       rastrigin       Rastrigin    0.0000000 <list[1]>
+#> 13:      rosenbrock      Rosenbrock    0.0000000 <list[1]>
+#> 14:        schwefel        Schwefel    0.0000000 <list[1]>
+#> 15:  six_hump_camel  Six-Hump Camel   -1.0316000 <list[2]>
+#> 16:          sphere          Sphere    0.0000000 <list[1]>
+#> 17: styblinski_tang Styblinski-Tang  -78.3319800 <list[1]>
 obj = mlr_test_functions$get("branin")
 obj$eval(list(x1 = 0, x2 = 0))
 #> $y

@@ -100,23 +100,25 @@ If <code>objects</code> is set to <code>TRUE</code>, the constructed objects are
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">mlr_test_functions</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;key&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 key           label     optimum optimum_x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              &lt;char&gt;          &lt;char&gt;       &lt;num&gt;    &lt;list&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:           beale           Beale    0.000000 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:          branin          Branin    0.397887 &lt;list[3]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:       branin_wu       Branin-Wu    0.397887 &lt;list[3]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:   cross_in_tray   Cross-in-Tray   -2.062610 &lt;list[4]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:       eggholder       Eggholder -959.640700 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: goldstein_price Goldstein-Price    3.000000 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      himmelblau      Himmelblau    0.000000 &lt;list[4]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:    holder_table    Holder Table  -19.208500 &lt;list[4]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:       mccormick       McCormick   -1.913300 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:       rastrigin       Rastrigin    0.000000 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:      rosenbrock      Rosenbrock    0.000000 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:        schwefel        Schwefel    0.000000 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:  six_hump_camel  Six-Hump Camel   -1.031600 &lt;list[2]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:          sphere          Sphere    0.000000 &lt;list[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: styblinski_tang Styblinski-Tang  -78.331980 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 key           label      optimum optimum_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              &lt;char&gt;          &lt;char&gt;        &lt;num&gt;    &lt;list&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:           beale           Beale    0.0000000 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:          branin          Branin    0.3978870 &lt;list[3]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:       branin_wu       Branin-Wu    0.3978870 &lt;list[3]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:   cross_in_tray   Cross-in-Tray   -2.0626100 &lt;list[4]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:       eggholder       Eggholder -959.6407000 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:       forrester       Forrester   -6.0207400 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: goldstein_price Goldstein-Price    3.0000000 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     gramacy_lee     Gramacy-Lee   -0.8690111 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      himmelblau      Himmelblau    0.0000000 &lt;list[4]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    holder_table    Holder Table  -19.2085000 &lt;list[4]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:       mccormick       McCormick   -1.9133000 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:       rastrigin       Rastrigin    0.0000000 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:      rosenbrock      Rosenbrock    0.0000000 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:        schwefel        Schwefel    0.0000000 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:  six_hump_camel  Six-Hump Camel   -1.0316000 &lt;list[2]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:          sphere          Sphere    0.0000000 &lt;list[1]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: styblinski_tang Styblinski-Tang  -78.3319800 &lt;list[1]&gt;</span>
 <span class="r-in"><span><span class="va">obj</span> <span class="op">=</span> <span class="va">mlr_test_functions</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"branin"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">obj</span><span class="op">$</span><span class="fu">eval</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">0</span>, x2 <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
