@@ -29,8 +29,8 @@ See \link[mlr3misc:Dictionary]{mlr3misc::Dictionary}.
 \itemize{
 \item \code{as.data.table(dict, ..., objects = FALSE)}\cr
 \link[mlr3misc:Dictionary]{mlr3misc::Dictionary} -> \code{\link[data.table:data.table]{data.table::data.table()}}\cr
-Returns a \code{\link[data.table:data.table]{data.table::data.table()}} with fields "key", "label", "optimum",
-and "optimum_x" as columns.
+Returns a \code{\link[data.table:data.table]{data.table::data.table()}} with fields "key", "label", "dimension",
+"optimum", and "optimum_x" as columns.
 If \code{objects} is set to \code{TRUE}, the constructed objects are returned in the list column named \code{object}.
 }
 }

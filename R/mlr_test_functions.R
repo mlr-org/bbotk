@@ -21,8 +21,8 @@
 #' @section S3 methods:
 #' * `as.data.table(dict, ..., objects = FALSE)`\cr
 #'   [mlr3misc::Dictionary] -> [data.table::data.table()]\cr
-#'   Returns a [data.table::data.table()] with fields "key", "label", "optimum",
-#'   and "optimum_x" as columns.
+#'   Returns a [data.table::data.table()] with fields "key", "label", "dimension",
+#'   "optimum", and "optimum_x" as columns.
 #'   If `objects` is set to `TRUE`, the constructed objects are returned in the list column named `object`.
 #'
 #' @seealso
@@ -46,6 +46,7 @@ as.data.table.DictionaryTestFunction = function(x, ..., objects = FALSE) {
       list(
         key = key,
         label = obj$label,
+        dimension = obj$domain$length,
         optimum = obj$optimum,
         optimum_x = list(obj$optimum_x)
       ),
