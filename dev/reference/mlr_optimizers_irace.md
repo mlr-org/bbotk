@@ -247,20 +247,20 @@ instance$archive
 instance$result
 # }
 }
-#> # 2026-03-05 09:12:22 UTC: Initialization
+#> # 2026-03-09 09:07:25 UTC: Initialization
 #> # Elitist race
 #> # Elitist new instances: 1
 #> # Elitist limit: 2
 #> # nbIterations: 3
 #> # minNbSurvival: 3
 #> # nbParameters: 2
-#> # seed: 624162489
+#> # seed: 1398266631
 #> # confidence level: 0.95
 #> # budget: 96
 #> # mu: 5
 #> # deterministic: FALSE
 #> 
-#> # 2026-03-05 09:12:22 UTC: Iteration 1 of 3
+#> # 2026-03-09 09:07:26 UTC: Iteration 1 of 3
 #> # experimentsUsed: 0
 #> # remainingBudget: 96
 #> # currentBudget: 32
@@ -277,21 +277,21 @@ instance$result
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          1|          5|          5|     18.55226488|          5|00:00:00|   NA|  NA|    NA|
-#> |x|          2|          5|          5|     18.55226488|         10|00:00:00|+1.00|1.00|0.0000|
-#> |x|          3|          5|          5|     18.55226488|         15|00:00:00|+1.00|1.00|0.0000|
-#> |x|          4|          5|          5|     18.55226488|         20|00:00:00|+1.00|1.00|0.0000|
-#> |-|          5|          1|          5|     18.55226488|         25|00:00:00|   NA|  NA|    NA|
+#> |x|          1|          5|          3|     38.16156304|          5|00:00:00|   NA|  NA|    NA|
+#> |x|          2|          5|          3|     38.16156304|         10|00:00:00|+1.00|1.00|0.0000|
+#> |x|          3|          5|          3|     38.16156304|         15|00:00:00|+1.00|1.00|0.0000|
+#> |x|          4|          5|          3|     38.16156304|         20|00:00:00|+1.00|1.00|0.0000|
+#> |-|          5|          1|          3|     38.16156304|         25|00:00:00|   NA|  NA|    NA|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> Best-so-far configuration:           5    mean value:      18.55226488
+#> Best-so-far configuration:           3    mean value:      38.16156304
 #> Description of the best-so-far configuration:
 #>   .ID.               x1               x2 .PARENT.
-#> 5    5 1.28557488322258 1.74866303801537       NA
+#> 3    3 6.90606743097305 5.68245559930801       NA
 #> 
-#> # 2026-03-05 09:12:23 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-03-09 09:07:26 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
-#> 5 1.28557488322258 1.74866303801537
-#> # 2026-03-05 09:12:23 UTC: Iteration 2 of 3
+#> 3 6.90606743097305 5.68245559930801
+#> # 2026-03-09 09:07:26 UTC: Iteration 2 of 3
 #> # experimentsUsed: 25
 #> # remainingBudget: 71
 #> # currentBudget: 35
@@ -308,23 +308,23 @@ instance$result
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          6|          5|          9|     2.612384843|          5|00:00:00|   NA|  NA|    NA|
-#> |x|          3|          5|          9|     2.612384843|          9|00:00:00|+1.00|1.00|0.0000|
-#> |x|          5|          5|          9|     2.612384843|         13|00:00:00|+1.00|1.00|0.0000|
-#> |x|          4|          5|          9|     2.612384843|         17|00:00:00|+1.00|1.00|0.0000|
-#> |-|          1|          2|          9|     2.612384843|         21|00:00:00|+1.00|1.00|0.0000|
+#> |x|          6|          5|          9|     16.75382725|          5|00:00:00|   NA|  NA|    NA|
+#> |x|          3|          5|          9|     16.75382725|          9|00:00:00|+1.00|1.00|0.0000|
+#> |x|          2|          5|          9|     16.75382725|         13|00:00:00|+1.00|1.00|0.0000|
+#> |x|          4|          5|          9|     16.75382725|         17|00:00:00|+1.00|1.00|0.0000|
+#> |-|          5|          2|          9|     16.75382725|         21|00:00:00|+1.00|1.00|0.0000|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> Best configuration for the instances in this race: 9
-#> Best-so-far configuration:           5    mean value:      18.55226488
+#> Best-so-far configuration:           3    mean value:      38.16156304
 #> Description of the best-so-far configuration:
 #>   .ID.               x1               x2 .PARENT.
-#> 5    5 1.28557488322258 1.74866303801537       NA
+#> 3    3 6.90606743097305 5.68245559930801       NA
 #> 
-#> # 2026-03-05 09:12:23 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-03-09 09:07:26 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
-#> 5 1.28557488322258 1.74866303801537
-#> 9 8.73834832730799 1.75747503641420
-#> # 2026-03-05 09:12:23 UTC: Iteration 3 of 3
+#> 3 6.90606743097305 5.68245559930801
+#> 9 4.69415420056065 4.00789529191280
+#> # 2026-03-09 09:07:26 UTC: Iteration 3 of 3
 #> # experimentsUsed: 46
 #> # remainingBudget: 50
 #> # currentBudget: 50
@@ -341,24 +341,24 @@ instance$result
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          7|          7|          9|     2.612384843|          7|00:00:00|   NA|  NA|    NA|
-#> |x|          2|          7|          9|     2.612384843|         13|00:00:00|+1.00|1.00|0.0000|
-#> |x|          1|          7|          9|     2.612384843|         18|00:00:00|+1.00|1.00|0.0000|
-#> |x|          5|          7|          9|     2.612384843|         23|00:00:00|+1.00|1.00|0.0000|
-#> |-|          3|          2|          9|     2.612384843|         28|00:00:00|+1.00|1.00|0.0000|
-#> |.|          4|          2|          9|     2.612384843|         28|00:00:00|+1.00|1.00|0.0000|
-#> |.|          6|          2|          9|     2.612384843|         28|00:00:00|+1.00|1.00|0.0000|
+#> |x|          7|          7|         13|     3.219114026|          7|00:00:00|   NA|  NA|    NA|
+#> |x|          5|          7|         13|     3.219114026|         12|00:00:00|+1.00|1.00|0.0000|
+#> |x|          1|          7|         13|     3.219114026|         18|00:00:00|+1.00|1.00|0.0000|
+#> |x|          2|          7|         13|     3.219114026|         23|00:00:00|+1.00|1.00|0.0000|
+#> |-|          3|          3|         13|     3.219114026|         28|00:00:00|+1.00|1.00|0.0000|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> Best-so-far configuration:           9    mean value:      2.612384843
+#> Best configuration for the instances in this race: 13
+#> Best-so-far configuration:           9    mean value:      16.75382725
 #> Description of the best-so-far configuration:
 #>   .ID.               x1              x2 .PARENT.
-#> 9    9 8.73834832730799 1.7574750364142        5
+#> 9    9 4.69415420056065 4.0078952919128        3
 #> 
-#> # 2026-03-05 09:12:23 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#>                 x1               x2
-#> 9 8.73834832730799 1.75747503641420
-#> 5 1.28557488322258 1.74866303801537
-#> # 2026-03-05 09:12:23 UTC: Iteration 4 of 4
+#> # 2026-03-09 09:07:26 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#>                  x1               x2
+#> 9  4.69415420056065 4.00789529191280
+#> 3  6.90606743097305 5.68245559930801
+#> 13 3.73045468483188 2.95782390456098
+#> # 2026-03-09 09:07:26 UTC: Iteration 4 of 4
 #> # experimentsUsed: 74
 #> # remainingBudget: 22
 #> # currentBudget: 22
@@ -375,41 +375,77 @@ instance$result
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          8|          4|          9|     2.612384843|          4|00:00:00|   NA|  NA|    NA|
-#> |x|          1|          4|          9|     2.612384843|          6|00:00:00|+1.00|1.00|0.0000|
-#> |x|          6|          4|          9|     2.612384843|          8|00:00:00|+1.00|1.00|0.0000|
-#> |x|          2|          4|          9|     2.612384843|         10|00:00:00|+1.00|1.00|0.0000|
-#> |-|          5|          2|          9|     2.612384843|         12|00:00:00|+1.00|1.00|0.0000|
-#> |.|          4|          2|          9|     2.612384843|         12|00:00:00|+1.00|1.00|0.0000|
-#> |.|          3|          2|          9|     2.612384843|         12|00:00:00|+1.00|1.00|0.0000|
-#> |.|          7|          2|          9|     2.612384843|         12|00:00:00|+1.00|1.00|0.0000|
+#> |x|          8|          4|         13|     3.219114026|          4|00:00:00|   NA|  NA|    NA|
+#> |x|          6|          4|         13|     3.219114026|          6|00:00:00|+1.00|1.00|0.0000|
+#> |x|          7|          4|         13|     3.219114026|          7|00:00:00|+1.00|1.00|0.0000|
+#> |x|          1|          4|         13|     3.219114026|          8|00:00:00|+1.00|1.00|0.0000|
+#> |-|          2|          3|         13|     3.219114026|          9|00:00:00|+1.00|1.00|0.0000|
+#> |.|          3|          3|         13|     3.219114026|          9|00:00:00|+1.00|1.00|0.0000|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> Best-so-far configuration:           9    mean value:      2.612384843
+#> Best configuration for the instances in this race: 13
+#> Best-so-far configuration:           9    mean value:      16.75382725
 #> Description of the best-so-far configuration:
 #>   .ID.               x1              x2 .PARENT.
-#> 9    9 8.73834832730799 1.7574750364142        5
+#> 9    9 4.69415420056065 4.0078952919128        3
 #> 
-#> # 2026-03-05 09:12:24 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#>                 x1               x2
-#> 9 8.73834832730799 1.75747503641420
-#> 5 1.28557488322258 1.74866303801537
-#> # 2026-03-05 09:12:24 UTC: Stopped because there is not enough budget left to race more than the minimum (3).
+#> # 2026-03-09 09:07:26 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#>                  x1               x2
+#> 9  4.69415420056065 4.00789529191280
+#> 3  6.90606743097305 5.68245559930801
+#> 13 3.73045468483188 2.95782390456098
+#> # 2026-03-09 09:07:26 UTC: Iteration 5 of 5
+#> # experimentsUsed: 83
+#> # remainingBudget: 13
+#> # currentBudget: 13
+#> # nbConfigurations: 4
+#> # Markers:
+#>      x No test is performed.
+#>      c Configurations are discarded only due to capping.
+#>      - The test is performed and some configurations are discarded.
+#>      = The test is performed but no configuration is discarded.
+#>      ! The test is performed and configurations could be discarded but elite configurations are preserved.
+#>      . Alive configurations were already evaluated on this instance and nothing is discarded.
+#>      : All alive configurations are elite, but some need to be evaluated on this instance.
+#> 
+#> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
+#> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
+#> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
+#> |x|          3|          4|         13|     3.219114026|          1|00:00:00|   NA|  NA|    NA|
+#> |x|          4|          4|         13|     3.219114026|          3|00:00:00|+1.00|1.00|0.0000|
+#> |x|          8|          4|         13|     3.219114026|          4|00:00:00|+1.00|1.00|0.0000|
+#> |x|          2|          4|         13|     3.219114026|          5|00:00:00|+1.00|1.00|0.0000|
+#> |-|          7|          3|         13|     3.219114026|          6|00:00:00|+1.00|1.00|0.0000|
+#> |.|          6|          3|         13|     3.219114026|          6|00:00:00|+1.00|1.00|0.0000|
+#> |.|          5|          3|         13|     3.219114026|          6|00:00:00|+1.00|1.00|0.0000|
+#> |.|          1|          3|         13|     3.219114026|          6|00:00:00|+1.00|1.00|0.0000|
+#> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
+#> Best-so-far configuration:          13    mean value:      3.219114026
+#> Description of the best-so-far configuration:
+#>    .ID.               x1               x2 .PARENT.
+#> 13   13 3.73045468483188 2.95782390456098        9
+#> 
+#> # 2026-03-09 09:07:27 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#>                  x1               x2
+#> 13 3.73045468483188 2.95782390456098
+#> 9  4.69415420056065 4.00789529191280
+#> 3  6.90606743097305 5.68245559930801
+#> # 2026-03-09 09:07:27 UTC: Stopped because there is not enough budget left to race more than the minimum (3).
 #> # You may either increase the budget or set 'minNbSurvival' to a lower value.
-#> # Iteration: 5
-#> # nbIterations: 5
-#> # experimentsUsed: 86
+#> # Iteration: 6
+#> # nbIterations: 6
+#> # experimentsUsed: 89
 #> # timeUsed: 0
-#> # remainingBudget: 10
-#> # currentBudget: 10
-#> # number of elites: 2
+#> # remainingBudget: 7
+#> # currentBudget: 7
+#> # number of elites: 3
 #> # nbConfigurations: 3
-#> # Total CPU user time: 1.751, CPU sys time: 0.012, Wall-clock time: 1.764
-#> # 2026-03-05 09:12:24 UTC: Starting post-selection:
-#> # Configurations selected: 9, 5, 1, 2.
-#> # Pending instances: 1, 1, 4, 4.
-#> # 2026-03-05 09:12:24 UTC: seed: 624162489
+#> # Total CPU user time: 1.773, CPU sys time: 0.008, Wall-clock time: 1.782
+#> # 2026-03-09 09:07:27 UTC: Starting post-selection:
+#> # Configurations selected: 13, 9, 3, 1.
+#> # Pending instances: 1, 1, 1, 4.
+#> # 2026-03-09 09:07:28 UTC: seed: 1398266631
 #> # Configurations: 4
-#> # Available experiments: 10
+#> # Available experiments: 7
 #> # minSurvival: 1
 #> # Markers:
 #>      x No test is performed.
@@ -423,25 +459,26 @@ instance$result
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
 #> | |   Instance|      Alive|       Best|       Mean best| Exp so far|  W time|  rho|KenW|  Qvar|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> |x|          6|          4|          9|     2.612384843|          2|00:00:00|   NA|  NA|    NA|
-#> |.|          1|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
-#> |.|          2|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
-#> |.|          5|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
-#> |.|          3|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
-#> |.|          4|          4|          9|     2.612384843|          2|00:00:00|+1.00|1.00|0.0000|
-#> |x|          8|          4|          9|     2.612384843|          4|00:00:00|+1.00|1.00|0.0000|
-#> |-|          7|          1|          9|     2.612384843|          6|00:00:00|   NA|  NA|    NA|
+#> |.|          4|          4|         13|     3.219114026|          0|00:00:00|   NA|  NA|    NA|
+#> |x|          7|          4|         13|     3.219114026|          1|00:00:00|+1.00|1.00|0.0000|
+#> |.|          1|          4|         13|     3.219114026|          1|00:00:00|+1.00|1.00|0.0000|
+#> |.|          2|          4|         13|     3.219114026|          1|00:00:00|+1.00|1.00|0.0000|
+#> |x|          6|          4|         13|     3.219114026|          2|00:00:00|+1.00|1.00|0.0000|
+#> |.|          5|          4|         13|     3.219114026|          2|00:00:00|+1.00|1.00|0.0000|
+#> |x|          8|          4|         13|     3.219114026|          3|00:00:00|+1.00|1.00|0.0000|
+#> |.|          3|          4|         13|     3.219114026|          3|00:00:00|+1.00|1.00|0.0000|
+#> |-|          9|          1|         13|     3.219114026|          7|00:00:00|   NA|  NA|    NA|
 #> +-+-----------+-----------+-----------+----------------+-----------+--------+-----+----+------+
-#> Best-so-far configuration:           9    mean value:      2.612384843
+#> Best-so-far configuration:          13    mean value:      3.219114026
 #> Description of the best-so-far configuration:
-#>   .ID.               x1              x2 .PARENT.
-#> 9    9 8.73834832730799 1.7574750364142        5
+#>    .ID.               x1               x2 .PARENT.
+#> 13   13 3.73045468483188 2.95782390456098        9
 #> 
-#> # 2026-03-05 09:12:25 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
-#>                 x1              x2
-#> 9 8.73834832730799 1.7574750364142
-#> # Total CPU user time: 2.088, CPU sys time: 0.019, Wall-clock time: 2.108
+#> # 2026-03-09 09:07:28 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#>                  x1               x2
+#> 13 3.73045468483188 2.95782390456098
+#> # Total CPU user time: 2.156, CPU sys time: 0.011, Wall-clock time: 2.168
 #>          x1       x2 configuration  x_domain        y
 #>       <num>    <num>         <int>    <list>    <num>
-#> 1: 8.738348 1.757475             9 <list[2]> 2.612385
+#> 1: 3.730455 2.957824            13 <list[2]> 3.219114
 ```
