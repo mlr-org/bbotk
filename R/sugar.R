@@ -117,7 +117,7 @@ oi = function(
   callbacks = NULL,
   check_values = TRUE,
   keep_evals = "all"
-  ) {
+) {
   assert_r6(objective, "Objective")
 
   Instance = if (objective$codomain$target_length == 1) OptimInstanceBatchSingleCrit else OptimInstanceBatchMultiCrit
@@ -125,7 +125,8 @@ oi = function(
     objective = objective,
     search_space = search_space,
     terminator = terminator,
-    callbacks = callbacks)
+    callbacks = callbacks
+  )
 }
 
 #' @title Syntactic Sugar for Optimization Test Functions
@@ -220,7 +221,7 @@ oi_async = function(
   check_values = FALSE,
   callbacks = NULL,
   rush = NULL
-  ) {
+) {
   assert_r6(objective, "Objective")
 
   Instance = if (objective$codomain$target_length == 1) OptimInstanceAsyncSingleCrit else OptimInstanceAsyncMultiCrit
@@ -230,5 +231,6 @@ oi_async = function(
     terminator = terminator,
     check_values = check_values,
     callbacks = callbacks,
-    rush = rush)
+    rush = rush
+  )
 }

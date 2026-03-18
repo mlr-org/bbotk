@@ -5,7 +5,8 @@
 #'
 #' @description
 #' `OptimizerAsyncGridSearch` class that implements a grid search.
-#' The grid is constructed as a Cartesian product over discretized values per parameter, see [paradox::generate_design_grid()].
+#' The grid is constructed as a Cartesian product over discretized values per parameter,
+#' see [paradox::generate_design_grid()].
 #' The points of the grid are evaluated in a random order.
 #'
 #' @templateVar id async_grid_search
@@ -75,11 +76,11 @@
 #' # covert to data.table
 #' as.data.table(instance$archive)
 #' }
-OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
+OptimizerAsyncGridSearch = R6Class(
+  "OptimizerAsyncGridSearch",
   inherit = OptimizerAsync,
 
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -108,7 +109,11 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
     optimize = function(inst) {
       # generate grid
       pv = self$param_set$values
-      design = generate_design_grid(inst$search_space, resolution = pv$resolution, param_resolutions = pv$param_resolutions)$data
+      design = generate_design_grid(
+        inst$search_space,
+        resolution = pv$resolution,
+        param_resolutions = pv$param_resolutions
+      )$data
 
       optimize_async_default(inst, self, design)
     }
@@ -123,4 +128,3 @@ OptimizerAsyncGridSearch = R6Class("OptimizerAsyncGridSearch",
 )
 
 mlr_optimizers$add("async_grid_search", OptimizerAsyncGridSearch)
-

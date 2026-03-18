@@ -1,6 +1,7 @@
 library(checkmate)
 
 # Simple 1D Function
+# nolint next
 PS_1D_domain = ps(
   x = p_dbl(lower = -1, upper = 1),
   foo = p_uty() # the domain of the function should not matter.
@@ -15,6 +16,7 @@ FUN_1D_CODOMAIN = ps(y = p_dbl(tags = c("minimize", "random_tag")))
 OBJ_1D = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D_domain, properties = "single-crit")
 
 # Simple 2D Function
+# nolint next
 PS_2D_domain = ps(
   x1 = p_dbl(lower = -1, upper = 1),
   x2 = p_dbl(lower = -1, upper = 1),
@@ -38,7 +40,7 @@ PS_2D_TRF = ps(
   x2 = p_dbl(lower = 1, upper = 3),
   .extra_trafo = function(x, param_set) {
     x$x2 = x$x2 - 2
-    return(x)
+    x
   }
 )
 
@@ -60,8 +62,7 @@ FUN_2D_2D_CODOMAIN = ps(
   y2 = p_dbl(tags = "maximize")
 )
 
-OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D,
-  codomain = FUN_2D_2D_CODOMAIN, properties = "multi-crit")
+OBJ_2D_2D = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN, properties = "multi-crit")
 
 # General Helper
 MAKE_INST = function(objective = OBJ_2D, search_space = PS_2D, terminator = 5L) {
@@ -86,10 +87,10 @@ MAKE_INST_2D = function(terminator) {
 }
 
 MAKE_INST_2D_2D = function(terminator) {
-  MAKE_INST(objective = OBJ_2D_2D, search_space = PS_2D,
-    terminator = terminator)
+  MAKE_INST(objective = OBJ_2D_2D, search_space = PS_2D, terminator = terminator)
 }
 
+# nolint start: object_usage_linter.
 test_optimizer_1d = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
   instance = OptimInstanceBatchSingleCrit$new(objective = OBJ_1D, search_space = PS_1D, terminator = terminator)
@@ -122,7 +123,11 @@ test_optimizer_2d = function(key, ..., term_evals = 2L, real_evals = term_evals)
 
 test_optimizer_dependencies = function(key, ..., term_evals = 2L, real_evals = term_evals) {
   terminator = trm("evals", n_evals = term_evals)
-  instance = OptimInstanceBatchSingleCrit$new(objective = OBJ_2D_DEPS, search_space = PS_2D_DEPS, terminator = terminator)
+  instance = OptimInstanceBatchSingleCrit$new(
+    objective = OBJ_2D_DEPS,
+    search_space = PS_2D_DEPS,
+    terminator = terminator
+  )
   res = test_optimizer(instance = instance, key = key, ..., real_evals = real_evals)
   x_opt = res$instance$result_x_domain
   y_opt = res$instance$result_y
@@ -157,13 +162,19 @@ random_search = function(inst, batch_size = 10) {
   return(inst$archive)
 }
 
-MAKE_OPT = function(param_set = ps(), param_classes = c("ParamDbl", "ParamInt"),
-  properties = "single-crit", packages = character(0)) {
-  OptimizerBatch$new(id = "optimizer",
+MAKE_OPT = function(
+  param_set = ps(),
+  param_classes = c("ParamDbl", "ParamInt"),
+  properties = "single-crit",
+  packages = character(0)
+) {
+  OptimizerBatch$new(
+    id = "optimizer",
     param_set = param_set,
     param_classes = param_classes,
     properties = properties,
-    packages = packages)
+    packages = packages
+  )
 }
 
 expect_irace_parameters = function(parameters, names, types, domain, conditions, depends, hierarchy) {
@@ -237,3 +248,4 @@ check_test_results = function(testres) {
     expect_true(testres[[i]], info = names(testres)[i], label = names(testres)[i])
   }
 }
+# nolint end: object_usage_linter.

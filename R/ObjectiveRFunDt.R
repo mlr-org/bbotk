@@ -45,10 +45,10 @@
 #'
 #' # evaluate multiple input values as data.table
 #' objective$eval_dt(data.table::data.table(x1 = 1:2, x2 = 3:4))
-ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
+ObjectiveRFunDt = R6Class(
+  "ObjectiveRFunDt",
   inherit = Objective,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -66,7 +66,7 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
       constants = ps(),
       packages = character(),
       check_values = TRUE
-      ) {
+    ) {
       if (is.null(codomain)) {
         codomain = ps(y = p_dbl(tags = "minimize"))
       }
@@ -81,7 +81,8 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
         packages = packages,
         check_values = check_values,
         label = "Objective Custom R Function Eval Data Table",
-        man = "bbotk::ObjectiveRFunDt")
+        man = "bbotk::ObjectiveRFunDt"
+      )
     },
 
     #' @description
@@ -96,11 +97,15 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' and multiple y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_many = function(xss) {
-      if (self$check_values) lapply(xss, self$domain$assert)
+      if (self$check_values) {
+        lapply(xss, self$domain$assert)
+      }
       xdt = rbindlist(xss, use.names = TRUE, fill = TRUE)
       # add missing columns
       if (ncol(xdt) < self$domain$length) {
-        proto = as.data.table(lapply(self$domain$class, switch,
+        proto = as.data.table(lapply(
+          self$domain$class,
+          switch,
           ParamFct = NA_character_,
           ParamDbl = NA_real_,
           ParamInt = NA_integer_,
@@ -110,8 +115,10 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
         xdt = rbindlist(list(proto, xdt), use.names = TRUE, fill = TRUE)[-1]
       }
       res = invoke(private$.fun, xdt, .args = self$constants$values)
-      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      return(res)
+      if (self$check_values) {
+        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
+      }
+      res
     },
 
     #' @description
@@ -121,19 +128,24 @@ ObjectiveRFunDt = R6Class("ObjectiveRFunDt",
     #' and multiple y-columns for multi-criteria functions, e.g.
     #' `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     eval_dt = function(xdt) {
-      if (self$check_values) self$domain$assert_dt(xdt)
+      if (self$check_values) {
+        self$domain$assert_dt(xdt)
+      }
       res = invoke(private$.fun, xdt, .args = self$constants$values)
-      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      return(res)
+      if (self$check_values) {
+        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
+      }
+      res
     }
   ),
 
   active = list(
-
     #' @field fun (`function`)\cr
     #' Objective function.
     fun = function(lhs) {
-      if (!missing(lhs) && !identical(lhs, private$.fun)) stop("fun is read-only")
+      if (!missing(lhs) && !identical(lhs, private$.fun)) {
+        stop("fun is read-only")
+      }
       private$.fun
     }
   ),

@@ -31,5 +31,11 @@ error_bbotk = function(msg, ..., class = NULL, signal = TRUE, parent = NULL) {
 error_bbotk_terminated = function(msg, ..., class = NULL, signal = TRUE, parent = NULL) {
   # "terminated_error" is kept for backwards compatibility with downstream packages
   # (e.g. miesmuschel, mlr3tuning, mlr3book) that catch this class in tryCatch handlers.
-  error_mlr3(msg, ..., class = c(class, "Mlr3ErrorBbotkTerminated", "Mlr3ErrorBbotk", "terminated_error"), signal = signal, parent = parent)
+  error_mlr3(
+    msg,
+    ...,
+    class = c(class, "Mlr3ErrorBbotkTerminated", "Mlr3ErrorBbotk", "terminated_error"),
+    signal = signal,
+    parent = parent
+  )
 }

@@ -10,11 +10,9 @@ test_that("on_optimization_begin works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
-    on_optimization_begin = function(callback, context) {
-      context$instance$terminator$param_set$values$n_evals = 20
-    }
-  )
+  callback = callback_async(id = "test", on_optimization_begin = function(callback, context) {
+    context$instance$terminator$param_set$values$n_evals = 20
+  })
 
   instance = oi_async(
     objective = OBJ_1D,
@@ -37,11 +35,9 @@ test_that("on_optimization_end works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
-    on_optimization_end = function(callback, context) {
-      context$instance$terminator$param_set$values$n_evals = 200
-    }
-  )
+  callback = callback_async(id = "test", on_optimization_end = function(callback, context) {
+    context$instance$terminator$param_set$values$n_evals = 200
+  })
 
   instance = oi_async(
     objective = OBJ_1D,
@@ -65,12 +61,10 @@ test_that("on_worker_begin works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
-    on_worker_begin = function(callback, context) {
-      instance = context$instance
-      mlr3misc::get_private(instance)$.eval_point(list(x = 1))
-    }
-  )
+  callback = callback_async(id = "test", on_worker_begin = function(callback, context) {
+    instance = context$instance
+    mlr3misc::get_private(instance)$.eval_point(list(x = 1))
+  })
 
   instance = oi_async(
     objective = OBJ_1D,
@@ -94,12 +88,10 @@ test_that("on_worker_end works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
-    on_worker_end = function(callback, context) {
-      instance = context$instance
-      mlr3misc::get_private(instance)$.eval_point(list(x = 1))
-    }
-  )
+  callback = callback_async(id = "test", on_worker_end = function(callback, context) {
+    instance = context$instance
+    mlr3misc::get_private(instance)$.eval_point(list(x = 1))
+  })
 
   instance = oi_async(
     objective = OBJ_1D,
@@ -124,7 +116,8 @@ test_that("on_optimizer_before_eval and on_optimizer_after_eval works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
+  callback = callback_async(
+    id = "test",
     on_optimizer_before_eval = function(callback, context) {
       context$xs = list(x = 1)
       context$xs_trafoed = list(x = 0)
@@ -160,12 +153,10 @@ test_that("on_result_begin in OptimInstanceAsyncSingleCrit works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
-    on_result_begin = function(callback, context) {
-      context$result_xdt = data.table(x = 1)
-      context$result_y = c(y = 2)
-    }
-  )
+  callback = callback_async(id = "test", on_result_begin = function(callback, context) {
+    context$result_xdt = data.table(x = 1)
+    context$result_y = c(y = 2)
+  })
 
   instance = oi_async(
     objective = OBJ_1D,
@@ -189,11 +180,9 @@ test_that("on_result_end in OptimInstanceAsyncSingleCrit works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
-    on_result_end = function(callback, context) {
-      context$result$y = 2
-    }
-  )
+  callback = callback_async(id = "test", on_result_end = function(callback, context) {
+    context$result$y = 2
+  })
 
   instance = oi_async(
     objective = OBJ_1D,
@@ -216,11 +205,14 @@ test_that("on_result in OptimInstanceAsyncSingleCrit works", {
     mirai::daemons(0)
   })
 
-  expect_warning({callback = callback_async(id = "test",
-    on_result = function(callback, context) {
-      context$result = 2
-    }
-  )}, "deprecated")
+  expect_warning(
+    {
+      callback = callback_async(id = "test", on_result = function(callback, context) {
+        context$result = 2
+      })
+    },
+    "deprecated"
+  )
 
   instance = oi_async(
     objective = OBJ_1D,
@@ -245,12 +237,10 @@ test_that("on_result_begin in OptimInstanceAsyncMultiCrit works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
-    on_result_begin = function(callback, context) {
-      context$result_xdt = data.table(x1 = 1, x2 = 1)
-      context$result_ydt = data.table(y1 = 2, y2 = 2)
-    }
-  )
+  callback = callback_async(id = "test", on_result_begin = function(callback, context) {
+    context$result_xdt = data.table(x1 = 1, x2 = 1)
+    context$result_ydt = data.table(y1 = 2, y2 = 2)
+  })
 
   instance = oi_async(
     objective = OBJ_2D_2D,
@@ -275,12 +265,10 @@ test_that("on_result_end in OptimInstanceAsyncMultiCrit works", {
     mirai::daemons(0)
   })
 
-  callback = callback_async(id = "test",
-    on_result_end = function(callback, context) {
-      set(context$result, j = "y1", value = 2)
-      set(context$result, j = "y2", value = 3)
-    }
-  )
+  callback = callback_async(id = "test", on_result_end = function(callback, context) {
+    set(context$result, j = "y1", value = 2)
+    set(context$result, j = "y2", value = 3)
+  })
 
   instance = oi_async(
     objective = OBJ_2D_2D,
@@ -303,12 +291,15 @@ test_that("on_result in OptimInstanceAsyncMultiCrit works", {
     mirai::daemons(0)
   })
 
-  expect_warning({callback = callback_async(id = "test",
-    on_result = function(callback, context) {
-      set(context$result, j = "y1", value = 2)
-      set(context$result, j = "y2", value = 3)
-    }
-  )}, "deprecated")
+  expect_warning(
+    {
+      callback = callback_async(id = "test", on_result = function(callback, context) {
+        set(context$result, j = "y1", value = 2)
+        set(context$result, j = "y2", value = 3)
+      })
+    },
+    "deprecated"
+  )
 
   instance = oi_async(
     objective = OBJ_2D_2D,
@@ -323,4 +314,3 @@ test_that("on_result in OptimInstanceAsyncMultiCrit works", {
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 3)
 })
-

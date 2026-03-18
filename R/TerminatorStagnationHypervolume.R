@@ -4,7 +4,8 @@
 #' @include Terminator.R
 #'
 #' @description
-#' Class to terminate the optimization after the hypervolume stagnates, i.e. does not improve more than `threshold` over the last `iters` iterations.
+#' Class to terminate the optimization after the hypervolume stagnates,
+#' i.e. does not improve more than `threshold` over the last `iters` iterations.
 #'
 #' @templateVar id stagnation_hypervolume
 #' @template section_dictionary_terminator
@@ -25,10 +26,11 @@
 #' @examples
 #' TerminatorStagnation$new()
 #' trm("stagnation", iters = 5, threshold = 1e-5)
-TerminatorStagnationHypervolume = R6Class("TerminatorStagnationHypervolume",
+# nolint next
+TerminatorStagnationHypervolume = R6Class(
+  "TerminatorStagnationHypervolume",
   inherit = Terminator,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -79,7 +81,7 @@ TerminatorStagnationHypervolume = R6Class("TerminatorStagnationHypervolume",
       hypervolume_before = emoa::dominated_hypervolume(points_before)
 
       # hypervolume is always maximized
-      return(hypervolume <= hypervolume_before + pv$threshold)
+      hypervolume <= hypervolume_before + pv$threshold
     }
   )
 )

@@ -15,12 +15,14 @@ test_that("OptimizerBatchCmaes", {
   objective = ObjectiveRFun$new(
     fun = objective_function,
     domain = domain,
-    codomain = codomain)
+    codomain = codomain
+  )
 
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 10L))
+    terminator = trm("evals", n_evals = 10L)
+  )
 
   z = test_optimizer(instance, "cmaes", real_evals = 10L)
 

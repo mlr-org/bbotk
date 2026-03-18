@@ -10,15 +10,22 @@
 #'
 #' * Evaluations in a instance are performed in batches.
 #' * Before each batch evaluation, the [Terminator] is checked, and if it is positive, we stop.
-#' * The optimization algorithm itself might decide not to produce any more points, or even might decide to do a smaller batch in its last evaluation.
+#' * The optimization algorithm itself might decide not to produce any more points,
+#' or even might decide to do a smaller batch in its last evaluation.
 #'
 #' Therefore the following note seems in order:
-#' While it is definitely possible to execute a fine-grained control for termination, and for many optimization algorithms we can specify exactly when to stop, it might happen that too few or even too many evaluations are performed, especially if multiple points are evaluated in a single batch (c.f. batch size parameter of many optimization algorithms).
-#' So it is advised to check the size of the returned archive, in particular if you are benchmarking multiple optimization algorithms.
+#' While it is definitely possible to execute a fine-grained control for termination,
+#' and for many optimization algorithms we can specify exactly when to stop,
+#' it might happen that too few or even too many evaluations are performed,
+#' especially if multiple points are evaluated in a single batch
+#' (c.f. batch size parameter of many optimization algorithms).
+#' So it is advised to check the size of the returned archive,
+#' in particular if you are benchmarking multiple optimization algorithms.
 #'
 #' @section Technical details:
 #' `Terminator` subclasses can overwrite `.status()` to support progress bars via the package \CRANpkg{progressr}.
-#' The method must return the maximum number of steps (`max_steps`) and the currently achieved number of steps (`current_steps`) as a named integer vector.
+#' The method must return the maximum number of steps (`max_steps`) and the currently achieved number of steps
+#' (`current_steps`) as a named integer vector.
 #'
 #' @family Terminator
 #'
@@ -33,7 +40,8 @@
 #' @template param_archive
 #'
 #' @export
-Terminator = R6Class("Terminator",
+Terminator = R6Class(
+  "Terminator",
   public = list(
     #' @template field_id
     id = NULL,
@@ -47,7 +55,14 @@ Terminator = R6Class("Terminator",
     #'
     #' @param unit (`character()`)\cr
     #'   Unit of steps.
-    initialize = function(id, param_set = ps(), properties = character(), unit = "percent", label = NA_character_, man = NA_character_) {
+    initialize = function(
+      id,
+      param_set = ps(),
+      properties = character(),
+      unit = "percent",
+      label = NA_character_,
+      man = NA_character_
+    ) {
       self$id = assert_string(id, min.chars = 1L)
       private$.param_set = assert_param_set(param_set)
       private$.properties = assert_subset(properties, bbotk_reflections$terminator_properties)
@@ -109,7 +124,6 @@ Terminator = R6Class("Terminator",
   ),
 
   active = list(
-
     param_set = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.param_set)) {
         stop("$param_set is read-only.")
@@ -142,7 +156,7 @@ Terminator = R6Class("Terminator",
     },
 
     man = function(rhs) {
-assert_ro_binding(rhs)
+      assert_ro_binding(rhs)
       private$.man
     }
   ),

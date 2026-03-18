@@ -21,7 +21,6 @@ test_that("TerminatorStagnationHypervolume works", {
 })
 
 test_that("TerminatorStagnationHypervolume errors with direction=0 (learn tag)", {
-
   terminator = trm("stagnation_hypervolume")
   terminator$param_set$values$iters = 1
   codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))

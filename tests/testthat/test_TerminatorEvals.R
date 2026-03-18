@@ -1,5 +1,4 @@
 test_that("TerminatorEvals works", {
-
   # only n_evals
   inst = MAKE_INST_2D(trm("evals", n_evals = 7))
   expect_snapshot(inst$terminator)
@@ -23,7 +22,6 @@ test_that("TerminatorEvals works", {
 })
 
 test_that("status method works", {
-
   # only n_evals
   terminator = trm("evals", n_evals = 10)
   inst = MAKE_INST_1D(terminator = terminator)

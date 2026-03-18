@@ -28,10 +28,10 @@
 #' @examples
 #' TerminatorStagnation$new()
 #' trm("stagnation", iters = 5, threshold = 1e-5)
-TerminatorStagnation = R6Class("TerminatorStagnation",
+TerminatorStagnation = R6Class(
+  "TerminatorStagnation",
   inherit = Terminator,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -78,9 +78,9 @@ TerminatorStagnation = R6Class("TerminatorStagnation",
       perf_before = head(ydata, -iters)
       perf_window = tail(ydata, iters)
       if (minimize) {
-        return(min(perf_window) >= min(perf_before) - pv$threshold)
+        min(perf_window) >= min(perf_before) - pv$threshold
       } else {
-        return(max(perf_window) <= max(perf_before) + pv$threshold)
+        max(perf_window) <= max(perf_before) + pv$threshold
       }
     }
   )

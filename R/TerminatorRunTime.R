@@ -26,10 +26,10 @@
 #' @export
 #' @examples
 #' trm("run_time", secs = 1800)
-TerminatorRunTime = R6Class("TerminatorRunTime",
+TerminatorRunTime = R6Class(
+  "TerminatorRunTime",
   inherit = Terminator,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -43,7 +43,8 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
         properties = c("single-crit", "multi-crit"),
         unit = "seconds",
         label = "Run Time",
-        man = "bbotk::mlr_terminators_run_time")
+        man = "bbotk::mlr_terminators_run_time"
+      )
     },
 
     #' @description
@@ -53,9 +54,11 @@ TerminatorRunTime = R6Class("TerminatorRunTime",
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       assert_multi_class(archive, c("Archive", "ArchiveAsync"))
-      if (is.null(archive$start_time)) return(FALSE)
+      if (is.null(archive$start_time)) {
+        return(FALSE)
+      }
       d = as.numeric(difftime(Sys.time(), archive$start_time, units = "secs"))
-      return(d >= self$param_set$values$secs)
+      d >= self$param_set$values$secs
     }
   ),
 

@@ -44,13 +44,7 @@ ii = OptimInstanceBatchSingleCrit$new(
 )
 
 
-oo2 = opt("local_search_2",
-  n_searches = 5,
-  n_neighbors = 5,
-  mut_sd = 0.1,
-  n_steps = 5
-)
+oo2 = opt("local_search_2", n_searches = 5, n_neighbors = 5, mut_sd = 0.1, n_steps = 5)
 
 oo2$optimize(ii)
 print(ii$archive$data)
-

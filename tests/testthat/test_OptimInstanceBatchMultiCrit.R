@@ -68,7 +68,6 @@ test_that("OptimInstanceBatchMultiCrit works with empty search space", {
   expect_data_table(instance$archive$data, nrows = 20)
   expect_equal(instance$result$x_domain[[1]], list())
 
-
   # optimizer lenght(y) == 1
   instance = OptimInstanceBatchMultiCrit$new(objective, terminator = trm("evals", n_evals = 1))
   optimizer = opt("random_search")

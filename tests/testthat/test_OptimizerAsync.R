@@ -126,8 +126,8 @@ test_that("Required packages are loaded", {
 
   objective = ObjectiveRFun$new(
     fun = function(xs) {
-      if("irace" %in% loadedNamespaces()) {
-        return(list(y = 1))
+      if ("irace" %in% loadedNamespaces()) {
+        list(y = 1)
       } else {
         stop("irace is not loaded")
       }
@@ -135,7 +135,6 @@ test_that("Required packages are loaded", {
     domain = PS_2D_domain,
     properties = "single-crit"
   )
-
 
   instance = oi_async(
     objective = objective,
@@ -151,8 +150,8 @@ test_that("Required packages are loaded", {
 
   objective = ObjectiveRFun$new(
     fun = function(xs) {
-      if("irace" %in% loadedNamespaces()) {
-        return(list(y = 1))
+      if ("irace" %in% loadedNamespaces()) {
+        list(y = 1)
       } else {
         stop("irace is not loaded")
       }
@@ -161,7 +160,6 @@ test_that("Required packages are loaded", {
     properties = "single-crit",
     packages = "irace"
   )
-
 
   instance = oi_async(
     objective = objective,

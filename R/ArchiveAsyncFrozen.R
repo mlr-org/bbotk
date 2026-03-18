@@ -1,4 +1,3 @@
-
 #' @title Frozen Rush Data Storage
 #'
 #' @description
@@ -69,10 +68,10 @@
 #' # covert to data.table
 #' as.data.table(instance$archive)
 #' }
-ArchiveAsyncFrozen = R6Class("ArchiveAsyncFrozen",
+ArchiveAsyncFrozen = R6Class(
+  "ArchiveAsyncFrozen",
   inherit = ArchiveAsync,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -153,7 +152,7 @@ ArchiveAsyncFrozen = R6Class("ArchiveAsyncFrozen",
       fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
       states = c("queued", "running", "finished", "failed"),
       reset_cache = FALSE
-      ) {
+    ) {
       stop("Archive is frozen")
     },
 
@@ -169,7 +168,6 @@ ArchiveAsyncFrozen = R6Class("ArchiveAsyncFrozen",
   ),
 
   active = list(
-
     #' @field data ([data.table::data.table])\cr
     #' Data table with all finished points.
     data = function(rhs) {
@@ -234,7 +232,8 @@ ArchiveAsyncFrozen = R6Class("ArchiveAsyncFrozen",
 )
 
 #' @export
-as.data.table.ArchiveAsync = function(x, keep.rownames = FALSE, unnest = "x_domain", ...) { # nolint
+# nolint next
+as.data.table.ArchiveAsync = function(x, keep.rownames = FALSE, unnest = "x_domain", ...) {
   data = x$data
   cols = intersect(unnest, names(data))
   unnest(data, cols, prefix = "{col}_")

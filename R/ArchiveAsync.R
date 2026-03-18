@@ -72,10 +72,10 @@
 #' # reset the rush data base
 #' instance$rush$reset()
 #' }
-ArchiveAsync = R6Class("ArchiveAsync",
+ArchiveAsync = R6Class(
+  "ArchiveAsync",
   inherit = Archive,
   public = list(
-
     rush = NULL,
 
     #' @description
@@ -89,7 +89,8 @@ ArchiveAsync = R6Class("ArchiveAsync",
         codomain = codomain,
         check_values = check_values,
         label = "Rush Data Storage",
-        man = "bbotk::ArchiveAsync")
+        man = "bbotk::ArchiveAsync"
+      )
     },
 
     #' @description
@@ -98,7 +99,9 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
     push_points = function(xss) {
-      if (self$check_values) map(xss, self$search_space$assert)
+      if (self$check_values) {
+        map(xss, self$search_space$assert)
+      }
       self$rush$push_tasks(xss, extra = list(list(timestamp_xs = Sys.time())))
     },
 
@@ -116,7 +119,9 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @param extra (`list()`)\cr
     #' Named list of additional information.
     push_running_point = function(xs, extra = NULL) {
-      if (self$check_values) self$search_space$assert(xs)
+      if (self$check_values) {
+        self$search_space$assert(xs)
+      }
       extra = c(list(timestamp_xs = Sys.time()), extra)
       self$rush$push_running_tasks(list(xs), extra = list(extra))
     },
@@ -160,7 +165,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     data_with_state = function(
       fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
       states = c("queued", "running", "finished", "failed")
-      ) {
+    ) {
       self$rush$fetch_tasks_with_state(fields, states)
     },
 
@@ -184,7 +189,10 @@ ArchiveAsync = R6Class("ArchiveAsync",
       tab = self$finished_data
 
       if (any(self$codomain$direction == 0L)) {
-        stop("Cannot determine best points: codomain contains targets with direction = 0 (non-optimization targets). Use optimization targets only, or filter the archive manually.")
+        stop(
+          "Cannot determine best points: codomain contains targets with direction = 0 (non-optimization targets).",
+          " Use optimization targets only, or filter the archive manually."
+        )
       }
 
       if (self$codomain$target_length == 1L) {
@@ -219,7 +227,10 @@ ArchiveAsync = R6Class("ArchiveAsync",
 
       direction = self$codomain$direction
       if (any(direction == 0L)) {
-        stop("Cannot perform NDS selection: codomain contains targets with direction = 0 (non-optimization targets). Use optimization targets only.")
+        stop(
+          "Cannot perform NDS selection: codomain contains targets with direction = 0",
+          " (non-optimization targets). Use optimization targets only."
+        )
       }
 
       points = t(as.matrix(tab[, self$cols_y, with = FALSE]))
@@ -237,7 +248,6 @@ ArchiveAsync = R6Class("ArchiveAsync",
   ),
 
   active = list(
-
     #' @field data ([data.table::data.table])\cr
     #' Data table with all finished points.
     data = function(rhs) {
@@ -302,7 +312,8 @@ ArchiveAsync = R6Class("ArchiveAsync",
 )
 
 #' @export
-as.data.table.ArchiveAsync = function(x, keep.rownames = FALSE, unnest = "x_domain", ...) { # nolint
+# nolint next
+as.data.table.ArchiveAsync = function(x, keep.rownames = FALSE, unnest = "x_domain", ...) {
   data = x$data_with_state()
   cols = intersect(unnest, names(data))
   unnest(data, cols, prefix = "{col}_")

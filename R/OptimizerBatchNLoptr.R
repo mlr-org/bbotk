@@ -22,7 +22,8 @@
 #' \item{`approximate_eval_grad_f`}{`logical(1)`\cr
 #'   Should gradients be numerically approximated via finite differences ([nloptr::nl.grad]).
 #'   Only required for certain algorithms.
-#'   Note that function evaluations required for the numerical gradient approximation will be logged as usual and are not treated differently than regular function evaluations by, e.g., [Terminator]s.}
+#'   Note that function evaluations required for the numerical gradient approximation will be logged as usual
+#'   and are not treated differently than regular function evaluations by, e.g., [Terminator]s.}
 #' }
 #'
 #' For the meaning of other control parameters, see [nloptr::nloptr()] and [nloptr::nloptr.print.options()].
@@ -114,9 +115,10 @@
 #' # best performing configuration
 #' instance$result
 #' }
-OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
+OptimizerBatchNLoptr = R6Class(
+  "OptimizerBatchNLoptr",
+  inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -161,7 +163,10 @@ OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
             "NLOPT_LN_AUGLAG_EQ",
             "NLOPT_LD_AUGLAG_EQ",
             "NLOPT_LN_BOBYQA",
-            "NLOPT_GN_ISRES"), tags = "required"),
+            "NLOPT_GN_ISRES"
+          ),
+          tags = "required"
+        ),
         # bbotk parameters
         start_values = p_fct(init = "random", levels = c("random", "center"), tags = "required"),
         approximate_eval_grad_f = p_lgl(init = FALSE),
@@ -191,7 +196,9 @@ OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
     .optimize = function(inst) {
       pv = self$param_set$values
 
-      if (is.null(pv$x0)) pv$x0 = search_start(inst$search_space, type = pv$start_values)
+      if (is.null(pv$x0)) {
+        pv$x0 = search_start(inst$search_space, type = pv$start_values)
+      }
 
       if (pv$approximate_eval_grad_f) {
         eval_grad_f = function(x) {
@@ -206,19 +213,24 @@ OptimizerBatchNLoptr = R6Class("OptimizerBatchNLoptr", inherit = OptimizerBatch,
 
       opts = pv[which(names(pv) %nin% formalArgs(nloptr::nloptr))]
       # deactivate termination criterions which are replaced by Terminators
-      opts = insert_named(opts, list(
-        maxeval = -1,
-        maxtime = -1,
-        stopval = -Inf
-      ))
+      opts = insert_named(
+        opts,
+        list(
+          maxeval = -1,
+          maxtime = -1,
+          stopval = -Inf
+        )
+      )
       pv = pv[which(names(pv) %nin% names(opts))]
 
-      invoke(nloptr::nloptr,
+      invoke(
+        nloptr::nloptr,
         eval_f = inst$objective_function,
-        lb = inst$search_space$lower + saveguard_epsilon,  # needed due to numerical issues with NLoptr
-        ub = inst$search_space$upper - saveguard_epsilon,  # needed due to numerical issues with NLoptr
+        lb = inst$search_space$lower + saveguard_epsilon, # needed due to numerical issues with NLoptr
+        ub = inst$search_space$upper - saveguard_epsilon, # needed due to numerical issues with NLoptr
         opts = opts,
-        .args = pv)
+        .args = pv
+      )
     }
   )
 )

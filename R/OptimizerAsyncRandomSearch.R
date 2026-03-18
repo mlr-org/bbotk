@@ -66,11 +66,11 @@
 #' # covert to data.table
 #' as.data.table(instance$archive)
 #' }
-OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
+OptimizerAsyncRandomSearch = R6Class(
+  "OptimizerAsyncRandomSearch",
   inherit = OptimizerAsync,
 
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -93,7 +93,7 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
       # usually the queue is empty but callbacks might have added points
       get_private(inst)$.eval_queue()
 
-      while(!inst$is_terminated) {
+      while (!inst$is_terminated) {
         # sample new points
         sampler = SamplerUnif$new(search_space)
         xdt = sampler$sample(1)$data
@@ -107,5 +107,3 @@ OptimizerAsyncRandomSearch = R6Class("OptimizerAsyncRandomSearch",
 )
 
 mlr_optimizers$add("async_random_search", OptimizerAsyncRandomSearch)
-
-

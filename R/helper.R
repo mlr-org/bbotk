@@ -72,7 +72,7 @@ trafo_xs = function(xs, search_space) {
   if (search_space$has_trafo) {
     xs = search_space$trafo(xs, search_space)
   }
-  return(xs)
+  xs
 }
 
 #' @title Get start values for optimizers
@@ -103,7 +103,8 @@ search_start = function(search_space, type = "random") {
 #' @title Branin Function
 #'
 #' @description
-#' Classic 2-D Branin function with noise `branin(x1, x2, noise)` and Branin function with fidelity parameter `branin_wu(x1, x2, fidelity)`.
+#' Classic 2-D Branin function with noise `branin(x1, x2, noise)` and Branin function with fidelity parameter
+#' `branin_wu(x1, x2, fidelity)`.
 #'
 #' @source
 #' `r format_bib("wu_2019")`
@@ -126,7 +127,7 @@ branin = function(x1, x2, noise = 0) {
 #' @rdname branin
 #' @export
 branin_wu = function(x1, x2, fidelity) {
-  (x2 - (5.1 / (4 * pi^2) - 0.1 * (1 - fidelity)) * x1^2 + 5 / pi * x1 - 6) ^ 2 +  10 * (1 - 1 / (8 * pi)) * cos(x1) + 10
+  (x2 - (5.1 / (4 * pi^2) - 0.1 * (1 - fidelity)) * x1^2 + 5 / pi * x1 - 6)^2 + 10 * (1 - 1 / (8 * pi)) * cos(x1) + 10
 }
 
 allow_partial_matching = list(
@@ -134,4 +135,3 @@ allow_partial_matching = list(
   warnPartialMatchAttr = FALSE,
   warnPartialMatchDollar = FALSE
 )
-

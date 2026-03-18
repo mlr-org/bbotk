@@ -10,10 +10,10 @@
 #'
 #' @seealso [CallbackAsync]
 #' @export
-ContextAsync = R6Class("ContextAsync",
+ContextAsync = R6Class(
+  "ContextAsync",
   inherit = Context,
   public = list(
-
     #' @field instance ([OptimInstance]).
     instance = NULL,
 
@@ -32,7 +32,6 @@ ContextAsync = R6Class("ContextAsync",
   ),
 
   active = list(
-
     #' @field xs (list())\cr
     #' The point to be evaluated in `instance$.eval_point()`.
     xs = function(rhs) {
@@ -77,7 +76,7 @@ ContextAsync = R6Class("ContextAsync",
     #' The xdt passed to `instance$assign_result()`.
     result_xdt = function(rhs) {
       if (missing(rhs)) {
-        return(get_private(self$instance)$.result_xdt)
+        get_private(self$instance)$.result_xdt
       } else {
         self$instance$.__enclos_env__$private$.result_xdt = rhs
       }
@@ -88,7 +87,7 @@ ContextAsync = R6Class("ContextAsync",
     #' Only available for single criterion optimization.
     result_y = function(rhs) {
       if (missing(rhs)) {
-        return(get_private(self$instance)$.result_y)
+        get_private(self$instance)$.result_y
       } else {
         self$instance$.__enclos_env__$private$.result_y = rhs
       }
@@ -99,7 +98,7 @@ ContextAsync = R6Class("ContextAsync",
     #' Only available for multi criterion optimization.
     result_ydt = function(rhs) {
       if (missing(rhs)) {
-        return(get_private(self$instance)$.result_ydt)
+        get_private(self$instance)$.result_ydt
       } else {
         self$instance$.__enclos_env__$private$.result_ydt = rhs
       }

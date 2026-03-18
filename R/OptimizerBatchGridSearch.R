@@ -73,9 +73,10 @@
 #'
 #' # best performing configuration
 #' instance$result
-OptimizerBatchGridSearch = R6Class("OptimizerBatchGridSearch", inherit = OptimizerBatch,
+OptimizerBatchGridSearch = R6Class(
+  "OptimizerBatchGridSearch",
+  inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -99,10 +100,8 @@ OptimizerBatchGridSearch = R6Class("OptimizerBatchGridSearch", inherit = Optimiz
   private = list(
     .optimize = function(inst) {
       pv = self$param_set$values
-      g = generate_design_grid(inst$search_space, resolution = pv$resolution,
-        param_resolutions = pv$param_resolutions)
-      ch = chunk_vector(seq_row(g$data), chunk_size = pv$batch_size,
-        shuffle = TRUE)
+      g = generate_design_grid(inst$search_space, resolution = pv$resolution, param_resolutions = pv$param_resolutions)
+      ch = chunk_vector(seq_row(g$data), chunk_size = pv$batch_size, shuffle = TRUE)
       for (inds in ch) {
         inst$eval_batch(g$data[inds])
       }

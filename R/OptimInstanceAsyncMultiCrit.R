@@ -56,10 +56,10 @@
 #'   objective = objective,
 #'   terminator = trm("evals", n_evals = 100))
 #' }
-OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
+OptimInstanceAsyncMultiCrit = R6Class(
+  "OptimInstanceAsyncMultiCrit",
   inherit = OptimInstanceAsync,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(
@@ -70,7 +70,7 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
       callbacks = NULL,
       archive = NULL,
       rush = NULL
-      ) {
+    ) {
       if (objective$codomain$target_length == 1) {
         stop("Codomain length must be greater than 1.")
       }
@@ -83,11 +83,13 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
         callbacks = callbacks,
         archive = archive,
         label = "Async Multi Criteria Instance",
-        man = "bbotk::OptimInstanceAsyncMultiCrit")
+        man = "bbotk::OptimInstanceAsyncMultiCrit"
+      )
     },
 
     #' @description
-    #' The [OptimizerAsync] writes the best found points and estimated performance values here (probably the Pareto set / front).
+    #' The [OptimizerAsync] writes the best found points and estimated performance values here
+    #' (probably the Pareto set / front).
     #' For internal use.
     #'
     #' @param ydt (`numeric(1)`)\cr
@@ -97,7 +99,7 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
     #' @param ... (`any`)\cr
     #' ignored.
     assign_result = function(xdt, ydt, extra = NULL, ...) {
-     # assign for callbacks
+      # assign for callbacks
       private$.result_xdt = xdt
       private$.result_ydt = ydt
       private$.result_extra = extra
@@ -113,7 +115,9 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
 
       # add x_domain to result
       x_domain = transform_xdt_to_xss(private$.result_xdt, self$search_space)
-      if (length(x_domain) == 0) x_domain = list(list())
+      if (length(x_domain) == 0) {
+        x_domain = list(list())
+      }
 
       private$.result = cbind(private$.result_xdt, x_domain = x_domain, private$.result_ydt)
       call_back("on_result_end", self$objective$callbacks, self$objective$context)
@@ -121,7 +125,6 @@ OptimInstanceAsyncMultiCrit = R6Class("OptimInstanceAsyncMultiCrit",
   ),
 
   active = list(
-
     #' @field result_x_domain (`list()`)\cr
     #' (transformed) x part of the result in the *domain space* of the objective.
     result_x_domain = function() {

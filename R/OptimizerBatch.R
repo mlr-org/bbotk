@@ -5,20 +5,22 @@
 #' @description
 #' Abstract `OptimizerBatch` class that implements the base functionality each `OptimizerBatch` subclass must provide.
 #' A `OptimizerBatch` object describes the optimization strategy.
-#' A `OptimizerBatch` object must write its result to the `$assign_result()` method of the [OptimInstance] at the end in order to store the best point and its estimated performance vector.
+#' A `OptimizerBatch` object must write its result to the `$assign_result()` method of the [OptimInstance] at the end
+#' in order to store the best point and its estimated performance vector.
 #'
 #' @template section_progress_bars
 #'
 #' @seealso [OptimizerBatchDesignPoints], [OptimizerBatchGridSearch], [OptimizerBatchRandomSearch]
 #' @export
-OptimizerBatch = R6Class("OptimizerBatch",
+OptimizerBatch = R6Class(
+  "OptimizerBatch",
   inherit = Optimizer,
 
   public = list(
-
     #' @description
     #' Performs the optimization and writes optimization result into [OptimInstanceBatch].
-    #' The optimization result is returned but the complete optimization path is stored in [ArchiveBatch] of [OptimInstanceBatch].
+    #' The optimization result is returned but the complete optimization path is stored in [ArchiveBatch]
+    #' of [OptimInstanceBatch].
     #'
     #' @param inst ([OptimInstanceBatch]).
     #' @return [data.table::data.table].
@@ -56,19 +58,29 @@ optimize_batch_default = function(instance, optimizer) {
   }
 
   # start optimization
-  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s'",
-    instance$search_space$length, optimizer$format(), instance$terminator$format(with_params = TRUE))
-  tryCatch({
-    get_private(optimizer)$.optimize(instance)
-  }, Mlr3ErrorBbotkTerminated = function(cond) {})
+  lg$info(
+    "Starting to optimize %i parameter(s) with '%s' and '%s'",
+    instance$search_space$length,
+    optimizer$format(),
+    instance$terminator$format(with_params = TRUE)
+  )
+  tryCatch(
+    {
+      get_private(optimizer)$.optimize(instance)
+    },
+    Mlr3ErrorBbotkTerminated = function(cond) {}
+  )
 
   # assign result
   get_private(optimizer)$.assign_result(instance)
   lg$info("Finished optimizing after %i evaluation(s)", instance$archive$n_evals)
   lg$info("Result:")
   lg$info(capture.output(print(
-    instance$result, lass = FALSE, row.names = FALSE, print.keys = FALSE)))
+    instance$result,
+    lass = FALSE,
+    row.names = FALSE,
+    print.keys = FALSE
+  )))
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
-  return(instance$result)
+  instance$result
 }
-

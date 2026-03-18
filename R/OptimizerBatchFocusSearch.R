@@ -7,7 +7,9 @@
 #' `OptimizerBatchFocusSearch` class that implements a Focus Search.
 #'
 #' Focus Search starts with evaluating `n_points` drawn uniformly at random.
-#' For 1 to `maxit` batches, `n_points` are then drawn uniformly at random and if the best value of a batch outperforms the previous best value over all batches evaluated so far, the search space is shrinked around this new best point prior to the next batch being sampled and evaluated.
+#' For 1 to `maxit` batches, `n_points` are then drawn uniformly at random and if the best value of a batch
+#' outperforms the previous best value over all batches evaluated so far,
+#' the search space is shrinked around this new best point prior to the next batch being sampled and evaluated.
 #'
 #' For details on the shrinking, see [shrink_ps].
 #'
@@ -69,10 +71,10 @@
 #'
 #' # best performing configuration
 #' instance$result
-OptimizerBatchFocusSearch = R6Class("OptimizerBatchFocusSearch",
+OptimizerBatchFocusSearch = R6Class(
+  "OptimizerBatchFocusSearch",
   inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -87,7 +89,7 @@ OptimizerBatchFocusSearch = R6Class("OptimizerBatchFocusSearch",
         id = "focus_search",
         param_set = param_set,
         param_classes = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct"),
-        properties = c("dependencies", "single-crit"),  # NOTE: think about multi-crit variant
+        properties = c("dependencies", "single-crit"), # NOTE: think about multi-crit variant
         label = "Focus Search",
         man = "bbotk::mlr_optimizers_focus_search"
       )
@@ -103,25 +105,29 @@ OptimizerBatchFocusSearch = R6Class("OptimizerBatchFocusSearch",
       om = inst$objective_multiplicator
       n_repeats = 0L
 
-      repeat {  # iterate until we have an exception from eval_batch
+      repeat {
+        # iterate until we have an exception from eval_batch
         param_set_local = inst$search_space$clone(deep = TRUE)
         lgls = param_set_local$ids()[param_set_local$class == "ParamLgl"]
         sampler = SamplerUnif$new(param_set_local)
         inst$eval_batch(sampler$sample(n_points)$data)
         start_batch = (n_repeats * maxit) + n_repeats + 1L
-        best = inst$archive$best(batch = start_batch)  # needed for restart to work
+        best = inst$archive$best(batch = start_batch) # needed for restart to work
 
         for (i in seq_len(maxit)) {
           # ParamLgls have the value to be shrinked around set as a default
           data = sampler$sample(n_points)$data
           if (length(lgls)) {
-            data[, (lgls) := imap(.SD, function(param, id) {
-              if ("shrinked" %in% param_set_local$tags[[id]]) {
-                rep(param_set_local$default[[id]], times = length(param))
-              } else {
-                param
-              }
-            }), .SDcols = lgls]
+            data[,
+              (lgls) := imap(.SD, function(param, id) {
+                if ("shrinked" %in% param_set_local$tags[[id]]) {
+                  rep(param_set_local$default[[id]], times = length(param))
+                } else {
+                  param
+                }
+              }),
+              .SDcols = lgls
+            ]
           }
 
           inst$eval_batch(data)
@@ -144,7 +150,6 @@ OptimizerBatchFocusSearch = R6Class("OptimizerBatchFocusSearch",
 )
 
 mlr_optimizers$add("focus_search", OptimizerBatchFocusSearch)
-
 
 
 #' @title Shrink a ParamSet towards a point.
@@ -189,8 +194,8 @@ mlr_optimizers$add("focus_search", OptimizerBatchFocusSearch)
 #' )
 #' x = data.table(x1 = 5, x2 = 0, x3 = "b", x4 = FALSE)
 #' shrink_ps(param_set, x = x)
+# nolint next
 shrink_ps = function(param_set, x, check.feasible = FALSE) {
-
   assert_param_set(param_set)
   assert_data_table(x, nrows = 1L, min.cols = 1L)
   assert_flag(check.feasible)
@@ -212,27 +217,29 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
     val = x[[pid]]
     param_test_val = param$test(structure(list(val), names = pid))
     if (test_atomic(val, any.missing = FALSE, len = 1L)) {
-
       if (param$is_number) {
         range = param$upper - param$lower
 
         if (param_set$has_trafo) {
-          xdt = copy(x)
-          val = tryCatch({
-            # find val on the original scale
-            val = stats::uniroot(
-              function(x_rep) {
-                xdt[[pid]] = x_rep
-                param_set$trafo(xdt)[[pid]] - val
-              },
-              interval = c(param$lower, param$upper),
-              extendInt = "yes",
-              tol = .Machine$double.eps ^ 0.5 * range,
-              maxiter = 10 ^ 4
-            )$root
-          }, error = function(error_condition) {
-            param$upper + 1
-          })
+          xdt = copy(x) # nolint
+          val = tryCatch(
+            {
+              # find val on the original scale
+              val = stats::uniroot(
+                function(x_rep) {
+                  xdt[[pid]] = x_rep
+                  param_set$trafo(xdt)[[pid]] - val
+                },
+                interval = c(param$lower, param$upper),
+                extendInt = "yes",
+                tol = .Machine$double.eps^0.5 * range,
+                maxiter = 10^4
+              )$root
+            },
+            error = function(error_condition) {
+              param$upper + 1
+            }
+          )
           param_test_val = param$test(structure(list(val), names = pid))
         }
         if (check.feasible && !param_test_val) {
@@ -247,19 +254,42 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
           if (param$class == "ParamInt") {
             lower = as.integer(floor(lower))
             upper = as.integer(ceiling(upper))
-            do.call(ps, structure(list(
-              p_int(lower = lower, upper = upper,
-                special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
-                trafo = param_trafos[[pid]])
-            ), names = pid))
-          } else {  # it's ParamDbl then
+            do.call(
+              ps,
+              structure(
+                list(
+                  p_int(
+                    lower = lower,
+                    upper = upper,
+                    special_vals = param$special_vals[[pid]],
+                    tags = param$tags[[pid]],
+                    trafo = param_trafos[[pid]]
+                  )
+                ),
+                names = pid
+              )
+            )
+          } else {
+            # it's ParamDbl then
 
-            do.call(ps, structure(list(
-              p_dbl(lower = lower, upper = upper,
-                special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
-                tolerance = param$params$tolerance[[1]] %??% param$params[[1]]$tolerance,  # since 'param' is from subspaces(), it only has 1 line ; '%??%' is for old pdaradox
-                trafo = param_trafos[[pid]])
-            ), names = pid))
+            do.call(
+              ps,
+              structure(
+                list(
+                  p_dbl(
+                    lower = lower,
+                    upper = upper,
+                    special_vals = param$special_vals[[pid]],
+                    tags = param$tags[[pid]],
+                    # since 'param' is from subspaces(), it only has 1 line
+                    # '%??%' is for old paradox
+                    tolerance = param$params$tolerance[[1]] %??% param$params[[1]]$tolerance,
+                    trafo = param_trafos[[pid]]
+                  )
+                ),
+                names = pid
+              )
+            )
           }
         }
       } else if (param$is_categ) {
@@ -273,19 +303,36 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
           if (length(levels) > 1L) {
             levels = setdiff(levels, sample(setdiff(levels, val), size = 1L))
             if (param$class == "ParamFct") {
-              do.call(ps, structure(list(
-                p_fct(levels = levels,
-                  special_vals = param$special_vals[[pid]], tags = param$tags[[pid]],
-                  trafo = param_trafos[[pid]]
+              do.call(
+                ps,
+                structure(
+                  list(
+                    p_fct(
+                      levels = levels,
+                      special_vals = param$special_vals[[pid]],
+                      tags = param$tags[[pid]],
+                      trafo = param_trafos[[pid]]
+                    )
+                  ),
+                  names = pid
                 )
-              ), names = pid))
+              )
             } else {
               # for ParamLgls we cannot specify levels; instead we set a default
-              do.call(ps, structure(list(
-                p_lgl(special_vals = param$special_vals[[pid]],
-                  default = levels, tags = unique(c(param$tags[[pid]], "shrinked")),
-                  trafo = param_trafos[[pid]])
-              ), names = pid))
+              do.call(
+                ps,
+                structure(
+                  list(
+                    p_lgl(
+                      special_vals = param$special_vals[[pid]],
+                      default = levels,
+                      tags = unique(c(param$tags[[pid]], "shrinked")),
+                      trafo = param_trafos[[pid]]
+                    )
+                  ),
+                  names = pid
+                )
+              )
             }
           }
         }
@@ -297,7 +344,8 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
   if (length(missing)) {
     params_new[missing] = subspaces[missing]
   }
-  param_set_new = get0("ps_union",
+  param_set_new = get0(
+    "ps_union",
     # old paradox
     ifnotfound = function(x) ParamSet$new(lapply(x, function(y) y$params[[1]]))
   )(params_new)
@@ -308,7 +356,6 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
     # old paradox
     param_set_new$trafo = param_set$trafo
   }
-  param_set_new$values = param_set$values  # needed for handling constants
+  param_set_new$values = param_set$values # needed for handling constants
   param_set_new
 }
-

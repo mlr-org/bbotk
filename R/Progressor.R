@@ -7,9 +7,9 @@
 #'
 #' @seealso [OptimInstance]
 #' @keywords internal
-Progressor = R6Class("Progressor",
+Progressor = R6Class(
+  "Progressor",
   public = list(
-
     #' @field progressor (`progressr::progressor()`).
     progressor = NULL,
 
@@ -50,7 +50,13 @@ Progressor = R6Class("Progressor",
         if (self$unit == "percent") {
           message = sprintf("Best: %s", str_collapse(paste0(names(best_y), ": ", best_y)))
         } else {
-          message = sprintf("%i/%i %s. Best: %s", self$current_steps, self$max_steps, self$unit, str_collapse(paste0(names(best_y), ": ", best_y)))
+          message = sprintf(
+            "%i/%i %s. Best: %s",
+            self$current_steps,
+            self$max_steps,
+            self$unit,
+            str_collapse(paste0(names(best_y), ": ", best_y))
+          )
         }
         self$progressor(message = message, amount = amount)
       }

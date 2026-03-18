@@ -4,7 +4,8 @@
 #' The `Objective` class describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 #'
 #' @details
-#' `Objective` objects can have the following properties: `"noisy"`, `"deterministic"`, `"single-crit"` and `"multi-crit"`.
+#' `Objective` objects can have the following properties: `"noisy"`, `"deterministic"`, `"single-crit"`,
+#' and `"multi-crit"`.
 #'
 #' @template field_callbacks
 #' @template field_context
@@ -22,9 +23,9 @@
 #'
 #' @seealso [ObjectiveRFun], [ObjectiveRFunMany], [ObjectiveRFunDt]
 #' @export
-Objective = R6Class("Objective",
+Objective = R6Class(
+  "Objective",
   public = list(
-
     #' @field id (`character(1)`)).
     id = NULL,
 
@@ -68,7 +69,7 @@ Objective = R6Class("Objective",
       check_values = TRUE,
       label = NA_character_,
       man = NA_character_
-      ) {
+    ) {
       self$id = assert_string(id)
       self$domain = assert_param_set(domain)
       assert_param_set(codomain)
@@ -124,10 +125,14 @@ Objective = R6Class("Objective",
     #' archive if called through the [OptimInstance].
     #' These extra entries are referred to as *extras*.
     eval = function(xs) {
-      if (self$check_values) self$domain$assert(xs)
+      if (self$check_values) {
+        self$domain$assert(xs)
+      }
       res = invoke(private$.eval, xs = xs, .args = self$constants$values)
-      if (self$check_values) self$codomain$assert(res[self$codomain$ids()])
-      return(res)
+      if (self$check_values) {
+        self$codomain$assert(res[self$codomain$ids()])
+      }
+      res
     },
 
     #' @description
@@ -149,10 +154,14 @@ Objective = R6Class("Objective",
     #' called through the [OptimInstance].
     #' These extra columns are referred to as *extras*.
     eval_many = function(xss) {
-      if (self$check_values) lapply(xss, self$domain$assert)
+      if (self$check_values) {
+        lapply(xss, self$domain$assert)
+      }
       res = invoke(private$.eval_many, xss = xss, .args = self$constants$values)
-      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      return(res)
+      if (self$check_values) {
+        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
+      }
+      res
     },
 
     #' @description
@@ -201,7 +210,8 @@ Objective = R6Class("Objective",
   ),
 
   private = list(
-    .eval = function(xs, ...) { # ... allows constants
+    .eval = function(xs, ...) {
+      # ... allows constants
       as.list(self$eval_many(list(xs)))
     },
 
@@ -210,13 +220,18 @@ Objective = R6Class("Objective",
         ys = self$eval(xs)
         as.data.table(lapply(ys, function(y) if (is.list(y) && length(y) > 1) list(y) else y))
       })
-      return(res)
+      res
     },
 
     deep_clone = function(name, value) {
-      if (name == "context") return(NULL)
-      if (!is.environment(value)) return(value)
-      switch(name,
+      if (name == "context") {
+        return(NULL)
+      }
+      if (!is.environment(value)) {
+        return(value)
+      }
+      switch(
+        name,
         domain = value$clone(deep = TRUE),
         codomain = value$clone(deep = TRUE),
         constants = value$clone(deep = TRUE),
