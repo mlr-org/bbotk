@@ -56,6 +56,6 @@ SEXP RC_get_dt_col_by_name(SEXP s_dt, const char *name) {
 }
 
 SEXP RC_get_r6_el_by_name(SEXP s_r6, const char *str) {
-  return Rf_findVar(Rf_install(str), s_r6);
+  return Rf_eval(Rf_install(str), s_r6);
 }
 
