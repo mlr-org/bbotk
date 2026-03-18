@@ -124,7 +124,7 @@ objective = ObjectiveRFun$new(
 )
 
 # start workers
-rush::rush_plan(worker_type = "remote")
+rush::rush_plan(worker_type = "mirai")
 mirai::daemons(1)
 
 # initialize instance
@@ -149,16 +149,16 @@ instance$archive$best()
 # covert to data.table
 as.data.table(instance$archive)
 }
-#>       state    x1    x2     y        timestamp_xs   pid
-#>      <char> <num> <num> <num>              <POSc> <int>
-#> 1: finished     0     0    -3 2026-03-09 09:07:10 16920
-#> 2: finished     1     1    -7 2026-03-09 09:07:10 16920
-#>                    worker_id        timestamp_ys
-#>                       <char>              <POSc>
-#> 1: terrorstricken_prairiedog 2026-03-09 09:07:10
-#> 2: terrorstricken_prairiedog 2026-03-09 09:07:10
-#>                                    keys x_domain_x1 x_domain_x2
-#>                                  <char>       <num>       <num>
-#> 1: dec4bdf3-9bdf-49d4-bfe5-032e1eefe8e2           0           0
-#> 2: 89b69494-11a7-43e6-9d94-630215da56d2           1           1
+#>       state    x1    x2     y        timestamp_xs                 worker_id
+#>      <char> <num> <num> <num>              <POSc>                    <char>
+#> 1: finished     0     0    -3 2026-03-18 14:00:41 terrorstricken_prairiedog
+#> 2: finished     1     1    -7 2026-03-18 14:00:41 terrorstricken_prairiedog
+#>           timestamp_ys                                 keys x_domain_x1
+#>                 <POSc>                               <char>       <num>
+#> 1: 2026-03-18 14:00:42 9249b359-121b-4af5-a28e-5425510c1706           0
+#> 2: 2026-03-18 14:00:42 4e014703-f846-4b49-ba19-3a23b3159cb0           1
+#>    x_domain_x2
+#>          <num>
+#> 1:           0
+#> 2:           1
 ```

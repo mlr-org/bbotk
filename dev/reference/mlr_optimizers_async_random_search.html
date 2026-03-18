@@ -144,7 +144,7 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># start workers</span></span></span>
-<span class="r-in"><span><span class="fu">rush</span><span class="fu">::</span><span class="fu"><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush_plan</a></span><span class="op">(</span>worker_type <span class="op">=</span> <span class="st">"remote"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">rush</span><span class="fu">::</span><span class="fu"><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush_plan</a></span><span class="op">(</span>worker_type <span class="op">=</span> <span class="st">"mirai"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">mirai</span><span class="fu">::</span><span class="fu"><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">daemons</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># initialize instance</span></span></span>
@@ -168,76 +168,76 @@
 <span class="r-in"><span><span class="co"># covert to data.table</span></span></span>
 <span class="r-in"><span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        state         x1          x2           y        timestamp_xs   pid</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;      &lt;num&gt;       &lt;num&gt;       &lt;num&gt;              &lt;POSc&gt; &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: finished  7.0005899  0.64849173  -28.317391 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: finished -4.7273068  1.55118543  -55.969945 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: finished -8.3142357 -0.84808989 -101.014174 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: finished  7.4495551  2.57767647  -50.808126 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: finished  7.5065666  1.81294693  -43.486734 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: finished -9.8478251 -2.69770124 -130.462345 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: finished  0.3870992  2.09953629  -18.606719 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: finished  9.1887166  1.95032306  -66.183344 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: finished -6.7320590 -4.50562770  -68.515769 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: finished  0.9955564 -3.63495767    8.587922 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: finished  1.9339031  3.60780233  -33.667420 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: finished -3.6334861 -0.37274046  -28.638658 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: finished -1.3406191 -2.02690225   -2.106655 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: finished -5.8805572 -2.81415540  -52.137720 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: finished  6.5360563  4.77872294  -71.084338 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: finished -4.5197170 -2.02682984  -33.453771 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: finished  5.3688411  1.11764111  -18.304059 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: finished  2.5665792 -1.21875214    6.506144 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: finished -5.3691761 -0.01495275  -53.215263 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: finished -6.3526726  1.61537696  -81.068844 2026-03-09 09:07:17 17138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        state         x1          x2           y        timestamp_xs   pid</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;      &lt;num&gt;       &lt;num&gt;       &lt;num&gt;              &lt;POSc&gt; &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        state         x1          x2           y        timestamp_xs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;      &lt;num&gt;       &lt;num&gt;       &lt;num&gt;              &lt;POSc&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: finished  7.0005899  0.64849173  -28.317391 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: finished -4.7273068  1.55118543  -55.969945 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: finished -8.3142357 -0.84808989 -101.014174 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: finished  7.4495551  2.57767647  -50.808126 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: finished  7.5065666  1.81294693  -43.486734 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: finished -9.8478251 -2.69770124 -130.462345 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: finished  0.3870992  2.09953629  -18.606719 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: finished  9.1887166  1.95032306  -66.183344 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: finished -6.7320590 -4.50562770  -68.515769 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: finished  0.9955564 -3.63495767    8.587922 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: finished  1.9339031  3.60780233  -33.667420 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: finished -3.6334861 -0.37274046  -28.638658 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: finished -1.3406191 -2.02690225   -2.106655 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: finished -5.8805572 -2.81415540  -52.137720 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: finished  6.5360563  4.77872294  -71.084338 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: finished -4.5197170 -2.02682984  -33.453771 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: finished  5.3688411  1.11764111  -18.304059 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: finished  2.5665792 -1.21875214    6.506144 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: finished -5.3691761 -0.01495275  -53.215263 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: finished -6.3526726  1.61537696  -81.068844 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        state         x1          x2           y        timestamp_xs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;      &lt;num&gt;       &lt;num&gt;       &lt;num&gt;              &lt;POSc&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   worker_id        timestamp_ys</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      &lt;char&gt;              &lt;POSc&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: narrow_xinjiangovenator 2026-03-09 09:07:17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: narrow_xinjiangovenator 2026-03-18 14:00:49</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   worker_id        timestamp_ys</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      &lt;char&gt;              &lt;POSc&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     keys x_domain_x1 x_domain_x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   &lt;char&gt;       &lt;num&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 6484bf34-f99a-42a8-a43a-2bbf9a7354f1   7.0005899  0.64849173</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: ea7a9288-89b1-4e1c-98e3-12f94c097917  -4.7273068  1.55118543</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 935b3c53-31f5-4fe7-b34f-5e22ff08f8f7  -8.3142357 -0.84808989</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 0fbb6c5f-499f-4fac-8309-2dd18a761e0d   7.4495551  2.57767647</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 229f5504-8bd5-42f0-aa49-9c89dbc289d4   7.5065666  1.81294693</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 8e4349ec-3551-425d-bb91-02170deb8dca  -9.8478251 -2.69770124</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: dae70ec3-0dc5-4ebc-be34-da42aa06f56e   0.3870992  2.09953629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 245f9d4f-d7cc-4329-b1ab-10300ac0fcd7   9.1887166  1.95032306</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 84bc82ef-7bdf-4c73-8bdb-86af7f6c8314  -6.7320590 -4.50562770</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: a0cbe9ba-51f3-4f13-9659-c0183700d999   0.9955564 -3.63495767</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 4d3d9855-0196-4a0a-bc55-3fa45b73a70b   1.9339031  3.60780233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 0dfa8e78-3ea8-47f1-88a6-94b5cbc90abf  -3.6334861 -0.37274046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 9cfeb2df-bde8-4a11-a294-aadea670ee91  -1.3406191 -2.02690225</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 8716ec83-0838-4baf-9e95-4e4dae4b4d0e  -5.8805572 -2.81415540</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 58c6b6ae-8340-47d8-8003-3d7092103c83   6.5360563  4.77872294</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: cdca479d-73ad-4657-8bc7-2af0a94ae4ef  -4.5197170 -2.02682984</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 0041cd96-bdcb-4784-9fec-3862bf566cf8   5.3688411  1.11764111</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 1cd458fd-7259-4761-81a1-51fe543b58f6   2.5665792 -1.21875214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 8196a61c-3177-446b-a249-b702799a172a  -5.3691761 -0.01495275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: b58aa360-ea7e-4421-8571-ea473b092c7a  -6.3526726  1.61537696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: e275da45-b3fb-4297-a891-e312bf71b103   7.0005899  0.64849173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1ec0efde-a91a-4e29-8c89-1bad7d5c651d  -4.7273068  1.55118543</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: f3ae6614-d433-43e3-ba37-5b06b7278451  -8.3142357 -0.84808989</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: c55c57f0-e62d-4d26-af4a-d828a144573b   7.4495551  2.57767647</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: c6319958-b123-4be2-be7f-06b0f68a9aec   7.5065666  1.81294693</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: ff56b093-e7b9-455e-b1bd-7f744f653a00  -9.8478251 -2.69770124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 72d51c9a-6cb7-4ef9-8c70-9c7ab0018a8f   0.3870992  2.09953629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 07acb8c9-526b-4dc8-8e98-5006b3bf9442   9.1887166  1.95032306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: d8687b55-5e5e-40da-9226-d8128c227be5  -6.7320590 -4.50562770</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 0c119239-b4d4-45fe-86d2-15d9ce1808de   0.9955564 -3.63495767</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: c1729815-8f7f-476d-86bb-e9f3598863de   1.9339031  3.60780233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 9aa04f84-3c0e-4bbe-ab5b-906a28afc7b2  -3.6334861 -0.37274046</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: cc96757a-8711-4e9f-9af2-71df37e9ac96  -1.3406191 -2.02690225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 443ec801-e9c6-46b7-ab22-b659b5bdd729  -5.8805572 -2.81415540</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 5c1e288d-bcbf-40b9-9e19-2f1a90bb847c   6.5360563  4.77872294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 26cdafc7-b82d-4b7c-9f58-4ab6a29eba1b  -4.5197170 -2.02682984</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 2d8e0629-5567-4321-84a6-8fde118bd5e6   5.3688411  1.11764111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: cf5c0fc3-20f8-44d7-9c20-28576eaf7b70   2.5665792 -1.21875214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 7d4aacc9-9896-46c5-995b-6f55d79ea51b  -5.3691761 -0.01495275</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 38598e1f-d039-4ab0-a34b-61100fee2697  -6.3526726  1.61537696</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     keys x_domain_x1 x_domain_x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   &lt;char&gt;       &lt;num&gt;       &lt;num&gt;</span>
 </code></pre></div>
