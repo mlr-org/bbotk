@@ -122,12 +122,7 @@ test_that("as.data.table.ArchiveAsync works", {
   data = as.data.table(instance$archive)
   expect_data_table(data, min.rows = 5)
 
-  if (packageVersion("rush") <= "0.4.1") {
-    cns = c("state", "x1", "x2", "y", "timestamp_xs", "pid", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
-  } else {
-    cns = c("state", "x1", "x2", "y", "timestamp_xs", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
-  }
-
+  cns = c("state", "x1", "x2", "y", "timestamp_xs", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
   expect_names(colnames(data), identical.to = cns)
 
   data = as.data.table(instance$archive, unnest = NULL)

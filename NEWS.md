@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* Minimum required version of `rush` is now 1.0.0. Removed all compatibility workarounds for older versions.
 * feat: Add `mlr_test_functions` dictionary with well-known 2-D optimization test functions (Branin, Rosenbrock, Himmelblau, Rastrigin, etc.) and sugar functions `otfun()` / `otfuns()`.
 
 # bbotk 1.9.0

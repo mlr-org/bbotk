@@ -52,7 +52,7 @@ objective = ObjectiveRFun$new(
 )
 
 # start workers
-rush::rush_plan(worker_type = "remote")
+rush::rush_plan(worker_type = "mirai")
 mirai::daemons(1)
 
 # initialize instance

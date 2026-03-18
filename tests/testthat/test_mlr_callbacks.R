@@ -21,7 +21,7 @@ test_that("async callback works", {
   skip_if_no_redis()
 
 
-  rush = start_rush(n_workers = 2, worker_type = "remote")
+  rush = start_rush(n_workers = 2)
 
   callback = callback_async("bbotk.test",
     on_worker_begin = function(callback, context) {
@@ -57,7 +57,7 @@ test_that("async freeze archive callback works", {
   skip_if_not_installed("rush")
   skip_if_no_redis()
 
-  rush = start_rush(n_workers = 2, worker_type = "remote")
+  rush = start_rush(n_workers = 2)
   instance = oi_async(
     objective = OBJ_2D,
     search_space = PS_2D,
