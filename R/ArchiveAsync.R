@@ -45,7 +45,7 @@
 #' )
 #'
 #' # start workers
-#' rush::rush_plan(worker_type = "remote")
+#' rush::rush_plan(worker_type = "mirai")
 #' mirai::daemons(1)
 #'
 #' # initialize instance
@@ -134,7 +134,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' Named list of additional information.
     push_result = function(key, ys, x_domain, extra = NULL) {
       extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
-      self$rush$push_results(key, list(ys), extra = list(extra))
+      self$rush$finish_tasks(key, list(ys), extra = list(extra))
     },
 
     #' @description
@@ -145,7 +145,7 @@ ArchiveAsync = R6Class("ArchiveAsync",
     #' @param message (`character()`)\cr
     #' Error message.
     push_failed_point = function(key, message) {
-      self$rush$push_failed(key, list(list(message = message)))
+      self$rush$fail_tasks(key, list(list(message = message)))
     },
 
     #' @description

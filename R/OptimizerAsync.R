@@ -19,11 +19,12 @@
 #' The [rush::rush_plan()] function defines the number of workers and their type.
 #' There are three types of workers:
 #'
-#' - "local": Workers are started as local processes with \CRANpkg{processx}.
-#'   See `$start_local_workers()` in [Rush] for more details.
-#' - "remote": Workers are started with \CRANpkg{mirai} on local or remote machines.
+#' - "mirai": Workers are started with \CRANpkg{mirai} on local or remote machines.
+#'   See `$start_workers()` in [Rush] for more details.
 #'   [mirai::daemons()] must be created before starting the optimization.
-#'   See `$start_remote_workers()` in [Rush] for more details.
+#' - "processx": Workers are started as local processes with \CRANpkg{processx}.
+
+#'   See `$start_local_workers()` in [Rush] for more details.
 #' - "script": Workers are started by the user with a custom script.
 #'   See `$create_worker_script()` in [Rush] for more details.
 #'
@@ -111,8 +112,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   } else {
     # run .optimize() on workers
     rush = instance$rush
-    # FIXME: change to "mirai" after rush 1.0.0 is released
-    worker_type = rush::rush_config()$worker_type %??% "remote"
+    worker_type = rush::rush_config()$worker_type %??% "mirai"
 
     if (worker_type == "script") {
       # worker script
@@ -123,9 +123,9 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         instance = instance)
 
       rush$wait_for_workers(n = 1)
-    } else if (worker_type %in% c("remote", "mirai")) { # FIXME: change to "mirai" after rush 1.0.0 is released
-      # remote workers
-      worker_ids = rush$start_remote_workers(
+    } else if (worker_type == "mirai") {
+      # mirai workers
+      worker_ids = rush$start_workers(
         n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
@@ -133,8 +133,8 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         instance = instance)
 
       rush$wait_for_workers(n = 1, worker_ids)
-    } else if (worker_type %in% c("local", "processx")) { # FIXME: change to "processx" after rush 1.0.0 is released
-      # local workers
+    } else if (worker_type == "processx") {
+      # processx workers
       worker_ids = rush$start_local_workers(
         n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
@@ -191,7 +191,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   # move queued and running tasks to failed
   failed_tasks = unlist(rush$tasks_with_state(states = c("queued", "running")))
   if (length(failed_tasks)) {
-    rush$push_failed(failed_tasks, conditions = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE))
+    rush$fail_tasks(failed_tasks, conditions = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE))
   }
 
   if (!instance$archive$n_finished) {
