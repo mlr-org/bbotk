@@ -15,10 +15,10 @@
 #'
 #' @seealso [oi()], [OptimInstanceBatchSingleCrit], [OptimInstanceBatchMultiCrit]
 #' @export
-OptimInstanceBatch = R6Class("OptimInstanceBatch",
+OptimInstanceBatch = R6Class(
+  "OptimInstanceBatch",
   inherit = OptimInstance,
   public = list(
-
     #' @field objective_multiplicator (`integer()`).
     objective_multiplicator = NULL,
 
@@ -33,7 +33,7 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       archive = NULL,
       label = NA_character_,
       man = NA_character_
-      ) {
+    ) {
       assert_r6(objective, "Objective")
       search_space = choose_search_space(objective, search_space)
 
@@ -42,7 +42,8 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
         ArchiveBatch$new(
           search_space = search_space,
           codomain = objective$codomain,
-          check_values = check_values)
+          check_values = check_values
+        )
       } else {
         assert_r6(archive, "ArchiveBatch")
       }
@@ -62,7 +63,6 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       self$objective_multiplicator = self$objective$codomain$direction
     },
 
-
     #' @description
     #' Evaluates all input values in `xdt` by calling
     #' the [Objective]. Applies possible transformations to the input values
@@ -77,12 +77,18 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
     #' columns for extra information.
     eval_batch = function(xdt) {
       private$.xdt = xdt
-      if (is.null(self$objective$context)) private$.initialize_context(NULL)
+      if (is.null(self$objective$context)) {
+        private$.initialize_context(NULL)
+      }
       call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
       # update progressor
-      if (!is.null(self$progressor)) self$progressor$update(self$terminator, self$archive)
+      if (!is.null(self$progressor)) {
+        self$progressor$update(self$terminator, self$archive)
+      }
 
-      if (self$is_terminated) terminated_error(self)
+      if (self$is_terminated) {
+        terminated_error(self)
+      }
       assert_data_table(xdt)
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 
@@ -91,7 +97,9 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
       if (!nrow(xdt)) {
         # eval if search space is empty
         ydt = self$objective$eval_many(list(list()))
-      } else if (!self$search_space$has_trafo && !self$search_space$has_deps && inherits(self$objective, "ObjectiveRFunDt")) {
+      } else if (
+        !self$search_space$has_trafo && !self$search_space$has_deps && inherits(self$objective, "ObjectiveRFunDt")
+      ) {
         # if search space has no transformation function and dependencies, and the objective takes a data table
         # use shortcut to skip conversion between data table and list
         ydt = self$objective$eval_dt(private$.xdt[, self$search_space$ids(), with = FALSE])
@@ -102,10 +110,9 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
 
       self$archive$add_evals(xdt, xss_trafoed, ydt)
       lg$info("Result of batch %i:", self$archive$n_batch)
-      lg$info(capture.output(print(cbind(xdt, ydt),
-        class = FALSE, row.names = FALSE, print.keys = FALSE)))
+      lg$info(capture.output(print(cbind(xdt, ydt), class = FALSE, row.names = FALSE, print.keys = FALSE)))
       call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
-      return(invisible(ydt[, self$archive$cols_y, with = FALSE]))
+      invisible(ydt[, self$archive$cols_y, with = FALSE])
     },
 
     #' @description
@@ -168,7 +175,8 @@ OptimInstanceBatch = R6Class("OptimInstanceBatch",
     },
 
     deep_clone = function(name, value) {
-      switch(name,
+      switch(
+        name,
         objective = value$clone(deep = TRUE),
         search_space = value$clone(deep = TRUE),
         terminator = value$clone(deep = TRUE),
@@ -189,8 +197,10 @@ objective_function = function(x, inst, direction) {
 }
 
 objective_error = function(x, inst, direction) {
-  stop("$objective_function can only be called if search_space only
-    contains numeric values")
+  stop(
+    "$objective_function can only be called if search_space only
+    contains numeric values"
+  )
 }
 
 # used by OptimInstance and OptimInstanceAsync

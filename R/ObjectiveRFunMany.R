@@ -46,16 +46,19 @@
 #'
 #' # evaluate multiple input values as data.table
 #' objective$eval_dt(data.table::data.table(x1 = 1:2, x2 = 3:4))
-ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
+ObjectiveRFunMany = R6Class(
+  "ObjectiveRFunMany",
   inherit = Objective,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param fun (`function`)\cr
-    #' R function that encodes objective and expects a list of lists that contains multiple x values, e.g. `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
-    #' The function must return a [data.table::data.table()] that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    #' R function that encodes objective and expects a list of lists that contains multiple x values,
+    #' e.g. `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
+    #' The function must return a [data.table::data.table()] that contains one y-column for
+    #' single-criteria functions and multiple y-columns for multi-criteria functions,
+    #' e.g. `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     #'
     #' @param id (`character(1)`).
     #' @param properties (`character()`).
@@ -68,8 +71,10 @@ ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
       constants = ps(),
       packages = character(),
       check_values = TRUE
-      ) {
-      if (is.null(codomain)) codomain = ps(y = p_dbl(tags = "minimize"))
+    ) {
+      if (is.null(codomain)) {
+        codomain = ps(y = p_dbl(tags = "minimize"))
+      }
       private$.fun = assert_function(fun, "xss")
       # asserts id, domain, codomain, properties
       super$initialize(
@@ -80,7 +85,8 @@ ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
         constants = constants,
         packages = packages,
         check_values = check_values,
-        label = "Objective Custom R Function Eval List")
+        label = "Objective Custom R Function Eval List"
+      )
     },
 
     #' @description
@@ -90,24 +96,33 @@ ObjectiveRFunMany = R6Class("ObjectiveRFunMany",
     #' @param xss (`list()`)\cr
     #'   A list of lists that contains multiple x values, e.g. `list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))`.
     #'
-    #' @return [data.table::data.table()] that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
+    #' @return [data.table::data.table()] that contains one y-column for single-criteria functions and
+    #' multiple y-columns for multi-criteria functions,
+    #' e.g. `data.table(y = 1:2)` or `data.table(y1 = 1:2, y2 = 3:4)`.
     #' It may also contain additional columns that will be stored in the archive if called through the [OptimInstance].
     #' These extra columns are referred to as *extras*.
     eval_many = function(xss) {
-      if (self$check_values) lapply(xss, self$domain$assert)
+      if (self$check_values) {
+        lapply(xss, self$domain$assert)
+      }
       res = invoke(private$.fun, xss, .args = self$constants$values)
-      if (!test_named(res)) names(res)[seq_len(self$codomain$length)] = self$codomain$ids()
-      if (self$check_values) self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
-      return(res)
+      if (!test_named(res)) {
+        names(res)[seq_len(self$codomain$length)] = self$codomain$ids()
+      }
+      if (self$check_values) {
+        self$codomain$assert_dt(res[, self$codomain$ids(), with = FALSE])
+      }
+      res
     }
   ),
 
   active = list(
-
     #' @field fun (`function`)\cr
     #' Objective function.
     fun = function(lhs) {
-      if (!missing(lhs) && !identical(lhs, private$.fun)) stop("fun is read-only")
+      if (!missing(lhs) && !identical(lhs, private$.fun)) {
+        stop("fun is read-only")
+      }
       private$.fun
     }
   ),

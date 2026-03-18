@@ -104,9 +104,10 @@
 #' # best performing configuration
 #' instance$result
 #' }
-OptimizerBatchGenSA = R6Class("OptimizerBatchGenSA", inherit = OptimizerBatch,
+OptimizerBatchGenSA = R6Class(
+  "OptimizerBatchGenSA",
+  inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -114,8 +115,10 @@ OptimizerBatchGenSA = R6Class("OptimizerBatchGenSA", inherit = OptimizerBatch,
         par = p_uty(default = NULL),
         smooth = p_lgl(default = TRUE),
         temperature = p_dbl(default = 5230),
-        visiting.param = p_dbl(default = 2.62, lower = 2.01, upper = 2.99),  # see https://journal.r-project.org/archive/2013-1/xiang-gubian-suomela-etal.pdf
-        acceptance.param = p_dbl(default = -5, upper = -0.01),  # see https://journal.r-project.org/archive/2013-1/xiang-gubian-suomela-etal.pdf
+        # see https://journal.r-project.org/archive/2013-1/xiang-gubian-suomela-etal.pdf
+        visiting.param = p_dbl(default = 2.62, lower = 2.01, upper = 2.99),
+        # see https://journal.r-project.org/archive/2013-1/xiang-gubian-suomela-etal.pdf
+        acceptance.param = p_dbl(default = -5, upper = -0.01),
         simple.function = p_lgl(default = FALSE),
         verbose = p_lgl(default = FALSE),
         trace.mat = p_lgl(default = TRUE),
@@ -156,7 +159,8 @@ OptimizerBatchGenSA = R6Class("OptimizerBatchGenSA", inherit = OptimizerBatch,
         fn = inst$objective_function,
         lower = inst$search_space$lower,
         upper = inst$search_space$upper,
-        control = pv)
+        control = pv
+      )
     }
   )
 )
@@ -164,6 +168,9 @@ OptimizerBatchGenSA = R6Class("OptimizerBatchGenSA", inherit = OptimizerBatch,
 mlr_optimizers$add("gensa", OptimizerBatchGenSA)
 
 # a note on smooth and simple.function
-# smooth: switching the local search algorithm from using L-BFGS-B (default) to Nelder-Mead approach that works better when the objective function has very few places where numerical derivatives can be computed (highly non-smooth function)
-# simple.function: simple.function argument is impacting the number of local searches performed when the best energy value is not updated after several iterations
+# smooth: switching the local search algorithm from using L-BFGS-B (default) to Nelder-Mead approach
+# that works better when the objective function has very few places where numerical derivatives can
+# be computed (highly non-smooth function)
+# simple.function: simple.function argument is impacting the number of local searches performed
+# when the best energy value is not updated after several iterations
 # as we mainly use this for HPO smooth = FALSE and simple.function = FALSE seems sensible (we just assume the worst)

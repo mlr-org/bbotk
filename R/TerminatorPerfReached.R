@@ -14,7 +14,8 @@
 #' \item{`level`}{`numeric(1)`\cr
 #'   Performance level that needs to be reached.
 #'   Default is 0.
-#'   Terminates if the performance exceeds (respective measure has to be maximized) or falls below (respective measure has to be minimized) this value.}
+#'   Terminates if the performance exceeds (respective measure has to be maximized) or falls below
+#'   (respective measure has to be minimized) this value.}
 #' }
 #'
 #' @family Terminator
@@ -25,10 +26,10 @@
 #' @examples
 #' TerminatorPerfReached$new()
 #' trm("perf_reached")
-TerminatorPerfReached = R6Class("TerminatorPerfReached",
+TerminatorPerfReached = R6Class(
+  "TerminatorPerfReached",
   inherit = Terminator,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {

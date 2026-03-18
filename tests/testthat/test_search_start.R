@@ -14,13 +14,17 @@ test_that("search_start helper works", {
   start_values = search_start(search_space = ps, type = "center")
   expect_equal(start_values, c("x1" = 0, "x2" = 30))
 
-  expect_error(search_start(search_space = ps, type = "middle"),
+  expect_error(
+    search_start(search_space = ps, type = "middle"),
     regexp = "Must be element of set {'random','center'}, but is 'middle'",
-    fixed = TRUE)
+    fixed = TRUE
+  )
 
   ps = ps(x1 = p_dbl(lower = -1, upper = 1), x2 = p_lgl())
 
-  expect_error(search_start(search_space = ps, type = "center"),
+  expect_error(
+    search_start(search_space = ps, type = "center"),
     regexp = "Cannot generate center values of non-numeric parameters.",
-    fixed = TRUE)
+    fixed = TRUE
+  )
 })

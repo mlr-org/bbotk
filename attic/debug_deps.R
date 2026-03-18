@@ -26,4 +26,4 @@ cat("\nDependencies 'on' column type:\n")
 print(typeof(domain$deps$on))
 
 cat("\nUnique parent parameters:\n")
-print(unique(domain$deps$on)) 
+print(unique(domain$deps$on))

@@ -17,14 +17,16 @@
 #' @keywords internal
 #' @export
 nds_selection = function(points, n_select, ref_point = NULL, minimize = TRUE) {
-
   require_namespaces("emoa")
 
   # check input for correctness
   assert_matrix(points, mode = "numeric")
   assert_int(n_select, lower = 1, upper = ncol(points))
   assert_logical(
-    minimize, min.len = 1, max.len = nrow(points), any.missing = FALSE
+    minimize,
+    min.len = 1,
+    max.len = nrow(points),
+    any.missing = FALSE
   )
   assert_numeric(ref_point, len = nrow(points), null.ok = TRUE)
   assert_logical(minimize)
@@ -57,7 +59,6 @@ nds_selection = function(points, n_select, ref_point = NULL, minimize = TRUE) {
 
   # remove tied indices/points as long as we are bigger than n_select
   while (length(tie_surv) + length(sel_surv) > n_select) {
-
     # compute hypervolume contribution
     hv_contrib = emoa::hypervolume_contribution(tie_points, ref_point)
 

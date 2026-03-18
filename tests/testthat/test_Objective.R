@@ -1,5 +1,6 @@
 test_that("Objective works", {
-  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+  ObjectiveTestEval = R6Class(
+    "ObjectiveTestEval",
     inherit = Objective,
     private = list(
       .eval = function(xs) list(y = sum(as.numeric(xs))^2)
@@ -27,7 +28,8 @@ test_that("Objective works", {
   xssf[[2]]$x1 = 2
   expect_error(obj$eval_many(xssf), "is not <= 1")
 
-  ObjectiveTestEvalMany = R6Class("ObjectiveTestEvalMany",
+  ObjectiveTestEvalMany = R6Class(
+    "ObjectiveTestEvalMany",
     inherit = Objective,
     private = list(
       .eval_many = function(xss) {
@@ -47,10 +49,14 @@ test_that("Objective works", {
 })
 
 test_that("Objective specialzations work", {
-
-  FUN_1D_MANY = function(xss) data.table(y = map_dbl(xss, function(xs) as.numeric(xs)^2)) # Many version of FUN_1D in helper.R
-  FUN_2D_MANY = function(xss) data.table(y = map_dbl(xss, function(xs) sum(as.numeric(xs)^2))) # same but FUN_2D
-  FUN_2D_2D_MANY = function(xss) map_dtr(xss, function(xs) data.table(y1 = xs[[1]]^2, y2 = -xs[[2]]^2)) # same as FUN_2D_2D
+  # Many version of FUN_1D in helper.R
+  FUN_1D_MANY = function(xss) data.table(y = map_dbl(xss, function(xs) as.numeric(xs)^2))
+  # same but FUN_2D
+  FUN_2D_MANY = function(xss) data.table(y = map_dbl(xss, function(xs) sum(as.numeric(xs)^2)))
+  # same as FUN_2D_2D
+  FUN_2D_2D_MANY = function(xss) {
+    map_dtr(xss, function(xs) data.table(y1 = xs[[1]]^2, y2 = -xs[[2]]^2))
+  }
   FUN_2D_DEPS_MANY = function(xss) data.table(y = map_dbl(xss, function(xs) sum(as.numeric(xs)^2, na.rm = TRUE)))
 
   FUN_1D_DT = function(xdt) data.table(y = xdt$x^2) # DT version oof FUN_1D in helper.R
@@ -58,37 +64,60 @@ test_that("Objective specialzations work", {
   FUN_2D_2D_DT = function(xdt) data.table(y1 = xdt[[1]]^2, y2 = -xdt[[2]]^2) # same as FUN_2D_2D
   FUN_2D_DEPS_DT = function(xdt) data.table(y = rowSums(xdt^2, na.rm = TRUE))
 
-
   # Different function pairs, where the R function uses a different signature but they should do the same
   funs = list(
-    list( # 1d x, 1d y
+    list(
+      # 1d x, 1d y
       rfun = ObjectiveRFun$new(fun = FUN_1D, domain = PS_1D, codomain = FUN_1D_CODOMAIN),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_1D_DT, domain = PS_1D, codomain = FUN_1D_CODOMAIN),
       rfun_many = ObjectiveRFunMany$new(fun = FUN_1D_MANY, domain = PS_1D, codomain = FUN_1D_CODOMAIN)
     ),
-    list( # 2d x, 1d y
+    list(
+      # 2d x, 1d y
       rfun = ObjectiveRFun$new(fun = FUN_2D, domain = PS_2D),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DT, domain = PS_2D),
       rfun_many = ObjectiveRFunMany$new(fun = FUN_2D_MANY, domain = PS_2D)
     ),
-    list( # 2d x, 1d y + extra
-      rfun = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"), id = "function_extras"),
-      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_2D_DT, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"), , id = "function_extras"),
-      rfun_many = ObjectiveRFunMany$new(fun = FUN_2D_2D_MANY, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"), , id = "function_extras")
+    list(
+      # 2d x, 1d y + extra
+      rfun = ObjectiveRFun$new(
+        fun = FUN_2D_2D,
+        domain = PS_2D,
+        codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"),
+        id = "function_extras"
+      ),
+      rfun_dt = ObjectiveRFunDt$new(
+        fun = FUN_2D_2D_DT,
+        domain = PS_2D,
+        codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"),
+        ,
+        id = "function_extras"
+      ),
+      rfun_many = ObjectiveRFunMany$new(
+        fun = FUN_2D_2D_MANY,
+        domain = PS_2D,
+        codomain = FUN_2D_2D_CODOMAIN$clone(deep = TRUE)$subset("y1"),
+        ,
+        id = "function_extras"
+      )
     ),
-    list( # 2d x, 2d y
+    list(
+      # 2d x, 2d y
       rfun = ObjectiveRFun$new(fun = FUN_2D_2D, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN),
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_2D_DT, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN),
       rfun_many = ObjectiveRFunMany$new(fun = FUN_2D_2D_MANY, domain = PS_2D, codomain = FUN_2D_2D_CODOMAIN)
     ),
-    list( # 2d x with deps, 1d y
-      rfun = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS, check_values = FALSE), # dont check bc. we get NAs
-      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DEPS_DT, domain = PS_2D_DEPS, check_values = TRUE), # here NAs can get checked by assert_dt correctly
+    list(
+      # 2d x with deps, 1d y
+      # dont check bc. we get NAs
+      rfun = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS, check_values = FALSE),
+      # here NAs can get checked by assert_dt correctly
+      rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DEPS_DT, domain = PS_2D_DEPS, check_values = TRUE),
       rfun_many = ObjectiveRFunMany$new(fun = FUN_2D_DEPS_MANY, domain = PS_2D_DEPS, check_values = FALSE)
     )
   )
 
-   fun_pairs = funs[[1]]
+  fun_pairs = funs[[1]]
 
   for (fun_pairs in funs) {
     fun1 = fun_pairs$rfun
@@ -106,9 +135,13 @@ test_that("Objective specialzations work", {
     xdt1 = sampler$sample(1)
 
     expected_ncols = fun1$codomain$length
-    if ("function_extras" == fun1$id) expected_ncols = expected_ncols + 1
+    if ("function_extras" == fun1$id) {
+      expected_ncols = expected_ncols + 1
+    }
     expected_colnames = fun1$codomain$ids()
-    if ("function_extras" == fun1$id) expected_colnames = c(expected_colnames, "y2")
+    if ("function_extras" == fun1$id) {
+      expected_colnames = c(expected_colnames, "y2")
+    }
 
     # eval_dt
     res1 = fun1$eval_dt(xdt1$data)
@@ -152,7 +185,10 @@ test_that("codomain assertions work", {
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'")
+  expect_error(
+    Objective$new(domain = domain, codomain = codomain),
+    "Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'"
+  )
 
   codomain = ps(y1 = p_lgl(tags = "minimize"))
   expect_error(Objective$new(domain = domain, codomain = codomain), "y1 in codomain is not numeric")
@@ -164,7 +200,10 @@ test_that("codomain assertions work", {
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
 
   codomain = ps(y1 = p_dbl(), y2 = p_dbl())
-  expect_error(Objective$new(domain = domain, codomain = codomain), "Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'")
+  expect_error(
+    Objective$new(domain = domain, codomain = codomain),
+    "Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'"
+  )
 
   codomain = ps(y1 = p_dbl(tags = "minimize"), time = p_dbl())
   expect_r6(Objective$new(domain = domain, codomain = codomain), "Objective")
@@ -183,23 +222,22 @@ test_that("codomain assertions work", {
 })
 
 test_that("check_values flag works", {
-  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+  ObjectiveTestEval = R6Class(
+    "ObjectiveTestEval",
     inherit = Objective,
     private = list(
       .eval = function(xs) list(y = sum(as.numeric(xs))^2, extra = 2)
     )
   )
 
-  obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN,
-    check_values = FALSE)
+  obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN, check_values = FALSE)
   expect_list(obj$eval(list(x1 = 2, x2 = 1)), len = 2)
 
-  obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN,
-    check_values = TRUE)
-  expect_error(obj$eval(list(x1 = 2, x2 = 1)),
-    "<= 1.", fixed = TRUE)
+  obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN, check_values = TRUE)
+  expect_error(obj$eval(list(x1 = 2, x2 = 1)), "<= 1.", fixed = TRUE)
 
-  ObjectiveTestEvalMany = R6Class("ObjectiveTestEvalMany",
+  ObjectiveTestEvalMany = R6Class(
+    "ObjectiveTestEvalMany",
     inherit = Objective,
     private = list(
       .eval_many = function(xss) {
@@ -214,12 +252,12 @@ test_that("check_values flag works", {
 
   obj = ObjectiveTestEvalMany$new(domain = PS_2D, check_values = TRUE)
   xs = list(x1 = 2, x2 = 1)
-  expect_error(obj$eval(list(x1 = 2, x2 = 1)),
-    "<= 1.", fixed = TRUE)
+  expect_error(obj$eval(list(x1 = 2, x2 = 1)), "<= 1.", fixed = TRUE)
 })
 
 test_that("check_values = TRUE with extra output works", {
-  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+  ObjectiveTestEval = R6Class(
+    "ObjectiveTestEval",
     inherit = Objective,
     private = list(
       .eval = function(xs) list(y = sum(as.numeric(xs))^2, extra = 2)
@@ -228,7 +266,8 @@ test_that("check_values = TRUE with extra output works", {
   obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN)
   expect_list(obj$eval(list(x1 = 0, x2 = 1)), len = 2)
 
-  ObjectiveTestEvalMany = R6Class("ObjectiveTestEvalCheck",
+  ObjectiveTestEvalMany = R6Class(
+    "ObjectiveTestEvalCheck",
     inherit = Objective,
     private = list(
       .eval_many = function(xss) {
@@ -239,28 +278,43 @@ test_that("check_values = TRUE with extra output works", {
     )
   )
   obj = ObjectiveTestEvalMany$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN)
-  expect_data_table(obj$eval_many(
-    list(list(x1 = 0, x2 = 1), list(x1 = 1, x2 = 0))), nrows = 2, ncols = 2)
+  expect_data_table(
+    obj$eval_many(
+      list(list(x1 = 0, x2 = 1), list(x1 = 1, x2 = 0))
+    ),
+    nrows = 2,
+    ncols = 2
+  )
 })
 
 test_that("assertion on overlapping and reserved names works", {
-  expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
+  expect_error(
+    Objective$new(domain = ps(x = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
     regexp = "disjunct from",
-    fixed = TRUE)
+    fixed = TRUE
+  )
 
-  expect_error(Objective$new(domain = ps(batch_nr = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
+  expect_error(
+    Objective$new(domain = ps(batch_nr = p_lgl()), codomain = ps(x = p_dbl(tags = "maximize"))),
     regexp = "disjunct from",
-    fixed = TRUE)
+    fixed = TRUE
+  )
 
-  expect_error(Objective$new(domain = ps(x = p_lgl()), codomain = ps(timestamp = p_dbl(tags = "maximize"))),
+  expect_error(
+    Objective$new(domain = ps(x = p_lgl()), codomain = ps(timestamp = p_dbl(tags = "maximize"))),
     regexp = "disjunct from",
-    fixed = TRUE)
+    fixed = TRUE
+  )
 })
 
 test_that("ObjectiveRFunDt works with a list containing elements with different order", {
   FUN = function(xdt) data.table(y = xdt$x)
 
-  rfun_dt = ObjectiveRFunDt$new(fun = FUN, domain = ps(x = p_int(), z = p_int()), codomain = ps(y = p_int(tags = "minimize")))
+  rfun_dt = ObjectiveRFunDt$new(
+    fun = FUN,
+    domain = ps(x = p_int(), z = p_int()),
+    codomain = ps(y = p_int(tags = "minimize"))
+  )
 
   res = rfun_dt$eval_many(list(list(x = 1, z = 2), list(x = 1, z = 2)))
   expect_equal(res, data.table(y = c(1, 1)))
@@ -298,9 +352,9 @@ test_that("ObjectiveRFunDt works with deps #141", {
 })
 
 test_that("Objective works with constants", {
-
   # .eval implemented
-  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+  ObjectiveTestEval = R6Class(
+    "ObjectiveTestEval",
     inherit = Objective,
     private = list(
       .eval = function(xs, c) list(y = xs[["x"]]^2 + c)
@@ -316,7 +370,8 @@ test_that("Objective works with constants", {
   expect_equal(objective$eval_dt(data.table(x = c(1, 0))), data.table(y = c(2, 1)))
 
   # .eval_many implemented
-  ObjectiveTestEval = R6Class("ObjectiveTestEval",
+  ObjectiveTestEval = R6Class(
+    "ObjectiveTestEval",
     inherit = Objective,
     private = list(
       .eval_many = function(xss, c) data.table(y = map_dbl(xss, function(xs) xs[["x"]]^2 + c))

@@ -19,9 +19,9 @@
 #'
 #' @seealso [ArchiveBatch], [ArchiveAsync]
 #' @export
-Archive = R6Class("Archive",
+Archive = R6Class(
+  "Archive",
   public = list(
-
     search_space = NULL,
 
     codomain = NULL,
@@ -44,7 +44,7 @@ Archive = R6Class("Archive",
       check_values = FALSE,
       label = NA_character_,
       man = NA_character_
-      ) {
+    ) {
       self$search_space = assert_param_set(search_space)
       assert_param_set(codomain)
       # get "codomain" element if present (new paradox) or default to $params (old paradox)
@@ -88,7 +88,6 @@ Archive = R6Class("Archive",
   ),
 
   active = list(
-
     #' @field cols_x (`character()`)\cr
     #' Column names of search space parameters.
     cols_x = function() self$search_space$ids(),
@@ -103,7 +102,7 @@ Archive = R6Class("Archive",
     },
 
     man = function(rhs) {
-assert_ro_binding(rhs)
+      assert_ro_binding(rhs)
       private$.man
     }
   ),
@@ -113,4 +112,3 @@ assert_ro_binding(rhs)
     .man = NULL
   )
 )
-

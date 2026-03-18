@@ -53,10 +53,10 @@
 #'   terminator = trm("evals", n_evals = 20)
 #' )
 #' }
-OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
+OptimInstanceAsyncSingleCrit = R6Class(
+  "OptimInstanceAsyncSingleCrit",
   inherit = OptimInstanceAsync,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(
@@ -67,7 +67,7 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
       callbacks = NULL,
       archive = NULL,
       rush = NULL
-      ) {
+    ) {
       if (objective$codomain$target_length > 1) {
         stop("Codomain length must be 1.")
       }
@@ -81,7 +81,8 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
         archive = archive,
         rush = rush,
         label = "Async Single Criteria Instance",
-        man = "bbotk::OptimInstanceAsyncSingleCrit")
+        man = "bbotk::OptimInstanceAsyncSingleCrit"
+      )
     },
 
     #' @description
@@ -111,15 +112,21 @@ OptimInstanceAsyncSingleCrit = R6Class("OptimInstanceAsyncSingleCrit",
 
       # add x_domain to result
       x_domain = unlist(transform_xdt_to_xss(private$.result_xdt, self$search_space), recursive = FALSE)
-      if (is.null(x_domain)) x_domain = list()
+      if (is.null(x_domain)) {
+        x_domain = list()
+      }
 
-      private$.result = cbind(private$.result_xdt, x_domain = list(x_domain), t(private$.result_y)) # t(y) so the name of y stays
+      # t(y) so the name of y stays
+      private$.result = cbind(
+        private$.result_xdt,
+        x_domain = list(x_domain),
+        t(private$.result_y)
+      )
       call_back("on_result_end", self$objective$callbacks, self$objective$context)
     }
   ),
 
   active = list(
-
     #' @field result_x_domain (`list()`)\cr
     #' (transformed) x part of the result in the *domain space* of the objective.
     result_x_domain = function() {

@@ -68,10 +68,10 @@
 #'
 #' # best performing configuration
 #' instance$result
-OptimizerBatchRandomSearch = R6Class("OptimizerBatchRandomSearch",
+OptimizerBatchRandomSearch = R6Class(
+  "OptimizerBatchRandomSearch",
   inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -94,7 +94,8 @@ OptimizerBatchRandomSearch = R6Class("OptimizerBatchRandomSearch",
     .optimize = function(inst) {
       batch_size = self$param_set$values$batch_size
       sampler = SamplerUnif$new(inst$search_space)
-      repeat { # iterate until we have an exception from eval_batch
+      repeat {
+        # iterate until we have an exception from eval_batch
         design = sampler$sample(batch_size)
         inst$eval_batch(design$data)
       }

@@ -27,13 +27,20 @@ local_search_control = function(
   n_neighs = 10L,
   mut_sd = 0.1,
   stagnate_max = 10L
-  ) {
+) {
   assert_int(n_searches, lower = 1L)
   assert_int(n_steps, lower = 0L)
   assert_int(n_neighs, lower = 1L)
   assert_number(mut_sd, lower = 0)
   assert_int(stagnate_max, lower = 1L)
-  res = list(minimize = minimize, n_searches = n_searches, n_steps = n_steps, n_neighs = n_neighs, mut_sd = mut_sd, stagnate_max = stagnate_max)
+  res = list(
+    minimize = minimize,
+    n_searches = n_searches,
+    n_steps = n_steps,
+    n_neighs = n_neighs,
+    mut_sd = mut_sd,
+    stagnate_max = stagnate_max
+  )
   set_class(res, "local_search_control")
 }
 
@@ -41,7 +48,9 @@ local_search_control = function(
 #'
 #' @description
 #' Runs a local search on the objective function.
-#' Somewhat similar to what is used in [SMAC](https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py) for acquisition function optimization of mixed type search spaces with hierarchical dependencies.
+#' Somewhat similar to what is used in
+#' [SMAC](https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py)
+#' for acquisition function optimization of mixed type search spaces with hierarchical dependencies.
 #'
 #' The function always minimizes.
 #' If the objective is to be maximized, we handle it by multiplying with "obj_mult" (which will be -1).
@@ -77,8 +86,10 @@ local_search_control = function(
 #'
 #' @param objective (`function(xdt)`)\cr
 #'   Objective to optimize.
-#'   The first arg (name 'xdt' is not enforced) will be a data.table with (scalar) columns corresponding exactly the search space, in the same order.
-#'   The function should must return numeric vector of exactly the same length as the number of rows in the dt, containing the objective values.
+#'   The first arg (name 'xdt' is not enforced) will be a data.table with (scalar) columns
+#'   corresponding exactly the search space, in the same order.
+#'   The function should must return numeric vector of exactly the same length as the number of rows
+#'   in the dt, containing the objective values.
 #' @param search_space ([paradox::ParamSet])\cr
 #'   Search space for decision variables.
 #'   Must be non-empty, can only contain `p_int`, `p_dbl`, `p_fct`, `p_lgl`, all must be bounded.

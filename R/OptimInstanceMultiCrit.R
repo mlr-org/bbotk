@@ -12,10 +12,10 @@
 #'
 #' @seealso [OptimInstanceBatchMultiCrit]
 #' @export
-OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
+OptimInstanceMultiCrit = R6Class(
+  "OptimInstanceMultiCrit",
   inherit = OptimInstanceBatchMultiCrit,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(
@@ -25,8 +25,7 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
       keep_evals = "all",
       check_values = TRUE,
       callbacks = NULL
-      ) {
-
+    ) {
       message("OptimInstanceMultiCrit is deprecated. Use OptimInstanceBatchMultiCrit instead.")
 
       super$initialize(
@@ -34,7 +33,8 @@ OptimInstanceMultiCrit = R6Class("OptimInstanceMultiCrit",
         search_space = search_space,
         terminator = terminator,
         check_values = check_values,
-        callbacks = callbacks)
+        callbacks = callbacks
+      )
     }
   )
 )

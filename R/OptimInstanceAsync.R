@@ -23,10 +23,10 @@
 #'
 #' @seealso [oi_async()], [OptimInstanceAsyncSingleCrit], [OptimInstanceAsyncMultiCrit]
 #' @export
-OptimInstanceAsync = R6Class("OptimInstanceAsync",
+OptimInstanceAsync = R6Class(
+  "OptimInstanceAsync",
   inherit = OptimInstance,
   public = list(
-
     rush = NULL,
 
     #' @description
@@ -41,7 +41,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       rush = NULL,
       label = NA_character_,
       man = NA_character_
-      ) {
+    ) {
       require_namespaces("rush")
       assert_r6(objective, "Objective")
       search_space = choose_search_space(objective, search_space)
@@ -53,7 +53,8 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
           search_space = search_space,
           codomain = objective$codomain,
           check_values = check_values,
-          rush = self$rush)
+          rush = self$rush
+        )
       } else {
         assert_r6(archive, "ArchiveAsync")
       }
@@ -65,7 +66,8 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
         callbacks = callbacks,
         archive = archive,
         label = label,
-        man = man)
+        man = man
+      )
     },
 
     #' @description
@@ -117,7 +119,7 @@ OptimInstanceAsync = R6Class("OptimInstanceAsync",
       # push result
       self$archive$push_result(key, private$.ys, x_domain = private$.xs_trafoed, extra = private$.extra)
 
-      return(invisible(private$.ys))
+      invisible(private$.ys)
     },
 
     .eval_queue = function() {

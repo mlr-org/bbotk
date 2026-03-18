@@ -36,7 +36,8 @@
 #' \item{`maxTime`}{`integer(1)`\cr
 #'   Maximum total execution time for the executions of targetRunner.
 #'   targetRunner must return two values: cost and time.
-#'   This value and the one returned by targetRunner must use the same units (seconds, minutes, iterations, evaluations, ...).
+#'   This value and the one returned by targetRunner must use the same units
+#'   (seconds, minutes, iterations, evaluations, ...).
 #'   Default is 0.}
 #' \item{`budgetEstimation`}{`numeric(1)`\cr
 #'   Fraction (smaller than 1) of the budget used to estimate the mean computation time of a configuration.
@@ -140,10 +141,10 @@
 #' instance$result
 #' }
 #' }
-OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
+OptimizerBatchIrace = R6Class(
+  "OptimizerBatchIrace",
   inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -212,19 +213,23 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
       scenario = list(
         parameters = paradox_to_irace(inst$search_space, pv$digits),
         maxExperiments = terminator$param_set$values$n_evals,
-        targetRunnerData = list(inst = inst))
+        targetRunnerData = list(inst = inst)
+      )
       scenario = insert_named(scenario, pv)
 
       # run irace
       res = invoke(irace::irace, scenario = scenario, .opts = allow_partial_matching)
 
       # add race and step to archive
-      iraceResults = irace::read_logfile(self$param_set$values$logFile)
+      iraceResults = irace::read_logfile(self$param_set$values$logFile) # nolint
       log = iraceResults$state$experiment_log
       log[, "step" := rleid("instance"), by = "iteration"]
       set(inst$archive$data, j = "race", value = log$iteration)
       set(inst$archive$data, j = "step", value = log$step)
-      setcolorder(inst$archive$data, c(inst$archive$cols_x, inst$archive$cols_y, "race", "step", "instance", "configuration"))
+      setcolorder(
+        inst$archive$data,
+        c(inst$archive$cols_x, inst$archive$cols_y, "race", "step", "instance", "configuration")
+      )
 
       # temporarily store best elite of final race
       private$.result_id = res$.ID.[1]
@@ -235,7 +240,10 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
     # the reported performance value is the average of all resampling iterations
     .assign_result = function(inst) {
       if (length(private$.result_id) == 0) {
-        stop("`irace::irace` did not return a result. The evaluated configurations are still accessible through the archive.")
+        stop(
+          "`irace::irace` did not return a result.",
+          " The evaluated configurations are still accessible through the archive."
+        )
       }
 
       res = inst$archive$data[get("configuration") == private$.result_id, ]
@@ -254,7 +262,8 @@ OptimizerBatchIrace = R6Class("OptimizerBatchIrace",
 
 mlr_optimizers$add("irace", OptimizerBatchIrace)
 
-target_runner_default = function(experiment, exec_target_runner, scenario, target_runner) { # nolint
+# nolint next
+target_runner_default = function(experiment, exec_target_runner, scenario, target_runner) {
   optim_instance = scenario$targetRunnerData$inst
 
   xdt = map_dtr(experiment, function(e) {
@@ -266,7 +275,9 @@ target_runner_default = function(experiment, exec_target_runner, scenario, targe
   })
   # fix logicals
   lgl_params = as.data.table(optim_instance$search_space)[class == "ParamLgl", "id"][[1]]
-  if (length(lgl_params)) xdt[, (lgl_params) := lapply(.SD, as.logical), .SDcols = lgl_params]
+  if (length(lgl_params)) {
+    xdt[, (lgl_params) := lapply(.SD, as.logical), .SDcols = lgl_params]
+  }
 
   # provide experiment instances to objective
   optim_instance$objective$constants$values$instances = map(experiment, function(e) e$instance)
@@ -284,7 +295,9 @@ paradox_to_irace = function(param_set, digits) {
   assertClass(param_set, "ParamSet")
   # workaround for mlr3tuning 0.15.0
   digits = assert_int(digits %??% 15, lower = 0)
-  if ("ParamUty" %in% param_set$class) stop("<ParamUty> not supported by <OptimizerBatchIrace>")
+  if ("ParamUty" %in% param_set$class) {
+    stop("<ParamUty> not supported by <OptimizerBatchIrace>")
+  }
 
   # types
   paradox_types = c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct")
@@ -313,7 +326,7 @@ paradox_to_irace = function(param_set, digits) {
     })
 
     # reduce to one row per parameter
-    deps = deps[, list("cond" =  paste(get("cond"), collapse = " & ")), by = "id"]
+    deps = deps[, list("cond" = paste(get("cond"), collapse = " & ")), by = "id"]
 
     # add parameters without dependency
     deps[, "cond" := paste("|", get("cond"))]

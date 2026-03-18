@@ -23,12 +23,14 @@ test_that("OptimizerBatchGenSA custom start values work", {
   objective = ObjectiveRFun$new(
     fun = objective_function,
     domain = domain,
-    codomain = codomain)
+    codomain = codomain
+  )
 
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 10L))
+    terminator = trm("evals", n_evals = 10L)
+  )
 
   optimizer = opt("gensa", par = c(-9.1, 1.3))
   optimizer$optimize(instance)

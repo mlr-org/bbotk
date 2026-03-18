@@ -22,4 +22,3 @@ test_that("OptimizerAsyncRandomSearch works", {
   expect_data_table(optimizer$optimize(instance), nrows = 1)
   expect_data_table(instance$archive$data, nrows = 2)
 })
-

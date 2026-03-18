@@ -71,15 +71,17 @@
 #' # covert to data.table
 #' as.data.table(instance$archive)
 #' }
-OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
+OptimizerAsyncDesignPoints = R6Class(
+  "OptimizerAsyncDesignPoints",
   inherit = OptimizerAsync,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        design = p_uty(tags = "required", custom_check = function(x) check_data_frame(x, min.rows = 1, min.cols = 1, null.ok = TRUE))
+        design = p_uty(tags = "required", custom_check = function(x) {
+          check_data_frame(x, min.rows = 1, min.cols = 1, null.ok = TRUE)
+        })
       )
       param_set$values = list(design = NULL)
       super$initialize(
@@ -115,4 +117,3 @@ OptimizerAsyncDesignPoints = R6Class("OptimizerAsyncDesignPoints",
 )
 
 mlr_optimizers$add("async_design_points", OptimizerAsyncDesignPoints)
-

@@ -33,26 +33,32 @@
 #' as.data.table(mlr_test_functions)
 #' obj = mlr_test_functions$get("branin")
 #' obj$eval(list(x1 = 0, x2 = 0))
-mlr_test_functions = R6Class("DictionaryTestFunction", inherit = Dictionary,
-  cloneable = FALSE)$new()
+mlr_test_functions = R6Class("DictionaryTestFunction", inherit = Dictionary, cloneable = FALSE)$new()
 
 #' @export
 as.data.table.DictionaryTestFunction = function(x, ..., objects = FALSE) {
   assert_flag(objects)
 
-  setkeyv(map_dtr(x$keys(), function(key) {
-    obj = x$get(key)
-    insert_named(
-      list(
-        key = key,
-        label = obj$label,
-        dimension = obj$domain$length,
-        optimum = obj$optimum,
-        optimum_x = list(obj$optimum_x)
-      ),
-      if (objects) list(object = list(obj))
-    )
-  }, .fill = TRUE), "key")[]
+  setkeyv(
+    map_dtr(
+      x$keys(),
+      function(key) {
+        obj = x$get(key)
+        insert_named(
+          list(
+            key = key,
+            label = obj$label,
+            dimension = obj$domain$length,
+            optimum = obj$optimum,
+            optimum_x = list(obj$optimum_x)
+          ),
+          if (objects) list(object = list(obj))
+        )
+      },
+      .fill = TRUE
+    ),
+    "key"
+  )[]
 }
 
 #' @title Objective Test Function
@@ -62,10 +68,10 @@ as.data.table.DictionaryTestFunction = function(x, ..., objects = FALSE) {
 #' Adds `optimum` and `optimum_x` fields with the known global optimum.
 #'
 #' @export
-ObjectiveTestFunction = R6Class("ObjectiveTestFunction",
+ObjectiveTestFunction = R6Class(
+  "ObjectiveTestFunction",
   inherit = ObjectiveRFun,
   public = list(
-
     #' @field optimum (`numeric(1)`)\cr
     #' Known global optimum value (f*).
     optimum = NULL,
@@ -171,8 +177,11 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = (x2 - 5.1 / (4 * pi^2) * x1^2 + 5 / pi * x1 - 6)^2 +
-      10 * (1 - 1 / (8 * pi)) * cos(x1) + 10)
+    list(
+      y = (x2 - 5.1 / (4 * pi^2) * x1^2 + 5 / pi * x1 - 6)^2 +
+        10 * (1 - 1 / (8 * pi)) * cos(x1) +
+        10
+    )
   },
   domain = ps(x1 = p_dbl(-5, 10), x2 = p_dbl(0, 15)),
   optimum = 0.397887,
@@ -190,8 +199,11 @@ make_test_function(
   fun = function(xs, fidelity = 1) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = (x2 - (5.1 / (4 * pi^2) - 0.1 * (1 - fidelity)) * x1^2 +
-      5 / pi * x1 - 6)^2 + 10 * (1 - 1 / (8 * pi)) * cos(x1) + 10)
+    list(
+      y = (x2 - (5.1 / (4 * pi^2) - 0.1 * (1 - fidelity)) * x1^2 + 5 / pi * x1 - 6)^2 +
+        10 * (1 - 1 / (8 * pi)) * cos(x1) +
+        10
+    )
   },
   domain = ps(x1 = p_dbl(-5, 10), x2 = p_dbl(0, 15)),
   constants = ps(fidelity = p_dbl(0, 1, init = 1)),
@@ -210,8 +222,7 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = (4 - 2.1 * x1^2 + x1^4 / 3) * x1^2 + x1 * x2 +
-      (-4 + 4 * x2^2) * x2^2)
+    list(y = (4 - 2.1 * x1^2 + x1^4 / 3) * x1^2 + x1 * x2 + (-4 + 4 * x2^2) * x2^2)
   },
   domain = ps(x1 = p_dbl(-3, 3), x2 = p_dbl(-2, 2)),
   optimum = -1.0316,
@@ -228,10 +239,8 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    a = 1 + (x1 + x2 + 1)^2 * (19 - 14 * x1 + 3 * x1^2 - 14 * x2 +
-      6 * x1 * x2 + 3 * x2^2)
-    b = 30 + (2 * x1 - 3 * x2)^2 * (18 - 32 * x1 + 12 * x1^2 + 48 * x2 -
-      36 * x1 * x2 + 27 * x2^2)
+    a = 1 + (x1 + x2 + 1)^2 * (19 - 14 * x1 + 3 * x1^2 - 14 * x2 + 6 * x1 * x2 + 3 * x2^2)
+    b = 30 + (2 * x1 - 3 * x2)^2 * (18 - 32 * x1 + 12 * x1^2 + 48 * x2 - 36 * x1 * x2 + 27 * x2^2)
     list(y = a * b)
   },
   domain = ps(x1 = p_dbl(-2, 2), x2 = p_dbl(-2, 2)),
@@ -264,8 +273,7 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = (1.5 - x1 + x1 * x2)^2 + (2.25 - x1 + x1 * x2^2)^2 +
-      (2.625 - x1 + x1 * x2^3)^2)
+    list(y = (1.5 - x1 + x1 * x2)^2 + (2.25 - x1 + x1 * x2^2)^2 + (2.625 - x1 + x1 * x2^3)^2)
   },
   domain = ps(x1 = p_dbl(-4.5, 4.5), x2 = p_dbl(-4.5, 4.5)),
   optimum = 0,
@@ -316,8 +324,7 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = -0.0001 * (abs(sin(x1) * sin(x2) *
-      exp(abs(100 - sqrt(x1^2 + x2^2) / pi))) + 1)^0.1)
+    list(y = -0.0001 * (abs(sin(x1) * sin(x2) * exp(abs(100 - sqrt(x1^2 + x2^2) / pi))) + 1)^0.1)
   },
   domain = ps(x1 = p_dbl(-10, 10), x2 = p_dbl(-10, 10)),
   optimum = -2.06261,
@@ -336,8 +343,7 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = -(x2 + 47) * sin(sqrt(abs(x2 + x1 / 2 + 47))) -
-      x1 * sin(sqrt(abs(x1 - (x2 + 47)))))
+    list(y = -(x2 + 47) * sin(sqrt(abs(x2 + x1 / 2 + 47))) - x1 * sin(sqrt(abs(x1 - (x2 + 47)))))
   },
   domain = ps(x1 = p_dbl(-512, 512), x2 = p_dbl(-512, 512)),
   optimum = -959.6407,
@@ -353,8 +359,7 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = -abs(sin(x1) * cos(x2) *
-      exp(abs(1 - sqrt(x1^2 + x2^2) / pi))))
+    list(y = -abs(sin(x1) * cos(x2) * exp(abs(1 - sqrt(x1^2 + x2^2) / pi))))
   },
   domain = ps(x1 = p_dbl(-10, 10), x2 = p_dbl(-10, 10)),
   optimum = -19.2085,
@@ -389,8 +394,7 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = 20 + (x1^2 - 10 * cos(2 * pi * x1)) +
-      (x2^2 - 10 * cos(2 * pi * x2)))
+    list(y = 20 + (x1^2 - 10 * cos(2 * pi * x1)) + (x2^2 - 10 * cos(2 * pi * x2)))
   },
   domain = ps(x1 = p_dbl(-5.12, 5.12), x2 = p_dbl(-5.12, 5.12)),
   optimum = 0,
@@ -406,8 +410,11 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = 0.5 * ((x1^4 - 16 * x1^2 + 5 * x1) +
-      (x2^4 - 16 * x2^2 + 5 * x2)))
+    list(
+      y = 0.5 *
+        ((x1^4 - 16 * x1^2 + 5 * x1) +
+          (x2^4 - 16 * x2^2 + 5 * x2)) # nolint
+    )
   },
   domain = ps(x1 = p_dbl(-5, 5), x2 = p_dbl(-5, 5)),
   optimum = -78.33198,
@@ -423,8 +430,7 @@ make_test_function(
   fun = function(xs) {
     x1 = xs[["x1"]]
     x2 = xs[["x2"]]
-    list(y = 2 * 418.9829 - x1 * sin(sqrt(abs(x1))) -
-      x2 * sin(sqrt(abs(x2))))
+    list(y = 2 * 418.9829 - x1 * sin(sqrt(abs(x1))) - x2 * sin(sqrt(abs(x2))))
   },
   domain = ps(x1 = p_dbl(-500, 500), x2 = p_dbl(-500, 500)),
   optimum = 0,

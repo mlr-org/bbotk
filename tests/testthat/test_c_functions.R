@@ -212,9 +212,9 @@ test_that("c_test_generate_neighs", {
   expect_true(all(is.logical(neighs$x4)))
 
   # check that exactly 1 param was mutated per row
-  for (i in 1:nrow(neighs)) {
-    diffs = mapply("!=", as.data.frame(neighs[i,]), as.data.frame(pop))
-    diffs[1] = abs(neighs[i,]$x1 - pop$x1) > 1e-8  # special handling for numeric
+  for (i in seq_len(nrow(neighs))) {
+    diffs = mapply("!=", as.data.frame(neighs[i, ]), as.data.frame(pop))
+    diffs[1] = abs(neighs[i, ]$x1 - pop$x1) > 1e-8 # special handling for numeric
     expect_equal(sum(diffs), 1)
   }
 
@@ -230,11 +230,11 @@ test_that("c_test_generate_neighs", {
 
   neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
-  mutated_A_to_a2 = which(neighs$A == "a2")
+  mutated_A_to_a2 = which(neighs$A == "a2") # nolint
   expect_true(length(mutated_A_to_a2) > 0) # check A was mutated to "a2"
   expect_true(all(is.na(neighs[mutated_A_to_a2, ]$B)))
 
-  not_mutated_A = which(neighs$A == "a1")
+  not_mutated_A = which(neighs$A == "a1") # nolint
   expect_true(all(!is.na(neighs[not_mutated_A, ]$B)))
 
   # Case 2: condition not met (A="a2"), B is NA. The only mutable param is A.
@@ -263,13 +263,13 @@ test_that("c_test_generate_neighs", {
   pop = data.table::data.table(A = 0.5, B = "b1", C = "c1")
   neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
-  mutated_C_to_c2 = which(neighs$C == "c2")
+  mutated_C_to_c2 = which(neighs$C == "c2") # nolint
   expect_true(length(mutated_C_to_c2) > 0)
   expect_true(all(is.na(neighs[mutated_C_to_c2, ]$B)))
   expect_true(all(is.na(neighs[mutated_C_to_c2, ]$A)))
 
   # Case 3.2: Start with everything active. Mutate B to "b2". A must become NA.
-  mutated_B_to_b2 = which(neighs$B == "b2" & neighs$C == "c1")
+  mutated_B_to_b2 = which(neighs$B == "b2" & neighs$C == "c1") # nolint
   expect_true(length(mutated_B_to_b2) > 0)
   expect_true(all(is.na(neighs[mutated_B_to_b2, ]$A)))
   expect_true(all(neighs[mutated_B_to_b2, ]$C == "c1")) # C should not change
@@ -309,12 +309,12 @@ test_that("c_test_generate_neighs", {
   pop = data.table::data.table(A = "a", B = "c", C = 0.5)
   neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
-  mutated_A = which(neighs$A == "b")
+  mutated_A = which(neighs$A == "b") # nolint
   expect_true(length(mutated_A) > 0)
   expect_true(all(is.na(neighs[mutated_A, ]$C)))
   expect_true(all(neighs[mutated_A, ]$B == "c"))
 
-  mutated_B = which(neighs$B == "d")
+  mutated_B = which(neighs$B == "d") # nolint
   expect_true(length(mutated_B) > 0)
   expect_true(all(is.na(neighs[mutated_B, ]$C)))
   expect_true(all(neighs[mutated_B, ]$A == "a"))
@@ -324,7 +324,7 @@ test_that("c_test_generate_neighs", {
   neighs = .Call("c_test_generate_neighs", ss, ctrl, pop, PACKAGE = "bbotk")
 
   # some neighbors will have B mutated to "d" which keeps C inactive
-  mutated_A_to_a = which(neighs$A == "a" & neighs$B == "c")
+  mutated_A_to_a = which(neighs$A == "a" & neighs$B == "c") # nolint
   expect_true(length(mutated_A_to_a) > 0)
   expect_true(all(!is.na(neighs[mutated_A_to_a, ]$C)))
   expect_true(all(neighs[mutated_A_to_a, ]$C >= 0 & neighs[mutated_A_to_a, ]$C <= 1))
@@ -377,7 +377,6 @@ test_that("c_test_get_best_pop_element", {
   best = .Call("c_test_get_best_pop_element", ss, ctrl, pop_x, pop_y, PACKAGE = "bbotk")
   expect_equal(best$y, 20)
   expect_equal(best$x, as.list(pop_x[3, ]))
-
 })
 
 
@@ -474,7 +473,7 @@ test_that("c_test_dt_set_random_row", {
     x3 = paradox::p_fct(c("a", "b", "c")),
     x4 = paradox::p_lgl()
   )
-   # NB: the condition should not matter for dt_set_random_row
+  # NB: the condition should not matter for dt_set_random_row
   ss$add_dep("x1", on = "x3", cond = paradox::CondEqual$new("a"))
   # A DT with one row of "wrong" values that should be overwritten
   dt = data.table::data.table(x1 = 2, x2 = 11L, x3 = "d", x4 = NA)
@@ -489,4 +488,3 @@ test_that("c_test_dt_set_random_row", {
   expect_true(is.logical(random_dt$x4))
   expect_true(!is.na(random_dt$x4))
 })
-

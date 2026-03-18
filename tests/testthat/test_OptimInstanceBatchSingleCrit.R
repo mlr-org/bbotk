@@ -54,10 +54,11 @@ test_that("OptimInstance works with extras output", {
   fun_extra = function(xs) {
     y = sum(as.numeric(xs)^2)
     res = list(y = y, extra1 = runif(1), extra2 = list(a = runif(1), b = Sys.time()))
-    if (y > 0.5) { # sometimes add extras
+    if (y > 0.5) {
+      # sometimes add extras
       res$extra3 = -y
     }
-    return(res)
+    res
   }
   obj_extra = ObjectiveRFun$new(fun = fun_extra, domain = PS_2D, codomain = FUN_2D_CODOMAIN)
   inst = MAKE_INST(objective = obj_extra, search_space = PS_2D, terminator = 20L)
@@ -88,8 +89,7 @@ test_that("objective_function works", {
   y = inst$objective_function(1)
   expect_equal(y, c(y = -1))
 
-  z = optimize(inst$objective_function, lower = inst$search_space$lower,
-    upper = inst$search_space$upper)
+  z = optimize(inst$objective_function, lower = inst$search_space$lower, upper = inst$search_space$upper)
   expect_list(z, any.missing = FALSE, names = "named", len = 2L)
 
   search_space = ps(
@@ -106,19 +106,15 @@ test_that("search_space is optional", {
 })
 
 test_that("OptimInstaceSingleCrit does not work with codomain > 1", {
-  expect_error(OptimInstanceBatchSingleCrit$new(objective = OBJ_2D_2D,
-    terminator = trm("none")), "Codomain > 1")
+  expect_error(OptimInstanceBatchSingleCrit$new(objective = OBJ_2D_2D, terminator = trm("none")), "Codomain > 1")
 })
 
 test_that("OptimInstanceBatchSingleCrit$eval_batch() throws and error if columns are missing", {
   inst = MAKE_INST_2D(20L)
-  expect_error(inst$eval_batch(data.table(x1 = 0)),
-    regexp = "include the elements",
-    fixed = TRUE)
+  expect_error(inst$eval_batch(data.table(x1 = 0)), regexp = "include the elements", fixed = TRUE)
 })
 
 test_that("domain, search_space and TuneToken work", {
-
   domain = ps(
     x1 = p_dbl(-10, 10),
     x2 = p_dbl(-5, 5)
@@ -170,8 +166,10 @@ test_that("domain, search_space and TuneToken work", {
   expect_equal(domain$search_space(), instance$search_space)
 
   # TuneToken and search_space
-  expect_error(OptimInstanceBatchSingleCrit$new(objective = objective, terminator = trm("none"), search_space = search_space),
-    regexp = "If the domain contains TuneTokens, you cannot supply a search_space")
+  expect_error(
+    OptimInstanceBatchSingleCrit$new(objective = objective, terminator = trm("none"), search_space = search_space),
+    regexp = "If the domain contains TuneTokens, you cannot supply a search_space"
+  )
 })
 
 test_that("OptimInstanceBatchSingleCrit works with empty search space", {

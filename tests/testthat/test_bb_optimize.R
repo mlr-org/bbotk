@@ -74,7 +74,14 @@ test_that("bb_optimize works with named codomain", {
     -(xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10
   }
 
-  res = bb_optimize(fun, method = "random_search", lower = lower, upper = upper, max_evals = 10, maximize = c(z = FALSE))
+  res = bb_optimize(
+    fun,
+    method = "random_search",
+    lower = lower,
+    upper = upper,
+    max_evals = 10,
+    maximize = c(z = FALSE)
+  )
   expect_list(res)
   expect_data_table(res$par)
   expect_named(res$par, c("x1", "x2"))

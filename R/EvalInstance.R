@@ -32,9 +32,9 @@
 #' @template field_man
 #'
 #' @export
-EvalInstance = R6Class("EvalInstance",
+EvalInstance = R6Class(
+  "EvalInstance",
   public = list(
-
     objective = NULL,
 
     search_space = NULL,
@@ -45,8 +45,7 @@ EvalInstance = R6Class("EvalInstance",
 
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
-    initialize = function(objective, search_space, terminator, archive,
-      label = NA_character_, man = NA_character_) {
+    initialize = function(objective, search_space, terminator, archive, label = NA_character_, man = NA_character_) {
       self$objective = assert_r6(objective, "Objective")
       self$search_space = assert_param_set(search_space)
       self$terminator = assert_r6(terminator, "Terminator")
@@ -73,7 +72,11 @@ EvalInstance = R6Class("EvalInstance",
         cli_li("Search Space:")
       })
       print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
-      terminator = if (length(self$terminator$param_set$values)) paste0("(", as_short_string(self$terminator$param_set$values), ")") else ""
+      terminator = if (length(self$terminator$param_set$values)) {
+        paste0("(", as_short_string(self$terminator$param_set$values), ")")
+      } else {
+        ""
+      }
       cat_cli({
         cli_li("Terminator: {.cls {class(self$terminator)[1]}} {terminator}")
         cli_li("Evaluations: {self$archive$n_evals}")
@@ -118,7 +121,8 @@ EvalInstance = R6Class("EvalInstance",
     .man = NULL,
 
     deep_clone = function(name, value) {
-      switch(name,
+      switch(
+        name,
         objective = value$clone(deep = TRUE),
         search_space = value$clone(deep = TRUE),
         terminator = value$clone(deep = TRUE),

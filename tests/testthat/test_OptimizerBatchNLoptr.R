@@ -2,14 +2,28 @@ test_that("OptimizerBatchNLoptr", {
   skip_on_os("windows")
   skip_if_not_installed("nloptr")
 
-  z = test_optimizer_1d("nloptr", algorithm = "NLOPT_LN_BOBYQA",
-    xtol_rel = -1, xtol_abs = -1, ftol_rel = -1, ftol_abs = -1,
-    term_evals = 5L)
+  z = test_optimizer_1d(
+    "nloptr",
+    algorithm = "NLOPT_LN_BOBYQA",
+    xtol_rel = -1,
+    xtol_abs = -1,
+    ftol_rel = -1,
+    ftol_abs = -1,
+    term_evals = 5L
+  )
   expect_class(z$optimizer, "OptimizerBatchNLoptr")
   expect_snapshot(z$optimizer)
 
-  z = test_optimizer_1d("nloptr", algorithm = "NLOPT_LD_LBFGS", approximate_eval_grad_f = TRUE,
-    xtol_rel = -1, xtol_abs = -1, ftol_rel = -1, ftol_abs = -1, term_evals = 5L)
+  z = test_optimizer_1d(
+    "nloptr",
+    algorithm = "NLOPT_LD_LBFGS",
+    approximate_eval_grad_f = TRUE,
+    xtol_rel = -1,
+    xtol_abs = -1,
+    ftol_rel = -1,
+    ftol_abs = -1,
+    term_evals = 5L
+  )
   expect_class(z$optimizer, "OptimizerBatchNLoptr")
   expect_snapshot(z$optimizer)
 })
@@ -32,12 +46,14 @@ test_that("OptimizerBatchNLoptr custom start values work", {
   objective = ObjectiveRFun$new(
     fun = objective_function,
     domain = domain,
-    codomain = codomain)
+    codomain = codomain
+  )
 
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 10L))
+    terminator = trm("evals", n_evals = 10L)
+  )
 
   optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA", x0 = c(-9.1, 1.3))
   optimizer$optimize(instance)
