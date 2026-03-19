@@ -43,11 +43,11 @@ jobs:
           - {package: mlr-org/mlr3tuning, ref: main}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           path: mlr3misc
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           repository: ${{ matrix.package }}
           ref: ${{ matrix.ref }}
