@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://bbotk.mlr-org.com/404.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/AGENTS.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/LICENSE-text.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/authors.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/index.html</loc></url>
@@ -18,6 +19,7 @@
 <url><loc>https://bbotk.mlr-org.com/reference/ObjectiveRFun.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/ObjectiveRFunDt.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/ObjectiveRFunMany.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/ObjectiveTestFunction.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/OptimInstance.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/OptimInstanceAsync.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/OptimInstanceAsyncMultiCrit.html</loc></url>
@@ -74,12 +76,14 @@
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation_batch.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/mlr_terminators_stagnation_hypervolume.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/mlr_test_functions.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/nds_selection.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/oi.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/oi_async.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/opt.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/optimize_async_default.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/optimize_batch_default.html</loc></url>
+<url><loc>https://bbotk.mlr-org.com/reference/otfun.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/reexports.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/search_start.html</loc></url>
 <url><loc>https://bbotk.mlr-org.com/reference/shrink_ps.html</loc></url>

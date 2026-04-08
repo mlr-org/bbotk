@@ -15,7 +15,7 @@ We simply search over a set of points fully specified by the ser."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.9.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,7 +170,7 @@ Design points to try in search, one per row.</p></dd>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># start workers</span></span></span>
-<span class="r-in"><span><span class="fu">rush</span><span class="fu">::</span><span class="fu"><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush_plan</a></span><span class="op">(</span>worker_type <span class="op">=</span> <span class="st">"remote"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">rush</span><span class="fu">::</span><span class="fu"><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush_plan</a></span><span class="op">(</span>worker_type <span class="op">=</span> <span class="st">"mirai"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">mirai</span><span class="fu">::</span><span class="fu"><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">daemons</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># initialize instance</span></span></span>
@@ -195,18 +195,18 @@ Design points to try in search, one per row.</p></dd>
 <span class="r-in"><span><span class="co"># covert to data.table</span></span></span>
 <span class="r-in"><span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       state    x1    x2     y        timestamp_xs   pid</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;char&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;              &lt;POSc&gt; &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: finished     0     0    -3 2026-02-28 07:00:58  9113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: finished     1     1    -7 2026-02-28 07:00:58  9113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     worker_id        timestamp_ys</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        &lt;char&gt;              &lt;POSc&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: emotionless_astrangiacoral 2026-02-28 07:00:59</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: emotionless_astrangiacoral 2026-02-28 07:00:59</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    keys x_domain_x1 x_domain_x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  &lt;char&gt;       &lt;num&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2e988536-d86f-4f38-b2c7-86ce0f9c7852           0           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: 59dfae73-e377-4ee3-8a07-99dfdff8b37d           1           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       state    x1    x2     y        timestamp_xs                 worker_id</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;char&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;              &lt;POSc&gt;                    &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: finished     0     0    -3 2026-04-08 06:02:55 terrorstricken_prairiedog</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: finished     1     1    -7 2026-04-08 06:02:55 terrorstricken_prairiedog</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           timestamp_ys                                 keys x_domain_x1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;POSc&gt;                               &lt;char&gt;       &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2026-04-08 06:02:56 fa7ae44f-fee2-4e4c-ab7e-1b594025c921           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: 2026-04-08 06:02:56 5e7e7399-54f0-465f-bb81-6772bf0ac958           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    x_domain_x2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:           1</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

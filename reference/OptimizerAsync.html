@@ -15,7 +15,7 @@ The optimization is performed asynchronously on a set of workers."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.9.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,11 +72,11 @@ Usually, the method proposes new points, evaluates them, and updates the archive
 
 
 <p>The <code><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush::rush_plan()</a></code> function defines the number of workers and their type.
-There are three types of workers:</p><ul><li><p>"local": Workers are started as local processes with <a href="https://CRAN.R-project.org/package=processx" class="external-link"><span class="pkg">processx</span></a>.
+There are three types of workers:</p><ul><li><p>"mirai": Workers are started with <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> on local or remote machines.
+See <code>$start_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.
+<code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> must be created before starting the optimization.</p></li>
+<li><p>"processx": Workers are started as local processes with <a href="https://CRAN.R-project.org/package=processx" class="external-link"><span class="pkg">processx</span></a>.
 See <code>$start_local_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
-<li><p>"remote": Workers are started with <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> on local or remote machines.
-<code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> must be created before starting the optimization.
-See <code>$start_remote_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
 <li><p>"script": Workers are started by the user with a custom script.
 See <code>$create_worker_script()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
 </ul><p>The workers are started when the <code>$optimize()</code> method is called.

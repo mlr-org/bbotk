@@ -23,18 +23,17 @@ The
 function defines the number of workers and their type. There are three
 types of workers:
 
-- "local": Workers are started as local processes with
-  [processx](https://CRAN.R-project.org/package=processx). See
-  `$start_local_workers()` in
+- "mirai": Workers are started with
+  [mirai](https://CRAN.R-project.org/package=mirai) on local or remote
+  machines. See `$start_workers()` in
   [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) for more
   details.
-
-- "remote": Workers are started with
-  [mirai](https://CRAN.R-project.org/package=mirai) on local or remote
-  machines.
   [`mirai::daemons()`](https://mirai.r-lib.org/reference/daemons.html)
-  must be created before starting the optimization. See
-  `$start_remote_workers()` in
+  must be created before starting the optimization.
+
+- "processx": Workers are started as local processes with
+  [processx](https://CRAN.R-project.org/package=processx). See
+  `$start_local_workers()` in
   [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) for more
   details.
 

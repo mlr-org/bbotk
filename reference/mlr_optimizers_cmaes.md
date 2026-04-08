@@ -152,7 +152,7 @@ instance$archive
 # best performing configuration
 instance$result
 }
-#>          x1    x2        x3  x_domain         y
-#>       <num> <num>     <num>    <list>     <num>
-#> 1: 3.649141    -5 0.3082349 <list[3]> -15.28056
+#>           x1        x2        x3  x_domain         y
+#>        <num>     <num>     <num>    <list>     <num>
+#> 1: 0.2459052 -3.758276 0.1484205 <list[3]> -10.86122
 ```
