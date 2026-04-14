@@ -1,7 +1,5 @@
 #' @title Heteroscedastic evolutionary bayesian optimization
 #'
-#'
-#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -50,7 +48,9 @@
 # IMPORTANT; configspace sind Python Objekte
 # search space -- R Objekt
 # cs // config_space -- Python Objekt
+
 optimize = function(inst) {
+  browser()
   # installing of packages
   assert_python_packages(c("hebo"))
   hebo = reticulate::import("hebo")
@@ -61,43 +61,84 @@ optimize = function(inst) {
 
   space = paramset_to_hebo_space(search_space)
 
-  # terminator criterion
-  terminator = inst$terminator
-
   optimizer = hebo$optimizers$hebo$HEBO(space = space)
 
   repeat {
+    if (inst$is_terminated) {
+      break
+    }
+
     # tryCatch muss noch etwas ausgestaltet werden, siehe folgender Kommentar
     # hebo$optimizers$hebo$HEBO()$quasi_sample --- default HEBO sampler evtl notwendig, wenn suggest fehlschlägt; useful wenn SM zusammenbricht; wrappen in Trycatch von suggest funktion falls das passiert
+    # ISSUE 1 - HEBO suggest doesnt expose metadata as SMAC3
+    # trial_info exposes paraeters as a pandas DataFrame
     trial_info = tryCatch(
       optimizer$suggest(),
+      # rausfinden wie HEBO suggest verwendet um mehrere configs oder einzelne configs zu kriegen; gibt mehrere Möglichkeiten das zu machen bei MBO interessant wie HEBO das macht
       error = function(e) NULL
     )
     if (is.null(trial_info)) {
       break
     }
 
-    proposal_dt = as.data.table(reticulate::py_to_r(trial_info))
+    # convert pandas DataFrame to R data.frame-like object
+    trial_info_dt = setDT(reticulate::py_to_r(trial_info))
 
-    all_params = search_space$ids()
-    missing_params = setdiff(all_params, names(proposal_dt))
-    if (length(missing_params)) {
-      proposal_dt[, (missing_params) := NA]
-    }
-    xdt = proposal_dt[, ..all_params]
+    # load paramset names
+    # all_params = search_space$ids()
 
-    search_space$assert_dt(xdt)
+    # identify missing parameters
+    # missing_params = setdiff(all_params, names(trial_info_dt))
 
-    ydt = inst$eval_batch(xdt)
+    # when there are missing parameters we set them to NA
+    # if (length(missing_params)) {
+    #   trial_info_dt[, (missing_params) := NA]
+    # }
 
-    y = as.matrix(ydt[, inst$archive$cols_y, with = FALSE])
+    # keep only columns in all params and saved as xdt
+    # xdt = trial_info_dt[, ..all_params]
+
+    # search_space$assert_dt(xdt)
+
+    # evaluation of that config
+    res = inst$eval_batch(xdt)
+
+    # evaluated target columns are turned into a numeric matrix
+    y = as.matrix(res[, inst$archive$cols_y, with = FALSE])
+
+    # signs are flipped
+    # ist es möglich bei HEBO auch multi-objective zu machen, also dass da mehrere y zurückkomen; das auch wichtig für denOptimizer ob er nicht nur SingleCrit oder auch MultiCrit kann
     y = y * matrix(inst$objective_multiplicator, nrow = nrow(y), ncol = ncol(y), byrow = TRUE)
 
-    opt$observe(trial_info, y)
+    optimizer$observe(trial_info, y)
   }
 }
 
+# 1 - rausfinden ob HEBO mixed/mixed hierarchical kann; falls nein alles andere außer numeric rauskicken
+
 # EXAMPLE
+objective_fun = function(xs) {
+  booster_term = if (xs$booster == "dart") {
+    0.8
+  } else if (xs$booster == "gbtree") {
+    0.4
+  } else {
+    0.0
+  }
+  bias_term = if (isTRUE(xs$use_bias)) 0.25 else -0.15
+
+  score = 12 -
+    (log10(xs$lr) + 1.1)^2 -
+    ((xs$depth - 7) / 3)^2 -
+    0.03 * (xs$reg_lambda - 4)^2 -
+    8 * (xs$subsample - 0.82)^2 -
+    ((xs$max_bin - 256) / 200)^2 +
+    booster_term +
+    bias_term
+
+  list(score = score)
+}
+
 search_space = ps(
   lr = p_dbl(lower = 1e-4, upper = 3e-1),
   depth = p_int(lower = 2L, upper = 14L),
