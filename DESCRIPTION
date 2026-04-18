@@ -32,6 +32,7 @@ Imports:
     lgr,
     methods,
     mlr3misc (>= 0.21.0),
+    moocore,
     R6
 Suggests:
     adagio,
