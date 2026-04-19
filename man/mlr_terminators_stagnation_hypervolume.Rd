@@ -6,6 +6,8 @@
 \title{Stagnation Hypervolume Terminator}
 \description{
 Class to terminate the optimization after the hypervolume stagnates, i.e. does not improve more than \code{threshold} over the last \code{iters} iterations.
+The hypervolume is computed using \code{\link[moocore:hypervolume]{moocore::hypervolume()}}.
+The reference point is the maximum of each objective over all evaluations.
 }
 \section{Dictionary}{
 

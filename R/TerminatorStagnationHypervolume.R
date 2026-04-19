@@ -6,6 +6,8 @@
 #' @description
 #' Class to terminate the optimization after the hypervolume stagnates,
 #' i.e. does not improve more than `threshold` over the last `iters` iterations.
+#' The hypervolume is computed using [moocore::hypervolume()].
+#' The reference point is the maximum of each objective over all evaluations.
 #'
 #' @templateVar id stagnation_hypervolume
 #' @template section_dictionary_terminator
@@ -77,8 +79,8 @@ TerminatorStagnationHypervolume = R6Class(
       # points outside iters windows
       points_before = points[, seq(1, ncol(points) - iters), drop = FALSE]
 
-      hypervolume = emoa::dominated_hypervolume(points)
-      hypervolume_before = emoa::dominated_hypervolume(points_before)
+      hypervolume = moocore::hypervolume(t(points), reference = apply(points, 1, max))
+      hypervolume_before = moocore::hypervolume(t(points_before), reference = apply(points_before, 1, max))
 
       # hypervolume is always maximized
       hypervolume <= hypervolume_before + pv$threshold
