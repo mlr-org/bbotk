@@ -44,177 +44,199 @@
 #' # best performing configuration
 #' instance$result
 #' }
+#'
+#'
+#'
 
-# IMPORTANT; configspace sind Python Objekte
-# search space -- R Objekt
-# cs // config_space -- Python Objekt
+OptimizerBatchHEBO = R6Class(
+  "OptimizerBatchHEBO",
+  inherit = OptimizerBatch,
+  public = list(
+    initialize = function() {
+      param_set = ps(
+        # optimizer interface
+        n_suggestions = p_int(lower = 1L, init = 1L), # remove as HEBO only handles single crit
+        n_init = p_int(lower = 1L),
+        seed = p_int(lower = 0L),
 
-optimize = function(inst) {
-  browser()
-  # installing of packages
-  assert_python_packages(c("hebo"))
-  hebo = reticulate::import("hebo")
+        # surrogate model
+        surrogate = p_fct(levels = c("gp", "rf"), init = "gp"),
+        rf_n_estimators = p_int(lower = 1L, depends = quote(surrogate == "rf")),
+        gp_lr = p_dbl(lower = 0, depends = quote(surrogate == "gp")),
+        gp_num_epochs = p_int(lower = 1L, depends = quote(surrogate == "gp")),
+        gp_noise_lb = p_dbl(lower = 0, depends = quote(surrogate == "gp")),
+        gp_pred_likeli = p_lgl(depends = quote(surrogate == "gp")),
 
-  # initialization of search space
-  # pv = self$param_set$values
-  search_space = inst$search_space
+        # acquisition function
+        acq_function = p_fct(levels = c("mace", "lcb"), init = "mace"),
 
-  space = paramset_to_hebo_space(search_space)
+        # evolutionary search for acquisition optimization
+        es = p_fct(
+          levels = c(
+            "ga",
+            "brkga",
+            "de",
+            "nelder-mead",
+            "pattern-search",
+            "cmaes",
+            "pso",
+            "nsga2",
+            "rnsga2",
+            "nsga3",
+            "unsga3",
+            "rnsga3",
+            "moead",
+            "ctaea"
+          ),
+          init = "nsga2"
+        )
+      )
 
-  optimizer = hebo$optimizers$hebo$HEBO(space = space)
-
-  repeat {
-    if (inst$is_terminated) {
-      break
+      super$initialize(
+        id = "hebo",
+        param_set = param_set,
+        param_classes = c("ParamDbl", "ParamInt", "ParamFct", "ParamLgl"),
+        properties = c("single-crit"),
+        packages = "reticulate",
+        label = "Heteroscedastic Evolutionary Bayesian Optimization",
+        man = "bbotk::mlr_optimizers_hebo"
+      )
     }
+  ),
 
-    # tryCatch muss noch etwas ausgestaltet werden, siehe folgender Kommentar
-    # hebo$optimizers$hebo$HEBO()$quasi_sample --- default HEBO sampler evtl notwendig, wenn suggest fehlschlägt; useful wenn SM zusammenbricht; wrappen in Trycatch von suggest funktion falls das passiert
-    # ISSUE 1 - HEBO suggest doesnt expose metadata as SMAC3
-    # trial_info exposes paraeters as a pandas DataFrame
-    trial_info = tryCatch(
-      optimizer$suggest(),
-      # rausfinden wie HEBO suggest verwendet um mehrere configs oder einzelne configs zu kriegen; gibt mehrere Möglichkeiten das zu machen bei MBO interessant wie HEBO das macht
-      error = function(e) NULL
-    )
-    if (is.null(trial_info)) {
-      break
+  private = list(
+    .optimize = function(inst) {
+      assert_python_packages(c("hebo"))
+      hebo = reticulate::import("hebo")
+
+      pv = self$param_set$values
+
+      search_space = inst$search_space
+      space = paramset_to_hebo_space(search_space)
+      optimizer_args = list(
+        space = space,
+        rand_sample = as.integer(pv$n_init %??% (1L + search_space$length)),
+        es = pv$es %??% "nsga2"
+      )
+
+      if (!is.null(pv$surrogate)) {
+        if (pv$surrogate == "rf") {
+          optimizer_args$model_name = "rf"
+          optimizer_args$model_config = list(
+            n_estimators = as.integer(pv$rf_n_estimators %??% 20L)
+          )
+        } else if (pv$surrogate == "gp") {
+          optimizer_args$model_name = "gp"
+          optimizer_args$model_config = list(
+            lr = pv$gp_lr %??% 0.01,
+            num_epochs = as.integer(pv$gp_num_epochs %??% 100L),
+            noise_lb = pv$gp_noise_lb %??% 8e-4,
+            pred_likeli = pv$gp_pred_likeli %??% FALSE
+          )
+        }
+      }
+
+      if (!is.null(pv$acq_function)) {
+        acq_mod = hebo$acquisitions$acq
+        optimizer_args$acq_cls = switch(
+          pv$acq_function,
+          "lcb" = acq_mod$LCB,
+          "mace" = acq_mod$MACE,
+          stopf(
+            "Unsupported HEBO acquisition function '%s'. Supported values are 'mace' and 'lcb'.",
+            pv$acq_function
+          )
+        )
+      }
+
+      if (!is.null(pv$seed)) {
+        optimizer_args$scramble_seed = as.integer(pv$seed)
+      }
+
+      hebo_optimizer = invoke(hebo$optimizers$hebo$HEBO, .args = optimizer_args)
+
+      repeat {
+        if (inst$is_terminated) {
+          break
+        }
+
+        # tryCatch muss noch etwas ausgestaltet werden, siehe folgender Kommentar
+        # hebo$optimizers$hebo$HEBO()$quasi_sample --- default HEBO sampler evtl notwendig, wenn suggest fehlschlägt; useful wenn SM zusammenbricht; wrappen in Trycatch von suggest funktion falls das passiert
+        # ISSUE 1 - HEBO suggest doesnt expose metadata as SMAC3
+        # trial_info exposes paraeters as a pandas DataFrame
+        trial_info = tryCatch(
+          hebo_optimizer$suggest(n_suggestions = as.integer(pv$n_suggestions %??% 1L)),
+          # rausfinden wie HEBO suggest verwendet um mehrere configs oder einzelne configs zu kriegen; gibt mehrere Möglichkeiten das zu machen bei MBO interessant wie HEBO das macht
+          error = function(e) NULL
+        )
+        if (is.null(trial_info)) {
+          break
+        }
+
+        # convert pandas DataFrame to R data.frame-like object
+        trial_info_dt = setDT(reticulate::py_to_r(trial_info))
+
+        # evaluation of that config
+        res = inst$eval_batch(trial_info_dt)
+
+        # evaluated target columns are turned into a numeric matrix
+        y = as.matrix(res[, inst$archive$cols_y, with = FALSE])
+
+        # signs are flipped
+        # ist es möglich bei HEBO auch multi-objective zu machen, also dass da mehrere y zurückkomen; das auch wichtig für denOptimizer ob er nicht nur SingleCrit oder auch MultiCrit kann
+        y = y * matrix(inst$objective_multiplicator, nrow = nrow(y), ncol = ncol(y), byrow = TRUE)
+
+        hebo_optimizer$observe(trial_info, y)
+      }
     }
-
-    # convert pandas DataFrame to R data.frame-like object
-    trial_info_dt = setDT(reticulate::py_to_r(trial_info))
-
-    # load paramset names
-    # all_params = search_space$ids()
-
-    # identify missing parameters
-    # missing_params = setdiff(all_params, names(trial_info_dt))
-
-    # when there are missing parameters we set them to NA
-    # if (length(missing_params)) {
-    #   trial_info_dt[, (missing_params) := NA]
-    # }
-
-    # keep only columns in all params and saved as xdt
-    # xdt = trial_info_dt[, ..all_params]
-
-    # search_space$assert_dt(xdt)
-
-    # evaluation of that config
-    res = inst$eval_batch(xdt)
-
-    # evaluated target columns are turned into a numeric matrix
-    y = as.matrix(res[, inst$archive$cols_y, with = FALSE])
-
-    # signs are flipped
-    # ist es möglich bei HEBO auch multi-objective zu machen, also dass da mehrere y zurückkomen; das auch wichtig für denOptimizer ob er nicht nur SingleCrit oder auch MultiCrit kann
-    y = y * matrix(inst$objective_multiplicator, nrow = nrow(y), ncol = ncol(y), byrow = TRUE)
-
-    optimizer$observe(trial_info, y)
-  }
-}
-
-# 1 - rausfinden ob HEBO mixed/mixed hierarchical kann; falls nein alles andere außer numeric rauskicken
-
-# EXAMPLE
-objective_fun = function(xs) {
-  booster_term = if (xs$booster == "dart") {
-    0.8
-  } else if (xs$booster == "gbtree") {
-    0.4
-  } else {
-    0.0
-  }
-  bias_term = if (isTRUE(xs$use_bias)) 0.25 else -0.15
-
-  score = 12 -
-    (log10(xs$lr) + 1.1)^2 -
-    ((xs$depth - 7) / 3)^2 -
-    0.03 * (xs$reg_lambda - 4)^2 -
-    8 * (xs$subsample - 0.82)^2 -
-    ((xs$max_bin - 256) / 200)^2 +
-    booster_term +
-    bias_term
-
-  list(score = score)
-}
-
-search_space = ps(
-  lr = p_dbl(lower = 1e-4, upper = 3e-1),
-  depth = p_int(lower = 2L, upper = 14L),
-  booster = p_fct(levels = c("gbtree", "dart", "gblinear")),
-  use_bias = p_lgl(),
-  reg_lambda = p_dbl(lower = 0, upper = 20),
-  subsample = p_dbl(lower = 0.5, upper = 1.0),
-  max_bin = p_int(lower = 64L, upper = 512L)
-)
-
-objective = ObjectiveRFun$new(
-  fun = objective_fun,
-  domain = search_space,
-  codomain = ps(score = p_dbl(tags = "maximize")),
-  properties = "deterministic"
-)
-
-terminator = trm(
-  "combo",
-  list(
-    trm("evals", n_evals = 100L),
-    trm("stagnation", iters = 15L, threshold = 1e-4)
   )
 )
 
-inst = oi(
-  objective = objective,
-  terminator = terminator
-)
+mlr_optimizers$add("hebo", OptimizerBatchHEBO)
 
+# 1 - rausfinden ob HEBO mixed/mixed hierarchical kann; falls nein alles andere außer numeric rauskicken
 
-optimize(inst)
-
-
-# build scenario
-# paramset wird direkt in HEBO space umgewandelt (ConfigSpace wird nicht verwendet)
-
-# no facade --- (facade would be full high-level configuration that chooses and wires SM/ACQ/ID/INT etc)
-
-# DEFAULT
-# challenge: wie kriegen wir es hin das R das ausführt (space = HEBO Design Space - nimmt keine Obj Funiktion due to ask + tell interface)
-#hebo$optimizers$hebo$HEBO()$suggest # das schlägt einen Punkt zum Evaluieren vor
-# n_suggestions = 1L is the default
-
-# jetzt in R config umwandeln
-
-# build surrogate model
-model = NULL
-if (!is.null(pv$surrogate)) {
-  if (pv$surrogate == "gp") {
-    model = hebo$models$model_factory$GP(
-      num_cont = ...,
-      num_enum = ...,
-      num_out = ...
-    )
-  } else if (pv$surrogate == "rf") {
-    model = hebo$models$model_factory$RF(
-      num_cont = ...,
-      num_enum = ...,
-      num_out = ...
-    )
+if (FALSE) {
+  fun = function(xs) {
+    y = (xs$x1 - 2)^2 + (xs$x2 + 1)^2
+    y = y + if (xs$x3 == "a") 0 else 0.25
+    y = y + if (isTRUE(xs$x4)) 0 else 0.1
+    list(y = y)
   }
+
+  search_space = ps(
+    x1 = p_dbl(lower = -5, upper = 5),
+    x2 = p_int(lower = -3L, upper = 3L),
+    x3 = p_fct(levels = c("a", "b")),
+    x4 = p_lgl()
+  )
+
+  objective = ObjectiveRFun$new(
+    fun = fun,
+    domain = search_space,
+    codomain = ps(y = p_dbl(tags = "minimize")),
+    properties = "deterministic"
+  )
+
+  instance = OptimInstanceBatchSingleCrit$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = trm("evals", n_evals = 20L)
+  )
+
+  optimizer = opt(
+    "hebo",
+    surrogate = "gp",
+    acq_function = "mace",
+    n_init = 5L,
+    seed = 1L,
+    es = "nsga2"
+  )
+
+  optimizer$optimize(instance)
+
+  instance$archive$data
+  instance$result
+  instance$result_x_domain
+  instance$result_y
 }
-
-# build acq func
-
-# build initial design
-
-# build random design
-
-# build intensifier
-
-# creation of HEBO optimizer
-
-# report results via TrialValue
-
-# do evaluation and optimization again and again until termination criterion happens
-
-# extract best configuration as named list
