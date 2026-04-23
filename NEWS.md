@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* `is_dominated()` now uses `moocore::is_nondominated()` internally instead of a custom C implementation, removing the `c_is_dominated` C entry point (#301).
+
 # bbotk 1.10.0
 
 * chore: Minimum required version of `rush` is now 1.0.0. Removed all compatibility workarounds for older versions.

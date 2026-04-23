@@ -6,11 +6,7 @@
 #include "local_search.h"
 #include "test_local_search.h"
 
-/* .Call calls */
-extern SEXP c_is_dominated(SEXP);
-
 static const R_CallMethodDef CallEntries[] = {
-    {"c_is_dominated", (DL_FUNC)&c_is_dominated, 1},
     {"c_local_search", (DL_FUNC)&c_local_search, 4},
 
     {"c_test_random_int", (DL_FUNC)&c_test_random_int, 0},
