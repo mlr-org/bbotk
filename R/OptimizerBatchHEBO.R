@@ -33,7 +33,8 @@
 #'   terminator = trm("evals", n_evals = 20)
 #' )
 #' # load optimizer
-#' optimizer = opt("smac")
+#' # The run can terminate before `n_evals` if HEBO cannot produce a new batch.
+#' optimizer = opt("hebo", n_suggestions = 2)
 #'
 #' # trigger optimization
 #' optimizer$optimize(instance)
@@ -64,6 +65,7 @@ OptimizerBatchHEBO = R6Class(
         rf_n_estimators = p_int(lower = 1L, depends = quote(surrogate == "rf")),
         gp_lr = p_dbl(lower = 0, depends = quote(surrogate == "gp")),
         gp_num_epochs = p_int(lower = 1L, depends = quote(surrogate == "gp")),
+        gp_noise_free = p_lgl(depends = quote(surrogate == "gp")),
         gp_noise_lb = p_dbl(lower = 0, depends = quote(surrogate == "gp")),
         gp_pred_likeli = p_lgl(depends = quote(surrogate == "gp")),
 
@@ -119,6 +121,8 @@ OptimizerBatchHEBO = R6Class(
         es = pv$es %??% "nsga2"
       )
 
+      # add nn; evtl boosting
+      # add unit tests see SMAC3
       if (!is.null(pv$surrogate)) {
         if (pv$surrogate == "rf") {
           optimizer_args$model_name = "rf"
@@ -130,6 +134,9 @@ OptimizerBatchHEBO = R6Class(
           optimizer_args$model_config = list(
             lr = pv$gp_lr %??% 0.01,
             num_epochs = as.integer(pv$gp_num_epochs %??% 100L),
+            verbose = pv$gp_verbose %??% FALSE,
+            print_every = as.integer(pv$gp_print_every %??% 10L),
+            noise_free = pv$gp_noise_free %??% FALSE,
             noise_lb = pv$gp_noise_lb %??% 8e-4,
             pred_likeli = pv$gp_pred_likeli %??% FALSE
           )
@@ -193,50 +200,3 @@ OptimizerBatchHEBO = R6Class(
 )
 
 mlr_optimizers$add("hebo", OptimizerBatchHEBO)
-
-# 1 - rausfinden ob HEBO mixed/mixed hierarchical kann; falls nein alles andere außer numeric rauskicken
-
-if (FALSE) {
-  fun = function(xs) {
-    y = (xs$x1 - 2)^2 + (xs$x2 + 1)^2
-    y = y + if (xs$x3 == "a") 0 else 0.25
-    y = y + if (isTRUE(xs$x4)) 0 else 0.1
-    list(y = y)
-  }
-
-  search_space = ps(
-    x1 = p_dbl(lower = -5, upper = 5),
-    x2 = p_int(lower = -3L, upper = 3L),
-    x3 = p_fct(levels = c("a", "b")),
-    x4 = p_lgl()
-  )
-
-  objective = ObjectiveRFun$new(
-    fun = fun,
-    domain = search_space,
-    codomain = ps(y = p_dbl(tags = "minimize")),
-    properties = "deterministic"
-  )
-
-  instance = OptimInstanceBatchSingleCrit$new(
-    objective = objective,
-    search_space = search_space,
-    terminator = trm("evals", n_evals = 20L)
-  )
-
-  optimizer = opt(
-    "hebo",
-    surrogate = "gp",
-    acq_function = "mace",
-    n_init = 5L,
-    seed = 1L,
-    es = "nsga2"
-  )
-
-  optimizer$optimize(instance)
-
-  instance$archive$data
-  instance$result
-  instance$result_x_domain
-  instance$result_y
-}
