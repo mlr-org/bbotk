@@ -1,5 +1,6 @@
 skip_if_not_installed("reticulate")
 
+# simple 1D function
 test_that("OptimizerBatchHEBO", {
   search_space = ps(
     x = p_dbl(lower = -1, upper = 1)
@@ -78,8 +79,12 @@ test_that("OptimizerBatchHEBO with mixed parameter types", {
 
   fun = function(xs) {
     y = xs$x1^2 + xs$x2 / 10
-    if (xs$x3 == "a") y = y + 1
-    if (xs$x4) y = y + 0.5
+    if (xs$x3 == "a") {
+      y = y + 1
+    }
+    if (xs$x4) {
+      y = y + 0.5
+    }
     list(y = y)
   }
 
@@ -126,11 +131,7 @@ test_that("OptimizerBatchHEBO with RF surrogate", {
     terminator = terminator
   )
 
-  optimizer = opt("hebo",
-    surrogate = "rf",
-    rf_n_estimators = 10L,
-    n_init = 3L
-  )
+  optimizer = opt("hebo", surrogate = "rf", rf_n_estimators = 10L, n_init = 3L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, min.rows = 8L)
@@ -159,13 +160,7 @@ test_that("OptimizerBatchHEBO with GP surrogate", {
     terminator = terminator
   )
 
-  optimizer = opt("hebo",
-    surrogate = "gp",
-    gp_lr = 0.05,
-    gp_num_epochs = 50L,
-    gp_noise_free = FALSE,
-    n_init = 2L
-  )
+  optimizer = opt("hebo", surrogate = "gp", gp_lr = 0.05, gp_num_epochs = 50L, gp_noise_free = FALSE, n_init = 2L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, min.rows = 6L)
@@ -194,11 +189,7 @@ test_that("OptimizerBatchHEBO with LCB acquisition function", {
     terminator = terminator
   )
 
-  optimizer = opt("hebo",
-    acq_function = "lcb",
-    n_suggestions = 1L,
-    n_init = 2L
-  )
+  optimizer = opt("hebo", acq_function = "lcb", n_suggestions = 1L, n_init = 2L)
   optimizer$optimize(instance)
 
   expect_data_table(instance$archive$data, min.rows = 6L)
@@ -228,10 +219,7 @@ test_that("OptimizerBatchHEBO with batch suggestions", {
     terminator = terminator
   )
 
-  optimizer = opt("hebo",
-    n_suggestions = 2L,
-    n_init = 3L
-  )
+  optimizer = opt("hebo", n_suggestions = 2L, n_init = 3L)
   optimizer$optimize(instance)
 
   # batches of 2 crossing the terminator boundary may yield 9 or 10 evals

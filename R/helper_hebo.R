@@ -1,4 +1,5 @@
 paramset_to_hebo_space = function(search_space) {
+  assert_python_packages(c("hebo"))
   hebo = reticulate::import("hebo")
   param = search_space$params
   defs = lapply(seq_len(nrow(param)), function(i) {
@@ -18,7 +19,3 @@ paramset_to_hebo_space = function(search_space) {
   })
   hebo$design_space$design_space$DesignSpace()$parse(defs)
 }
-
-# check whether dependencies can (or how) be implemented in HEBO Space
-# paradox => ConfigSpace => HEBO-space  (wenn der zweite Pfeil einfach so geht als One-Liner); erstmal nur mit numerischen Räumen ohne dependencies
-# kann HEBO hierarchische gemischete Räume???
