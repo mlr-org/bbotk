@@ -71,7 +71,8 @@ as.data.table(instance$archive)
 Contains all performed \link{Objective} function calls.}
 
 \item{\code{data_extra}}{(named \code{list})\cr
-Data created by specific \code{\link{Optimizer}}s that does not relate to any individual function evaluation and can therefore not be held in \verb{$data}.
+Data created by specific \code{\link{Optimizer}}s that does not relate to any individual function evaluation
+and can therefore not be held in \verb{$data}.
 Every optimizer should create and refer to its own entry in this list, named by its \code{class()}.}
 }
 \if{html}{\out{</div>}}

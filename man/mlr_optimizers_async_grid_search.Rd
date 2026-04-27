@@ -12,7 +12,8 @@ Bergstra J, Bengio Y (2012).
 }
 \description{
 \code{OptimizerAsyncGridSearch} class that implements a grid search.
-The grid is constructed as a Cartesian product over discretized values per parameter, see \code{\link[paradox:generate_design_grid]{paradox::generate_design_grid()}}.
+The grid is constructed as a Cartesian product over discretized values per parameter,
+see \code{\link[paradox:generate_design_grid]{paradox::generate_design_grid()}}.
 The points of the grid are evaluated in a random order.
 }
 \section{Dictionary}{

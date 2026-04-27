@@ -7,7 +7,8 @@
 A \link[paradox:ParamSet]{paradox::ParamSet} defining the codomain of a function.
 The parameter set must contain at least one target parameter tagged with
 \code{"minimize"}, \code{"maximize"}, or \code{"learn"}.
-The codomain may contain extra parameters which are ignored when calling the \link{Archive} methods \verb{$best()}, \verb{$nds_selection()} and \verb{$cols_y}.
+The codomain may contain extra parameters which are ignored when calling the \link{Archive} methods
+\verb{$best()}, \verb{$nds_selection()} and \verb{$cols_y}.
 This class is usually constructed internally from a \link[paradox:ParamSet]{paradox::ParamSet} when \link{Objective} is initialized.
 }
 \examples{

@@ -132,7 +132,8 @@ If a rush instance is supplied, the tuning runs without batches.}
 \if{html}{\out{<a id="method-OptimInstanceAsyncMultiCrit-assign_result"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsyncMultiCrit-assign_result}{}}}
 \subsection{Method \code{assign_result()}}{
-The \link{OptimizerAsync} writes the best found points and estimated performance values here (probably the Pareto set / front).
+The \link{OptimizerAsync} writes the best found points and estimated performance values here
+(probably the Pareto set / front).
 For internal use.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncMultiCrit$assign_result(xdt, ydt, extra = NULL, ...)}\if{html}{\out{</div>}}

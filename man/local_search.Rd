@@ -14,8 +14,10 @@ local_search(
 \arguments{
 \item{objective}{(\verb{function(xdt)})\cr
 Objective to optimize.
-The first arg (name 'xdt' is not enforced) will be a data.table with (scalar) columns corresponding exactly the search space, in the same order.
-The function should must return numeric vector of exactly the same length as the number of rows in the dt, containing the objective values.}
+The first arg (name 'xdt' is not enforced) will be a data.table with (scalar) columns
+corresponding exactly the search space, in the same order.
+The function should must return numeric vector of exactly the same length as the number of rows
+in the dt, containing the objective values.}
 
 \item{search_space}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Search space for decision variables.
@@ -41,7 +43,9 @@ The objective value of the best point.
 }
 \description{
 Runs a local search on the objective function.
-Somewhat similar to what is used in \href{https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py}{SMAC} for acquisition function optimization of mixed type search spaces with hierarchical dependencies.
+Somewhat similar to what is used in
+\href{https://github.com/automl/SMAC3/blob/main/smac/acquisition/maximizer/local_search.py}{SMAC}
+for acquisition function optimization of mixed type search spaces with hierarchical dependencies.
 
 The function always minimizes.
 If the objective is to be maximized, we handle it by multiplying with "obj_mult" (which will be -1).

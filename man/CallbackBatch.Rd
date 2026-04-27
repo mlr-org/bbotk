@@ -7,7 +7,8 @@
 Specialized \link[mlr3misc:Callback]{mlr3misc::Callback} for batch optimization.
 Callbacks allow to customize the behavior of processes in bbotk.
 The \code{\link[=callback_batch]{callback_batch()}} function creates a \link{CallbackBatch}.
-Predefined callbacks are stored in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_callbacks} and can be retrieved with \code{\link[=clbk]{clbk()}}.
+Predefined callbacks are stored in the \link[mlr3misc:Dictionary]{dictionary} \link{mlr_callbacks}
+and can be retrieved with \code{\link[=clbk]{clbk()}}.
 For more information on optimization callbacks see \code{\link[=callback_batch]{callback_batch()}}.
 }
 \examples{
