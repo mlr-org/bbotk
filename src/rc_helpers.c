@@ -1,4 +1,5 @@
 #include "rc_helpers.h"
+#include <Rversion.h>
 
 const char *RC_asString(SEXP s_x) { return CHAR(STRING_ELT(s_x, 0)); }
 
@@ -56,6 +57,10 @@ SEXP RC_get_dt_col_by_name(SEXP s_dt, const char *name) {
 }
 
 SEXP RC_get_r6_el_by_name(SEXP s_r6, const char *str) {
+#if defined(R_VERSION) && R_VERSION >= R_Version(4, 5, 0)
+  return R_getVar(Rf_install(str), s_r6, TRUE);
+#else
   return Rf_eval(Rf_install(str), s_r6);
+#endif
 }
 
