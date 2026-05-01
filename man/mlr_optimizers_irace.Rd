@@ -46,7 +46,8 @@ Default is NA.}
 \item{\code{maxTime}}{\code{integer(1)}\cr
 Maximum total execution time for the executions of targetRunner.
 targetRunner must return two values: cost and time.
-This value and the one returned by targetRunner must use the same units (seconds, minutes, iterations, evaluations, ...).
+This value and the one returned by targetRunner must use the same units
+(seconds, minutes, iterations, evaluations, ...).
 Default is 0.}
 \item{\code{budgetEstimation}}{\code{numeric(1)}\cr
 Fraction (smaller than 1) of the budget used to estimate the mean computation time of a configuration.

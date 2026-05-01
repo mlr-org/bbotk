@@ -97,8 +97,11 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{fun}}{(\code{function})\cr
-R function that encodes objective and expects a list of lists that contains multiple x values, e.g. \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.
-The function must return a \code{\link[data.table:data.table]{data.table::data.table()}} that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.}
+R function that encodes objective and expects a list of lists that contains multiple x values,
+e.g. \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.
+The function must return a \code{\link[data.table:data.table]{data.table::data.table()}} that contains one y-column for
+single-criteria functions and multiple y-columns for multi-criteria functions,
+e.g. \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.}
 
 \item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies domain of function.
@@ -145,7 +148,9 @@ A list of lists that contains multiple x values, e.g. \code{list(list(x1 = 1, x2
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}} that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
+\code{\link[data.table:data.table]{data.table::data.table()}} that contains one y-column for single-criteria functions and
+multiple y-columns for multi-criteria functions,
+e.g. \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 It may also contain additional columns that will be stored in the archive if called through the \link{OptimInstance}.
 These extra columns are referred to as \emph{extras}.
 }

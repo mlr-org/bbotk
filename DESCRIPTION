@@ -44,9 +44,12 @@ Suggests:
     processx,
     progressr,
     redux,
+    reticulate,
     RhpcBLASctl,
     rush (>= 1.0.0),
     testthat (>= 3.0.0)
+Remotes:
+    mlr-org/paradox
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
@@ -91,10 +94,12 @@ Collate:
     'OptimizerBatchFocusSearch.R'
     'OptimizerBatchGenSA.R'
     'OptimizerBatchGridSearch.R'
+    'OptimizerBatchHEBO.R'
     'OptimizerBatchIrace.R'
     'OptimizerBatchLocalSearch.R'
     'OptimizerBatchNLoptr.R'
     'OptimizerBatchRandomSearch.R'
+    'OptimizerBatchSmac3.R'
     'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
@@ -114,6 +119,7 @@ Collate:
     'bibentries.R'
     'conditions.R'
     'helper.R'
+    'helper_hebo.R'
     'local_search.R'
     'mlr_callbacks.R'
     'mlr_test_functions.R'

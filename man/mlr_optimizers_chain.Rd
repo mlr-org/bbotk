@@ -14,7 +14,8 @@ the additional \link{Terminator}s guard each individual \link{OptimizerBatch}.
 The optimization process works as follows:
 The first \link{OptimizerBatch} is run on the \link{OptimInstanceBatch} relying on a \link{TerminatorCombo} of the original
 \link{Terminator} of the \link{OptimInstanceBatch} and the (optional) additional \link{Terminator} as passed during construction.
-Once this \link{TerminatorCombo} indicates termination (usually via the additional \link{Terminator}), the second \link{OptimizerBatch} is run.
+Once this \link{TerminatorCombo} indicates termination (usually via the additional \link{Terminator}),
+the second \link{OptimizerBatch} is run.
 This continues for all optimizers unless the original \link{Terminator} of the \link{OptimInstanceBatch} indicates termination.
 
 \link{OptimizerBatchChain} can also be used for random restarts of the same

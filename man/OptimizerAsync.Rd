@@ -50,7 +50,8 @@ The debug mode is enabled by setting \code{options(bbotk.debug = TRUE)}.
 \section{Tiny Logging}{
 
 The tiny logging mode is enabled by setting the option \code{bbotk.tiny_logging} to \code{TRUE}.
-In the tiny logging mode, the evaluated points are printed in a compact format and the currently best performing point is shown.
+In the tiny logging mode, the evaluated points are printed in a compact format and the currently best
+performing point is shown.
 Deactivated depending parameters are not printed.
 }
 

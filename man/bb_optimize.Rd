@@ -58,7 +58,8 @@ domain.}
 Upper bounds on the parameters.}
 
 \item{maximize}{(\code{logical()})\cr
-Logical vector used to create the codomain e.g. c(TRUE, FALSE) -> ps(y1 = p_dbl(tags = "maximize"), y2 = pd_dbl(tags = "minimize")).
+Logical vector used to create the codomain e.g.
+c(TRUE, FALSE) -> ps(y1 = p_dbl(tags = "maximize"), y2 = pd_dbl(tags = "minimize")).
 If named, names are used to create the codomain.}
 
 \item{search_space}{(\link[paradox:ParamSet]{paradox::ParamSet}).}

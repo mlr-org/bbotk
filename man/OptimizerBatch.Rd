@@ -6,7 +6,8 @@
 \description{
 Abstract \code{OptimizerBatch} class that implements the base functionality each \code{OptimizerBatch} subclass must provide.
 A \code{OptimizerBatch} object describes the optimization strategy.
-A \code{OptimizerBatch} object must write its result to the \verb{$assign_result()} method of the \link{OptimInstance} at the end in order to store the best point and its estimated performance vector.
+A \code{OptimizerBatch} object must write its result to the \verb{$assign_result()} method of the \link{OptimInstance} at the end
+in order to store the best point and its estimated performance vector.
 }
 \section{Progress Bars}{
 
@@ -44,7 +45,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 \if{latex}{\out{\hypertarget{method-OptimizerBatch-optimize}{}}}
 \subsection{Method \code{optimize()}}{
 Performs the optimization and writes optimization result into \link{OptimInstanceBatch}.
-The optimization result is returned but the complete optimization path is stored in \link{ArchiveBatch} of \link{OptimInstanceBatch}.
+The optimization result is returned but the complete optimization path is stored in \link{ArchiveBatch}
+of \link{OptimInstanceBatch}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OptimizerBatch$optimize(inst)}\if{html}{\out{</div>}}
 }
