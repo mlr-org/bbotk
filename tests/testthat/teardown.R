@@ -2,7 +2,7 @@ options(old_opts)
 lg_bbotk$set_threshold(old_threshold_bbotk)
 lg_rush$set_threshold(old_threshold_rush)
 
-if (requireNamespace("reticulate", quietly = TRUE)) {
+if (requireNamespace("reticulate", quietly = TRUE) && reticulate::py_available()) {
   python_temp_dir = dirname(
     reticulate::py_run_string("import tempfile; x=tempfile.NamedTemporaryFile().name", local = TRUE)$x
   )
