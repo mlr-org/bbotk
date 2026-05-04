@@ -33,6 +33,10 @@
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
   }
+
+  if (requireNamespace("reticulate", quietly = TRUE)) {
+    reticulate::py_require(c("hebo", "smac", "ConfigSpace"))
+  }
 } # nocov end
 
 utils::globalVariables(c("batch_nr", "start_values"))
