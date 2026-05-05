@@ -35,7 +35,6 @@ Imports:
     R6
 Suggests:
     adagio,
-    callr,
     emoa,
     GenSA,
     irace (>= 4.0.0),
