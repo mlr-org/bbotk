@@ -248,4 +248,8 @@ check_test_results = function(testres) {
     expect_true(testres[[i]], info = names(testres)[i], label = names(testres)[i])
   }
 }
+
+if (requireNamespace("rush", quietly = TRUE)) {
+  source(system.file("testthat", "helper.R", package = "rush"))
+}
 # nolint end: object_usage_linter.
