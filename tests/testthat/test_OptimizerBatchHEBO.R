@@ -3,8 +3,7 @@ skip_if_not_installed("callr")
 
 test_that("OptimizerBatchHEBO", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(x = p_dbl(lower = -1, upper = 1))
@@ -32,8 +31,7 @@ test_that("OptimizerBatchHEBO", {
 
 test_that("OptimizerBatchHEBO with 2d search space", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(
@@ -56,8 +54,7 @@ test_that("OptimizerBatchHEBO with 2d search space", {
 
 test_that("OptimizerBatchHEBO with mixed parameter types", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(
@@ -87,8 +84,7 @@ test_that("OptimizerBatchHEBO with mixed parameter types", {
 
 test_that("OptimizerBatchHEBO with RF surrogate", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(
@@ -111,8 +107,7 @@ test_that("OptimizerBatchHEBO with RF surrogate", {
 
 test_that("OptimizerBatchHEBO with GP surrogate", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(x = p_dbl(lower = -1, upper = 1))
@@ -132,8 +127,7 @@ test_that("OptimizerBatchHEBO with GP surrogate", {
 
 test_that("OptimizerBatchHEBO with LCB acquisition function", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(x = p_dbl(lower = -1, upper = 1))
@@ -153,8 +147,7 @@ test_that("OptimizerBatchHEBO with LCB acquisition function", {
 
 test_that("OptimizerBatchHEBO with batch suggestions", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(
@@ -177,8 +170,7 @@ test_that("OptimizerBatchHEBO with batch suggestions", {
 
 test_that("OptimizerBatchHEBO with explicit seed", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(x = p_dbl(lower = -1, upper = 1))
@@ -198,8 +190,7 @@ test_that("OptimizerBatchHEBO with explicit seed", {
 
 test_that("OptimizerBatchHEBO with custom n_init", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(
@@ -222,8 +213,7 @@ test_that("OptimizerBatchHEBO with custom n_init", {
 
 test_that("OptimizerBatchHEBO with alternative evolutionary strategy", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(
@@ -246,8 +236,7 @@ test_that("OptimizerBatchHEBO with alternative evolutionary strategy", {
 
 test_that("OptimizerBatchHEBO maximization", {
   expect_true(callr::r(function() {
-    reticulate::virtualenv_create("r-hebo", packages = "hebo")
-    reticulate::use_virtualenv("r-hebo", required = TRUE)
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-hebo"))
     library(bbotk)
     library(paradox)
     search_space = ps(
