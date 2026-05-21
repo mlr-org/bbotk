@@ -37,6 +37,7 @@ Suggests:
     adagio,
     emoa,
     GenSA,
+    reticulate,
     irace (>= 4.0.0),
     knitr,
     mirai,
@@ -94,6 +95,7 @@ Collate:
     'OptimizerBatchIrace.R'
     'OptimizerBatchLocalSearch.R'
     'OptimizerBatchNLoptr.R'
+    'OptimizerBatchOptuna.R'
     'OptimizerBatchRandomSearch.R'
     'Progressor.R'
     'mlr_terminators.R'
