@@ -11,7 +11,8 @@ Authors@R: c(
     person("Bernd", "Bischl", , "bernd_bischl@gmx.net", role = "aut",
            comment = c(ORCID = "0000-0001-6002-6980")),
     person("Martin", "Binder", , "martin.binder@mail.com", role = "aut"),
-    person("Olaf", "Mersmann", , "olafm@statistik.tu-dortmund.de", role = "ctb")
+    person("Olaf", "Mersmann", , "olafm@statistik.tu-dortmund.de", role = "ctb"),
+    person("Alexander", "Winterstetter", "alexanderwinterstetter@gmail.de", role = "ctb")
   )
 Description: Features highly configurable search spaces via the 'paradox'
     package and optimizes every user-defined objective function. The
