@@ -18,7 +18,8 @@ lg_rush$set_threshold(0)
 
 # PyTorch's torchinductor JIT compiler leaves behind a temp directory that
 # causes R CMD check to flag a NOTE about detritus. Clean it up after all tests.
-defer( # nolint
+withr::defer(
+  # nolint
   unlink(file.path(dirname(tempdir()), "torchinductor_runner"), recursive = TRUE),
   envir = teardown_env()
 )
