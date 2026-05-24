@@ -181,10 +181,10 @@
 #' # best performing configuration
 #' instance$result
 #' }
-OptimizerBatchSmac3 = R6Class("OptimizerBatchSmac3",
+OptimizerBatchSmac3 = R6Class(
+  "OptimizerBatchSmac3",
   inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -285,7 +285,8 @@ OptimizerBatchSmac3 = R6Class("OptimizerBatchSmac3",
       scenario = invoke(smac$Scenario, .args = scenario_args)
 
       # map facade
-      facade_class = switch(pv$facade,
+      facade_class = switch(
+        pv$facade,
         "smac4bb" = smac$BlackBoxFacade,
         "smac4hb" = smac$HyperparameterOptimizationFacade,
         "smac4ac" = smac$AlgorithmConfigurationFacade,
@@ -321,7 +322,8 @@ OptimizerBatchSmac3 = R6Class("OptimizerBatchSmac3",
       acq_function = NULL
       if (!is.null(pv$acq_function)) {
         acq_mod = smac$acquisition[["function"]]
-        acq_function = switch(pv$acq_function,
+        acq_function = switch(
+          pv$acq_function,
           "ei" = acq_mod$EI(xi = pv$acq_function.xi %??% 0.0),
           "lcb" = acq_mod$LCB(beta = pv$acq_function.beta %??% 1.0),
           "pi" = acq_mod$PI(xi = pv$acq_function.xi %??% 0.0),
@@ -332,7 +334,8 @@ OptimizerBatchSmac3 = R6Class("OptimizerBatchSmac3",
       # build initial design
       initial_design_obj = NULL
       if (!is.null(pv$initial_design)) {
-        initial_design_obj = switch(pv$initial_design,
+        initial_design_obj = switch(
+          pv$initial_design,
           "sobol" = smac$initial_design$SobolInitialDesign(scenario, n_configs = as.integer(n_init)),
           "random" = smac$initial_design$RandomInitialDesign(scenario, n_configs = as.integer(n_init)),
           "lhc" = smac$initial_design$LatinHypercubeInitialDesign(scenario, n_configs = as.integer(n_init)),
@@ -352,11 +355,14 @@ OptimizerBatchSmac3 = R6Class("OptimizerBatchSmac3",
       # build random design
       random_design = NULL
       if (!is.null(pv$random_design)) {
-        random_design = switch(pv$random_design,
+        random_design = switch(
+          pv$random_design,
           "probability" = smac$random_design$ProbabilityRandomDesign(
-            probability = pv$random_design.probability %??% 0.08447),
+            probability = pv$random_design.probability %??% 0.08447
+          ),
           "modulus" = smac$random_design$ModulusRandomDesign(
-            modulus = pv$random_design.modulus %??% 2.0)
+            modulus = pv$random_design.modulus %??% 2.0
+          )
         )
       }
 

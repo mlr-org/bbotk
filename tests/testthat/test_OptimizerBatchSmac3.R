@@ -6,6 +6,7 @@ test_that("OptimizerBatchSmac3", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -34,6 +35,7 @@ test_that("OptimizerBatchSmac3 with 2d search space", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(
       x1 = p_dbl(lower = -1, upper = 1, default = 0),
       x2 = p_dbl(lower = -1, upper = 1, default = 0)
@@ -57,6 +59,7 @@ test_that("OptimizerBatchSmac3 with mixed parameter types", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(
       x1 = p_dbl(lower = -1, upper = 1, default = 0),
       x2 = p_int(lower = 1L, upper = 10L, default = 5L),
@@ -65,8 +68,12 @@ test_that("OptimizerBatchSmac3 with mixed parameter types", {
     )
     fun = function(xs) {
       y = xs$x1^2 + xs$x2 / 10
-      if (xs$x3 == "a") y = y + 1
-      if (xs$x4) y = y + 0.5
+      if (xs$x3 == "a") {
+        y = y + 1
+      }
+      if (xs$x4) {
+        y = y + 0.5
+      }
       list(y = y)
     }
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -87,6 +94,7 @@ test_that("OptimizerBatchSmac3 with dependencies", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(
       x1 = p_fct(levels = c("a", "b"), default = "a"),
       x2 = p_dbl(lower = -1, upper = 1, default = 0, depends = x1 == "a")
@@ -112,6 +120,7 @@ test_that("OptimizerBatchSmac3 with HyperparameterOptimizationFacade", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -132,6 +141,7 @@ test_that("OptimizerBatchSmac3 with AlgorithmConfigurationFacade", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -152,6 +162,7 @@ test_that("OptimizerBatchSmac3 with RandomFacade", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -172,6 +183,7 @@ test_that("OptimizerBatchSmac3 with custom surrogate model", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(
       x1 = p_dbl(lower = -1, upper = 1, default = 0),
       x2 = p_dbl(lower = -1, upper = 1, default = 0)
@@ -195,6 +207,7 @@ test_that("OptimizerBatchSmac3 with GP surrogate", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -215,6 +228,7 @@ test_that("OptimizerBatchSmac3 with custom acquisition function", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -235,6 +249,7 @@ test_that("OptimizerBatchSmac3 with LCB acquisition function", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -255,6 +270,7 @@ test_that("OptimizerBatchSmac3 with custom initial design", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(
       x1 = p_dbl(lower = -1, upper = 1, default = 0),
       x2 = p_dbl(lower = -1, upper = 1, default = 0)
@@ -280,6 +296,7 @@ test_that("OptimizerBatchSmac3 with explicit seed", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -300,6 +317,7 @@ test_that("OptimizerBatchSmac3 with deterministic FALSE and max_config_calls", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -320,6 +338,7 @@ test_that("OptimizerBatchSmac3 with random design probability", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
@@ -340,6 +359,7 @@ test_that("OptimizerBatchSmac3 with MultiFidelityFacade", {
     Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
     library(bbotk)
     library(paradox)
+    library(checkmate)
     search_space = ps(x = p_dbl(lower = -1, upper = 1, default = 0))
     fun = function(xs) list(y = as.numeric(xs)^2)
     objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
