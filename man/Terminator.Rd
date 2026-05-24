@@ -11,17 +11,24 @@ Termination of optimization works as follows:
 \itemize{
 \item Evaluations in a instance are performed in batches.
 \item Before each batch evaluation, the \link{Terminator} is checked, and if it is positive, we stop.
-\item The optimization algorithm itself might decide not to produce any more points, or even might decide to do a smaller batch in its last evaluation.
+\item The optimization algorithm itself might decide not to produce any more points,
+or even might decide to do a smaller batch in its last evaluation.
 }
 
 Therefore the following note seems in order:
-While it is definitely possible to execute a fine-grained control for termination, and for many optimization algorithms we can specify exactly when to stop, it might happen that too few or even too many evaluations are performed, especially if multiple points are evaluated in a single batch (c.f. batch size parameter of many optimization algorithms).
-So it is advised to check the size of the returned archive, in particular if you are benchmarking multiple optimization algorithms.
+While it is definitely possible to execute a fine-grained control for termination,
+and for many optimization algorithms we can specify exactly when to stop,
+it might happen that too few or even too many evaluations are performed,
+especially if multiple points are evaluated in a single batch
+(c.f. batch size parameter of many optimization algorithms).
+So it is advised to check the size of the returned archive,
+in particular if you are benchmarking multiple optimization algorithms.
 }
 \section{Technical details}{
 
 \code{Terminator} subclasses can overwrite \code{.status()} to support progress bars via the package \CRANpkg{progressr}.
-The method must return the maximum number of steps (\code{max_steps}) and the currently achieved number of steps (\code{current_steps}) as a named integer vector.
+The method must return the maximum number of steps (\code{max_steps}) and the currently achieved number of steps
+(\code{current_steps}) as a named integer vector.
 }
 
 \seealso{

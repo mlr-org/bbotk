@@ -5,7 +5,8 @@
 \alias{TerminatorStagnationHypervolume}
 \title{Stagnation Hypervolume Terminator}
 \description{
-Class to terminate the optimization after the hypervolume stagnates, i.e. does not improve more than \code{threshold} over the last \code{iters} iterations.
+Class to terminate the optimization after the hypervolume stagnates,
+i.e. does not improve more than \code{threshold} over the last \code{iters} iterations.
 }
 \section{Dictionary}{
 
