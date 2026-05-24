@@ -9,7 +9,8 @@ The \code{Optimizer} implements the optimization algorithm.
 \details{
 \code{Optimizer} is an abstract base class that implements the base functionality each optimizer must provide.
 A \code{Optimizer} object describes the optimization strategy.
-A \code{Optimizer} object must write its result to the \verb{$assign_result()} method of the \link{OptimInstance} at the end in order to store the best point and its estimated performance vector.
+A \code{Optimizer} object must write its result to the \verb{$assign_result()} method of the \link{OptimInstance} at the end
+in order to store the best point and its estimated performance vector.
 }
 \section{Progress Bars}{
 
@@ -46,7 +47,8 @@ String in the format \verb{[pkg]::[topic]} pointing to a manual page for this ob
 The referenced help package can be opened via method \verb{$help()}.}
 
 \item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes that the optimizer can optimize, as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
+Supported parameter classes that the optimizer can optimize,
+as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the optimizer.
@@ -54,7 +56,8 @@ Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$optimizer_
 
 \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.
-A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
+A warning is signaled by the constructor if at least one of the packages is not installed,
+but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -95,7 +98,8 @@ Identifier for the new instance.}
 Set of control parameters.}
 
 \item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes that the optimizer can optimize, as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
+Supported parameter classes that the optimizer can optimize,
+as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
 
 \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the optimizer.
@@ -103,7 +107,8 @@ Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$optimizer_
 
 \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.
-A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
+A warning is signaled by the constructor if at least one of the packages is not installed,
+but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
 
 \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.

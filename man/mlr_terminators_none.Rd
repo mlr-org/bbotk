@@ -5,7 +5,8 @@
 \alias{TerminatorNone}
 \title{None Terminator}
 \description{
-Mainly useful for optimization algorithms where the stopping is inherently controlled by the algorithm itself (e.g. \link{OptimizerBatchGridSearch}).
+Mainly useful for optimization algorithms where the stopping is inherently controlled by the algorithm itself
+(e.g. \link{OptimizerBatchGridSearch}).
 }
 \section{Dictionary}{
 
