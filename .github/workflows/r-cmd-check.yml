@@ -72,6 +72,9 @@ jobs:
           python3 -m venv ~/.virtualenvs/r-smac
           ~/.virtualenvs/r-smac/bin/pip install --upgrade pip --quiet
           ~/.virtualenvs/r-smac/bin/pip install smac ConfigSpace --quiet
+          python3 -m venv ~/.virtualenvs/r-optuna
+          ~/.virtualenvs/r-optuna/bin/pip install --upgrade pip --quiet
+          ~/.virtualenvs/r-optuna/bin/pip install optuna --quiet
 
       - uses: mxschmitt/action-tmate@v3
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
