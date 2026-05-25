@@ -39,7 +39,7 @@ OptimizerBatchOptuna = R6Class(
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        sampler = p_fct(levels = c("tpe", "cmaes", "gp", "nsga2", "nsga3", "qmc", "bruteforce", "random")),
+        sampler = p_fct(levels = c("tpe", "cmaes", "gp", "nsga2", "nsga3", "qmc", "bruteforce", "random"), default = "tpe"),
         n_startup_trials = p_int(lower = 1L),
         seed = p_int(lower = 1L, special_vals = list(NULL))
       )
