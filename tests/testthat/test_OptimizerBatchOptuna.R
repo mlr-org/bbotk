@@ -3,7 +3,7 @@ skip_if_not_installed("callr")
 
 test_that("OptimizerBatchOptuna", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -32,7 +32,7 @@ test_that("OptimizerBatchOptuna", {
 
 test_that("OptimizerBatchOptuna with 2d search space", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -56,7 +56,7 @@ test_that("OptimizerBatchOptuna with 2d search space", {
 
 test_that("OptimizerBatchOptuna with mixed parameter types", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -87,7 +87,7 @@ test_that("OptimizerBatchOptuna with mixed parameter types", {
 
 test_that("OptimizerBatchOptuna multi-crit with nsga2 sampler", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -112,7 +112,7 @@ test_that("OptimizerBatchOptuna multi-crit with nsga2 sampler", {
 
 test_that("OptimizerBatchOptuna multi-crit with nsga3 sampler", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -138,7 +138,7 @@ test_that("OptimizerBatchOptuna multi-crit with nsga3 sampler", {
 
 test_that("OptimizerBatchOptuna with gp sampler", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -160,7 +160,7 @@ test_that("OptimizerBatchOptuna with gp sampler", {
 
 test_that("OptimizerBatchOptuna with random sampler", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -181,7 +181,7 @@ test_that("OptimizerBatchOptuna with random sampler", {
 
 test_that("OptimizerBatchOptuna with n_startup_trials", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -205,7 +205,7 @@ test_that("OptimizerBatchOptuna with n_startup_trials", {
 
 test_that("OptimizerBatchOptuna with explicit seed", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
@@ -226,7 +226,7 @@ test_that("OptimizerBatchOptuna with explicit seed", {
 
 test_that("OptimizerBatchOptuna maximization", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = "managed")
+    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
     library(checkmate)
     library(bbotk)
     library(paradox)
