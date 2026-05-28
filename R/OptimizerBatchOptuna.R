@@ -60,6 +60,7 @@ OptimizerBatchOptuna = R6Class(
     .optimize = function(inst) {
       assert_python_packages("optuna")
       optuna = reticulate::import("optuna")
+      optuna$logging$set_verbosity(optuna$logging$WARNING)
 
       pv = self$param_set$values
 
