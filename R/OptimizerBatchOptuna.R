@@ -75,7 +75,7 @@ OptimizerBatchOptuna = R6Class(
       )
 
       sampler = switch(
-        pv$sampler,
+        pv$sampler %??% "tpe",
         tpe = optuna$samplers$TPESampler(n_startup_trials = pv$n_startup_trials, seed = pv$seed),
         cmaes = optuna$samplers$CmaEsSampler(seed = pv$seed),
         gp = optuna$samplers$GPSampler(seed = pv$seed),
