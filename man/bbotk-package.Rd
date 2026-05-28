@@ -40,6 +40,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Olaf Mersmann \email{olafm@statistik.tu-dortmund.de} [contributor]
+  \item Alexander alexanderwinterstetter@gmail.de Winterstetter [contributor]
 }
 
 }

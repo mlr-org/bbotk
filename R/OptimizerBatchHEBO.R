@@ -1,4 +1,66 @@
-#' @title Heteroscedastic evolutionary bayesian optimization
+#' @title Heteroscedastic Evolutionary Bayesian Optimization (HEBO)
+#'
+#' @include Optimizer.R
+#' @name mlr_optimizers_hebo
+#'
+#' @description
+#' `OptimizerBatchHEBO` class that implements optimization via the Python
+#' HEBO framework. Calls HEBO via \CRANpkg{reticulate}.
+#'
+#' @templateVar id hebo
+#' @template section_dictionary_optimizers
+#'
+#' @section Parameters:
+#' \describe{
+#' \item{`n_suggestions`}{`integer(1)`\cr
+#'   Number of candidate configurations to suggest per iteration.
+#'   Default is `1L`.}
+#' \item{`n_init`}{`integer(1)`\cr
+#'   Number of random initialization points before the surrogate model is fitted.
+#'   Default is `1 + number of parameters`.}
+#' \item{`seed`}{`integer(1)`\cr
+#'   Random seed for the scramble sequence.
+#'   Default is `NULL` (no fixed seed).}
+#' \item{`surrogate`}{`character(1)`\cr
+#'   Surrogate model to use.
+#'   `"gp"` (Gaussian Process) or `"rf"` (Random Forest).
+#'   Default is `"gp"`.}
+#' \item{`rf_n_estimators`}{`integer(1)`\cr
+#'   Number of trees in the Random Forest surrogate.
+#'   Only used when `surrogate = "rf"`.
+#'   Default is `20L`.}
+#' \item{`gp_lr`}{`numeric(1)`\cr
+#'   Learning rate for the GP model.
+#'   Only used when `surrogate = "gp"`.
+#'   Default is `0.01`.}
+#' \item{`gp_num_epochs`}{`integer(1)`\cr
+#'   Number of training epochs for the GP model.
+#'   Only used when `surrogate = "gp"`.
+#'   Default is `100L`.}
+#' \item{`gp_noise_free`}{`logical(1)`\cr
+#'   Whether to treat the objective as noise-free.
+#'   Only used when `surrogate = "gp"`.
+#'   Default is `FALSE`.}
+#' \item{`gp_noise_lb`}{`numeric(1)`\cr
+#'   Lower bound on GP noise variance.
+#'   Only used when `surrogate = "gp"`.
+#'   Default is `8e-4`.}
+#' \item{`gp_pred_likeli`}{`logical(1)`\cr
+#'   Whether to use predictive likelihood.
+#'   Only used when `surrogate = "gp"`.
+#'   Default is `FALSE`.}
+#' \item{`acq_function`}{`character(1)`\cr
+#'   Acquisition function to use.
+#'   `"mace"` (Multi-Objective Acquisition Criterion Ensemble) or `"lcb"` (Lower Confidence Bound).
+#'   Default is `"mace"`.}
+#' \item{`es`}{`character(1)`\cr
+#'   Evolutionary strategy for acquisition function optimization.
+#'   One of `"ga"`, `"brkga"`, `"de"`, `"nelder-mead"`, `"pattern-search"`, `"cmaes"`, `"pso"`,
+#'   `"nsga2"`, `"rnsga2"`, `"nsga3"`, `"unsga3"`, `"rnsga3"`, `"moead"`, `"ctaea"`.
+#'   Default is `"nsga2"`.}
+#' }
+#'
+#' @template section_progress_bars
 #'
 #' @export
 #'

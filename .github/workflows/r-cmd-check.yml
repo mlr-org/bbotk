@@ -75,6 +75,10 @@ jobs:
           python3 -m venv ~/.virtualenvs/r-optuna
           ~/.virtualenvs/r-optuna/bin/pip install --upgrade pip --quiet
           ~/.virtualenvs/r-optuna/bin/pip install optuna --quiet
+          python3 -m venv ~/.virtualenvs/r-ax
+          ~/.virtualenvs/r-ax/bin/pip install --upgrade pip --quiet
+          ~/.virtualenvs/r-ax/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu --quiet
+          ~/.virtualenvs/r-ax/bin/pip install ax-platform --quiet
 
       - uses: mxschmitt/action-tmate@v3
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
