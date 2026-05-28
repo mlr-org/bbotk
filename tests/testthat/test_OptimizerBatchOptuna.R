@@ -135,29 +135,6 @@ test_that("OptimizerBatchOptuna multi-crit with nsga3 sampler", {
   }))
 })
 
-test_that("OptimizerBatchOptuna with cmaes sampler", {
-  expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
-    library(checkmate)
-    library(bbotk)
-    library(paradox)
-    search_space = ps(
-      x1 = p_dbl(lower = -1, upper = 1),
-      x2 = p_dbl(lower = -1, upper = 1)
-    )
-    fun = function(xs) list(y = sum(as.numeric(xs)^2))
-    objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
-    instance = OptimInstanceBatchSingleCrit$new(
-      objective = objective,
-      search_space = search_space,
-      terminator = trm("evals", n_evals = 8L)
-    )
-    opt("optuna", sampler = "cmaes", seed = 1L)$optimize(instance)
-    assert_data_table(instance$archive$data, min.rows = 8L)
-    stopifnot(instance$archive$n_evals == 8L)
-    TRUE
-  }))
-})
 
 test_that("OptimizerBatchOptuna with gp sampler", {
   expect_true(callr::r(function() {
@@ -180,29 +157,6 @@ test_that("OptimizerBatchOptuna with gp sampler", {
   }))
 })
 
-test_that("OptimizerBatchOptuna with qmc sampler", {
-  expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-optuna"))
-    library(checkmate)
-    library(bbotk)
-    library(paradox)
-    search_space = ps(
-      x1 = p_dbl(lower = -1, upper = 1),
-      x2 = p_dbl(lower = -1, upper = 1)
-    )
-    fun = function(xs) list(y = sum(as.numeric(xs)^2))
-    objective = ObjectiveRFun$new(fun = fun, domain = search_space, properties = "single-crit")
-    instance = OptimInstanceBatchSingleCrit$new(
-      objective = objective,
-      search_space = search_space,
-      terminator = trm("evals", n_evals = 8L)
-    )
-    opt("optuna", sampler = "qmc")$optimize(instance)
-    assert_data_table(instance$archive$data, min.rows = 8L)
-    stopifnot(instance$archive$n_evals == 8L)
-    TRUE
-  }))
-})
 
 test_that("OptimizerBatchOptuna with random sampler", {
   expect_true(callr::r(function() {

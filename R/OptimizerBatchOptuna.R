@@ -14,9 +14,8 @@
 #' \describe{
 #' \item{`sampler`}{`character(1)`\cr
 #'   Optuna sampler to use.
-#'   One of `"tpe"` (Tree-structured Parzen Estimator), `"cmaes"` (CMA-ES),
-#'   `"gp"` (Gaussian Process), `"nsga2"` (NSGA-II), `"nsga3"` (NSGA-III),
-#'   `"qmc"` (Quasi-Monte Carlo), `"bruteforce"`, or `"random"`.
+#'   One of `"tpe"` (Tree-structured Parzen Estimator), `"gp"` (Gaussian Process),
+#'   `"nsga2"` (NSGA-II), `"nsga3"` (NSGA-III), `"bruteforce"`, or `"random"`.
 #'   `"nsga2"` and `"nsga3"` are recommended for multi-criteria optimization.
 #'   Default is `"tpe"`.}
 #' \item{`n_startup_trials`}{`integer(1)`\cr
@@ -39,7 +38,7 @@ OptimizerBatchOptuna = R6Class(
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       param_set = ps(
-        sampler = p_fct(levels = c("tpe", "cmaes", "gp", "nsga2", "nsga3", "qmc", "bruteforce", "random"), default = "tpe"),
+        sampler = p_fct(levels = c("tpe", "gp", "nsga2", "nsga3", "bruteforce", "random"), default = "tpe"),
         n_startup_trials = p_int(lower = 1L),
         seed = p_int(lower = 1L, special_vals = list(NULL))
       )
@@ -77,12 +76,10 @@ OptimizerBatchOptuna = R6Class(
 
       sampler = switch(
         pv$sampler %??% "tpe",
-        tpe = optuna$samplers$TPESampler(n_startup_trials = pv$n_startup_trials, seed = pv$seed),
-        cmaes = optuna$samplers$CmaEsSampler(seed = pv$seed),
+        tpe = optuna$samplers$TPESampler(n_startup_trials = pv$n_startup_trials %??% 10L, seed = pv$seed),
         gp = optuna$samplers$GPSampler(seed = pv$seed),
         nsga2 = optuna$samplers$NSGAIISampler(seed = pv$seed),
         nsga3 = optuna$samplers$NSGAIIISampler(seed = pv$seed),
-        qmc = optuna$samplers$QMCSampler(seed = pv$seed),
         bruteforce = optuna$samplers$BruteForceSampler(),
         random = optuna$samplers$RandomSampler(seed = pv$seed)
       )
