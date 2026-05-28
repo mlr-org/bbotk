@@ -75,21 +75,8 @@ OptimizerBatchAx = R6Class(
         client_args$random_seed = as.integer(pv$seed)
       }
       if (!is.null(pv$n_sobol)) {
-        ax_gs = reticulate::import("ax.modelbridge.generation_strategy")
-        ax_models = reticulate::import("ax.modelbridge.registry")
-        n_sobol = as.integer(pv$n_sobol)
-        client_args$generation_strategy = ax_gs$GenerationStrategy(
-          steps = list(
-            ax_gs$GenerationStep(
-              model = ax_models$Models$SOBOL,
-              num_trials = n_sobol,
-              min_trials_observed = n_sobol
-            ),
-            ax_gs$GenerationStep(
-              model = ax_models$Models$BOTORCH_MODULAR,
-              num_trials = -1L
-            )
-          )
+        client_args$choose_generation_strategy_kwargs = list(
+          num_initialization_trials = as.integer(pv$n_sobol)
         )
       }
 
@@ -107,7 +94,9 @@ OptimizerBatchAx = R6Class(
           ax_client$get_next_trial(),
           error = function(e) NULL
         )
-        if (is.null(result)) break
+        if (is.null(result)) {
+          break
+        }
 
         params = reticulate::py_to_r(result[[1L]])
         trial_index = result[[2L]]
