@@ -24,7 +24,8 @@ trm("perf_reached")
 \item{\code{level}}{\code{numeric(1)}\cr
 Performance level that needs to be reached.
 Default is 0.
-Terminates if the performance exceeds (respective measure has to be maximized) or falls below (respective measure has to be minimized) this value.}
+Terminates if the performance exceeds (respective measure has to be maximized) or falls below
+(respective measure has to be minimized) this value.}
 }
 }
 

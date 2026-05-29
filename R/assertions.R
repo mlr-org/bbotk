@@ -209,3 +209,32 @@ assert_archive_batch = function(archive, null_ok = FALSE) {
   }
   assert_r6(archive, "ArchiveBatch")
 }
+
+#' @title Assert Python Packages
+#'
+#' @description
+#' Assert that the given Python packages are available.
+#'
+#' @param packages (`character()`)\cr
+#'   Python packages to check.
+#' @param python_version (`character(1)`)\cr
+#'   Python version to use. If `NULL`, the default Python version is used.
+#'
+#' @return (`character()`)\cr
+#'   Invisibly returns the input `packages` vector if all requested Python packages are available; otherwise throws an error listing the missing packages.
+assert_python_packages = function(packages, python_version = NULL) {
+  if (!reticulate::py_available()) {
+    # Only call py_require() in managed mode: when RETICULATE_PYTHON points to a
+    # specific virtualenv, py_require() would override it and switch to the managed
+    # environment, where the packages (hebo) are not installed.
+    reticulate_python = Sys.getenv("RETICULATE_PYTHON", unset = "managed")
+    if (reticulate_python == "managed") {
+      reticulate::py_require(packages, python_version = python_version)
+    }
+  }
+  available = map_lgl(packages, reticulate::py_module_available)
+  if (any(!available)) {
+    stopf("Package %s not available.", as_short_string(packages[!available]))
+  }
+  invisible(packages)
+}
