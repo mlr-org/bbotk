@@ -74,7 +74,7 @@ jobs:
       - name: Create Python virtual environments
         run: |
           uv venv ~/.virtualenvs/r-hebo
-          uv pip install --python ~/.virtualenvs/r-hebo torch --index-url https://download.pytorch.org/whl/cpu git+https://github.com/huawei-noah/HEBO.git#subdirectory=HEBO --quiet
+          uv pip install --python ~/.virtualenvs/r-hebo torch --index-url https://download.pytorch.org/whl/cpu hebo --quiet
           uv venv ~/.virtualenvs/r-smac
           uv pip install --python ~/.virtualenvs/r-smac smac ConfigSpace --quiet
           uv venv ~/.virtualenvs/r-optuna
