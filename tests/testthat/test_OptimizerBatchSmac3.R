@@ -3,7 +3,7 @@ skip_if_not_installed("callr")
 
 test_that("OptimizerBatchSmac3", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -32,7 +32,7 @@ test_that("OptimizerBatchSmac3", {
 
 test_that("OptimizerBatchSmac3 with 2d search space", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -56,7 +56,7 @@ test_that("OptimizerBatchSmac3 with 2d search space", {
 
 test_that("OptimizerBatchSmac3 with mixed parameter types", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -91,7 +91,7 @@ test_that("OptimizerBatchSmac3 with mixed parameter types", {
 
 test_that("OptimizerBatchSmac3 with dependencies", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -117,7 +117,7 @@ test_that("OptimizerBatchSmac3 with dependencies", {
 
 test_that("OptimizerBatchSmac3 with HyperparameterOptimizationFacade", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -138,7 +138,7 @@ test_that("OptimizerBatchSmac3 with HyperparameterOptimizationFacade", {
 
 test_that("OptimizerBatchSmac3 with AlgorithmConfigurationFacade", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -159,7 +159,7 @@ test_that("OptimizerBatchSmac3 with AlgorithmConfigurationFacade", {
 
 test_that("OptimizerBatchSmac3 with RandomFacade", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -180,7 +180,7 @@ test_that("OptimizerBatchSmac3 with RandomFacade", {
 
 test_that("OptimizerBatchSmac3 with custom surrogate model", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -204,7 +204,7 @@ test_that("OptimizerBatchSmac3 with custom surrogate model", {
 
 test_that("OptimizerBatchSmac3 with GP surrogate", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -225,7 +225,7 @@ test_that("OptimizerBatchSmac3 with GP surrogate", {
 
 test_that("OptimizerBatchSmac3 with custom acquisition function", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -246,7 +246,7 @@ test_that("OptimizerBatchSmac3 with custom acquisition function", {
 
 test_that("OptimizerBatchSmac3 with LCB acquisition function", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -267,7 +267,7 @@ test_that("OptimizerBatchSmac3 with LCB acquisition function", {
 
 test_that("OptimizerBatchSmac3 with custom initial design", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -293,7 +293,7 @@ test_that("OptimizerBatchSmac3 with custom initial design", {
 
 test_that("OptimizerBatchSmac3 with explicit seed", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -314,7 +314,7 @@ test_that("OptimizerBatchSmac3 with explicit seed", {
 
 test_that("OptimizerBatchSmac3 with deterministic FALSE and max_config_calls", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -335,7 +335,7 @@ test_that("OptimizerBatchSmac3 with deterministic FALSE and max_config_calls", {
 
 test_that("OptimizerBatchSmac3 with random design probability", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
@@ -356,7 +356,7 @@ test_that("OptimizerBatchSmac3 with random design probability", {
 
 test_that("OptimizerBatchSmac3 with MultiFidelityFacade", {
   expect_true(callr::r(function() {
-    Sys.setenv(RETICULATE_PYTHON = reticulate::virtualenv_python("r-smac"))
+    Sys.setenv(RETICULATE_PYTHON = "managed")
     library(bbotk)
     library(paradox)
     library(checkmate)
