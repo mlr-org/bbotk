@@ -82,7 +82,7 @@ test_that("OptimizerBatchHEBO with mixed parameter types", {
       search_space = search_space,
       terminator = trm("evals", n_evals = 10L)
     )
-    opt("hebo", n_init = 5L)$optimize(instance)
+    opt("hebo", n_init = 10L)$optimize(instance)
     assert_data_table(instance$archive$data, min.rows = 10L)
     stopifnot(instance$archive$n_evals == 10L)
     TRUE
