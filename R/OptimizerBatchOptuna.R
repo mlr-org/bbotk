@@ -93,7 +93,7 @@ OptimizerBatchOptuna = R6Class(
       # Ask-and-tell loop
       repeat {
         trial = study$ask()
-        xdt = private$.trial_to_xdt(trial, inst$search_space)
+        xdt = trial_to_xdt(trial, inst$search_space)
         inst$eval_batch(xdt)
 
         n = nrow(inst$archive$data)
@@ -105,26 +105,6 @@ OptimizerBatchOptuna = R6Class(
           study$tell(trial, as.list(y_vals))
         }
       }
-    },
-
-    # Convert an Optuna trial to a single-row data.table in bbotk's search space
-    .trial_to_xdt = function(trial, search_space) {
-      ids = search_space$ids()
-      classes = search_space$class
-      xs = lapply(ids, function(id) {
-        switch(
-          classes[[id]],
-          ParamDbl = as.double(trial$suggest_float(id, search_space$lower[[id]], search_space$upper[[id]])),
-          ParamInt = as.integer(trial$suggest_int(
-            id,
-            as.integer(search_space$lower[[id]]),
-            as.integer(search_space$upper[[id]])
-          )),
-          ParamFct = as.character(trial$suggest_categorical(id, as.list(search_space$levels[[id]]))),
-          ParamLgl = as.logical(trial$suggest_categorical(id, list(TRUE, FALSE)))
-        )
-      })
-      as.data.table(setNames(xs, ids))
     }
   )
 )
