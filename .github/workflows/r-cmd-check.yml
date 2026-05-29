@@ -58,27 +58,23 @@ jobs:
         with:
           python-version: '3.11'
 
-      - uses: astral-sh/setup-uv@v5
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: actions/cache@v4
-        with:
-          path: ~/.virtualenvs
-          key: venvs-${{ runner.os }}-${{ hashFiles('.github/workflows/r-cmd-check.yml') }}
-          restore-keys: venvs-${{ runner.os }}-
-
       - name: Create Python virtual environments
         run: |
-          uv venv ~/.virtualenvs/r-hebo
-          uv pip install --python ~/.virtualenvs/r-hebo torch --index-url https://download.pytorch.org/whl/cpu hebo --quiet
-          uv venv ~/.virtualenvs/r-smac
-          uv pip install --python ~/.virtualenvs/r-smac smac ConfigSpace --quiet
-          uv venv ~/.virtualenvs/r-optuna
-          uv pip install --python ~/.virtualenvs/r-optuna optuna --quiet
+          python3 -m venv ~/.virtualenvs/r-hebo
+          ~/.virtualenvs/r-hebo/bin/pip install --upgrade pip --quiet
+          ~/.virtualenvs/r-hebo/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu --quiet
+          ~/.virtualenvs/r-hebo/bin/pip install hebo --quiet
+          python3 -m venv ~/.virtualenvs/r-smac
+          ~/.virtualenvs/r-smac/bin/pip install --upgrade pip --quiet
+          ~/.virtualenvs/r-smac/bin/pip install smac ConfigSpace --quiet
+          python3 -m venv ~/.virtualenvs/r-optuna
+          ~/.virtualenvs/r-optuna/bin/pip install --upgrade pip --quiet
+          ~/.virtualenvs/r-optuna/bin/pip install optuna --quiet
 
       - uses: mxschmitt/action-tmate@v3
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
