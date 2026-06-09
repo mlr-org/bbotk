@@ -101,7 +101,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
 
   if (getOption("bbotk.debug", FALSE)) {
     # debug mode runs .optimize() in main process
-    rush = rush::RushWorker$new(instance$rush$network_id, remote = FALSE)
+    rush = rush::RushWorker$new(instance$rush$network_id)
     instance$rush = rush
     instance$archive$rush = rush
     worker_type = "debug_local"
