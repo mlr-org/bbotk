@@ -32,6 +32,7 @@ Imports:
     lgr,
     methods,
     mlr3misc (>= 0.21.0),
+    moocore,
     R6
 Suggests:
     adagio,
@@ -40,7 +41,6 @@ Suggests:
     irace (>= 4.0.0),
     knitr,
     mirai,
-    moocore,
     nloptr,
     processx,
     progressr,
