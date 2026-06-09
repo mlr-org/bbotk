@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* `trm("stagnation_hypervolume")`: Replace `emoa::dominated_hypervolume` with `moocore::hypervolume` for computing the hypervolume indicator.
+
 # bbotk 1.10.0
 
 * chore: Minimum required version of `rush` is now 1.0.0. Removed all compatibility workarounds for older versions.
