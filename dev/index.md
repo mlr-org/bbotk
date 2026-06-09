@@ -44,18 +44,21 @@ tuning are also relevant for general black-box optimization.
 Install the latest release from CRAN.
 
 ``` r
+
 install.packages("bbotk")
 ```
 
 Install the development version from GitHub.
 
 ``` r
+
 pak::pkg_install("mlr-org/bbotk")
 ```
 
 ## Example
 
 ``` r
+
 # define the objective function
 fun = function(xs) {
   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 + 10)
@@ -99,6 +102,7 @@ optimizer$optimize(instance)
 ```
 
 ``` r
+
 # best performing configuration
 instance$result
 ```
@@ -109,6 +113,7 @@ instance$result
 ```
 
 ``` r
+
 # all evaluated configuration
 as.data.table(instance$archive)
 ```
