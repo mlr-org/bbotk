@@ -13,167 +13,168 @@ The \code{Archive} is an abstract class that implements the base functionality e
 \link{ArchiveBatch}, \link{ArchiveAsync}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specification of the search space for the \link{Optimizer}.}
 
-\item{\code{codomain}}{(\link{Codomain})\cr
+    \item{\code{codomain}}{(\link{Codomain})\cr
 Codomain of objective function.}
 
-\item{\code{start_time}}{(\link{POSIXct})\cr
+    \item{\code{start_time}}{(\link{POSIXct})\cr
 Time stamp of when the optimization started.
 The time is set by the \link{Optimizer}.}
 
-\item{\code{check_values}}{(\code{logical(1)})\cr
+    \item{\code{check_values}}{(\code{logical(1)})\cr
 Determines if points and results are checked for validity.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{label}}{(\code{character(1)})\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
 
-\item{\code{man}}{(\code{character(1)})\cr
+    \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
 
-\item{\code{cols_x}}{(\code{character()})\cr
+    \item{\code{cols_x}}{(\code{character()})\cr
 Column names of search space parameters.}
 
-\item{\code{cols_y}}{(\code{character()})\cr
+    \item{\code{cols_y}}{(\code{character()})\cr
 Column names of codomain target parameters.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Archive-new}{\code{Archive$new()}}
-\item \href{#method-Archive-format}{\code{Archive$format()}}
-\item \href{#method-Archive-print}{\code{Archive$print()}}
-\item \href{#method-Archive-clear}{\code{Archive$clear()}}
-\item \href{#method-Archive-help}{\code{Archive$help()}}
-\item \href{#method-Archive-clone}{\code{Archive$clone()}}
-}
+  \itemize{
+    \item \href{#method-Archive-initialize}{\code{Archive$new()}}
+    \item \href{#method-Archive-format}{\code{Archive$format()}}
+    \item \href{#method-Archive-print}{\code{Archive$print()}}
+    \item \href{#method-Archive-clear}{\code{Archive$clear()}}
+    \item \href{#method-Archive-help}{\code{Archive$help()}}
+    \item \href{#method-Archive-clone}{\code{Archive$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Archive-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Archive-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$new(
+\if{html}{\out{<a id="method-Archive-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-Archive-initialize}{}}}
+\subsection{\code{Archive$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Archive$new(
   search_space,
   codomain,
   check_values = FALSE,
   label = NA_character_,
   man = NA_character_
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
 describes either a subset of the \code{domain} of the \link{Objective} or it describes
 a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
-
-\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.}
-
-\item{\code{check_values}}{(\code{logical(1)})\cr
+      \item{\code{check_values}}{(\code{logical(1)})\cr
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.}
-
-\item{\code{label}}{(\code{character(1)})\cr
+      \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
+      \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Archive-format"></a>}}
 \if{latex}{\out{\hypertarget{method-Archive-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$format(...)}\if{html}{\out{</div>}}
+\subsection{\code{Archive$format()}}{
+  Helper for print outputs.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Archive$format(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{(ignored).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Archive-print"></a>}}
 \if{latex}{\out{\hypertarget{method-Archive-print}{}}}
-\subsection{Method \code{print()}}{
-Printer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$print()}\if{html}{\out{</div>}}
+\subsection{\code{Archive$print()}}{
+  Printer.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Archive$print()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Archive-clear"></a>}}
 \if{latex}{\out{\hypertarget{method-Archive-clear}{}}}
-\subsection{Method \code{clear()}}{
-Clear all evaluation results from archive.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$clear()}\if{html}{\out{</div>}}
+\subsection{\code{Archive$clear()}}{
+  Clear all evaluation results from archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Archive$clear()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Archive-help"></a>}}
 \if{latex}{\out{\hypertarget{method-Archive-help}{}}}
-\subsection{Method \code{help()}}{
-Opens the corresponding help page referenced by field \verb{$man}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$help()}\if{html}{\out{</div>}}
+\subsection{\code{Archive$help()}}{
+  Opens the corresponding help page referenced by field \verb{$man}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Archive$help()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Archive-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-Archive-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Archive$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{Archive$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Archive$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

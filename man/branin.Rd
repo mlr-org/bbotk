@@ -27,7 +27,8 @@ branin_wu(x1, x2, fidelity)
 \code{numeric()}
 }
 \description{
-Classic 2-D Branin function with noise \code{branin(x1, x2, noise)} and Branin function with fidelity parameter \code{branin_wu(x1, x2, fidelity)}.
+Classic 2-D Branin function with noise \code{branin(x1, x2, noise)} and Branin function with fidelity parameter
+\code{branin_wu(x1, x2, fidelity)}.
 }
 \examples{
 branin(x1 = 12, x2 = 2, noise = 0.05)

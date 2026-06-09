@@ -12,7 +12,8 @@ Bergstra J, Bengio Y (2012).
 }
 \description{
 \code{OptimizerAsyncGridSearch} class that implements a grid search.
-The grid is constructed as a Cartesian product over discretized values per parameter, see \code{\link[paradox:generate_design_grid]{paradox::generate_design_grid()}}.
+The grid is constructed as a Cartesian product over discretized values per parameter,
+see \code{\link[paradox:generate_design_grid]{paradox::generate_design_grid()}}.
 The points of the grid are evaluated in a random order.
 }
 \section{Dictionary}{
@@ -88,70 +89,74 @@ as.data.table(instance$archive)
 }
 }
 \section{Super classes}{
-\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerAsync]{bbotk::OptimizerAsync}} -> \code{OptimizerAsyncGridSearch}
+\code{\link[bbotk:Optimizer]{Optimizer}} -> \code{\link[bbotk:OptimizerAsync]{OptimizerAsync}} -> \code{OptimizerAsyncGridSearch}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimizerAsyncGridSearch-new}{\code{OptimizerAsyncGridSearch$new()}}
-\item \href{#method-OptimizerAsyncGridSearch-optimize}{\code{OptimizerAsyncGridSearch$optimize()}}
-\item \href{#method-OptimizerAsyncGridSearch-clone}{\code{OptimizerAsyncGridSearch$clone()}}
+  \itemize{
+    \item \href{#method-OptimizerAsyncGridSearch-initialize}{\code{OptimizerAsyncGridSearch$new()}}
+    \item \href{#method-OptimizerAsyncGridSearch-optimize}{\code{OptimizerAsyncGridSearch$optimize()}}
+    \item \href{#method-OptimizerAsyncGridSearch-clone}{\code{OptimizerAsyncGridSearch$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>Optimizer$print()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerAsyncGridSearch-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerAsyncGridSearch-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsyncGridSearch$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-OptimizerAsyncGridSearch-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerAsyncGridSearch-initialize}{}}}
+\subsection{\code{OptimizerAsyncGridSearch$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerAsyncGridSearch$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerAsyncGridSearch-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerAsyncGridSearch-optimize}{}}}
-\subsection{Method \code{optimize()}}{
-Starts the asynchronous optimization.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsyncGridSearch$optimize(inst)}\if{html}{\out{</div>}}
+\subsection{\code{OptimizerAsyncGridSearch$optimize()}}{
+  Starts the asynchronous optimization.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerAsyncGridSearch$optimize(inst)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{inst}}{(\link{OptimInstance}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \link[data.table:data.table]{data.table::data.table}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{inst}}{(\link{OptimInstance}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerAsyncGridSearch-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerAsyncGridSearch-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsyncGridSearch$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimizerAsyncGridSearch$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerAsyncGridSearch$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

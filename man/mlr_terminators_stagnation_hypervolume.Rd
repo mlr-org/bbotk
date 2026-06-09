@@ -5,7 +5,8 @@
 \alias{TerminatorStagnationHypervolume}
 \title{Stagnation Hypervolume Terminator}
 \description{
-Class to terminate the optimization after the hypervolume stagnates, i.e. does not improve more than \code{threshold} over the last \code{iters} iterations.
+Class to terminate the optimization after the hypervolume stagnates,
+i.e. does not improve more than \code{threshold} over the last \code{iters} iterations.
 The hypervolume is computed using \code{\link[moocore:hypervolume]{moocore::hypervolume()}}.
 The reference point is the maximum of each objective over all evaluations.
 }
@@ -35,7 +36,7 @@ TerminatorStagnation$new()
 trm("stagnation", iters = 5, threshold = 1e-5)
 }
 \seealso{
-Other Terminator: 
+Other Terminator:
 \code{\link{Terminator}},
 \code{\link{mlr_terminators}},
 \code{\link{mlr_terminators_clock_time}},
@@ -49,71 +50,75 @@ Other Terminator:
 }
 \concept{Terminator}
 \section{Super class}{
-\code{\link[bbotk:Terminator]{bbotk::Terminator}} -> \code{TerminatorStagnationHypervolume}
+\code{\link[bbotk:Terminator]{Terminator}} -> \code{TerminatorStagnationHypervolume}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TerminatorStagnationHypervolume-new}{\code{TerminatorStagnationHypervolume$new()}}
-\item \href{#method-TerminatorStagnationHypervolume-is_terminated}{\code{TerminatorStagnationHypervolume$is_terminated()}}
-\item \href{#method-TerminatorStagnationHypervolume-clone}{\code{TerminatorStagnationHypervolume$clone()}}
+  \itemize{
+    \item \href{#method-TerminatorStagnationHypervolume-initialize}{\code{TerminatorStagnationHypervolume$new()}}
+    \item \href{#method-TerminatorStagnationHypervolume-is_terminated}{\code{TerminatorStagnationHypervolume$is_terminated()}}
+    \item \href{#method-TerminatorStagnationHypervolume-clone}{\code{TerminatorStagnationHypervolume$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>bbotk::Terminator$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>bbotk::Terminator$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>bbotk::Terminator$remaining_time()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>bbotk::Terminator$status()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>Terminator$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>Terminator$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>Terminator$remaining_time()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>Terminator$status()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TerminatorStagnationHypervolume-new"></a>}}
-\if{latex}{\out{\hypertarget{method-TerminatorStagnationHypervolume-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnationHypervolume$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-TerminatorStagnationHypervolume-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorStagnationHypervolume-initialize}{}}}
+\subsection{\code{TerminatorStagnationHypervolume$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorStagnationHypervolume$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorStagnationHypervolume-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorStagnationHypervolume-is_terminated}{}}}
-\subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} if the termination criterion is positive, and \code{FALSE} otherwise.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnationHypervolume$is_terminated(archive)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorStagnationHypervolume$is_terminated()}}{
+  Is \code{TRUE} if the termination criterion is positive, and \code{FALSE} otherwise.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorStagnationHypervolume$is_terminated(archive)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{archive}}{(\link{Archive}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{logical(1)}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{logical(1)}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorStagnationHypervolume-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorStagnationHypervolume-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnationHypervolume$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorStagnationHypervolume$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorStagnationHypervolume$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

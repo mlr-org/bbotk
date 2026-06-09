@@ -9,7 +9,8 @@ The \code{Optimizer} implements the optimization algorithm.
 \details{
 \code{Optimizer} is an abstract base class that implements the base functionality each optimizer must provide.
 A \code{Optimizer} object describes the optimization strategy.
-A \code{Optimizer} object must write its result to the \verb{$assign_result()} method of the \link{OptimInstance} at the end in order to store the best point and its estimated performance vector.
+A \code{Optimizer} object must write its result to the \verb{$assign_result()} method of the \link{OptimInstance} at the end
+in order to store the best point and its estimated performance vector.
 }
 \section{Progress Bars}{
 
@@ -23,58 +24,61 @@ combined with a \link{Terminator}. Simply wrap the function in
 \link{OptimizerAsync}, \link{OptimizerBatch}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{id}}{(\code{character(1)})\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{id}}{(\code{character(1)})\cr
 Identifier of the object.
 Used in tables, plot and text output.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{param_set}}{\link[paradox:ParamSet]{paradox::ParamSet}\cr
 Set of control parameters.}
 
-\item{\code{label}}{(\code{character(1)})\cr
+    \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
 
-\item{\code{man}}{(\code{character(1)})\cr
+    \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
 
-\item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes that the optimizer can optimize, as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
+    \item{\code{param_classes}}{(\code{character()})\cr
+Supported parameter classes that the optimizer can optimize,
+as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
 
-\item{\code{properties}}{(\code{character()})\cr
+    \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the optimizer.
 Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$optimizer_properties}}.}
 
-\item{\code{packages}}{(\code{character()})\cr
+    \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.
-A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
-}
-\if{html}{\out{</div>}}
+A warning is signaled by the constructor if at least one of the packages is not installed,
+but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Optimizer-new}{\code{Optimizer$new()}}
-\item \href{#method-Optimizer-format}{\code{Optimizer$format()}}
-\item \href{#method-Optimizer-print}{\code{Optimizer$print()}}
-\item \href{#method-Optimizer-help}{\code{Optimizer$help()}}
-\item \href{#method-Optimizer-clone}{\code{Optimizer$clone()}}
-}
+  \itemize{
+    \item \href{#method-Optimizer-initialize}{\code{Optimizer$new()}}
+    \item \href{#method-Optimizer-format}{\code{Optimizer$format()}}
+    \item \href{#method-Optimizer-print}{\code{Optimizer$print()}}
+    \item \href{#method-Optimizer-help}{\code{Optimizer$help()}}
+    \item \href{#method-Optimizer-clone}{\code{Optimizer$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Optimizer-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Optimizer-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$new(
+\if{html}{\out{<a id="method-Optimizer-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-Optimizer-initialize}{}}}
+\subsection{\code{Optimizer$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Optimizer$new(
   id = "optimizer",
   param_set,
   param_classes,
@@ -82,95 +86,100 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   packages = character(),
   label = NA_character_,
   man = NA_character_
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{(\code{character(1)})\cr
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{id}}{(\code{character(1)})\cr
 Identifier for the new instance.}
-
-\item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{param_set}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Set of control parameters.}
-
-\item{\code{param_classes}}{(\code{character()})\cr
-Supported parameter classes that the optimizer can optimize, as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
-
-\item{\code{properties}}{(\code{character()})\cr
+      \item{\code{param_classes}}{(\code{character()})\cr
+Supported parameter classes that the optimizer can optimize,
+as given in the \code{\link[paradox:ParamSet]{paradox::ParamSet}} \verb{$class} field.}
+      \item{\code{properties}}{(\code{character()})\cr
 Set of properties of the optimizer.
 Must be a subset of \code{\link[=bbotk_reflections]{bbotk_reflections$optimizer_properties}}.}
-
-\item{\code{packages}}{(\code{character()})\cr
+      \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.
-A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
-
-\item{\code{label}}{(\code{character(1)})\cr
+A warning is signaled by the constructor if at least one of the packages is not installed,
+but loaded (not attached) later on-demand via \code{\link[=requireNamespace]{requireNamespace()}}.}
+      \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
+      \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Optimizer-format"></a>}}
 \if{latex}{\out{\hypertarget{method-Optimizer-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$format(...)}\if{html}{\out{</div>}}
+\subsection{\code{Optimizer$format()}}{
+  Helper for print outputs.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Optimizer$format(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{(ignored).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Optimizer-print"></a>}}
 \if{latex}{\out{\hypertarget{method-Optimizer-print}{}}}
-\subsection{Method \code{print()}}{
-Print method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$print()}\if{html}{\out{</div>}}
+\subsection{\code{Optimizer$print()}}{
+  Print method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Optimizer$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    (\code{character()}).
+  }
 }
 
-\subsection{Returns}{
-(\code{character()}).
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Optimizer-help"></a>}}
 \if{latex}{\out{\hypertarget{method-Optimizer-help}{}}}
-\subsection{Method \code{help()}}{
-Opens the corresponding help page referenced by field \verb{$man}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$help()}\if{html}{\out{</div>}}
+\subsection{\code{Optimizer$help()}}{
+  Opens the corresponding help page referenced by field \verb{$man}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Optimizer$help()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Optimizer-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-Optimizer-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Optimizer$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{Optimizer$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Optimizer$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

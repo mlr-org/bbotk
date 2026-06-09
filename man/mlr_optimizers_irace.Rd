@@ -46,7 +46,8 @@ Default is NA.}
 \item{\code{maxTime}}{\code{integer(1)}\cr
 Maximum total execution time for the executions of targetRunner.
 targetRunner must return two values: cost and time.
-This value and the one returned by targetRunner must use the same units (seconds, minutes, iterations, evaluations, ...).
+This value and the one returned by targetRunner must use the same units
+(seconds, minutes, iterations, evaluations, ...).
 Default is 0.}
 \item{\code{budgetEstimation}}{\code{numeric(1)}\cr
 Fraction (smaller than 1) of the budget used to estimate the mean computation time of a configuration.
@@ -175,50 +176,52 @@ instance$result
 }
 }
 \section{Super classes}{
-\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchIrace}
+\code{\link[bbotk:Optimizer]{Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{OptimizerBatch}} -> \code{OptimizerBatchIrace}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimizerBatchIrace-new}{\code{OptimizerBatchIrace$new()}}
-\item \href{#method-OptimizerBatchIrace-clone}{\code{OptimizerBatchIrace$clone()}}
+  \itemize{
+    \item \href{#method-OptimizerBatchIrace-initialize}{\code{OptimizerBatchIrace$new()}}
+    \item \href{#method-OptimizerBatchIrace-clone}{\code{OptimizerBatchIrace$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerBatch" data-id="optimize"><a href='../../bbotk/html/OptimizerBatch.html#method-OptimizerBatch-optimize'><code>bbotk::OptimizerBatch$optimize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>Optimizer$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerBatch" data-id="optimize"><a href='../../bbotk/html/OptimizerBatch.html#method-OptimizerBatch-optimize'><code>OptimizerBatch$optimize()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerBatchIrace-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerBatchIrace-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerBatchIrace$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-OptimizerBatchIrace-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerBatchIrace-initialize}{}}}
+\subsection{\code{OptimizerBatchIrace$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerBatchIrace$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerBatchIrace-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerBatchIrace-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerBatchIrace$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimizerBatchIrace$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerBatchIrace$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

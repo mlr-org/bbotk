@@ -24,7 +24,8 @@ trm("perf_reached")
 \item{\code{level}}{\code{numeric(1)}\cr
 Performance level that needs to be reached.
 Default is 0.
-Terminates if the performance exceeds (respective measure has to be maximized) or falls below (respective measure has to be minimized) this value.}
+Terminates if the performance exceeds (respective measure has to be maximized) or falls below
+(respective measure has to be minimized) this value.}
 }
 }
 
@@ -33,7 +34,7 @@ TerminatorPerfReached$new()
 trm("perf_reached")
 }
 \seealso{
-Other Terminator: 
+Other Terminator:
 \code{\link{Terminator}},
 \code{\link{mlr_terminators}},
 \code{\link{mlr_terminators_clock_time}},
@@ -47,72 +48,76 @@ Other Terminator:
 }
 \concept{Terminator}
 \section{Super class}{
-\code{\link[bbotk:Terminator]{bbotk::Terminator}} -> \code{TerminatorPerfReached}
+\code{\link[bbotk:Terminator]{Terminator}} -> \code{TerminatorPerfReached}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TerminatorPerfReached-new}{\code{TerminatorPerfReached$new()}}
-\item \href{#method-TerminatorPerfReached-is_terminated}{\code{TerminatorPerfReached$is_terminated()}}
-\item \href{#method-TerminatorPerfReached-clone}{\code{TerminatorPerfReached$clone()}}
+  \itemize{
+    \item \href{#method-TerminatorPerfReached-initialize}{\code{TerminatorPerfReached$new()}}
+    \item \href{#method-TerminatorPerfReached-is_terminated}{\code{TerminatorPerfReached$is_terminated()}}
+    \item \href{#method-TerminatorPerfReached-clone}{\code{TerminatorPerfReached$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>bbotk::Terminator$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>bbotk::Terminator$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>bbotk::Terminator$remaining_time()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>bbotk::Terminator$status()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>Terminator$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>Terminator$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>Terminator$remaining_time()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>Terminator$status()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TerminatorPerfReached-new"></a>}}
-\if{latex}{\out{\hypertarget{method-TerminatorPerfReached-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorPerfReached$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-TerminatorPerfReached-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorPerfReached-initialize}{}}}
+\subsection{\code{TerminatorPerfReached$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorPerfReached$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorPerfReached-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorPerfReached-is_terminated}{}}}
-\subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+\subsection{\code{TerminatorPerfReached$is_terminated()}}{
+  Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
 otherwise.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorPerfReached$is_terminated(archive)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorPerfReached$is_terminated(archive)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{archive}}{(\link{Archive}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{logical(1)}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{logical(1)}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorPerfReached-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorPerfReached-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorPerfReached$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorPerfReached$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorPerfReached$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

@@ -10,58 +10,58 @@ Inherits from \link{EvalInstance} and adds optimization-specific functionality.
 \details{
 \code{OptimInstance} is an abstract base class that implements the base functionality each instance must provide.
 The \link{Optimizer} writes the final result to the \code{.result} field by using the \verb{$assign_result()} method.
-\code{.result} stores a \link[data.table:data.table]{data.table::data.table} consisting of x values in the \emph{search space}, (transformed) x values in the \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}.
+\code{.result} stores a \link[data.table:data.table]{data.table::data.table} consisting of x values in the \emph{search space},
+(transformed) x values in the \emph{domain space} and y values in the \emph{codomain space} of the \link{Objective}.
 The user can access the results with active bindings (see below).
 }
 \seealso{
 \link{EvalInstance}, \link{OptimInstanceBatch}, \link{OptimInstanceAsync}
 }
 \section{Super class}{
-\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{OptimInstance}
+\code{\link[bbotk:EvalInstance]{EvalInstance}} -> \code{OptimInstance}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{progressor}}{(\code{progressor()})\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{progressor}}{(\code{progressor()})\cr
 Stores \code{progressor} function.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Get result}
 
-\item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{result_x_search_space}}{(\link[data.table:data.table]{data.table::data.table})\cr
 x part of the result in the \emph{search space}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimInstance-new}{\code{OptimInstance$new()}}
-\item \href{#method-OptimInstance-print}{\code{OptimInstance$print()}}
-\item \href{#method-OptimInstance-assign_result}{\code{OptimInstance$assign_result()}}
-\item \href{#method-OptimInstance-clear}{\code{OptimInstance$clear()}}
-\item \href{#method-OptimInstance-clone}{\code{OptimInstance$clone()}}
+  \itemize{
+    \item \href{#method-OptimInstance-initialize}{\code{OptimInstance$new()}}
+    \item \href{#method-OptimInstance-print}{\code{OptimInstance$print()}}
+    \item \href{#method-OptimInstance-assign_result}{\code{OptimInstance$assign_result()}}
+    \item \href{#method-OptimInstance-clear}{\code{OptimInstance$clear()}}
+    \item \href{#method-OptimInstance-clone}{\code{OptimInstance$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href='../../bbotk/html/EvalInstance.html#method-EvalInstance-format'><code>bbotk::EvalInstance$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href='../../bbotk/html/EvalInstance.html#method-EvalInstance-format'><code>EvalInstance$format()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstance-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstance-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$new(
+\if{html}{\out{<a id="method-OptimInstance-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstance-initialize}{}}}
+\subsection{\code{OptimInstance$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstance$new(
   objective,
   search_space = NULL,
   terminator,
@@ -70,113 +70,113 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   archive = NULL,
   label = NA_character_,
   man = NA_character_
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{objective}}{(\link{Objective})\cr
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{objective}}{(\link{Objective})\cr
 Objective function.}
-
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
 describes either a subset of the \code{domain} of the \link{Objective} or it describes
 a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
-
-\item{\code{terminator}}{\link{Terminator}\cr
+      \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
-
-\item{\code{check_values}}{(\code{logical(1)})\cr
+      \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for validity?}
-
-\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+      \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
-
-\item{\code{archive}}{(\link{Archive}).}
-
-\item{\code{label}}{(\code{character(1)})\cr
+      \item{\code{archive}}{(\link{Archive}).}
+      \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
+      \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-print"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-print}{}}}
-\subsection{Method \code{print()}}{
-Printer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{OptimInstance$print()}}{
+  Printer.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstance$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{(ignored).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-assign_result"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-assign_result}{}}}
-\subsection{Method \code{assign_result()}}{
-The \link{Optimizer} object writes the best found point and estimated performance value here.
+\subsection{\code{OptimInstance$assign_result()}}{
+  The \link{Optimizer} object writes the best found point and estimated performance value here.
 For internal use.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$assign_result(xdt, y, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{data.table::data.table()})\cr
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstance$assign_result(xdt, y, ...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xdt}}{(\code{data.table::data.table()})\cr
 x values as \code{data.table::data.table()} with one row. Contains the value in the
 \emph{search space} of the \link{OptimInstance} object. Can contain additional
 columns for extra information.}
-
-\item{\code{y}}{(\code{numeric(1)})\cr
+      \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
-
-\item{\code{...}}{(\code{any})\cr
+      \item{\code{...}}{(\code{any})\cr
 ignored.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-clear"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-clear}{}}}
-\subsection{Method \code{clear()}}{
-Reset terminator and clear all evaluation results from archive and results.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$clear()}\if{html}{\out{</div>}}
+\subsection{\code{OptimInstance$clear()}}{
+  Reset terminator and clear all evaluation results from archive and results.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstance$clear()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstance-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstance-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstance$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimInstance$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstance$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

@@ -5,7 +5,7 @@
 \alias{OptimizerBatchCmaes}
 \title{Optimization via Covariance Matrix Adaptation Evolution Strategy}
 \description{
-\code{OptimizerBatchCmaes} class that implements CMA-ES. Calls \code{\link[adagio:cmaes]{adagio::pureCMAES()}}
+\code{OptimizerBatchCmaes} class that implements CMA-ES. Calls \code{\link[adagio:pureCMAES]{adagio::pureCMAES()}}
 from package \CRANpkg{adagio}. The algorithm is typically applied to search
 space dimensions between three and fifty. Lower search space dimensions might
 crash.
@@ -32,7 +32,7 @@ If set to \code{"custom"}, the start values can be passed via the \code{start} p
 Custom start values. Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
 }
 
-For the meaning of the control parameters, see \code{\link[adagio:cmaes]{adagio::pureCMAES()}}. Note
+For the meaning of the control parameters, see \code{\link[adagio:pureCMAES]{adagio::pureCMAES()}}. Note
 that we have removed all control parameters which refer to the termination of
 the algorithm and where our terminators allow to obtain the same behavior.
 }
@@ -93,50 +93,52 @@ instance$result
 }
 }
 \section{Super classes}{
-\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchCmaes}
+\code{\link[bbotk:Optimizer]{Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{OptimizerBatch}} -> \code{OptimizerBatchCmaes}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimizerBatchCmaes-new}{\code{OptimizerBatchCmaes$new()}}
-\item \href{#method-OptimizerBatchCmaes-clone}{\code{OptimizerBatchCmaes$clone()}}
+  \itemize{
+    \item \href{#method-OptimizerBatchCmaes-initialize}{\code{OptimizerBatchCmaes$new()}}
+    \item \href{#method-OptimizerBatchCmaes-clone}{\code{OptimizerBatchCmaes$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerBatch" data-id="optimize"><a href='../../bbotk/html/OptimizerBatch.html#method-OptimizerBatch-optimize'><code>bbotk::OptimizerBatch$optimize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>Optimizer$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerBatch" data-id="optimize"><a href='../../bbotk/html/OptimizerBatch.html#method-OptimizerBatch-optimize'><code>OptimizerBatch$optimize()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerBatchCmaes-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerBatchCmaes-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerBatchCmaes$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-OptimizerBatchCmaes-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerBatchCmaes-initialize}{}}}
+\subsection{\code{OptimizerBatchCmaes$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerBatchCmaes$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerBatchCmaes-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerBatchCmaes-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerBatchCmaes$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimizerBatchCmaes$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerBatchCmaes$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
