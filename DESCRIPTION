@@ -11,7 +11,8 @@ Authors@R: c(
     person("Bernd", "Bischl", , "bernd_bischl@gmx.net", role = "aut",
            comment = c(ORCID = "0000-0001-6002-6980")),
     person("Martin", "Binder", , "martin.binder@mail.com", role = "aut"),
-    person("Olaf", "Mersmann", , "olafm@statistik.tu-dortmund.de", role = "ctb")
+    person("Olaf", "Mersmann", , "olafm@statistik.tu-dortmund.de", role = "ctb"),
+    person("Alexander", "Winterstetter", "alexanderwinterstetter@gmail.de", role = "ctb")
   )
 Description: Features highly configurable search spaces via the 'paradox'
     package and optimizes every user-defined objective function. The
@@ -35,8 +36,10 @@ Imports:
     R6
 Suggests:
     adagio,
+    callr,
     emoa,
     GenSA,
+    reticulate,
     irace (>= 4.0.0),
     knitr,
     mirai,
@@ -44,9 +47,13 @@ Suggests:
     processx,
     progressr,
     redux,
+    reticulate,
     RhpcBLASctl,
     rush (>= 1.0.0),
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
+Remotes:
+    mlr-org/paradox
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
@@ -85,16 +92,20 @@ Collate:
     'OptimizerAsyncGridSearch.R'
     'OptimizerAsyncRandomSearch.R'
     'OptimizerBatch.R'
+    'OptimizerBatchAx.R'
     'OptimizerBatchChain.R'
     'OptimizerBatchCmaes.R'
     'OptimizerBatchDesignPoints.R'
     'OptimizerBatchFocusSearch.R'
     'OptimizerBatchGenSA.R'
     'OptimizerBatchGridSearch.R'
+    'OptimizerBatchHEBO.R'
     'OptimizerBatchIrace.R'
     'OptimizerBatchLocalSearch.R'
     'OptimizerBatchNLoptr.R'
+    'OptimizerBatchOptuna.R'
     'OptimizerBatchRandomSearch.R'
+    'OptimizerBatchSmac3.R'
     'Progressor.R'
     'mlr_terminators.R'
     'Terminator.R'
@@ -114,6 +125,9 @@ Collate:
     'bibentries.R'
     'conditions.R'
     'helper.R'
+    'helper_ax.R'
+    'helper_hebo.R'
+    'helper_optuna.R'
     'local_search.R'
     'mlr_callbacks.R'
     'mlr_test_functions.R'

@@ -20,13 +20,13 @@
 #' There are three types of workers:
 #'
 #' - "mirai": Workers are started with \CRANpkg{mirai} on local or remote machines.
-#'   See `$start_workers()` in [Rush] for more details.
+#'   See `$start_workers()` in [rush::Rush] for more details.
 #'   [mirai::daemons()] must be created before starting the optimization.
 #' - "processx": Workers are started as local processes with \CRANpkg{processx}.
 
-#'   See `$start_local_workers()` in [Rush] for more details.
+#'   See `$start_local_workers()` in [rush::Rush] for more details.
 #' - "script": Workers are started by the user with a custom script.
-#'   See `$create_worker_script()` in [Rush] for more details.
+#'   See `$create_worker_script()` in [rush::Rush] for more details.
 #'
 #' The workers are started when the `$optimize()` method is called.
 #' The main process waits until at least one worker is running.

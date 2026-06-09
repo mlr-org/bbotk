@@ -7,7 +7,8 @@
 The \code{Objective} class describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }
 \details{
-\code{Objective} objects can have the following properties: \code{"noisy"}, \code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
+\code{Objective} objects can have the following properties: \code{"noisy"}, \code{"deterministic"}, \code{"single-crit"},
+and \code{"multi-crit"}.
 }
 \seealso{
 \link{ObjectiveRFun}, \link{ObjectiveRFunMany}, \link{ObjectiveRFunDt}
