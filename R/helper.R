@@ -31,6 +31,7 @@ terminated_error = function(optim_instance) {
 #' @export
 is_dominated = function(ymat) {
   assert_matrix(ymat, mode = "double")
+  require_namespaces("moocore")
   !moocore::is_nondominated(t(ymat))
 }
 
