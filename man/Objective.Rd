@@ -7,83 +7,85 @@
 The \code{Objective} class describes a black-box objective function that maps an arbitrary domain to a numerical codomain.
 }
 \details{
-\code{Objective} objects can have the following properties: \code{"noisy"}, \code{"deterministic"}, \code{"single-crit"} and \code{"multi-crit"}.
+\code{Objective} objects can have the following properties: \code{"noisy"}, \code{"deterministic"}, \code{"single-crit"},
+and \code{"multi-crit"}.
 }
 \seealso{
 \link{ObjectiveRFun}, \link{ObjectiveRFunMany}, \link{ObjectiveRFunDt}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 Callbacks applied during the optimization.}
 
-\item{\code{context}}{(\link{ContextBatch})\cr
+    \item{\code{context}}{(\link{ContextBatch})\cr
 Stores the context for the callbacks.}
 
-\item{\code{id}}{(\code{character(1)})).}
+    \item{\code{id}}{(\code{character(1)})).}
 
-\item{\code{properties}}{(\code{character()}).}
+    \item{\code{properties}}{(\code{character()}).}
 
-\item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+    \item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies domain of function, hence its input parameters, their types
 and ranges.}
 
-\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+    \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function, hence its feasible values.}
 
-\item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet}).\cr
+    \item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet}).\cr
 Changeable constants or parameters that are not subject to tuning can be
 stored and accessed here. Set constant values are passed to \verb{$.eval()}
 and \verb{$.eval_many()} as named arguments.}
 
-\item{\code{check_values}}{(\code{logical(1)})\cr}
-}
-\if{html}{\out{</div>}}
+    \item{\code{check_values}}{(\code{logical(1)})\cr}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{label}}{(\code{character(1)})\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
 
-\item{\code{man}}{(\code{character(1)})\cr
+    \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
 
-\item{\code{xdim}}{(\code{integer(1)})\cr
+    \item{\code{xdim}}{(\code{integer(1)})\cr
 Dimension of domain.}
 
-\item{\code{ydim}}{(\code{integer(1)})\cr
+    \item{\code{ydim}}{(\code{integer(1)})\cr
 Dimension of codomain.}
 
-\item{\code{packages}}{(\code{character()})\cr
+    \item{\code{packages}}{(\code{character()})\cr
 Set of required packages to run the objective function.
 Packages are loaded on each worker when the objective is called by \link{OptimizerAsync}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Objective-new}{\code{Objective$new()}}
-\item \href{#method-Objective-format}{\code{Objective$format()}}
-\item \href{#method-Objective-print}{\code{Objective$print()}}
-\item \href{#method-Objective-eval}{\code{Objective$eval()}}
-\item \href{#method-Objective-eval_many}{\code{Objective$eval_many()}}
-\item \href{#method-Objective-eval_dt}{\code{Objective$eval_dt()}}
-\item \href{#method-Objective-help}{\code{Objective$help()}}
-\item \href{#method-Objective-clone}{\code{Objective$clone()}}
-}
+  \itemize{
+    \item \href{#method-Objective-initialize}{\code{Objective$new()}}
+    \item \href{#method-Objective-format}{\code{Objective$format()}}
+    \item \href{#method-Objective-print}{\code{Objective$print()}}
+    \item \href{#method-Objective-eval}{\code{Objective$eval()}}
+    \item \href{#method-Objective-eval_many}{\code{Objective$eval_many()}}
+    \item \href{#method-Objective-eval_dt}{\code{Objective$eval_dt()}}
+    \item \href{#method-Objective-help}{\code{Objective$help()}}
+    \item \href{#method-Objective-clone}{\code{Objective$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Objective-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Objective-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$new(
+\if{html}{\out{<a id="method-Objective-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-Objective-initialize}{}}}
+\subsection{\code{Objective$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Objective$new(
   id = "f",
   properties = character(),
   domain,
@@ -93,185 +95,192 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   check_values = TRUE,
   label = NA_character_,
   man = NA_character_
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{(\code{character(1)}).}
-
-\item{\code{properties}}{(\code{character()}).}
-
-\item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{id}}{(\code{character(1)}).}
+      \item{\code{properties}}{(\code{character()}).}
+      \item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies domain of function.
 The \link[paradox:ParamSet]{paradox::ParamSet} should describe all possible input parameters of the objective function.
 This includes their \code{id}, their types and the possible range.}
-
-\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.}
-
-\item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
-
-\item{\code{packages}}{(\code{character()})\cr
+      \item{\code{packages}}{(\code{character()})\cr
 Set of required packages to run the objective function.}
-
-\item{\code{check_values}}{(\code{logical(1)})\cr
+      \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for validity?}
-
-\item{\code{label}}{(\code{character(1)})\cr
+      \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
+      \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Objective-format"></a>}}
 \if{latex}{\out{\hypertarget{method-Objective-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$format(...)}\if{html}{\out{</div>}}
+\subsection{\code{Objective$format()}}{
+  Helper for print outputs.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Objective$format(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{(ignored).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Objective-print"></a>}}
 \if{latex}{\out{\hypertarget{method-Objective-print}{}}}
-\subsection{Method \code{print()}}{
-Print method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$print()}\if{html}{\out{</div>}}
+\subsection{\code{Objective$print()}}{
+  Print method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Objective$print()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{character()}.
+  }
 }
 
-\subsection{Returns}{
-\code{character()}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Objective-eval"></a>}}
 \if{latex}{\out{\hypertarget{method-Objective-eval}{}}}
-\subsection{Method \code{eval()}}{
-Evaluates a single input value on the objective function. If
+\subsection{\code{Objective$eval()}}{
+  Evaluates a single input value on the objective function. If
 \code{check_values = TRUE}, the validity of the point as well as the validity
 of the result is checked.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$eval(xs)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xs}}{(\code{list()})\cr
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Objective$eval(xs)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{(\code{list()})\cr
 A list that contains a single x value, e.g. \code{list(x1 = 1, x2 = 2)}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{list()} that contains the result of the evaluation, e.g. \code{list(y = 1)}.
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{list()} that contains the result of the evaluation, e.g. \code{list(y = 1)}.
 The list can also contain additional \emph{named} entries that will be stored in the
 archive if called through the \link{OptimInstance}.
 These extra entries are referred to as \emph{extras}.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Objective-eval_many"></a>}}
 \if{latex}{\out{\hypertarget{method-Objective-eval_many}{}}}
-\subsection{Method \code{eval_many()}}{
-Evaluates multiple input values on the objective function. If
+\subsection{\code{Objective$eval_many()}}{
+  Evaluates multiple input values on the objective function. If
 \code{check_values = TRUE}, the validity of the points as well as the validity
 of the results are checked. \emph{bbotk} does not take care of
 parallelization. If the function should make use of parallel computing,
 it has to be implemented by deriving from this class and overwriting this
 function.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$eval_many(xss)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xss}}{(\code{list()})\cr
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Objective$eval_many(xss)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xss}}{(\code{list()})\cr
 A list of lists that contains multiple x values, e.g.
 \code{list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))}.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-data.table::data.table()] that contains one y-column for
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    data.table::data.table()] that contains one y-column for
 single-criteria functions and multiple y-columns for multi-criteria functions,
 e.g.  \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
 It may also contain additional columns that will be stored in the archive if
 called through the \link{OptimInstance}.
 These extra columns are referred to as \emph{extras}.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Objective-eval_dt"></a>}}
 \if{latex}{\out{\hypertarget{method-Objective-eval_dt}{}}}
-\subsection{Method \code{eval_dt()}}{
-Evaluates multiple input values on the objective function
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$eval_dt(xdt)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+\subsection{\code{Objective$eval_dt()}}{
+  Evaluates multiple input values on the objective function
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Objective$eval_dt(xdt)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Set of untransformed points / points from the \emph{search space}.
 One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
 Column names have to match ids of the \code{search_space}.
 However, \code{xdt} can contain additional columns.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-data.table::data.table()] that contains one y-column for
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    data.table::data.table()] that contains one y-column for
 single-criteria functions and multiple y-columns for multi-criteria
 functions, e.g.  \code{data.table(y = 1:2)} or \code{data.table(y1 = 1:2, y2 = 3:4)}.
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Objective-help"></a>}}
 \if{latex}{\out{\hypertarget{method-Objective-help}{}}}
-\subsection{Method \code{help()}}{
-Opens the corresponding help page referenced by field \verb{$man}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$help()}\if{html}{\out{</div>}}
+\subsection{\code{Objective$help()}}{
+  Opens the corresponding help page referenced by field \verb{$man}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Objective$help()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Objective-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-Objective-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Objective$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{Objective$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Objective$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
