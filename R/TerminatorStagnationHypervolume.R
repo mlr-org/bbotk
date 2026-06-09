@@ -66,6 +66,8 @@ TerminatorStagnationHypervolume = R6Class(
         return(FALSE)
       }
 
+      require_namespaces("moocore")
+
       points = t(as.matrix(archive$data[, ycols, , drop = FALSE, with = FALSE]))
 
       # switch sign in each dim to minimize
@@ -79,8 +81,10 @@ TerminatorStagnationHypervolume = R6Class(
       # points outside iters windows
       points_before = points[, seq(1, ncol(points) - iters), drop = FALSE]
 
-      hypervolume = moocore::hypervolume(t(points), reference = apply(points, 1, max))
-      hypervolume_before = moocore::hypervolume(t(points_before), reference = apply(points_before, 1, max))
+      # both hypervolumes must share a reference point to be comparable
+      reference = apply(points, 1, max)
+      hypervolume = moocore::hypervolume(t(points), reference = reference)
+      hypervolume_before = moocore::hypervolume(t(points_before), reference = reference)
 
       # hypervolume is always maximized
       hypervolume <= hypervolume_before + pv$threshold
