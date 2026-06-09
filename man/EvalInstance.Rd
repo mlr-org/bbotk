@@ -25,155 +25,160 @@ Subclasses add specific functionality:
 }
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{objective}}{(\link{Objective})\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{objective}}{(\link{Objective})\cr
 Objective function of the instance.}
 
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+    \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specification of the search space for the \link{Optimizer}.}
 
-\item{\code{terminator}}{\link{Terminator}\cr
+    \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion of the optimization.}
 
-\item{\code{archive}}{(\link{Archive})\cr
+    \item{\code{archive}}{(\link{Archive})\cr
 Contains all performed function calls of the Objective.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{label}}{(\code{character(1)})\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
 
-\item{\code{man}}{(\code{character(1)})\cr
+    \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
 
-\item{\code{is_terminated}}{(\code{logical(1)})\cr
+    \item{\code{is_terminated}}{(\code{logical(1)})\cr
 Whether the terminator says we should stop.}
 
-\item{\code{n_evals}}{(\code{integer(1)})\cr
+    \item{\code{n_evals}}{(\code{integer(1)})\cr
 Number of evaluations performed.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-EvalInstance-new}{\code{EvalInstance$new()}}
-\item \href{#method-EvalInstance-format}{\code{EvalInstance$format()}}
-\item \href{#method-EvalInstance-print}{\code{EvalInstance$print()}}
-\item \href{#method-EvalInstance-clear}{\code{EvalInstance$clear()}}
-\item \href{#method-EvalInstance-clone}{\code{EvalInstance$clone()}}
-}
+  \itemize{
+    \item \href{#method-EvalInstance-initialize}{\code{EvalInstance$new()}}
+    \item \href{#method-EvalInstance-format}{\code{EvalInstance$format()}}
+    \item \href{#method-EvalInstance-print}{\code{EvalInstance$print()}}
+    \item \href{#method-EvalInstance-clear}{\code{EvalInstance$clear()}}
+    \item \href{#method-EvalInstance-clone}{\code{EvalInstance$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-EvalInstance-new"></a>}}
-\if{latex}{\out{\hypertarget{method-EvalInstance-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EvalInstance$new(
+\if{html}{\out{<a id="method-EvalInstance-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-EvalInstance-initialize}{}}}
+\subsection{\code{EvalInstance$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EvalInstance$new(
   objective,
   search_space,
   terminator,
   archive,
   label = NA_character_,
   man = NA_character_
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{objective}}{(\link{Objective})\cr
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{objective}}{(\link{Objective})\cr
 Objective function.}
-
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
 describes either a subset of the \code{domain} of the \link{Objective} or it describes
 a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
-
-\item{\code{terminator}}{\link{Terminator}\cr
+      \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
-
-\item{\code{archive}}{(\link{Archive}).}
-
-\item{\code{label}}{(\code{character(1)})\cr
+      \item{\code{archive}}{(\link{Archive}).}
+      \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
+      \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EvalInstance-format"></a>}}
 \if{latex}{\out{\hypertarget{method-EvalInstance-format}{}}}
-\subsection{Method \code{format()}}{
-Helper for print outputs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EvalInstance$format(...)}\if{html}{\out{</div>}}
+\subsection{\code{EvalInstance$format()}}{
+  Helper for print outputs.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EvalInstance$format(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{(ignored).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EvalInstance-print"></a>}}
 \if{latex}{\out{\hypertarget{method-EvalInstance-print}{}}}
-\subsection{Method \code{print()}}{
-Printer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EvalInstance$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{EvalInstance$print()}}{
+  Printer.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EvalInstance$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{(ignored).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EvalInstance-clear"></a>}}
 \if{latex}{\out{\hypertarget{method-EvalInstance-clear}{}}}
-\subsection{Method \code{clear()}}{
-Clear all evaluation results from archive.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EvalInstance$clear()}\if{html}{\out{</div>}}
+\subsection{\code{EvalInstance$clear()}}{
+  Clear all evaluation results from archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EvalInstance$clear()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-EvalInstance-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-EvalInstance-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{EvalInstance$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{EvalInstance$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{EvalInstance$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

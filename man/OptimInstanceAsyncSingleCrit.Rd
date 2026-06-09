@@ -47,44 +47,43 @@ instance = oi_async(
 }
 }
 \section{Super classes}{
-\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{\link[bbotk:OptimInstanceAsync]{bbotk::OptimInstanceAsync}} -> \code{OptimInstanceAsyncSingleCrit}
+\code{\link[bbotk:EvalInstance]{EvalInstance}} -> \code{\link[bbotk:OptimInstance]{OptimInstance}} -> \code{\link[bbotk:OptimInstanceAsync]{OptimInstanceAsync}} -> \code{OptimInstanceAsyncSingleCrit}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{result_x_domain}}{(\code{list()})\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{result_x_domain}}{(\code{list()})\cr
 (transformed) x part of the result in the \emph{domain space} of the objective.}
 
-\item{\code{result_y}}{(\code{numeric()})\cr
+    \item{\code{result_y}}{(\code{numeric()})\cr
 Optimal outcome.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimInstanceAsyncSingleCrit-new}{\code{OptimInstanceAsyncSingleCrit$new()}}
-\item \href{#method-OptimInstanceAsyncSingleCrit-assign_result}{\code{OptimInstanceAsyncSingleCrit$assign_result()}}
-\item \href{#method-OptimInstanceAsyncSingleCrit-clone}{\code{OptimInstanceAsyncSingleCrit$clone()}}
+  \itemize{
+    \item \href{#method-OptimInstanceAsyncSingleCrit-initialize}{\code{OptimInstanceAsyncSingleCrit$new()}}
+    \item \href{#method-OptimInstanceAsyncSingleCrit-assign_result}{\code{OptimInstanceAsyncSingleCrit$assign_result()}}
+    \item \href{#method-OptimInstanceAsyncSingleCrit-clone}{\code{OptimInstanceAsyncSingleCrit$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href='../../bbotk/html/EvalInstance.html#method-EvalInstance-format'><code>bbotk::EvalInstance$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="clear"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-clear'><code>bbotk::OptimInstanceAsync$clear()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="print"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-print'><code>bbotk::OptimInstanceAsync$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="reconnect"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-reconnect'><code>bbotk::OptimInstanceAsync$reconnect()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href='../../bbotk/html/EvalInstance.html#method-EvalInstance-format'><code>EvalInstance$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="clear"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-clear'><code>OptimInstanceAsync$clear()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="print"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-print'><code>OptimInstanceAsync$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstanceAsync" data-id="reconnect"><a href='../../bbotk/html/OptimInstanceAsync.html#method-OptimInstanceAsync-reconnect'><code>OptimInstanceAsync$reconnect()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceAsyncSingleCrit-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceAsyncSingleCrit-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncSingleCrit$new(
+\if{html}{\out{<a id="method-OptimInstanceAsyncSingleCrit-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstanceAsyncSingleCrit-initialize}{}}}
+\subsection{\code{OptimInstanceAsyncSingleCrit$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstanceAsyncSingleCrit$new(
   objective,
   search_space = NULL,
   terminator,
@@ -92,85 +91,81 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   callbacks = NULL,
   archive = NULL,
   rush = NULL
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{objective}}{(\link{Objective})\cr
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{objective}}{(\link{Objective})\cr
 Objective function.}
-
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
 describes either a subset of the \code{domain} of the \link{Objective} or it describes
 a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
-
-\item{\code{terminator}}{\link{Terminator}\cr
+      \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
-
-\item{\code{check_values}}{(\code{logical(1)})\cr
+      \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for validity?}
-
-\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+      \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
-
-\item{\code{archive}}{(\link{Archive}).}
-
-\item{\code{rush}}{(\code{Rush})\cr
+      \item{\code{archive}}{(\link{Archive}).}
+      \item{\code{rush}}{(\code{Rush})\cr
 If a rush instance is supplied, the tuning runs without batches.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsyncSingleCrit-assign_result"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsyncSingleCrit-assign_result}{}}}
-\subsection{Method \code{assign_result()}}{
-The \link{OptimizerAsync} object writes the best found point and estimated performance value here.
+\subsection{\code{OptimInstanceAsyncSingleCrit$assign_result()}}{
+  The \link{OptimizerAsync} object writes the best found point and estimated performance value here.
 For internal use.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncSingleCrit$assign_result(xdt, y, extra = NULL, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstanceAsyncSingleCrit$assign_result(xdt, y, extra = NULL, ...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xdt}}{(\code{\link[data.table:data.table]{data.table::data.table()}})\cr
 Set of untransformed points / points from the \emph{search space}.
 One point per row, e.g. \code{data.table(x1 = c(1, 3), x2 = c(2, 4))}.
 Column names have to match ids of the \code{search_space}.
 However, \code{xdt} can contain additional columns.}
-
-\item{\code{y}}{(\code{numeric(1)})\cr
+      \item{\code{y}}{(\code{numeric(1)})\cr
 Optimal outcome.}
-
-\item{\code{extra}}{(\code{data.table::data.table()})\cr
+      \item{\code{extra}}{(\code{data.table::data.table()})\cr
 Additional information.}
-
-\item{\code{...}}{(\code{any})\cr
+      \item{\code{...}}{(\code{any})\cr
 ignored.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsyncSingleCrit-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsyncSingleCrit-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsyncSingleCrit$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimInstanceAsyncSingleCrit$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstanceAsyncSingleCrit$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

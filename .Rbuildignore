@@ -4,7 +4,7 @@
 ^CLAUDE\.md$
 ^CONTRIBUTING\.md$
 ^CRAN-SUBMISSION$
-^LICENSE$
+^LICENSE.md$
 ^README\.Rmd$
 ^README\.html$
 ^\.?air\.toml$
@@ -18,12 +18,14 @@
 ^\.cursor$
 ^\.editorconfig$
 ^\.git$
+^\.git-blame-ignore-revs$
 ^\.gitattributes$
 ^\.github$
 ^\.gitignore$
 ^\.ignore$
 ^\.lintr$
 ^\.vscode$
+^\.yolobox\.toml$
 ^attic$
 ^attic_local$
 ^cran-comments\.md$

@@ -15,89 +15,90 @@ See \code{\link[=callback_batch]{callback_batch()}} for a list of stages which t
 \code{\link[mlr3misc:Context]{mlr3misc::Context}} -> \code{ContextBatch}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{instance}}{(\link{OptimInstance}).}
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{instance}}{(\link{OptimInstance}).}
 
-\item{\code{optimizer}}{(\link{Optimizer}).}
-}
-\if{html}{\out{</div>}}
+    \item{\code{optimizer}}{(\link{Optimizer}).}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
 The points of the latest batch in \code{instance$eval_batch()}.
 Contains the values in the search space i.e. transformations are not yet applied.}
 
-\item{\code{result_xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{result_xdt}}{(\link[data.table:data.table]{data.table::data.table})\cr
 The xdt passed to \code{instance$assign_result()}.}
 
-\item{\code{result_y}}{(\code{numeric(1)})\cr
+    \item{\code{result_y}}{(\code{numeric(1)})\cr
 The y passed to \code{instance$assign_result()}.
 Only available for single criterion optimization.}
 
-\item{\code{result_ydt}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{result_ydt}}{(\link[data.table:data.table]{data.table::data.table})\cr
 The ydt passed to \code{instance$assign_result()}.
 Only available for multi criterion optimization.}
 
-\item{\code{result_extra}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{result_extra}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Additional information about the result passed to \code{instance$assign_result()}.}
 
-\item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{result}}{(\link[data.table:data.table]{data.table::data.table})\cr
 The result of the optimization in \code{instance$assign_result()}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-ContextBatch-new}{\code{ContextBatch$new()}}
-\item \href{#method-ContextBatch-clone}{\code{ContextBatch$clone()}}
+  \itemize{
+    \item \href{#method-ContextBatch-initialize}{\code{ContextBatch$new()}}
+    \item \href{#method-ContextBatch-clone}{\code{ContextBatch$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="mlr3misc" data-topic="Context" data-id="format"><a href='../../mlr3misc/html/Context.html#method-Context-format'><code>mlr3misc::Context$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3misc" data-topic="Context" data-id="print"><a href='../../mlr3misc/html/Context.html#method-Context-print'><code>mlr3misc::Context$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="mlr3misc" data-topic="Context" data-id="format"><a href='../../mlr3misc/html/Context.html#method-Context-format'><code>mlr3misc::Context$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="mlr3misc" data-topic="Context" data-id="print"><a href='../../mlr3misc/html/Context.html#method-Context-print'><code>mlr3misc::Context$print()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ContextBatch-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ContextBatch-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ContextBatch$new(inst, optimizer)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-ContextBatch-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-ContextBatch-initialize}{}}}
+\subsection{\code{ContextBatch$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ContextBatch$new(inst, optimizer)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{inst}}{(\link{OptimInstance}).}
+      \item{\code{optimizer}}{(\link{Optimizer}).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{inst}}{(\link{OptimInstance}).}
-
-\item{\code{optimizer}}{(\link{Optimizer}).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ContextBatch-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-ContextBatch-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ContextBatch$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{ContextBatch$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ContextBatch$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

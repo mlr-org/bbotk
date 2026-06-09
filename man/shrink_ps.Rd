@@ -30,7 +30,7 @@ Boundaries of numeric values are shrinked to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.
 
-Note that for \code{\link[paradox:Domain]{paradox::p_lgl()}}s the value to be shrinked around is set as
+Note that for \code{\link[paradox:p_lgl]{paradox::p_lgl()}}s the value to be shrinked around is set as
 the \code{default} value instead of dropping a level. Also, a tag \code{shrinked} is
 added.
 

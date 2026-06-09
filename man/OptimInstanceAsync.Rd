@@ -14,41 +14,40 @@ The function \code{\link[=oi_async]{oi_async()}} creates an \link{OptimInstanceA
 \code{\link[=oi_async]{oi_async()}}, \link{OptimInstanceAsyncSingleCrit}, \link{OptimInstanceAsyncMultiCrit}
 }
 \section{Super classes}{
-\code{\link[bbotk:EvalInstance]{bbotk::EvalInstance}} -> \code{\link[bbotk:OptimInstance]{bbotk::OptimInstance}} -> \code{OptimInstanceAsync}
+\code{\link[bbotk:EvalInstance]{EvalInstance}} -> \code{\link[bbotk:OptimInstance]{OptimInstance}} -> \code{OptimInstanceAsync}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{rush}}{(\code{Rush})\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{rush}}{(\code{Rush})\cr
 Rush controller for parallel optimization.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimInstanceAsync-new}{\code{OptimInstanceAsync$new()}}
-\item \href{#method-OptimInstanceAsync-print}{\code{OptimInstanceAsync$print()}}
-\item \href{#method-OptimInstanceAsync-clear}{\code{OptimInstanceAsync$clear()}}
-\item \href{#method-OptimInstanceAsync-reconnect}{\code{OptimInstanceAsync$reconnect()}}
-\item \href{#method-OptimInstanceAsync-clone}{\code{OptimInstanceAsync$clone()}}
+  \itemize{
+    \item \href{#method-OptimInstanceAsync-initialize}{\code{OptimInstanceAsync$new()}}
+    \item \href{#method-OptimInstanceAsync-print}{\code{OptimInstanceAsync$print()}}
+    \item \href{#method-OptimInstanceAsync-clear}{\code{OptimInstanceAsync$clear()}}
+    \item \href{#method-OptimInstanceAsync-reconnect}{\code{OptimInstanceAsync$reconnect()}}
+    \item \href{#method-OptimInstanceAsync-clone}{\code{OptimInstanceAsync$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href='../../bbotk/html/EvalInstance.html#method-EvalInstance-format'><code>bbotk::EvalInstance$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-assign_result'><code>bbotk::OptimInstance$assign_result()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href='../../bbotk/html/EvalInstance.html#method-EvalInstance-format'><code>EvalInstance$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimInstance" data-id="assign_result"><a href='../../bbotk/html/OptimInstance.html#method-OptimInstance-assign_result'><code>OptimInstance$assign_result()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimInstanceAsync-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimInstanceAsync-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$new(
+\if{html}{\out{<a id="method-OptimInstanceAsync-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimInstanceAsync-initialize}{}}}
+\subsection{\code{OptimInstanceAsync$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstanceAsync$new(
   objective,
   search_space = NULL,
   terminator,
@@ -58,101 +57,102 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   rush = NULL,
   label = NA_character_,
   man = NA_character_
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{objective}}{(\link{Objective})\cr
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{objective}}{(\link{Objective})\cr
 Objective function.}
-
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
 describes either a subset of the \code{domain} of the \link{Objective} or it describes
 a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
-
-\item{\code{terminator}}{\link{Terminator}\cr
+      \item{\code{terminator}}{\link{Terminator}\cr
 Termination criterion.}
-
-\item{\code{check_values}}{(\code{logical(1)})\cr
+      \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for validity?}
-
-\item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
+      \item{\code{callbacks}}{(list of \link[mlr3misc:Callback]{mlr3misc::Callback})\cr
 List of callbacks.}
-
-\item{\code{archive}}{(\link{Archive}).}
-
-\item{\code{rush}}{(\code{Rush})\cr
+      \item{\code{archive}}{(\link{Archive}).}
+      \item{\code{rush}}{(\code{Rush})\cr
 If a rush instance is supplied, the tuning runs without batches.}
-
-\item{\code{label}}{(\code{character(1)})\cr
+      \item{\code{label}}{(\code{character(1)})\cr
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.}
-
-\item{\code{man}}{(\code{character(1)})\cr
+      \item{\code{man}}{(\code{character(1)})\cr
 String in the format \verb{[pkg]::[topic]} pointing to a manual page for this object.
 The referenced help package can be opened via method \verb{$help()}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsync-print"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsync-print}{}}}
-\subsection{Method \code{print()}}{
-Printer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{OptimInstanceAsync$print()}}{
+  Printer.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstanceAsync$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{(ignored).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsync-clear"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsync-clear}{}}}
-\subsection{Method \code{clear()}}{
-Reset terminator and clear all evaluation results from archive and results.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$clear()}\if{html}{\out{</div>}}
+\subsection{\code{OptimInstanceAsync$clear()}}{
+  Reset terminator and clear all evaluation results from archive and results.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstanceAsync$clear()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsync-reconnect"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsync-reconnect}{}}}
-\subsection{Method \code{reconnect()}}{
-Reconnect to Redis.
+\subsection{\code{OptimInstanceAsync$reconnect()}}{
+  Reconnect to Redis.
 The connection breaks when the \link[rush:Rush]{rush::Rush} is saved to disk.
 Call this method to reconnect after loading the object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$reconnect()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstanceAsync$reconnect()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimInstanceAsync-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimInstanceAsync-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimInstanceAsync$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimInstanceAsync$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimInstanceAsync$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
