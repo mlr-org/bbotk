@@ -2,6 +2,12 @@
 
 ## bbotk (development version)
 
+- `trm("stagnation_hypervolume")`: Replace
+  [`emoa::dominated_hypervolume`](https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html)
+  with
+  [`moocore::hypervolume`](https://multi-objective.github.io/moocore/r/reference/hypervolume.html)
+  for computing the hypervolume indicator.
+
 ## bbotk 1.10.0
 
 CRAN release: 2026-04-08

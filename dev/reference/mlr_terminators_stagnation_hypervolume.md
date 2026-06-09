@@ -2,7 +2,10 @@
 
 Class to terminate the optimization after the hypervolume stagnates,
 i.e. does not improve more than `threshold` over the last `iters`
-iterations.
+iterations. The hypervolume is computed using
+[`moocore::hypervolume()`](https://multi-objective.github.io/moocore/r/reference/hypervolume.html).
+The reference point is the maximum of each objective over all
+evaluations.
 
 ## Dictionary
 
