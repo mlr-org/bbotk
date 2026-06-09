@@ -65,7 +65,7 @@ functionality each archive must provide.
 
 ### Public methods
 
-- [`Archive$new()`](#method-Archive-new)
+- [`Archive$new()`](#method-Archive-initialize)
 
 - [`Archive$format()`](#method-Archive-format)
 
@@ -79,7 +79,7 @@ functionality each archive must provide.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Archive$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -137,7 +137,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`format()`](https://rdrr.io/r/base/format.html)
+### `Archive$format()`
 
 Helper for print outputs.
 
@@ -153,7 +153,7 @@ Helper for print outputs.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `Archive$print()`
 
 Printer.
 
@@ -161,15 +161,9 @@ Printer.
 
     Archive$print()
 
-#### Arguments
-
-- `...`:
-
-  (ignored).
-
 ------------------------------------------------------------------------
 
-### Method `clear()`
+### `Archive$clear()`
 
 Clear all evaluation results from archive.
 
@@ -179,7 +173,7 @@ Clear all evaluation results from archive.
 
 ------------------------------------------------------------------------
 
-### Method [`help()`](https://rdrr.io/r/utils/help.html)
+### `Archive$help()`
 
 Opens the corresponding help page referenced by field `$man`.
 
@@ -189,7 +183,7 @@ Opens the corresponding help page referenced by field `$man`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `Archive$clone()`
 
 The objects of this class are cloneable with this method.
 

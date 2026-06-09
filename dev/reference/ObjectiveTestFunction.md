@@ -7,9 +7,8 @@ subclass for well-known optimization test functions. Adds `optimum` and
 
 ## Super classes
 
-[`bbotk::Objective`](https://bbotk.mlr-org.com/dev/reference/Objective.md)
--\>
-[`bbotk::ObjectiveRFun`](https://bbotk.mlr-org.com/dev/reference/ObjectiveRFun.md)
+[`Objective`](https://bbotk.mlr-org.com/dev/reference/Objective.md) -\>
+[`ObjectiveRFun`](https://bbotk.mlr-org.com/dev/reference/ObjectiveRFun.md)
 -\> `ObjectiveTestFunction`
 
 ## Public fields
@@ -28,22 +27,22 @@ subclass for well-known optimization test functions. Adds `optimum` and
 
 ### Public methods
 
-- [`ObjectiveTestFunction$new()`](#method-ObjectiveTestFunction-new)
+- [`ObjectiveTestFunction$new()`](#method-ObjectiveTestFunction-initialize)
 
 - [`ObjectiveTestFunction$clone()`](#method-ObjectiveTestFunction-clone)
 
 Inherited methods
 
-- [`bbotk::Objective$eval_dt()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_dt)
-- [`bbotk::Objective$eval_many()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_many)
-- [`bbotk::Objective$format()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-format)
-- [`bbotk::Objective$help()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-help)
-- [`bbotk::Objective$print()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-print)
-- [`bbotk::ObjectiveRFun$eval()`](https://bbotk.mlr-org.com/dev/reference/ObjectiveRFun.html#method-eval)
+- [`Objective$eval_dt()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_dt)
+- [`Objective$eval_many()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_many)
+- [`Objective$format()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-format)
+- [`Objective$help()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-help)
+- [`Objective$print()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-print)
+- [`ObjectiveRFun$eval()`](https://bbotk.mlr-org.com/dev/reference/ObjectiveRFun.html#method-eval)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `ObjectiveTestFunction$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -110,7 +109,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `ObjectiveTestFunction$clone()`
 
 The objects of this class are cloneable with this method.
 

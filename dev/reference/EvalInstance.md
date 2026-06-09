@@ -80,7 +80,7 @@ Subclasses add specific functionality:
 
 ### Public methods
 
-- [`EvalInstance$new()`](#method-EvalInstance-new)
+- [`EvalInstance$new()`](#method-EvalInstance-initialize)
 
 - [`EvalInstance$format()`](#method-EvalInstance-format)
 
@@ -92,7 +92,7 @@ Subclasses add specific functionality:
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `EvalInstance$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -152,7 +152,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`format()`](https://rdrr.io/r/base/format.html)
+### `EvalInstance$format()`
 
 Helper for print outputs.
 
@@ -168,7 +168,7 @@ Helper for print outputs.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `EvalInstance$print()`
 
 Printer.
 
@@ -184,7 +184,7 @@ Printer.
 
 ------------------------------------------------------------------------
 
-### Method `clear()`
+### `EvalInstance$clear()`
 
 Clear all evaluation results from archive.
 
@@ -194,7 +194,7 @@ Clear all evaluation results from archive.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `EvalInstance$clone()`
 
 The objects of this class are cloneable with this method.
 

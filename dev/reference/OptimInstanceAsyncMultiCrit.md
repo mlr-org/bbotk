@@ -8,11 +8,11 @@ creates an OptimInstanceAsyncMultiCrit.
 
 ## Super classes
 
-[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+[`EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
 -\>
-[`bbotk::OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
+[`OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
 -\>
-[`bbotk::OptimInstanceAsync`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.md)
+[`OptimInstanceAsync`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.md)
 -\> `OptimInstanceAsyncMultiCrit`
 
 ## Active bindings
@@ -32,7 +32,7 @@ creates an OptimInstanceAsyncMultiCrit.
 
 ### Public methods
 
-- [`OptimInstanceAsyncMultiCrit$new()`](#method-OptimInstanceAsyncMultiCrit-new)
+- [`OptimInstanceAsyncMultiCrit$new()`](#method-OptimInstanceAsyncMultiCrit-initialize)
 
 - [`OptimInstanceAsyncMultiCrit$assign_result()`](#method-OptimInstanceAsyncMultiCrit-assign_result)
 
@@ -40,14 +40,14 @@ creates an OptimInstanceAsyncMultiCrit.
 
 Inherited methods
 
-- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
-- [`bbotk::OptimInstanceAsync$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-clear)
-- [`bbotk::OptimInstanceAsync$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-print)
-- [`bbotk::OptimInstanceAsync$reconnect()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-reconnect)
+- [`EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
+- [`OptimInstanceAsync$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-clear)
+- [`OptimInstanceAsync$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-print)
+- [`OptimInstanceAsync$reconnect()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-reconnect)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimInstanceAsyncMultiCrit$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -112,7 +112,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `assign_result()`
+### `OptimInstanceAsyncMultiCrit$assign_result()`
 
 The
 [OptimizerAsync](https://bbotk.mlr-org.com/dev/reference/OptimizerAsync.md)
@@ -150,7 +150,7 @@ writes the best found points and estimated performance values here
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimInstanceAsyncMultiCrit$clone()`
 
 The objects of this class are cloneable with this method.
 

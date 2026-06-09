@@ -7,11 +7,11 @@ creates an OptimInstanceBatchMultiCrit.
 
 ## Super classes
 
-[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+[`EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
 -\>
-[`bbotk::OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
+[`OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
 -\>
-[`bbotk::OptimInstanceBatch`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.md)
+[`OptimInstanceBatch`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.md)
 -\> `OptimInstanceBatchMultiCrit`
 
 ## Active bindings
@@ -31,7 +31,7 @@ creates an OptimInstanceBatchMultiCrit.
 
 ### Public methods
 
-- [`OptimInstanceBatchMultiCrit$new()`](#method-OptimInstanceBatchMultiCrit-new)
+- [`OptimInstanceBatchMultiCrit$new()`](#method-OptimInstanceBatchMultiCrit-initialize)
 
 - [`OptimInstanceBatchMultiCrit$assign_result()`](#method-OptimInstanceBatchMultiCrit-assign_result)
 
@@ -39,15 +39,15 @@ creates an OptimInstanceBatchMultiCrit.
 
 Inherited methods
 
-- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
-- [`bbotk::OptimInstance$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-clear)
-- [`bbotk::OptimInstance$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-print)
-- [`bbotk::OptimInstanceBatch$eval_batch()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.html#method-eval_batch)
-- [`bbotk::OptimInstanceBatch$objective_function()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.html#method-objective_function)
+- [`EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
+- [`OptimInstance$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-clear)
+- [`OptimInstance$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-print)
+- [`OptimInstanceBatch$eval_batch()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.html#method-eval_batch)
+- [`OptimInstanceBatch$objective_function()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.html#method-objective_function)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimInstanceBatchMultiCrit$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -106,7 +106,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `assign_result()`
+### `OptimInstanceBatchMultiCrit$assign_result()`
 
 The [Optimizer](https://bbotk.mlr-org.com/dev/reference/Optimizer.md)
 object writes the best found points and estimated performance values
@@ -143,7 +143,7 @@ here (probably the Pareto set / front). For internal use.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimInstanceBatchMultiCrit$clone()`
 
 The objects of this class are cloneable with this method.
 

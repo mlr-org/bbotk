@@ -6,7 +6,7 @@ an arbitrary domain to a numerical codomain.
 ## Details
 
 `Objective` objects can have the following properties: `"noisy"`,
-`"deterministic"`, `"single-crit"` and `"multi-crit"`.
+`"deterministic"`, `"single-crit"`, and `"multi-crit"`.
 
 ## See also
 
@@ -93,7 +93,7 @@ an arbitrary domain to a numerical codomain.
 
 ### Public methods
 
-- [`Objective$new()`](#method-Objective-new)
+- [`Objective$new()`](#method-Objective-initialize)
 
 - [`Objective$format()`](#method-Objective-format)
 
@@ -111,7 +111,7 @@ an arbitrary domain to a numerical codomain.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Objective$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -188,7 +188,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`format()`](https://rdrr.io/r/base/format.html)
+### `Objective$format()`
 
 Helper for print outputs.
 
@@ -204,7 +204,7 @@ Helper for print outputs.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `Objective$print()`
 
 Print method.
 
@@ -218,7 +218,7 @@ Print method.
 
 ------------------------------------------------------------------------
 
-### Method [`eval()`](https://rdrr.io/r/base/eval.html)
+### `Objective$eval()`
 
 Evaluates a single input value on the objective function. If
 `check_values = TRUE`, the validity of the point as well as the validity
@@ -245,7 +245,7 @@ These extra entries are referred to as *extras*.
 
 ------------------------------------------------------------------------
 
-### Method `eval_many()`
+### `Objective$eval_many()`
 
 Evaluates multiple input values on the objective function. If
 `check_values = TRUE`, the validity of the points as well as the
@@ -278,7 +278,7 @@ These extra columns are referred to as *extras*.
 
 ------------------------------------------------------------------------
 
-### Method `eval_dt()`
+### `Objective$eval_dt()`
 
 Evaluates multiple input values on the objective function
 
@@ -305,7 +305,7 @@ functions, e.g. `data.table(y = 1:2)` or
 
 ------------------------------------------------------------------------
 
-### Method [`help()`](https://rdrr.io/r/utils/help.html)
+### `Objective$help()`
 
 Opens the corresponding help page referenced by field `$man`.
 
@@ -315,7 +315,7 @@ Opens the corresponding help page referenced by field `$man`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `Objective$clone()`
 
 The objects of this class are cloneable with this method.
 

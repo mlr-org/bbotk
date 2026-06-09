@@ -39,14 +39,14 @@ Other Terminator:
 
 ## Super class
 
-[`bbotk::Terminator`](https://bbotk.mlr-org.com/dev/reference/Terminator.md)
+[`Terminator`](https://bbotk.mlr-org.com/dev/reference/Terminator.md)
 -\> `TerminatorClockTime`
 
 ## Methods
 
 ### Public methods
 
-- [`TerminatorClockTime$new()`](#method-TerminatorClockTime-new)
+- [`TerminatorClockTime$new()`](#method-TerminatorClockTime-initialize)
 
 - [`TerminatorClockTime$is_terminated()`](#method-TerminatorClockTime-is_terminated)
 
@@ -54,14 +54,14 @@ Other Terminator:
 
 Inherited methods
 
-- [`bbotk::Terminator$format()`](https://bbotk.mlr-org.com/dev/reference/Terminator.html#method-format)
-- [`bbotk::Terminator$print()`](https://bbotk.mlr-org.com/dev/reference/Terminator.html#method-print)
-- [`bbotk::Terminator$remaining_time()`](https://bbotk.mlr-org.com/dev/reference/Terminator.html#method-remaining_time)
-- [`bbotk::Terminator$status()`](https://bbotk.mlr-org.com/dev/reference/Terminator.html#method-status)
+- [`Terminator$format()`](https://bbotk.mlr-org.com/dev/reference/Terminator.html#method-format)
+- [`Terminator$print()`](https://bbotk.mlr-org.com/dev/reference/Terminator.html#method-print)
+- [`Terminator$remaining_time()`](https://bbotk.mlr-org.com/dev/reference/Terminator.html#method-remaining_time)
+- [`Terminator$status()`](https://bbotk.mlr-org.com/dev/reference/Terminator.html#method-status)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `TerminatorClockTime$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -72,7 +72,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `is_terminated()`
+### `TerminatorClockTime$is_terminated()`
 
 Is `TRUE` iff the termination criterion is positive, and `FALSE`
 otherwise.
@@ -93,7 +93,7 @@ otherwise.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `TerminatorClockTime$clone()`
 
 The objects of this class are cloneable with this method.
 

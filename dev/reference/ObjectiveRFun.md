@@ -11,8 +11,8 @@ named with the ids of the codomain.
 
 ## Super class
 
-[`bbotk::Objective`](https://bbotk.mlr-org.com/dev/reference/Objective.md)
--\> `ObjectiveRFun`
+[`Objective`](https://bbotk.mlr-org.com/dev/reference/Objective.md) -\>
+`ObjectiveRFun`
 
 ## Active bindings
 
@@ -25,7 +25,7 @@ named with the ids of the codomain.
 
 ### Public methods
 
-- [`ObjectiveRFun$new()`](#method-ObjectiveRFun-new)
+- [`ObjectiveRFun$new()`](#method-ObjectiveRFun-initialize)
 
 - [`ObjectiveRFun$eval()`](#method-ObjectiveRFun-eval)
 
@@ -33,15 +33,15 @@ named with the ids of the codomain.
 
 Inherited methods
 
-- [`bbotk::Objective$eval_dt()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_dt)
-- [`bbotk::Objective$eval_many()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_many)
-- [`bbotk::Objective$format()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-format)
-- [`bbotk::Objective$help()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-help)
-- [`bbotk::Objective$print()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-print)
+- [`Objective$eval_dt()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_dt)
+- [`Objective$eval_many()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_many)
+- [`Objective$format()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-format)
+- [`Objective$help()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-help)
+- [`Objective$print()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `ObjectiveRFun$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -111,7 +111,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`eval()`](https://rdrr.io/r/base/eval.html)
+### `ObjectiveRFun$eval()`
 
 Evaluates input value(s) on the objective function. Calls the R function
 supplied by the user.
@@ -128,7 +128,7 @@ supplied by the user.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `ObjectiveRFun$clone()`
 
 The objects of this class are cloneable with this method.
 

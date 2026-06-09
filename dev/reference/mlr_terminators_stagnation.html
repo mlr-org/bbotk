@@ -99,58 +99,55 @@ default is <code>0</code>.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
-    <p><code><a href="Terminator.html">bbotk::Terminator</a></code> -&gt; <code>TerminatorStagnation</code></p>
+    <p><code><a href="Terminator.html">Terminator</a></code> -&gt; <code>TerminatorStagnation</code></p>
     </div>
     <div class="section level2">
     <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a></h2>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-TerminatorStagnation-new"><code>TerminatorStagnation$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-TerminatorStagnation-initialize"><code>TerminatorStagnation$new()</code></a></p></li>
 <li><p><a href="#method-TerminatorStagnation-is_terminated"><code>TerminatorStagnation$is_terminated()</code></a></p></li>
 <li><p><a href="#method-TerminatorStagnation-clone"><code>TerminatorStagnation$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href="Terminator.html#method-format"><code>bbotk::Terminator$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href="Terminator.html#method-print"><code>bbotk::Terminator$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href="Terminator.html#method-remaining_time"><code>bbotk::Terminator$remaining_time()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href="Terminator.html#method-status"><code>bbotk::Terminator$status()</code></a></span></li>
-</ul></details></p><hr><a id="method-TerminatorStagnation-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href="Terminator.html#method-format"><code>Terminator$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href="Terminator.html#method-print"><code>Terminator$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href="Terminator.html#method-remaining_time"><code>Terminator$remaining_time()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href="Terminator.html#method-status"><code>Terminator$status()</code></a></span></li>
+</ul></details></p><hr><a id="method-TerminatorStagnation-initialize"></a><div class="section">
+<h3 id="terminatorstagnation-new-"><code>TerminatorStagnation$new()</code><a class="anchor" aria-label="anchor" href="#terminatorstagnation-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/mlr_terminators_stagnation.html">TerminatorStagnation</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-TerminatorStagnation-is_terminated"></a><div class="section">
-<h3 id="method-is-terminated-">Method <code>is_terminated()</code><a class="anchor" aria-label="anchor" href="#method-is-terminated-"></a></h3>
+<p></p><hr><a id="method-TerminatorStagnation-is_terminated"></a><div class="section">
+<h3 id="terminatorstagnation-is-terminated-"><code>TerminatorStagnation$is_terminated()</code><a class="anchor" aria-label="anchor" href="#terminatorstagnation-is-terminated-"></a></h3>
 <p>Is <code>TRUE</code> iff the termination criterion is positive, and <code>FALSE</code>
 otherwise.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TerminatorStagnation</span><span class="op">$</span><span class="fu">is_terminated</span><span class="op">(</span><span class="va">archive</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>archive</code></dt>
 <dd><p>(<a href="Archive.html">Archive</a>).</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p><code>logical(1)</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-TerminatorStagnation-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-TerminatorStagnation-clone"></a><div class="section">
+<h3 id="terminatorstagnation-clone-"><code>TerminatorStagnation$clone()</code><a class="anchor" aria-label="anchor" href="#terminatorstagnation-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TerminatorStagnation</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -160,6 +157,7 @@ otherwise.</p><div class="section">
 </div>
 
 </div>
+
 
     </div>
 

@@ -26,21 +26,18 @@ types of workers:
 - "mirai": Workers are started with
   [mirai](https://CRAN.R-project.org/package=mirai) on local or remote
   machines. See `$start_workers()` in
-  [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) for more
-  details.
+  [Rush](https://rush.mlr-org.com/reference/Rush.html) for more details.
   [`mirai::daemons()`](https://mirai.r-lib.org/reference/daemons.html)
   must be created before starting the optimization.
 
 - "processx": Workers are started as local processes with
   [processx](https://CRAN.R-project.org/package=processx). See
   `$start_local_workers()` in
-  [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) for more
-  details.
+  [Rush](https://rush.mlr-org.com/reference/Rush.html) for more details.
 
 - "script": Workers are started by the user with a custom script. See
   `$create_worker_script()` in
-  [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) for more
-  details.
+  [Rush](https://rush.mlr-org.com/reference/Rush.html) for more details.
 
 The workers are started when the `$optimize()` method is called. The
 main process waits until at least one worker is running. The
@@ -73,8 +70,8 @@ point is shown. Deactivated depending parameters are not printed.
 
 ## Super class
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/dev/reference/Optimizer.md)
--\> `OptimizerAsync`
+[`Optimizer`](https://bbotk.mlr-org.com/dev/reference/Optimizer.md) -\>
+`OptimizerAsync`
 
 ## Methods
 
@@ -86,14 +83,14 @@ point is shown. Deactivated depending parameters are not printed.
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$initialize()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-initialize)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-print)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-help)
+- [`Optimizer$initialize()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-initialize)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method [`optimize()`](https://rdrr.io/r/stats/optimize.html)
+### `OptimizerAsync$optimize()`
 
 Performs the optimization on a
 [OptimInstanceAsyncSingleCrit](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsyncSingleCrit.md)
@@ -121,7 +118,7 @@ The result will be written into the instance object.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerAsync$clone()`
 
 The objects of this class are cloneable with this method.
 

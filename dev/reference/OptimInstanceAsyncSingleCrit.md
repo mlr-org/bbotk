@@ -9,11 +9,11 @@ creates an OptimInstanceAsyncSingleCrit.
 
 ## Super classes
 
-[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+[`EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
 -\>
-[`bbotk::OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
+[`OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
 -\>
-[`bbotk::OptimInstanceAsync`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.md)
+[`OptimInstanceAsync`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.md)
 -\> `OptimInstanceAsyncSingleCrit`
 
 ## Active bindings
@@ -33,7 +33,7 @@ creates an OptimInstanceAsyncSingleCrit.
 
 ### Public methods
 
-- [`OptimInstanceAsyncSingleCrit$new()`](#method-OptimInstanceAsyncSingleCrit-new)
+- [`OptimInstanceAsyncSingleCrit$new()`](#method-OptimInstanceAsyncSingleCrit-initialize)
 
 - [`OptimInstanceAsyncSingleCrit$assign_result()`](#method-OptimInstanceAsyncSingleCrit-assign_result)
 
@@ -41,14 +41,14 @@ creates an OptimInstanceAsyncSingleCrit.
 
 Inherited methods
 
-- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
-- [`bbotk::OptimInstanceAsync$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-clear)
-- [`bbotk::OptimInstanceAsync$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-print)
-- [`bbotk::OptimInstanceAsync$reconnect()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-reconnect)
+- [`EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
+- [`OptimInstanceAsync$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-clear)
+- [`OptimInstanceAsync$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-print)
+- [`OptimInstanceAsync$reconnect()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceAsync.html#method-reconnect)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimInstanceAsyncSingleCrit$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -113,7 +113,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `assign_result()`
+### `OptimInstanceAsyncSingleCrit$assign_result()`
 
 The
 [OptimizerAsync](https://bbotk.mlr-org.com/dev/reference/OptimizerAsync.md)
@@ -151,7 +151,7 @@ For internal use.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimInstanceAsyncSingleCrit$clone()`
 
 The objects of this class are cloneable with this method.
 

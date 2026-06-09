@@ -13,8 +13,8 @@ a [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) data base.
 
 ## Super class
 
-[`bbotk::Archive`](https://bbotk.mlr-org.com/dev/reference/Archive.md)
--\> `ArchiveAsync`
+[`Archive`](https://bbotk.mlr-org.com/dev/reference/Archive.md) -\>
+`ArchiveAsync`
 
 ## Public fields
 
@@ -79,7 +79,7 @@ a [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) data base.
 
 ### Public methods
 
-- [`ArchiveAsync$new()`](#method-ArchiveAsync-new)
+- [`ArchiveAsync$new()`](#method-ArchiveAsync-initialize)
 
 - [`ArchiveAsync$push_points()`](#method-ArchiveAsync-push_points)
 
@@ -103,13 +103,13 @@ a [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) data base.
 
 Inherited methods
 
-- [`bbotk::Archive$format()`](https://bbotk.mlr-org.com/dev/reference/Archive.html#method-format)
-- [`bbotk::Archive$help()`](https://bbotk.mlr-org.com/dev/reference/Archive.html#method-help)
-- [`bbotk::Archive$print()`](https://bbotk.mlr-org.com/dev/reference/Archive.html#method-print)
+- [`Archive$format()`](https://bbotk.mlr-org.com/dev/reference/Archive.html#method-format)
+- [`Archive$help()`](https://bbotk.mlr-org.com/dev/reference/Archive.html#method-help)
+- [`Archive$print()`](https://bbotk.mlr-org.com/dev/reference/Archive.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `ArchiveAsync$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -153,7 +153,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `push_points()`
+### `ArchiveAsync$push_points()`
 
 Push queued points to the archive.
 
@@ -170,7 +170,7 @@ Push queued points to the archive.
 
 ------------------------------------------------------------------------
 
-### Method `pop_point()`
+### `ArchiveAsync$pop_point()`
 
 Pop a point from the queue.
 
@@ -180,7 +180,7 @@ Pop a point from the queue.
 
 ------------------------------------------------------------------------
 
-### Method `push_running_point()`
+### `ArchiveAsync$push_running_point()`
 
 Push running point to the archive.
 
@@ -202,7 +202,7 @@ Push running point to the archive.
 
 ------------------------------------------------------------------------
 
-### Method `push_result()`
+### `ArchiveAsync$push_result()`
 
 Push result to the archive.
 
@@ -234,7 +234,7 @@ Push result to the archive.
 
 ------------------------------------------------------------------------
 
-### Method `push_failed_point()`
+### `ArchiveAsync$push_failed_point()`
 
 Push failed point to the archive.
 
@@ -256,7 +256,7 @@ Push failed point to the archive.
 
 ------------------------------------------------------------------------
 
-### Method `data_with_state()`
+### `ArchiveAsync$data_with_state()`
 
 Fetch points with a specific state.
 
@@ -283,7 +283,7 @@ Fetch points with a specific state.
 
 ------------------------------------------------------------------------
 
-### Method `best()`
+### `ArchiveAsync$best()`
 
 Returns the best scoring evaluation(s). For single-crit optimization,
 the solution that minimizes / maximizes the objective function. For
@@ -314,7 +314,7 @@ multi-crit optimization, the Pareto set / front.
 
 ------------------------------------------------------------------------
 
-### Method [`nds_selection()`](https://bbotk.mlr-org.com/dev/reference/nds_selection.md)
+### `ArchiveAsync$nds_selection()`
 
 Calculate best points w.r.t. non dominated sorting with hypervolume
 contribution.
@@ -341,7 +341,7 @@ contribution.
 
 ------------------------------------------------------------------------
 
-### Method `clear()`
+### `ArchiveAsync$clear()`
 
 Clear all evaluation results from archive.
 
@@ -351,7 +351,7 @@ Clear all evaluation results from archive.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `ArchiveAsync$clone()`
 
 The objects of this class are cloneable with this method.
 

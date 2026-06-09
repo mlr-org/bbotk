@@ -25,16 +25,15 @@ or with the associated sugar function
 
 ## Super classes
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/dev/reference/Optimizer.md)
--\>
-[`bbotk::OptimizerAsync`](https://bbotk.mlr-org.com/dev/reference/OptimizerAsync.md)
+[`Optimizer`](https://bbotk.mlr-org.com/dev/reference/Optimizer.md) -\>
+[`OptimizerAsync`](https://bbotk.mlr-org.com/dev/reference/OptimizerAsync.md)
 -\> `OptimizerAsyncDesignPoints`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimizerAsyncDesignPoints$new()`](#method-OptimizerAsyncDesignPoints-new)
+- [`OptimizerAsyncDesignPoints$new()`](#method-OptimizerAsyncDesignPoints-initialize)
 
 - [`OptimizerAsyncDesignPoints$optimize()`](#method-OptimizerAsyncDesignPoints-optimize)
 
@@ -42,13 +41,13 @@ or with the associated sugar function
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-print)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-help)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimizerAsyncDesignPoints$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -59,7 +58,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`optimize()`](https://rdrr.io/r/stats/optimize.html)
+### `OptimizerAsyncDesignPoints$optimize()`
 
 Starts the asynchronous optimization.
 
@@ -79,7 +78,7 @@ Starts the asynchronous optimization.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerAsyncDesignPoints$clone()`
 
 The objects of this class are cloneable with this method.
 
@@ -151,12 +150,12 @@ as.data.table(instance$archive)
 }
 #>       state    x1    x2     y        timestamp_xs                 worker_id
 #>      <char> <num> <num> <num>              <POSc>                    <char>
-#> 1: finished     0     0    -3 2026-06-09 16:20:07 terrorstricken_prairiedog
-#> 2: finished     1     1    -7 2026-06-09 16:20:07 terrorstricken_prairiedog
+#> 1: finished     0     0    -3 2026-06-09 17:41:26 terrorstricken_prairiedog
+#> 2: finished     1     1    -7 2026-06-09 17:41:26 terrorstricken_prairiedog
 #>           timestamp_ys                                 keys x_domain_x1
 #>                 <POSc>                               <char>       <num>
-#> 1: 2026-06-09 16:20:08 316a7f73-4769-4ee8-aaf5-6ee78a6ea134           0
-#> 2: 2026-06-09 16:20:08 216856cc-1b93-473b-8d7d-9565f73d99f4           1
+#> 1: 2026-06-09 17:41:27 4637bef1-eaa7-4c8f-a95a-1b815bba940e           0
+#> 2: 2026-06-09 17:41:27 60766d06-cf89-415c-8212-ca531c7f063a           1
 #>    x_domain_x2
 #>          <num>
 #> 1:           0

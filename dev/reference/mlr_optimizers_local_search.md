@@ -35,29 +35,28 @@ enable with `progressr::handlers("progress")`.
 
 ## Super classes
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/dev/reference/Optimizer.md)
--\>
-[`bbotk::OptimizerBatch`](https://bbotk.mlr-org.com/dev/reference/OptimizerBatch.md)
+[`Optimizer`](https://bbotk.mlr-org.com/dev/reference/Optimizer.md) -\>
+[`OptimizerBatch`](https://bbotk.mlr-org.com/dev/reference/OptimizerBatch.md)
 -\> `OptimizerBatchLocalSearch`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimizerBatchLocalSearch$new()`](#method-OptimizerBatchLocalSearch-new)
+- [`OptimizerBatchLocalSearch$new()`](#method-OptimizerBatchLocalSearch-initialize)
 
 - [`OptimizerBatchLocalSearch$clone()`](#method-OptimizerBatchLocalSearch-clone)
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-print)
-- [`bbotk::OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/dev/reference/OptimizerBatch.html#method-optimize)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-help)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-print)
+- [`OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/dev/reference/OptimizerBatch.html#method-optimize)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimizerBatchLocalSearch$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -68,7 +67,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerBatchLocalSearch$clone()`
 
 The objects of this class are cloneable with this method.
 
@@ -130,17 +129,17 @@ instance$archive
 #> ── <ArchiveBatch> - Data Table Storage ─────────────────────────────────────────
 #>         x1    x2      y           timestamp batch_nr x_domain_x1 x_domain_x2
 #>      <num> <num>  <num>              <POSc>    <int>       <num>       <num>
-#>   1:  -2.7   0.1 -21.81 2026-06-09 16:20:29        1        -2.7         0.1
-#>   2:   1.3  -3.7   8.99 2026-06-09 16:20:29        1         1.3        -3.7
-#>   3:   3.3   1.2  -9.03 2026-06-09 16:20:29        1         3.3         1.2
-#>   4:  -5.9   3.1 -89.21 2026-06-09 16:20:29        1        -5.9         3.1
-#>   5:  -3.9   4.7 -83.85 2026-06-09 16:20:29        1        -3.9         4.7
+#>   1:  -2.7   0.1 -21.81 2026-06-09 17:41:46        1        -2.7         0.1
+#>   2:   1.3  -3.7   8.99 2026-06-09 17:41:46        1         1.3        -3.7
+#>   3:   3.3   1.2  -9.03 2026-06-09 17:41:46        1         3.3         1.2
+#>   4:  -5.9   3.1 -89.21 2026-06-09 17:41:46        1        -5.9         3.1
+#>   5:  -3.9   4.7 -83.85 2026-06-09 17:41:46        1        -3.9         4.7
 #>  ---                                                                        
-#> 106:  -1.2  -3.3  -0.04 2026-06-09 16:20:29        2        -1.2        -3.3
-#> 107:   2.4  -3.8   9.13 2026-06-09 16:20:29        2         2.4        -3.8
-#> 108:   2.6  -3.8   8.92 2026-06-09 16:20:29        2         2.6        -3.8
-#> 109:  -2.0  -3.8  -6.96 2026-06-09 16:20:29        2        -2.0        -3.8
-#> 110:   0.4  -3.8   6.74 2026-06-09 16:20:29        2         0.4        -3.8
+#> 106:  -1.2  -3.3  -0.04 2026-06-09 17:41:47        2        -1.2        -3.3
+#> 107:   2.4  -3.8   9.13 2026-06-09 17:41:47        2         2.4        -3.8
+#> 108:   2.6  -3.8   8.92 2026-06-09 17:41:47        2         2.6        -3.8
+#> 109:  -2.0  -3.8  -6.96 2026-06-09 17:41:47        2        -2.0        -3.8
+#> 110:   0.4  -3.8   6.74 2026-06-09 17:41:47        2         0.4        -3.8
 
 # best performing configuration
 instance$result

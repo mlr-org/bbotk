@@ -87,7 +87,8 @@ Custom start values can be passed via the <code>x0</code> parameter.</p></dd>
 <dd><p><code>logical(1)</code><br>
 Should gradients be numerically approximated via finite differences (<a href="https://astamm.github.io/nloptr/reference/nl.grad.html" class="external-link">nloptr::nl.grad</a>).
 Only required for certain algorithms.
-Note that function evaluations required for the numerical gradient approximation will be logged as usual and are not treated differently than regular function evaluations by, e.g., <a href="Terminator.html">Terminator</a>s.</p></dd>
+Note that function evaluations required for the numerical gradient approximation will be logged as usual
+and are not treated differently than regular function evaluations by, e.g., <a href="Terminator.html">Terminator</a>s.</p></dd>
 
 
 </dl><p>For the meaning of other control parameters, see <code><a href="https://astamm.github.io/nloptr/reference/nloptr.html" class="external-link">nloptr::nloptr()</a></code> and <code><a href="https://astamm.github.io/nloptr/reference/nloptr.print.options.html" class="external-link">nloptr::nloptr.print.options()</a></code>.</p>
@@ -154,36 +155,34 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
     </div>
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="Optimizer.html">bbotk::Optimizer</a></code> -&gt; <code><a href="OptimizerBatch.html">bbotk::OptimizerBatch</a></code> -&gt; <code>OptimizerBatchNLoptr</code></p>
+    <p><code><a href="Optimizer.html">Optimizer</a></code> -&gt; <code><a href="OptimizerBatch.html">OptimizerBatch</a></code> -&gt; <code>OptimizerBatchNLoptr</code></p>
     </div>
     <div class="section level2">
     <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a></h2>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-OptimizerBatchNLoptr-new"><code>OptimizerBatchNLoptr$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-OptimizerBatchNLoptr-initialize"><code>OptimizerBatchNLoptr$new()</code></a></p></li>
 <li><p><a href="#method-OptimizerBatchNLoptr-clone"><code>OptimizerBatchNLoptr$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>bbotk::Optimizer$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerBatch" data-id="optimize"><a href="OptimizerBatch.html#method-optimize"><code>bbotk::OptimizerBatch$optimize()</code></a></span></li>
-</ul></details></p><hr><a id="method-OptimizerBatchNLoptr-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>Optimizer$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerBatch" data-id="optimize"><a href="OptimizerBatch.html#method-optimize"><code>OptimizerBatch$optimize()</code></a></span></li>
+</ul></details></p><hr><a id="method-OptimizerBatchNLoptr-initialize"></a><div class="section">
+<h3 id="optimizerbatchnloptr-new-"><code>OptimizerBatchNLoptr$new()</code><a class="anchor" aria-label="anchor" href="#optimizerbatchnloptr-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/mlr_optimizers_nloptr.html">OptimizerBatchNLoptr</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-OptimizerBatchNLoptr-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-OptimizerBatchNLoptr-clone"></a><div class="section">
+<h3 id="optimizerbatchnloptr-clone-"><code>OptimizerBatchNLoptr$clone()</code><a class="anchor" aria-label="anchor" href="#optimizerbatchnloptr-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimizerBatchNLoptr</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -193,6 +192,7 @@ combined with a <a href="Terminator.html">Terminator</a>. Simply wrap the functi
 </div>
 
 </div>
+
 
     </div>
 

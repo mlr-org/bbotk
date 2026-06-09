@@ -63,7 +63,7 @@ If the return of the function is unnamed, it is named with the ids of the codoma
     </div>
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
-    <p><code><a href="Objective.html">bbotk::Objective</a></code> -&gt; <code>ObjectiveRFunMany</code></p>
+    <p><code><a href="Objective.html">Objective</a></code> -&gt; <code>ObjectiveRFunMany</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -79,17 +79,16 @@ Objective function.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-ObjectiveRFunMany-new"><code>ObjectiveRFunMany$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-ObjectiveRFunMany-initialize"><code>ObjectiveRFunMany$new()</code></a></p></li>
 <li><p><a href="#method-ObjectiveRFunMany-eval_many"><code>ObjectiveRFunMany$eval_many()</code></a></p></li>
 <li><p><a href="#method-ObjectiveRFunMany-clone"><code>ObjectiveRFunMany$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval"><a href="Objective.html#method-eval"><code>bbotk::Objective$eval()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_dt"><a href="Objective.html#method-eval_dt"><code>bbotk::Objective$eval_dt()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format"><a href="Objective.html#method-format"><code>bbotk::Objective$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="help"><a href="Objective.html#method-help"><code>bbotk::Objective$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print"><a href="Objective.html#method-print"><code>bbotk::Objective$print()</code></a></span></li>
-</ul></details></p><hr><a id="method-ObjectiveRFunMany-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval"><a href="Objective.html#method-eval"><code>Objective$eval()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_dt"><a href="Objective.html#method-eval_dt"><code>Objective$eval_dt()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format"><a href="Objective.html#method-format"><code>Objective$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="help"><a href="Objective.html#method-help"><code>Objective$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print"><a href="Objective.html#method-print"><code>Objective$print()</code></a></span></li>
+</ul></details></p><hr><a id="method-ObjectiveRFunMany-initialize"></a><div class="section">
+<h3 id="objectiverfunmany-new-"><code>ObjectiveRFunMany$new()</code><a class="anchor" aria-label="anchor" href="#objectiverfunmany-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/ObjectiveRFunMany.html">ObjectiveRFunMany</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -102,49 +101,43 @@ Objective function.</p></dd>
 <span>  packages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  check_values <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>fun</code></dt>
 <dd><p>(<code>function</code>)<br>
-R function that encodes objective and expects a list of lists that contains multiple x values, e.g. <code>list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))</code>.
-The function must return a <code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code> that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.</p></dd>
+R function that encodes objective and expects a list of lists that contains multiple x values,
+e.g. <code>list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))</code>.
+The function must return a <code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code> that contains one y-column for
+single-criteria functions and multiple y-columns for multi-criteria functions,
+e.g. <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.</p></dd>
 
-
-<dt><code>domain</code></dt>
+      <dt><code>domain</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Specifies domain of function.
 The <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> should describe all possible input parameters of the objective function.
 This includes their <code>id</code>, their types and the possible range.</p></dd>
 
-
-<dt><code>codomain</code></dt>
+      <dt><code>codomain</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.</p></dd>
 
-
-<dt><code>id</code></dt>
+      <dt><code>id</code></dt>
 <dd><p>(<code>character(1)</code>).</p></dd>
 
-
-<dt><code>properties</code></dt>
+      <dt><code>properties</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>).</p></dd>
 
-
-<dt><code>constants</code></dt>
+      <dt><code>constants</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.</p></dd>
 
-
-<dt><code>packages</code></dt>
+      <dt><code>packages</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Set of required packages to run the objective function.</p></dd>
 
-
-<dt><code>check_values</code></dt>
+      <dt><code>check_values</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should points before the evaluation and the results be checked for validity?</p></dd>
 
@@ -152,15 +145,15 @@ Should points before the evaluation and the results be checked for validity?</p>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ObjectiveRFunMany-eval_many"></a><div class="section">
-<h3 id="method-eval-many-">Method <code>eval_many()</code><a class="anchor" aria-label="anchor" href="#method-eval-many-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ObjectiveRFunMany-eval_many"></a><div class="section">
+<h3 id="objectiverfunmany-eval-many-"><code>ObjectiveRFunMany$eval_many()</code><a class="anchor" aria-label="anchor" href="#objectiverfunmany-eval-many-"></a></h3>
 <p>Evaluates input value(s) on the objective function.
 Calls the R function supplied by the user.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ObjectiveRFunMany</span><span class="op">$</span><span class="fu">eval_many</span><span class="op">(</span><span class="va">xss</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xss</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
@@ -168,22 +161,23 @@ A list of lists that contains multiple x values, e.g. <code>list(list(x1 = 1, x2
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
-<p><code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code> that contains one y-column for single-criteria functions and multiple y-columns for multi-criteria functions, e.g.  <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.
+<p><code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code> that contains one y-column for single-criteria functions and
+multiple y-columns for multi-criteria functions,
+e.g. <code>data.table(y = 1:2)</code> or <code>data.table(y1 = 1:2, y2 = 3:4)</code>.
 It may also contain additional columns that will be stored in the archive if called through the <a href="OptimInstance.html">OptimInstance</a>.
 These extra columns are referred to as <em>extras</em>.</p>
 </div>
 
-</div><p></p><hr><a id="method-ObjectiveRFunMany-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ObjectiveRFunMany-clone"></a><div class="section">
+<h3 id="objectiverfunmany-clone-"><code>ObjectiveRFunMany$clone()</code><a class="anchor" aria-label="anchor" href="#objectiverfunmany-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ObjectiveRFunMany</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -193,6 +187,7 @@ These extra columns are referred to as <em>extras</em>.</p>
 </div>
 
 </div>
+
 
     </div>
 

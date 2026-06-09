@@ -88,7 +88,7 @@ Other Terminator:
 
 ### Public methods
 
-- [`Terminator$new()`](#method-Terminator-new)
+- [`Terminator$new()`](#method-Terminator-initialize)
 
 - [`Terminator$format()`](#method-Terminator-format)
 
@@ -102,7 +102,7 @@ Other Terminator:
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Terminator$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -156,7 +156,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`format()`](https://rdrr.io/r/base/format.html)
+### `Terminator$format()`
 
 Helper for print outputs.
 
@@ -177,7 +177,7 @@ Helper for print outputs.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `Terminator$print()`
 
 Printer.
 
@@ -193,7 +193,7 @@ Printer.
 
 ------------------------------------------------------------------------
 
-### Method `status()`
+### `Terminator$status()`
 
 Returns how many progression steps are made (`current_steps`) and the
 amount steps needed for termination (`max_steps`).
@@ -214,7 +214,7 @@ named `integer(2)`.
 
 ------------------------------------------------------------------------
 
-### Method `remaining_time()`
+### `Terminator$remaining_time()`
 
 Returns remaining runtime in seconds. If the terminator is not
 time-based, the reaming runtime is `Inf`.
@@ -235,7 +235,7 @@ time-based, the reaming runtime is `Inf`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `Terminator$clone()`
 
 The objects of this class are cloneable with this method.
 

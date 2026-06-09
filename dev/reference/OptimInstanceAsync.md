@@ -22,9 +22,9 @@ functionality each instance must provide.
 
 ## Super classes
 
-[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+[`EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
 -\>
-[`bbotk::OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
+[`OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
 -\> `OptimInstanceAsync`
 
 ## Public fields
@@ -38,7 +38,7 @@ functionality each instance must provide.
 
 ### Public methods
 
-- [`OptimInstanceAsync$new()`](#method-OptimInstanceAsync-new)
+- [`OptimInstanceAsync$new()`](#method-OptimInstanceAsync-initialize)
 
 - [`OptimInstanceAsync$print()`](#method-OptimInstanceAsync-print)
 
@@ -50,12 +50,12 @@ functionality each instance must provide.
 
 Inherited methods
 
-- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
-- [`bbotk::OptimInstance$assign_result()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-assign_result)
+- [`EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
+- [`OptimInstance$assign_result()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-assign_result)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimInstanceAsync$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -135,7 +135,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `OptimInstanceAsync$print()`
 
 Printer.
 
@@ -151,7 +151,7 @@ Printer.
 
 ------------------------------------------------------------------------
 
-### Method `clear()`
+### `OptimInstanceAsync$clear()`
 
 Reset terminator and clear all evaluation results from archive and
 results.
@@ -162,7 +162,7 @@ results.
 
 ------------------------------------------------------------------------
 
-### Method `reconnect()`
+### `OptimInstanceAsync$reconnect()`
 
 Reconnect to Redis. The connection breaks when the
 [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) is saved to
@@ -174,7 +174,7 @@ disk. Call this method to reconnect after loading the object.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimInstanceAsync$clone()`
 
 The objects of this class are cloneable with this method.
 

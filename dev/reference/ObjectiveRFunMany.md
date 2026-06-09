@@ -11,8 +11,8 @@ is unnamed, it is named with the ids of the codomain.
 
 ## Super class
 
-[`bbotk::Objective`](https://bbotk.mlr-org.com/dev/reference/Objective.md)
--\> `ObjectiveRFunMany`
+[`Objective`](https://bbotk.mlr-org.com/dev/reference/Objective.md) -\>
+`ObjectiveRFunMany`
 
 ## Active bindings
 
@@ -25,7 +25,7 @@ is unnamed, it is named with the ids of the codomain.
 
 ### Public methods
 
-- [`ObjectiveRFunMany$new()`](#method-ObjectiveRFunMany-new)
+- [`ObjectiveRFunMany$new()`](#method-ObjectiveRFunMany-initialize)
 
 - [`ObjectiveRFunMany$eval_many()`](#method-ObjectiveRFunMany-eval_many)
 
@@ -33,15 +33,15 @@ is unnamed, it is named with the ids of the codomain.
 
 Inherited methods
 
-- [`bbotk::Objective$eval()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval)
-- [`bbotk::Objective$eval_dt()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_dt)
-- [`bbotk::Objective$format()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-format)
-- [`bbotk::Objective$help()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-help)
-- [`bbotk::Objective$print()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-print)
+- [`Objective$eval()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval)
+- [`Objective$eval_dt()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-eval_dt)
+- [`Objective$format()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-format)
+- [`Objective$help()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-help)
+- [`Objective$print()`](https://bbotk.mlr-org.com/dev/reference/Objective.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `ObjectiveRFunMany$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -116,7 +116,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `eval_many()`
+### `ObjectiveRFunMany$eval_many()`
 
 Evaluates input value(s) on the objective function. Calls the R function
 supplied by the user.
@@ -145,7 +145,7 @@ These extra columns are referred to as *extras*.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `ObjectiveRFunMany$clone()`
 
 The objects of this class are cloneable with this method.
 

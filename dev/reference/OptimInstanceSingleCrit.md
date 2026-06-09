@@ -9,35 +9,35 @@ around `OptimInstanceBatchSingleCrit`.
 
 ## Super classes
 
-[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
+[`EvalInstance`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.md)
 -\>
-[`bbotk::OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
+[`OptimInstance`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.md)
 -\>
-[`bbotk::OptimInstanceBatch`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.md)
+[`OptimInstanceBatch`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.md)
 -\>
-[`bbotk::OptimInstanceBatchSingleCrit`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatchSingleCrit.md)
+[`OptimInstanceBatchSingleCrit`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatchSingleCrit.md)
 -\> `OptimInstanceSingleCrit`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimInstanceSingleCrit$new()`](#method-OptimInstanceSingleCrit-new)
+- [`OptimInstanceSingleCrit$new()`](#method-OptimInstanceSingleCrit-initialize)
 
 - [`OptimInstanceSingleCrit$clone()`](#method-OptimInstanceSingleCrit-clone)
 
 Inherited methods
 
-- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
-- [`bbotk::OptimInstance$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-clear)
-- [`bbotk::OptimInstance$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-print)
-- [`bbotk::OptimInstanceBatch$eval_batch()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.html#method-eval_batch)
-- [`bbotk::OptimInstanceBatch$objective_function()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.html#method-objective_function)
-- [`bbotk::OptimInstanceBatchSingleCrit$assign_result()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatchSingleCrit.html#method-assign_result)
+- [`EvalInstance$format()`](https://bbotk.mlr-org.com/dev/reference/EvalInstance.html#method-format)
+- [`OptimInstance$clear()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-clear)
+- [`OptimInstance$print()`](https://bbotk.mlr-org.com/dev/reference/OptimInstance.html#method-print)
+- [`OptimInstanceBatch$eval_batch()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.html#method-eval_batch)
+- [`OptimInstanceBatch$objective_function()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatch.html#method-objective_function)
+- [`OptimInstanceBatchSingleCrit$assign_result()`](https://bbotk.mlr-org.com/dev/reference/OptimInstanceBatchSingleCrit.html#method-assign_result)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimInstanceSingleCrit$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -97,7 +97,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimInstanceSingleCrit$clone()`
 
 The objects of this class are cloneable with this method.
 

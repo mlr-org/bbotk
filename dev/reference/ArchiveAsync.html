@@ -65,7 +65,7 @@ The <code>x_domain</code> column is unnested to separate columns.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
-    <p><code><a href="Archive.html">bbotk::Archive</a></code> -&gt; <code>ArchiveAsync</code></p>
+    <p><code><a href="Archive.html">Archive</a></code> -&gt; <code>ArchiveAsync</code></p>
     </div>
     <div class="section level2">
     <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
@@ -83,47 +83,47 @@ Rush controller for parallel optimization.</p></dd>
 Data table with all finished points.</p></dd>
 
 
-<dt><code>queued_data</code></dt>
+    <dt><code>queued_data</code></dt>
 <dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 Data table with all queued points.</p></dd>
 
 
-<dt><code>running_data</code></dt>
+    <dt><code>running_data</code></dt>
 <dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 Data table with all running points.</p></dd>
 
 
-<dt><code>finished_data</code></dt>
+    <dt><code>finished_data</code></dt>
 <dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 Data table with all finished points.</p></dd>
 
 
-<dt><code>failed_data</code></dt>
+    <dt><code>failed_data</code></dt>
 <dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 Data table with all failed points.</p></dd>
 
 
-<dt><code>n_queued</code></dt>
+    <dt><code>n_queued</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Number of queued points.</p></dd>
 
 
-<dt><code>n_running</code></dt>
+    <dt><code>n_running</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Number of running points.</p></dd>
 
 
-<dt><code>n_finished</code></dt>
+    <dt><code>n_finished</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Number of finished points.</p></dd>
 
 
-<dt><code>n_failed</code></dt>
+    <dt><code>n_failed</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Number of failed points.</p></dd>
 
 
-<dt><code>n_evals</code></dt>
+    <dt><code>n_evals</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Number of evaluations stored in the archive.</p></dd>
 
@@ -135,8 +135,7 @@ Number of evaluations stored in the archive.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-ArchiveAsync-new"><code>ArchiveAsync$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-ArchiveAsync-initialize"><code>ArchiveAsync$new()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsync-push_points"><code>ArchiveAsync$push_points()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsync-pop_point"><code>ArchiveAsync$pop_point()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsync-push_running_point"><code>ArchiveAsync$push_running_point()</code></a></p></li>
@@ -147,17 +146,15 @@ Number of evaluations stored in the archive.</p></dd>
 <li><p><a href="#method-ArchiveAsync-nds_selection"><code>ArchiveAsync$nds_selection()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsync-clear"><code>ArchiveAsync$clear()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsync-clone"><code>ArchiveAsync$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href="Archive.html#method-format"><code>bbotk::Archive$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href="Archive.html#method-help"><code>bbotk::Archive$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href="Archive.html#method-print"><code>bbotk::Archive$print()</code></a></span></li>
-</ul></details></p><hr><a id="method-ArchiveAsync-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href="Archive.html#method-format"><code>Archive$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href="Archive.html#method-help"><code>Archive$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href="Archive.html#method-print"><code>Archive$print()</code></a></span></li>
+</ul></details></p><hr><a id="method-ArchiveAsync-initialize"></a><div class="section">
+<h3 id="archiveasync-new-"><code>ArchiveAsync$new()</code><a class="anchor" aria-label="anchor" href="#archiveasync-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/ArchiveAsync.html">ArchiveAsync</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">search_space</span>, <span class="va">codomain</span>, check_values <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">rush</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>search_space</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
@@ -167,20 +164,17 @@ a set of parameters together with a <code>trafo</code> function that transforms 
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.</p></dd>
 
-
-<dt><code>codomain</code></dt>
+      <dt><code>codomain</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.</p></dd>
 
-
-<dt><code>check_values</code></dt>
+      <dt><code>check_values</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should points before the evaluation and the results be checked for validity?</p></dd>
 
-
-<dt><code>rush</code></dt>
+      <dt><code>rush</code></dt>
 <dd><p>(<code>Rush</code>)<br>
 If a rush instance is supplied, the tuning runs without batches.</p></dd>
 
@@ -188,14 +182,14 @@ If a rush instance is supplied, the tuning runs without batches.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-push_points"></a><div class="section">
-<h3 id="method-push-points-">Method <code>push_points()</code><a class="anchor" aria-label="anchor" href="#method-push-points-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveAsync-push_points"></a><div class="section">
+<h3 id="archiveasync-push-points-"><code>ArchiveAsync$push_points()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-points-"></a></h3>
 <p>Push queued points to the archive.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_points</span><span class="op">(</span><span class="va">xss</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xss</code></dt>
 <dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
@@ -205,29 +199,29 @@ List of named lists of point values.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-pop_point"></a><div class="section">
-<h3 id="method-pop-point-">Method <code>pop_point()</code><a class="anchor" aria-label="anchor" href="#method-pop-point-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveAsync-pop_point"></a><div class="section">
+<h3 id="archiveasync-pop-point-"><code>ArchiveAsync$pop_point()</code><a class="anchor" aria-label="anchor" href="#archiveasync-pop-point-"></a></h3>
 <p>Pop a point from the queue.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">pop_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-push_running_point"></a><div class="section">
-<h3 id="method-push-running-point-">Method <code>push_running_point()</code><a class="anchor" aria-label="anchor" href="#method-push-running-point-"></a></h3>
+<p></p><hr><a id="method-ArchiveAsync-push_running_point"></a><div class="section">
+<h3 id="archiveasync-push-running-point-"><code>ArchiveAsync$push_running_point()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-running-point-"></a></h3>
 <p>Push running point to the archive.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_running_point</span><span class="op">(</span><span class="va">xs</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xs</code></dt>
 <dd><p>(named <code>list</code>)<br>
 Named list of point values.</p></dd>
 
-
-<dt><code>extra</code></dt>
+      <dt><code>extra</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
 Named list of additional information.</p></dd>
 
@@ -235,31 +229,28 @@ Named list of additional information.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-push_result"></a><div class="section">
-<h3 id="method-push-result-">Method <code>push_result()</code><a class="anchor" aria-label="anchor" href="#method-push-result-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveAsync-push_result"></a><div class="section">
+<h3 id="archiveasync-push-result-"><code>ArchiveAsync$push_result()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-result-"></a></h3>
 <p>Push result to the archive.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_result</span><span class="op">(</span><span class="va">key</span>, <span class="va">ys</span>, <span class="va">x_domain</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>key</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Key of the point.</p></dd>
 
-
-<dt><code>ys</code></dt>
+      <dt><code>ys</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
 Named list of results.</p></dd>
 
-
-<dt><code>x_domain</code></dt>
+      <dt><code>x_domain</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
 Named list of transformed point values.</p></dd>
 
-
-<dt><code>extra</code></dt>
+      <dt><code>extra</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
 Named list of additional information.</p></dd>
 
@@ -267,21 +258,20 @@ Named list of additional information.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-push_failed_point"></a><div class="section">
-<h3 id="method-push-failed-point-">Method <code>push_failed_point()</code><a class="anchor" aria-label="anchor" href="#method-push-failed-point-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveAsync-push_failed_point"></a><div class="section">
+<h3 id="archiveasync-push-failed-point-"><code>ArchiveAsync$push_failed_point()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-failed-point-"></a></h3>
 <p>Push failed point to the archive.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_failed_point</span><span class="op">(</span><span class="va">key</span>, <span class="va">message</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>key</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Key of the point.</p></dd>
 
-
-<dt><code>message</code></dt>
+      <dt><code>message</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Error message.</p></dd>
 
@@ -289,25 +279,24 @@ Error message.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-data_with_state"></a><div class="section">
-<h3 id="method-data-with-state-">Method <code>data_with_state()</code><a class="anchor" aria-label="anchor" href="#method-data-with-state-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveAsync-data_with_state"></a><div class="section">
+<h3 id="archiveasync-data-with-state-"><code>ArchiveAsync$data_with_state()</code><a class="anchor" aria-label="anchor" href="#archiveasync-data-with-state-"></a></h3>
 <p>Fetch points with a specific state.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">data_with_state</span><span class="op">(</span></span>
 <span>  fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"xs"</span>, <span class="st">"ys"</span>, <span class="st">"xs_extra"</span>, <span class="st">"worker_extra"</span>, <span class="st">"ys_extra"</span>, <span class="st">"condition"</span><span class="op">)</span>,</span>
 <span>  states <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"queued"</span>, <span class="st">"running"</span>, <span class="st">"finished"</span>, <span class="st">"failed"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>fields</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Fields to fetch.
 Defaults to <code>c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")</code>.</p></dd>
 
-
-<dt><code>states</code></dt>
+      <dt><code>states</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 States of the tasks to be fetched.
 Defaults to <code>c("queued", "running", "finished", "failed")</code>.</p></dd>
@@ -316,24 +305,23 @@ Defaults to <code>c("queued", "running", "finished", "failed")</code>.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-best"></a><div class="section">
-<h3 id="method-best-">Method <code>best()</code><a class="anchor" aria-label="anchor" href="#method-best-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveAsync-best"></a><div class="section">
+<h3 id="archiveasync-best-"><code>ArchiveAsync$best()</code><a class="anchor" aria-label="anchor" href="#archiveasync-best-"></a></h3>
 <p>Returns the best scoring evaluation(s).
 For single-crit optimization, the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span>n_select <span class="op">=</span> <span class="fl">1</span>, ties_method <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>n_select</code></dt>
 <dd><p>(<code>integer(1L)</code>)<br>
 Amount of points to select.
 Ignored for multi-crit optimization.</p></dd>
 
-
-<dt><code>ties_method</code></dt>
+      <dt><code>ties_method</code></dt>
 <dd><p>(<code>character(1L)</code>)<br>
 Method to break ties when multiple points have the same score.
 Either <code>"first"</code> (default) or <code>"random"</code>.
@@ -342,54 +330,52 @@ If <code>n_select &gt; 1L</code>, the tie method is ignored and the first point 
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p><code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code></p>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-nds_selection"></a><div class="section">
-<h3 id="method-nds-selection-">Method <code><a href="nds_selection.html">nds_selection()</a></code><a class="anchor" aria-label="anchor" href="#method-nds-selection-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveAsync-nds_selection"></a><div class="section">
+<h3 id="archiveasync-nds-selection-"><code>ArchiveAsync$nds_selection()</code><a class="anchor" aria-label="anchor" href="#archiveasync-nds-selection-"></a></h3>
 <p>Calculate best points w.r.t. non dominated sorting with hypervolume contribution.</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">nds_selection</span><span class="op">(</span>n_select <span class="op">=</span> <span class="fl">1</span>, ref_point <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>n_select</code></dt>
 <dd><p>(<code>integer(1L)</code>)<br>
 Amount of points to select.</p></dd>
 
-
-<dt><code>ref_point</code></dt>
+      <dt><code>ref_point</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code>)<br>
 Reference point for hypervolume.</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p><code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code></p>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-clear"></a><div class="section">
-<h3 id="method-clear-">Method <code>clear()</code><a class="anchor" aria-label="anchor" href="#method-clear-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveAsync-clear"></a><div class="section">
+<h3 id="archiveasync-clear-"><code>ArchiveAsync$clear()</code><a class="anchor" aria-label="anchor" href="#archiveasync-clear-"></a></h3>
 <p>Clear all evaluation results from archive.</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">clear</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-ArchiveAsync-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-ArchiveAsync-clone"></a><div class="section">
+<h3 id="archiveasync-clone-"><code>ArchiveAsync$clone()</code><a class="anchor" aria-label="anchor" href="#archiveasync-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -399,6 +385,7 @@ Reference point for hypervolume.</p></dd>
 </div>
 
 </div>
+
 
     </div>
 

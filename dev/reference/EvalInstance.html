@@ -77,17 +77,17 @@ evaluation loop:</p><ul><li><p>An <a href="Objective.html">Objective</a> to eval
 Objective function of the instance.</p></dd>
 
 
-<dt><code>search_space</code></dt>
+    <dt><code>search_space</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Specification of the search space for the <a href="Optimizer.html">Optimizer</a>.</p></dd>
 
 
-<dt><code>terminator</code></dt>
+    <dt><code>terminator</code></dt>
 <dd><p><a href="Terminator.html">Terminator</a><br>
 Termination criterion of the optimization.</p></dd>
 
 
-<dt><code>archive</code></dt>
+    <dt><code>archive</code></dt>
 <dd><p>(<a href="Archive.html">Archive</a>)<br>
 Contains all performed function calls of the Objective.</p></dd>
 
@@ -102,18 +102,18 @@ Label for this object.
 Can be used in tables, plot and text output instead of the ID.</p></dd>
 
 
-<dt><code>man</code></dt>
+    <dt><code>man</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
 The referenced help package can be opened via method <code>$help()</code>.</p></dd>
 
 
-<dt><code>is_terminated</code></dt>
+    <dt><code>is_terminated</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Whether the terminator says we should stop.</p></dd>
 
 
-<dt><code>n_evals</code></dt>
+    <dt><code>n_evals</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Number of evaluations performed.</p></dd>
 
@@ -125,14 +125,13 @@ Number of evaluations performed.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-EvalInstance-new"><code>EvalInstance$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-EvalInstance-initialize"><code>EvalInstance$new()</code></a></p></li>
 <li><p><a href="#method-EvalInstance-format"><code>EvalInstance$format()</code></a></p></li>
 <li><p><a href="#method-EvalInstance-print"><code>EvalInstance$print()</code></a></p></li>
 <li><p><a href="#method-EvalInstance-clear"><code>EvalInstance$clear()</code></a></p></li>
 <li><p><a href="#method-EvalInstance-clone"><code>EvalInstance$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-EvalInstance-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-EvalInstance-initialize"></a><div class="section">
+<h3 id="evalinstance-new-"><code>EvalInstance$new()</code><a class="anchor" aria-label="anchor" href="#evalinstance-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/EvalInstance.html">EvalInstance</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -143,16 +142,13 @@ Number of evaluations performed.</p></dd>
 <span>  label <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  man <span class="op">=</span> <span class="cn">NA_character_</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>objective</code></dt>
 <dd><p>(<a href="Objective.html">Objective</a>)<br>
 Objective function.</p></dd>
 
-
-<dt><code>search_space</code></dt>
+      <dt><code>search_space</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Specifies the search space for the <a href="Optimizer.html">Optimizer</a>. The <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>
 describes either a subset of the <code>domain</code> of the <a href="Objective.html">Objective</a> or it describes
@@ -160,23 +156,19 @@ a set of parameters together with a <code>trafo</code> function that transforms 
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.</p></dd>
 
-
-<dt><code>terminator</code></dt>
+      <dt><code>terminator</code></dt>
 <dd><p><a href="Terminator.html">Terminator</a><br>
 Termination criterion.</p></dd>
 
-
-<dt><code>archive</code></dt>
+      <dt><code>archive</code></dt>
 <dd><p>(<a href="Archive.html">Archive</a>).</p></dd>
 
-
-<dt><code>label</code></dt>
+      <dt><code>label</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.</p></dd>
 
-
-<dt><code>man</code></dt>
+      <dt><code>man</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
 The referenced help package can be opened via method <code>$help()</code>.</p></dd>
@@ -185,14 +177,14 @@ The referenced help package can be opened via method <code>$help()</code>.</p></
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-EvalInstance-format"></a><div class="section">
-<h3 id="method-format-">Method <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code><a class="anchor" aria-label="anchor" href="#method-format-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-EvalInstance-format"></a><div class="section">
+<h3 id="evalinstance-format-"><code>EvalInstance$format()</code><a class="anchor" aria-label="anchor" href="#evalinstance-format-"></a></h3>
 <p>Helper for print outputs.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EvalInstance</span><span class="op">$</span><span class="fu">format</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>(ignored).</p></dd>
@@ -201,14 +193,14 @@ The referenced help package can be opened via method <code>$help()</code>.</p></
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-EvalInstance-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-EvalInstance-print"></a><div class="section">
+<h3 id="evalinstance-print-"><code>EvalInstance$print()</code><a class="anchor" aria-label="anchor" href="#evalinstance-print-"></a></h3>
 <p>Printer.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EvalInstance</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>(ignored).</p></dd>
@@ -217,22 +209,23 @@ The referenced help package can be opened via method <code>$help()</code>.</p></
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-EvalInstance-clear"></a><div class="section">
-<h3 id="method-clear-">Method <code>clear()</code><a class="anchor" aria-label="anchor" href="#method-clear-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-EvalInstance-clear"></a><div class="section">
+<h3 id="evalinstance-clear-"><code>EvalInstance$clear()</code><a class="anchor" aria-label="anchor" href="#evalinstance-clear-"></a></h3>
 <p>Clear all evaluation results from archive.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EvalInstance</span><span class="op">$</span><span class="fu">clear</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-EvalInstance-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-EvalInstance-clone"></a><div class="section">
+<h3 id="evalinstance-clone-"><code>EvalInstance$clone()</code><a class="anchor" aria-label="anchor" href="#evalinstance-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">EvalInstance</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -242,6 +235,7 @@ The referenced help package can be opened via method <code>$help()</code>.</p></
 </div>
 
 </div>
+
 
     </div>
 

@@ -60,7 +60,7 @@ is initialized.
 
 ### Public methods
 
-- [`Codomain$new()`](#method-Codomain-new)
+- [`Codomain$new()`](#method-Codomain-initialize)
 
 - [`Codomain$clone()`](#method-Codomain-clone)
 
@@ -94,7 +94,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Codomain$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -115,7 +115,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `Codomain$clone()`
 
 The objects of this class are cloneable with this method.
 

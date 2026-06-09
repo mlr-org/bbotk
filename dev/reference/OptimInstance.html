@@ -61,7 +61,8 @@ Inherits from <a href="EvalInstance.html">EvalInstance</a> and adds optimization
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>OptimInstance</code> is an abstract base class that implements the base functionality each instance must provide.
 The <a href="Optimizer.html">Optimizer</a> writes the final result to the <code>.result</code> field by using the <code>$assign_result()</code> method.
-<code>.result</code> stores a <a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a> consisting of x values in the <em>search space</em>, (transformed) x values in the <em>domain space</em> and y values in the <em>codomain space</em> of the <a href="Objective.html">Objective</a>.
+<code>.result</code> stores a <a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a> consisting of x values in the <em>search space</em>,
+(transformed) x values in the <em>domain space</em> and y values in the <em>codomain space</em> of the <a href="Objective.html">Objective</a>.
 The user can access the results with active bindings (see below).</p>
     </div>
     <div class="section level2">
@@ -70,7 +71,7 @@ The user can access the results with active bindings (see below).</p>
     </div>
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
-    <p><code><a href="EvalInstance.html">bbotk::EvalInstance</a></code> -&gt; <code>OptimInstance</code></p>
+    <p><code><a href="EvalInstance.html">EvalInstance</a></code> -&gt; <code>OptimInstance</code></p>
     </div>
     <div class="section level2">
     <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
@@ -88,7 +89,7 @@ Stores <code>progressor</code> function.</p></dd>
 Get result</p></dd>
 
 
-<dt><code>result_x_search_space</code></dt>
+    <dt><code>result_x_search_space</code></dt>
 <dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
 x part of the result in the <em>search space</em>.</p></dd>
 
@@ -100,15 +101,14 @@ x part of the result in the <em>search space</em>.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-OptimInstance-new"><code>OptimInstance$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-OptimInstance-initialize"><code>OptimInstance$new()</code></a></p></li>
 <li><p><a href="#method-OptimInstance-print"><code>OptimInstance$print()</code></a></p></li>
 <li><p><a href="#method-OptimInstance-assign_result"><code>OptimInstance$assign_result()</code></a></p></li>
 <li><p><a href="#method-OptimInstance-clear"><code>OptimInstance$clear()</code></a></p></li>
 <li><p><a href="#method-OptimInstance-clone"><code>OptimInstance$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href="EvalInstance.html#method-format"><code>bbotk::EvalInstance$format()</code></a></span></li>
-</ul></details></p><hr><a id="method-OptimInstance-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="EvalInstance" data-id="format"><a href="EvalInstance.html#method-format"><code>EvalInstance$format()</code></a></span></li>
+</ul></details></p><hr><a id="method-OptimInstance-initialize"></a><div class="section">
+<h3 id="optiminstance-new-"><code>OptimInstance$new()</code><a class="anchor" aria-label="anchor" href="#optiminstance-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/OptimInstance.html">OptimInstance</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -121,16 +121,13 @@ x part of the result in the <em>search space</em>.</p></dd>
 <span>  label <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  man <span class="op">=</span> <span class="cn">NA_character_</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>objective</code></dt>
 <dd><p>(<a href="Objective.html">Objective</a>)<br>
 Objective function.</p></dd>
 
-
-<dt><code>search_space</code></dt>
+      <dt><code>search_space</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Specifies the search space for the <a href="Optimizer.html">Optimizer</a>. The <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>
 describes either a subset of the <code>domain</code> of the <a href="Objective.html">Objective</a> or it describes
@@ -138,33 +135,27 @@ a set of parameters together with a <code>trafo</code> function that transforms 
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.</p></dd>
 
-
-<dt><code>terminator</code></dt>
+      <dt><code>terminator</code></dt>
 <dd><p><a href="Terminator.html">Terminator</a><br>
 Termination criterion.</p></dd>
 
-
-<dt><code>check_values</code></dt>
+      <dt><code>check_values</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should points before the evaluation and the results be checked for validity?</p></dd>
 
-
-<dt><code>callbacks</code></dt>
+      <dt><code>callbacks</code></dt>
 <dd><p>(list of <a href="https://mlr3misc.mlr-org.com/reference/Callback.html" class="external-link">mlr3misc::Callback</a>)<br>
 List of callbacks.</p></dd>
 
-
-<dt><code>archive</code></dt>
+      <dt><code>archive</code></dt>
 <dd><p>(<a href="Archive.html">Archive</a>).</p></dd>
 
-
-<dt><code>label</code></dt>
+      <dt><code>label</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.</p></dd>
 
-
-<dt><code>man</code></dt>
+      <dt><code>man</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
 The referenced help package can be opened via method <code>$help()</code>.</p></dd>
@@ -173,14 +164,14 @@ The referenced help package can be opened via method <code>$help()</code>.</p></
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-OptimInstance-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-OptimInstance-print"></a><div class="section">
+<h3 id="optiminstance-print-"><code>OptimInstance$print()</code><a class="anchor" aria-label="anchor" href="#optiminstance-print-"></a></h3>
 <p>Printer.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimInstance</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>(ignored).</p></dd>
@@ -189,15 +180,15 @@ The referenced help package can be opened via method <code>$help()</code>.</p></
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-OptimInstance-assign_result"></a><div class="section">
-<h3 id="method-assign-result-">Method <code>assign_result()</code><a class="anchor" aria-label="anchor" href="#method-assign-result-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-OptimInstance-assign_result"></a><div class="section">
+<h3 id="optiminstance-assign-result-"><code>OptimInstance$assign_result()</code><a class="anchor" aria-label="anchor" href="#optiminstance-assign-result-"></a></h3>
 <p>The <a href="Optimizer.html">Optimizer</a> object writes the best found point and estimated performance value here.
 For internal use.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimInstance</span><span class="op">$</span><span class="fu">assign_result</span><span class="op">(</span><span class="va">xdt</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xdt</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
@@ -205,13 +196,11 @@ x values as <code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" c
 <em>search space</em> of the OptimInstance object. Can contain additional
 columns for extra information.</p></dd>
 
-
-<dt><code>y</code></dt>
+      <dt><code>y</code></dt>
 <dd><p>(<code>numeric(1)</code>)<br>
 Optimal outcome.</p></dd>
 
-
-<dt><code>...</code></dt>
+      <dt><code>...</code></dt>
 <dd><p>(<code>any</code>)<br>
 ignored.</p></dd>
 
@@ -219,22 +208,23 @@ ignored.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-OptimInstance-clear"></a><div class="section">
-<h3 id="method-clear-">Method <code>clear()</code><a class="anchor" aria-label="anchor" href="#method-clear-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-OptimInstance-clear"></a><div class="section">
+<h3 id="optiminstance-clear-"><code>OptimInstance$clear()</code><a class="anchor" aria-label="anchor" href="#optiminstance-clear-"></a></h3>
 <p>Reset terminator and clear all evaluation results from archive and results.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimInstance</span><span class="op">$</span><span class="fu">clear</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-OptimInstance-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-OptimInstance-clone"></a><div class="section">
+<h3 id="optiminstance-clone-"><code>OptimInstance$clone()</code><a class="anchor" aria-label="anchor" href="#optiminstance-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimInstance</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -244,6 +234,7 @@ ignored.</p></dd>
 </div>
 
 </div>
+
 
     </div>
 

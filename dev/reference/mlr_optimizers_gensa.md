@@ -99,29 +99,28 @@ enable with `progressr::handlers("progress")`.
 
 ## Super classes
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/dev/reference/Optimizer.md)
--\>
-[`bbotk::OptimizerBatch`](https://bbotk.mlr-org.com/dev/reference/OptimizerBatch.md)
+[`Optimizer`](https://bbotk.mlr-org.com/dev/reference/Optimizer.md) -\>
+[`OptimizerBatch`](https://bbotk.mlr-org.com/dev/reference/OptimizerBatch.md)
 -\> `OptimizerBatchGenSA`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimizerBatchGenSA$new()`](#method-OptimizerBatchGenSA-new)
+- [`OptimizerBatchGenSA$new()`](#method-OptimizerBatchGenSA-initialize)
 
 - [`OptimizerBatchGenSA$clone()`](#method-OptimizerBatchGenSA-clone)
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-print)
-- [`bbotk::OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/dev/reference/OptimizerBatch.html#method-optimize)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-help)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/dev/reference/Optimizer.html#method-print)
+- [`OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/dev/reference/OptimizerBatch.html#method-optimize)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimizerBatchGenSA$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -132,7 +131,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerBatchGenSA$clone()`
 
 The objects of this class are cloneable with this method.
 
