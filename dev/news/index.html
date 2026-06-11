@@ -50,10 +50,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="bbotk-development-version">bbotk (development version)<a class="anchor" aria-label="anchor" href="#bbotk-development-version"></a></h2>
-<ul><li>
-<code><a href="../reference/is_dominated.html">is_dominated()</a></code> now uses <code><a href="https://multi-objective.github.io/moocore/r/reference/nondominated.html" class="external-link">moocore::is_nondominated()</a></code> internally instead of a custom C implementation, removing the <code>c_is_dominated</code> C entry point (<a href="https://github.com/mlr-org/bbotk/issues/301" class="external-link">#301</a>).</li>
-<li>
-<code>trm("stagnation_hypervolume")</code>: Replace <code><a href="https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html" class="external-link">emoa::dominated_hypervolume</a></code> with <code><a href="https://multi-objective.github.io/moocore/r/reference/hypervolume.html" class="external-link">moocore::hypervolume</a></code> for computing the hypervolume indicator.</li>
+<ul><li>refactor: <code><a href="../reference/is_dominated.html">is_dominated()</a></code> now uses <code><a href="https://multi-objective.github.io/moocore/r/reference/nondominated.html" class="external-link">moocore::is_nondominated()</a></code> internally instead of a custom C implementation (<a href="https://github.com/mlr-org/bbotk/issues/301" class="external-link">#301</a>).</li>
+<li>refactor: Replace <code><a href="https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html" class="external-link">emoa::dominated_hypervolume</a></code> with <code><a href="https://multi-objective.github.io/moocore/r/reference/hypervolume.html" class="external-link">moocore::hypervolume</a></code> for computing the hypervolume indicator.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.10.0" id="bbotk-1100">bbotk 1.10.0<a class="anchor" aria-label="anchor" href="#bbotk-1100"></a></h2><p class="text-muted">CRAN release: 2026-04-08</p>
@@ -100,7 +98,7 @@
 <ul><li>BREAKING CHANGE: The mlr3 ecosystem has a base logger now which is named <code>mlr3</code>. The <code>mlr3/bbotk</code> logger is a child of the <code>mlr3</code> logger and is used for logging messages from the <code>bbotk</code> and <code>mlr3tuning</code> package.</li>
 <li>feat: Classes are now printed with the <code>cli</code> package.</li>
 <li>fix: Prevent switching of <code>xss</code> and <code>constants</code>.</li>
-<li>fix: Add saveguard on <code>OptimizerNloptr</code> bounds.</li>
+<li>fix: Add safeguard on <code>OptimizerNloptr</code> bounds.</li>
 <li>feat: Allow numerical gradient approximation in <code>OptimizerNloptr</code>.</li>
 </ul></div>
     <div class="section level2">

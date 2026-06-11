@@ -6,21 +6,21 @@
     }
   };
 </script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Shrink a ParamSet towards a point. — shrink_ps"><meta name="description" content="Shrinks a paradox::ParamSet towards a point.
-Boundaries of numeric values are shrinked to an interval around the point of
+Boundaries of numeric values are shrunk to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.
-Note that for paradox::p_lgl()s the value to be shrinked around is set as
-the default value instead of dropping a level. Also, a tag shrinked is
+Note that for paradox::p_lgl()s the value to be shrunk around is set as
+the default value instead of dropping a level. Also, a tag shrunk is
 added.
 Note that the returned paradox::ParamSet has lost all its original
 defaults, as they may have become infeasible.
 If the paradox::ParamSet has a trafo, x is expected to contain the
 transformed values."><meta property="og:description" content="Shrinks a paradox::ParamSet towards a point.
-Boundaries of numeric values are shrinked to an interval around the point of
+Boundaries of numeric values are shrunk to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.
-Note that for paradox::p_lgl()s the value to be shrinked around is set as
-the default value instead of dropping a level. Also, a tag shrinked is
+Note that for paradox::p_lgl()s the value to be shrunk around is set as
+the default value instead of dropping a level. Also, a tag shrunk is
 added.
 Note that the returned paradox::ParamSet has lost all its original
 defaults, as they may have become infeasible.
@@ -71,11 +71,11 @@ transformed values."><meta name="robots" content="noindex"></head><body>
 
     <div class="ref-description section level2">
     <p>Shrinks a <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> towards a point.
-Boundaries of numeric values are shrinked to an interval around the point of
+Boundaries of numeric values are shrunk to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.</p>
-<p>Note that for <code><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">paradox::p_lgl()</a></code>s the value to be shrinked around is set as
-the <code>default</code> value instead of dropping a level. Also, a tag <code>shrinked</code> is
+<p>Note that for <code><a href="https://paradox.mlr-org.com/reference/Domain.html" class="external-link">paradox::p_lgl()</a></code>s the value to be shrunk around is set as
+the <code>default</code> value instead of dropping a level. Also, a tag <code>shrunk</code> is
 added.</p>
 <p>Note that the returned <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> has lost all its original
 <code>default</code>s, as they may have become infeasible.</p>
@@ -94,7 +94,7 @@ transformed values.</p>
 
 <dl><dt id="arg-param-set">param_set<a class="anchor" aria-label="anchor" href="#arg-param-set"></a></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
-The <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> to be shrinked.</p></dd>
+The <a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a> to be shrunk.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
