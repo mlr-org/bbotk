@@ -44,7 +44,7 @@
 #'   Only used when maxTime > 0
 #'   Default is 0.05.}
 #' \item{`minMeasurableTime`}{`numeric(1)`\cr
-#'   Minimum time unit that is still (significantly) measureable.
+#'   Minimum time unit that is still (significantly) measurable.
 #'   Default is 0.01.}
 #' }
 #'

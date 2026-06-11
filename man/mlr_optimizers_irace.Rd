@@ -54,7 +54,7 @@ Fraction (smaller than 1) of the budget used to estimate the mean computation ti
 Only used when maxTime > 0
 Default is 0.05.}
 \item{\code{minMeasurableTime}}{\code{numeric(1)}\cr
-Minimum time unit that is still (significantly) measureable.
+Minimum time unit that is still (significantly) measurable.
 Default is 0.01.}
 }
 }

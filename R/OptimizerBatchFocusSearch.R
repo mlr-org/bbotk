@@ -9,7 +9,7 @@
 #' Focus Search starts with evaluating `n_points` drawn uniformly at random.
 #' For 1 to `maxit` batches, `n_points` are then drawn uniformly at random and if the best value of a batch
 #' outperforms the previous best value over all batches evaluated so far,
-#' the search space is shrinked around this new best point prior to the next batch being sampled and evaluated.
+#' the search space is shrunk around this new best point prior to the next batch being sampled and evaluated.
 #'
 #' For details on the shrinking, see [shrink_ps].
 #'
@@ -115,12 +115,12 @@ OptimizerBatchFocusSearch = R6Class(
         best = inst$archive$best(batch = start_batch) # needed for restart to work
 
         for (i in seq_len(maxit)) {
-          # ParamLgls have the value to be shrinked around set as a default
+          # ParamLgls have the value to be shrunk around set as a default
           data = sampler$sample(n_points)$data
           if (length(lgls)) {
             data[,
               (lgls) := imap(.SD, function(param, id) {
-                if ("shrinked" %in% param_set_local$tags[[id]]) {
+                if ("shrunk" %in% param_set_local$tags[[id]]) {
                   rep(param_set_local$default[[id]], times = length(param))
                 } else {
                   param
@@ -156,12 +156,12 @@ mlr_optimizers$add("focus_search", OptimizerBatchFocusSearch)
 #'
 #' @description
 #' Shrinks a [paradox::ParamSet] towards a point.
-#' Boundaries of numeric values are shrinked to an interval around the point of
+#' Boundaries of numeric values are shrunk to an interval around the point of
 #' half of the previous length, while for discrete variables, a random
 #' (currently not chosen) level is dropped.
 #'
-#' Note that for [paradox::p_lgl()]s the value to be shrinked around is set as
-#' the `default` value instead of dropping a level. Also, a tag `shrinked` is
+#' Note that for [paradox::p_lgl()]s the value to be shrunk around is set as
+#' the `default` value instead of dropping a level. Also, a tag `shrunk` is
 #' added.
 #'
 #' Note that the returned [paradox::ParamSet] has lost all its original
@@ -171,7 +171,7 @@ mlr_optimizers$add("focus_search", OptimizerBatchFocusSearch)
 #' transformed values.
 #'
 #' @param param_set ([paradox::ParamSet])\cr
-#' The [paradox::ParamSet] to be shrinked.
+#' The [paradox::ParamSet] to be shrunk.
 #' @param x ([data.table::data.table])\cr
 #' [data.table::data.table] with one row containing the point to shrink
 #' around.
@@ -326,7 +326,7 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
                     p_lgl(
                       special_vals = param$special_vals[[pid]],
                       default = levels,
-                      tags = unique(c(param$tags[[pid]], "shrinked")),
+                      tags = unique(c(param$tags[[pid]], "shrunk")),
                       trafo = param_trafos[[pid]]
                     )
                   ),

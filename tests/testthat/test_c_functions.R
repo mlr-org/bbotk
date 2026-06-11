@@ -365,7 +365,7 @@ test_that("c_test_get_best_pop_element", {
   expect_equal(best$y, 5)
   expect_equal(best$x, as.list(pop_x[2, ]))
 
-  # test maximizatio; internally we assume that the evaln multiplies with -1
+  # test maximization; internally we assume that the evaluation multiplies with -1
   ctrl$minimize = FALSE
   pop_y = pop_y * -1
   best = .Call("c_test_get_best_pop_element", ss, ctrl, pop_x, pop_y, PACKAGE = "bbotk")

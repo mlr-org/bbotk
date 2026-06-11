@@ -226,8 +226,8 @@ OptimizerBatchNLoptr = R6Class(
       invoke(
         nloptr::nloptr,
         eval_f = inst$objective_function,
-        lb = inst$search_space$lower + saveguard_epsilon, # needed due to numerical issues with NLoptr
-        ub = inst$search_space$upper - saveguard_epsilon, # needed due to numerical issues with NLoptr
+        lb = inst$search_space$lower + saveguard_epsilon, # needed due to numerical issues with nloptr
+        ub = inst$search_space$upper - saveguard_epsilon, # needed due to numerical issues with nloptr
         opts = opts,
         .args = pv
       )

@@ -53,7 +53,7 @@ PS_2D_DEPS = PS_2D$clone(deep = TRUE)
 PS_2D_DEPS$add_dep("x2", "x1", CondEqual$new(1))
 OBJ_2D_DEPS = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS, properties = "single-crit")
 
-# Multi-objecitve 2D->2D function
+# Multi-objective 2D->2D function
 FUN_2D_2D = function(xs) {
   list(y1 = xs[[1]]^2, y2 = -xs[[2]]^2)
 }

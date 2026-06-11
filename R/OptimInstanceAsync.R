@@ -137,7 +137,7 @@ OptimInstanceAsync = R6Class(
 
           call_back("on_optimizer_queue_after_eval", self$objective$callbacks, self$objective$context)
 
-          # push reuslt
+          # push result
           self$archive$push_result(task$key, private$.ys, x_domain = private$.xs_trafoed)
         }
       }

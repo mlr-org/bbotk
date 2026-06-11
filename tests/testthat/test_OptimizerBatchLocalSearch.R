@@ -169,7 +169,7 @@ test_that("OptimizerBatchLocalSearch works with chained dependencies on factor p
     x3 = p_fct(c("a", "b"))
   )
   # example: x1 = a, x2 = a, x3 = b
-  # x1 check suceeds, x2 fails
+  # x1 check succeeds, x2 fails
   # then x2 is set to NA, which invalidates x1 -> need to check again
 
   fun = function(xs) {

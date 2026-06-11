@@ -31,17 +31,17 @@ test_that("nds_selection works", {
   )
 
   s1 = list(
-    # Point 3 is ommitted first, followed by point 2. Then, 1 or 4 survives randomly.
+    # Point 3 is omitted first, followed by point 2. Then, 1 or 4 survives randomly.
     list(1L, 4L),
-    # Point 3 is ommitted first, followed by point 2. 1 and 4 survive both
+    # Point 3 is omitted first, followed by point 2. 1 and 4 survive both
     list(c(1L, 4L)),
-    # Point 3 is ommited first, so points 1, 2, and 4 survive
+    # Point 3 is omitted first, so points 1, 2, and 4 survive
     list(c(1L, 2L, 4L)),
     # All points out of front 1 survive
     list(c(1L, 2L, 3L, 4L)),
-    # Out of front 2, points 5 is ommitted first, then, either 5 or 7 are sampled randomly
+    # Out of front 2, points 5 is omitted first, then, either 5 or 7 are sampled randomly
     list(c(1L, 2L, 3L, 4L, 5L), c(1L, 2L, 3L, 4L, 7L)),
-    # Out of front 2, points 5 is ommitted first, and 5 and 7 survive
+    # Out of front 2, points 5 is omitted first, and 5 and 7 survive
     list(c(1L, 2L, 3L, 4L, 5L, 7L)),
     # Whole front 2 survives
     list(c(1L, 2L, 3L, 4L, 5L, 6L, 7L)),
@@ -115,17 +115,17 @@ test_that("nds_selection in Archive works", {
   a$add_evals(xdt, transpose_list(xdt), ydt)
 
   s1 = list(
-    # Point 3 is ommitted first, followed by point 2. Then, 1 or 4 survives randomly.
+    # Point 3 is omitted first, followed by point 2. Then, 1 or 4 survives randomly.
     list(1L, 4L),
-    # Point 3 is ommitted first, followed by point 2. 1 and 4 survive both
+    # Point 3 is omitted first, followed by point 2. 1 and 4 survive both
     list(c(1L, 4L)),
-    # Point 3 is ommited first, so points 1, 2, and 4 survive
+    # Point 3 is omitted first, so points 1, 2, and 4 survive
     list(c(1L, 2L, 4L)),
     # All points out of front 1 survive
     list(c(1L, 2L, 3L, 4L)),
-    # Out of front 2, points 5 is ommitted first, then, either 5 or 7 are sampled randomly
+    # Out of front 2, points 5 is omitted first, then, either 5 or 7 are sampled randomly
     list(c(1L, 2L, 3L, 4L, 5L), c(1L, 2L, 3L, 4L, 7L)),
-    # Out of front 2, points 5 is ommitted first, and 5 and 7 survive
+    # Out of front 2, points 5 is omitted first, and 5 and 7 survive
     list(c(1L, 2L, 3L, 4L, 5L, 7L)),
     # Whole front 2 survives
     list(c(1L, 2L, 3L, 4L, 5L, 6L, 7L)),

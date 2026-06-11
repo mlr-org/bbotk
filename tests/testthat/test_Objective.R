@@ -109,7 +109,7 @@ test_that("Objective specialzations work", {
     ),
     list(
       # 2d x with deps, 1d y
-      # dont check bc. we get NAs
+      # don't check bc. we get NAs
       rfun = ObjectiveRFun$new(fun = FUN_2D_DEPS, domain = PS_2D_DEPS, check_values = FALSE),
       # here NAs can get checked by assert_dt correctly
       rfun_dt = ObjectiveRFunDt$new(fun = FUN_2D_DEPS_DT, domain = PS_2D_DEPS, check_values = TRUE),
