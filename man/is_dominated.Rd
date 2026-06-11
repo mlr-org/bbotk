@@ -16,6 +16,7 @@ A numeric matrix. Each column (!) contains one point.}
 \description{
 Returns which points from a set are dominated by another point in the set.
 See \code{\link[moocore:is_nondominated]{moocore::is_nondominated()}} for details about the implementation.
+Points that are equal to each other are all considered non-dominated, i.e. weakly dominated points are kept.
 }
 \seealso{
 \code{\link[moocore:is_nondominated]{moocore::is_nondominated()}}

@@ -81,11 +81,11 @@ TerminatorStagnationHypervolume = R6Class(
       # points outside iters windows
       points_before = points[, seq(1, ncol(points) - iters), drop = FALSE]
 
-      hypervolume = moocore::hypervolume(t(points), reference = apply(points, 1, max))
-      hypervolume_before = moocore::hypervolume(t(points_before), reference = apply(points_before, 1, max))
+      hv = hypervolume(t(points), reference = apply(points, 1, max))
+      hv_before = hypervolume(t(points_before), reference = apply(points_before, 1, max))
 
       # hypervolume is always maximized
-      hypervolume <= hypervolume_before + pv$threshold
+      hv <= hv_before + pv$threshold
     }
   )
 )

@@ -22,6 +22,7 @@ terminated_error = function(optim_instance) {
 #' @description
 #' Returns which points from a set are dominated by another point in the set.
 #' See [moocore::is_nondominated()] for details about the implementation.
+#' Points that are equal to each other are all considered non-dominated, i.e. weakly dominated points are kept.
 #'
 #' @param ymat (`matrix()`) \cr
 #'   A numeric matrix. Each column (!) contains one point.
@@ -31,8 +32,7 @@ terminated_error = function(optim_instance) {
 #' @export
 is_dominated = function(ymat) {
   assert_matrix(ymat, mode = "double")
-  require_namespaces("moocore")
-  !moocore::is_nondominated(t(ymat))
+  !is_nondominated(t(ymat), keep_weakly = TRUE)
 }
 
 #' @title Calculates the transformed x-values
