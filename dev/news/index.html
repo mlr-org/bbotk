@@ -51,6 +51,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="bbotk-development-version">bbotk (development version)<a class="anchor" aria-label="anchor" href="#bbotk-development-version"></a></h2>
 <ul><li>
+<code><a href="../reference/is_dominated.html">is_dominated()</a></code> now uses <code><a href="https://multi-objective.github.io/moocore/r/reference/nondominated.html" class="external-link">moocore::is_nondominated()</a></code> internally instead of a custom C implementation, removing the <code>c_is_dominated</code> C entry point (<a href="https://github.com/mlr-org/bbotk/issues/301" class="external-link">#301</a>).</li>
+<li>
 <code>trm("stagnation_hypervolume")</code>: Replace <code><a href="https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html" class="external-link">emoa::dominated_hypervolume</a></code> with <code><a href="https://multi-objective.github.io/moocore/r/reference/hypervolume.html" class="external-link">moocore::hypervolume</a></code> for computing the hypervolume indicator.</li>
 </ul></div>
     <div class="section level2">

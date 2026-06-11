@@ -2,6 +2,12 @@
 
 ## bbotk (development version)
 
+- [`is_dominated()`](https://bbotk.mlr-org.com/dev/reference/is_dominated.md)
+  now uses
+  [`moocore::is_nondominated()`](https://multi-objective.github.io/moocore/r/reference/nondominated.html)
+  internally instead of a custom C implementation, removing the
+  `c_is_dominated` C entry point
+  ([\#301](https://github.com/mlr-org/bbotk/issues/301)).
 - `trm("stagnation_hypervolume")`: Replace
   [`emoa::dominated_hypervolume`](https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html)
   with
