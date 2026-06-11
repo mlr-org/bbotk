@@ -1,7 +1,7 @@
 # bbotk (development version)
 
-* `is_dominated()` now uses `moocore::is_nondominated()` internally instead of a custom C implementation, removing the `c_is_dominated` C entry point (#301).
-* `trm("stagnation_hypervolume")`: Replace `emoa::dominated_hypervolume` with `moocore::hypervolume` for computing the hypervolume indicator.
+* refactor: `is_dominated()` now uses `moocore::is_nondominated()` internally instead of a custom C implementation (#301).
+* refactor: Replace `emoa::dominated_hypervolume` with `moocore::hypervolume` for computing the hypervolume indicator.
 
 # bbotk 1.10.0
 
