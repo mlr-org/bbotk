@@ -11,7 +11,6 @@
     "*.Rds",  // R binary data
     "*.lock", // lockfiles
     "attic/", // scrap code, not part of the package
-    "inst/WORDLIST", // dictionary for the spelling package
     "man/",   // generated man pages
     "renv/"   // renv library
   ],

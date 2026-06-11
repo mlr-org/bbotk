@@ -123,7 +123,6 @@ trms
 Tsallis
 tsks
 VECSXP
-WORDLIST
 xdim
 Xiang
 XLENGTH
