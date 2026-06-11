@@ -8,7 +8,7 @@ test_that("TerminatorStagnationBatch works with single objective and n = 1", {
   inst$eval_batch(xdt = data.table(x1 = 1, x2 = 1))
   inst$eval_batch(xdt = data.table(x1 = 0.8, x2 = 0.8))
   inst$eval_batch(xdt = data.table(x1 = 0.9, x2 = 0.9))
-  # Arbitrary points since termination is checked before evalaluation
+  # Arbitrary points since termination is checked before evaluation
   expect_error(inst$eval_batch(xdt = data.table(x1 = 0, x2 = 0)))
 })
 
@@ -26,7 +26,7 @@ test_that("TerminatorStagnationBatch works with single objective and n = 2", {
   inst$eval_batch(xdt = data.table(x1 = 0.7, x2 = 0.7))
   inst$eval_batch(xdt = data.table(x1 = 0.7, x2 = 0.7))
   inst$eval_batch(xdt = data.table(x1 = 0.7, x2 = 0.7))
-  # Arbitrary points since termination is checked before evalaluation
+  # Arbitrary points since termination is checked before evaluation
   expect_error(inst$eval_batch(xdt = data.table(x1 = 0, x2 = 0)))
 })
 

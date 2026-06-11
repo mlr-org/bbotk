@@ -8,7 +8,7 @@ shrink_ps(param_set, x, check.feasible = FALSE)
 }
 \arguments{
 \item{param_set}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
-The \link[paradox:ParamSet]{paradox::ParamSet} to be shrinked.}
+The \link[paradox:ParamSet]{paradox::ParamSet} to be shrunk.}
 
 \item{x}{(\link[data.table:data.table]{data.table::data.table})\cr
 \link[data.table:data.table]{data.table::data.table} with one row containing the point to shrink
@@ -26,12 +26,12 @@ Default is \code{FALSE}.}
 }
 \description{
 Shrinks a \link[paradox:ParamSet]{paradox::ParamSet} towards a point.
-Boundaries of numeric values are shrinked to an interval around the point of
+Boundaries of numeric values are shrunk to an interval around the point of
 half of the previous length, while for discrete variables, a random
 (currently not chosen) level is dropped.
 
-Note that for \code{\link[paradox:p_lgl]{paradox::p_lgl()}}s the value to be shrinked around is set as
-the \code{default} value instead of dropping a level. Also, a tag \code{shrinked} is
+Note that for \code{\link[paradox:p_lgl]{paradox::p_lgl()}}s the value to be shrunk around is set as
+the \code{default} value instead of dropping a level. Also, a tag \code{shrunk} is
 added.
 
 Note that the returned \link[paradox:ParamSet]{paradox::ParamSet} has lost all its original

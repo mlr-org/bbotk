@@ -27,8 +27,8 @@ test_that("shrink_ps", {
   expect_equal(psx$lower, c(x1 = 2.5, x2 = -5, x3 = NA, x4 = NA))
   expect_equal(psx$upper, c(x1 = 7.5, x2 = 5, x3 = NA, x4 = NA))
   expect_true(psx$nlevels[["x3"]] == 2L && "b" %in% psx$levels$x3)
-  # ParamLgls have the value to be shrinked around set as a default
-  expect_true(psx$nlevels[["x4"]] == 2L && psx$default[["x4"]] == TRUE && psx$tags[["x4"]] == "shrinked")
+  # ParamLgls have the value to be shrunk around set as a default
+  expect_true(psx$nlevels[["x4"]] == 2L && psx$default[["x4"]] == TRUE && psx$tags[["x4"]] == "shrunk")
 })
 
 test_that("shrink_ps trafo and deps", {
@@ -47,8 +47,8 @@ test_that("shrink_ps trafo and deps", {
   expect_equal(psx$lower, c(x1 = pmax(log(1), log(5) - (log(10) - log(1)) / 4), x2 = -5, x3 = NA, x4 = NA))
   expect_equal(psx$upper, c(x1 = pmin(log(10), log(5) + (log(10) - log(1)) / 4), x2 = 5, x3 = NA, x4 = NA))
   expect_true(psx$nlevels[["x3"]] == 2L && "b" %in% psx$levels$x3)
-  # ParamLgls have the value to be shrinked around set as a default
-  expect_true(psx$nlevels[["x4"]] == 2L && psx$default[["x4"]] == FALSE && psx$tags[["x4"]] == "shrinked")
+  # ParamLgls have the value to be shrunk around set as a default
+  expect_true(psx$nlevels[["x4"]] == 2L && psx$default[["x4"]] == FALSE && psx$tags[["x4"]] == "shrunk")
 })
 
 test_that("shrink_ps trafo and deps via sugar", {
@@ -67,8 +67,8 @@ test_that("shrink_ps trafo and deps via sugar", {
   expect_equal(psx$lower, c(x1 = pmax(log(1), log(5) - (log(10) - log(1)) / 4), x2 = -5, x3 = NA, x4 = NA))
   expect_equal(psx$upper, c(x1 = pmin(log(10), log(5) + (log(10) - log(1)) / 4), x2 = 5, x3 = NA, x4 = NA))
   expect_true(psx$nlevels[["x3"]] == 2L && "b" %in% psx$levels$x3)
-  # ParamLgls have the value to be shrinked around set as a default
-  expect_true(psx$nlevels[["x4"]] == 2L && psx$default[["x4"]] == FALSE && psx$tags[["x4"]] == "shrinked")
+  # ParamLgls have the value to be shrunk around set as a default
+  expect_true(psx$nlevels[["x4"]] == 2L && psx$default[["x4"]] == FALSE && psx$tags[["x4"]] == "shrunk")
 
   y = psx$trafo(data.table(x1 = log(5), x2 = 0, x3 = "b", x4 = FALSE))
   expect_equal(x, y) # trafo works after shrinking
