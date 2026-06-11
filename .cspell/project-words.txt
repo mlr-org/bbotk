@@ -71,6 +71,7 @@ NLOPT
 nloptr
 nocov
 nolint
+nondominated
 nrows
 ORCID
 otfun
