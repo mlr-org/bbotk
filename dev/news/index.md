@@ -2,6 +2,8 @@
 
 ## bbotk (development version)
 
+## bbotk 1.10.1
+
 - refactor:
   [`is_dominated()`](https://bbotk.mlr-org.com/dev/reference/is_dominated.md)
   now uses
