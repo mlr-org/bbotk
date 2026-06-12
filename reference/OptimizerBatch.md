@@ -27,8 +27,8 @@ enable with `progressr::handlers("progress")`.
 
 ## Super class
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md)
--\> `OptimizerBatch`
+[`Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md) -\>
+`OptimizerBatch`
 
 ## Methods
 
@@ -40,14 +40,14 @@ enable with `progressr::handlers("progress")`.
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$initialize()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-initialize)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
+- [`Optimizer$initialize()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-initialize)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method [`optimize()`](https://rdrr.io/r/stats/optimize.html)
+### `OptimizerBatch$optimize()`
 
 Performs the optimization and writes optimization result into
 [OptimInstanceBatch](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.md).
@@ -72,7 +72,7 @@ is stored in
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerBatch$clone()`
 
 The objects of this class are cloneable with this method.
 

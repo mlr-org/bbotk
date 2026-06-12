@@ -2,7 +2,10 @@
 
 Class to terminate the optimization after the hypervolume stagnates,
 i.e. does not improve more than `threshold` over the last `iters`
-iterations.
+iterations. The hypervolume is computed using
+[`moocore::hypervolume()`](https://multi-objective.github.io/moocore/r/reference/hypervolume.html).
+The reference point is the maximum of each objective over all
+evaluations.
 
 ## Dictionary
 
@@ -46,14 +49,14 @@ Other Terminator:
 
 ## Super class
 
-[`bbotk::Terminator`](https://bbotk.mlr-org.com/reference/Terminator.md)
--\> `TerminatorStagnationHypervolume`
+[`Terminator`](https://bbotk.mlr-org.com/reference/Terminator.md) -\>
+`TerminatorStagnationHypervolume`
 
 ## Methods
 
 ### Public methods
 
-- [`TerminatorStagnationHypervolume$new()`](#method-TerminatorStagnationHypervolume-new)
+- [`TerminatorStagnationHypervolume$new()`](#method-TerminatorStagnationHypervolume-initialize)
 
 - [`TerminatorStagnationHypervolume$is_terminated()`](#method-TerminatorStagnationHypervolume-is_terminated)
 
@@ -61,14 +64,14 @@ Other Terminator:
 
 Inherited methods
 
-- [`bbotk::Terminator$format()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-format)
-- [`bbotk::Terminator$print()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-print)
-- [`bbotk::Terminator$remaining_time()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-remaining_time)
-- [`bbotk::Terminator$status()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-status)
+- [`Terminator$format()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-format)
+- [`Terminator$print()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-print)
+- [`Terminator$remaining_time()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-remaining_time)
+- [`Terminator$status()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-status)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `TerminatorStagnationHypervolume$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -79,7 +82,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `is_terminated()`
+### `TerminatorStagnationHypervolume$is_terminated()`
 
 Is `TRUE` if the termination criterion is positive, and `FALSE`
 otherwise.
@@ -100,7 +103,7 @@ otherwise.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `TerminatorStagnationHypervolume$clone()`
 
 The objects of this class are cloneable with this method.
 

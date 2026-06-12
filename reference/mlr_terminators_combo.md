@@ -41,8 +41,8 @@ Other Terminator:
 
 ## Super class
 
-[`bbotk::Terminator`](https://bbotk.mlr-org.com/reference/Terminator.md)
--\> `TerminatorCombo`
+[`Terminator`](https://bbotk.mlr-org.com/reference/Terminator.md) -\>
+`TerminatorCombo`
 
 ## Public fields
 
@@ -56,7 +56,7 @@ Other Terminator:
 
 ### Public methods
 
-- [`TerminatorCombo$new()`](#method-TerminatorCombo-new)
+- [`TerminatorCombo$new()`](#method-TerminatorCombo-initialize)
 
 - [`TerminatorCombo$is_terminated()`](#method-TerminatorCombo-is_terminated)
 
@@ -70,12 +70,12 @@ Other Terminator:
 
 Inherited methods
 
-- [`bbotk::Terminator$format()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-format)
-- [`bbotk::Terminator$status()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-status)
+- [`Terminator$format()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-format)
+- [`Terminator$status()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-status)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `TerminatorCombo$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -94,7 +94,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `is_terminated()`
+### `TerminatorCombo$is_terminated()`
 
 Is `TRUE` iff the termination criterion is positive, and `FALSE`
 otherwise.
@@ -115,7 +115,7 @@ otherwise.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `TerminatorCombo$print()`
 
 Printer.
 
@@ -131,7 +131,7 @@ Printer.
 
 ------------------------------------------------------------------------
 
-### Method `remaining_time()`
+### `TerminatorCombo$remaining_time()`
 
 Returns the remaining runtime in seconds. If `any = TRUE`, the remaining
 runtime is determined by the time-based terminator with the shortest
@@ -154,7 +154,7 @@ time remaining. If non-time-based terminators are used and
 
 ------------------------------------------------------------------------
 
-### Method `status_long()`
+### `TerminatorCombo$status_long()`
 
 Returns `max_steps` and `current_steps` for each terminator.
 
@@ -174,7 +174,7 @@ Returns `max_steps` and `current_steps` for each terminator.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `TerminatorCombo$clone()`
 
 The objects of this class are cloneable with this method.
 

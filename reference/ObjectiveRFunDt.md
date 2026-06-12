@@ -10,8 +10,8 @@ Objective interface where user can pass an R function that works on an
 
 ## Super class
 
-[`bbotk::Objective`](https://bbotk.mlr-org.com/reference/Objective.md)
--\> `ObjectiveRFunDt`
+[`Objective`](https://bbotk.mlr-org.com/reference/Objective.md) -\>
+`ObjectiveRFunDt`
 
 ## Active bindings
 
@@ -24,7 +24,7 @@ Objective interface where user can pass an R function that works on an
 
 ### Public methods
 
-- [`ObjectiveRFunDt$new()`](#method-ObjectiveRFunDt-new)
+- [`ObjectiveRFunDt$new()`](#method-ObjectiveRFunDt-initialize)
 
 - [`ObjectiveRFunDt$eval_many()`](#method-ObjectiveRFunDt-eval_many)
 
@@ -34,14 +34,14 @@ Objective interface where user can pass an R function that works on an
 
 Inherited methods
 
-- [`bbotk::Objective$eval()`](https://bbotk.mlr-org.com/reference/Objective.html#method-eval)
-- [`bbotk::Objective$format()`](https://bbotk.mlr-org.com/reference/Objective.html#method-format)
-- [`bbotk::Objective$help()`](https://bbotk.mlr-org.com/reference/Objective.html#method-help)
-- [`bbotk::Objective$print()`](https://bbotk.mlr-org.com/reference/Objective.html#method-print)
+- [`Objective$eval()`](https://bbotk.mlr-org.com/reference/Objective.html#method-eval)
+- [`Objective$format()`](https://bbotk.mlr-org.com/reference/Objective.html#method-format)
+- [`Objective$help()`](https://bbotk.mlr-org.com/reference/Objective.html#method-help)
+- [`Objective$print()`](https://bbotk.mlr-org.com/reference/Objective.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `ObjectiveRFunDt$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -110,7 +110,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `eval_many()`
+### `ObjectiveRFunDt$eval_many()`
 
 Evaluates multiple input values received as a list, converted to a
 `data.table()` on the objective function. Missing columns in xss are
@@ -137,7 +137,7 @@ y-columns for multi-criteria functions, e.g. `data.table(y = 1:2)` or
 
 ------------------------------------------------------------------------
 
-### Method `eval_dt()`
+### `ObjectiveRFunDt$eval_dt()`
 
 Evaluates multiple input values on the objective function supplied by
 the user.
@@ -165,7 +165,7 @@ functions, e.g. `data.table(y = 1:2)` or
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `ObjectiveRFunDt$clone()`
 
 The objects of this class are cloneable with this method.
 

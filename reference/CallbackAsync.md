@@ -100,7 +100,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `CallbackAsync$clone()`
 
 The objects of this class are cloneable with this method.
 

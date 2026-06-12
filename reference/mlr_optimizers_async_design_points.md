@@ -25,16 +25,15 @@ or with the associated sugar function
 
 ## Super classes
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md)
--\>
-[`bbotk::OptimizerAsync`](https://bbotk.mlr-org.com/reference/OptimizerAsync.md)
+[`Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md) -\>
+[`OptimizerAsync`](https://bbotk.mlr-org.com/reference/OptimizerAsync.md)
 -\> `OptimizerAsyncDesignPoints`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimizerAsyncDesignPoints$new()`](#method-OptimizerAsyncDesignPoints-new)
+- [`OptimizerAsyncDesignPoints$new()`](#method-OptimizerAsyncDesignPoints-initialize)
 
 - [`OptimizerAsyncDesignPoints$optimize()`](#method-OptimizerAsyncDesignPoints-optimize)
 
@@ -42,13 +41,13 @@ or with the associated sugar function
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimizerAsyncDesignPoints$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -59,7 +58,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`optimize()`](https://rdrr.io/r/stats/optimize.html)
+### `OptimizerAsyncDesignPoints$optimize()`
 
 Starts the asynchronous optimization.
 
@@ -79,7 +78,7 @@ Starts the asynchronous optimization.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerAsyncDesignPoints$clone()`
 
 The objects of this class are cloneable with this method.
 
@@ -151,12 +150,12 @@ as.data.table(instance$archive)
 }
 #>       state    x1    x2     y        timestamp_xs                 worker_id
 #>      <char> <num> <num> <num>              <POSc>                    <char>
-#> 1: finished     0     0    -3 2026-04-08 06:02:55 terrorstricken_prairiedog
-#> 2: finished     1     1    -7 2026-04-08 06:02:55 terrorstricken_prairiedog
+#> 1: finished     0     0    -3 2026-06-12 16:20:31 terrorstricken_prairiedog
+#> 2: finished     1     1    -7 2026-06-12 16:20:31 terrorstricken_prairiedog
 #>           timestamp_ys                                 keys x_domain_x1
 #>                 <POSc>                               <char>       <num>
-#> 1: 2026-04-08 06:02:56 fa7ae44f-fee2-4e4c-ab7e-1b594025c921           0
-#> 2: 2026-04-08 06:02:56 5e7e7399-54f0-465f-bb81-6772bf0ac958           1
+#> 1: 2026-06-12 16:20:32 5a4190c3-e7c0-46f4-ba19-9fc020f0e156           0
+#> 2: 2026-06-12 16:20:32 4f904ad8-1519-44c5-b335-3dfba0fcca30           1
 #>    x_domain_x2
 #>          <num>
 #> 1:           0

@@ -5,27 +5,39 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Abstract Terminator Class — Terminator"><meta name="description" content="Abstract Terminator class that implements the base functionality each terminator must provide.
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Abstract Terminator Class — Terminator"><meta name="description" content="Abstract Terminator class that implements the base functionality each terminator must provide.
 A terminator is an object that determines when to stop the optimization.
 Termination of optimization works as follows:
 Evaluations in a instance are performed in batches.
 Before each batch evaluation, the Terminator is checked, and if it is positive, we stop.
-The optimization algorithm itself might decide not to produce any more points, or even might decide to do a smaller batch in its last evaluation.
+The optimization algorithm itself might decide not to produce any more points,
+or even might decide to do a smaller batch in its last evaluation.
 
 
 Therefore the following note seems in order:
-While it is definitely possible to execute a fine-grained control for termination, and for many optimization algorithms we can specify exactly when to stop, it might happen that too few or even too many evaluations are performed, especially if multiple points are evaluated in a single batch (c.f. batch size parameter of many optimization algorithms).
-So it is advised to check the size of the returned archive, in particular if you are benchmarking multiple optimization algorithms."><meta property="og:description" content="Abstract Terminator class that implements the base functionality each terminator must provide.
+While it is definitely possible to execute a fine-grained control for termination,
+and for many optimization algorithms we can specify exactly when to stop,
+it might happen that too few or even too many evaluations are performed,
+especially if multiple points are evaluated in a single batch
+(c.f. batch size parameter of many optimization algorithms).
+So it is advised to check the size of the returned archive,
+in particular if you are benchmarking multiple optimization algorithms."><meta property="og:description" content="Abstract Terminator class that implements the base functionality each terminator must provide.
 A terminator is an object that determines when to stop the optimization.
 Termination of optimization works as follows:
 Evaluations in a instance are performed in batches.
 Before each batch evaluation, the Terminator is checked, and if it is positive, we stop.
-The optimization algorithm itself might decide not to produce any more points, or even might decide to do a smaller batch in its last evaluation.
+The optimization algorithm itself might decide not to produce any more points,
+or even might decide to do a smaller batch in its last evaluation.
 
 
 Therefore the following note seems in order:
-While it is definitely possible to execute a fine-grained control for termination, and for many optimization algorithms we can specify exactly when to stop, it might happen that too few or even too many evaluations are performed, especially if multiple points are evaluated in a single batch (c.f. batch size parameter of many optimization algorithms).
-So it is advised to check the size of the returned archive, in particular if you are benchmarking multiple optimization algorithms."></head><body>
+While it is definitely possible to execute a fine-grained control for termination,
+and for many optimization algorithms we can specify exactly when to stop,
+it might happen that too few or even too many evaluations are performed,
+especially if multiple points are evaluated in a single batch
+(c.f. batch size parameter of many optimization algorithms).
+So it is advised to check the size of the returned archive,
+in particular if you are benchmarking multiple optimization algorithms."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -33,7 +45,7 @@ So it is advised to check the size of the returned archive, in particular if you
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,10 +86,16 @@ So it is advised to check the size of the returned archive, in particular if you
 A terminator is an object that determines when to stop the optimization.</p>
 <p>Termination of optimization works as follows:</p><ul><li><p>Evaluations in a instance are performed in batches.</p></li>
 <li><p>Before each batch evaluation, the Terminator is checked, and if it is positive, we stop.</p></li>
-<li><p>The optimization algorithm itself might decide not to produce any more points, or even might decide to do a smaller batch in its last evaluation.</p></li>
+<li><p>The optimization algorithm itself might decide not to produce any more points,
+or even might decide to do a smaller batch in its last evaluation.</p></li>
 </ul><p>Therefore the following note seems in order:
-While it is definitely possible to execute a fine-grained control for termination, and for many optimization algorithms we can specify exactly when to stop, it might happen that too few or even too many evaluations are performed, especially if multiple points are evaluated in a single batch (c.f. batch size parameter of many optimization algorithms).
-So it is advised to check the size of the returned archive, in particular if you are benchmarking multiple optimization algorithms.</p>
+While it is definitely possible to execute a fine-grained control for termination,
+and for many optimization algorithms we can specify exactly when to stop,
+it might happen that too few or even too many evaluations are performed,
+especially if multiple points are evaluated in a single batch
+(c.f. batch size parameter of many optimization algorithms).
+So it is advised to check the size of the returned archive,
+in particular if you are benchmarking multiple optimization algorithms.</p>
     </div>
 
 
@@ -86,7 +104,8 @@ So it is advised to check the size of the returned archive, in particular if you
 
 
 <p><code>Terminator</code> subclasses can overwrite <code>.status()</code> to support progress bars via the package <a href="https://CRAN.R-project.org/package=progressr" class="external-link"><span class="pkg">progressr</span></a>.
-The method must return the maximum number of steps (<code>max_steps</code>) and the currently achieved number of steps (<code>current_steps</code>) as a named integer vector.</p>
+The method must return the maximum number of steps (<code>max_steps</code>) and the currently achieved number of steps
+(<code>current_steps</code>) as a named integer vector.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -119,25 +138,25 @@ Used in tables, plot and text output.</p></dd>
 Set of control parameters.</p></dd>
 
 
-<dt><code>label</code></dt>
+    <dt><code>label</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.</p></dd>
 
 
-<dt><code>man</code></dt>
+    <dt><code>man</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
 The referenced help package can be opened via method <code>$help()</code>.</p></dd>
 
 
-<dt><code>properties</code></dt>
+    <dt><code>properties</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Set of properties of the terminator.
 Must be a subset of <code><a href="bbotk_reflections.html">bbotk_reflections$terminator_properties</a></code>.</p></dd>
 
 
-<dt><code>unit</code></dt>
+    <dt><code>unit</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Unit of steps.</p></dd>
 
@@ -149,15 +168,14 @@ Unit of steps.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-Terminator-new"><code>Terminator$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-Terminator-initialize"><code>Terminator$new()</code></a></p></li>
 <li><p><a href="#method-Terminator-format"><code>Terminator$format()</code></a></p></li>
 <li><p><a href="#method-Terminator-print"><code>Terminator$print()</code></a></p></li>
 <li><p><a href="#method-Terminator-status"><code>Terminator$status()</code></a></p></li>
 <li><p><a href="#method-Terminator-remaining_time"><code>Terminator$remaining_time()</code></a></p></li>
 <li><p><a href="#method-Terminator-clone"><code>Terminator$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-Terminator-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-Terminator-initialize"></a><div class="section">
+<h3 id="terminator-new-"><code>Terminator$new()</code><a class="anchor" aria-label="anchor" href="#terminator-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/Terminator.html">Terminator</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -168,38 +186,31 @@ Unit of steps.</p></dd>
 <span>  label <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  man <span class="op">=</span> <span class="cn">NA_character_</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 Identifier for the new instance.</p></dd>
 
-
-<dt><code>param_set</code></dt>
+      <dt><code>param_set</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Set of control parameters.</p></dd>
 
-
-<dt><code>properties</code></dt>
+      <dt><code>properties</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Set of properties of the terminator.
 Must be a subset of <code><a href="bbotk_reflections.html">bbotk_reflections$terminator_properties</a></code>.</p></dd>
 
-
-<dt><code>unit</code></dt>
+      <dt><code>unit</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Unit of steps.</p></dd>
 
-
-<dt><code>label</code></dt>
+      <dt><code>label</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 Label for this object.
 Can be used in tables, plot and text output instead of the ID.</p></dd>
 
-
-<dt><code>man</code></dt>
+      <dt><code>man</code></dt>
 <dd><p>(<code>character(1)</code>)<br>
 String in the format <code>[pkg]::[topic]</code> pointing to a manual page for this object.
 The referenced help package can be opened via method <code>$help()</code>.</p></dd>
@@ -208,35 +219,34 @@ The referenced help package can be opened via method <code>$help()</code>.</p></
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Terminator-format"></a><div class="section">
-<h3 id="method-format-">Method <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code><a class="anchor" aria-label="anchor" href="#method-format-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-Terminator-format"></a><div class="section">
+<h3 id="terminator-format-"><code>Terminator$format()</code><a class="anchor" aria-label="anchor" href="#terminator-format-"></a></h3>
 <p>Helper for print outputs.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Terminator</span><span class="op">$</span><span class="fu">format</span><span class="op">(</span>with_params <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>with_params</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Add parameter values to format string.</p></dd>
 
-
-<dt><code>...</code></dt>
+      <dt><code>...</code></dt>
 <dd><p>(ignored).</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Terminator-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-Terminator-print"></a><div class="section">
+<h3 id="terminator-print-"><code>Terminator$print()</code><a class="anchor" aria-label="anchor" href="#terminator-print-"></a></h3>
 <p>Printer.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Terminator</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>(ignored).</p></dd>
@@ -245,56 +255,54 @@ Add parameter values to format string.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Terminator-status"></a><div class="section">
-<h3 id="method-status-">Method <code>status()</code><a class="anchor" aria-label="anchor" href="#method-status-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-Terminator-status"></a><div class="section">
+<h3 id="terminator-status-"><code>Terminator$status()</code><a class="anchor" aria-label="anchor" href="#terminator-status-"></a></h3>
 <p>Returns how many progression steps are made (<code>current_steps</code>) and the
 amount steps needed for termination (<code>max_steps</code>).</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Terminator</span><span class="op">$</span><span class="fu">status</span><span class="op">(</span><span class="va">archive</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>archive</code></dt>
 <dd><p>(<a href="Archive.html">Archive</a>).</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p>named <code>integer(2)</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-Terminator-remaining_time"></a><div class="section">
-<h3 id="method-remaining-time-">Method <code>remaining_time()</code><a class="anchor" aria-label="anchor" href="#method-remaining-time-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-Terminator-remaining_time"></a><div class="section">
+<h3 id="terminator-remaining-time-"><code>Terminator$remaining_time()</code><a class="anchor" aria-label="anchor" href="#terminator-remaining-time-"></a></h3>
 <p>Returns remaining runtime in seconds. If the terminator is not
 time-based, the reaming runtime is <code>Inf</code>.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Terminator</span><span class="op">$</span><span class="fu">remaining_time</span><span class="op">(</span><span class="va">archive</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>archive</code></dt>
 <dd><p>(<a href="Archive.html">Archive</a>).</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p><code>integer(1)</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-Terminator-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-Terminator-clone"></a><div class="section">
+<h3 id="terminator-clone-"><code>Terminator$clone()</code><a class="anchor" aria-label="anchor" href="#terminator-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Terminator</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -304,6 +312,7 @@ time-based, the reaming runtime is <code>Inf</code>.</p><div class="section">
 </div>
 
 </div>
+
 
     </div>
 

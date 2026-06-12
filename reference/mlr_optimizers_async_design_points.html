@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Asynchronous Optimization via Design Points — mlr_optimizers_async_design_points"><meta name="description" content="OptimizerAsyncDesignPoints class that implements optimization w.r.t. fixed design points.
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Asynchronous Optimization via Design Points — mlr_optimizers_async_design_points"><meta name="description" content="OptimizerAsyncDesignPoints class that implements optimization w.r.t. fixed design points.
 We simply search over a set of points fully specified by the ser."><meta property="og:description" content="OptimizerAsyncDesignPoints class that implements optimization w.r.t. fixed design points.
 We simply search over a set of points fully specified by the ser."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -15,7 +15,7 @@ We simply search over a set of points fully specified by the ser."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,56 +78,53 @@ Design points to try in search, one per row.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="Optimizer.html">bbotk::Optimizer</a></code> -&gt; <code><a href="OptimizerAsync.html">bbotk::OptimizerAsync</a></code> -&gt; <code>OptimizerAsyncDesignPoints</code></p>
+    <p><code><a href="Optimizer.html">Optimizer</a></code> -&gt; <code><a href="OptimizerAsync.html">OptimizerAsync</a></code> -&gt; <code>OptimizerAsyncDesignPoints</code></p>
     </div>
     <div class="section level2">
     <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a></h2>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-OptimizerAsyncDesignPoints-new"><code>OptimizerAsyncDesignPoints$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-OptimizerAsyncDesignPoints-initialize"><code>OptimizerAsyncDesignPoints$new()</code></a></p></li>
 <li><p><a href="#method-OptimizerAsyncDesignPoints-optimize"><code>OptimizerAsyncDesignPoints$optimize()</code></a></p></li>
 <li><p><a href="#method-OptimizerAsyncDesignPoints-clone"><code>OptimizerAsyncDesignPoints$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>bbotk::Optimizer$print()</code></a></span></li>
-</ul></details></p><hr><a id="method-OptimizerAsyncDesignPoints-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>Optimizer$print()</code></a></span></li>
+</ul></details></p><hr><a id="method-OptimizerAsyncDesignPoints-initialize"></a><div class="section">
+<h3 id="optimizerasyncdesignpoints-new-"><code>OptimizerAsyncDesignPoints$new()</code><a class="anchor" aria-label="anchor" href="#optimizerasyncdesignpoints-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/mlr_optimizers_async_design_points.html">OptimizerAsyncDesignPoints</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-OptimizerAsyncDesignPoints-optimize"></a><div class="section">
-<h3 id="method-optimize-">Method <code><a href="https://rdrr.io/r/stats/optimize.html" class="external-link">optimize()</a></code><a class="anchor" aria-label="anchor" href="#method-optimize-"></a></h3>
+<p></p><hr><a id="method-OptimizerAsyncDesignPoints-optimize"></a><div class="section">
+<h3 id="optimizerasyncdesignpoints-optimize-"><code>OptimizerAsyncDesignPoints$optimize()</code><a class="anchor" aria-label="anchor" href="#optimizerasyncdesignpoints-optimize-"></a></h3>
 <p>Starts the asynchronous optimization.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimizerAsyncDesignPoints</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">inst</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>inst</code></dt>
 <dd><p>(<a href="OptimInstance.html">OptimInstance</a>).</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>.</p>
 </div>
 
-</div><p></p><hr><a id="method-OptimizerAsyncDesignPoints-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-OptimizerAsyncDesignPoints-clone"></a><div class="section">
+<h3 id="optimizerasyncdesignpoints-clone-"><code>OptimizerAsyncDesignPoints$clone()</code><a class="anchor" aria-label="anchor" href="#optimizerasyncdesignpoints-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimizerAsyncDesignPoints</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -137,6 +134,7 @@ Design points to try in search, one per row.</p></dd>
 </div>
 
 </div>
+
 
     </div>
 
@@ -197,12 +195,12 @@ Design points to try in search, one per row.</p></dd>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       state    x1    x2     y        timestamp_xs                 worker_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;char&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;              &lt;POSc&gt;                    &lt;char&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: finished     0     0    -3 2026-04-08 06:02:55 terrorstricken_prairiedog</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: finished     1     1    -7 2026-04-08 06:02:55 terrorstricken_prairiedog</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: finished     0     0    -3 2026-06-12 16:20:31 terrorstricken_prairiedog</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: finished     1     1    -7 2026-06-12 16:20:31 terrorstricken_prairiedog</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           timestamp_ys                                 keys x_domain_x1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 &lt;POSc&gt;                               &lt;char&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2026-04-08 06:02:56 fa7ae44f-fee2-4e4c-ab7e-1b594025c921           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: 2026-04-08 06:02:56 5e7e7399-54f0-465f-bb81-6772bf0ac958           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 2026-06-12 16:20:32 5a4190c3-e7c0-46f4-ba19-9fc020f0e156           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: 2026-06-12 16:20:32 4f904ad8-1519-44c5-b335-3dfba0fcca30           1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x_domain_x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:           0</span>

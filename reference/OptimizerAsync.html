@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Asynchronous Optimizer — OptimizerAsync"><meta name="description" content="The OptimizerAsync implements the asynchronous optimization algorithm.
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Asynchronous Optimizer — OptimizerAsync"><meta name="description" content="The OptimizerAsync implements the asynchronous optimization algorithm.
 The optimization is performed asynchronously on a set of workers."><meta property="og:description" content="The OptimizerAsync implements the asynchronous optimization algorithm.
 The optimization is performed asynchronously on a set of workers."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -15,7 +15,7 @@ The optimization is performed asynchronously on a set of workers."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,12 +73,12 @@ Usually, the method proposes new points, evaluates them, and updates the archive
 
 <p>The <code><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush::rush_plan()</a></code> function defines the number of workers and their type.
 There are three types of workers:</p><ul><li><p>"mirai": Workers are started with <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> on local or remote machines.
-See <code>$start_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.
+See <code>$start_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">Rush</a> for more details.
 <code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> must be created before starting the optimization.</p></li>
 <li><p>"processx": Workers are started as local processes with <a href="https://CRAN.R-project.org/package=processx" class="external-link"><span class="pkg">processx</span></a>.
-See <code>$start_local_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
+See <code>$start_local_workers()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">Rush</a> for more details.</p></li>
 <li><p>"script": Workers are started by the user with a custom script.
-See <code>$create_worker_script()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">rush::Rush</a> for more details.</p></li>
+See <code>$create_worker_script()</code> in <a href="https://rush.mlr-org.com/reference/Rush.html" class="external-link">Rush</a> for more details.</p></li>
 </ul><p>The workers are started when the <code>$optimize()</code> method is called.
 The main process waits until at least one worker is running.
 The optimization starts directly after the workers are running.
@@ -101,7 +101,8 @@ The debug mode is enabled by setting <code>options(bbotk.debug = TRUE)</code>.</
 
 
 <p>The tiny logging mode is enabled by setting the option <code>bbotk.tiny_logging</code> to <code>TRUE</code>.
-In the tiny logging mode, the evaluated points are printed in a compact format and the currently best performing point is shown.
+In the tiny logging mode, the evaluated points are printed in a compact format and the currently best
+performing point is shown.
 Deactivated depending parameters are not printed.</p>
     </div>
     <div class="section level2">
@@ -110,50 +111,46 @@ Deactivated depending parameters are not printed.</p>
     </div>
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
-    <p><code><a href="Optimizer.html">bbotk::Optimizer</a></code> -&gt; <code>OptimizerAsync</code></p>
+    <p><code><a href="Optimizer.html">Optimizer</a></code> -&gt; <code>OptimizerAsync</code></p>
     </div>
     <div class="section level2">
     <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a></h2>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-OptimizerAsync-optimize"><code>OptimizerAsync$optimize()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-OptimizerAsync-optimize"><code>OptimizerAsync$optimize()</code></a></p></li>
 <li><p><a href="#method-OptimizerAsync-clone"><code>OptimizerAsync$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="initialize"><a href="Optimizer.html#method-initialize"><code>bbotk::Optimizer$initialize()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>bbotk::Optimizer$print()</code></a></span></li>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href="Optimizer.html#method-format"><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href="Optimizer.html#method-help"><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="initialize"><a href="Optimizer.html#method-initialize"><code>Optimizer$initialize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href="Optimizer.html#method-print"><code>Optimizer$print()</code></a></span></li>
 </ul></details></p><hr><a id="method-OptimizerAsync-optimize"></a><div class="section">
-<h3 id="method-optimize-">Method <code><a href="https://rdrr.io/r/stats/optimize.html" class="external-link">optimize()</a></code><a class="anchor" aria-label="anchor" href="#method-optimize-"></a></h3>
+<h3 id="optimizerasync-optimize-"><code>OptimizerAsync$optimize()</code><a class="anchor" aria-label="anchor" href="#optimizerasync-optimize-"></a></h3>
 <p>Performs the optimization on a <a href="OptimInstanceAsyncSingleCrit.html">OptimInstanceAsyncSingleCrit</a> or <a href="OptimInstanceAsyncMultiCrit.html">OptimInstanceAsyncMultiCrit</a> until termination.
 The single evaluations will be written into the <a href="ArchiveAsync.html">ArchiveAsync</a>.
 The result will be written into the instance object.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimizerAsync</span><span class="op">$</span><span class="fu">optimize</span><span class="op">(</span><span class="va">inst</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>inst</code></dt>
 <dd><p>(<a href="OptimInstanceAsyncSingleCrit.html">OptimInstanceAsyncSingleCrit</a> | <a href="OptimInstanceAsyncMultiCrit.html">OptimInstanceAsyncMultiCrit</a>).</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p><code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code></p>
 </div>
 
-</div><p></p><hr><a id="method-OptimizerAsync-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-OptimizerAsync-clone"></a><div class="section">
+<h3 id="optimizerasync-clone-"><code>OptimizerAsync$clone()</code><a class="anchor" aria-label="anchor" href="#optimizerasync-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OptimizerAsync</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -163,6 +160,7 @@ The result will be written into the instance object.</p><div class="section">
 </div>
 
 </div>
+
 
     </div>
 

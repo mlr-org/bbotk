@@ -5,7 +5,7 @@
 Focus Search starts with evaluating `n_points` drawn uniformly at
 random. For 1 to `maxit` batches, `n_points` are then drawn uniformly at
 random and if the best value of a batch outperforms the previous best
-value over all batches evaluated so far, the search space is shrinked
+value over all batches evaluated so far, the search space is shrunk
 around this new best point prior to the next batch being sampled and
 evaluated.
 
@@ -53,29 +53,28 @@ enable with `progressr::handlers("progress")`.
 
 ## Super classes
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md)
--\>
-[`bbotk::OptimizerBatch`](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
+[`Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md) -\>
+[`OptimizerBatch`](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
 -\> `OptimizerBatchFocusSearch`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimizerBatchFocusSearch$new()`](#method-OptimizerBatchFocusSearch-new)
+- [`OptimizerBatchFocusSearch$new()`](#method-OptimizerBatchFocusSearch-initialize)
 
 - [`OptimizerBatchFocusSearch$clone()`](#method-OptimizerBatchFocusSearch-clone)
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
-- [`bbotk::OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/reference/OptimizerBatch.html#method-optimize)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
+- [`OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/reference/OptimizerBatch.html#method-optimize)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimizerBatchFocusSearch$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -86,7 +85,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerBatchFocusSearch$clone()`
 
 The objects of this class are cloneable with this method.
 
@@ -148,26 +147,26 @@ instance$archive
 #> ── <ArchiveBatch> - Data Table Storage ─────────────────────────────────────────
 #>        x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2
 #>     <num> <num> <num>              <POSc>    <int>       <num>       <num>
-#>  1:    -5   0.2   -47 2026-04-08 06:03:07        1          -5         0.2
-#>  2:     4  -0.3    -2 2026-04-08 06:03:07        1           4        -0.3
-#>  3:     9  -4.0   -45 2026-04-08 06:03:07        1           9        -4.0
-#>  4:     3   0.2    -1 2026-04-08 06:03:07        1           3         0.2
-#>  5:     6  -0.5   -12 2026-04-08 06:03:07        1           6        -0.5
-#>  6:    -9   0.5  -113 2026-04-08 06:03:07        1          -9         0.5
-#>  7:     8   1.5   -43 2026-04-08 06:03:07        1           8         1.5
-#>  8:     7  -3.4   -11 2026-04-08 06:03:07        1           7        -3.4
-#>  9:     5  -2.1     3 2026-04-08 06:03:07        1           5        -2.1
-#> 10:    -3   3.9   -59 2026-04-08 06:03:07        1          -3         3.9
-#> 11:     2  -2.0     9 2026-04-08 06:03:07        2           2        -2.0
-#> 12:     3  -4.1     8 2026-04-08 06:03:07        2           3        -4.1
-#> 13:    -5   2.6   -68 2026-04-08 06:03:07        2          -5         2.6
-#> 14:    -4   2.7   -55 2026-04-08 06:03:07        2          -4         2.7
-#> 15:    -3  -1.0   -21 2026-04-08 06:03:07        2          -3        -1.0
-#> 16:     5  -4.4    -2 2026-04-08 06:03:07        2           5        -4.4
-#> 17:   -10   2.5  -159 2026-04-08 06:03:07        2         -10         2.5
-#> 18:    -9   0.3  -116 2026-04-08 06:03:07        2          -9         0.3
-#> 19:    -5  -2.2   -36 2026-04-08 06:03:07        2          -5        -2.2
-#> 20:     2  -2.4    10 2026-04-08 06:03:07        2           2        -2.4
+#>  1:    -5   0.2   -47 2026-06-12 16:20:44        1          -5         0.2
+#>  2:     4  -0.3    -2 2026-06-12 16:20:44        1           4        -0.3
+#>  3:     9  -4.0   -45 2026-06-12 16:20:44        1           9        -4.0
+#>  4:     3   0.2    -1 2026-06-12 16:20:44        1           3         0.2
+#>  5:     6  -0.5   -12 2026-06-12 16:20:44        1           6        -0.5
+#>  6:    -9   0.5  -113 2026-06-12 16:20:44        1          -9         0.5
+#>  7:     8   1.5   -43 2026-06-12 16:20:44        1           8         1.5
+#>  8:     7  -3.4   -11 2026-06-12 16:20:44        1           7        -3.4
+#>  9:     5  -2.1     3 2026-06-12 16:20:44        1           5        -2.1
+#> 10:    -3   3.9   -59 2026-06-12 16:20:44        1          -3         3.9
+#> 11:     2  -2.0     9 2026-06-12 16:20:44        2           2        -2.0
+#> 12:     3  -4.1     8 2026-06-12 16:20:44        2           3        -4.1
+#> 13:    -5   2.6   -68 2026-06-12 16:20:44        2          -5         2.6
+#> 14:    -4   2.7   -55 2026-06-12 16:20:44        2          -4         2.7
+#> 15:    -3  -1.0   -21 2026-06-12 16:20:44        2          -3        -1.0
+#> 16:     5  -4.4    -2 2026-06-12 16:20:44        2           5        -4.4
+#> 17:   -10   2.5  -159 2026-06-12 16:20:44        2         -10         2.5
+#> 18:    -9   0.3  -116 2026-06-12 16:20:44        2          -9         0.3
+#> 19:    -5  -2.2   -36 2026-06-12 16:20:44        2          -5        -2.2
+#> 20:     2  -2.4    10 2026-06-12 16:20:44        2           2        -2.4
 #>        x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2
 #>     <num> <num> <num>              <POSc>    <int>       <num>       <num>
 

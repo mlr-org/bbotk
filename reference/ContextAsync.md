@@ -86,7 +86,7 @@ workers are not reflected in the main process.
 
 ### Public methods
 
-- [`ContextAsync$new()`](#method-ContextAsync-new)
+- [`ContextAsync$new()`](#method-ContextAsync-initialize)
 
 - [`ContextAsync$clone()`](#method-ContextAsync-clone)
 
@@ -97,7 +97,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `ContextAsync$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -118,7 +118,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `ContextAsync$clone()`
 
 The objects of this class are cloneable with this method.
 

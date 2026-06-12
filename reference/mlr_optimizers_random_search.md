@@ -46,29 +46,28 @@ enable with `progressr::handlers("progress")`.
 
 ## Super classes
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md)
--\>
-[`bbotk::OptimizerBatch`](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
+[`Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md) -\>
+[`OptimizerBatch`](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
 -\> `OptimizerBatchRandomSearch`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimizerBatchRandomSearch$new()`](#method-OptimizerBatchRandomSearch-new)
+- [`OptimizerBatchRandomSearch$new()`](#method-OptimizerBatchRandomSearch-initialize)
 
 - [`OptimizerBatchRandomSearch$clone()`](#method-OptimizerBatchRandomSearch-clone)
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
-- [`bbotk::OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/reference/OptimizerBatch.html#method-optimize)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
+- [`OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/reference/OptimizerBatch.html#method-optimize)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimizerBatchRandomSearch$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -79,7 +78,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerBatchRandomSearch$clone()`
 
 The objects of this class are cloneable with this method.
 
@@ -141,26 +140,26 @@ instance$archive
 #> ── <ArchiveBatch> - Data Table Storage ─────────────────────────────────────────
 #>        x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2
 #>     <num> <num> <num>              <POSc>    <int>       <num>       <num>
-#>  1:     4  -4.6     5 2026-04-08 06:03:18        1           4        -4.6
-#>  2:     6  -2.6   -10 2026-04-08 06:03:18        1           6        -2.6
-#>  3:    -6   1.6   -71 2026-04-08 06:03:18        1          -6         1.6
-#>  4:     5   0.7   -14 2026-04-08 06:03:18        1           5         0.7
-#>  5:    10   2.3   -80 2026-04-08 06:03:18        1          10         2.3
-#>  6:     4   0.8   -10 2026-04-08 06:03:18        1           4         0.8
-#>  7:    10   0.7   -62 2026-04-08 06:03:18        1          10         0.7
-#>  8:     5   1.6   -19 2026-04-08 06:03:18        1           5         1.6
-#>  9:    -7   0.3   -84 2026-04-08 06:03:18        1          -7         0.3
-#> 10:     1  -2.2     9 2026-04-08 06:03:18        1           1        -2.2
-#> 11:     1  -4.5     7 2026-04-08 06:03:18        2           1        -4.5
-#> 12:    -1  -4.0    -2 2026-04-08 06:03:18        2          -1        -4.0
-#> 13:    -2  -0.5    -9 2026-04-08 06:03:18        2          -2        -0.5
-#> 14:     1  -3.0     9 2026-04-08 06:03:18        2           1        -3.0
-#> 15:    -5  -4.2   -42 2026-04-08 06:03:18        2          -5        -4.2
-#> 16:     7   0.8   -28 2026-04-08 06:03:18        2           7         0.8
-#> 17:    10  -3.1   -47 2026-04-08 06:03:18        2          10        -3.1
-#> 18:    -8   1.5  -104 2026-04-08 06:03:18        2          -8         1.5
-#> 19:    10   3.4   -87 2026-04-08 06:03:18        2          10         3.4
-#> 20:     5  -4.1     2 2026-04-08 06:03:18        2           5        -4.1
+#>  1:     4  -4.6     5 2026-06-12 16:20:56        1           4        -4.6
+#>  2:     6  -2.6   -10 2026-06-12 16:20:56        1           6        -2.6
+#>  3:    -6   1.6   -71 2026-06-12 16:20:56        1          -6         1.6
+#>  4:     5   0.7   -14 2026-06-12 16:20:56        1           5         0.7
+#>  5:    10   2.3   -80 2026-06-12 16:20:56        1          10         2.3
+#>  6:     4   0.8   -10 2026-06-12 16:20:56        1           4         0.8
+#>  7:    10   0.7   -62 2026-06-12 16:20:56        1          10         0.7
+#>  8:     5   1.6   -19 2026-06-12 16:20:56        1           5         1.6
+#>  9:    -7   0.3   -84 2026-06-12 16:20:56        1          -7         0.3
+#> 10:     1  -2.2     9 2026-06-12 16:20:56        1           1        -2.2
+#> 11:     1  -4.5     7 2026-06-12 16:20:56        2           1        -4.5
+#> 12:    -1  -4.0    -2 2026-06-12 16:20:56        2          -1        -4.0
+#> 13:    -2  -0.5    -9 2026-06-12 16:20:56        2          -2        -0.5
+#> 14:     1  -3.0     9 2026-06-12 16:20:56        2           1        -3.0
+#> 15:    -5  -4.2   -42 2026-06-12 16:20:56        2          -5        -4.2
+#> 16:     7   0.8   -28 2026-06-12 16:20:56        2           7         0.8
+#> 17:    10  -3.1   -47 2026-06-12 16:20:56        2          10        -3.1
+#> 18:    -8   1.5  -104 2026-06-12 16:20:56        2          -8         1.5
+#> 19:    10   3.4   -87 2026-06-12 16:20:56        2          10         3.4
+#> 20:     5  -4.1     2 2026-06-12 16:20:56        2           5        -4.1
 #>        x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2
 #>     <num> <num> <num>              <POSc>    <int>       <num>       <num>
 

@@ -31,7 +31,7 @@ See
   [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)  
   Returns a
   [`data.table::data.table()`](https://rdrr.io/pkg/data.table/man/data.table.html)
-  with fields "key", "label", "param_classes", "properties" and
+  with fields "key", "label", "param_classes", "properties", and
   "packages" as columns. If `objects` is set to `TRUE`, the constructed
   objects are returned in the list column named `object`.
 

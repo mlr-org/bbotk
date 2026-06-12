@@ -2,14 +2,14 @@
 
 Shrinks a
 [paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html)
-towards a point. Boundaries of numeric values are shrinked to an
-interval around the point of half of the previous length, while for
-discrete variables, a random (currently not chosen) level is dropped.
+towards a point. Boundaries of numeric values are shrunk to an interval
+around the point of half of the previous length, while for discrete
+variables, a random (currently not chosen) level is dropped.
 
 Note that for
 [`paradox::p_lgl()`](https://paradox.mlr-org.com/reference/Domain.html)s
-the value to be shrinked around is set as the `default` value instead of
-dropping a level. Also, a tag `shrinked` is added.
+the value to be shrunk around is set as the `default` value instead of
+dropping a level. Also, a tag `shrunk` is added.
 
 Note that the returned
 [paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html)
@@ -33,7 +33,7 @@ shrink_ps(param_set, x, check.feasible = FALSE)
   ([paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html))  
   The
   [paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html)
-  to be shrinked.
+  to be shrunk.
 
 - x:
 

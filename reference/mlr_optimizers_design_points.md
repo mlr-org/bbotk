@@ -47,29 +47,28 @@ enable with `progressr::handlers("progress")`.
 
 ## Super classes
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md)
--\>
-[`bbotk::OptimizerBatch`](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
+[`Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md) -\>
+[`OptimizerBatch`](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
 -\> `OptimizerBatchDesignPoints`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimizerBatchDesignPoints$new()`](#method-OptimizerBatchDesignPoints-new)
+- [`OptimizerBatchDesignPoints$new()`](#method-OptimizerBatchDesignPoints-initialize)
 
 - [`OptimizerBatchDesignPoints$clone()`](#method-OptimizerBatchDesignPoints-clone)
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
-- [`bbotk::OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/reference/OptimizerBatch.html#method-optimize)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
+- [`OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/reference/OptimizerBatch.html#method-optimize)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimizerBatchDesignPoints$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -80,7 +79,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerBatchDesignPoints$clone()`
 
 The objects of this class are cloneable with this method.
 
@@ -143,8 +142,8 @@ instance$archive
 #> ── <ArchiveBatch> - Data Table Storage ─────────────────────────────────────────
 #>       x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2
 #>    <num> <num> <num>              <POSc>    <int>       <num>       <num>
-#> 1:     0     0    -3 2026-04-08 06:03:06        1           0           0
-#> 2:     1     1    -7 2026-04-08 06:03:06        2           1           1
+#> 1:     0     0    -3 2026-06-12 16:20:43        1           0           0
+#> 2:     1     1    -7 2026-06-12 16:20:43        2           1           1
 
 # best performing configuration
 instance$result

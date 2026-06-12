@@ -24,8 +24,8 @@ to freeze the archive after the optimization has finished.
 
 ## Super classes
 
-[`bbotk::Archive`](https://bbotk.mlr-org.com/reference/Archive.md) -\>
-[`bbotk::ArchiveAsync`](https://bbotk.mlr-org.com/reference/ArchiveAsync.md)
+[`Archive`](https://bbotk.mlr-org.com/reference/Archive.md) -\>
+[`ArchiveAsync`](https://bbotk.mlr-org.com/reference/ArchiveAsync.md)
 -\> `ArchiveAsyncFrozen`
 
 ## Active bindings
@@ -84,7 +84,7 @@ to freeze the archive after the optimization has finished.
 
 ### Public methods
 
-- [`ArchiveAsyncFrozen$new()`](#method-ArchiveAsyncFrozen-new)
+- [`ArchiveAsyncFrozen$new()`](#method-ArchiveAsyncFrozen-initialize)
 
 - [`ArchiveAsyncFrozen$push_points()`](#method-ArchiveAsyncFrozen-push_points)
 
@@ -104,15 +104,15 @@ to freeze the archive after the optimization has finished.
 
 Inherited methods
 
-- [`bbotk::Archive$format()`](https://bbotk.mlr-org.com/reference/Archive.html#method-format)
-- [`bbotk::Archive$help()`](https://bbotk.mlr-org.com/reference/Archive.html#method-help)
-- [`bbotk::Archive$print()`](https://bbotk.mlr-org.com/reference/Archive.html#method-print)
-- [`bbotk::ArchiveAsync$best()`](https://bbotk.mlr-org.com/reference/ArchiveAsync.html#method-best)
-- [`bbotk::ArchiveAsync$nds_selection()`](https://bbotk.mlr-org.com/reference/ArchiveAsync.html#method-nds_selection)
+- [`Archive$format()`](https://bbotk.mlr-org.com/reference/Archive.html#method-format)
+- [`Archive$help()`](https://bbotk.mlr-org.com/reference/Archive.html#method-help)
+- [`Archive$print()`](https://bbotk.mlr-org.com/reference/Archive.html#method-print)
+- [`ArchiveAsync$best()`](https://bbotk.mlr-org.com/reference/ArchiveAsync.html#method-best)
+- [`ArchiveAsync$nds_selection()`](https://bbotk.mlr-org.com/reference/ArchiveAsync.html#method-nds_selection)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `ArchiveAsyncFrozen$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -130,7 +130,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `push_points()`
+### `ArchiveAsyncFrozen$push_points()`
 
 Push queued points to the archive.
 
@@ -147,7 +147,7 @@ Push queued points to the archive.
 
 ------------------------------------------------------------------------
 
-### Method `pop_point()`
+### `ArchiveAsyncFrozen$pop_point()`
 
 Pop a point from the queue.
 
@@ -157,7 +157,7 @@ Pop a point from the queue.
 
 ------------------------------------------------------------------------
 
-### Method `push_running_point()`
+### `ArchiveAsyncFrozen$push_running_point()`
 
 Push running point to the archive.
 
@@ -179,7 +179,7 @@ Push running point to the archive.
 
 ------------------------------------------------------------------------
 
-### Method `push_result()`
+### `ArchiveAsyncFrozen$push_result()`
 
 Push result to the archive.
 
@@ -211,7 +211,7 @@ Push result to the archive.
 
 ------------------------------------------------------------------------
 
-### Method `push_failed_point()`
+### `ArchiveAsyncFrozen$push_failed_point()`
 
 Push failed point to the archive.
 
@@ -233,7 +233,7 @@ Push failed point to the archive.
 
 ------------------------------------------------------------------------
 
-### Method `data_with_state()`
+### `ArchiveAsyncFrozen$data_with_state()`
 
 Fetch points with a specific state.
 
@@ -266,7 +266,7 @@ Fetch points with a specific state.
 
 ------------------------------------------------------------------------
 
-### Method `clear()`
+### `ArchiveAsyncFrozen$clear()`
 
 Clear all evaluation results from archive.
 
@@ -276,7 +276,7 @@ Clear all evaluation results from archive.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `ArchiveAsyncFrozen$clone()`
 
 The objects of this class are cloneable with this method.
 
@@ -346,76 +346,76 @@ instance$archive$best()
 # covert to data.table
 as.data.table(instance$archive)
 }
-#>        state          x1          x2           y        timestamp_xs
-#>       <char>       <num>       <num>       <num>              <POSc>
-#>  1: finished  0.79964108  4.44173718  -46.820314 2026-04-08 06:02:37
-#>  2: finished  1.97171934  0.98977706   -5.919121 2026-04-08 06:02:37
-#>  3: finished -8.74678495  2.85974125 -139.829954 2026-04-08 06:02:37
-#>  4: finished -8.86620125 -0.52683197 -114.190890 2026-04-08 06:02:38
-#>  5: finished  0.07174052  2.66149936  -25.770760 2026-04-08 06:02:38
-#>  6: finished -7.51773958 -3.62287586  -80.975341 2026-04-08 06:02:38
-#>  7: finished  5.70333065 -4.08089324   -4.882988 2026-04-08 06:02:38
-#>  8: finished -6.10767685  3.07812258  -92.677998 2026-04-08 06:02:38
-#>  9: finished  9.84218962  4.26953198 -104.346033 2026-04-08 06:02:38
-#> 10: finished -9.43527839  3.90120726 -168.392253 2026-04-08 06:02:38
-#> 11: finished  7.50436097 -0.05695712  -28.959491 2026-04-08 06:02:38
-#> 12: finished -0.84870267 -1.03129050   -1.990924 2026-04-08 06:02:38
-#> 13: finished -0.03656525  0.22023930   -4.517539 2026-04-08 06:02:38
-#> 14: finished -8.26350117  0.25491344 -105.933918 2026-04-08 06:02:38
-#> 15: finished -2.40412588 -0.01124492  -18.328982 2026-04-08 06:02:38
-#> 16: finished  2.25513226  4.70309719  -49.402799 2026-04-08 06:02:38
-#> 17: finished -6.33460185 -3.98131188  -60.428561 2026-04-08 06:02:38
-#> 18: finished -7.94145157 -0.13848943  -97.020702 2026-04-08 06:02:38
-#> 19: finished -9.00099977  2.14240782 -137.466354 2026-04-08 06:02:38
-#> 20: finished -5.83602346 -2.01183452  -52.379735 2026-04-08 06:02:38
-#>        state          x1          x2           y        timestamp_xs
-#>       <char>       <num>       <num>       <num>              <POSc>
+#>        state          x1         x2           y        timestamp_xs
+#>       <char>       <num>      <num>       <num>              <POSc>
+#>  1: finished -6.21358293  0.2769503  -68.201348 2026-06-12 16:20:12
+#>  2: finished -2.62264757  4.2779729  -64.337761 2026-06-12 16:20:12
+#>  3: finished  6.84682656  3.2309502  -52.316468 2026-06-12 16:20:12
+#>  4: finished -1.96786549 -3.4438612   -5.940969 2026-06-12 16:20:12
+#>  5: finished -9.86571338  2.5243351 -161.313432 2026-06-12 16:20:12
+#>  6: finished  0.01208465  3.1304511  -31.534238 2026-06-12 16:20:12
+#>  7: finished -4.77998488  1.4299587  -55.592729 2026-06-12 16:20:12
+#>  8: finished  7.57503606  1.3830058  -40.291767 2026-06-12 16:20:12
+#>  9: finished  8.01326577 -2.8537699  -26.180748 2026-06-12 16:20:12
+#> 10: finished  5.39871055  2.9134685  -36.520343 2026-06-12 16:20:12
+#> 11: finished  4.82894640 -0.2106949   -5.783161 2026-06-12 16:20:12
+#> 12: finished  2.92831418 -0.4491262    2.631276 2026-06-12 16:20:12
+#> 13: finished -2.48881904  1.6091926  -31.394153 2026-06-12 16:20:12
+#> 14: finished  2.11332211  1.0427817   -6.356925 2026-06-12 16:20:12
+#> 15: finished  0.87403046  4.3072392  -44.663553 2026-06-12 16:20:12
+#> 16: finished -5.88500581 -0.9916228  -56.206896 2026-06-12 16:20:12
+#> 17: finished  4.08136954  3.9785972  -43.032918 2026-06-12 16:20:12
+#> 18: finished -7.80489880 -3.6260806  -86.528017 2026-06-12 16:20:12
+#> 19: finished -9.37102033 -3.4632716 -119.514724 2026-06-12 16:20:12
+#> 20: finished  5.22167868  0.7561287  -14.487716 2026-06-12 16:20:12
+#>        state          x1         x2           y        timestamp_xs
+#>       <char>       <num>      <num>       <num>              <POSc>
 #>                             worker_id        timestamp_ys
 #>                                <char>              <POSc>
-#>  1: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:37
-#>  2: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:37
-#>  3: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:37
-#>  4: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#>  5: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#>  6: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#>  7: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#>  8: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#>  9: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 10: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 11: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 12: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 13: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 14: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 15: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 16: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 17: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 18: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 19: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
-#> 20: artsycraftsy_easteuropeanshepherd 2026-04-08 06:02:38
+#>  1: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  2: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  3: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  4: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  5: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  6: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  7: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  8: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  9: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 10: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 11: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 12: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 13: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 14: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 15: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 16: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 17: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 18: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 19: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#> 20: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
 #>                             worker_id        timestamp_ys
 #>                                <char>              <POSc>
 #>                                     keys x_domain_x1 x_domain_x2
 #>                                   <char>       <num>       <num>
-#>  1: 0ad92a16-9db7-4148-97c6-f8cbf8733a87  0.79964108  4.44173718
-#>  2: 990410c2-a0a8-4bd2-a746-af3f2fb38c67  1.97171934  0.98977706
-#>  3: ee64a640-ed2a-4513-afa1-8c755d80f204 -8.74678495  2.85974125
-#>  4: 367e6eae-f42e-4b6a-865f-a99cd9b011ff -8.86620125 -0.52683197
-#>  5: 747dc23e-809f-41a1-85f5-0b63ef4eae28  0.07174052  2.66149936
-#>  6: cceddb5a-d3ae-4742-9970-812068861a29 -7.51773958 -3.62287586
-#>  7: fdd79f2e-ddcf-4e06-ab36-0e5ecf692102  5.70333065 -4.08089324
-#>  8: 93a55ddf-c2ac-4a31-bc8a-c06c7841d7fa -6.10767685  3.07812258
-#>  9: 91b2dab1-2dff-44ef-bf35-54c54fe4adb4  9.84218962  4.26953198
-#> 10: c9df27af-b71d-4293-a947-91f68618b646 -9.43527839  3.90120726
-#> 11: 1a760839-f289-421b-8cb1-0ab75683fa75  7.50436097 -0.05695712
-#> 12: 7e707bf2-a110-493c-911f-b24fe699708f -0.84870267 -1.03129050
-#> 13: 1ea63297-4dd8-4808-b17d-86551c2932c6 -0.03656525  0.22023930
-#> 14: 5f8057d3-a6b7-4ef3-b5ec-8e29a3d265ea -8.26350117  0.25491344
-#> 15: 1ee221f7-5986-4989-a293-567b03e6977a -2.40412588 -0.01124492
-#> 16: 19d4243d-81f8-40aa-b28b-74118812e733  2.25513226  4.70309719
-#> 17: c58cb43d-3b8d-49e9-aa63-3026dca65c72 -6.33460185 -3.98131188
-#> 18: 3a18faa6-045d-4db1-b355-50bdf771196a -7.94145157 -0.13848943
-#> 19: d57529c7-e63b-4143-ab8b-9fe1eece2441 -9.00099977  2.14240782
-#> 20: bab887da-ae2e-409b-947c-296412ada3bd -5.83602346 -2.01183452
+#>  1: 3999d406-05c4-449c-914c-57c1202bffc5 -6.21358293   0.2769503
+#>  2: eb845170-142f-49fa-acf3-13f599b9acd6 -2.62264757   4.2779729
+#>  3: 1b02937f-c465-4896-892c-490f97d8015d  6.84682656   3.2309502
+#>  4: 06222ac7-8d03-40d2-8e4c-cf76dbf7b739 -1.96786549  -3.4438612
+#>  5: e16851a4-7e54-42f2-918a-804a3821a52d -9.86571338   2.5243351
+#>  6: dfe29689-bfa6-40c0-8185-1db3b80c7066  0.01208465   3.1304511
+#>  7: 9d26947b-4cca-45f5-93d1-2f06498957d3 -4.77998488   1.4299587
+#>  8: d58642fe-6fd7-4bef-b629-939835b4ff30  7.57503606   1.3830058
+#>  9: db8a0f38-ffd5-4b11-b839-5293aeca8ab0  8.01326577  -2.8537699
+#> 10: 24b12c45-4038-4d0f-89c9-d20f97a35b88  5.39871055   2.9134685
+#> 11: 2a6dda98-54f6-4185-8a4d-d4ec806bde56  4.82894640  -0.2106949
+#> 12: 62892e26-e50f-401b-b62b-7f6486a723ac  2.92831418  -0.4491262
+#> 13: af53ec3d-55bf-4b46-88fe-d5a3adfa2d30 -2.48881904   1.6091926
+#> 14: 49d773ae-055d-4171-88f7-fb92ef5c294d  2.11332211   1.0427817
+#> 15: a028d733-12c8-4286-93e2-cd847068ad5b  0.87403046   4.3072392
+#> 16: 34067348-6975-4ea0-8a1d-a8ae7b10e295 -5.88500581  -0.9916228
+#> 17: 038ad92e-1e17-4423-b022-c17e7fcbb18d  4.08136954   3.9785972
+#> 18: cfb0005e-8fb7-4283-89ec-ff61e6fea163 -7.80489880  -3.6260806
+#> 19: f60ee1fb-969b-4c2a-9f87-b941a64681d0 -9.37102033  -3.4632716
+#> 20: 56872b29-451b-44a3-bf69-916a8233dc2b  5.22167868   0.7561287
 #>                                     keys x_domain_x1 x_domain_x2
 #>                                   <char>       <num>       <num>
 ```

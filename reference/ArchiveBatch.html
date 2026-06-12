@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Data Table Storage — ArchiveBatch"><meta name="description" content="The ArchiveBatch stores all evaluated points and performance scores in a data.table::data.table()."><meta property="og:description" content="The ArchiveBatch stores all evaluated points and performance scores in a data.table::data.table()."></head><body>
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Data Table Storage — ArchiveBatch"><meta name="description" content="The ArchiveBatch stores all evaluated points and performance scores in a data.table::data.table()."><meta property="og:description" content="The ArchiveBatch stores all evaluated points and performance scores in a data.table::data.table()."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,7 @@ The <code>x_domain</code> column is unnested to separate columns.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
-    <p><code><a href="Archive.html">bbotk::Archive</a></code> -&gt; <code>ArchiveBatch</code></p>
+    <p><code><a href="Archive.html">Archive</a></code> -&gt; <code>ArchiveBatch</code></p>
     </div>
     <div class="section level2">
     <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
@@ -74,9 +74,10 @@ The <code>x_domain</code> column is unnested to separate columns.</p></li>
 Contains all performed <a href="Objective.html">Objective</a> function calls.</p></dd>
 
 
-<dt><code>data_extra</code></dt>
+    <dt><code>data_extra</code></dt>
 <dd><p>(named <code>list</code>)<br>
-Data created by specific <code><a href="Optimizer.html">Optimizer</a></code>s that does not relate to any individual function evaluation and can therefore not be held in <code>$data</code>.
+Data created by specific <code><a href="Optimizer.html">Optimizer</a></code>s that does not relate to any individual function evaluation
+and can therefore not be held in <code>$data</code>.
 Every optimizer should create and refer to its own entry in this list, named by its <code><a href="https://rdrr.io/r/base/class.html" class="external-link">class()</a></code>.</p></dd>
 
 
@@ -89,7 +90,7 @@ Every optimizer should create and refer to its own entry in this list, named by 
 Number of evaluations stored in the archive.</p></dd>
 
 
-<dt><code>n_batch</code></dt>
+    <dt><code>n_batch</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Number of batches stored in the archive.</p></dd>
 
@@ -101,24 +102,21 @@ Number of batches stored in the archive.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-ArchiveBatch-new"><code>ArchiveBatch$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-ArchiveBatch-initialize"><code>ArchiveBatch$new()</code></a></p></li>
 <li><p><a href="#method-ArchiveBatch-add_evals"><code>ArchiveBatch$add_evals()</code></a></p></li>
 <li><p><a href="#method-ArchiveBatch-best"><code>ArchiveBatch$best()</code></a></p></li>
 <li><p><a href="#method-ArchiveBatch-nds_selection"><code>ArchiveBatch$nds_selection()</code></a></p></li>
 <li><p><a href="#method-ArchiveBatch-clear"><code>ArchiveBatch$clear()</code></a></p></li>
 <li><p><a href="#method-ArchiveBatch-clone"><code>ArchiveBatch$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href="Archive.html#method-format"><code>bbotk::Archive$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href="Archive.html#method-help"><code>bbotk::Archive$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href="Archive.html#method-print"><code>bbotk::Archive$print()</code></a></span></li>
-</ul></details></p><hr><a id="method-ArchiveBatch-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href="Archive.html#method-format"><code>Archive$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href="Archive.html#method-help"><code>Archive$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href="Archive.html#method-print"><code>Archive$print()</code></a></span></li>
+</ul></details></p><hr><a id="method-ArchiveBatch-initialize"></a><div class="section">
+<h3 id="archivebatch-new-"><code>ArchiveBatch$new()</code><a class="anchor" aria-label="anchor" href="#archivebatch-new-"></a></h3>
 <p>Creates a new instance of this <a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6</a> class.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/ArchiveBatch.html">ArchiveBatch</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">search_space</span>, <span class="va">codomain</span>, check_values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>search_space</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
@@ -128,15 +126,13 @@ a set of parameters together with a <code>trafo</code> function that transforms 
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.</p></dd>
 
-
-<dt><code>codomain</code></dt>
+      <dt><code>codomain</code></dt>
 <dd><p>(<a href="https://paradox.mlr-org.com/reference/ParamSet.html" class="external-link">paradox::ParamSet</a>)<br>
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.</p></dd>
 
-
-<dt><code>check_values</code></dt>
+      <dt><code>check_values</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should x-values that are added to the archive be checked for validity?
 Search space that is logged into archive.</p></dd>
@@ -145,14 +141,14 @@ Search space that is logged into archive.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveBatch-add_evals"></a><div class="section">
-<h3 id="method-add-evals-">Method <code>add_evals()</code><a class="anchor" aria-label="anchor" href="#method-add-evals-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveBatch-add_evals"></a><div class="section">
+<h3 id="archivebatch-add-evals-"><code>ArchiveBatch$add_evals()</code><a class="anchor" aria-label="anchor" href="#archivebatch-add-evals-"></a></h3>
 <p>Adds function evaluations to the archive table.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveBatch</span><span class="op">$</span><span class="fu">add_evals</span><span class="op">(</span><span class="va">xdt</span>, xss_trafoed <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">ydt</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xdt</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
@@ -161,13 +157,11 @@ One point per row, e.g. <code>data.table(x1 = c(1, 3), x2 = c(2, 4))</code>.
 Column names have to match ids of the <code>search_space</code>.
 However, <code>xdt</code> can contain additional columns.</p></dd>
 
-
-<dt><code>xss_trafoed</code></dt>
+      <dt><code>xss_trafoed</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
 Transformed point(s) in the <em>domain space</em>.</p></dd>
 
-
-<dt><code>ydt</code></dt>
+      <dt><code>ydt</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code>)<br>
 Optimal outcome.</p></dd>
 
@@ -175,30 +169,28 @@ Optimal outcome.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveBatch-best"></a><div class="section">
-<h3 id="method-best-">Method <code>best()</code><a class="anchor" aria-label="anchor" href="#method-best-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveBatch-best"></a><div class="section">
+<h3 id="archivebatch-best-"><code>ArchiveBatch$best()</code><a class="anchor" aria-label="anchor" href="#archivebatch-best-"></a></h3>
 <p>Returns the best scoring evaluation(s).
 For single-crit optimization, the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveBatch</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span>batch <span class="op">=</span> <span class="cn">NULL</span>, n_select <span class="op">=</span> <span class="fl">1L</span>, ties_method <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>batch</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 The batch number(s) to limit the best results to.
 Default is all batches.</p></dd>
 
-
-<dt><code>n_select</code></dt>
+      <dt><code>n_select</code></dt>
 <dd><p>(<code>integer(1L)</code>)<br>
 Amount of points to select.
 Ignored for multi-crit optimization.</p></dd>
 
-
-<dt><code>ties_method</code></dt>
+      <dt><code>ties_method</code></dt>
 <dd><p>(<code>character(1L)</code>)<br>
 Method to break ties when multiple points have the same score.
 Either <code>"first"</code> (default) or <code>"random"</code>.
@@ -207,60 +199,57 @@ If <code>n_select &gt; 1L</code>, the tie method is ignored and the first point 
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p><code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code></p>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveBatch-nds_selection"></a><div class="section">
-<h3 id="method-nds-selection-">Method <code><a href="nds_selection.html">nds_selection()</a></code><a class="anchor" aria-label="anchor" href="#method-nds-selection-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveBatch-nds_selection"></a><div class="section">
+<h3 id="archivebatch-nds-selection-"><code>ArchiveBatch$nds_selection()</code><a class="anchor" aria-label="anchor" href="#archivebatch-nds-selection-"></a></h3>
 <p>Calculate best points w.r.t. non dominated sorting with hypervolume contribution.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveBatch</span><span class="op">$</span><span class="fu">nds_selection</span><span class="op">(</span>batch <span class="op">=</span> <span class="cn">NULL</span>, n_select <span class="op">=</span> <span class="fl">1</span>, ref_point <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>batch</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 The batch number(s) to limit the best points to. Default is
 all batches.</p></dd>
 
-
-<dt><code>n_select</code></dt>
+      <dt><code>n_select</code></dt>
 <dd><p>(<code>integer(1L)</code>)<br>
 Amount of points to select.</p></dd>
 
-
-<dt><code>ref_point</code></dt>
+      <dt><code>ref_point</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code>)<br>
 Reference point for hypervolume.</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p><code><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table()</a></code></p>
 </div>
 
-</div><p></p><hr><a id="method-ArchiveBatch-clear"></a><div class="section">
-<h3 id="method-clear-">Method <code>clear()</code><a class="anchor" aria-label="anchor" href="#method-clear-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-ArchiveBatch-clear"></a><div class="section">
+<h3 id="archivebatch-clear-"><code>ArchiveBatch$clear()</code><a class="anchor" aria-label="anchor" href="#archivebatch-clear-"></a></h3>
 <p>Clear all evaluation results from archive.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveBatch</span><span class="op">$</span><span class="fu">clear</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-ArchiveBatch-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-ArchiveBatch-clone"></a><div class="section">
+<h3 id="archivebatch-clone-"><code>ArchiveBatch$clone()</code><a class="anchor" aria-label="anchor" href="#archivebatch-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveBatch</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -270,6 +259,7 @@ Reference point for hypervolume.</p></dd>
 </div>
 
 </div>
+
 
     </div>
 
@@ -319,26 +309,26 @@ Reference point for hypervolume.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;ArchiveBatch&gt;</span><span style="font-weight: bold;"> - Data Table Storage</span> <span style="color: #00BBBB;">─────────────────────────────────────────</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;num&gt; &lt;num&gt; &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:   4.7  2.73   -30 2026-04-08 06:02:39        1         4.7        2.73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:   7.5 -3.25   -20 2026-04-08 06:02:39        2         7.5       -3.25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  -9.3 -1.80  -119 2026-04-08 06:02:39        3        -9.3       -1.80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  -2.0 -3.04    -6 2026-04-08 06:02:39        4        -2.0       -3.04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  -1.9 -4.36    -7 2026-04-08 06:02:39        5        -1.9       -4.36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  -2.2  4.76   -68 2026-04-08 06:02:39        6        -2.2        4.76</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  -4.2  1.78   -51 2026-04-08 06:02:39        7        -4.2        1.78</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   4.7 -3.04     3 2026-04-08 06:02:39        8         4.7       -3.04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:   9.6  2.42   -77 2026-04-08 06:02:39        9         9.6        2.42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  -9.0  0.30  -121 2026-04-08 06:02:39       10        -9.0        0.30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:   3.9  1.89   -18 2026-04-08 06:02:39       11         3.9        1.89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  -9.4 -2.74  -119 2026-04-08 06:02:39       12        -9.4       -2.74</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:  -4.0  1.36   -45 2026-04-08 06:02:39       13        -4.0        1.36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:  -0.4 -0.68    -1 2026-04-08 06:02:39       14        -0.4       -0.68</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:   4.1  4.49   -51 2026-04-08 06:02:39       15         4.1        4.49</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:  -6.4 -2.83   -60 2026-04-08 06:02:39       16        -6.4       -2.83</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:   3.6 -0.01    -2 2026-04-08 06:02:39       17         3.6       -0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:   2.8  1.60   -12 2026-04-08 06:02:39       18         2.8        1.60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:  -8.1  2.66  -124 2026-04-08 06:02:39       19        -8.1        2.66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:   5.4  4.91   -64 2026-04-08 06:02:39       20         5.4        4.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:   4.7  2.73   -30 2026-06-12 16:20:13        1         4.7        2.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:   7.5 -3.25   -20 2026-06-12 16:20:13        2         7.5       -3.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:  -9.3 -1.80  -119 2026-06-12 16:20:13        3        -9.3       -1.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:  -2.0 -3.04    -6 2026-06-12 16:20:13        4        -2.0       -3.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:  -1.9 -4.36    -7 2026-06-12 16:20:13        5        -1.9       -4.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:  -2.2  4.76   -68 2026-06-12 16:20:14        6        -2.2        4.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:  -4.2  1.78   -51 2026-06-12 16:20:14        7        -4.2        1.78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   4.7 -3.04     3 2026-06-12 16:20:14        8         4.7       -3.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:   9.6  2.42   -77 2026-06-12 16:20:14        9         9.6        2.42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  -9.0  0.30  -121 2026-06-12 16:20:14       10        -9.0        0.30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:   3.9  1.89   -18 2026-06-12 16:20:14       11         3.9        1.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:  -9.4 -2.74  -119 2026-06-12 16:20:14       12        -9.4       -2.74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:  -4.0  1.36   -45 2026-06-12 16:20:14       13        -4.0        1.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14:  -0.4 -0.68    -1 2026-06-12 16:20:14       14        -0.4       -0.68</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:   4.1  4.49   -51 2026-06-12 16:20:14       15         4.1        4.49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16:  -6.4 -2.83   -60 2026-06-12 16:20:14       16        -6.4       -2.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:   3.6 -0.01    -2 2026-06-12 16:20:14       17         3.6       -0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:   2.8  1.60   -12 2026-06-12 16:20:14       18         2.8        1.60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19:  -8.1  2.66  -124 2026-06-12 16:20:14       19        -8.1        2.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:   5.4  4.91   -64 2026-06-12 16:20:14       20         5.4        4.91</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;num&gt; &lt;num&gt; &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;       &lt;num&gt;</span>
 <span class="r-in"><span></span></span>
@@ -346,32 +336,32 @@ Reference point for hypervolume.</p></dd>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">$</span><span class="fu">best</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          x1        x2        y  x_domain           timestamp batch_nr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;num&gt;     &lt;num&gt;    &lt;num&gt;    &lt;list&gt;              &lt;POSc&gt;    &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 4.706392 -3.040433 2.673808 &lt;list[2]&gt; 2026-04-08 06:02:39        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 4.706392 -3.040433 2.673808 &lt;list[2]&gt; 2026-06-12 16:20:14        8</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># covert to data.table</span></span></span>
 <span class="r-in"><span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            x1          x2           y           timestamp batch_nr x_domain_x1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;       &lt;num&gt;       &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  4.657640  2.72521511  -29.841137 2026-04-08 06:02:39        1    4.657640</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  7.492013 -3.25059373  -20.225006 2026-04-08 06:02:39        2    7.492013</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -9.315173 -1.79614269 -119.482420 2026-04-08 06:02:39        3   -9.315173</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -1.953435 -3.04330165   -5.631525 2026-04-08 06:02:39        4   -1.953435</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -1.929238 -4.36338543   -7.297728 2026-04-08 06:02:39        5   -1.929238</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -2.225974  4.75547835  -68.006298 2026-04-08 06:02:39        6   -2.225974</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -4.202154  1.78380427  -51.351499 2026-04-08 06:02:39        7   -4.202154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  4.706392 -3.04043267    2.673808 2026-04-08 06:02:39        8    4.706392</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  9.610793  2.41521529  -77.248734 2026-04-08 06:02:39        9    9.610793</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -8.971074  0.30212464 -121.268502 2026-04-08 06:02:39       10   -8.971074</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  3.916478  1.88556003  -17.541583 2026-04-08 06:02:39       11    3.916478</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: -9.375393 -2.74437465 -119.464921 2026-04-08 06:02:39       12   -9.375393</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: -3.983384  1.36465615  -44.851106 2026-04-08 06:02:39       13   -3.983384</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: -0.419509 -0.67828742   -1.244373 2026-04-08 06:02:39       14   -0.419509</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:  4.128677  4.48576576  -50.567954 2026-04-08 06:02:39       15    4.128677</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: -6.393225 -2.83100124  -60.474780 2026-04-08 06:02:39       16   -6.393225</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:  3.603258 -0.01154389   -1.501307 2026-04-08 06:02:39       17    3.603258</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:  2.833587  1.60284349  -11.881035 2026-04-08 06:02:39       18    2.833587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: -8.079517  2.65600164 -123.587014 2026-04-08 06:02:39       19   -8.079517</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:  5.393496  4.90712312  -64.038412 2026-04-08 06:02:39       20    5.393496</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:  4.657640  2.72521511  -29.841137 2026-06-12 16:20:13        1    4.657640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:  7.492013 -3.25059373  -20.225006 2026-06-12 16:20:13        2    7.492013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: -9.315173 -1.79614269 -119.482420 2026-06-12 16:20:13        3   -9.315173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: -1.953435 -3.04330165   -5.631525 2026-06-12 16:20:13        4   -1.953435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: -1.929238 -4.36338543   -7.297728 2026-06-12 16:20:13        5   -1.929238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: -2.225974  4.75547835  -68.006298 2026-06-12 16:20:14        6   -2.225974</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: -4.202154  1.78380427  -51.351499 2026-06-12 16:20:14        7   -4.202154</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:  4.706392 -3.04043267    2.673808 2026-06-12 16:20:14        8    4.706392</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  9.610793  2.41521529  -77.248734 2026-06-12 16:20:14        9    9.610793</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: -8.971074  0.30212464 -121.268502 2026-06-12 16:20:14       10   -8.971074</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:  3.916478  1.88556003  -17.541583 2026-06-12 16:20:14       11    3.916478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: -9.375393 -2.74437465 -119.464921 2026-06-12 16:20:14       12   -9.375393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: -3.983384  1.36465615  -44.851106 2026-06-12 16:20:14       13   -3.983384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: -0.419509 -0.67828742   -1.244373 2026-06-12 16:20:14       14   -0.419509</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15:  4.128677  4.48576576  -50.567954 2026-06-12 16:20:14       15    4.128677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: -6.393225 -2.83100124  -60.474780 2026-06-12 16:20:14       16   -6.393225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17:  3.603258 -0.01154389   -1.501307 2026-06-12 16:20:14       17    3.603258</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18:  2.833587  1.60284349  -11.881035 2026-06-12 16:20:14       18    2.833587</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: -8.079517  2.65600164 -123.587014 2026-06-12 16:20:14       19   -8.079517</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20:  5.393496  4.90712312  -64.038412 2026-06-12 16:20:14       20    5.393496</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            x1          x2           y           timestamp batch_nr x_domain_x1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;num&gt;       &lt;num&gt;       &lt;num&gt;              &lt;POSc&gt;    &lt;int&gt;       &lt;num&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     x_domain_x2</span>

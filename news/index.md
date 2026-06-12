@@ -1,5 +1,19 @@
 # Changelog
 
+## bbotk 1.10.1
+
+- refactor:
+  [`is_dominated()`](https://bbotk.mlr-org.com/reference/is_dominated.md)
+  now uses
+  [`moocore::is_nondominated()`](https://multi-objective.github.io/moocore/r/reference/nondominated.html)
+  internally instead of a custom C implementation
+  ([\#301](https://github.com/mlr-org/bbotk/issues/301)).
+- refactor: Replace
+  [`emoa::dominated_hypervolume`](https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html)
+  with
+  [`moocore::hypervolume`](https://multi-objective.github.io/moocore/r/reference/hypervolume.html)
+  for computing the hypervolume indicator.
+
 ## bbotk 1.10.0
 
 CRAN release: 2026-04-08
@@ -78,7 +92,7 @@ CRAN release: 2025-06-03
   package.
 - feat: Classes are now printed with the `cli` package.
 - fix: Prevent switching of `xss` and `constants`.
-- fix: Add saveguard on `OptimizerNloptr` bounds.
+- fix: Add safeguard on `OptimizerNloptr` bounds.
 - feat: Allow numerical gradient approximation in `OptimizerNloptr`.
 
 ## bbotk 1.5.0

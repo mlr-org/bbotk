@@ -16,9 +16,9 @@ or
 
 ## Super classes
 
-[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
+[`EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
 -\>
-[`bbotk::OptimInstance`](https://bbotk.mlr-org.com/reference/OptimInstance.md)
+[`OptimInstance`](https://bbotk.mlr-org.com/reference/OptimInstance.md)
 -\> `OptimInstanceBatch`
 
 ## Public fields
@@ -58,7 +58,7 @@ or
 
 ### Public methods
 
-- [`OptimInstanceBatch$new()`](#method-OptimInstanceBatch-new)
+- [`OptimInstanceBatch$new()`](#method-OptimInstanceBatch-initialize)
 
 - [`OptimInstanceBatch$eval_batch()`](#method-OptimInstanceBatch-eval_batch)
 
@@ -68,14 +68,14 @@ or
 
 Inherited methods
 
-- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/reference/EvalInstance.html#method-format)
-- [`bbotk::OptimInstance$assign_result()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-assign_result)
-- [`bbotk::OptimInstance$clear()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-clear)
-- [`bbotk::OptimInstance$print()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-print)
+- [`EvalInstance$format()`](https://bbotk.mlr-org.com/reference/EvalInstance.html#method-format)
+- [`OptimInstance$assign_result()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-assign_result)
+- [`OptimInstance$clear()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-clear)
+- [`OptimInstance$print()`](https://bbotk.mlr-org.com/reference/OptimInstance.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimInstanceBatch$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -149,7 +149,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `eval_batch()`
+### `OptimInstanceBatch$eval_batch()`
 
 Evaluates all input values in `xdt` by calling the
 [Objective](https://bbotk.mlr-org.com/reference/Objective.md). Applies
@@ -178,7 +178,7 @@ is raised. This function should be internally called by the
 
 ------------------------------------------------------------------------
 
-### Method `objective_function()`
+### `OptimInstanceBatch$objective_function()`
 
 Evaluates (untransformed) points of only numeric values. Returns a
 numeric scalar for single-crit or a numeric vector for multi-crit. The
@@ -204,7 +204,7 @@ Objective value as `numeric(1)`, negated for maximization problems.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimInstanceBatch$clone()`
 
 The objects of this class are cloneable with this method.
 

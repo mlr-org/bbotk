@@ -70,8 +70,8 @@ internal termination parameters can be used:
 - `minMeasurableTime`:
 
   `numeric(1)`  
-  Minimum time unit that is still (significantly) measureable. Default
-  is 0.01.
+  Minimum time unit that is still (significantly) measurable. Default is
+  0.01.
 
 ## Initial parameter values
 
@@ -146,29 +146,28 @@ enable with `progressr::handlers("progress")`.
 
 ## Super classes
 
-[`bbotk::Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md)
--\>
-[`bbotk::OptimizerBatch`](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
+[`Optimizer`](https://bbotk.mlr-org.com/reference/Optimizer.md) -\>
+[`OptimizerBatch`](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
 -\> `OptimizerBatchIrace`
 
 ## Methods
 
 ### Public methods
 
-- [`OptimizerBatchIrace$new()`](#method-OptimizerBatchIrace-new)
+- [`OptimizerBatchIrace$new()`](#method-OptimizerBatchIrace-initialize)
 
 - [`OptimizerBatchIrace$clone()`](#method-OptimizerBatchIrace-clone)
 
 Inherited methods
 
-- [`bbotk::Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
-- [`bbotk::Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
-- [`bbotk::Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
-- [`bbotk::OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/reference/OptimizerBatch.html#method-optimize)
+- [`Optimizer$format()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-format)
+- [`Optimizer$help()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-help)
+- [`Optimizer$print()`](https://bbotk.mlr-org.com/reference/Optimizer.html#method-print)
+- [`OptimizerBatch$optimize()`](https://bbotk.mlr-org.com/reference/OptimizerBatch.html#method-optimize)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimizerBatchIrace$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -179,7 +178,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimizerBatchIrace$clone()`
 
 The objects of this class are cloneable with this method.
 
@@ -246,7 +245,12 @@ instance$archive
 instance$result
 # }
 }
-#> # 2026-04-08 06:03:10 UTC: Initialization
+#> 
+#> Attaching package: ‘data.table’
+#> The following object is masked from ‘package:base’:
+#> 
+#>     %notin%
+#> # 2026-06-12 16:20:48 UTC: Initialization
 #> # Elitist race
 #> # Elitist new instances: 1
 #> # Elitist limit: 2
@@ -259,7 +263,7 @@ instance$result
 #> # mu: 5
 #> # deterministic: FALSE
 #> 
-#> # 2026-04-08 06:03:11 UTC: Iteration 1 of 3
+#> # 2026-06-12 16:20:49 UTC: Iteration 1 of 3
 #> # experimentsUsed: 0
 #> # remainingBudget: 96
 #> # currentBudget: 32
@@ -287,10 +291,10 @@ instance$result
 #>   .ID.               x1               x2 .PARENT.
 #> 3    3 6.90606743097305 5.68245559930801       NA
 #> 
-#> # 2026-04-08 06:03:11 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-06-12 16:20:49 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
 #> 3 6.90606743097305 5.68245559930801
-#> # 2026-04-08 06:03:11 UTC: Iteration 2 of 3
+#> # 2026-06-12 16:20:49 UTC: Iteration 2 of 3
 #> # experimentsUsed: 25
 #> # remainingBudget: 71
 #> # currentBudget: 35
@@ -319,11 +323,11 @@ instance$result
 #>   .ID.               x1               x2 .PARENT.
 #> 3    3 6.90606743097305 5.68245559930801       NA
 #> 
-#> # 2026-04-08 06:03:12 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-06-12 16:20:49 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                 x1               x2
 #> 3 6.90606743097305 5.68245559930801
 #> 9 4.69415420056065 4.00789529191280
-#> # 2026-04-08 06:03:12 UTC: Iteration 3 of 3
+#> # 2026-06-12 16:20:49 UTC: Iteration 3 of 3
 #> # experimentsUsed: 46
 #> # remainingBudget: 50
 #> # currentBudget: 50
@@ -352,12 +356,12 @@ instance$result
 #>   .ID.               x1              x2 .PARENT.
 #> 9    9 4.69415420056065 4.0078952919128        3
 #> 
-#> # 2026-04-08 06:03:12 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-06-12 16:20:49 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                  x1               x2
 #> 9  4.69415420056065 4.00789529191280
 #> 3  6.90606743097305 5.68245559930801
 #> 13 3.73045468483188 2.95782390456098
-#> # 2026-04-08 06:03:12 UTC: Iteration 4 of 4
+#> # 2026-06-12 16:20:49 UTC: Iteration 4 of 4
 #> # experimentsUsed: 74
 #> # remainingBudget: 22
 #> # currentBudget: 22
@@ -387,12 +391,12 @@ instance$result
 #>   .ID.               x1              x2 .PARENT.
 #> 9    9 4.69415420056065 4.0078952919128        3
 #> 
-#> # 2026-04-08 06:03:12 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-06-12 16:20:50 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                  x1               x2
 #> 9  4.69415420056065 4.00789529191280
 #> 3  6.90606743097305 5.68245559930801
 #> 13 3.73045468483188 2.95782390456098
-#> # 2026-04-08 06:03:12 UTC: Iteration 5 of 5
+#> # 2026-06-12 16:20:50 UTC: Iteration 5 of 5
 #> # experimentsUsed: 83
 #> # remainingBudget: 13
 #> # currentBudget: 13
@@ -423,12 +427,12 @@ instance$result
 #>    .ID.               x1               x2 .PARENT.
 #> 13   13 3.73045468483188 2.95782390456098        9
 #> 
-#> # 2026-04-08 06:03:12 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-06-12 16:20:50 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                  x1               x2
 #> 13 3.73045468483188 2.95782390456098
 #> 9  4.69415420056065 4.00789529191280
 #> 3  6.90606743097305 5.68245559930801
-#> # 2026-04-08 06:03:12 UTC: Stopped because there is not enough budget left to race more than the minimum (3).
+#> # 2026-06-12 16:20:50 UTC: Stopped because there is not enough budget left to race more than the minimum (3).
 #> # You may either increase the budget or set 'minNbSurvival' to a lower value.
 #> # Iteration: 6
 #> # nbIterations: 6
@@ -438,11 +442,11 @@ instance$result
 #> # currentBudget: 7
 #> # number of elites: 3
 #> # nbConfigurations: 3
-#> # Total CPU user time: 1.835, CPU sys time: 0.011, Wall-clock time: 1.846
-#> # 2026-04-08 06:03:13 UTC: Starting post-selection:
+#> # Total CPU user time: 1.969, CPU sys time: 0.015, Wall-clock time: 1.984
+#> # 2026-06-12 16:20:51 UTC: Starting post-selection:
 #> # Configurations selected: 13, 9, 3, 1.
 #> # Pending instances: 1, 1, 1, 4.
-#> # 2026-04-08 06:03:13 UTC: seed: 1398266631
+#> # 2026-06-12 16:20:51 UTC: seed: 1398266631
 #> # Configurations: 4
 #> # Available experiments: 7
 #> # minSurvival: 1
@@ -473,10 +477,10 @@ instance$result
 #>    .ID.               x1               x2 .PARENT.
 #> 13   13 3.73045468483188 2.95782390456098        9
 #> 
-#> # 2026-04-08 06:03:13 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
+#> # 2026-06-12 16:20:51 UTC: Elite configurations (first number is the configuration ID; listed from best to worst according to the sum of ranks):
 #>                  x1               x2
 #> 13 3.73045468483188 2.95782390456098
-#> # Total CPU user time: 2.221, CPU sys time: 0.018, Wall-clock time: 2.239
+#> # Total CPU user time: 2.343, CPU sys time: 0.021, Wall-clock time: 2.363
 #>          x1       x2 configuration  x_domain        y
 #>       <num>    <num>         <int>    <list>    <num>
 #> 1: 3.730455 2.957824            13 <list[2]> 3.219114

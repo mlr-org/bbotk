@@ -26,7 +26,7 @@ can access the results with active bindings (see below).
 
 ## Super class
 
-[`bbotk::EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
+[`EvalInstance`](https://bbotk.mlr-org.com/reference/EvalInstance.md)
 -\> `OptimInstance`
 
 ## Public fields
@@ -52,7 +52,7 @@ can access the results with active bindings (see below).
 
 ### Public methods
 
-- [`OptimInstance$new()`](#method-OptimInstance-new)
+- [`OptimInstance$new()`](#method-OptimInstance-initialize)
 
 - [`OptimInstance$print()`](#method-OptimInstance-print)
 
@@ -64,11 +64,11 @@ can access the results with active bindings (see below).
 
 Inherited methods
 
-- [`bbotk::EvalInstance$format()`](https://bbotk.mlr-org.com/reference/EvalInstance.html#method-format)
+- [`EvalInstance$format()`](https://bbotk.mlr-org.com/reference/EvalInstance.html#method-format)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `OptimInstance$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -142,7 +142,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `OptimInstance$print()`
 
 Printer.
 
@@ -158,7 +158,7 @@ Printer.
 
 ------------------------------------------------------------------------
 
-### Method `assign_result()`
+### `OptimInstance$assign_result()`
 
 The [Optimizer](https://bbotk.mlr-org.com/reference/Optimizer.md) object
 writes the best found point and estimated performance value here. For
@@ -191,7 +191,7 @@ internal use.
 
 ------------------------------------------------------------------------
 
-### Method `clear()`
+### `OptimInstance$clear()`
 
 Reset terminator and clear all evaluation results from archive and
 results.
@@ -202,7 +202,7 @@ results.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `OptimInstance$clone()`
 
 The objects of this class are cloneable with this method.
 

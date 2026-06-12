@@ -40,14 +40,14 @@ Other Terminator:
 
 ## Super class
 
-[`bbotk::Terminator`](https://bbotk.mlr-org.com/reference/Terminator.md)
--\> `TerminatorPerfReached`
+[`Terminator`](https://bbotk.mlr-org.com/reference/Terminator.md) -\>
+`TerminatorPerfReached`
 
 ## Methods
 
 ### Public methods
 
-- [`TerminatorPerfReached$new()`](#method-TerminatorPerfReached-new)
+- [`TerminatorPerfReached$new()`](#method-TerminatorPerfReached-initialize)
 
 - [`TerminatorPerfReached$is_terminated()`](#method-TerminatorPerfReached-is_terminated)
 
@@ -55,14 +55,14 @@ Other Terminator:
 
 Inherited methods
 
-- [`bbotk::Terminator$format()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-format)
-- [`bbotk::Terminator$print()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-print)
-- [`bbotk::Terminator$remaining_time()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-remaining_time)
-- [`bbotk::Terminator$status()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-status)
+- [`Terminator$format()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-format)
+- [`Terminator$print()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-print)
+- [`Terminator$remaining_time()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-remaining_time)
+- [`Terminator$status()`](https://bbotk.mlr-org.com/reference/Terminator.html#method-status)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `TerminatorPerfReached$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -73,7 +73,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method `is_terminated()`
+### `TerminatorPerfReached$is_terminated()`
 
 Is `TRUE` iff the termination criterion is positive, and `FALSE`
 otherwise.
@@ -94,7 +94,7 @@ otherwise.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `TerminatorPerfReached$clone()`
 
 The objects of this class are cloneable with this method.
 

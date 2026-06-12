@@ -30,7 +30,7 @@ function and stores current progress.
 
 ### Public methods
 
-- [`Progressor$new()`](#method-Progressor-new)
+- [`Progressor$new()`](#method-Progressor-initialize)
 
 - [`Progressor$update()`](#method-Progressor-update)
 
@@ -38,7 +38,7 @@ function and stores current progress.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Progressor$new()`
 
 Creates a new instance of this
 [R6](https://r6.r-lib.org/reference/R6Class.html) class.
@@ -61,7 +61,7 @@ Creates a new instance of this
 
 ------------------------------------------------------------------------
 
-### Method [`update()`](https://rdrr.io/r/stats/update.html)
+### `Progressor$update()`
 
 Updates
 [`progressr::progressor()`](https://progressr.futureverse.org/reference/progressor.html)
@@ -83,7 +83,7 @@ with current steps.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `Progressor$clone()`
 
 The objects of this class are cloneable with this method.
 
