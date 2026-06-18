@@ -4,7 +4,8 @@
 #' Specialized [mlr3misc::Callback] for batch optimization.
 #' Callbacks allow to customize the behavior of processes in bbotk.
 #' The [callback_batch()] function creates a [CallbackBatch].
-#' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
+#' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks]
+#' and can be retrieved with [clbk()].
 #' For more information on optimization callbacks see [callback_batch()].
 #'
 #' @seealso [callback_batch()]
@@ -16,10 +17,10 @@
 #'     saveRDS(context$instance$archive, "archive.rds")
 #'   }
 #' )
-CallbackBatch = R6Class("CallbackBatch",
+CallbackBatch = R6Class(
+  "CallbackBatch",
   inherit = Callback,
   public = list(
-
     #' @field on_optimization_begin (`function()`)\cr
     #'   Stage called at the beginning of the optimization.
     #'   Called in `Optimizer$optimize()`.
@@ -138,23 +139,30 @@ callback_batch = function(
   on_result_end = NULL,
   on_result = NULL,
   on_optimization_end = NULL
-  ) {
-  stages = discard(set_names(list(
-    on_optimization_begin,
-    on_optimizer_before_eval,
-    on_optimizer_after_eval,
-    on_result_begin,
-    on_result_end,
-    on_result,
-    on_optimization_end),
-    c(
-      "on_optimization_begin",
-      "on_optimizer_before_eval",
-      "on_optimizer_after_eval",
-      "on_result_begin",
-      "on_result_end",
-      "on_result",
-      "on_optimization_end")), is.null)
+) {
+  stages = discard(
+    set_names(
+      list(
+        on_optimization_begin,
+        on_optimizer_before_eval,
+        on_optimizer_after_eval,
+        on_result_begin,
+        on_result_end,
+        on_result,
+        on_optimization_end
+      ),
+      c(
+        "on_optimization_begin",
+        "on_optimizer_before_eval",
+        "on_optimizer_after_eval",
+        "on_result_begin",
+        "on_result_end",
+        "on_result",
+        "on_optimization_end"
+      )
+    ),
+    is.null
+  )
 
   if ("on_result" %in% names(stages)) {
     .Deprecated(old = "on_result", new = "on_result_end")

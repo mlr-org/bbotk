@@ -478,7 +478,7 @@ int is_condition_satisfied_helper(int parent_class, SEXP s_parent_col, int i, SE
 }
 
 // Check if a condition is satisfied for a given row
-// whether a confition is satisfied ONLY depends on the value of the parent parameter,
+// whether a condition is satisfied ONLY depends on the value of the parent parameter,
 // not the condition-param itself
 // if the parent parameter is NA the condition is not satisfied, as the parent is non-active
 // (i dont think we want to allow that a subordinate is only active when the super parameter is non-active)

@@ -1,14 +1,7 @@
-
-
 test_that("OptimizerBatchLocalSearch", {
-
-
-  z = test_optimizer_1d("local_search_2", n_searches = 3L, n_neighbors = 10L, n_steps = 10L, 
-    term_evals = 130L)
+  z = test_optimizer_1d("local_search_2", n_searches = 3L, n_neighbors = 10L, n_steps = 10L, term_evals = 130L)
   expect_class(z$optimizer, "OptimizerBatchLocalSearch2")
   expect_snapshot(z$optimizer)
-
-
 })
 
 # test_that("OptimizerBatchLocalSearch mixed hierarchical search space", {

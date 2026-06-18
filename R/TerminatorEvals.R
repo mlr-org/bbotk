@@ -42,10 +42,10 @@
 #'
 #' # (3 * [dimension of search space] + 1) evaluations in total
 #' trm("evals", n_evals = 1, k = 3)
-TerminatorEvals = R6Class("TerminatorEvals",
+TerminatorEvals = R6Class(
+  "TerminatorEvals",
   inherit = Terminator,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -60,7 +60,8 @@ TerminatorEvals = R6Class("TerminatorEvals",
         properties = c("single-crit", "multi-crit"),
         unit = "evaluations",
         label = "Number of Evaluation",
-        man = "bbotk::mlr_terminators_evals")
+        man = "bbotk::mlr_terminators_evals"
+      )
     },
 
     #' @description

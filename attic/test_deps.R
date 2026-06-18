@@ -21,8 +21,8 @@ objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-c
 
 # Create instance
 instance = OptimInstanceBatchSingleCrit$new(
-  objective = objective, 
-  search_space = domain, 
+  objective = objective,
+  search_space = domain,
   terminator = trm("evals", n_evals = 50L)
 )
 
@@ -38,4 +38,4 @@ cat("Best result:\n")
 print(instance$result)
 
 # Check archive
-cat("\nArchive has", instance$archive$n_evals, "evaluations\n") 
+cat("\nArchive has", instance$archive$n_evals, "evaluations\n")

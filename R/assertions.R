@@ -27,7 +27,9 @@ NULL
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_terminator = function(terminator, instance = NULL, null_ok = FALSE) {
-  if (null_ok && is.null(terminator)) return(NULL)
+  if (null_ok && is.null(terminator)) {
+    return(NULL)
+  }
   assert_r6(terminator, "Terminator")
 
   if (!is.null(instance)) {
@@ -51,13 +53,11 @@ assert_terminators = function(terminators) {
 assert_terminable = function(terminator, instance) {
   if ("OptimInstanceBatchMultiCrit" %in% class(instance)) {
     if (!"multi-crit" %in% terminator$properties) {
-      stopf("Terminator '%s' does not support multi-crit optimization",
-        terminator$format())
+      stopf("Terminator '%s' does not support multi-crit optimization", terminator$format())
     }
   } else {
     if (!"single-crit" %in% terminator$properties) {
-      stopf("Terminator '%s' does not support single-crit optimization",
-        terminator$format())
+      stopf("Terminator '%s' does not support single-crit optimization", terminator$format())
     }
   }
 }
@@ -67,9 +67,16 @@ assert_terminable = function(terminator, instance) {
 #' @param empty (`logical(1)`)
 #' @param .var.name (`character(1)`)
 #' @rdname bbotk_assertions
+# nolint next
 assert_set = function(x, empty = TRUE, .var.name = vname(x)) {
-  assert_character(x, min.len = as.integer(!empty), any.missing = FALSE,
-    min.chars = 1L, unique = TRUE, .var.name = .var.name)
+  assert_character(
+    x,
+    min.len = as.integer(!empty),
+    any.missing = FALSE,
+    min.chars = 1L,
+    unique = TRUE,
+    .var.name = .var.name
+  )
 }
 
 #' @export
@@ -77,7 +84,9 @@ assert_set = function(x, empty = TRUE, .var.name = vname(x)) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_optimizer = function(optimizer, null_ok = FALSE) {
-  if (null_ok && is.null(optimizer)) return(NULL)
+  if (null_ok && is.null(optimizer)) {
+    return(NULL)
+  }
   assert_r6(optimizer, "Optimizer")
 }
 
@@ -86,7 +95,9 @@ assert_optimizer = function(optimizer, null_ok = FALSE) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_optimizer_async = function(optimizer, null_ok = FALSE) {
-   if (null_ok && is.null(optimizer)) return(NULL)
+  if (null_ok && is.null(optimizer)) {
+    return(NULL)
+  }
   assert_r6(optimizer, "OptimizerAsync")
 }
 
@@ -95,7 +106,9 @@ assert_optimizer_async = function(optimizer, null_ok = FALSE) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_optimizer_batch = function(optimizer, null_ok = FALSE) {
-  if (null_ok && is.null(optimizer)) return(NULL)
+  if (null_ok && is.null(optimizer)) {
+    return(NULL)
+  }
   assert_r6(optimizer, "OptimizerBatch")
 }
 
@@ -104,7 +117,9 @@ assert_optimizer_batch = function(optimizer, null_ok = FALSE) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_instance = function(inst, null_ok = FALSE) {
-  if (null_ok && is.null(inst)) return(NULL)
+  if (null_ok && is.null(inst)) {
+    return(NULL)
+  }
   assert_r6(inst, "OptimInstance")
 }
 
@@ -112,7 +127,9 @@ assert_instance = function(inst, null_ok = FALSE) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_instance_batch = function(inst, null_ok = FALSE) {
-  if (null_ok && is.null(inst)) return(NULL)
+  if (null_ok && is.null(inst)) {
+    return(NULL)
+  }
   assert_r6(inst, "OptimInstanceBatch")
 }
 
@@ -121,7 +138,9 @@ assert_instance_batch = function(inst, null_ok = FALSE) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_instance_async = function(inst, null_ok = FALSE) {
-  if (null_ok && is.null(inst)) return(NULL)
+  if (null_ok && is.null(inst)) {
+    return(NULL)
+  }
   assert_r6(inst, "OptimInstanceAsync")
 }
 
@@ -139,7 +158,7 @@ assert_instance_properties = function(optimizer, inst) {
     stopf("'%s' does not support multi-crit objectives", optimizer$format())
   }
   if ("single-crit" %nin% optimizer$properties && inst$objective$ydim == 1) {
-    stopf( "'%s' does not support single-crit objectives", optimizer$format())
+    stopf("'%s' does not support single-crit objectives", optimizer$format())
   }
 
   # check dependencies
@@ -150,7 +169,11 @@ assert_instance_properties = function(optimizer, inst) {
   # check supported parameter class
   not_supported_pclasses = setdiff(unique(inst$search_space$class), get_private(optimizer)$.param_classes)
   if (length(not_supported_pclasses) > 0L) {
-    stopf("'%s' does not support param types: '%s'", class(optimizer)[1L], paste0(not_supported_pclasses, collapse = ","))
+    stopf(
+      "'%s' does not support param types: '%s'",
+      class(optimizer)[1L],
+      paste0(not_supported_pclasses, collapse = ",")
+    )
   }
 }
 
@@ -159,7 +182,9 @@ assert_instance_properties = function(optimizer, inst) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_archive = function(archive, null_ok = FALSE) {
-  if (null_ok && is.null(archive)) return(NULL)
+  if (null_ok && is.null(archive)) {
+    return(NULL)
+  }
   assert_r6(archive, "Archive")
 }
 
@@ -168,7 +193,9 @@ assert_archive = function(archive, null_ok = FALSE) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_archive_async = function(archive, null_ok = FALSE) {
-  if (null_ok && is.null(archive)) return(NULL)
+  if (null_ok && is.null(archive)) {
+    return(NULL)
+  }
   assert_r6(archive, "ArchiveAsync")
 }
 
@@ -177,6 +204,8 @@ assert_archive_async = function(archive, null_ok = FALSE) {
 #' @template param_null_ok
 #' @rdname bbotk_assertions
 assert_archive_batch = function(archive, null_ok = FALSE) {
-  if (null_ok && is.null(archive)) return(NULL)
+  if (null_ok && is.null(archive)) {
+    return(NULL)
+  }
   assert_r6(archive, "ArchiveBatch")
 }

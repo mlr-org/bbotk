@@ -7,7 +7,8 @@
 #' @details
 #' `OptimInstance` is an abstract base class that implements the base functionality each instance must provide.
 #' The [Optimizer] writes the final result to the `.result` field by using the `$assign_result()` method.
-#' `.result` stores a [data.table::data.table] consisting of x values in the *search space*, (transformed) x values in the *domain space* and y values in the *codomain space* of the [Objective].
+#' `.result` stores a [data.table::data.table] consisting of x values in the *search space*,
+#' (transformed) x values in the *domain space* and y values in the *codomain space* of the [Objective].
 #' The user can access the results with active bindings (see below).
 #'
 #' @template param_objective
@@ -25,10 +26,10 @@
 #'
 #' @seealso [EvalInstance], [OptimInstanceBatch], [OptimInstanceAsync]
 #' @export
-OptimInstance = R6Class("OptimInstance",
+OptimInstance = R6Class(
+  "OptimInstance",
   inherit = EvalInstance,
   public = list(
-
     progressor = NULL,
 
     #' @description
@@ -42,7 +43,7 @@ OptimInstance = R6Class("OptimInstance",
       archive = NULL,
       label = NA_character_,
       man = NA_character_
-      ) {
+    ) {
       assert_r6(objective, "Objective")
       objective$callbacks = assert_callbacks(as_callbacks(callbacks))
       assert_param_set(search_space)
@@ -73,7 +74,11 @@ OptimInstance = R6Class("OptimInstance",
         cli_li("Search Space:")
       })
       print(as.data.table(self$search_space)[, c("id", "class", "lower", "upper", "nlevels"), with = FALSE])
-      terminator = if (length(self$terminator$param_set$values)) paste0("(", as_short_string(self$terminator$param_set$values), ")") else ""
+      terminator = if (length(self$terminator$param_set$values)) {
+        paste0("(", as_short_string(self$terminator$param_set$values), ")")
+      } else {
+        ""
+      }
       cat_cli(cli_li("Terminator: {.cls {class(self$terminator)[1]}} {terminator}"))
 
       if (!is.null(private$.result)) {
@@ -81,7 +86,7 @@ OptimInstance = R6Class("OptimInstance",
         print(self$result[, c(self$archive$cols_x, self$archive$cols_y), with = FALSE])
         cat_cli(cli_li("Archive:"))
         tab = as.data.table(self$archive)
-        x_domain_ids = names(tab)[grepl("x_domain_" , names(tab))]
+        x_domain_ids = names(tab)[grepl("x_domain_", names(tab))]
         print(tab[, c(self$archive$cols_y, self$archive$cols_x, x_domain_ids), with = FALSE], digits = 1)
       }
     },
@@ -133,7 +138,8 @@ OptimInstance = R6Class("OptimInstance",
     .result = NULL,
 
     deep_clone = function(name, value) {
-      switch(name,
+      switch(
+        name,
         objective = value$clone(deep = TRUE),
         search_space = value$clone(deep = TRUE),
         terminator = value$clone(deep = TRUE),

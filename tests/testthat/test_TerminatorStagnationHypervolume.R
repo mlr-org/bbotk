@@ -1,6 +1,6 @@
-test_that("TerminatorStagnationHypervolume works", {
-  skip_if_not_installed("emoa")
+skip_if_not_installed("moocore")
 
+test_that("TerminatorStagnationHypervolume works", {
   terminator = trm("stagnation_hypervolume")
   terminator$param_set$values$iters = 5
   terminator$param_set$values$threshold = 0
@@ -21,7 +21,6 @@ test_that("TerminatorStagnationHypervolume works", {
 })
 
 test_that("TerminatorStagnationHypervolume errors with direction=0 (learn tag)", {
-
   terminator = trm("stagnation_hypervolume")
   terminator$param_set$values$iters = 1
   codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))

@@ -117,7 +117,7 @@ oi = function(
   callbacks = NULL,
   check_values = TRUE,
   keep_evals = "all"
-  ) {
+) {
   assert_r6(objective, "Objective")
 
   Instance = if (objective$codomain$target_length == 1) OptimInstanceBatchSingleCrit else OptimInstanceBatchMultiCrit
@@ -125,7 +125,42 @@ oi = function(
     objective = objective,
     search_space = search_space,
     terminator = terminator,
-    callbacks = callbacks)
+    callbacks = callbacks
+  )
+}
+
+#' @title Syntactic Sugar for Optimization Test Functions
+#'
+#' @description
+#' This function complements [mlr_test_functions] with functions in the spirit
+#' of `mlr_sugar` from \CRANpkg{mlr3}.
+#'
+#' @param .key (`character(1)`)\cr
+#' Key passed to the respective [dictionary][mlr3misc::Dictionary] to retrieve
+#' the object.
+#' @param .keys (`character()`)\cr
+#' Keys passed to the respective [dictionary][mlr3misc::Dictionary] to retrieve
+#' multiple objects.
+#' @param ... (named `list()`)\cr
+#' Named arguments passed to the constructor. See
+#' [mlr3misc::dictionary_sugar_get()] for more details.
+#'
+#' @return
+#' * [ObjectiveRFun] for `otfun()`.
+#' * list of [ObjectiveRFun] for `otfuns()`.
+#'
+#' @export
+#' @examples
+#' obj = otfun("branin")
+#' obj$eval(list(x1 = 1, x2 = 2))
+otfun = function(.key, ...) {
+  dictionary_sugar_get(mlr_test_functions, .key, ...)
+}
+
+#' @rdname otfun
+#' @export
+otfuns = function(.keys, ...) {
+  dictionary_sugar_mget(mlr_test_functions, .keys, ...)
 }
 
 #' @title Syntactic Sugar for Asynchronous Optimization Instance Construction
@@ -170,7 +205,7 @@ oi = function(
 #' )
 #'
 #' # start workers
-#' rush::rush_plan(worker_type = "remote")
+#' rush::rush_plan(worker_type = "mirai")
 #' mirai::daemons(1)
 #'
 #' # initialize instance
@@ -186,7 +221,7 @@ oi_async = function(
   check_values = FALSE,
   callbacks = NULL,
   rush = NULL
-  ) {
+) {
   assert_r6(objective, "Objective")
 
   Instance = if (objective$codomain$target_length == 1) OptimInstanceAsyncSingleCrit else OptimInstanceAsyncMultiCrit
@@ -196,5 +231,6 @@ oi_async = function(
     terminator = terminator,
     check_values = check_values,
     callbacks = callbacks,
-    rush = rush)
+    rush = rush
+  )
 }

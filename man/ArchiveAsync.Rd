@@ -43,7 +43,7 @@ objective = ObjectiveRFun$new(
 )
 
 # start workers
-rush::rush_plan(worker_type = "remote")
+rush::rush_plan(worker_type = "mirai")
 mirai::daemons(1)
 
 # initialize instance
@@ -72,315 +72,349 @@ instance$rush$reset()
 }
 }
 \section{Super class}{
-\code{\link[bbotk:Archive]{bbotk::Archive}} -> \code{ArchiveAsync}
+\code{\link[bbotk:Archive]{Archive}} -> \code{ArchiveAsync}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{rush}}{(\code{Rush})\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{rush}}{(\code{Rush})\cr
 Rush controller for parallel optimization.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Data table with all finished points.}
 
-\item{\code{queued_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{queued_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Data table with all queued points.}
 
-\item{\code{running_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{running_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Data table with all running points.}
 
-\item{\code{finished_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{finished_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Data table with all finished points.}
 
-\item{\code{failed_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
+    \item{\code{failed_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Data table with all failed points.}
 
-\item{\code{n_queued}}{(\code{integer(1)})\cr
+    \item{\code{n_queued}}{(\code{integer(1)})\cr
 Number of queued points.}
 
-\item{\code{n_running}}{(\code{integer(1)})\cr
+    \item{\code{n_running}}{(\code{integer(1)})\cr
 Number of running points.}
 
-\item{\code{n_finished}}{(\code{integer(1)})\cr
+    \item{\code{n_finished}}{(\code{integer(1)})\cr
 Number of finished points.}
 
-\item{\code{n_failed}}{(\code{integer(1)})\cr
+    \item{\code{n_failed}}{(\code{integer(1)})\cr
 Number of failed points.}
 
-\item{\code{n_evals}}{(\code{integer(1)})\cr
+    \item{\code{n_evals}}{(\code{integer(1)})\cr
 Number of evaluations stored in the archive.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-ArchiveAsync-new}{\code{ArchiveAsync$new()}}
-\item \href{#method-ArchiveAsync-push_points}{\code{ArchiveAsync$push_points()}}
-\item \href{#method-ArchiveAsync-pop_point}{\code{ArchiveAsync$pop_point()}}
-\item \href{#method-ArchiveAsync-push_running_point}{\code{ArchiveAsync$push_running_point()}}
-\item \href{#method-ArchiveAsync-push_result}{\code{ArchiveAsync$push_result()}}
-\item \href{#method-ArchiveAsync-push_failed_point}{\code{ArchiveAsync$push_failed_point()}}
-\item \href{#method-ArchiveAsync-data_with_state}{\code{ArchiveAsync$data_with_state()}}
-\item \href{#method-ArchiveAsync-best}{\code{ArchiveAsync$best()}}
-\item \href{#method-ArchiveAsync-nds_selection}{\code{ArchiveAsync$nds_selection()}}
-\item \href{#method-ArchiveAsync-clear}{\code{ArchiveAsync$clear()}}
-\item \href{#method-ArchiveAsync-clone}{\code{ArchiveAsync$clone()}}
+  \itemize{
+    \item \href{#method-ArchiveAsync-initialize}{\code{ArchiveAsync$new()}}
+    \item \href{#method-ArchiveAsync-push_points}{\code{ArchiveAsync$push_points()}}
+    \item \href{#method-ArchiveAsync-pop_point}{\code{ArchiveAsync$pop_point()}}
+    \item \href{#method-ArchiveAsync-push_running_point}{\code{ArchiveAsync$push_running_point()}}
+    \item \href{#method-ArchiveAsync-push_result}{\code{ArchiveAsync$push_result()}}
+    \item \href{#method-ArchiveAsync-push_failed_point}{\code{ArchiveAsync$push_failed_point()}}
+    \item \href{#method-ArchiveAsync-push_finished_points}{\code{ArchiveAsync$push_finished_points()}}
+    \item \href{#method-ArchiveAsync-data_with_state}{\code{ArchiveAsync$data_with_state()}}
+    \item \href{#method-ArchiveAsync-best}{\code{ArchiveAsync$best()}}
+    \item \href{#method-ArchiveAsync-nds_selection}{\code{ArchiveAsync$nds_selection()}}
+    \item \href{#method-ArchiveAsync-clear}{\code{ArchiveAsync$clear()}}
+    \item \href{#method-ArchiveAsync-clone}{\code{ArchiveAsync$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>bbotk::Archive$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href='../../bbotk/html/Archive.html#method-Archive-help'><code>bbotk::Archive$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>bbotk::Archive$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>Archive$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href='../../bbotk/html/Archive.html#method-Archive-help'><code>Archive$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>Archive$print()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsync-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsync-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$new(search_space, codomain, check_values = FALSE, rush)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+\if{html}{\out{<a id="method-ArchiveAsync-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-initialize}{}}}
+\subsection{\code{ArchiveAsync$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$new(search_space, codomain, check_values = FALSE, rush)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{search_space}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies the search space for the \link{Optimizer}. The \link[paradox:ParamSet]{paradox::ParamSet}
 describes either a subset of the \code{domain} of the \link{Objective} or it describes
 a set of parameters together with a \code{trafo} function that transforms values
 from the search space to values of the domain. Depending on the context, this
 value defaults to the domain of the objective.}
-
-\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.}
-
-\item{\code{check_values}}{(\code{logical(1)})\cr
+      \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for validity?}
-
-\item{\code{rush}}{(\code{Rush})\cr
+      \item{\code{rush}}{(\code{Rush})\cr
 If a rush instance is supplied, the tuning runs without batches.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-push_points"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_points}{}}}
-\subsection{Method \code{push_points()}}{
-Push queued points to the archive.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_points(xss)}\if{html}{\out{</div>}}
+\subsection{\code{ArchiveAsync$push_points()}}{
+  Push queued points to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_points(xss, extras = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xss}}{(list of named \code{list()})\cr
+List of named lists of point values.}
+      \item{\code{extras}}{(\code{list()})\cr
+List of named lists of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xss}}{(list of named \code{list()})\cr
-List of named lists of point values.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-pop_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-pop_point}{}}}
-\subsection{Method \code{pop_point()}}{
-Pop a point from the queue.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$pop_point()}\if{html}{\out{</div>}}
+\subsection{\code{ArchiveAsync$pop_point()}}{
+  Pop a point from the queue.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$pop_point()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-push_running_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_running_point}{}}}
-\subsection{Method \code{push_running_point()}}{
-Push running point to the archive.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_running_point(xs, extra = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xs}}{(named \code{list})\cr
+\subsection{\code{ArchiveAsync$push_running_point()}}{
+  Push running point to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_running_point(xs, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{(named \code{list})\cr
 Named list of point values.}
-
-\item{\code{extra}}{(\code{list()})\cr
+      \item{\code{extra}}{(\code{list()})\cr
 Named list of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-push_result"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_result}{}}}
-\subsection{Method \code{push_result()}}{
-Push result to the archive.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_result(key, ys, x_domain, extra = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{key}}{(\code{character()})\cr
+\subsection{\code{ArchiveAsync$push_result()}}{
+  Push result to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_result(key, ys, x_domain, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{key}}{(\code{character()})\cr
 Key of the point.}
-
-\item{\code{ys}}{(\code{list()})\cr
+      \item{\code{ys}}{(\code{list()})\cr
 Named list of results.}
-
-\item{\code{x_domain}}{(\code{list()})\cr
+      \item{\code{x_domain}}{(\code{list()})\cr
 Named list of transformed point values.}
-
-\item{\code{extra}}{(\code{list()})\cr
+      \item{\code{extra}}{(\code{list()})\cr
 Named list of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-push_failed_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_failed_point}{}}}
-\subsection{Method \code{push_failed_point()}}{
-Push failed point to the archive.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$push_failed_point(key, message)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{key}}{(\code{character()})\cr
+\subsection{\code{ArchiveAsync$push_failed_point()}}{
+  Push failed point to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_failed_point(key, message)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{key}}{(\code{character()})\cr
 Key of the point.}
-
-\item{\code{message}}{(\code{character()})\cr
+      \item{\code{message}}{(\code{character()})\cr
 Error message.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_finished_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_finished_points}{}}}
+\subsection{\code{ArchiveAsync$push_finished_points()}}{
+  Push finished point to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_finished_points(xss, yss, xss_extra = NULL, yss_extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xss}}{(list of named \code{list()})\cr
+List of named lists of point values.}
+      \item{\code{yss}}{(list of named \code{list()})\cr
+List of named lists of results.}
+      \item{\code{xss_extra}}{(\code{list()})\cr
+List of named lists of additional information.}
+      \item{\code{yss_extra}}{(\code{list()})\cr
+List of named lists of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-data_with_state"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-data_with_state}{}}}
-\subsection{Method \code{data_with_state()}}{
-Fetch points with a specific state.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$data_with_state(
+\subsection{\code{ArchiveAsync$data_with_state()}}{
+  Fetch points with a specific state.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$data_with_state(
   fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
-  states = c("queued", "running", "finished", "failed"),
-  reset_cache = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{fields}}{(\code{character()})\cr
+  states = c("queued", "running", "finished", "failed")
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{fields}}{(\code{character()})\cr
 Fields to fetch.
 Defaults to \code{c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")}.}
-
-\item{\code{states}}{(\code{character()})\cr
+      \item{\code{states}}{(\code{character()})\cr
 States of the tasks to be fetched.
 Defaults to \code{c("queued", "running", "finished", "failed")}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
 
-\item{\code{reset_cache}}{(\code{logical(1)})\cr
-Whether to reset the cache of the finished points.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-best"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-best}{}}}
-\subsection{Method \code{best()}}{
-Returns the best scoring evaluation(s).
+\subsection{\code{ArchiveAsync$best()}}{
+  Returns the best scoring evaluation(s).
 For single-crit optimization, the solution that minimizes / maximizes the objective function.
 For multi-crit optimization, the Pareto set / front.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$best(n_select = 1, ties_method = "first")}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n_select}}{(\code{integer(1L)})\cr
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$best(n_select = 1, ties_method = "first")}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{n_select}}{(\code{integer(1L)})\cr
 Amount of points to select.
 Ignored for multi-crit optimization.}
-
-\item{\code{ties_method}}{(\code{character(1L)})\cr
+      \item{\code{ties_method}}{(\code{character(1L)})\cr
 Method to break ties when multiple points have the same score.
 Either \code{"first"} (default) or \code{"random"}.
 Ignored for multi-crit optimization.
 If \code{n_select > 1L}, the tie method is ignored and the first point is returned.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{\link[data.table:data.table]{data.table::data.table()}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-nds_selection"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-nds_selection}{}}}
-\subsection{Method \code{nds_selection()}}{
-Calculate best points w.r.t. non dominated sorting with hypervolume contribution.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$nds_selection(n_select = 1, ref_point = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n_select}}{(\code{integer(1L)})\cr
+\subsection{\code{ArchiveAsync$nds_selection()}}{
+  Calculate best points w.r.t. non dominated sorting with hypervolume contribution.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$nds_selection(n_select = 1, ref_point = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{n_select}}{(\code{integer(1L)})\cr
 Amount of points to select.}
-
-\item{\code{ref_point}}{(\code{numeric()})\cr
+      \item{\code{ref_point}}{(\code{numeric()})\cr
 Reference point for hypervolume.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{\link[data.table:data.table]{data.table::data.table()}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-clear"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-clear}{}}}
-\subsection{Method \code{clear()}}{
-Clear all evaluation results from archive.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$clear()}\if{html}{\out{</div>}}
+\subsection{\code{ArchiveAsync$clear()}}{
+  Clear all evaluation results from archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$clear()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ArchiveAsync$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{ArchiveAsync$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

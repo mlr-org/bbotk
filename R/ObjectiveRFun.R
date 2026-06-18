@@ -45,10 +45,10 @@
 #'
 #' # evaluate multiple input values as data.table
 #' objective$eval_dt(data.table::data.table(x1 = 1:2, x2 = 3:4))
-ObjectiveRFun = R6Class("ObjectiveRFun",
+ObjectiveRFun = R6Class(
+  "ObjectiveRFun",
   inherit = Objective,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -67,7 +67,7 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
       constants = ps(),
       packages = character(),
       check_values = TRUE
-      ) {
+    ) {
       if (is.null(codomain)) {
         codomain = ps(y = p_dbl(tags = "minimize"))
       }
@@ -82,7 +82,8 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
         packages = packages,
         check_values = check_values,
         label = "Objective Custom R Function",
-        man = "bbotk::ObjectiveRFun")
+        man = "bbotk::ObjectiveRFun"
+      )
     },
 
     #' @description
@@ -90,20 +91,27 @@ ObjectiveRFun = R6Class("ObjectiveRFun",
     #' supplied by the user.
     #' @param xs Input values.
     eval = function(xs) {
-      if (self$check_values) self$domain$assert(xs)
+      if (self$check_values) {
+        self$domain$assert(xs)
+      }
       res = invoke(private$.fun, xs, .args = self$constants$values)
-      if (!test_named(res)) names(res)[seq_len(self$codomain$length)] = self$codomain$ids()
-      if (self$check_values) self$codomain$assert(as.list(res)[self$codomain$ids()])
-      return(res)
+      if (!test_named(res)) {
+        names(res)[seq_len(self$codomain$length)] = self$codomain$ids()
+      }
+      if (self$check_values) {
+        self$codomain$assert(as.list(res)[self$codomain$ids()])
+      }
+      res
     }
   ),
 
   active = list(
-
     #' @field fun (`function`)\cr
     #' Objective function.
     fun = function(lhs) {
-      if (!missing(lhs) && !identical(lhs, private$.fun)) stop("fun is read-only")
+      if (!missing(lhs) && !identical(lhs, private$.fun)) {
+        stop("fun is read-only")
+      }
       private$.fun
     }
   ),

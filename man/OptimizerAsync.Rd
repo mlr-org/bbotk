@@ -21,13 +21,13 @@ Usually, the method proposes new points, evaluates them, and updates the archive
 The \code{\link[rush:rush_plan]{rush::rush_plan()}} function defines the number of workers and their type.
 There are three types of workers:
 \itemize{
-\item "local": Workers are started as local processes with \CRANpkg{processx}.
-See \verb{$start_local_workers()} in \link[rush:Rush]{rush::Rush} for more details.
-\item "remote": Workers are started with \CRANpkg{mirai} on local or remote machines.
+\item "mirai": Workers are started with \CRANpkg{mirai} on local or remote machines.
+See \verb{$start_workers()} in \link[rush:Rush]{Rush} for more details.
 \code{\link[mirai:daemons]{mirai::daemons()}} must be created before starting the optimization.
-See \verb{$start_remote_workers()} in \link[rush:Rush]{rush::Rush} for more details.
+\item "processx": Workers are started as local processes with \CRANpkg{processx}.
+See \verb{$start_local_workers()} in \link[rush:Rush]{Rush} for more details.
 \item "script": Workers are started by the user with a custom script.
-See \verb{$create_worker_script()} in \link[rush:Rush]{rush::Rush} for more details.
+See \verb{$create_worker_script()} in \link[rush:Rush]{Rush} for more details.
 }
 
 The workers are started when the \verb{$optimize()} method is called.
@@ -50,7 +50,8 @@ The debug mode is enabled by setting \code{options(bbotk.debug = TRUE)}.
 \section{Tiny Logging}{
 
 The tiny logging mode is enabled by setting the option \code{bbotk.tiny_logging} to \code{TRUE}.
-In the tiny logging mode, the evaluated points are printed in a compact format and the currently best performing point is shown.
+In the tiny logging mode, the evaluated points are printed in a compact format and the currently best
+performing point is shown.
 Deactivated depending parameters are not printed.
 }
 
@@ -58,62 +59,64 @@ Deactivated depending parameters are not printed.
 \link{OptimizerAsyncDesignPoints}, \link{OptimizerAsyncGridSearch}, \link{OptimizerAsyncRandomSearch}
 }
 \section{Super class}{
-\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{OptimizerAsync}
+\code{\link[bbotk:Optimizer]{Optimizer}} -> \code{OptimizerAsync}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimizerAsync-optimize}{\code{OptimizerAsync$optimize()}}
-\item \href{#method-OptimizerAsync-clone}{\code{OptimizerAsync$clone()}}
+  \itemize{
+    \item \href{#method-OptimizerAsync-optimize}{\code{OptimizerAsync$optimize()}}
+    \item \href{#method-OptimizerAsync-clone}{\code{OptimizerAsync$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="initialize"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-initialize'><code>bbotk::Optimizer$initialize()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="initialize"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-initialize'><code>Optimizer$initialize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>Optimizer$print()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerAsync-optimize"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerAsync-optimize}{}}}
-\subsection{Method \code{optimize()}}{
-Performs the optimization on a \link{OptimInstanceAsyncSingleCrit} or \link{OptimInstanceAsyncMultiCrit} until termination.
+\subsection{\code{OptimizerAsync$optimize()}}{
+  Performs the optimization on a \link{OptimInstanceAsyncSingleCrit} or \link{OptimInstanceAsyncMultiCrit} until termination.
 The single evaluations will be written into the \link{ArchiveAsync}.
 The result will be written into the instance object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsync$optimize(inst)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerAsync$optimize(inst)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{inst}}{(\link{OptimInstanceAsyncSingleCrit} | \link{OptimInstanceAsyncMultiCrit}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{\link[data.table:data.table]{data.table::data.table()}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{inst}}{(\link{OptimInstanceAsyncSingleCrit} | \link{OptimInstanceAsyncMultiCrit}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{\link[data.table:data.table]{data.table::data.table()}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerAsync-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerAsync-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsync$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimizerAsync$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerAsync$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

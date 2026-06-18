@@ -1,13 +1,31 @@
 # bbotk (development version)
 
+* fix: Asynchronous optimization no longer calls the deprecated `rush$fail_tasks()` method when cleaning up after termination.
+  Queued tasks are now removed with `rush$empty_queue()` and running tasks are left to the workers that own them.
+
+# bbotk 1.10.1
+
+* refactor: `is_dominated()` now uses `moocore::is_nondominated()` internally instead of a custom C implementation (#301).
+* refactor: Replace `emoa::dominated_hypervolume` with `moocore::hypervolume` for computing the hypervolume indicator.
+
+# bbotk 1.10.0
+
+* chore: Minimum required version of `rush` is now 1.0.0. Removed all compatibility workarounds for older versions.
+* fix: Remove non-API C entry points that caused CRAN warnings (#332).
+* feat: Add `mlr_test_functions` dictionary with well-known 2-D optimization test functions (Branin, Rosenbrock, Himmelblau, Rastrigin, etc.) and sugar functions `otfun()` / `otfuns()`.
+
+# bbotk 1.9.0
+
 * feat: Allow `"learn"` tag (direction=0) alongside minimize/maximize in `Codomain`.
 * feat: Add new base class `EvalInstance` from which `OptimInstance` now inherits. `EvalInstance` keeps information about a process that evaluates an `Objective` while not necessarily optimizing it.
 * feat: Exporting formerly internal `choose_search_space()` function.
+* feat: Use `mlr3misc` error classes for errors and warnings.
+* compatibility: Compatible with `rush` 1.0.0.
+* fix: Terminator print method works correctly now.
 
 # bbotk 1.8.1
 
 * fix: Any Conditions work with `OptimizerLocalSearch` now.
-
 
 # bbotk 1.8.0
 
@@ -37,7 +55,7 @@ fix: Load required packages in worker loop.
   The `mlr3/bbotk` logger is a child of the `mlr3` logger and is used for logging messages from the `bbotk` and `mlr3tuning` package.
 * feat: Classes are now printed with the `cli` package.
 * fix: Prevent switching of `xss` and `constants`.
-* fix: Add saveguard on `OptimizerNloptr` bounds.
+* fix: Add safeguard on `OptimizerNloptr` bounds.
 * feat: Allow numerical gradient approximation in `OptimizerNloptr`.
 
 # bbotk 1.5.0

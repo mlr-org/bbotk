@@ -16,7 +16,8 @@
 #' @param upper (`numeric()`)\cr
 #'  Upper bounds on the parameters.
 #' @param maximize (`logical()`)\cr
-#'  Logical vector used to create the codomain e.g. c(TRUE, FALSE) -> ps(y1 = p_dbl(tags = "maximize"), y2 = pd_dbl(tags = "minimize")).
+#'  Logical vector used to create the codomain e.g.
+#'  c(TRUE, FALSE) -> ps(y1 = p_dbl(tags = "maximize"), y2 = pd_dbl(tags = "minimize")).
 #'  If named, names are used to create the codomain.
 #' @param search_space ([paradox::ParamSet]).
 #' @param ... (named `list()`)\cr
@@ -69,8 +70,16 @@ bb_optimize = function(x, method = "random_search", max_evals = 1000, max_time =
 
 #' @rdname bb_optimize
 #' @export
-bb_optimize.function = function(x, method = "random_search", max_evals = 1000, max_time = NULL, lower = NULL,
-  upper = NULL, maximize = FALSE, ...) {
+bb_optimize.function = function(
+  x,
+  method = "random_search",
+  max_evals = 1000,
+  max_time = NULL,
+  lower = NULL,
+  upper = NULL,
+  maximize = FALSE,
+  ...
+) {
   assert_numeric(lower, finite = TRUE, min.len = 1)
   assert_numeric(upper, finite = TRUE, len = length(lower))
   # construct constants set
@@ -85,7 +94,10 @@ bb_optimize.function = function(x, method = "random_search", max_evals = 1000, m
   domain = do.call(ps, set_names(pmap(list(lower, upper), p_dbl), ids_domain))
 
   ids_codomain = if (is.null(names(maximize))) paste0("y", seq_along(maximize)) else names(maximize)
-  codomain = do.call(ps, set_names(map(maximize, function(x) p_dbl(tags = if (x) "maximize" else "minimize")), ids_codomain))
+  codomain = do.call(
+    ps,
+    set_names(map(maximize, function(x) p_dbl(tags = if (x) "maximize" else "minimize")), ids_codomain)
+  )
 
   objective = ObjectiveRFun$new(x, domain, codomain, constants = constants, check_values = FALSE)
   bb_optimize(objective, method, max_evals, max_time, ...)
@@ -93,7 +105,14 @@ bb_optimize.function = function(x, method = "random_search", max_evals = 1000, m
 
 #' @rdname bb_optimize
 #' @export
-bb_optimize.Objective = function(x, method = "random_search", max_evals = 1000, max_time = NULL, search_space = NULL, ...) {
+bb_optimize.Objective = function(
+  x,
+  method = "random_search",
+  max_evals = 1000,
+  max_time = NULL,
+  search_space = NULL,
+  ...
+) {
   optimizer = if (is.character(method)) opt(assert_choice(method, mlr_optimizers$keys())) else assert_optimizer(method)
   terminator = if (is.null(max_evals) && is.null(max_time)) {
     trm("none")
@@ -112,5 +131,6 @@ bb_optimize.Objective = function(x, method = "random_search", max_evals = 1000, 
   list(
     par = instance$result_x_search_space,
     value = instance$result_y,
-    instance = instance)
+    instance = instance
+  )
 }

@@ -1,4 +1,6 @@
 test_that("TerminatorClockTime works", {
+  skip_on_cran()
+
   terminator = TerminatorClockTime$new()
   now = Sys.time()
   terminator$param_set$values$stop_time = now + 2L
@@ -10,6 +12,8 @@ test_that("TerminatorClockTime works", {
 })
 
 test_that("status method works", {
+  skip_on_cran()
+
   terminator = trm("clock_time", stop_time = Sys.time() + 3)
   inst = MAKE_INST_1D(terminator = terminator)
   inst$archive$start_time = Sys.time()
@@ -21,6 +25,8 @@ test_that("status method works", {
 })
 
 test_that("TerminatorClockTime works with empty archive", {
+  skip_on_cran()
+
   terminator = TerminatorClockTime$new()
   terminator$param_set$values$stop_time = Sys.time() + 2L
   archive = ArchiveBatch$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))

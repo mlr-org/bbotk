@@ -44,6 +44,8 @@ reference:
   - title: Objective
     contents:
       - starts_with("Objective")
+      - mlr_test_functions
+      - otfun
   - title: Terminator
     contents:
       - starts_with("Terminator")
@@ -85,4 +87,5 @@ reference:
       - bbotk_worker_loop
       - trafo_xs
       - terminated_error
+      - bbotk_conditions
       - choose_search_space

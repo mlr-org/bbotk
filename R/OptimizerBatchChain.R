@@ -13,7 +13,8 @@
 #' The optimization process works as follows:
 #' The first [OptimizerBatch] is run on the [OptimInstanceBatch] relying on a [TerminatorCombo] of the original
 #' [Terminator] of the [OptimInstanceBatch] and the (optional) additional [Terminator] as passed during construction.
-#' Once this [TerminatorCombo] indicates termination (usually via the additional [Terminator]), the second [OptimizerBatch] is run.
+#' Once this [TerminatorCombo] indicates termination (usually via the additional [Terminator]),
+#' the second [OptimizerBatch] is run.
 #' This continues for all optimizers unless the original [Terminator] of the [OptimInstanceBatch] indicates termination.
 #'
 #' [OptimizerBatchChain] can also be used for random restarts of the same
@@ -79,9 +80,10 @@
 #' # best performing configuration
 #' instance$result
 #' }
-OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
+OptimizerBatchChain = R6Class(
+  "OptimizerBatchChain",
+  inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -137,7 +139,9 @@ OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
 
     .optimize = function(inst) {
       terminator = inst$terminator
-      on.exit({inst$terminator = terminator})
+      on.exit({
+        inst$terminator = terminator
+      })
       inner_inst = inst$clone(deep = TRUE)
 
       for (i in seq_along(private$.optimizers)) {
@@ -150,7 +154,11 @@ OptimizerBatchChain = R6Class("OptimizerBatchChain", inherit = OptimizerBatch,
         optimizer = private$.optimizers[[i]]
         optimizer$param_set$values = self$param_set$.__enclos_env__$private$.sets[[i]]$values
         optimizer$optimize(inner_inst)
-        set(inner_inst$archive$data, j = "batch_nr", value = max(inst$archive$data$batch_nr, 0L) + inner_inst$archive$data$batch_nr)
+        set(
+          inner_inst$archive$data,
+          j = "batch_nr",
+          value = max(inst$archive$data$batch_nr, 0L) + inner_inst$archive$data$batch_nr
+        )
         set(inner_inst$archive$data, j = ".optimizer_id", value = private$.ids[i])
         inst$archive$data = rbind(inst$archive$data, inner_inst$archive$data, fill = TRUE)
         inner_inst$archive$data = data.table()

@@ -58,10 +58,10 @@
 #'
 #' # best performing configuration
 #' instance$result
-OptimizerBatchLocalSearch = R6Class("OptimizerBatchLocalSearch",
+OptimizerBatchLocalSearch = R6Class(
+  "OptimizerBatchLocalSearch",
   inherit = bbotk::OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {

@@ -48,10 +48,10 @@
 #' instance = oi(
 #'   objective = objective,
 #'   terminator = trm("evals", n_evals = 100))
-OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
+OptimInstanceBatchMultiCrit = R6Class(
+  "OptimInstanceBatchMultiCrit",
   inherit = OptimInstanceBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(
@@ -61,7 +61,7 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
       check_values = TRUE,
       callbacks = NULL,
       archive = NULL
-      ) {
+    ) {
       super$initialize(
         objective = objective,
         search_space = search_space,
@@ -70,7 +70,8 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
         callbacks = callbacks,
         archive = archive,
         label = "Batch Multi Criteria Instance",
-        man = "bbotk::OptimInstanceBatchMultiCrit")
+        man = "bbotk::OptimInstanceBatchMultiCrit"
+      )
     },
 
     #' @description
@@ -99,7 +100,9 @@ OptimInstanceBatchMultiCrit = R6Class("OptimInstanceBatchMultiCrit",
 
       # add x_domain to result
       x_domain = transform_xdt_to_xss(private$.result_xdt, self$search_space)
-      if (length(x_domain) == 0) x_domain = list(list())
+      if (length(x_domain) == 0) {
+        x_domain = list(list())
+      }
 
       private$.result = cbind(private$.result_xdt, x_domain = x_domain, private$.result_ydt)
       call_back("on_result_end", self$objective$callbacks, self$objective$context)

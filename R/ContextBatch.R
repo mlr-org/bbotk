@@ -7,10 +7,10 @@
 #'
 #' @seealso [CallbackBatch]
 #' @export
-ContextBatch = R6Class("ContextBatch",
+ContextBatch = R6Class(
+  "ContextBatch",
   inherit = Context,
   public = list(
-
     #' @field instance ([OptimInstance]).
     instance = NULL,
 
@@ -29,7 +29,6 @@ ContextBatch = R6Class("ContextBatch",
   ),
 
   active = list(
-
     #' @field xdt ([data.table::data.table])\cr
     #' The points of the latest batch in `instance$eval_batch()`.
     #' Contains the values in the search space i.e. transformations are not yet applied.
@@ -45,7 +44,7 @@ ContextBatch = R6Class("ContextBatch",
     #' The xdt passed to `instance$assign_result()`.
     result_xdt = function(rhs) {
       if (missing(rhs)) {
-        return(get_private(self$instance)$.result_xdt)
+        get_private(self$instance)$.result_xdt
       } else {
         self$instance$.__enclos_env__$private$.result_xdt = rhs
       }
@@ -56,7 +55,7 @@ ContextBatch = R6Class("ContextBatch",
     #' Only available for single criterion optimization.
     result_y = function(rhs) {
       if (missing(rhs)) {
-        return(get_private(self$instance)$.result_y)
+        get_private(self$instance)$.result_y
       } else {
         self$instance$.__enclos_env__$private$.result_y = rhs
       }
@@ -67,7 +66,7 @@ ContextBatch = R6Class("ContextBatch",
     #' Only available for multi criterion optimization.
     result_ydt = function(rhs) {
       if (missing(rhs)) {
-        return(get_private(self$instance)$.result_ydt)
+        get_private(self$instance)$.result_ydt
       } else {
         self$instance$.__enclos_env__$private$.result_ydt = rhs
       }

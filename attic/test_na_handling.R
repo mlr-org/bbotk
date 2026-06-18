@@ -16,14 +16,14 @@ domain$add_dep("x2", on = "x4", cond = CondEqual$new(TRUE))
 fun = function(xs) {
   # Handle NA values in x2 (which can be NA when x4 is FALSE)
   if (is.na(xs$x2)) {
-    xs$x2 = "a"  # Default value
+    xs$x2 = "a" # Default value
   }
-  
+
   # Calculate objective value
   base_val = xs$x1^2 + xs$x3^2
   factor_val = switch(xs$x2, "a" = 0, "b" = 1, "c" = 2)
   logical_val = if (xs$x4) 0 else 1
-  
+
   list(y = base_val + factor_val + logical_val)
 }
 
@@ -31,17 +31,13 @@ objective = ObjectiveRFun$new(fun = fun, domain = domain, properties = "single-c
 
 # Create instance
 instance = OptimInstanceBatchSingleCrit$new(
-  objective = objective, 
-  search_space = domain, 
+  objective = objective,
+  search_space = domain,
   terminator = trm("evals", n_evals = 20L)
 )
 
 # Test the local search optimizer with C implementation
-optimizer = opt("local_search_2", 
-                n_searches = 2L, 
-                n_steps = 3L, 
-                n_neighbors = 5L, 
-                mut_sd = 0.1)
+optimizer = opt("local_search_2", n_searches = 2L, n_steps = 3L, n_neighbors = 5L, mut_sd = 0.1)
 
 cat("Testing local search with NA handling...\n")
 cat("Search space has dependencies that can lead to NA values\n")
@@ -66,4 +62,4 @@ print(na_counts)
 
 # Verify that the C function handled NA values correctly
 cat("\nTest completed successfully!\n")
-cat("The C function should have avoided mutating NA values.\n") 
+cat("The C function should have avoided mutating NA values.\n")

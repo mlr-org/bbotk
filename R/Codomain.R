@@ -4,7 +4,8 @@
 #' A [paradox::ParamSet] defining the codomain of a function.
 #' The parameter set must contain at least one target parameter tagged with
 #' `"minimize"`, `"maximize"`, or `"learn"`.
-#' The codomain may contain extra parameters which are ignored when calling the [Archive] methods `$best()`, `$nds_selection()` and `$cols_y`.
+#' The codomain may contain extra parameters which are ignored when calling the [Archive] methods
+#' `$best()`, `$nds_selection()` and `$cols_y`.
 #' This class is usually constructed internally from a [paradox::ParamSet] when [Objective] is initialized.
 #'
 #' @export
@@ -34,9 +35,10 @@
 #'   codomain = codomain,
 #'   properties = "deterministic"
 #' )
-Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
+Codomain = R6Class(
+  "Codomain",
+  inherit = paradox::ParamSet,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
@@ -44,7 +46,6 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #'   Named list with which to initialize the codomain.
     #'   This argument is analogous to [paradox::ParamSet]'s `$initialize()` `params` argument.
     initialize = function(params) {
-
       assert_list(params)
 
       super$initialize(params)
@@ -62,12 +63,13 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
       }
 
       # assert at least one target parameter
-      if (!any(self$is_target) && self$length) stop("Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'")
+      if (!any(self$is_target) && self$length) {
+        stop("Codomain contains no parameter tagged with 'minimize', 'maximize', or 'learn'")
+      }
     }
   ),
 
   active = list(
-
     #' @field is_target (named `logical()`)\cr
     #' Position is `TRUE` for target parameters.
     is_target = function() {
@@ -111,9 +113,13 @@ Codomain = R6Class("Codomain", inherit = paradox::ParamSet,
     #' Multiply with the outcome of a maximization problem to turn it into a minimization problem.
     direction = function() {
       map_int(self$target_tags, function(tags) {
-        if ("minimize" %in% tags) 1L
-        else if ("maximize" %in% tags) -1L
-        else 0L  # learn
+        if ("minimize" %in% tags) {
+          1L
+        } else if ("maximize" %in% tags) {
+          -1L
+        } else {
+          0L
+        } # learn
       })
     }
   )

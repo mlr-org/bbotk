@@ -35,7 +35,7 @@ trm("combo",
 )
 }
 \seealso{
-Other Terminator: 
+Other Terminator:
 \code{\link{Terminator}},
 \code{\link{mlr_terminators}},
 \code{\link{mlr_terminators_clock_time}},
@@ -49,149 +49,159 @@ Other Terminator:
 }
 \concept{Terminator}
 \section{Super class}{
-\code{\link[bbotk:Terminator]{bbotk::Terminator}} -> \code{TerminatorCombo}
+\code{\link[bbotk:Terminator]{Terminator}} -> \code{TerminatorCombo}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{terminators}}{(\code{list()})\cr
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{terminators}}{(\code{list()})\cr
 List of objects of class \link{Terminator}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TerminatorCombo-new}{\code{TerminatorCombo$new()}}
-\item \href{#method-TerminatorCombo-is_terminated}{\code{TerminatorCombo$is_terminated()}}
-\item \href{#method-TerminatorCombo-print}{\code{TerminatorCombo$print()}}
-\item \href{#method-TerminatorCombo-remaining_time}{\code{TerminatorCombo$remaining_time()}}
-\item \href{#method-TerminatorCombo-status_long}{\code{TerminatorCombo$status_long()}}
-\item \href{#method-TerminatorCombo-clone}{\code{TerminatorCombo$clone()}}
+  \itemize{
+    \item \href{#method-TerminatorCombo-initialize}{\code{TerminatorCombo$new()}}
+    \item \href{#method-TerminatorCombo-is_terminated}{\code{TerminatorCombo$is_terminated()}}
+    \item \href{#method-TerminatorCombo-print}{\code{TerminatorCombo$print()}}
+    \item \href{#method-TerminatorCombo-remaining_time}{\code{TerminatorCombo$remaining_time()}}
+    \item \href{#method-TerminatorCombo-status_long}{\code{TerminatorCombo$status_long()}}
+    \item \href{#method-TerminatorCombo-clone}{\code{TerminatorCombo$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>bbotk::Terminator$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>bbotk::Terminator$status()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>Terminator$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>Terminator$status()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TerminatorCombo-new"></a>}}
-\if{latex}{\out{\hypertarget{method-TerminatorCombo-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$new(terminators = list(TerminatorNone$new()))}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-TerminatorCombo-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorCombo-initialize}{}}}
+\subsection{\code{TerminatorCombo$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorCombo$new(terminators = list(TerminatorNone$new()))}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{terminators}}{(\code{list()})\cr
+List of objects of class \link{Terminator}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{terminators}}{(\code{list()})\cr
-List of objects of class \link{Terminator}.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorCombo-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorCombo-is_terminated}{}}}
-\subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+\subsection{\code{TerminatorCombo$is_terminated()}}{
+  Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
 otherwise.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$is_terminated(archive)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorCombo$is_terminated(archive)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{archive}}{(\link{Archive}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{logical(1)}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{logical(1)}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorCombo-print"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorCombo-print}{}}}
-\subsection{Method \code{print()}}{
-Printer.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorCombo$print()}}{
+  Printer.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorCombo$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{(ignored).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{(ignored).}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorCombo-remaining_time"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorCombo-remaining_time}{}}}
-\subsection{Method \code{remaining_time()}}{
-Returns the remaining runtime in seconds. If \code{any = TRUE}, the remaining
+\subsection{\code{TerminatorCombo$remaining_time()}}{
+  Returns the remaining runtime in seconds. If \code{any = TRUE}, the remaining
 runtime is determined by the time-based terminator with the shortest time
 remaining. If non-time-based terminators are used and \code{any = FALSE},
 the the remaining runtime is always \code{Inf}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$remaining_time(archive)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorCombo$remaining_time(archive)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{archive}}{(\link{Archive}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{integer(1)}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{integer(1)}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorCombo-status_long"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorCombo-status_long}{}}}
-\subsection{Method \code{status_long()}}{
-Returns \code{max_steps} and \code{current_steps} for each terminator.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$status_long(archive)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorCombo$status_long()}}{
+  Returns \code{max_steps} and \code{current_steps} for each terminator.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorCombo$status_long(archive)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{archive}}{(\link{Archive}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \link[data.table:data.table]{data.table::data.table}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\link[data.table:data.table]{data.table::data.table}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorCombo-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorCombo-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorCombo$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorCombo$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorCombo$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 1.8.1.9000
+Version: 1.10.1.9000
 Authors@R: c(
     person("Marc", "Becker", , "marcbecker@posteo.de", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-8115-0400")),
@@ -31,7 +31,8 @@ Imports:
     data.table,
     lgr,
     methods,
-    mlr3misc (>= 0.15.1),
+    mlr3misc (>= 0.21.0),
+    moocore,
     R6
 Suggests:
     adagio,
@@ -45,17 +46,14 @@ Suggests:
     progressr,
     redux,
     RhpcBLASctl,
-    rush (>= 0.4.1),
+    rush (>= 1.0.0),
     testthat (>= 3.0.0)
-Remotes:
-    mlr-org/rush@push
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Collate:
     'Archive.R'
     'ArchiveAsync.R'
@@ -114,11 +112,14 @@ Collate:
     'bb_optimize.R'
     'bbotk_reflections.R'
     'bibentries.R'
+    'conditions.R'
     'helper.R'
     'local_search.R'
     'mlr_callbacks.R'
+    'mlr_test_functions.R'
     'nds_selection.R'
     'reexport.R'
     'sugar.R'
     'worker_loops.R'
     'zzz.R'
+Config/roxygen2/version: 8.0.0.9000
