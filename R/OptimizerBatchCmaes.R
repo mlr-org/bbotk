@@ -76,10 +76,10 @@
 #' # best performing configuration
 #' instance$result
 #' }
-OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
+OptimizerBatchCmaes = R6Class(
+  "OptimizerBatchCmaes",
   inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -121,14 +121,19 @@ OptimizerBatchCmaes = R6Class("OptimizerBatchCmaes",
       pv$stopfitness = -Inf
 
       if (length(pv$par) < 2L) {
-        warning("CMA-ES is typically applied to search space dimensions between three and fifty. A lower search space dimension might crash.")
+        warning(
+          "CMA-ES is typically applied to search space dimensions between three and fifty.",
+          " A lower search space dimension might crash."
+        )
       }
 
-      invoke(adagio::pureCMAES,
+      invoke(
+        adagio::pureCMAES,
         fun = inst$objective_function,
         lower = inst$search_space$lower,
         upper = inst$search_space$upper,
-        .args = pv)
+        .args = pv
+      )
     }
   )
 )

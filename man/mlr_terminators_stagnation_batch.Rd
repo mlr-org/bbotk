@@ -36,7 +36,7 @@ TerminatorStagnationBatch$new()
 trm("stagnation_batch", n = 1, threshold = 1e-5)
 }
 \seealso{
-Other Terminator: 
+Other Terminator:
 \code{\link{Terminator}},
 \code{\link{mlr_terminators}},
 \code{\link{mlr_terminators_clock_time}},
@@ -50,72 +50,76 @@ Other Terminator:
 }
 \concept{Terminator}
 \section{Super class}{
-\code{\link[bbotk:Terminator]{bbotk::Terminator}} -> \code{TerminatorStagnationBatch}
+\code{\link[bbotk:Terminator]{Terminator}} -> \code{TerminatorStagnationBatch}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TerminatorStagnationBatch-new}{\code{TerminatorStagnationBatch$new()}}
-\item \href{#method-TerminatorStagnationBatch-is_terminated}{\code{TerminatorStagnationBatch$is_terminated()}}
-\item \href{#method-TerminatorStagnationBatch-clone}{\code{TerminatorStagnationBatch$clone()}}
+  \itemize{
+    \item \href{#method-TerminatorStagnationBatch-initialize}{\code{TerminatorStagnationBatch$new()}}
+    \item \href{#method-TerminatorStagnationBatch-is_terminated}{\code{TerminatorStagnationBatch$is_terminated()}}
+    \item \href{#method-TerminatorStagnationBatch-clone}{\code{TerminatorStagnationBatch$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>bbotk::Terminator$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>bbotk::Terminator$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>bbotk::Terminator$remaining_time()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>bbotk::Terminator$status()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>Terminator$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>Terminator$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>Terminator$remaining_time()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>Terminator$status()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TerminatorStagnationBatch-new"></a>}}
-\if{latex}{\out{\hypertarget{method-TerminatorStagnationBatch-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnationBatch$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-TerminatorStagnationBatch-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorStagnationBatch-initialize}{}}}
+\subsection{\code{TerminatorStagnationBatch$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorStagnationBatch$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorStagnationBatch-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorStagnationBatch-is_terminated}{}}}
-\subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+\subsection{\code{TerminatorStagnationBatch$is_terminated()}}{
+  Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
 otherwise.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnationBatch$is_terminated(archive)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorStagnationBatch$is_terminated(archive)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{archive}}{(\link{Archive}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{logical(1)}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{logical(1)}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorStagnationBatch-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorStagnationBatch-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorStagnationBatch$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorStagnationBatch$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorStagnationBatch$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

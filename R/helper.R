@@ -6,32 +6,33 @@
 #' @param optim_instance [OptimInstance]\cr
 #' OptimInstance that terminated.
 #'
-#' @return A `'terminated_error'` condition (inherits from `'error'` and `'condition'`).
+#' @return A `Mlr3ErrorBbotkTerminated` condition.
 #' @export
 terminated_error = function(optim_instance) {
   msg = sprintf(
     fmt = "Objective (obj:%s, term:%s) terminated",
     optim_instance$objective$id,
-    format(optim_instance$terminator)
+    class(optim_instance$terminator)[[1L]]
   )
 
-  set_class(list(message = msg, call = NULL),
-    c("terminated_error", "error", "condition"))
+  error_bbotk_terminated(msg)
 }
 
 #' @title Calculate which points are dominated
 #' @description
 #' Returns which points from a set are dominated by another point in the set.
+#' See [moocore::is_nondominated()] for details about the implementation.
+#' Points that are equal to each other are all considered non-dominated, i.e. weakly dominated points are kept.
 #'
 #' @param ymat (`matrix()`) \cr
 #'   A numeric matrix. Each column (!) contains one point.
 #'
-#' @useDynLib bbotk c_is_dominated
+#' @seealso [moocore::is_nondominated()]
 #' @return `logical()` with `TRUE` if a point (column of `ymat`) is dominated.
 #' @export
 is_dominated = function(ymat) {
   assert_matrix(ymat, mode = "double")
-  .Call(c_is_dominated, ymat, PACKAGE = "bbotk")
+  !is_nondominated(t(ymat), keep_weakly = TRUE)
 }
 
 #' @title Calculates the transformed x-values
@@ -73,7 +74,7 @@ trafo_xs = function(xs, search_space) {
   if (search_space$has_trafo) {
     xs = search_space$trafo(xs, search_space)
   }
-  return(xs)
+  xs
 }
 
 #' @title Get start values for optimizers
@@ -104,7 +105,8 @@ search_start = function(search_space, type = "random") {
 #' @title Branin Function
 #'
 #' @description
-#' Classic 2-D Branin function with noise `branin(x1, x2, noise)` and Branin function with fidelity parameter `branin_wu(x1, x2, fidelity)`.
+#' Classic 2-D Branin function with noise `branin(x1, x2, noise)` and Branin function with fidelity parameter
+#' `branin_wu(x1, x2, fidelity)`.
 #'
 #' @source
 #' `r format_bib("wu_2019")`
@@ -127,7 +129,7 @@ branin = function(x1, x2, noise = 0) {
 #' @rdname branin
 #' @export
 branin_wu = function(x1, x2, fidelity) {
-  (x2 - (5.1 / (4 * pi^2) - 0.1 * (1 - fidelity)) * x1^2 + 5 / pi * x1 - 6) ^ 2 +  10 * (1 - 1 / (8 * pi)) * cos(x1) + 10
+  (x2 - (5.1 / (4 * pi^2) - 0.1 * (1 - fidelity)) * x1^2 + 5 / pi * x1 - 6)^2 + 10 * (1 - 1 / (8 * pi)) * cos(x1) + 10
 }
 
 allow_partial_matching = list(
@@ -135,4 +137,3 @@ allow_partial_matching = list(
   warnPartialMatchAttr = FALSE,
   warnPartialMatchDollar = FALSE
 )
-

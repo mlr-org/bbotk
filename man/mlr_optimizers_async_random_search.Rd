@@ -52,7 +52,7 @@ objective = ObjectiveRFun$new(
 )
 
 # start workers
-rush::rush_plan(worker_type = "remote")
+rush::rush_plan(worker_type = "mirai")
 mirai::daemons(1)
 
 # initialize instance
@@ -78,50 +78,52 @@ as.data.table(instance$archive)
 }
 }
 \section{Super classes}{
-\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{bbotk::OptimizerAsync} -> \code{OptimizerAsyncRandomSearch}
+\code{\link[bbotk:Optimizer]{Optimizer}} -> \code{\link[bbotk:OptimizerAsync]{OptimizerAsync}} -> \code{OptimizerAsyncRandomSearch}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimizerAsyncRandomSearch-new}{\code{OptimizerAsyncRandomSearch$new()}}
-\item \href{#method-OptimizerAsyncRandomSearch-clone}{\code{OptimizerAsyncRandomSearch$clone()}}
+  \itemize{
+    \item \href{#method-OptimizerAsyncRandomSearch-initialize}{\code{OptimizerAsyncRandomSearch$new()}}
+    \item \href{#method-OptimizerAsyncRandomSearch-clone}{\code{OptimizerAsyncRandomSearch$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="optimize"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-optimize'><code>bbotk::OptimizerAsync$optimize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>Optimizer$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerAsync" data-id="optimize"><a href='../../bbotk/html/OptimizerAsync.html#method-OptimizerAsync-optimize'><code>OptimizerAsync$optimize()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerAsyncRandomSearch-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerAsyncRandomSearch-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsyncRandomSearch$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-OptimizerAsyncRandomSearch-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerAsyncRandomSearch-initialize}{}}}
+\subsection{\code{OptimizerAsyncRandomSearch$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerAsyncRandomSearch$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerAsyncRandomSearch-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerAsyncRandomSearch-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerAsyncRandomSearch$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimizerAsyncRandomSearch$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerAsyncRandomSearch$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

@@ -23,10 +23,10 @@
 #' @examples
 #' stop_time = as.POSIXct("2030-01-01 00:00:00")
 #' trm("clock_time", stop_time = stop_time)
-TerminatorClockTime = R6Class("TerminatorClockTime",
+TerminatorClockTime = R6Class(
+  "TerminatorClockTime",
   inherit = Terminator,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -50,7 +50,7 @@ TerminatorClockTime = R6Class("TerminatorClockTime",
     #' @return `logical(1)`.
     is_terminated = function(archive) {
       assert_multi_class(archive, c("Archive", "ArchiveAsync"))
-      return(Sys.time() >= self$param_set$values$stop_time)
+      Sys.time() >= self$param_set$values$stop_time
     }
   ),
 

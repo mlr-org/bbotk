@@ -5,7 +5,8 @@
 \alias{TerminatorNone}
 \title{None Terminator}
 \description{
-Mainly useful for optimization algorithms where the stopping is inherently controlled by the algorithm itself (e.g. \link{OptimizerBatchGridSearch}).
+Mainly useful for optimization algorithms where the stopping is inherently controlled by the algorithm itself
+(e.g. \link{OptimizerBatchGridSearch}).
 }
 \section{Dictionary}{
 
@@ -19,7 +20,7 @@ trm("none")
 }
 
 \seealso{
-Other Terminator: 
+Other Terminator:
 \code{\link{Terminator}},
 \code{\link{mlr_terminators}},
 \code{\link{mlr_terminators_clock_time}},
@@ -33,72 +34,76 @@ Other Terminator:
 }
 \concept{Terminator}
 \section{Super class}{
-\code{\link[bbotk:Terminator]{bbotk::Terminator}} -> \code{TerminatorNone}
+\code{\link[bbotk:Terminator]{Terminator}} -> \code{TerminatorNone}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TerminatorNone-new}{\code{TerminatorNone$new()}}
-\item \href{#method-TerminatorNone-is_terminated}{\code{TerminatorNone$is_terminated()}}
-\item \href{#method-TerminatorNone-clone}{\code{TerminatorNone$clone()}}
+  \itemize{
+    \item \href{#method-TerminatorNone-initialize}{\code{TerminatorNone$new()}}
+    \item \href{#method-TerminatorNone-is_terminated}{\code{TerminatorNone$is_terminated()}}
+    \item \href{#method-TerminatorNone-clone}{\code{TerminatorNone$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>bbotk::Terminator$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>bbotk::Terminator$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>bbotk::Terminator$remaining_time()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>bbotk::Terminator$status()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>Terminator$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>Terminator$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>Terminator$remaining_time()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>Terminator$status()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TerminatorNone-new"></a>}}
-\if{latex}{\out{\hypertarget{method-TerminatorNone-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorNone$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-TerminatorNone-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorNone-initialize}{}}}
+\subsection{\code{TerminatorNone$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorNone$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorNone-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorNone-is_terminated}{}}}
-\subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+\subsection{\code{TerminatorNone$is_terminated()}}{
+  Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
 otherwise.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorNone$is_terminated(archive)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorNone$is_terminated(archive)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{archive}}{(\link{Archive}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{logical(1)}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{logical(1)}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorNone-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorNone-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorNone$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorNone$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorNone$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

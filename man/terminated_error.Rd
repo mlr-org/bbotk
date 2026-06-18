@@ -11,7 +11,7 @@ terminated_error(optim_instance)
 OptimInstance that terminated.}
 }
 \value{
-A \code{'terminated_error'} condition (inherits from \code{'error'} and \code{'condition'}).
+A \code{Mlr3ErrorBbotkTerminated} condition.
 }
 \description{
 Error class for termination.

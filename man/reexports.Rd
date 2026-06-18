@@ -13,6 +13,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{mlr3misc}{\code{\link[mlr3misc]{clbk}}, \code{\link[mlr3misc:clbk]{clbks}}, \code{\link[mlr3misc]{mlr_callbacks}}}
+  \item{mlr3misc}{\code{\link[mlr3misc:clbk]{clbk()}}, \code{\link[mlr3misc:clbks]{clbks()}}, \code{\link[mlr3misc:mlr_callbacks]{mlr_callbacks}}}
 }}
 

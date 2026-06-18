@@ -88,50 +88,52 @@ instance$archive
 instance$result
 }
 \section{Super classes}{
-\code{\link[bbotk:Optimizer]{bbotk::Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{bbotk::OptimizerBatch}} -> \code{OptimizerBatchRandomSearch}
+\code{\link[bbotk:Optimizer]{Optimizer}} -> \code{\link[bbotk:OptimizerBatch]{OptimizerBatch}} -> \code{OptimizerBatchRandomSearch}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OptimizerBatchRandomSearch-new}{\code{OptimizerBatchRandomSearch$new()}}
-\item \href{#method-OptimizerBatchRandomSearch-clone}{\code{OptimizerBatchRandomSearch$clone()}}
+  \itemize{
+    \item \href{#method-OptimizerBatchRandomSearch-initialize}{\code{OptimizerBatchRandomSearch$new()}}
+    \item \href{#method-OptimizerBatchRandomSearch-clone}{\code{OptimizerBatchRandomSearch$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>bbotk::Optimizer$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>bbotk::Optimizer$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>bbotk::Optimizer$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerBatch" data-id="optimize"><a href='../../bbotk/html/OptimizerBatch.html#method-OptimizerBatch-optimize'><code>bbotk::OptimizerBatch$optimize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="format"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-format'><code>Optimizer$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="help"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-help'><code>Optimizer$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Optimizer" data-id="print"><a href='../../bbotk/html/Optimizer.html#method-Optimizer-print'><code>Optimizer$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="OptimizerBatch" data-id="optimize"><a href='../../bbotk/html/OptimizerBatch.html#method-OptimizerBatch-optimize'><code>OptimizerBatch$optimize()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-OptimizerBatchRandomSearch-new"></a>}}
-\if{latex}{\out{\hypertarget{method-OptimizerBatchRandomSearch-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerBatchRandomSearch$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-OptimizerBatchRandomSearch-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-OptimizerBatchRandomSearch-initialize}{}}}
+\subsection{\code{OptimizerBatchRandomSearch$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerBatchRandomSearch$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OptimizerBatchRandomSearch-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-OptimizerBatchRandomSearch-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OptimizerBatchRandomSearch$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{OptimizerBatchRandomSearch$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OptimizerBatchRandomSearch$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

@@ -62,16 +62,17 @@
 #'
 #' # covert to data.table
 #' as.data.table(instance$archive)
-ArchiveBatch = R6Class("ArchiveBatch",
+ArchiveBatch = R6Class(
+  "ArchiveBatch",
   inherit = Archive,
   public = list(
-
     #' @field data ([data.table::data.table])\cr
     #' Contains all performed [Objective] function calls.
     data = NULL,
 
     #' @field data_extra (named `list`)\cr
-    #' Data created by specific [`Optimizer`]s that does not relate to any individual function evaluation and can therefore not be held in `$data`.
+    #' Data created by specific [`Optimizer`]s that does not relate to any individual function evaluation
+    #' and can therefore not be held in `$data`.
     #' Every optimizer should create and refer to its own entry in this list, named by its `class()`.
     data_extra = named_list(),
 
@@ -85,9 +86,10 @@ ArchiveBatch = R6Class("ArchiveBatch",
       super$initialize(
         search_space = search_space,
         codomain = codomain,
-        check_values = check_values,  # FIXME: not implemented yet
+        check_values = check_values, # FIXME: not implemented yet
         label = "Data Table Storage",
-        man = "bbotk::ArchiveBatch")
+        man = "bbotk::ArchiveBatch"
+      )
       self$data = data.table()
     },
 
@@ -106,7 +108,9 @@ ArchiveBatch = R6Class("ArchiveBatch",
       }
       xydt = cbind(xdt, ydt)
       assert_subset(c(self$search_space$ids(), self$codomain$ids()), colnames(xydt))
-      if (!is.null(xss_trafoed)) set(xydt, j = "x_domain", value = list(xss_trafoed))
+      if (!is.null(xss_trafoed)) {
+        set(xydt, j = "x_domain", value = list(xss_trafoed))
+      }
       set(xydt, j = "timestamp", value = Sys.time())
       batch_nr = self$data$batch_nr
       set(xydt, j = "batch_nr", value = if (length(batch_nr)) max(batch_nr) + 1L else 1L)
@@ -132,13 +136,18 @@ ArchiveBatch = R6Class("ArchiveBatch",
     #'
     #' @return [data.table::data.table()]
     best = function(batch = NULL, n_select = 1L, ties_method = "first") {
-      if (!self$n_batch) return(data.table())
+      if (!self$n_batch) {
+        return(data.table())
+      }
       assert_subset(batch, seq_len(self$n_batch))
       assert_int(n_select, lower = 1L)
       assert_choice(ties_method, c("first", "random"))
 
       if (any(self$codomain$direction == 0L)) {
-        stop("Cannot determine best points: codomain contains targets with direction = 0 (non-optimization targets). Use optimization targets only, or filter the archive manually.")
+        stop(
+          "Cannot determine best points: codomain contains targets with direction = 0 (non-optimization targets).",
+          " Use optimization targets only, or filter the archive manually."
+        )
       }
 
       tab = if (is.null(batch)) self$data else self$data[list(batch), , on = "batch_nr"]
@@ -151,7 +160,9 @@ ArchiveBatch = R6Class("ArchiveBatch",
           tab[ii]
         } else {
           # copy table to avoid changing the order of the archive
-          if (is.null(batch)) tab = copy(self$data)
+          if (is.null(batch)) {
+            tab = copy(self$data)
+          }
           # use data.table fast sort to find the best points
           setorderv(tab, cols = self$cols_y, order = self$codomain$direction)
           head(tab, n_select)
@@ -173,12 +184,17 @@ ArchiveBatch = R6Class("ArchiveBatch",
     #'
     #' @return [data.table::data.table()]
     nds_selection = function(batch = NULL, n_select = 1, ref_point = NULL) {
-      if (!self$n_batch) return(data.table())
+      if (!self$n_batch) {
+        return(data.table())
+      }
       assert_subset(batch, seq_len(self$n_batch))
 
       direction = self$codomain$direction
       if (any(direction == 0L)) {
-        stop("Cannot perform NDS selection: codomain contains targets with direction = 0 (non-optimization targets). Use optimization targets only.")
+        stop(
+          "Cannot perform NDS selection: codomain contains targets with direction = 0",
+          " (non-optimization targets). Use optimization targets only."
+        )
       }
 
       tab = if (is.null(batch)) self$data else self$data[list(batch), , on = "batch_nr"]
@@ -199,7 +215,6 @@ ArchiveBatch = R6Class("ArchiveBatch",
   ),
 
   active = list(
-
     #' @field n_evals (`integer(1)`)\cr
     #' Number of evaluations stored in the archive.
     n_evals = function() nrow(self$data),
@@ -219,7 +234,8 @@ ArchiveBatch = R6Class("ArchiveBatch",
     .data = NULL,
 
     deep_clone = function(name, value) {
-      switch(name,
+      switch(
+        name,
         search_space = value$clone(deep = TRUE),
         codomain = value$clone(deep = TRUE),
         data = copy(value),
@@ -230,7 +246,8 @@ ArchiveBatch = R6Class("ArchiveBatch",
 )
 
 #' @export
-as.data.table.ArchiveBatch = function(x, keep.rownames = FALSE, unnest = "x_domain", ...) { # nolint
+# nolint next
+as.data.table.ArchiveBatch = function(x, keep.rownames = FALSE, unnest = "x_domain", ...) {
   data = copy(x$data)
   cols = intersect(unnest, names(data))
   unnest(data, cols, prefix = "{col}_")

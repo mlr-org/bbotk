@@ -29,19 +29,24 @@
 #' as.data.table(mlr_terminators)
 #' mlr_terminators$get("evals")
 #' trm("evals", n_evals = 10)
-mlr_terminators = R6Class("DictionaryTerminator", inherit = Dictionary,
-  cloneable = FALSE)$new()
+mlr_terminators = R6Class("DictionaryTerminator", inherit = Dictionary, cloneable = FALSE)$new()
 
 #' @export
 as.data.table.DictionaryTerminator = function(x, ..., objects = FALSE) {
   assert_flag(objects)
 
-  setkeyv(map_dtr(x$keys(), function(key) {
-    t = withCallingHandlers(x$get(key),
-      packageNotFoundWarning = function(w) invokeRestart("muffleWarning"))
-    insert_named(
-      list(key = key, label = t$label, properties = list(t$properties), unit = t$unit),
-      if (objects) list(object = list(t))
-    )
-  }, .fill = TRUE), "key")[]
+  setkeyv(
+    map_dtr(
+      x$keys(),
+      function(key) {
+        t = withCallingHandlers(x$get(key), packageNotFoundWarning = function(w) invokeRestart("muffleWarning"))
+        insert_named(
+          list(key = key, label = t$label, properties = list(t$properties), unit = t$unit),
+          if (objects) list(object = list(t))
+        )
+      },
+      .fill = TRUE
+    ),
+    "key"
+  )[]
 }

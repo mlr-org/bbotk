@@ -27,7 +27,8 @@
 #'   list(trm("clock_time", stop_time = Sys.time() + 60),
 #'     trm("evals", n_evals = 10)), any = FALSE
 #' )
-TerminatorCombo = R6Class("TerminatorCombo",
+TerminatorCombo = R6Class(
+  "TerminatorCombo",
   inherit = Terminator,
 
   public = list(
@@ -56,7 +57,8 @@ TerminatorCombo = R6Class("TerminatorCombo",
         properties = properties,
         unit = "percent",
         label = "Combination",
-        man = "bbotk::mlr_terminators_combo")
+        man = "bbotk::mlr_terminators_combo"
+      )
     },
 
     #' @description
@@ -77,9 +79,13 @@ TerminatorCombo = R6Class("TerminatorCombo",
     print = function(...) {
       super$print(...)
 
-      terminators = map_chr(self$terminators, function(t) {class(t)[1L]})
-      msg_trms = cli_vec(lapply(terminators, function(trm) format_inline('{.cls {trm}}')),
-                         style = list(last = ' and ', sep = ', '))
+      terminators = map_chr(self$terminators, function(t) {
+        class(t)[1L]
+      })
+      msg_trms = cli_vec(
+        lapply(terminators, function(trm) format_inline("{.cls {trm}}")),
+        style = list(last = " and ", sep = ", ")
+      )
       cat_cli(cli_li("Terminators: {msg_trms}"))
     },
 

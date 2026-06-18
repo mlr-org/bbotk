@@ -43,7 +43,8 @@ ii = OptimInstanceBatchSingleCrit$new(
   check_values = FALSE
 )
 
-oo1 = opt("local_search",
+oo1 = opt(
+  "local_search",
   n_initial_points = n_searches,
   initial_random_sample_size = n_searches,
   neighbors_per_point = n_neighbors,
@@ -51,12 +52,7 @@ oo1 = opt("local_search",
 )
 
 
-oo2 = opt("local_search_2",
-  n_searches = n_searches,
-  n_neighbors = n_neighbors,
-  mut_sd = mut_sd,
-  n_steps = n_steps
-)
+oo2 = opt("local_search_2", n_searches = n_searches, n_neighbors = n_neighbors, mut_sd = mut_sd, n_steps = n_steps)
 
 # oo2$optimize(ii)
 # result = ii$result
@@ -71,9 +67,17 @@ oo2 = opt("local_search_2",
 
 cat("Running microbenchmark...\n")
 
-mb = microbenchmark(times = 1, unit = "ms", 
-  ls1 = {ii$clear(); oo1$optimize(ii)},
-  ls2 = {ii$clear(); oo2$optimize(ii)}
+mb = microbenchmark(
+  times = 1,
+  unit = "ms",
+  ls1 = {
+    ii$clear()
+    oo1$optimize(ii)
+  },
+  ls2 = {
+    ii$clear()
+    oo2$optimize(ii)
+  }
 )
 
 print(mb)

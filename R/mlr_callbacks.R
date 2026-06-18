@@ -11,7 +11,8 @@
 NULL
 
 load_callback_backup = function() {
-  callback_batch("bbotk.backup",
+  callback_batch(
+    "bbotk.backup",
     label = "Backup Archive Callback",
     man = "bbotk::bbotk.backup",
     on_optimization_begin = function(callback, context) {
@@ -19,7 +20,9 @@ load_callback_backup = function() {
     },
 
     on_optimizer_after_eval = function(callback, context) {
-      if (file.exists(callback$state$path)) unlink(callback$state$path)
+      if (file.exists(callback$state$path)) {
+        unlink(callback$state$path)
+      }
       saveRDS(context$instance$archive$data, callback$state$path)
     }
   )
@@ -38,7 +41,8 @@ load_callback_backup = function() {
 NULL
 
 load_callback_freeze_archive = function() {
-  callback_async("bbotk.async_freeze_archive",
+  callback_async(
+    "bbotk.async_freeze_archive",
     label = "Archive Freeze Callback",
     man = "bbotk::bbotk.async_freeze_archive",
     on_optimization_end = function(callback, context) {
@@ -46,5 +50,3 @@ load_callback_freeze_archive = function() {
     }
   )
 }
-
-

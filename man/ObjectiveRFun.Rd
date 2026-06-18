@@ -45,42 +45,41 @@ objective$eval_dt(data.table::data.table(x1 = 1:2, x2 = 3:4))
 \link{ObjectiveRFunMany}, \link{ObjectiveRFunDt}
 }
 \section{Super class}{
-\code{\link[bbotk:Objective]{bbotk::Objective}} -> \code{ObjectiveRFun}
+\code{\link[bbotk:Objective]{Objective}} -> \code{ObjectiveRFun}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{fun}}{(\code{function})\cr
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{fun}}{(\code{function})\cr
 Objective function.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-ObjectiveRFun-new}{\code{ObjectiveRFun$new()}}
-\item \href{#method-ObjectiveRFun-eval}{\code{ObjectiveRFun$eval()}}
-\item \href{#method-ObjectiveRFun-clone}{\code{ObjectiveRFun$clone()}}
+  \itemize{
+    \item \href{#method-ObjectiveRFun-initialize}{\code{ObjectiveRFun$new()}}
+    \item \href{#method-ObjectiveRFun-eval}{\code{ObjectiveRFun$eval()}}
+    \item \href{#method-ObjectiveRFun-clone}{\code{ObjectiveRFun$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_dt"><a href='../../bbotk/html/Objective.html#method-Objective-eval_dt'><code>bbotk::Objective$eval_dt()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many"><a href='../../bbotk/html/Objective.html#method-Objective-eval_many'><code>bbotk::Objective$eval_many()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format"><a href='../../bbotk/html/Objective.html#method-Objective-format'><code>bbotk::Objective$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="help"><a href='../../bbotk/html/Objective.html#method-Objective-help'><code>bbotk::Objective$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print"><a href='../../bbotk/html/Objective.html#method-Objective-print'><code>bbotk::Objective$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_dt"><a href='../../bbotk/html/Objective.html#method-Objective-eval_dt'><code>Objective$eval_dt()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="eval_many"><a href='../../bbotk/html/Objective.html#method-Objective-eval_many'><code>Objective$eval_many()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="format"><a href='../../bbotk/html/Objective.html#method-Objective-format'><code>Objective$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="help"><a href='../../bbotk/html/Objective.html#method-Objective-help'><code>Objective$help()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Objective" data-id="print"><a href='../../bbotk/html/Objective.html#method-Objective-print'><code>Objective$print()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ObjectiveRFun-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ObjectiveRFun-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFun$new(
+\if{html}{\out{<a id="method-ObjectiveRFun-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-ObjectiveRFun-initialize}{}}}
+\subsection{\code{ObjectiveRFun$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ObjectiveRFun$new(
   fun,
   domain,
   codomain = NULL,
@@ -89,76 +88,74 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   constants = ps(),
   packages = character(),
   check_values = TRUE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{fun}}{(\code{function})\cr
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{fun}}{(\code{function})\cr
 R function that encodes objective and expects a list with the input for a single point
 (e.g. \code{list(x1 = 1, x2 = 2)}) and returns the result either as a numeric vector or a
 list (e.g. \code{list(y = 3)}).}
-
-\item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{domain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies domain of function.
 The \link[paradox:ParamSet]{paradox::ParamSet} should describe all possible input parameters of the objective function.
 This includes their \code{id}, their types and the possible range.}
-
-\item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{codomain}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Specifies codomain of function.
 Most importantly the tags of each output "Parameter" define whether it should
 be minimized or maximized.  The default is to minimize each component.}
-
-\item{\code{id}}{(\code{character(1)}).}
-
-\item{\code{properties}}{(\code{character()}).}
-
-\item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
+      \item{\code{id}}{(\code{character(1)}).}
+      \item{\code{properties}}{(\code{character()}).}
+      \item{\code{constants}}{(\link[paradox:ParamSet]{paradox::ParamSet})\cr
 Changeable constants or parameters that are not subject to tuning can be stored and accessed here.}
-
-\item{\code{packages}}{(\code{character()})\cr
+      \item{\code{packages}}{(\code{character()})\cr
 Set of required packages to run the objective function.}
-
-\item{\code{check_values}}{(\code{logical(1)})\cr
+      \item{\code{check_values}}{(\code{logical(1)})\cr
 Should points before the evaluation and the results be checked for validity?}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ObjectiveRFun-eval"></a>}}
 \if{latex}{\out{\hypertarget{method-ObjectiveRFun-eval}{}}}
-\subsection{Method \code{eval()}}{
-Evaluates input value(s) on the objective function. Calls the R function
+\subsection{\code{ObjectiveRFun$eval()}}{
+  Evaluates input value(s) on the objective function. Calls the R function
 supplied by the user.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFun$eval(xs)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ObjectiveRFun$eval(xs)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{Input values.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xs}}{Input values.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ObjectiveRFun-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-ObjectiveRFun-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ObjectiveRFun$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{ObjectiveRFun$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ObjectiveRFun$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

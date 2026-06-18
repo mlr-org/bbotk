@@ -1,31 +1,43 @@
 test_that("OptimizerBatchChain", {
-  z = test_optimizer_1d("chain", term_evals = 20L,
+  z = test_optimizer_1d(
+    "chain",
+    term_evals = 20L,
     optimizers = list(opt("random_search"), opt("grid_search")),
-    terminators = list(trm("evals", n_evals = 10L), trm("evals", n_evals = 10L)))
+    terminators = list(trm("evals", n_evals = 10L), trm("evals", n_evals = 10L))
+  )
   expect_class(z$optimizer, "OptimizerBatchChain")
   expect_output(print(z$optimizer), "OptimizerBatchChain")
   expect_identical(z$instance$archive$data[.optimizer_id == "OptimizerBatchRandomSearch_1"]$batch_nr, 1:10)
   expect_identical(z$instance$archive$data[.optimizer_id == "OptimizerBatchGridSearch_1"]$batch_nr, 11:20)
 
-  z = test_optimizer_2d("chain", term_evals = 20L,
+  z = test_optimizer_2d(
+    "chain",
+    term_evals = 20L,
     optimizers = list(opt("random_search"), opt("grid_search")),
-    terminators = list(trm("evals", n_evals = 10L), trm("evals", n_evals = 10L)))
+    terminators = list(trm("evals", n_evals = 10L), trm("evals", n_evals = 10L))
+  )
   expect_class(z$optimizer, "OptimizerBatchChain")
   expect_output(print(z$optimizer), "OptimizerBatchChain")
   expect_identical(z$instance$archive$data[.optimizer_id == "OptimizerBatchRandomSearch_1"]$batch_nr, 1:10)
   expect_identical(z$instance$archive$data[.optimizer_id == "OptimizerBatchGridSearch_1"]$batch_nr, 11:20)
 
-  z = test_optimizer_2d("chain", term_evals = 20L,
+  z = test_optimizer_2d(
+    "chain",
+    term_evals = 20L,
     optimizers = list(opt("random_search", batch_size = 10L), opt("grid_search", batch_size = 10L)),
-    terminators = list(trm("evals", n_evals = 10L), trm("evals", n_evals = 10L)))
+    terminators = list(trm("evals", n_evals = 10L), trm("evals", n_evals = 10L))
+  )
   expect_class(z$optimizer, "OptimizerBatchChain")
   expect_output(print(z$optimizer), "OptimizerBatchChain")
   expect_identical(unique(z$instance$archive$data[.optimizer_id == "OptimizerBatchRandomSearch_1"]$batch_nr), 1L)
   expect_identical(unique(z$instance$archive$data[.optimizer_id == "OptimizerBatchGridSearch_1"]$batch_nr), 2L)
 
-  z = test_optimizer_dependencies("chain", term_evals = 20L,
+  z = test_optimizer_dependencies(
+    "chain",
+    term_evals = 20L,
     optimizers = list(opt("random_search"), opt("grid_search")),
-    terminators = list(trm("evals", n_evals = 10L), trm("evals", n_evals = 10L)))
+    terminators = list(trm("evals", n_evals = 10L), trm("evals", n_evals = 10L))
+  )
   expect_class(z$optimizer, "OptimizerBatchChain")
   expect_output(print(z$optimizer), "OptimizerBatchChain")
   expect_identical(z$instance$archive$data[.optimizer_id == "OptimizerBatchRandomSearch_1"]$batch_nr, 1:10)
@@ -56,11 +68,11 @@ test_that("OptimizerBatchChain", {
 
   expected_ids = c(
     paste0("OptimizerBatchRandomSearch_1.", opt("random_search")$param_set$ids()),
-    paste0("OptimizerBatchGenSA_1.", opt("gensa")$param_set$ids()))
+    paste0("OptimizerBatchGenSA_1.", opt("gensa")$param_set$ids())
+  )
 
   expect_set_equal(
     optimizer$param_set$ids(),
     expected_ids
   )
 })
-

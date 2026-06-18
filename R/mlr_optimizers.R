@@ -17,7 +17,8 @@
 #' @section S3 methods:
 #' * `as.data.table(dict, ..., objects = FALSE)`\cr
 #'   [mlr3misc::Dictionary] -> [data.table::data.table()]\cr
-#'   Returns a [data.table::data.table()] with fields "key", "label", "param_classes", "properties" and "packages" as columns.
+#'   Returns a [data.table::data.table()] with fields "key", "label", "param_classes", "properties",
+#'   and "packages" as columns.
 #'   If `objects` is set to `TRUE`, the constructed objects are returned in the list column named `object`.
 #'
 #' @family Dictionary
@@ -36,23 +37,45 @@ mlr_optimizers = R6Class("DictionaryOptimizer", inherit = Dictionary, cloneable 
 as.data.table.DictionaryOptimizer = function(x, ..., objects = FALSE) {
   assert_flag(objects)
 
-  setkeyv(map_dtr(x$keys(), function(key) {
-    # NOTE: special handling of OptimizerBatchChain due to optimizers being required as an argument during construction
-    if (key == "chain") {
-      optimizer1 = opt("random_search")
-      optimizer2 = opt("random_search")
-      opt = withCallingHandlers(x$get(key, optimizers = list(optimizer1, optimizer2)), packageNotFoundWarning = function(w) invokeRestart("muffleWarning"))
-      insert_named(
-        list(key = key, label = opt$label, param_classes = list(opt$param_classes), properties = list(opt$properties), packages = list(opt$packages)),
-        if (objects) list(object = list(opt))
-      )
-    } else {
-      opt = withCallingHandlers(x$get(key),
-        packageNotFoundWarning = function(w) invokeRestart("muffleWarning"))
-      insert_named(
-        list(key = key, label = opt$label, param_classes = list(opt$param_classes), properties = list(opt$properties), packages = list(opt$packages)),
-        if (objects) list(object = list(t))
-      )
-    }
-  }, .fill = TRUE), "key")[]
+  setkeyv(
+    map_dtr(
+      x$keys(),
+      function(key) {
+        # NOTE: special handling of OptimizerBatchChain due to optimizers being required
+        # as an argument during construction
+        if (key == "chain") {
+          optimizer1 = opt("random_search")
+          optimizer2 = opt("random_search")
+          opt = withCallingHandlers(
+            x$get(key, optimizers = list(optimizer1, optimizer2)),
+            packageNotFoundWarning = function(w) invokeRestart("muffleWarning")
+          )
+          insert_named(
+            list(
+              key = key,
+              label = opt$label,
+              param_classes = list(opt$param_classes),
+              properties = list(opt$properties),
+              packages = list(opt$packages)
+            ),
+            if (objects) list(object = list(opt))
+          )
+        } else {
+          opt = withCallingHandlers(x$get(key), packageNotFoundWarning = function(w) invokeRestart("muffleWarning"))
+          insert_named(
+            list(
+              key = key,
+              label = opt$label,
+              param_classes = list(opt$param_classes),
+              properties = list(opt$properties),
+              packages = list(opt$packages)
+            ),
+            if (objects) list(object = list(t))
+          )
+        }
+      },
+      .fill = TRUE
+    ),
+    "key"
+  )[]
 }

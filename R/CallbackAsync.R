@@ -4,15 +4,16 @@
 #' Specialized [mlr3misc::Callback] for asynchronous optimization.
 #' Callbacks allow to customize the behavior of processes in bbotk.
 #' The [callback_async()] function creates a [CallbackAsync].
-#' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks] and can be retrieved with [clbk()].
+#' Predefined callbacks are stored in the [dictionary][mlr3misc::Dictionary] [mlr_callbacks]
+#' and can be retrieved with [clbk()].
 #' For more information on optimization callbacks see [callback_async()].
 #'
 #' @seealso [callback_async()]
 #' @export
-CallbackAsync = R6Class("CallbackAsync",
+CallbackAsync = R6Class(
+  "CallbackAsync",
   inherit = Callback,
   public = list(
-
     #' @field on_optimization_begin (`function()`)\cr
     #' Stage called at the beginning of the optimization in the main process.
     #' Called in `Optimizer$optimize()`.
@@ -176,30 +177,38 @@ callback_async = function(
   on_result_end = NULL,
   on_result = NULL,
   on_optimization_end = NULL
-  ) {
-  stages = discard(set_names(list(
-    on_optimization_begin,
-    on_worker_begin,
-    on_optimizer_before_eval,
-    on_optimizer_after_eval,
-    on_optimizer_queue_before_eval,
-    on_optimizer_queue_after_eval,
-    on_worker_end,
-    on_result_begin,
-    on_result_end,
-    on_result,
-    on_optimization_end),
-    c("on_optimization_begin",
-      "on_worker_begin",
-      "on_optimizer_before_eval",
-      "on_optimizer_after_eval",
-      "on_optimizer_queue_before_eval",
-      "on_optimizer_queue_after_eval",
-      "on_worker_end",
-      "on_result_begin",
-      "on_result_end",
-      "on_result",
-      "on_optimization_end")), is.null)
+) {
+  stages = discard(
+    set_names(
+      list(
+        on_optimization_begin,
+        on_worker_begin,
+        on_optimizer_before_eval,
+        on_optimizer_after_eval,
+        on_optimizer_queue_before_eval,
+        on_optimizer_queue_after_eval,
+        on_worker_end,
+        on_result_begin,
+        on_result_end,
+        on_result,
+        on_optimization_end
+      ),
+      c(
+        "on_optimization_begin",
+        "on_worker_begin",
+        "on_optimizer_before_eval",
+        "on_optimizer_after_eval",
+        "on_optimizer_queue_before_eval",
+        "on_optimizer_queue_after_eval",
+        "on_worker_end",
+        "on_result_begin",
+        "on_result_end",
+        "on_result",
+        "on_optimization_end"
+      )
+    ),
+    is.null
+  )
 
   if ("on_result" %in% names(stages)) {
     .Deprecated(old = "on_result", new = "on_result_end")

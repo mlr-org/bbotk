@@ -19,11 +19,12 @@
 #' The [rush::rush_plan()] function defines the number of workers and their type.
 #' There are three types of workers:
 #'
-#' - "local": Workers are started as local processes with \CRANpkg{processx}.
-#'   See `$start_local_workers()` in [Rush] for more details.
-#' - "remote": Workers are started with \CRANpkg{mirai} on local or remote machines.
+#' - "mirai": Workers are started with \CRANpkg{mirai} on local or remote machines.
+#'   See `$start_workers()` in [Rush] for more details.
 #'   [mirai::daemons()] must be created before starting the optimization.
-#'   See `$start_remote_workers()` in [Rush] for more details.
+#' - "processx": Workers are started as local processes with \CRANpkg{processx}.
+
+#'   See `$start_local_workers()` in [Rush] for more details.
 #' - "script": Workers are started by the user with a custom script.
 #'   See `$create_worker_script()` in [Rush] for more details.
 #'
@@ -43,15 +44,16 @@
 #'
 #' @section Tiny Logging:
 #' The tiny logging mode is enabled by setting the option `bbotk.tiny_logging` to `TRUE`.
-#' In the tiny logging mode, the evaluated points are printed in a compact format and the currently best performing point is shown.
+#' In the tiny logging mode, the evaluated points are printed in a compact format and the currently best
+#' performing point is shown.
 #' Deactivated depending parameters are not printed.
 #'
 #' @seealso [OptimizerAsyncDesignPoints], [OptimizerAsyncGridSearch], [OptimizerAsyncRandomSearch]
 #' @export
-OptimizerAsync = R6Class("OptimizerAsync",
+OptimizerAsync = R6Class(
+  "OptimizerAsync",
   inherit = Optimizer,
   public = list(
-
     #' @description
     #' Performs the optimization on a [OptimInstanceAsyncSingleCrit] or [OptimInstanceAsyncMultiCrit] until termination.
     #' The single evaluations will be written into the [ArchiveAsync].
@@ -93,11 +95,13 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   call_back("on_optimization_begin", instance$objective$callbacks, instance$objective$context)
 
   # send design to workers
-  if (!is.null(design)) instance$archive$push_points(transpose_list(design))
+  if (!is.null(design)) {
+    instance$archive$push_points(transpose_list(design))
+  }
 
   if (getOption("bbotk.debug", FALSE)) {
     # debug mode runs .optimize() in main process
-    rush = rush::RushWorker$new(instance$rush$network_id, remote = FALSE)
+    rush = rush::RushWorker$new(instance$rush$network_id)
     instance$rush = rush
     instance$archive$rush = rush
     worker_type = "debug_local"
@@ -111,7 +115,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   } else {
     # run .optimize() on workers
     rush = instance$rush
-    worker_type = rush::rush_config()$worker_type %??% "local"
+    worker_type = rush::rush_config()$worker_type %??% "mirai"
 
     if (worker_type == "script") {
       # worker script
@@ -119,38 +123,43 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
-        instance = instance)
+        instance = instance
+      )
 
       rush$wait_for_workers(n = 1)
-    } else if (worker_type == "remote") {
-      # remote workers
-      worker_ids = rush$start_remote_workers(
+    } else if (worker_type == "mirai") {
+      # mirai workers
+      worker_ids = rush$start_workers(
         n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
-        instance = instance)
+        instance = instance
+      )
 
       rush$wait_for_workers(n = 1, worker_ids)
-    } else if (worker_type == "local") {
-      # local workers
+    } else if (worker_type == "processx") {
+      # processx workers
       worker_ids = rush$start_local_workers(
         n_workers = n_workers,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
-        instance = instance)
+        instance = instance
+      )
 
       rush$wait_for_workers(n = 1, worker_ids)
     }
   }
 
-  lg$info("Starting to optimize %i parameter(s) with '%s' and '%s' on %s %s worker(s)",
+  lg$info(
+    "Starting to optimize %i parameter(s) with '%s' and '%s' on %s %s worker(s)",
     instance$search_space$length,
     optimizer$format(),
     instance$terminator$format(with_params = TRUE),
     as.character(rush::rush_config()$n_workers %??% ""),
-    worker_type)
+    worker_type
+  )
 
   n_running_workers = 0
   # wait until optimization is finished
@@ -175,7 +184,12 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
         lg$info("Results of %i configuration(s):", nrow(new_results))
         setcolorder(new_results, c(instance$archive$cols_y, instance$archive$cols_x, "timestamp_xs", "timestamp_ys"))
         cns = setdiff(colnames(new_results), c("pid", "x_domain", "keys"))
-        lg$info(capture.output(print(new_results[, cns, with = FALSE], class = FALSE, row.names = FALSE, print.keys = FALSE)))
+        lg$info(capture.output(print(
+          new_results[, cns, with = FALSE],
+          class = FALSE,
+          row.names = FALSE,
+          print.keys = FALSE
+        )))
       }
     }
 
@@ -187,11 +201,9 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     }
   }
 
-  # move queued and running tasks to failed
-  failed_tasks = unlist(rush$tasks_with_state(states = c("queued", "running")))
-  if (length(failed_tasks)) {
-    rush$push_failed(failed_tasks, conditions = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE))
-  }
+  # remove queued tasks that were not evaluated before termination
+  # running tasks are left to the workers that own them
+  rush$empty_queue()
 
   if (!instance$archive$n_finished) {
     stopf("Optimization terminated without any finished evaluations.")
@@ -244,12 +256,18 @@ tiny_logging.OptimInstanceAsync = function(instance, optimizer) {
     cns = intersect(c(instance$archive$cols_y, instance$archive$cols_x), colnames(new_results))
 
     for (i in seq_row(new_results)) {
-      lg$info("Evaluation %i: %s (Current best %s: %s)",
+      lg$info(
+        "Evaluation %i: %s (Current best %s: %s)",
         ids[i],
         as_short_string(keep(as.list(new_results[i, cns, with = FALSE]), function(x) !is.na(x))),
         as_short_string(best_ids),
         # works for single and multi-criterion
-        paste0(map_chr(seq_row(best), function(i) as_short_string(keep(as.list(best[i, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))), collapse = " & ")
+        paste0(
+          map_chr(seq_row(best), function(i) {
+            as_short_string(keep(as.list(best[i, instance$archive$cols_y, with = FALSE]), function(x) !is.na(x)))
+          }),
+          collapse = " & "
+        )
       )
     }
   }
@@ -274,7 +292,9 @@ tiny_result = function(instance, optimizer) {
 #' @export
 tiny_result.OptimInstanceAsync = function(instance, optimizer) {
   for (i in seq_row(instance$result)) {
-    lg$info(as_short_string(keep(as.list(instance$result[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]), function(x) !is.na(x))))
+    lg$info(as_short_string(keep(
+      as.list(instance$result[i, c(instance$archive$cols_y, instance$archive$cols_x), with = FALSE]),
+      function(x) !is.na(x)
+    )))
   }
 }
-

@@ -4,7 +4,10 @@
 #' @include Terminator.R
 #'
 #' @description
-#' Class to terminate the optimization after the hypervolume stagnates, i.e. does not improve more than `threshold` over the last `iters` iterations.
+#' Class to terminate the optimization after the hypervolume stagnates,
+#' i.e. does not improve more than `threshold` over the last `iters` iterations.
+#' The hypervolume is computed using [moocore::hypervolume()].
+#' The reference point is the maximum of each objective over all evaluations.
 #'
 #' @templateVar id stagnation_hypervolume
 #' @template section_dictionary_terminator
@@ -25,10 +28,11 @@
 #' @examples
 #' TerminatorStagnation$new()
 #' trm("stagnation", iters = 5, threshold = 1e-5)
-TerminatorStagnationHypervolume = R6Class("TerminatorStagnationHypervolume",
+# nolint next
+TerminatorStagnationHypervolume = R6Class(
+  "TerminatorStagnationHypervolume",
   inherit = Terminator,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -62,6 +66,8 @@ TerminatorStagnationHypervolume = R6Class("TerminatorStagnationHypervolume",
         return(FALSE)
       }
 
+      require_namespaces("moocore")
+
       points = t(as.matrix(archive$data[, ycols, , drop = FALSE, with = FALSE]))
 
       # switch sign in each dim to minimize
@@ -75,11 +81,11 @@ TerminatorStagnationHypervolume = R6Class("TerminatorStagnationHypervolume",
       # points outside iters windows
       points_before = points[, seq(1, ncol(points) - iters), drop = FALSE]
 
-      hypervolume = emoa::dominated_hypervolume(points)
-      hypervolume_before = emoa::dominated_hypervolume(points_before)
+      hv = hypervolume(t(points), reference = apply(points, 1, max))
+      hv_before = hypervolume(t(points_before), reference = apply(points_before, 1, max))
 
       # hypervolume is always maximized
-      return(hypervolume <= hypervolume_before + pv$threshold)
+      hv <= hv_before + pv$threshold
     }
   )
 )

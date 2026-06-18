@@ -12,10 +12,10 @@
 #'
 #' @seealso [OptimInstanceBatchSingleCrit]
 #' @export
-OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
+OptimInstanceSingleCrit = R6Class(
+  "OptimInstanceSingleCrit",
   inherit = OptimInstanceBatchSingleCrit,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(
@@ -25,8 +25,7 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
       keep_evals = "all",
       check_values = TRUE,
       callbacks = NULL
-      ) {
-
+    ) {
       message("OptimInstanceSingleCrit is deprecated. Use OptimInstanceBatchSingleCrit instead.")
 
       super$initialize(
@@ -34,7 +33,8 @@ OptimInstanceSingleCrit = R6Class("OptimInstanceSingleCrit",
         search_space = search_space,
         terminator = terminator,
         check_values = check_values,
-        callbacks = callbacks)
+        callbacks = callbacks
+      )
     }
   )
 )

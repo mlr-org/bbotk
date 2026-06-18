@@ -15,8 +15,8 @@ test_that("OptimizerBatchIrace minimize works", {
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 96))
-
+    terminator = trm("evals", n_evals = 96)
+  )
 
   optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
 
@@ -28,7 +28,7 @@ test_that("OptimizerBatchIrace minimize works", {
 
   # check optimization direction
   # first elite of the first race should have the lowest average performance
-  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile)
+  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile) # nolint
   elites = iraceResults$allElites
   aggr = instance$archive$data[race == 1, .(y = mean(y)), by = configuration]
   expect_equal(aggr[which.min(y), configuration], elites[[1]][1])
@@ -56,7 +56,8 @@ test_that("OptimizerBatchIrace maximize works", {
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 96))
+    terminator = trm("evals", n_evals = 96)
+  )
 
   optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
 
@@ -68,7 +69,7 @@ test_that("OptimizerBatchIrace maximize works", {
 
   # check optimization direction
   # first elite of the first race should have the highest average performance
-  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile)
+  iraceResults = irace::read_logfile(optimizer$param_set$values$logFile) # nolint
   elites = iraceResults$allElites
   aggr = instance$archive$data[race == 1, .(y = mean(y)), by = configuration]
   expect_equal(aggr[which.max(y), configuration], elites[[1]][1])
@@ -78,7 +79,7 @@ test_that("OptimizerBatchIrace maximize works", {
   expect_equal(unname(instance$result_y), mean(archive[configuration == configuration_id, y]))
 })
 
-test_that("OptimizerBatchIrace assertions works",  {
+test_that("OptimizerBatchIrace assertions works", {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -96,16 +97,19 @@ test_that("OptimizerBatchIrace assertions works",  {
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("perf_reached", level = 0.1))
+    terminator = trm("perf_reached", level = 0.1)
+  )
 
   optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
 
-  expect_error(optimizer$optimize(instance),
+  expect_error(
+    optimizer$optimize(instance),
     regexp = "<TerminatorPerfReached> is not supported. Use <TerminatorEvals> instead",
-    fixed = TRUE)
+    fixed = TRUE
+  )
 })
 
-test_that("OptimizerBatchIrace works with passed constants set",  {
+test_that("OptimizerBatchIrace works with passed constants set", {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -122,7 +126,8 @@ test_that("OptimizerBatchIrace works with passed constants set",  {
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 96))
+    terminator = trm("evals", n_evals = 96)
+  )
 
   optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
 
@@ -130,7 +135,7 @@ test_that("OptimizerBatchIrace works with passed constants set",  {
   expect_data_table(instance$result, nrows = 1)
 })
 
-test_that("OptimizerBatchIrace works without passed constants set",  {
+test_that("OptimizerBatchIrace works without passed constants set", {
   skip_if_not_installed("irace")
 
   search_space = domain = ps(
@@ -147,7 +152,8 @@ test_that("OptimizerBatchIrace works without passed constants set",  {
   instance = OptimInstanceBatchSingleCrit$new(
     objective = objective,
     search_space = search_space,
-    terminator = trm("evals", n_evals = 96))
+    terminator = trm("evals", n_evals = 96)
+  )
 
   optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
 
@@ -161,8 +167,13 @@ test_that("paradox_to_irace without dependencies", {
 
   # only ParamLgl
   pps = ps(lgl = p_lgl())
-  expect_irace_parameters(parameters = paradox_to_irace(pps, 4), names = "lgl", types = "c",
-    domain = list(lgl = c("TRUE", "FALSE")), conditions = list(lgl = TRUE))
+  expect_irace_parameters(
+    parameters = paradox_to_irace(pps, 4),
+    names = "lgl",
+    types = "c",
+    domain = list(lgl = c("TRUE", "FALSE")),
+    conditions = list(lgl = TRUE)
+  )
 
   # only ParamUty
   pps = ps(uty = p_uty())
@@ -179,7 +190,8 @@ test_that("paradox_to_irace without dependencies", {
     parameters = paradox_to_irace(pps, 4),
     names = c("dbl", "int", "fct", "lgl"),
     types = c("r", "i", "c", "c"),
-    domain = list(dbl = c(0.1, 0.3), int = c(1, 9), fct = c("a", "b", "c"), lgl = c("TRUE", "FALSE")))
+    domain = list(dbl = c(0.1, 0.3), int = c(1, 9), fct = c("a", "b", "c"), lgl = c("TRUE", "FALSE"))
+  )
 
   # double checking previous bug in merge sort
   pps = ps(
@@ -193,8 +205,8 @@ test_that("paradox_to_irace without dependencies", {
     parameters = paradox_to_irace(pps, 4),
     names = c("fct", "int1", "dbl", "int2", "lgl"),
     types = c("c", "i", "r", "i", "c"),
-    domain = list(fct = c("a", "b", "c"), int1 = c(1, 9), dbl = c(0.1, 0.3), int2 = c(10, 90),
-      lgl = c("TRUE", "FALSE")))
+    domain = list(fct = c("a", "b", "c"), int1 = c(1, 9), dbl = c(0.1, 0.3), int2 = c(10, 90), lgl = c("TRUE", "FALSE"))
+  )
 })
 
 test_that("paradox_to_irace with dependencies", {
@@ -206,11 +218,14 @@ test_that("paradox_to_irace with dependencies", {
     b = p_int(lower = 1, upper = 9, depends = a == TRUE)
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps, 4), names = c("a", "b"), types = c("c", "i"),
+    parameters = paradox_to_irace(pps, 4),
+    names = c("a", "b"),
+    types = c("c", "i"),
     domain = list(a = c("TRUE", "FALSE"), b = c(1, 9)),
     conditions = list(a = TRUE, b = expression(a == TRUE)),
     depends = list(a = character(0), b = "a"),
-    hierarchy = c(1, 2))
+    hierarchy = c(1, 2)
+  )
 
   # two dependencies
   pps = ps(
@@ -219,14 +234,18 @@ test_that("paradox_to_irace with dependencies", {
     b = p_int(lower = 1, upper = 9, depends = a == TRUE)
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps, 4), names = c("a", "c", "b"),
+    parameters = paradox_to_irace(pps, 4),
+    names = c("a", "c", "b"),
     types = c("c", "c", "i"),
     domain = list(a = c("TRUE", "FALSE"), c = c("lvl1", "lvl2"), b = c(1, 9)),
     conditions = list(
-      a = TRUE, b = expression(a == TRUE),
-      c = expression(b %in% c(2, 5, 7))),
+      a = TRUE,
+      b = expression(a == TRUE),
+      c = expression(b %in% c(2, 5, 7))
+    ),
     depends = list(a = character(0), c = "b", b = "a"),
-    hierarchy = c(1, 3, 2))
+    hierarchy = c(1, 3, 2)
+  )
 
   # three dependencies
   pps = ps(
@@ -236,17 +255,24 @@ test_that("paradox_to_irace with dependencies", {
     d = p_dbl(lower = 0, upper = 1, depends = c %in% c("lvl1", "lvl2"))
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps, 4), names = c("a", "b", "c", "d"),
+    parameters = paradox_to_irace(pps, 4),
+    names = c("a", "b", "c", "d"),
     types = c("c", "i", "c", "r"),
     domain = list(
-      a = c("TRUE", "FALSE"), b = c(1, 9), c = c("lvl1", "lvl2"),
-      d = c(0, 1)),
+      a = c("TRUE", "FALSE"),
+      b = c(1, 9),
+      c = c("lvl1", "lvl2"),
+      d = c(0, 1)
+    ),
     conditions = list(
-      c = TRUE, a = expression(c == "lvl1"),
+      c = TRUE,
+      a = expression(c == "lvl1"),
       d = expression(c %in% c("lvl1", "lvl2")),
-      b = expression(a == TRUE)),
+      b = expression(a == TRUE)
+    ),
     depends = list(a = "c", b = "a", c = character(0), d = "c"),
-    hierarchy = c(2, 3, 1, 2))
+    hierarchy = c(2, 3, 1, 2)
+  )
 })
 
 test_that("paradox_to_irace works with parameters with multiple dependencies", {
@@ -263,9 +289,39 @@ test_that("paradox_to_irace works with parameters with multiple dependencies", {
     h = p_int(lower = 2, upper = 3, depends = c %in% c("lvl2", "lvl3") && d %in% c("lvl3", "lvl4"))
   )
   expect_irace_parameters(
-    parameters = paradox_to_irace(pps, 4), names = c("a", "b", "c", "d", "e", "f", "g", "h"), types = c("c", "c", "c", "c", "i", "i", "i", "i"),
-    domain = list(a = c("TRUE", "FALSE"), b = c("TRUE", "FALSE"), c = c("lvl1", "lvl2", "lvl3"), d = c("lvl1", "lvl2", "lvl3", "lvl4"), e = c(1, 9), f = c(1, 9), g = c(2, 3), h = c(2, 3)),
-    conditions = list(a = TRUE, b = TRUE, c = TRUE, d = TRUE, e = expression(a == TRUE), f = expression(a == TRUE & b == TRUE), g = expression(c %in% c("lvl2", "lvl3")), h = expression(c %in% c("lvl2", "lvl3") & d %in% c("lvl3", "lvl4"))),
-    depends = list(a = character(0), b = character(0), c = character(0), d = character(0), e = "a", f = c("a", "b"), g = "c", h = c("c", "d")),
-    hierarchy = c(1, 1, 1, 1, 2, 2, 2, 2))
+    parameters = paradox_to_irace(pps, 4),
+    names = c("a", "b", "c", "d", "e", "f", "g", "h"),
+    types = c("c", "c", "c", "c", "i", "i", "i", "i"),
+    domain = list(
+      a = c("TRUE", "FALSE"),
+      b = c("TRUE", "FALSE"),
+      c = c("lvl1", "lvl2", "lvl3"),
+      d = c("lvl1", "lvl2", "lvl3", "lvl4"),
+      e = c(1, 9),
+      f = c(1, 9),
+      g = c(2, 3),
+      h = c(2, 3)
+    ),
+    conditions = list(
+      a = TRUE,
+      b = TRUE,
+      c = TRUE,
+      d = TRUE,
+      e = expression(a == TRUE),
+      f = expression(a == TRUE & b == TRUE),
+      g = expression(c %in% c("lvl2", "lvl3")),
+      h = expression(c %in% c("lvl2", "lvl3") & d %in% c("lvl3", "lvl4"))
+    ),
+    depends = list(
+      a = character(0),
+      b = character(0),
+      c = character(0),
+      d = character(0),
+      e = "a",
+      f = c("a", "b"),
+      g = "c",
+      h = c("c", "d")
+    ),
+    hierarchy = c(1, 1, 1, 1, 2, 2, 2, 2)
+  )
 })

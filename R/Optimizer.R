@@ -8,7 +8,8 @@
 #' @details
 #' `Optimizer` is an abstract base class that implements the base functionality each optimizer must provide.
 #' A `Optimizer` object describes the optimization strategy.
-#' A `Optimizer` object must write its result to the `$assign_result()` method of the [OptimInstance] at the end in order to store the best point and its estimated performance vector.
+#' A `Optimizer` object must write its result to the `$assign_result()` method of the [OptimInstance] at the end
+#' in order to store the best point and its estimated performance vector.
 #'
 #' @template section_progress_bars
 #'
@@ -23,9 +24,9 @@
 #'
 #' @seealso [OptimizerAsync], [OptimizerBatch]
 #' @export
-Optimizer = R6Class("Optimizer",
+Optimizer = R6Class(
+  "Optimizer",
   public = list(
-
     #' @template field_id
     id = NULL,
 
@@ -33,15 +34,17 @@ Optimizer = R6Class("Optimizer",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @param param_classes (`character()`)\cr
-    #'   Supported parameter classes that the optimizer can optimize, as given in the [`paradox::ParamSet`] `$class` field.
+    #'   Supported parameter classes that the optimizer can optimize,
+    #'   as given in the [`paradox::ParamSet`] `$class` field.
     #'
     #' @param properties (`character()`)\cr
     #'   Set of properties of the optimizer.
     #'   Must be a subset of [`bbotk_reflections$optimizer_properties`][bbotk_reflections].
     #'
-     #' @param packages (`character()`)\cr
+    #' @param packages (`character()`)\cr
     #'   Set of required packages.
-    #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
+    #'   A warning is signaled by the constructor if at least one of the packages is not installed,
+    #'   but loaded (not attached) later on-demand via [requireNamespace()].
     initialize = function(
       id = "optimizer",
       param_set,
@@ -50,17 +53,23 @@ Optimizer = R6Class("Optimizer",
       packages = character(),
       label = NA_character_,
       man = NA_character_
-      ) {
+    ) {
       self$id = assert_string(id, min.chars = 1L)
       private$.param_set = assert_param_set(param_set)
-      private$.param_classes = assert_subset(param_classes, c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty"))
+      private$.param_classes = assert_subset(
+        param_classes,
+        c("ParamLgl", "ParamInt", "ParamDbl", "ParamFct", "ParamUty")
+      )
       # has to have at least multi-crit or single-crit property
       private$.properties = assert_subset(properties, bbotk_reflections$optimizer_properties, empty.ok = FALSE)
       private$.packages = union("bbotk", assert_character(packages, any.missing = FALSE, min.chars = 1L))
       private$.label = assert_string(label, na.ok = TRUE)
       private$.man = assert_string(man, na.ok = TRUE)
 
-      check_packages_installed(self$packages, msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self)))
+      check_packages_installed(
+        self$packages,
+        msg = sprintf("Package '%%s' required but not installed for Optimizer '%s'", format(self))
+      )
     },
 
     #' @description
@@ -76,8 +85,10 @@ Optimizer = R6Class("Optimizer",
     #' @return (`character()`).
     print = function() {
       msg_h = if (is.na(self$label)) "" else paste0(" - ", self$label)
-      msg_params = cli_vec(lapply(self$param_classes, function(cls) format_inline('{.cls {cls}}')),
-                          style = list(last = ' and ', sep = ', '))
+      msg_params = cli_vec(
+        lapply(self$param_classes, function(cls) format_inline("{.cls {cls}}")),
+        style = list(last = " and ", sep = ", ")
+      )
 
       cat_cli({
         cli_h1("{.cls {class(self)[1L]}}{msg_h}")
@@ -96,7 +107,6 @@ Optimizer = R6Class("Optimizer",
   ),
 
   active = list(
-
     param_set = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.param_set)) {
         stop("$param_set is read-only.")
@@ -105,7 +115,8 @@ Optimizer = R6Class("Optimizer",
     },
 
     #' @field param_classes (`character()`)\cr
-    #'   Supported parameter classes that the optimizer can optimize, as given in the [`paradox::ParamSet`] `$class` field.
+    #'   Supported parameter classes that the optimizer can optimize,
+    #'   as given in the [`paradox::ParamSet`] `$class` field.
     param_classes = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.param_classes)) {
         stop("$param_classes is read-only.")
@@ -125,7 +136,8 @@ Optimizer = R6Class("Optimizer",
 
     #' @field packages (`character()`)\cr
     #'   Set of required packages.
-    #'   A warning is signaled by the constructor if at least one of the packages is not installed, but loaded (not attached) later on-demand via [requireNamespace()].
+    #'   A warning is signaled by the constructor if at least one of the packages is not installed,
+    #'   but loaded (not attached) later on-demand via [requireNamespace()].
     packages = function(rhs) {
       if (!missing(rhs) && !identical(rhs, private$.packages)) {
         stop("$packages is read-only.")

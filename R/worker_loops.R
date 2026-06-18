@@ -29,16 +29,20 @@ bbotk_worker_loop = function(rush, optimizer, instance) {
     old_blas_threads = RhpcBLASctl::blas_get_num_procs()
     on.exit(RhpcBLASctl::blas_set_num_threads(old_blas_threads), add = TRUE)
     RhpcBLASctl::blas_set_num_threads(1)
-  } else { # try the bare minimum to disable threading of the most popular blas implementations
+  } else {
+    # try the bare minimum to disable threading of the most popular blas implementations
     old_blas = Sys.getenv("OPENBLAS_NUM_THREADS")
     old_mkl = Sys.getenv("MKL_NUM_THREADS")
     Sys.setenv(OPENBLAS_NUM_THREADS = 1)
     Sys.setenv(MKL_NUM_THREADS = 1)
 
-    on.exit({
-      Sys.setenv(OPENBLAS_NUM_THREADS = old_blas)
-      Sys.setenv(MKL_NUM_THREADS = old_mkl)
-    }, add = TRUE)
+    on.exit(
+      {
+        Sys.setenv(OPENBLAS_NUM_THREADS = old_blas)
+        Sys.setenv(MKL_NUM_THREADS = old_mkl)
+      },
+      add = TRUE
+    )
   }
 
   call_back("on_worker_begin", instance$objective$callbacks, instance$objective$context)
@@ -48,5 +52,5 @@ bbotk_worker_loop = function(rush, optimizer, instance) {
 
   call_back("on_worker_end", instance$objective$callbacks, instance$objective$context)
 
-  return(NULL)
+  NULL
 }

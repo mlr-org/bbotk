@@ -34,7 +34,7 @@ Maximum allowed time, in seconds, default is 100.}
 trm("run_time", secs = 1800)
 }
 \seealso{
-Other Terminator: 
+Other Terminator:
 \code{\link{Terminator}},
 \code{\link{mlr_terminators}},
 \code{\link{mlr_terminators_clock_time}},
@@ -48,72 +48,76 @@ Other Terminator:
 }
 \concept{Terminator}
 \section{Super class}{
-\code{\link[bbotk:Terminator]{bbotk::Terminator}} -> \code{TerminatorRunTime}
+\code{\link[bbotk:Terminator]{Terminator}} -> \code{TerminatorRunTime}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TerminatorRunTime-new}{\code{TerminatorRunTime$new()}}
-\item \href{#method-TerminatorRunTime-is_terminated}{\code{TerminatorRunTime$is_terminated()}}
-\item \href{#method-TerminatorRunTime-clone}{\code{TerminatorRunTime$clone()}}
+  \itemize{
+    \item \href{#method-TerminatorRunTime-initialize}{\code{TerminatorRunTime$new()}}
+    \item \href{#method-TerminatorRunTime-is_terminated}{\code{TerminatorRunTime$is_terminated()}}
+    \item \href{#method-TerminatorRunTime-clone}{\code{TerminatorRunTime$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>bbotk::Terminator$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>bbotk::Terminator$print()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>bbotk::Terminator$remaining_time()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>bbotk::Terminator$status()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="format"><a href='../../bbotk/html/Terminator.html#method-Terminator-format'><code>Terminator$format()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="print"><a href='../../bbotk/html/Terminator.html#method-Terminator-print'><code>Terminator$print()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="remaining_time"><a href='../../bbotk/html/Terminator.html#method-Terminator-remaining_time'><code>Terminator$remaining_time()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="Terminator" data-id="status"><a href='../../bbotk/html/Terminator.html#method-Terminator-status'><code>Terminator$status()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TerminatorRunTime-new"></a>}}
-\if{latex}{\out{\hypertarget{method-TerminatorRunTime-new}{}}}
-\subsection{Method \code{new()}}{
-Creates a new instance of this \link[R6:R6Class]{R6} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorRunTime$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-TerminatorRunTime-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-TerminatorRunTime-initialize}{}}}
+\subsection{\code{TerminatorRunTime$new()}}{
+  Creates a new instance of this \link[R6:R6Class]{R6} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorRunTime$new()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorRunTime-is_terminated"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorRunTime-is_terminated}{}}}
-\subsection{Method \code{is_terminated()}}{
-Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
+\subsection{\code{TerminatorRunTime$is_terminated()}}{
+  Is \code{TRUE} iff the termination criterion is positive, and \code{FALSE}
 otherwise.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorRunTime$is_terminated(archive)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorRunTime$is_terminated(archive)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{archive}}{(\link{Archive}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{logical(1)}.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{archive}}{(\link{Archive}).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{logical(1)}.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TerminatorRunTime-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-TerminatorRunTime-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TerminatorRunTime$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{TerminatorRunTime$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TerminatorRunTime$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

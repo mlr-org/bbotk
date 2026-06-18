@@ -70,9 +70,10 @@
 #'
 #' # best performing configuration
 #' instance$result
-OptimizerBatchDesignPoints = R6Class("OptimizerBatchDesignPoints", inherit = OptimizerBatch,
+OptimizerBatchDesignPoints = R6Class(
+  "OptimizerBatchDesignPoints",
+  inherit = OptimizerBatch,
   public = list(
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
@@ -102,8 +103,7 @@ OptimizerBatchDesignPoints = R6Class("OptimizerBatchDesignPoints", inherit = Opt
       }
       design = instance$search_space$assert_dt(pv$design)
 
-      ch = chunk_vector(seq_row(design), chunk_size = pv$batch_size,
-        shuffle = FALSE)
+      ch = chunk_vector(seq_row(design), chunk_size = pv$batch_size, shuffle = FALSE)
       for (inds in ch) {
         instance$eval_batch(design[inds, ])
       }
