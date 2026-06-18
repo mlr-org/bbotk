@@ -1,5 +1,8 @@
 # bbotk (development version)
 
+* fix: Asynchronous optimization no longer calls the deprecated `rush$fail_tasks()` method when cleaning up after termination.
+  Queued tasks are now removed with `rush$empty_queue()` and running tasks are left to the workers that own them.
+
 # bbotk 1.10.1
 
 * refactor: `is_dominated()` now uses `moocore::is_nondominated()` internally instead of a custom C implementation (#301).

@@ -201,14 +201,9 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     }
   }
 
-  # move queued and running tasks to failed
-  failed_tasks = unlist(rush$tasks_with_state(states = c("queued", "running")))
-  if (length(failed_tasks)) {
-    rush$fail_tasks(
-      failed_tasks,
-      conditions = replicate(length(failed_tasks), list(message = "Optimization terminated"), simplify = FALSE)
-    )
-  }
+  # remove queued tasks that were not evaluated before termination
+  # running tasks are left to the workers that own them
+  rush$empty_queue()
 
   if (!instance$archive$n_finished) {
     stopf("Optimization terminated without any finished evaluations.")
