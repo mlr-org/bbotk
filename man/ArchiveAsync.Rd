@@ -347,20 +347,21 @@ List of named lists with the error condition of each point, e.g. \code{list(list
 \if{html}{\out{<a id="method-ArchiveAsync-push_failed_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_failed_point}{}}}
 \subsection{\code{ArchiveAsync$push_failed_point()}}{
-  Move a running point to the failed points.
-Equivalent to \verb{$fail_point()}.
+  Push a single failed point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_failed_point(key, message)}
+    \preformatted{ArchiveAsync$push_failed_point(xs, message, x_extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{key}}{(\code{character(1)})\cr
-Key of the point.}
+      \item{\code{xs}}{(named \code{list()})\cr
+Named list of point values.}
       \item{\code{message}}{(\code{character(1)})\cr
 Error message.}
+      \item{\code{x_extra}}{(\code{list()})\cr
+Named list of additional information.}
     }
     \if{html}{\out{</div>}}
   }
@@ -430,7 +431,8 @@ Error message.}
 \if{html}{\out{<a id="method-ArchiveAsync-push_result"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_result}{}}}
 \subsection{\code{ArchiveAsync$push_result()}}{
-  Push result to the archive.
+  Deprecated.
+Use \verb{$finish_point()} instead.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{ArchiveAsync$push_result(key, ys, x_domain, extra = NULL)}

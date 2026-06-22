@@ -222,15 +222,17 @@ ArchiveAsync = R6Class(
     },
 
     #' @description
-    #' Move a running point to the failed points.
-    #' Equivalent to `$fail_point()`.
+    #' Push a single failed point to the archive.
     #'
-    #' @param key (`character(1)`)\cr
-    #' Key of the point.
+    #' @param xs (named `list()`)\cr
+    #' Named list of point values.
     #' @param message (`character(1)`)\cr
     #' Error message.
-    push_failed_point = function(key, message) {
-      self$rush$fail_tasks(key, list(list(message = message)))
+    #' @param x_extra (`list()`)\cr
+    #' Named list of additional information.
+    push_failed_point = function(xs, message, x_extra = NULL) {
+      x_extra = c(list(timestamp_xs = Sys.time()), x_extra)
+      self$rush$push_failed_tasks(list(xs), xss_extra = list(x_extra), conditions = list(list(message = message)))
     },
 
     #' @description
@@ -267,7 +269,8 @@ ArchiveAsync = R6Class(
     },
 
     #' @description
-    #' Push result to the archive.
+    #' Deprecated.
+    #' Use `$finish_point()` instead.
     #'
     #' @param key (`character()`)\cr
     #' Key of the point.
@@ -278,6 +281,7 @@ ArchiveAsync = R6Class(
     #' @param extra (`list()`)\cr
     #' Named list of additional information.
     push_result = function(key, ys, x_domain, extra = NULL) {
+      .Deprecated(new = "finish_point", old = "push_result")
       extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
       self$rush$finish_tasks(key, list(ys), extra = list(extra))
     },

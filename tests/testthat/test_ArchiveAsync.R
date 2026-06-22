@@ -31,7 +31,7 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 0)
   expect_equal(archive$data_with_state()$state, "running")
 
-  archive$push_result(keys, ys = list(y1 = 1, y2 = 2), x_domain = list(x1 = 1, x2 = 2))
+  archive$finish_point(keys, ys = list(y1 = 1, y2 = 2), x_domain = list(x1 = 1, x2 = 2))
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)
@@ -48,7 +48,7 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 0)
   expect_equal(archive$data_with_state()$state, c("running", "finished"))
 
-  archive$push_failed_point(keys, message = "error")
+  archive$fail_point(keys, message = "error")
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)
@@ -74,7 +74,7 @@ test_that("best method errors with direction=0 (learn tag)", {
   xss = list(list(x1 = 0.5, x2 = 0.5))
   keys = archive$push_points(xss)
   archive$pop_point()
-  archive$push_result(keys, ys = list(y = 0.5), x_domain = list(x1 = 0.5, x2 = 0.5))
+  archive$finish_point(keys, ys = list(y = 0.5), x_domain = list(x1 = 0.5, x2 = 0.5))
 
   expect_error(archive$best(), "direction = 0")
 })
@@ -96,9 +96,9 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
   xss = list(list(x1 = 0.5, x2 = 0.5), list(x1 = 0.3, x2 = 0.3))
   keys = archive$push_points(xss)
   archive$pop_point()
-  archive$push_result(keys[1], ys = list(y1 = 0.5, y2 = 0.3), x_domain = list(x1 = 0.5, x2 = 0.5))
+  archive$finish_point(keys[1], ys = list(y1 = 0.5, y2 = 0.3), x_domain = list(x1 = 0.5, x2 = 0.5))
   archive$pop_point()
-  archive$push_result(keys[2], ys = list(y1 = 0.3, y2 = 0.5), x_domain = list(x1 = 0.3, x2 = 0.3))
+  archive$finish_point(keys[2], ys = list(y1 = 0.3, y2 = 0.5), x_domain = list(x1 = 0.3, x2 = 0.3))
 
   expect_error(archive$nds_selection(n_select = 1), "direction = 0")
 })
@@ -181,4 +181,50 @@ test_that("push_finished_point works", {
   expect_data_table(archive$failed_data, nrows = 0)
 
   expect_character(archive$data$extra_info, len = 2)
+})
+
+test_that("push_failed_point creates a failed point", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  archive$push_failed_point(list(x1 = 1, x2 = 2), message = "error")
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 0)
+  expect_data_table(archive$finished_data, nrows = 0)
+  expect_data_table(archive$failed_data, nrows = 1)
+
+  failed = archive$failed_data
+  expect_equal(failed$x1, 1)
+  expect_equal(failed$message, "error")
+})
+
+test_that("push_result is deprecated and forwards to finish_point", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  keys = archive$push_points(list(list(x1 = 1, x2 = 2)))
+  archive$pop_point()
+  expect_warning(
+    archive$push_result(keys, ys = list(y1 = 1, y2 = 2), x_domain = list(x1 = 1, x2 = 2)),
+    "deprecated"
+  )
+
+  expect_data_table(archive$finished_data, nrows = 1)
 })

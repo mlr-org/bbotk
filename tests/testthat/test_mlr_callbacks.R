@@ -26,12 +26,12 @@ test_that("async callback works", {
     "bbotk.test",
     on_worker_begin = function(callback, context) {
       key = context$instance$archive$push_running_point(list(x = 1))
-      context$instance$archive$push_result(key, list(y = 1), list(x = 1))
+      context$instance$archive$finish_point(key, list(y = 1), list(x = 1))
     },
 
     on_worker_end = function(callback, context) {
       key = context$instance$archive$push_running_point(list(x = 2))
-      context$instance$archive$push_result(key, list(y = 2), list(x = 2))
+      context$instance$archive$finish_point(key, list(y = 2), list(x = 2))
     }
   )
 

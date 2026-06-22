@@ -223,7 +223,8 @@ Named list of additional information.}
 \if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_result"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_result}{}}}
 \subsection{\code{ArchiveAsyncFrozen$push_result()}}{
-  Push result to the archive.
+  Deprecated.
+Use \verb{$finish_point()} instead.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{ArchiveAsyncFrozen$push_result(key, ys, x_domain, extra = NULL)}
@@ -249,19 +250,21 @@ Named list of additional information.}
 \if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_failed_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_failed_point}{}}}
 \subsection{\code{ArchiveAsyncFrozen$push_failed_point()}}{
-  Move a running point to the failed points.
+  Push a single failed point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_failed_point(key, message)}
+    \preformatted{ArchiveAsyncFrozen$push_failed_point(xs, message, x_extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{key}}{(\code{character()})\cr
-Key of the point.}
-      \item{\code{message}}{(\code{character()})\cr
+      \item{\code{xs}}{(named \code{list()})\cr
+Named list of point values.}
+      \item{\code{message}}{(\code{character(1)})\cr
 Error message.}
+      \item{\code{x_extra}}{(\code{list()})\cr
+Named list of additional information.}
     }
     \if{html}{\out{</div>}}
   }

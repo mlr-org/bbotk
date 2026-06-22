@@ -117,7 +117,7 @@ OptimInstanceAsync = R6Class(
       call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
 
       # push result
-      self$archive$push_result(key, private$.ys, x_domain = private$.xs_trafoed, extra = private$.extra)
+      self$archive$finish_point(key, private$.ys, x_domain = private$.xs_trafoed, extra = private$.extra)
 
       invisible(private$.ys)
     },
@@ -138,7 +138,7 @@ OptimInstanceAsync = R6Class(
           call_back("on_optimizer_queue_after_eval", self$objective$callbacks, self$objective$context)
 
           # push result
-          self$archive$push_result(task$key, private$.ys, x_domain = private$.xs_trafoed)
+          self$archive$finish_point(task$key, private$.ys, x_domain = private$.xs_trafoed)
         }
       }
     },

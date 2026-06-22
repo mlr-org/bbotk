@@ -112,7 +112,8 @@ ArchiveAsyncFrozen = R6Class(
     },
 
     #' @description
-    #' Push result to the archive.
+    #' Deprecated.
+    #' Use `$finish_point()` instead.
     #'
     #' @param key (`character()`)\cr
     #' Key of the point.
@@ -127,13 +128,15 @@ ArchiveAsyncFrozen = R6Class(
     },
 
     #' @description
-    #' Move a running point to the failed points.
+    #' Push a single failed point to the archive.
     #'
-    #' @param key (`character()`)\cr
-    #' Key of the point.
-    #' @param message (`character()`)\cr
+    #' @param xs (named `list()`)\cr
+    #' Named list of point values.
+    #' @param message (`character(1)`)\cr
     #' Error message.
-    push_failed_point = function(key, message) {
+    #' @param x_extra (`list()`)\cr
+    #' Named list of additional information.
+    push_failed_point = function(xs, message, x_extra = NULL) {
       stop("Archive is frozen")
     },
 
