@@ -113,9 +113,37 @@ ArchiveAsync = R6Class(
     },
 
     #' @description
-    #' Pop a point from the queue.
-    pop_point = function() {
-      self$rush$pop_task(fields = "xs")
+    #' Push a single queued point to the archive.
+    #'
+    #' @param xs (named `list()`)\cr
+    #' Named list of point values.
+    #' @param extra (`list()`)\cr
+    #' Named list of additional information.
+    push_point = function(xs, extra = NULL) {
+      if (self$check_values) {
+        self$search_space$assert(xs)
+      }
+      extra = c(list(timestamp_xs = Sys.time()), extra)
+      self$rush$push_tasks(list(xs), extra = list(extra))
+    },
+
+    #' @description
+    #' Push running points to the archive.
+    #'
+    #' @param xss (list of named `list()`)\cr
+    #' List of named lists of point values.
+    #' @param extras (`list()`)\cr
+    #' List of named lists of additional information.
+    push_running_points = function(xss, extras = NULL) {
+      if (self$check_values) {
+        map(xss, self$search_space$assert)
+      }
+      extras = if (is.null(extras)) {
+        list(list(timestamp_xs = Sys.time()))
+      } else {
+        map(extras, function(extra) c(list(timestamp_xs = Sys.time()), extra))
+      }
+      self$rush$push_running_tasks(xss, extra = extras)
     },
 
     #' @description
@@ -134,34 +162,7 @@ ArchiveAsync = R6Class(
     },
 
     #' @description
-    #' Push result to the archive.
-    #'
-    #' @param key (`character()`)\cr
-    #' Key of the point.
-    #' @param ys (`list()`)\cr
-    #' Named list of results.
-    #' @param x_domain (`list()`)\cr
-    #' Named list of transformed point values.
-    #' @param extra (`list()`)\cr
-    #' Named list of additional information.
-    push_result = function(key, ys, x_domain, extra = NULL) {
-      extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
-      self$rush$finish_tasks(key, list(ys), extra = list(extra))
-    },
-
-    #' @description
-    #' Push failed point to the archive.
-    #'
-    #' @param key (`character()`)\cr
-    #' Key of the point.
-    #' @param message (`character()`)\cr
-    #' Error message.
-    push_failed_point = function(key, message) {
-      self$rush$fail_tasks(key, list(list(message = message)))
-    },
-
-    #' @description
-    #' Push finished point to the archive.
+    #' Push finished points to the archive.
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
@@ -183,6 +184,102 @@ ArchiveAsync = R6Class(
         map(yss_extra, function(extra) c(list(timestamp_ys = Sys.time()), extra))
       }
       self$rush$push_finished_tasks(xss, yss, xss_extra, yss_extra)
+    },
+
+    #' @description
+    #' Push a single finished point to the archive.
+    #'
+    #' @param xs (named `list()`)\cr
+    #' Named list of point values.
+    #' @param ys (named `list()`)\cr
+    #' Named list of results.
+    #' @param x_extra (`list()`)\cr
+    #' Named list of additional information stored with the point.
+    #' @param y_extra (`list()`)\cr
+    #' Named list of additional information stored with the results.
+    push_finished_point = function(xs, ys, x_extra = NULL, y_extra = NULL) {
+      x_extra = c(list(timestamp_xs = Sys.time()), x_extra)
+      y_extra = c(list(timestamp_ys = Sys.time()), y_extra)
+      self$rush$push_finished_tasks(list(xs), list(ys), list(x_extra), list(y_extra))
+    },
+
+    #' @description
+    #' Push failed points to the archive.
+    #'
+    #' @param xss (list of named `list()`)\cr
+    #' List of named lists of point values.
+    #' @param xss_extra (`list()`)\cr
+    #' List of named lists of additional information.
+    #' @param conditions (`list()`)\cr
+    #' List of named lists with the error condition of each point, e.g. `list(list(message = "..."))`.
+    push_failed_points = function(xss, xss_extra = NULL, conditions) {
+      xss_extra = if (is.null(xss_extra)) {
+        map(xss, function(xs) list(timestamp_xs = Sys.time()))
+      } else {
+        map(xss_extra, function(extra) c(list(timestamp_xs = Sys.time()), extra))
+      }
+      self$rush$push_failed_tasks(xss, xss_extra = xss_extra, conditions = conditions)
+    },
+
+    #' @description
+    #' Move a running point to the failed points.
+    #' Equivalent to `$fail_point()`.
+    #'
+    #' @param key (`character(1)`)\cr
+    #' Key of the point.
+    #' @param message (`character(1)`)\cr
+    #' Error message.
+    push_failed_point = function(key, message) {
+      self$rush$fail_tasks(key, list(list(message = message)))
+    },
+
+    #' @description
+    #' Pop a point from the queue.
+    pop_point = function() {
+      self$rush$pop_task(fields = "xs")
+    },
+
+    #' @description
+    #' Save the results of a running point and move it to the finished points.
+    #'
+    #' @param key (`character(1)`)\cr
+    #' Key of the point.
+    #' @param ys (named `list()`)\cr
+    #' Named list of results.
+    #' @param x_domain (named `list()`)\cr
+    #' Named list of transformed point values.
+    #' @param extra (`list()`)\cr
+    #' Named list of additional information.
+    finish_point = function(key, ys, x_domain, extra = NULL) {
+      extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
+      self$rush$finish_tasks(key, list(ys), extra = list(extra))
+    },
+
+    #' @description
+    #' Move a running point to the failed points.
+    #'
+    #' @param key (`character(1)`)\cr
+    #' Key of the point.
+    #' @param message (`character(1)`)\cr
+    #' Error message.
+    fail_point = function(key, message) {
+      self$rush$fail_tasks(key, list(list(message = message)))
+    },
+
+    #' @description
+    #' Push result to the archive.
+    #'
+    #' @param key (`character()`)\cr
+    #' Key of the point.
+    #' @param ys (`list()`)\cr
+    #' Named list of results.
+    #' @param x_domain (`list()`)\cr
+    #' Named list of transformed point values.
+    #' @param extra (`list()`)\cr
+    #' Named list of additional information.
+    push_result = function(key, ys, x_domain, extra = NULL) {
+      extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
+      self$rush$finish_tasks(key, list(ys), extra = list(extra))
     },
 
     #' @description

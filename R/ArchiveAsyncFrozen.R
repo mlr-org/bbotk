@@ -127,7 +127,7 @@ ArchiveAsyncFrozen = R6Class(
     },
 
     #' @description
-    #' Push failed point to the archive.
+    #' Move a running point to the failed points.
     #'
     #' @param key (`character()`)\cr
     #' Key of the point.

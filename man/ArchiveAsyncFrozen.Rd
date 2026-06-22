@@ -135,8 +135,14 @@ Number of evaluations stored in the archive.}
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href='../../bbotk/html/Archive.html#method-Archive-help'><code>Archive$help()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>Archive$print()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="best"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-best'><code>ArchiveAsync$best()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="fail_point"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-fail_point'><code>ArchiveAsync$fail_point()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="finish_point"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-finish_point'><code>ArchiveAsync$finish_point()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="nds_selection"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-nds_selection'><code>ArchiveAsync$nds_selection()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_failed_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_failed_points'><code>ArchiveAsync$push_failed_points()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_finished_point"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_finished_point'><code>ArchiveAsync$push_finished_point()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_finished_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_finished_points'><code>ArchiveAsync$push_finished_points()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_point"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_point'><code>ArchiveAsync$push_point()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_running_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_running_points'><code>ArchiveAsync$push_running_points()</code></a></span></li>
 </ul>
 </details>}}
 \if{html}{\out{<hr>}}
@@ -243,7 +249,7 @@ Named list of additional information.}
 \if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_failed_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_failed_point}{}}}
 \subsection{\code{ArchiveAsyncFrozen$push_failed_point()}}{
-  Push failed point to the archive.
+  Move a running point to the failed points.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{ArchiveAsyncFrozen$push_failed_point(key, message)}

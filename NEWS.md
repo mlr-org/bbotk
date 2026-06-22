@@ -2,6 +2,7 @@
 
 * fix: Asynchronous optimization no longer calls the deprecated `rush$fail_tasks()` method when cleaning up after termination.
   Queued tasks are now removed with `rush$empty_queue()` and running tasks are left to the workers that own them.
+* feat: `ArchiveAsync` gains additional methods wrapping the `rush` task API: `$push_point()`, `$push_running_points()`, `$push_finished_point()`, `$push_finished_points()`, `$push_failed_points()`, `$finish_point()`, and `$fail_point()`.
 
 # bbotk 1.10.1
 
