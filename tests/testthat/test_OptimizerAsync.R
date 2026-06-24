@@ -146,7 +146,11 @@ test_that("Required packages are loaded", {
   optimizer = opt("async_random_search")
   expect_error(optimizer$optimize(instance), "Optimization terminated without any finished evaluations")
   Sys.sleep(1)
-  expect_match(instance$rush$fetch_failed_tasks()$message, "irace is not loaded")
+  if (packageVersion("rush") >= "1.1.0.9001") {
+    expect_match(instance$rush$fetch_failed_tasks()$condition$message, "irace is not loaded")
+  } else {
+    expect_match(instance$rush$fetch_failed_tasks()$message, "irace is not loaded")
+  }
 
   objective = ObjectiveRFun$new(
     fun = function(xs) {
