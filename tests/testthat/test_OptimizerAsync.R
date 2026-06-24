@@ -147,7 +147,7 @@ test_that("Required packages are loaded", {
   expect_error(optimizer$optimize(instance), "Optimization terminated without any finished evaluations")
   Sys.sleep(1)
   if (packageVersion("rush") >= "1.1.0.9001") {
-    expect_match(instance$rush$fetch_failed_tasks()$condition$message, "irace is not loaded")
+    expect_match(instance$rush$fetch_failed_tasks()$condition[[1]]$message, "irace is not loaded")
   } else {
     expect_match(instance$rush$fetch_failed_tasks()$message, "irace is not loaded")
   }
