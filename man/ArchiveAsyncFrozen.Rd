@@ -120,29 +120,29 @@ Number of evaluations stored in the archive.}
   \itemize{
     \item \href{#method-ArchiveAsyncFrozen-initialize}{\code{ArchiveAsyncFrozen$new()}}
     \item \href{#method-ArchiveAsyncFrozen-push_points}{\code{ArchiveAsyncFrozen$push_points()}}
-    \item \href{#method-ArchiveAsyncFrozen-pop_point}{\code{ArchiveAsyncFrozen$pop_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-push_point}{\code{ArchiveAsyncFrozen$push_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-push_running_points}{\code{ArchiveAsyncFrozen$push_running_points()}}
     \item \href{#method-ArchiveAsyncFrozen-push_running_point}{\code{ArchiveAsyncFrozen$push_running_point()}}
-    \item \href{#method-ArchiveAsyncFrozen-push_result}{\code{ArchiveAsyncFrozen$push_result()}}
+    \item \href{#method-ArchiveAsyncFrozen-push_finished_points}{\code{ArchiveAsyncFrozen$push_finished_points()}}
+    \item \href{#method-ArchiveAsyncFrozen-push_finished_point}{\code{ArchiveAsyncFrozen$push_finished_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-push_failed_points}{\code{ArchiveAsyncFrozen$push_failed_points()}}
     \item \href{#method-ArchiveAsyncFrozen-push_failed_point}{\code{ArchiveAsyncFrozen$push_failed_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-pop_point}{\code{ArchiveAsyncFrozen$pop_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-finish_point}{\code{ArchiveAsyncFrozen$finish_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-fail_point}{\code{ArchiveAsyncFrozen$fail_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-push_result}{\code{ArchiveAsyncFrozen$push_result()}}
     \item \href{#method-ArchiveAsyncFrozen-data_with_state}{\code{ArchiveAsyncFrozen$data_with_state()}}
     \item \href{#method-ArchiveAsyncFrozen-clear}{\code{ArchiveAsyncFrozen$clear()}}
     \item \href{#method-ArchiveAsyncFrozen-clone}{\code{ArchiveAsyncFrozen$clone()}}
   }
 }
-\if{html}{\out{<details><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>Archive$format()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href='../../bbotk/html/Archive.html#method-Archive-help'><code>Archive$help()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>Archive$print()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="best"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-best'><code>ArchiveAsync$best()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="fail_point"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-fail_point'><code>ArchiveAsync$fail_point()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="finish_point"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-finish_point'><code>ArchiveAsync$finish_point()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="nds_selection"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-nds_selection'><code>ArchiveAsync$nds_selection()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_failed_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_failed_points'><code>ArchiveAsync$push_failed_points()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_finished_point"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_finished_point'><code>ArchiveAsync$push_finished_point()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_finished_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_finished_points'><code>ArchiveAsync$push_finished_points()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_point"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_point'><code>ArchiveAsync$push_point()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="push_running_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-push_running_points'><code>ArchiveAsync$push_running_points()</code></a></span></li>
 </ul>
 </details>}}
 \if{html}{\out{<hr>}}
@@ -172,7 +172,7 @@ The archive to freeze.}
   Push queued points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_points(xss)}
+    \preformatted{ArchiveAsyncFrozen$push_points(xss, extras = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -180,19 +180,53 @@ The archive to freeze.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
+      \item{\code{extras}}{(\code{list()})\cr
+List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
   }
 }
 
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsyncFrozen-pop_point"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-pop_point}{}}}
-\subsection{\code{ArchiveAsyncFrozen$pop_point()}}{
-  Pop a point from the queue.
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_point}{}}}
+\subsection{\code{ArchiveAsyncFrozen$push_point()}}{
+  Push a single queued point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$pop_point()}
+    \preformatted{ArchiveAsyncFrozen$push_point(xs, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{(named \code{list()})\cr
+Named list of point values.}
+      \item{\code{extra}}{(\code{list()})\cr
+Named list of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_running_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_running_points}{}}}
+\subsection{\code{ArchiveAsyncFrozen$push_running_points()}}{
+  Push running points to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$push_running_points(xss, extras = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xss}}{(list of named \code{list()})\cr
+List of named lists of point values.}
+      \item{\code{extras}}{(\code{list()})\cr
+List of named lists of additional information.}
+    }
     \if{html}{\out{</div>}}
   }
 }
@@ -220,27 +254,81 @@ Named list of additional information.}
 }
 
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_result"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_result}{}}}
-\subsection{\code{ArchiveAsyncFrozen$push_result()}}{
-  Deprecated.
-Use \verb{$finish_point()} instead.
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_finished_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_finished_points}{}}}
+\subsection{\code{ArchiveAsyncFrozen$push_finished_points()}}{
+  Push finished points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_result(key, ys, x_domain, extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_finished_points(
+  xss,
+  yss,
+  xss_extra = NULL,
+  yss_extra = NULL
+)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{key}}{(\code{character()})\cr
-Key of the point.}
-      \item{\code{ys}}{(\code{list()})\cr
+      \item{\code{xss}}{(list of named \code{list()})\cr
+List of named lists of point values.}
+      \item{\code{yss}}{(list of named \code{list()})\cr
+List of named lists of results.}
+      \item{\code{xss_extra}}{(\code{list()})\cr
+List of named lists of additional information.}
+      \item{\code{yss_extra}}{(\code{list()})\cr
+List of named lists of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_finished_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_finished_point}{}}}
+\subsection{\code{ArchiveAsyncFrozen$push_finished_point()}}{
+  Push a single finished point to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$push_finished_point(xs, ys, x_extra = NULL, y_extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{(named \code{list()})\cr
+Named list of point values.}
+      \item{\code{ys}}{(named \code{list()})\cr
 Named list of results.}
-      \item{\code{x_domain}}{(\code{list()})\cr
-Named list of transformed point values.}
-      \item{\code{extra}}{(\code{list()})\cr
-Named list of additional information.}
+      \item{\code{x_extra}}{(\code{list()})\cr
+Named list of additional information stored with the point.}
+      \item{\code{y_extra}}{(\code{list()})\cr
+Named list of additional information stored with the results.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_failed_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_failed_points}{}}}
+\subsection{\code{ArchiveAsyncFrozen$push_failed_points()}}{
+  Push failed points to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$push_failed_points(xss, conditions, xss_extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xss}}{(list of named \code{list()})\cr
+List of named lists of point values.}
+      \item{\code{conditions}}{(\code{list()})\cr
+List of named lists with the error condition of each point, e.g. \code{list(list(message = "..."))}.}
+      \item{\code{xss_extra}}{(\code{list()})\cr
+List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
   }
@@ -264,6 +352,93 @@ Named list of point values.}
       \item{\code{message}}{(\code{character(1)})\cr
 Error message.}
       \item{\code{x_extra}}{(\code{list()})\cr
+Named list of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-pop_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-pop_point}{}}}
+\subsection{\code{ArchiveAsyncFrozen$pop_point()}}{
+  Pop a point from the queue.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$pop_point()}
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-finish_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-finish_point}{}}}
+\subsection{\code{ArchiveAsyncFrozen$finish_point()}}{
+  Save the results of a running point and move it to the finished points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$finish_point(key, ys, x_domain, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{key}}{(\code{character(1)})\cr
+Key of the point.}
+      \item{\code{ys}}{(named \code{list()})\cr
+Named list of results.}
+      \item{\code{x_domain}}{(named \code{list()})\cr
+Named list of transformed point values.}
+      \item{\code{extra}}{(\code{list()})\cr
+Named list of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-fail_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-fail_point}{}}}
+\subsection{\code{ArchiveAsyncFrozen$fail_point()}}{
+  Move a running point to the failed points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$fail_point(key, message)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{key}}{(\code{character(1)})\cr
+Key of the point.}
+      \item{\code{message}}{(\code{character(1)})\cr
+Error message.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-push_result"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-push_result}{}}}
+\subsection{\code{ArchiveAsyncFrozen$push_result()}}{
+  Deprecated.
+Use \verb{$finish_point()} instead.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$push_result(key, ys, x_domain, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{key}}{(\code{character()})\cr
+Key of the point.}
+      \item{\code{ys}}{(\code{list()})\cr
+Named list of results.}
+      \item{\code{x_domain}}{(\code{list()})\cr
+Named list of transformed point values.}
+      \item{\code{extra}}{(\code{list()})\cr
 Named list of additional information.}
     }
     \if{html}{\out{</div>}}

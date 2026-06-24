@@ -208,13 +208,13 @@ ArchiveAsync = R6Class(
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
-    #' @param xss_extra (`list()`)\cr
-    #' List of named lists of additional information.
     #' @param conditions (`list()`)\cr
     #' List of named lists with the error condition of each point, e.g. `list(list(message = "..."))`.
-    push_failed_points = function(xss, xss_extra = NULL, conditions) {
+    #' @param xss_extra (`list()`)\cr
+    #' List of named lists of additional information.
+    push_failed_points = function(xss, conditions, xss_extra = NULL) {
       xss_extra = if (is.null(xss_extra)) {
-        map(xss, function(xs) list(timestamp_xs = Sys.time()))
+        list(list(timestamp_xs = Sys.time()))
       } else {
         map(xss_extra, function(extra) c(list(timestamp_xs = Sys.time()), extra))
       }

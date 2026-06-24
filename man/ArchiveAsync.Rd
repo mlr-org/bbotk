@@ -326,7 +326,7 @@ Named list of additional information stored with the results.}
   Push failed points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_failed_points(xss, xss_extra = NULL, conditions)}
+    \preformatted{ArchiveAsync$push_failed_points(xss, conditions, xss_extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -334,10 +334,10 @@ Named list of additional information stored with the results.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{xss_extra}}{(\code{list()})\cr
-List of named lists of additional information.}
       \item{\code{conditions}}{(\code{list()})\cr
 List of named lists with the error condition of each point, e.g. \code{list(list(message = "..."))}.}
+      \item{\code{xss_extra}}{(\code{list()})\cr
+List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
   }

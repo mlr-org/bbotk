@@ -157,7 +157,7 @@ test_that("push_points works with extras argument", {
   expect_equal(queued$batch_id, c(1, 1))
 })
 
-test_that("push_finished_point works", {
+test_that("push_finished_points works", {
   rush = start_rush_worker()
   on.exit({
     rush$reset()
@@ -183,6 +183,80 @@ test_that("push_finished_point works", {
   expect_character(archive$data$extra_info, len = 2)
 })
 
+test_that("push_finished_point works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  archive$push_finished_point(
+    list(x1 = 1, x2 = 2),
+    list(y1 = 1, y2 = 2),
+    x_extra = list(extra_info = "point1"),
+    y_extra = list(score = 0.5))
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 0)
+  expect_data_table(archive$finished_data, nrows = 1)
+  expect_data_table(archive$failed_data, nrows = 0)
+
+  finished = archive$finished_data
+  expect_equal(finished$x1, 1)
+  expect_equal(finished$y1, 1)
+  expect_equal(finished$extra_info, "point1")
+  expect_equal(finished$score, 0.5)
+  expect_true("timestamp_xs" %in% names(finished))
+  expect_true("timestamp_ys" %in% names(finished))
+})
+
+test_that("push_point works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  key = archive$push_point(list(x1 = 1, x2 = 2), extra = list(extra_info = "point1"))
+  expect_character(key, len = 1)
+
+  queued = archive$queued_data
+  expect_data_table(queued, nrows = 1)
+  expect_equal(queued$x1, 1)
+  expect_equal(queued$extra_info, "point1")
+  expect_true("timestamp_xs" %in% names(queued))
+})
+
+test_that("push_running_points works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  archive$push_running_points(xss, extras = list(list(extra_info = "point1"), list(extra_info = "point2")))
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 2)
+  expect_equal(sort(archive$running_data$extra_info), c("point1", "point2"))
+})
+
 test_that("push_failed_point creates a failed point", {
   rush = start_rush_worker()
   on.exit({
@@ -205,6 +279,53 @@ test_that("push_failed_point creates a failed point", {
   failed = archive$failed_data
   expect_equal(failed$x1, 1)
   expect_equal(failed$message, "error")
+})
+
+test_that("push_failed_points creates failed points", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  conditions = list(list(message = "error1"), list(message = "error2"))
+  archive$push_failed_points(xss, conditions = conditions)
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 0)
+  expect_data_table(archive$finished_data, nrows = 0)
+  expect_data_table(archive$failed_data, nrows = 2)
+  expect_equal(sort(archive$failed_data$message), c("error1", "error2"))
+})
+
+test_that("finish_point stores extra information", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  keys = archive$push_points(list(list(x1 = 1, x2 = 2)))
+  archive$pop_point()
+  archive$finish_point(
+    keys,
+    ys = list(y1 = 1, y2 = 2),
+    x_domain = list(x1 = 1, x2 = 2),
+    extra = list(extra_info = "point1"))
+
+  expect_data_table(archive$finished_data, nrows = 1)
+  expect_equal(archive$finished_data$extra_info, "point1")
 })
 
 test_that("push_result is deprecated and forwards to finish_point", {
