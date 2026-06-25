@@ -242,6 +242,28 @@ ArchiveAsync = R6Class(
     },
 
     #' @description
+    #' Save the results of multiple running points and move them to the finished points.
+    #'
+    #' @param keys (`character()`)\cr
+    #' Keys of the points.
+    #' @param yss (list of named `list()`)\cr
+    #' List of named lists of results.
+    #' @param x_domains (`list()`)\cr
+    #' List of named lists of transformed point values.
+    #' @param extras (`list()`)\cr
+    #' List of named lists of additional information.
+    finish_points = function(keys, yss, x_domains, extras = NULL) {
+      extras = if (is.null(extras)) {
+        map(x_domains, function(x_domain) list(x_domain = list(x_domain), timestamp_ys = Sys.time()))
+      } else {
+        pmap(list(x_domains, extras), function(x_domain, extra) {
+          c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
+        })
+      }
+      self$rush$finish_tasks(keys, yss, extra = extras)
+    },
+
+    #' @description
     #' Save the results of a running point and move it to the finished points.
     #'
     #' @param key (`character(1)`)\cr
@@ -255,6 +277,18 @@ ArchiveAsync = R6Class(
     finish_point = function(key, ys, x_domain, extra = NULL) {
       extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
       self$rush$finish_tasks(key, list(ys), extra = list(extra))
+    },
+
+    #' @description
+    #' Move multiple running points to the failed points.
+    #'
+    #' @param keys (`character()`)\cr
+    #' Keys of the points.
+    #' @param messages (`character()`)\cr
+    #' Error messages.
+    fail_points = function(keys, messages) {
+      conditions = map(messages, function(message) list(message = message))
+      self$rush$fail_tasks(keys, conditions)
     },
 
     #' @description

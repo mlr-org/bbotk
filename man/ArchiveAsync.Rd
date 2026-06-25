@@ -130,7 +130,9 @@ Number of evaluations stored in the archive.}
     \item \href{#method-ArchiveAsync-push_failed_points}{\code{ArchiveAsync$push_failed_points()}}
     \item \href{#method-ArchiveAsync-push_failed_point}{\code{ArchiveAsync$push_failed_point()}}
     \item \href{#method-ArchiveAsync-pop_point}{\code{ArchiveAsync$pop_point()}}
+    \item \href{#method-ArchiveAsync-finish_points}{\code{ArchiveAsync$finish_points()}}
     \item \href{#method-ArchiveAsync-finish_point}{\code{ArchiveAsync$finish_point()}}
+    \item \href{#method-ArchiveAsync-fail_points}{\code{ArchiveAsync$fail_points()}}
     \item \href{#method-ArchiveAsync-fail_point}{\code{ArchiveAsync$fail_point()}}
     \item \href{#method-ArchiveAsync-push_result}{\code{ArchiveAsync$push_result()}}
     \item \href{#method-ArchiveAsync-data_with_state}{\code{ArchiveAsync$data_with_state()}}
@@ -380,6 +382,32 @@ Named list of additional information.}
 }
 
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-finish_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-finish_points}{}}}
+\subsection{\code{ArchiveAsync$finish_points()}}{
+  Save the results of multiple running points and move them to the finished points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$finish_points(keys, yss, x_domains, extras = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{keys}}{(\code{character()})\cr
+Keys of the points.}
+      \item{\code{yss}}{(list of named \code{list()})\cr
+List of named lists of results.}
+      \item{\code{x_domains}}{(\code{list()})\cr
+List of named lists of transformed point values.}
+      \item{\code{extras}}{(\code{list()})\cr
+List of named lists of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-finish_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-finish_point}{}}}
 \subsection{\code{ArchiveAsync$finish_point()}}{
@@ -400,6 +428,28 @@ Named list of results.}
 Named list of transformed point values.}
       \item{\code{extra}}{(\code{list()})\cr
 Named list of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-fail_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-fail_points}{}}}
+\subsection{\code{ArchiveAsync$fail_points()}}{
+  Move multiple running points to the failed points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$fail_points(keys, messages)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{keys}}{(\code{character()})\cr
+Keys of the points.}
+      \item{\code{messages}}{(\code{character()})\cr
+Error messages.}
     }
     \if{html}{\out{</div>}}
   }

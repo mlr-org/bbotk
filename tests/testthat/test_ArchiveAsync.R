@@ -278,7 +278,11 @@ test_that("push_failed_point creates a failed point", {
 
   failed = archive$failed_data
   expect_equal(failed$x1, 1)
-  expect_equal(failed$message, "error")
+  if (packageVersion("rush") >= "1.1.0.9001") {
+    expect_equal(failed$condition[[1]]$message, "error")
+  } else {
+    expect_equal(failed$message, "error")
+  }
 })
 
 test_that("push_failed_points creates failed points", {
@@ -301,7 +305,11 @@ test_that("push_failed_points creates failed points", {
   expect_data_table(archive$running_data, nrows = 0)
   expect_data_table(archive$finished_data, nrows = 0)
   expect_data_table(archive$failed_data, nrows = 2)
-  expect_equal(sort(archive$failed_data$message), c("error1", "error2"))
+  if (packageVersion("rush") >= "1.1.0.9001") {
+    expect_equal(sort(map_chr(archive$failed_data$condition, "message")), c("error1", "error2"))
+  } else {
+    expect_equal(sort(archive$failed_data$message), c("error1", "error2"))
+  }
 })
 
 test_that("finish_point stores extra information", {
@@ -326,6 +334,56 @@ test_that("finish_point stores extra information", {
 
   expect_data_table(archive$finished_data, nrows = 1)
   expect_equal(archive$finished_data$extra_info, "point1")
+})
+
+test_that("finish_points works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  keys = archive$push_points(list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)))
+  archive$pop_point()
+  archive$pop_point()
+  archive$finish_points(
+    keys,
+    yss = list(list(y1 = 1, y2 = 2), list(y1 = 3, y2 = 4)),
+    x_domains = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)),
+    extras = list(list(extra_info = "point1"), list(extra_info = "point2")))
+
+  expect_data_table(archive$finished_data, nrows = 2)
+  expect_equal(sort(archive$finished_data$extra_info), c("point1", "point2"))
+})
+
+test_that("fail_points works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  keys = archive$push_points(list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)))
+  archive$pop_point()
+  archive$pop_point()
+  archive$fail_points(keys, messages = c("error1", "error2"))
+
+  expect_data_table(archive$failed_data, nrows = 2)
+  if (packageVersion("rush") >= "1.1.0.9001") {
+    expect_equal(sort(map_chr(archive$failed_data$condition, "message")), c("error1", "error2"))
+  } else {
+    expect_equal(sort(archive$failed_data$message), c("error1", "error2"))
+  }
 })
 
 test_that("push_result is deprecated and forwards to finish_point", {

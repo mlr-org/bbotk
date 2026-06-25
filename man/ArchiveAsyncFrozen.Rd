@@ -136,12 +136,14 @@ Number of evaluations stored in the archive.}
     \item \href{#method-ArchiveAsyncFrozen-clone}{\code{ArchiveAsyncFrozen$clone()}}
   }
 }
-\if{html}{\out{<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>Archive$format()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href='../../bbotk/html/Archive.html#method-Archive-help'><code>Archive$help()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>Archive$print()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="best"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-best'><code>ArchiveAsync$best()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="fail_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-fail_points'><code>ArchiveAsync$fail_points()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="finish_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-finish_points'><code>ArchiveAsync$finish_points()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="nds_selection"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-nds_selection'><code>ArchiveAsync$nds_selection()</code></a></span></li>
 </ul>
 </details>}}
