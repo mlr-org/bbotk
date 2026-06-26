@@ -128,7 +128,9 @@ Number of evaluations stored in the archive.}
     \item \href{#method-ArchiveAsyncFrozen-push_failed_points}{\code{ArchiveAsyncFrozen$push_failed_points()}}
     \item \href{#method-ArchiveAsyncFrozen-push_failed_point}{\code{ArchiveAsyncFrozen$push_failed_point()}}
     \item \href{#method-ArchiveAsyncFrozen-pop_point}{\code{ArchiveAsyncFrozen$pop_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-finish_points}{\code{ArchiveAsyncFrozen$finish_points()}}
     \item \href{#method-ArchiveAsyncFrozen-finish_point}{\code{ArchiveAsyncFrozen$finish_point()}}
+    \item \href{#method-ArchiveAsyncFrozen-fail_points}{\code{ArchiveAsyncFrozen$fail_points()}}
     \item \href{#method-ArchiveAsyncFrozen-fail_point}{\code{ArchiveAsyncFrozen$fail_point()}}
     \item \href{#method-ArchiveAsyncFrozen-push_result}{\code{ArchiveAsyncFrozen$push_result()}}
     \item \href{#method-ArchiveAsyncFrozen-data_with_state}{\code{ArchiveAsyncFrozen$data_with_state()}}
@@ -136,14 +138,12 @@ Number of evaluations stored in the archive.}
     \item \href{#method-ArchiveAsyncFrozen-clone}{\code{ArchiveAsyncFrozen$clone()}}
   }
 }
-\if{html}{\out{<details><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="format"><a href='../../bbotk/html/Archive.html#method-Archive-format'><code>Archive$format()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="help"><a href='../../bbotk/html/Archive.html#method-Archive-help'><code>Archive$help()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="Archive" data-id="print"><a href='../../bbotk/html/Archive.html#method-Archive-print'><code>Archive$print()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="best"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-best'><code>ArchiveAsync$best()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="fail_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-fail_points'><code>ArchiveAsync$fail_points()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="finish_points"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-finish_points'><code>ArchiveAsync$finish_points()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="bbotk" data-topic="ArchiveAsync" data-id="nds_selection"><a href='../../bbotk/html/ArchiveAsync.html#method-ArchiveAsync-nds_selection'><code>ArchiveAsync$nds_selection()</code></a></span></li>
 </ul>
 </details>}}
@@ -182,7 +182,7 @@ The archive to freeze.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{extras}}{(\code{list()})\cr
+      \item{\code{extras}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -204,7 +204,7 @@ List of named lists of additional information.}
     \describe{
       \item{\code{xs}}{(named \code{list()})\cr
 Named list of point values.}
-      \item{\code{extra}}{(\code{list()})\cr
+      \item{\code{extra}}{(\verb{named list()} | \code{NULL})\cr
 Named list of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -226,7 +226,7 @@ Named list of additional information.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{extras}}{(\code{list()})\cr
+      \item{\code{extras}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -246,9 +246,9 @@ List of named lists of additional information.}
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{xs}}{(named \code{list})\cr
+      \item{\code{xs}}{(named \code{list()})\cr
 Named list of point values.}
-      \item{\code{extra}}{(\code{list()})\cr
+      \item{\code{extra}}{(\verb{named list()} | \code{NULL})\cr
 Named list of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -277,9 +277,9 @@ Named list of additional information.}
 List of named lists of point values.}
       \item{\code{yss}}{(list of named \code{list()})\cr
 List of named lists of results.}
-      \item{\code{xss_extra}}{(\code{list()})\cr
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
-      \item{\code{yss_extra}}{(\code{list()})\cr
+      \item{\code{yss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -293,7 +293,12 @@ List of named lists of additional information.}
   Push a single finished point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_finished_point(xs, ys, x_extra = NULL, y_extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_finished_point(
+  xs,
+  ys,
+  xs_extra = NULL,
+  ys_extra = NULL
+)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -303,10 +308,10 @@ List of named lists of additional information.}
 Named list of point values.}
       \item{\code{ys}}{(named \code{list()})\cr
 Named list of results.}
-      \item{\code{x_extra}}{(\code{list()})\cr
-Named list of additional information stored with the point.}
-      \item{\code{y_extra}}{(\code{list()})\cr
-Named list of additional information stored with the results.}
+      \item{\code{xs_extra}}{(\verb{named list()} | \code{NULL})\cr
+Named list of additional information.}
+      \item{\code{ys_extra}}{(\verb{named list()} | \code{NULL})\cr
+Named list of additional information.}
     }
     \if{html}{\out{</div>}}
   }
@@ -319,7 +324,7 @@ Named list of additional information stored with the results.}
   Push failed points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_failed_points(xss, conditions, xss_extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_failed_points(xss, xss_extra = NULL, conditions = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -327,10 +332,11 @@ Named list of additional information stored with the results.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{conditions}}{(\code{list()})\cr
-List of named lists with the error condition of each point, e.g. \code{list(list(message = "..."))}.}
-      \item{\code{xss_extra}}{(\code{list()})\cr
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
+      \item{\code{conditions}}{(\code{list} | \code{NULL})\cr
+List of conditions for each failed point.
+If \code{NULL}, a generic error message is used.}
     }
     \if{html}{\out{</div>}}
   }
@@ -343,7 +349,7 @@ List of named lists of additional information.}
   Push a single failed point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_failed_point(xs, message, x_extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_failed_point(xs, xs_extra = NULL, condition = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -351,10 +357,11 @@ List of named lists of additional information.}
     \describe{
       \item{\code{xs}}{(named \code{list()})\cr
 Named list of point values.}
-      \item{\code{message}}{(\code{character(1)})\cr
-Error message.}
-      \item{\code{x_extra}}{(\code{list()})\cr
+      \item{\code{xs_extra}}{(\verb{named list()} | \code{NULL})\cr
 Named list of additional information.}
+      \item{\code{condition}}{(\code{any} | \code{NULL})\cr
+Condition of the failed point.
+If \code{NULL}, a generic error message is used.}
     }
     \if{html}{\out{</div>}}
   }
@@ -368,6 +375,32 @@ Named list of additional information.}
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{ArchiveAsyncFrozen$pop_point()}
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-finish_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-finish_points}{}}}
+\subsection{\code{ArchiveAsyncFrozen$finish_points()}}{
+  Save the results of multiple running points and move them to the finished points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$finish_points(keys, yss, x_domains, extras = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{keys}}{(\code{character()})\cr
+Keys of the points.}
+      \item{\code{yss}}{(list of named \code{list()})\cr
+List of named lists of results.}
+      \item{\code{x_domains}}{(\code{list()})\cr
+List of named lists of transformed point values.}
+      \item{\code{extras}}{(\code{list()})\cr
+List of named lists of additional information.}
+    }
     \if{html}{\out{</div>}}
   }
 }
@@ -399,13 +432,35 @@ Named list of additional information.}
 }
 
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsyncFrozen-fail_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-fail_points}{}}}
+\subsection{\code{ArchiveAsyncFrozen$fail_points()}}{
+  Move multiple running points to the failed points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsyncFrozen$fail_points(keys, conditions = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{keys}}{(\code{character()})\cr
+Keys of the points.}
+      \item{\code{conditions}}{(\code{list()} | \code{NULL})\cr
+Conditions of the failed points.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsyncFrozen-fail_point"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsyncFrozen-fail_point}{}}}
 \subsection{\code{ArchiveAsyncFrozen$fail_point()}}{
   Move a running point to the failed points.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$fail_point(key, message)}
+    \preformatted{ArchiveAsyncFrozen$fail_point(key, condition = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -413,8 +468,8 @@ Named list of additional information.}
     \describe{
       \item{\code{key}}{(\code{character(1)})\cr
 Key of the point.}
-      \item{\code{message}}{(\code{character(1)})\cr
-Error message.}
+      \item{\code{condition}}{(\code{any} | \code{NULL})\cr
+Condition of the failed point.}
     }
     \if{html}{\out{</div>}}
   }

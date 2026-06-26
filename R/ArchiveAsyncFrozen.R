@@ -90,7 +90,7 @@ ArchiveAsyncFrozen = R6Class(
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
-    #' @param extras (`list()`)\cr
+    #' @param extras (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
     push_points = function(xss, extras = NULL) {
       stop("Archive is frozen")
@@ -101,7 +101,7 @@ ArchiveAsyncFrozen = R6Class(
     #'
     #' @param xs (named `list()`)\cr
     #' Named list of point values.
-    #' @param extra (`list()`)\cr
+    #' @param extra (`named list()` | `NULL`)\cr
     #' Named list of additional information.
     push_point = function(xs, extra = NULL) {
       stop("Archive is frozen")
@@ -112,7 +112,7 @@ ArchiveAsyncFrozen = R6Class(
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
-    #' @param extras (`list()`)\cr
+    #' @param extras (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
     push_running_points = function(xss, extras = NULL) {
       stop("Archive is frozen")
@@ -121,9 +121,9 @@ ArchiveAsyncFrozen = R6Class(
     #' @description
     #' Push running point to the archive.
     #'
-    #' @param xs (named `list`)\cr
+    #' @param xs (named `list()`)\cr
     #' Named list of point values.
-    #' @param extra (`list()`)\cr
+    #' @param extra (`named list()` | `NULL`)\cr
     #' Named list of additional information.
     push_running_point = function(xs, extra = NULL) {
       stop("Archive is frozen")
@@ -136,9 +136,9 @@ ArchiveAsyncFrozen = R6Class(
     #' List of named lists of point values.
     #' @param yss (list of named `list()`)\cr
     #' List of named lists of results.
-    #' @param xss_extra (`list()`)\cr
+    #' @param xss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    #' @param yss_extra (`list()`)\cr
+    #' @param yss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
     push_finished_points = function(xss, yss, xss_extra = NULL, yss_extra = NULL) {
       stop("Archive is frozen")
@@ -151,11 +151,11 @@ ArchiveAsyncFrozen = R6Class(
     #' Named list of point values.
     #' @param ys (named `list()`)\cr
     #' Named list of results.
-    #' @param x_extra (`list()`)\cr
-    #' Named list of additional information stored with the point.
-    #' @param y_extra (`list()`)\cr
-    #' Named list of additional information stored with the results.
-    push_finished_point = function(xs, ys, x_extra = NULL, y_extra = NULL) {
+    #' @param xs_extra (`named list()` | `NULL`)\cr
+    #' Named list of additional information.
+    #' @param ys_extra (`named list()` | `NULL`)\cr
+    #' Named list of additional information.
+    push_finished_point = function(xs, ys, xs_extra = NULL, ys_extra = NULL) {
       stop("Archive is frozen")
     },
 
@@ -164,11 +164,12 @@ ArchiveAsyncFrozen = R6Class(
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
-    #' @param conditions (`list()`)\cr
-    #' List of named lists with the error condition of each point, e.g. `list(list(message = "..."))`.
-    #' @param xss_extra (`list()`)\cr
+    #' @param xss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    push_failed_points = function(xss, conditions, xss_extra = NULL) {
+    #' @param conditions (`list` | `NULL`)\cr
+    #' List of conditions for each failed point.
+    #' If `NULL`, a generic error message is used.
+    push_failed_points = function(xss, xss_extra = NULL, conditions = NULL) {
       stop("Archive is frozen")
     },
 
@@ -177,17 +178,33 @@ ArchiveAsyncFrozen = R6Class(
     #'
     #' @param xs (named `list()`)\cr
     #' Named list of point values.
-    #' @param message (`character(1)`)\cr
-    #' Error message.
-    #' @param x_extra (`list()`)\cr
+    #' @param xs_extra (`named list()` | `NULL`)\cr
     #' Named list of additional information.
-    push_failed_point = function(xs, message, x_extra = NULL) {
+    #' @param condition (`any` | `NULL`)\cr
+    #' Condition of the failed point.
+    #' If `NULL`, a generic error message is used.
+    push_failed_point = function(xs, xs_extra = NULL, condition = NULL) {
       stop("Archive is frozen")
     },
 
     #' @description
     #' Pop a point from the queue.
     pop_point = function() {
+      stop("Archive is frozen")
+    },
+
+    #' @description
+    #' Save the results of multiple running points and move them to the finished points.
+    #'
+    #' @param keys (`character()`)\cr
+    #' Keys of the points.
+    #' @param yss (list of named `list()`)\cr
+    #' List of named lists of results.
+    #' @param x_domains (`list()`)\cr
+    #' List of named lists of transformed point values.
+    #' @param extras (`list()`)\cr
+    #' List of named lists of additional information.
+    finish_points = function(keys, yss, x_domains, extras = NULL) {
       stop("Archive is frozen")
     },
 
@@ -207,13 +224,24 @@ ArchiveAsyncFrozen = R6Class(
     },
 
     #' @description
+    #' Move multiple running points to the failed points.
+    #'
+    #' @param keys (`character()`)\cr
+    #' Keys of the points.
+    #' @param conditions (`list()` | `NULL`)\cr
+    #' Conditions of the failed points.
+    fail_points = function(keys, conditions = NULL) {
+      stop("Archive is frozen")
+    },
+
+    #' @description
     #' Move a running point to the failed points.
     #'
     #' @param key (`character(1)`)\cr
     #' Key of the point.
-    #' @param message (`character(1)`)\cr
-    #' Error message.
-    fail_point = function(key, message) {
+    #' @param condition (`any` | `NULL`)\cr
+    #' Condition of the failed point.
+    fail_point = function(key, condition = NULL) {
       stop("Archive is frozen")
     },
 

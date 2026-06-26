@@ -98,7 +98,7 @@ ArchiveAsync = R6Class(
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
-    #' @param extras (`list()`)\cr
+    #' @param extras (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
     push_points = function(xss, extras = NULL) {
       if (self$check_values) {
@@ -117,7 +117,7 @@ ArchiveAsync = R6Class(
     #'
     #' @param xs (named `list()`)\cr
     #' Named list of point values.
-    #' @param extra (`list()`)\cr
+    #' @param extra (`named list()` | `NULL`)\cr
     #' Named list of additional information.
     push_point = function(xs, extra = NULL) {
       if (self$check_values) {
@@ -132,7 +132,7 @@ ArchiveAsync = R6Class(
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
-    #' @param extras (`list()`)\cr
+    #' @param extras (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
     push_running_points = function(xss, extras = NULL) {
       if (self$check_values) {
@@ -149,9 +149,9 @@ ArchiveAsync = R6Class(
     #' @description
     #' Push running point to the archive.
     #'
-    #' @param xs (named `list`)\cr
+    #' @param xs (named `list()`)\cr
     #' Named list of point values.
-    #' @param extra (`list()`)\cr
+    #' @param extra (`named list()` | `NULL`)\cr
     #' Named list of additional information.
     push_running_point = function(xs, extra = NULL) {
       if (self$check_values) {
@@ -168,9 +168,9 @@ ArchiveAsync = R6Class(
     #' List of named lists of point values.
     #' @param yss (list of named `list()`)\cr
     #' List of named lists of results.
-    #' @param xss_extra (`list()`)\cr
+    #' @param xss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    #' @param yss_extra (`list()`)\cr
+    #' @param yss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
     push_finished_points = function(xss, yss, xss_extra = NULL, yss_extra = NULL) {
       xss_extra = if (is.null(xss_extra)) {
@@ -193,14 +193,14 @@ ArchiveAsync = R6Class(
     #' Named list of point values.
     #' @param ys (named `list()`)\cr
     #' Named list of results.
-    #' @param x_extra (`list()`)\cr
-    #' Named list of additional information stored with the point.
-    #' @param y_extra (`list()`)\cr
-    #' Named list of additional information stored with the results.
-    push_finished_point = function(xs, ys, x_extra = NULL, y_extra = NULL) {
-      x_extra = c(list(timestamp_xs = Sys.time()), x_extra)
-      y_extra = c(list(timestamp_ys = Sys.time()), y_extra)
-      self$rush$push_finished_tasks(list(xs), list(ys), list(x_extra), list(y_extra))
+    #' @param xs_extra (`named list()` | `NULL`)\cr
+    #' Named list of additional information.
+    #' @param ys_extra (`named list()` | `NULL`)\cr
+    #' Named list of additional information.
+    push_finished_point = function(xs, ys, xs_extra = NULL, ys_extra = NULL) {
+      xs_extra = c(list(timestamp_xs = Sys.time()), xs_extra)
+      ys_extra = c(list(timestamp_ys = Sys.time()), ys_extra)
+      self$rush$push_finished_tasks(list(xs), list(ys), list(xs_extra), list(ys_extra))
     },
 
     #' @description
@@ -208,11 +208,12 @@ ArchiveAsync = R6Class(
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
-    #' @param conditions (`list()`)\cr
-    #' List of named lists with the error condition of each point, e.g. `list(list(message = "..."))`.
-    #' @param xss_extra (`list()`)\cr
+    #' @param xss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    push_failed_points = function(xss, conditions, xss_extra = NULL) {
+    #' @param conditions (`list` | `NULL`)\cr
+    #' List of conditions for each failed point.
+    #' If `NULL`, a generic error message is used.
+    push_failed_points = function(xss, xss_extra = NULL, conditions = NULL) {
       xss_extra = if (is.null(xss_extra)) {
         list(list(timestamp_xs = Sys.time()))
       } else {
@@ -226,13 +227,17 @@ ArchiveAsync = R6Class(
     #'
     #' @param xs (named `list()`)\cr
     #' Named list of point values.
-    #' @param message (`character(1)`)\cr
-    #' Error message.
-    #' @param x_extra (`list()`)\cr
+    #' @param xs_extra (`named list()` | `NULL`)\cr
     #' Named list of additional information.
-    push_failed_point = function(xs, message, x_extra = NULL) {
-      x_extra = c(list(timestamp_xs = Sys.time()), x_extra)
-      self$rush$push_failed_tasks(list(xs), xss_extra = list(x_extra), conditions = list(list(message = message)))
+    #' @param condition (`any` | `NULL`)\cr
+    #' Condition of the failed point.
+    #' If `NULL`, a generic error message is used.
+    push_failed_point = function(xs, xs_extra = NULL, condition = NULL) {
+      xs_extra = c(list(timestamp_xs = Sys.time()), xs_extra)
+      if (!is.null(condition)) {
+        condition = list(condition)
+      }
+      self$rush$push_failed_tasks(list(xs), xss_extra = list(xs_extra), conditions = condition)
     },
 
     #' @description
@@ -284,11 +289,10 @@ ArchiveAsync = R6Class(
     #'
     #' @param keys (`character()`)\cr
     #' Keys of the points.
-    #' @param messages (`character()`)\cr
-    #' Error messages.
-    fail_points = function(keys, messages) {
-      conditions = map(messages, function(message) list(message = message))
-      self$rush$fail_tasks(keys, conditions)
+    #' @param conditions (`list()` | `NULL`)\cr
+    #' Conditions of the failed points.
+    fail_points = function(keys, conditions = NULL) {
+      self$rush$fail_tasks(keys, conditions = conditions)
     },
 
     #' @description
@@ -296,10 +300,13 @@ ArchiveAsync = R6Class(
     #'
     #' @param key (`character(1)`)\cr
     #' Key of the point.
-    #' @param message (`character(1)`)\cr
-    #' Error message.
-    fail_point = function(key, message) {
-      self$rush$fail_tasks(key, list(list(message = message)))
+    #' @param condition (`any` | `NULL`)\cr
+    #' Condition of the failed point.
+    fail_point = function(key, condition = NULL) {
+      if (!is.null(condition)) {
+        condition = list(condition)
+      }
+      self$rush$fail_tasks(key, conditions = condition)
     },
 
     #' @description
@@ -316,8 +323,7 @@ ArchiveAsync = R6Class(
     #' Named list of additional information.
     push_result = function(key, ys, x_domain, extra = NULL) {
       .Deprecated(new = "finish_point", old = "push_result")
-      extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
-      self$rush$finish_tasks(key, list(ys), extra = list(extra))
+      self$finish_point(key, ys, x_domain, extra)
     },
 
     #' @description
@@ -325,12 +331,12 @@ ArchiveAsync = R6Class(
     #'
     #' @param fields (`character()`)\cr
     #' Fields to fetch.
-    #' Defaults to `c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")`.
+    #' Defaults to `c("worker_id", "xs", "ys", "xs_extra", "ys_extra", "condition")`.
     #' @param states (`character()`)\cr
     #' States of the tasks to be fetched.
     #' Defaults to `c("queued", "running", "finished", "failed")`.
     data_with_state = function(
-      fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
+      fields = c("worker_id", "xs", "ys", "xs_extra", "ys_extra", "condition"),
       states = c("queued", "running", "finished", "failed")
     ) {
       self$rush$fetch_tasks_with_state(fields, states)

@@ -48,7 +48,7 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 0)
   expect_equal(archive$data_with_state()$state, c("running", "finished"))
 
-  archive$fail_point(keys, message = "error")
+  archive$fail_point(keys, condition = list(message = "error"))
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)
@@ -198,8 +198,8 @@ test_that("push_finished_point works", {
   archive$push_finished_point(
     list(x1 = 1, x2 = 2),
     list(y1 = 1, y2 = 2),
-    x_extra = list(extra_info = "point1"),
-    y_extra = list(score = 0.5))
+    xs_extra = list(extra_info = "point1"),
+    ys_extra = list(score = 0.5))
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)
@@ -269,7 +269,7 @@ test_that("push_failed_point creates a failed point", {
     rush = rush
   )
 
-  archive$push_failed_point(list(x1 = 1, x2 = 2), message = "error")
+  archive$push_failed_point(list(x1 = 1, x2 = 2), condition = list(message = "error"))
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)
@@ -376,7 +376,7 @@ test_that("fail_points works", {
   keys = archive$push_points(list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)))
   archive$pop_point()
   archive$pop_point()
-  archive$fail_points(keys, messages = c("error1", "error2"))
+  archive$fail_points(keys, conditions = list(list(message = "error1"), list(message = "error2")))
 
   expect_data_table(archive$failed_data, nrows = 2)
   if (packageVersion("rush") >= "1.1.0.9001") {

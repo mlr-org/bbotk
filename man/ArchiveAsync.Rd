@@ -196,7 +196,7 @@ If a rush instance is supplied, the tuning runs without batches.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{extras}}{(\code{list()})\cr
+      \item{\code{extras}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -218,7 +218,7 @@ List of named lists of additional information.}
     \describe{
       \item{\code{xs}}{(named \code{list()})\cr
 Named list of point values.}
-      \item{\code{extra}}{(\code{list()})\cr
+      \item{\code{extra}}{(\verb{named list()} | \code{NULL})\cr
 Named list of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -240,7 +240,7 @@ Named list of additional information.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{extras}}{(\code{list()})\cr
+      \item{\code{extras}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -260,9 +260,9 @@ List of named lists of additional information.}
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{xs}}{(named \code{list})\cr
+      \item{\code{xs}}{(named \code{list()})\cr
 Named list of point values.}
-      \item{\code{extra}}{(\code{list()})\cr
+      \item{\code{extra}}{(\verb{named list()} | \code{NULL})\cr
 Named list of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -286,9 +286,9 @@ Named list of additional information.}
 List of named lists of point values.}
       \item{\code{yss}}{(list of named \code{list()})\cr
 List of named lists of results.}
-      \item{\code{xss_extra}}{(\code{list()})\cr
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
-      \item{\code{yss_extra}}{(\code{list()})\cr
+      \item{\code{yss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
     }
     \if{html}{\out{</div>}}
@@ -302,7 +302,7 @@ List of named lists of additional information.}
   Push a single finished point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_finished_point(xs, ys, x_extra = NULL, y_extra = NULL)}
+    \preformatted{ArchiveAsync$push_finished_point(xs, ys, xs_extra = NULL, ys_extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -312,10 +312,10 @@ List of named lists of additional information.}
 Named list of point values.}
       \item{\code{ys}}{(named \code{list()})\cr
 Named list of results.}
-      \item{\code{x_extra}}{(\code{list()})\cr
-Named list of additional information stored with the point.}
-      \item{\code{y_extra}}{(\code{list()})\cr
-Named list of additional information stored with the results.}
+      \item{\code{xs_extra}}{(\verb{named list()} | \code{NULL})\cr
+Named list of additional information.}
+      \item{\code{ys_extra}}{(\verb{named list()} | \code{NULL})\cr
+Named list of additional information.}
     }
     \if{html}{\out{</div>}}
   }
@@ -328,7 +328,7 @@ Named list of additional information stored with the results.}
   Push failed points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_failed_points(xss, conditions, xss_extra = NULL)}
+    \preformatted{ArchiveAsync$push_failed_points(xss, xss_extra = NULL, conditions = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -336,10 +336,11 @@ Named list of additional information stored with the results.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{conditions}}{(\code{list()})\cr
-List of named lists with the error condition of each point, e.g. \code{list(list(message = "..."))}.}
-      \item{\code{xss_extra}}{(\code{list()})\cr
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
+      \item{\code{conditions}}{(\code{list} | \code{NULL})\cr
+List of conditions for each failed point.
+If \code{NULL}, a generic error message is used.}
     }
     \if{html}{\out{</div>}}
   }
@@ -352,7 +353,7 @@ List of named lists of additional information.}
   Push a single failed point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_failed_point(xs, message, x_extra = NULL)}
+    \preformatted{ArchiveAsync$push_failed_point(xs, xs_extra = NULL, condition = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -360,10 +361,11 @@ List of named lists of additional information.}
     \describe{
       \item{\code{xs}}{(named \code{list()})\cr
 Named list of point values.}
-      \item{\code{message}}{(\code{character(1)})\cr
-Error message.}
-      \item{\code{x_extra}}{(\code{list()})\cr
+      \item{\code{xs_extra}}{(\verb{named list()} | \code{NULL})\cr
 Named list of additional information.}
+      \item{\code{condition}}{(\code{any} | \code{NULL})\cr
+Condition of the failed point.
+If \code{NULL}, a generic error message is used.}
     }
     \if{html}{\out{</div>}}
   }
@@ -440,7 +442,7 @@ Named list of additional information.}
   Move multiple running points to the failed points.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$fail_points(keys, messages)}
+    \preformatted{ArchiveAsync$fail_points(keys, conditions = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -448,8 +450,8 @@ Named list of additional information.}
     \describe{
       \item{\code{keys}}{(\code{character()})\cr
 Keys of the points.}
-      \item{\code{messages}}{(\code{character()})\cr
-Error messages.}
+      \item{\code{conditions}}{(\code{list()} | \code{NULL})\cr
+Conditions of the failed points.}
     }
     \if{html}{\out{</div>}}
   }
@@ -462,7 +464,7 @@ Error messages.}
   Move a running point to the failed points.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$fail_point(key, message)}
+    \preformatted{ArchiveAsync$fail_point(key, condition = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -470,8 +472,8 @@ Error messages.}
     \describe{
       \item{\code{key}}{(\code{character(1)})\cr
 Key of the point.}
-      \item{\code{message}}{(\code{character(1)})\cr
-Error message.}
+      \item{\code{condition}}{(\code{any} | \code{NULL})\cr
+Condition of the failed point.}
     }
     \if{html}{\out{</div>}}
   }
