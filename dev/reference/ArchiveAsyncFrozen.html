@@ -140,10 +140,19 @@ Number of evaluations stored in the archive.</p></dd>
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 <p></p><ul><li><p><a href="#method-ArchiveAsyncFrozen-initialize"><code>ArchiveAsyncFrozen$new()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsyncFrozen-push_points"><code>ArchiveAsyncFrozen$push_points()</code></a></p></li>
-<li><p><a href="#method-ArchiveAsyncFrozen-pop_point"><code>ArchiveAsyncFrozen$pop_point()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-push_point"><code>ArchiveAsyncFrozen$push_point()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-push_running_points"><code>ArchiveAsyncFrozen$push_running_points()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsyncFrozen-push_running_point"><code>ArchiveAsyncFrozen$push_running_point()</code></a></p></li>
-<li><p><a href="#method-ArchiveAsyncFrozen-push_result"><code>ArchiveAsyncFrozen$push_result()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-push_finished_points"><code>ArchiveAsyncFrozen$push_finished_points()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-push_finished_point"><code>ArchiveAsyncFrozen$push_finished_point()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-push_failed_points"><code>ArchiveAsyncFrozen$push_failed_points()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsyncFrozen-push_failed_point"><code>ArchiveAsyncFrozen$push_failed_point()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-pop_point"><code>ArchiveAsyncFrozen$pop_point()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-finish_points"><code>ArchiveAsyncFrozen$finish_points()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-finish_point"><code>ArchiveAsyncFrozen$finish_point()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-fail_points"><code>ArchiveAsyncFrozen$fail_points()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-fail_point"><code>ArchiveAsyncFrozen$fail_point()</code></a></p></li>
+<li><p><a href="#method-ArchiveAsyncFrozen-push_result"><code>ArchiveAsyncFrozen$push_result()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsyncFrozen-data_with_state"><code>ArchiveAsyncFrozen$data_with_state()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsyncFrozen-clear"><code>ArchiveAsyncFrozen$clear()</code></a></p></li>
 <li><p><a href="#method-ArchiveAsyncFrozen-clone"><code>ArchiveAsyncFrozen$clone()</code></a></p></li>
@@ -173,12 +182,219 @@ The archive to freeze.</p></dd>
 <h3 id="archiveasyncfrozen-push-points-"><code>ArchiveAsyncFrozen$push_points()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-points-"></a></h3>
 <p>Push queued points to the archive.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_points</span><span class="op">(</span><span class="va">xss</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xss</code></dt>
 <dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
 List of named lists of point values.</p></dd>
+
+      <dt><code>xss_extra</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+List of named lists of additional information.</p></dd>
+
+      <dt><code>extra</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Deprecated argument for additional information.
+Use <code>xss_extra</code> instead.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-push_point"></a><div class="section">
+<h3 id="archiveasyncfrozen-push-point-"><code>ArchiveAsyncFrozen$push_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-point-"></a></h3>
+<p>Push a single queued point to the archive.</p><div class="section">
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>xs</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+Named list of point values.</p></dd>
+
+      <dt><code>xs_extra</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Named list of additional information.</p></dd>
+
+      <dt><code>extra</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Deprecated argument for additional information.
+Use <code>xs_extra</code> instead.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-push_running_points"></a><div class="section">
+<h3 id="archiveasyncfrozen-push-running-points-"><code>ArchiveAsyncFrozen$push_running_points()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-running-points-"></a></h3>
+<p>Push running points to the archive.</p><div class="section">
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_running_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>xss</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+List of named lists of point values.</p></dd>
+
+      <dt><code>xss_extra</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+List of named lists of additional information.</p></dd>
+
+      <dt><code>extra</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Deprecated argument for additional information.
+Use <code>xss_extra</code> instead.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-push_running_point"></a><div class="section">
+<h3 id="archiveasyncfrozen-push-running-point-"><code>ArchiveAsyncFrozen$push_running_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-running-point-"></a></h3>
+<p>Push running point to the archive.</p><div class="section">
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_running_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>xs</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+Named list of point values.</p></dd>
+
+      <dt><code>xs_extra</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Named list of additional information.</p></dd>
+
+      <dt><code>extra</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Deprecated argument for additional information.
+Use <code>xs_extra</code> instead.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-push_finished_points"></a><div class="section">
+<h3 id="archiveasyncfrozen-push-finished-points-"><code>ArchiveAsyncFrozen$push_finished_points()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-finished-points-"></a></h3>
+<p>Push finished points to the archive.</p><div class="section">
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_finished_points</span><span class="op">(</span></span>
+<span>  <span class="va">xss</span>,</span>
+<span>  <span class="va">yss</span>,</span>
+<span>  xss_extra <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  yss_extra <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>xss</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+List of named lists of point values.</p></dd>
+
+      <dt><code>yss</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+List of named lists of results.</p></dd>
+
+      <dt><code>xss_extra</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+List of named lists of additional information.</p></dd>
+
+      <dt><code>yss_extra</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+List of named lists of additional information.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-push_finished_point"></a><div class="section">
+<h3 id="archiveasyncfrozen-push-finished-point-"><code>ArchiveAsyncFrozen$push_finished_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-finished-point-"></a></h3>
+<p>Push a single finished point to the archive.</p><div class="section">
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_finished_point</span><span class="op">(</span></span>
+<span>  <span class="va">xs</span>,</span>
+<span>  <span class="va">ys</span>,</span>
+<span>  xs_extra <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ys_extra <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>xs</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+Named list of point values.</p></dd>
+
+      <dt><code>ys</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+Named list of results.</p></dd>
+
+      <dt><code>xs_extra</code></dt>
+<dd><p>(<code>named list()</code> | <code>NULL</code>)<br>
+Named list of additional information.</p></dd>
+
+      <dt><code>ys_extra</code></dt>
+<dd><p>(<code>named list()</code> | <code>NULL</code>)<br>
+Named list of additional information.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-push_failed_points"></a><div class="section">
+<h3 id="archiveasyncfrozen-push-failed-points-"><code>ArchiveAsyncFrozen$push_failed_points()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-failed-points-"></a></h3>
+<p>Push failed points to the archive.</p><div class="section">
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_failed_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span>, conditions <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>xss</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+List of named lists of point values.</p></dd>
+
+      <dt><code>xss_extra</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+List of named lists of additional information.</p></dd>
+
+      <dt><code>conditions</code></dt>
+<dd><p>(<code>list</code> | <code>NULL</code>)<br>
+List of conditions for each failed point.
+If <code>NULL</code>, a generic error message is used.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-push_failed_point"></a><div class="section">
+<h3 id="archiveasyncfrozen-push-failed-point-"><code>ArchiveAsyncFrozen$push_failed_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-failed-point-"></a></h3>
+<p>Push a single failed point to the archive.</p><div class="section">
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_failed_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span>, condition <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>xs</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+Named list of point values.</p></dd>
+
+      <dt><code>xs_extra</code></dt>
+<dd><p>(<code>named list()</code> | <code>NULL</code>)<br>
+Named list of additional information.</p></dd>
+
+      <dt><code>condition</code></dt>
+<dd><p>(<code>any</code> | <code>NULL</code>)<br>
+Condition of the failed point.
+If <code>NULL</code>, a generic error message is used.</p></dd>
 
 
 </dl><p></p></div>
@@ -189,26 +405,127 @@ List of named lists of point values.</p></dd>
 <p></p><hr><a id="method-ArchiveAsyncFrozen-pop_point"></a><div class="section">
 <h3 id="archiveasyncfrozen-pop-point-"><code>ArchiveAsyncFrozen$pop_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-pop-point-"></a></h3>
 <p>Pop a point from the queue.</p><div class="section">
-<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">pop_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 </div>
 
-<p></p><hr><a id="method-ArchiveAsyncFrozen-push_running_point"></a><div class="section">
-<h3 id="archiveasyncfrozen-push-running-point-"><code>ArchiveAsyncFrozen$push_running_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-running-point-"></a></h3>
-<p>Push running point to the archive.</p><div class="section">
-<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_running_point</span><span class="op">(</span><span class="va">xs</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><hr><a id="method-ArchiveAsyncFrozen-finish_points"></a><div class="section">
+<h3 id="archiveasyncfrozen-finish-points-"><code>ArchiveAsyncFrozen$finish_points()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-finish-points-"></a></h3>
+<p>Save the results of multiple running points and move them to the finished points.</p><div class="section">
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">finish_points</span><span class="op">(</span></span>
+<span>  <span class="va">keys</span>,</span>
+<span>  <span class="va">yss</span>,</span>
+<span>  <span class="va">x_domains</span>,</span>
+<span>  yss_extra <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  extra <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
-<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>xs</code></dt>
-<dd><p>(named <code>list</code>)<br>
-Named list of point values.</p></dd>
+<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>keys</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
+Keys of the points.</p></dd>
+
+      <dt><code>yss</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+List of named lists of results.</p></dd>
+
+      <dt><code>x_domains</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+List of named lists of transformed point values.</p></dd>
+
+      <dt><code>yss_extra</code></dt>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+List of named lists of additional information.</p></dd>
 
       <dt><code>extra</code></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Deprecated argument for additional information.
+Use <code>yss_extra</code> instead.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-finish_point"></a><div class="section">
+<h3 id="archiveasyncfrozen-finish-point-"><code>ArchiveAsyncFrozen$finish_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-finish-point-"></a></h3>
+<p>Save the results of a running point and move it to the finished points.</p><div class="section">
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">finish_point</span><span class="op">(</span></span>
+<span>  <span class="va">key</span>,</span>
+<span>  <span class="va">ys</span>,</span>
+<span>  <span class="va">x_domain</span>,</span>
+<span>  ys_extra <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  extra <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>key</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+Key of the point.</p></dd>
+
+      <dt><code>ys</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+Named list of results.</p></dd>
+
+      <dt><code>x_domain</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
+Named list of transformed point values.</p></dd>
+
+      <dt><code>ys_extra</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 Named list of additional information.</p></dd>
+
+      <dt><code>extra</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Deprecated argument for additional information.
+Use <code>ys_extra</code> instead.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-fail_points"></a><div class="section">
+<h3 id="archiveasyncfrozen-fail-points-"><code>ArchiveAsyncFrozen$fail_points()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-fail-points-"></a></h3>
+<p>Move multiple running points to the failed points.</p><div class="section">
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">fail_points</span><span class="op">(</span><span class="va">keys</span>, conditions <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>keys</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
+Keys of the points.</p></dd>
+
+      <dt><code>conditions</code></dt>
+<dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
+Conditions of the failed points.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-ArchiveAsyncFrozen-fail_point"></a><div class="section">
+<h3 id="archiveasyncfrozen-fail-point-"><code>ArchiveAsyncFrozen$fail_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-fail-point-"></a></h3>
+<p>Move a running point to the failed points.</p><div class="section">
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">fail_point</span><span class="op">(</span><span class="va">key</span>, condition <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>key</code></dt>
+<dd><p>(<code>character(1)</code>)<br>
+Key of the point.</p></dd>
+
+      <dt><code>condition</code></dt>
+<dd><p>(<code>any</code> | <code>NULL</code>)<br>
+Condition of the failed point.</p></dd>
 
 
 </dl><p></p></div>
@@ -218,11 +535,12 @@ Named list of additional information.</p></dd>
 
 <p></p><hr><a id="method-ArchiveAsyncFrozen-push_result"></a><div class="section">
 <h3 id="archiveasyncfrozen-push-result-"><code>ArchiveAsyncFrozen$push_result()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-result-"></a></h3>
-<p>Push result to the archive.</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<p>Deprecated.
+Use <code>$finish_point()</code> instead.</p><div class="section">
+<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_result</span><span class="op">(</span><span class="va">key</span>, <span class="va">ys</span>, <span class="va">x_domain</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
-<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>key</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Key of the point.</p></dd>
@@ -245,38 +563,17 @@ Named list of additional information.</p></dd>
 
 </div>
 
-<p></p><hr><a id="method-ArchiveAsyncFrozen-push_failed_point"></a><div class="section">
-<h3 id="archiveasyncfrozen-push-failed-point-"><code>ArchiveAsyncFrozen$push_failed_point()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-push-failed-point-"></a></h3>
-<p>Push failed point to the archive.</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">push_failed_point</span><span class="op">(</span><span class="va">key</span>, <span class="va">message</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>key</code></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
-Key of the point.</p></dd>
-
-      <dt><code>message</code></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
-Error message.</p></dd>
-
-
-</dl><p></p></div>
-</div>
-
-</div>
-
 <p></p><hr><a id="method-ArchiveAsyncFrozen-data_with_state"></a><div class="section">
 <h3 id="archiveasyncfrozen-data-with-state-"><code>ArchiveAsyncFrozen$data_with_state()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-data-with-state-"></a></h3>
 <p>Fetch points with a specific state.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">data_with_state</span><span class="op">(</span></span>
 <span>  fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"xs"</span>, <span class="st">"ys"</span>, <span class="st">"xs_extra"</span>, <span class="st">"worker_extra"</span>, <span class="st">"ys_extra"</span>, <span class="st">"condition"</span><span class="op">)</span>,</span>
 <span>  states <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"queued"</span>, <span class="st">"running"</span>, <span class="st">"finished"</span>, <span class="st">"failed"</span><span class="op">)</span>,</span>
 <span>  reset_cache <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
-<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<h4 id="arguments-14">Arguments<a class="anchor" aria-label="anchor" href="#arguments-14"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>fields</code></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Fields to fetch.
@@ -300,7 +597,7 @@ Whether to reset the cache of the finished points.</p></dd>
 <p></p><hr><a id="method-ArchiveAsyncFrozen-clear"></a><div class="section">
 <h3 id="archiveasyncfrozen-clear-"><code>ArchiveAsyncFrozen$clear()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-clear-"></a></h3>
 <p>Clear all evaluation results from archive.</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">clear</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -309,10 +606,10 @@ Whether to reset the cache of the finished points.</p></dd>
 <p></p><hr><a id="method-ArchiveAsyncFrozen-clone"></a><div class="section">
 <h3 id="archiveasyncfrozen-clone-"><code>ArchiveAsyncFrozen$clone()</code><a class="anchor" aria-label="anchor" href="#archiveasyncfrozen-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsyncFrozen</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
-<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<h4 id="arguments-15">Arguments<a class="anchor" aria-label="anchor" href="#arguments-15"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -382,74 +679,74 @@ Whether to reset the cache of the finished points.</p></dd>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        state          x1         x2           y        timestamp_xs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;       &lt;num&gt;      &lt;num&gt;       &lt;num&gt;              &lt;POSc&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: finished -6.21358293  0.2769503  -68.201348 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: finished -2.62264757  4.2779729  -64.337761 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: finished  6.84682656  3.2309502  -52.316468 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: finished -1.96786549 -3.4438612   -5.940969 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: finished -9.86571338  2.5243351 -161.313432 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: finished  0.01208465  3.1304511  -31.534238 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: finished -4.77998488  1.4299587  -55.592729 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: finished  7.57503606  1.3830058  -40.291767 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: finished  8.01326577 -2.8537699  -26.180748 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: finished  5.39871055  2.9134685  -36.520343 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: finished  4.82894640 -0.2106949   -5.783161 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: finished  2.92831418 -0.4491262    2.631276 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: finished -2.48881904  1.6091926  -31.394153 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: finished  2.11332211  1.0427817   -6.356925 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: finished  0.87403046  4.3072392  -44.663553 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: finished -5.88500581 -0.9916228  -56.206896 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: finished  4.08136954  3.9785972  -43.032918 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: finished -7.80489880 -3.6260806  -86.528017 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: finished -9.37102033 -3.4632716 -119.514724 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: finished  5.22167868  0.7561287  -14.487716 2026-06-24 06:51:48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: finished -6.21358293  0.2769503  -68.201348 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: finished -2.62264757  4.2779729  -64.337761 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: finished  6.84682656  3.2309502  -52.316468 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: finished -1.96786549 -3.4438612   -5.940969 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: finished -9.86571338  2.5243351 -161.313432 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: finished  0.01208465  3.1304511  -31.534238 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: finished -4.77998488  1.4299587  -55.592729 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: finished  7.57503606  1.3830058  -40.291767 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: finished  8.01326577 -2.8537699  -26.180748 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: finished  5.39871055  2.9134685  -36.520343 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: finished  4.82894640 -0.2106949   -5.783161 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: finished  2.92831418 -0.4491262    2.631276 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: finished -2.48881904  1.6091926  -31.394153 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: finished  2.11332211  1.0427817   -6.356925 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: finished  0.87403046  4.3072392  -44.663553 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: finished -5.88500581 -0.9916228  -56.206896 2026-06-26 10:07:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: finished  4.08136954  3.9785972  -43.032918 2026-06-26 10:07:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: finished -7.80489880 -3.6260806  -86.528017 2026-06-26 10:07:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: finished -9.37102033 -3.4632716 -119.514724 2026-06-26 10:07:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: finished  5.22167868  0.7561287  -14.487716 2026-06-26 10:07:39</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        state          x1         x2           y        timestamp_xs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;       &lt;num&gt;      &lt;num&gt;       &lt;num&gt;              &lt;POSc&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             worker_id        timestamp_ys</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                &lt;char&gt;              &lt;POSc&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: artsycraftsy_easteuropeanshepherd 2026-06-24 06:51:48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: artsycraftsy_easteuropeanshepherd 2026-06-26 10:07:39</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             worker_id        timestamp_ys</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                &lt;char&gt;              &lt;POSc&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     keys x_domain_x1 x_domain_x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   &lt;char&gt;       &lt;num&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: f017205b-634c-4664-90de-18b568126f4c -6.21358293   0.2769503</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 5b4fd5bc-63ef-45a0-bee5-74024db9c1b8 -2.62264757   4.2779729</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 7314cb66-2967-41c8-882a-722112ff6fb4  6.84682656   3.2309502</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: fb15072d-b15d-4e2e-97cf-85b0c74368be -1.96786549  -3.4438612</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: a65c2f82-c041-4a3a-a697-d4a1f0bbf4b9 -9.86571338   2.5243351</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 3330ce45-07bb-4caa-8da6-05801135ba28  0.01208465   3.1304511</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: bb4efeee-88ba-43a0-a71b-58a61a71af9e -4.77998488   1.4299587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 03a417f8-4eb0-4481-ba22-8448c7e76710  7.57503606   1.3830058</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: f793c0c9-7800-4bb7-8691-afb08e82a2ae  8.01326577  -2.8537699</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 63b6a9b0-3865-45ca-9e33-26fdbb7e2ddf  5.39871055   2.9134685</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 9b53cec3-e7b7-409b-af13-d5d365797569  4.82894640  -0.2106949</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: d5cf7f6b-7e72-47a4-ba7a-9f1d1406d643  2.92831418  -0.4491262</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 5d176916-670b-49c1-b6d3-e61ffd6842c6 -2.48881904   1.6091926</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 4ba6ca2c-3da9-4599-b548-0016b4c8f72e  2.11332211   1.0427817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: ca588c19-5005-4dfc-90cf-c8214398954f  0.87403046   4.3072392</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: b567f9d4-abe3-45d0-b4c0-a62efaf41cb7 -5.88500581  -0.9916228</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 5c1a7dd0-aa8a-4279-8dd7-5947a5a26dc9  4.08136954   3.9785972</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: f9badf0f-2265-4b63-a2e2-ce27fdc4d3bf -7.80489880  -3.6260806</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 234aaf19-2c4c-43f3-9d2a-556259327aa4 -9.37102033  -3.4632716</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: a3911973-7dc3-4f3d-8f39-baeb0b3fbd0d  5.22167868   0.7561287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: b21bd646-0273-4a5c-8149-affcf28d8a02 -6.21358293   0.2769503</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: b6296cad-e287-412c-ae10-96e4f5de7068 -2.62264757   4.2779729</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: aa45f328-b2b9-4ea8-b327-16a15c45a36a  6.84682656   3.2309502</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: b41280ec-75bc-47ae-b1a1-540fbae2ebe9 -1.96786549  -3.4438612</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 9b205e81-3cff-4095-bdd1-63836b080b35 -9.86571338   2.5243351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 9d3e853d-dde5-4ca7-9d1e-83b896e063ee  0.01208465   3.1304511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 0fabf0a8-b923-4d41-8914-8d11edfcf268 -4.77998488   1.4299587</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 73d57364-1936-4599-a5bf-d7bb5198a567  7.57503606   1.3830058</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: d06a3260-9ddf-4cd9-8a3d-910890cbab9e  8.01326577  -2.8537699</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1ce193c7-3125-4351-8817-042fea86649b  5.39871055   2.9134685</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 78c03c17-5fe2-4b49-948a-70cb31e6949c  4.82894640  -0.2106949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 8e6981a1-079d-4dbc-a071-007dd611caa2  2.92831418  -0.4491262</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 8e3717f4-b50d-4396-b650-3f2368f83c20 -2.48881904   1.6091926</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 295a07af-7e1e-441c-9506-cbf8b2fdff3a  2.11332211   1.0427817</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 7ef28778-a7f2-4e2b-9d65-f6ea80abbd24  0.87403046   4.3072392</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 5f443b96-46dc-40e1-b9d9-47ba63cf0800 -5.88500581  -0.9916228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: f80decb1-7280-4430-99e2-d857dc15ebf2  4.08136954   3.9785972</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 41259614-ac82-45dd-aa12-fa8f23d21dfb -7.80489880  -3.6260806</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 535316e8-1028-4786-b90f-4bf03b71fb0b -9.37102033  -3.4632716</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: b5305702-e594-40c7-9c2d-b91a01b25435  5.22167868   0.7561287</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     keys x_domain_x1 x_domain_x2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   &lt;char&gt;       &lt;num&gt;       &lt;num&gt;</span>
 </code></pre></div>
