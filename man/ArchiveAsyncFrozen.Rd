@@ -174,7 +174,7 @@ The archive to freeze.}
   Push queued points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_points(xss, extras = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_points(xss, xss_extra = NULL, extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -182,8 +182,11 @@ The archive to freeze.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{extras}}{(list of named \code{list()} | \code{NULL})\cr
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
+      \item{\code{extra}}{(list of named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{xss_extra} instead.}
     }
     \if{html}{\out{</div>}}
   }
@@ -196,7 +199,7 @@ List of named lists of additional information.}
   Push a single queued point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_point(xs, extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_point(xs, xs_extra = NULL, extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -204,8 +207,11 @@ List of named lists of additional information.}
     \describe{
       \item{\code{xs}}{(named \code{list()})\cr
 Named list of point values.}
-      \item{\code{extra}}{(\verb{named list()} | \code{NULL})\cr
+      \item{\code{xs_extra}}{(named \code{list()} | \code{NULL})\cr
 Named list of additional information.}
+      \item{\code{extra}}{(named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{xs_extra} instead.}
     }
     \if{html}{\out{</div>}}
   }
@@ -218,7 +224,7 @@ Named list of additional information.}
   Push running points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_running_points(xss, extras = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_running_points(xss, xss_extra = NULL, extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -226,8 +232,11 @@ Named list of additional information.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
-      \item{\code{extras}}{(list of named \code{list()} | \code{NULL})\cr
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
+      \item{\code{extra}}{(list of named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{xss_extra} instead.}
     }
     \if{html}{\out{</div>}}
   }
@@ -240,7 +249,7 @@ List of named lists of additional information.}
   Push running point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_running_point(xs, extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_running_point(xs, xs_extra = NULL, extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -248,8 +257,11 @@ List of named lists of additional information.}
     \describe{
       \item{\code{xs}}{(named \code{list()})\cr
 Named list of point values.}
-      \item{\code{extra}}{(\verb{named list()} | \code{NULL})\cr
+      \item{\code{xs_extra}}{(named \code{list()} | \code{NULL})\cr
 Named list of additional information.}
+      \item{\code{extra}}{(named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{xs_extra} instead.}
     }
     \if{html}{\out{</div>}}
   }
@@ -386,7 +398,13 @@ If \code{NULL}, a generic error message is used.}
   Save the results of multiple running points and move them to the finished points.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$finish_points(keys, yss, x_domains, extras = NULL)}
+    \preformatted{ArchiveAsyncFrozen$finish_points(
+  keys,
+  yss,
+  x_domains,
+  yss_extra = NULL,
+  extra = NULL
+)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -398,8 +416,11 @@ Keys of the points.}
 List of named lists of results.}
       \item{\code{x_domains}}{(\code{list()})\cr
 List of named lists of transformed point values.}
-      \item{\code{extras}}{(\code{list()})\cr
+      \item{\code{yss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
+      \item{\code{extra}}{(list of named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{yss_extra} instead.}
     }
     \if{html}{\out{</div>}}
   }
@@ -412,7 +433,13 @@ List of named lists of additional information.}
   Save the results of a running point and move it to the finished points.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$finish_point(key, ys, x_domain, extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$finish_point(
+  key,
+  ys,
+  x_domain,
+  ys_extra = NULL,
+  extra = NULL
+)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -424,8 +451,11 @@ Key of the point.}
 Named list of results.}
       \item{\code{x_domain}}{(named \code{list()})\cr
 Named list of transformed point values.}
-      \item{\code{extra}}{(\code{list()})\cr
+      \item{\code{ys_extra}}{(named \code{list()} | \code{NULL})\cr
 Named list of additional information.}
+      \item{\code{extra}}{(named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{ys_extra} instead.}
     }
     \if{html}{\out{</div>}}
   }

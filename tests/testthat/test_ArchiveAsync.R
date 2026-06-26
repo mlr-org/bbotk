@@ -143,7 +143,7 @@ test_that("push_points works with extras argument", {
 
   xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
   extras = list(list(extra_info = "point1", batch_id = 1), list(extra_info = "point2", batch_id = 1))
-  keys = archive$push_points(xss, extras = extras)
+  keys = archive$push_points(xss, xss_extra = extras)
   expect_character(keys, len = 2)
 
   queued = archive$queued_data
@@ -155,6 +155,64 @@ test_that("push_points works with extras argument", {
   expect_true("batch_id" %in% names(queued))
   expect_equal(sort(queued$extra_info), c("point1", "point2"))
   expect_equal(queued$batch_id, c(1, 1))
+})
+
+test_that("extra is a legacy alias for xss_extra / xs_extra", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  # legacy `extra` alias on the batch method
+  archive$push_points(list(list(x1 = 1, x2 = 2)), extra = list(list(extra_info = "legacy")))
+  # canonical `xs_extra` on the single method
+  archive$push_point(list(x1 = 3, x2 = 4), xs_extra = list(extra_info = "canonical"))
+
+  expect_equal(sort(archive$queued_data$extra_info), c("canonical", "legacy"))
+})
+
+test_that("xss_extra takes precedence over the legacy extra argument", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  archive$push_points(
+    list(list(x1 = 1, x2 = 2)),
+    xss_extra = list(list(extra_info = "canonical")),
+    extra = list(list(extra_info = "legacy")))
+
+  expect_equal(archive$queued_data$extra_info, "canonical")
+})
+
+test_that("push_points assigns one timestamp to all points in a batch", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  archive$push_points(xss, xss_extra = list(list(a = 1), list(a = 2)))
+
+  expect_length(unique(archive$queued_data$timestamp_xs), 1L)
 })
 
 test_that("push_finished_points works", {
@@ -213,6 +271,7 @@ test_that("push_finished_point works", {
   expect_equal(finished$score, 0.5)
   expect_true("timestamp_xs" %in% names(finished))
   expect_true("timestamp_ys" %in% names(finished))
+  expect_equal(finished$timestamp_xs, finished$timestamp_ys)
 })
 
 test_that("push_point works", {
@@ -250,7 +309,7 @@ test_that("push_running_points works", {
   )
 
   xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
-  archive$push_running_points(xss, extras = list(list(extra_info = "point1"), list(extra_info = "point2")))
+  archive$push_running_points(xss, xss_extra = list(list(extra_info = "point1"), list(extra_info = "point2")))
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 2)
@@ -355,7 +414,7 @@ test_that("finish_points works", {
     keys,
     yss = list(list(y1 = 1, y2 = 2), list(y1 = 3, y2 = 4)),
     x_domains = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)),
-    extras = list(list(extra_info = "point1"), list(extra_info = "point2")))
+    yss_extra = list(list(extra_info = "point1"), list(extra_info = "point2")))
 
   expect_data_table(archive$finished_data, nrows = 2)
   expect_equal(sort(archive$finished_data$extra_info), c("point1", "point2"))
