@@ -114,7 +114,7 @@ ArchiveAsync = R6Class(
       } else {
         map(xss_extra, function(e) c(list(timestamp_xs = timestamp_xs), e))
       }
-      self$rush$push_tasks(xss, xss_extra = xss_extra)
+      self$rush$push_tasks(xss, extra = xss_extra)
     },
 
     #' @description
@@ -133,7 +133,7 @@ ArchiveAsync = R6Class(
         self$search_space$assert(xs)
       }
       xs_extra = c(list(timestamp_xs = Sys.time()), xs_extra)
-      self$rush$push_tasks(list(xs), xss_extra = list(xs_extra))
+      self$rush$push_tasks(list(xs), extra = list(xs_extra))
     },
 
     #' @description
@@ -157,7 +157,7 @@ ArchiveAsync = R6Class(
       } else {
         map(xss_extra, function(e) c(list(timestamp_xs = timestamp_xs), e))
       }
-      self$rush$push_running_tasks(xss, xss_extra = xss_extra)
+      self$rush$push_running_tasks(xss, extra = xss_extra)
     },
 
     #' @description
@@ -176,7 +176,7 @@ ArchiveAsync = R6Class(
         self$search_space$assert(xs)
       }
       xs_extra = c(list(timestamp_xs = Sys.time()), xs_extra)
-      self$rush$push_running_tasks(list(xs), xss_extra = list(xs_extra))
+      self$rush$push_running_tasks(list(xs), extra = list(xs_extra))
     },
 
     #' @description
@@ -291,7 +291,7 @@ ArchiveAsync = R6Class(
           c(list(x_domain = list(x_domain), timestamp_ys = timestamp_ys), e)
         })
       }
-      self$rush$finish_tasks(keys, yss, yss_extra = yss_extra)
+      self$rush$finish_tasks(keys, yss, extra = yss_extra)
     },
 
     #' @description
@@ -311,7 +311,7 @@ ArchiveAsync = R6Class(
     finish_point = function(key, ys, x_domain, ys_extra = NULL, extra = NULL) {
       ys_extra = ys_extra %??% extra
       ys_extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), ys_extra)
-      self$rush$finish_tasks(key, list(ys), yss_extra = list(ys_extra))
+      self$rush$finish_tasks(key, list(ys), extra = list(ys_extra))
     },
 
     #' @description
