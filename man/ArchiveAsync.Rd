@@ -122,10 +122,19 @@ Number of evaluations stored in the archive.}
   \itemize{
     \item \href{#method-ArchiveAsync-initialize}{\code{ArchiveAsync$new()}}
     \item \href{#method-ArchiveAsync-push_points}{\code{ArchiveAsync$push_points()}}
-    \item \href{#method-ArchiveAsync-pop_point}{\code{ArchiveAsync$pop_point()}}
+    \item \href{#method-ArchiveAsync-push_point}{\code{ArchiveAsync$push_point()}}
+    \item \href{#method-ArchiveAsync-push_running_points}{\code{ArchiveAsync$push_running_points()}}
     \item \href{#method-ArchiveAsync-push_running_point}{\code{ArchiveAsync$push_running_point()}}
-    \item \href{#method-ArchiveAsync-push_result}{\code{ArchiveAsync$push_result()}}
+    \item \href{#method-ArchiveAsync-push_finished_points}{\code{ArchiveAsync$push_finished_points()}}
+    \item \href{#method-ArchiveAsync-push_finished_point}{\code{ArchiveAsync$push_finished_point()}}
+    \item \href{#method-ArchiveAsync-push_failed_points}{\code{ArchiveAsync$push_failed_points()}}
     \item \href{#method-ArchiveAsync-push_failed_point}{\code{ArchiveAsync$push_failed_point()}}
+    \item \href{#method-ArchiveAsync-pop_point}{\code{ArchiveAsync$pop_point()}}
+    \item \href{#method-ArchiveAsync-finish_points}{\code{ArchiveAsync$finish_points()}}
+    \item \href{#method-ArchiveAsync-finish_point}{\code{ArchiveAsync$finish_point()}}
+    \item \href{#method-ArchiveAsync-fail_points}{\code{ArchiveAsync$fail_points()}}
+    \item \href{#method-ArchiveAsync-fail_point}{\code{ArchiveAsync$fail_point()}}
+    \item \href{#method-ArchiveAsync-push_result}{\code{ArchiveAsync$push_result()}}
     \item \href{#method-ArchiveAsync-data_with_state}{\code{ArchiveAsync$data_with_state()}}
     \item \href{#method-ArchiveAsync-best}{\code{ArchiveAsync$best()}}
     \item \href{#method-ArchiveAsync-nds_selection}{\code{ArchiveAsync$nds_selection()}}
@@ -179,7 +188,7 @@ If a rush instance is supplied, the tuning runs without batches.}
   Push queued points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_points(xss)}
+    \preformatted{ArchiveAsync$push_points(xss, xss_extra = NULL, extra = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -187,6 +196,188 @@ If a rush instance is supplied, the tuning runs without batches.}
     \describe{
       \item{\code{xss}}{(list of named \code{list()})\cr
 List of named lists of point values.}
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
+List of named lists of additional information.}
+      \item{\code{extra}}{(list of named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{xss_extra} instead.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_point}{}}}
+\subsection{\code{ArchiveAsync$push_point()}}{
+  Push a single queued point to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_point(xs, xs_extra = NULL, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{(named \code{list()})\cr
+Named list of point values.}
+      \item{\code{xs_extra}}{(named \code{list()} | \code{NULL})\cr
+Named list of additional information.}
+      \item{\code{extra}}{(named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{xs_extra} instead.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_running_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_running_points}{}}}
+\subsection{\code{ArchiveAsync$push_running_points()}}{
+  Push running points to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_running_points(xss, xss_extra = NULL, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xss}}{(list of named \code{list()})\cr
+List of named lists of point values.}
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
+List of named lists of additional information.}
+      \item{\code{extra}}{(list of named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{xss_extra} instead.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_running_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_running_point}{}}}
+\subsection{\code{ArchiveAsync$push_running_point()}}{
+  Push running point to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_running_point(xs, xs_extra = NULL, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{(named \code{list()})\cr
+Named list of point values.}
+      \item{\code{xs_extra}}{(named \code{list()} | \code{NULL})\cr
+Named list of additional information.}
+      \item{\code{extra}}{(named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{xs_extra} instead.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_finished_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_finished_points}{}}}
+\subsection{\code{ArchiveAsync$push_finished_points()}}{
+  Push finished points to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_finished_points(xss, yss, xss_extra = NULL, yss_extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xss}}{(list of named \code{list()})\cr
+List of named lists of point values.}
+      \item{\code{yss}}{(list of named \code{list()})\cr
+List of named lists of results.}
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
+List of named lists of additional information.}
+      \item{\code{yss_extra}}{(list of named \code{list()} | \code{NULL})\cr
+List of named lists of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_finished_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_finished_point}{}}}
+\subsection{\code{ArchiveAsync$push_finished_point()}}{
+  Push a single finished point to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_finished_point(xs, ys, xs_extra = NULL, ys_extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{(named \code{list()})\cr
+Named list of point values.}
+      \item{\code{ys}}{(named \code{list()})\cr
+Named list of results.}
+      \item{\code{xs_extra}}{(\verb{named list()} | \code{NULL})\cr
+Named list of additional information.}
+      \item{\code{ys_extra}}{(\verb{named list()} | \code{NULL})\cr
+Named list of additional information.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_failed_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_failed_points}{}}}
+\subsection{\code{ArchiveAsync$push_failed_points()}}{
+  Push failed points to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_failed_points(xss, xss_extra = NULL, conditions = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xss}}{(list of named \code{list()})\cr
+List of named lists of point values.}
+      \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
+List of named lists of additional information.}
+      \item{\code{conditions}}{(\code{list} | \code{NULL})\cr
+List of conditions for each failed point.
+If \code{NULL}, a generic error message is used.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-push_failed_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_failed_point}{}}}
+\subsection{\code{ArchiveAsync$push_failed_point()}}{
+  Push a single failed point to the archive.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$push_failed_point(xs, xs_extra = NULL, condition = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xs}}{(named \code{list()})\cr
+Named list of point values.}
+      \item{\code{xs_extra}}{(\verb{named list()} | \code{NULL})\cr
+Named list of additional information.}
+      \item{\code{condition}}{(\code{any} | \code{NULL})\cr
+Condition of the failed point.
+If \code{NULL}, a generic error message is used.}
     }
     \if{html}{\out{</div>}}
   }
@@ -205,22 +396,108 @@ List of named lists of point values.}
 }
 
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsync-push_running_point"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_running_point}{}}}
-\subsection{\code{ArchiveAsync$push_running_point()}}{
-  Push running point to the archive.
+\if{html}{\out{<a id="method-ArchiveAsync-finish_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-finish_points}{}}}
+\subsection{\code{ArchiveAsync$finish_points()}}{
+  Save the results of multiple running points and move them to the finished points.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_running_point(xs, extra = NULL)}
+    \preformatted{ArchiveAsync$finish_points(
+  keys,
+  yss,
+  x_domains,
+  yss_extra = NULL,
+  extra = NULL
+)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{xs}}{(named \code{list})\cr
-Named list of point values.}
-      \item{\code{extra}}{(\code{list()})\cr
+      \item{\code{keys}}{(\code{character()})\cr
+Keys of the points.}
+      \item{\code{yss}}{(list of named \code{list()})\cr
+List of named lists of results.}
+      \item{\code{x_domains}}{(\code{list()})\cr
+List of named lists of transformed point values.}
+      \item{\code{yss_extra}}{(list of named \code{list()} | \code{NULL})\cr
+List of named lists of additional information.}
+      \item{\code{extra}}{(list of named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{yss_extra} instead.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-finish_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-finish_point}{}}}
+\subsection{\code{ArchiveAsync$finish_point()}}{
+  Save the results of a running point and move it to the finished points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$finish_point(key, ys, x_domain, ys_extra = NULL, extra = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{key}}{(\code{character(1)})\cr
+Key of the point.}
+      \item{\code{ys}}{(named \code{list()})\cr
+Named list of results.}
+      \item{\code{x_domain}}{(named \code{list()})\cr
+Named list of transformed point values.}
+      \item{\code{ys_extra}}{(named \code{list()} | \code{NULL})\cr
 Named list of additional information.}
+      \item{\code{extra}}{(named \code{list()} | \code{NULL})\cr
+Deprecated argument for additional information.
+Use \code{ys_extra} instead.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-fail_points"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-fail_points}{}}}
+\subsection{\code{ArchiveAsync$fail_points()}}{
+  Move multiple running points to the failed points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$fail_points(keys, conditions = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{keys}}{(\code{character()})\cr
+Keys of the points.}
+      \item{\code{conditions}}{(\code{list()} | \code{NULL})\cr
+Conditions of the failed points.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ArchiveAsync-fail_point"></a>}}
+\if{latex}{\out{\hypertarget{method-ArchiveAsync-fail_point}{}}}
+\subsection{\code{ArchiveAsync$fail_point()}}{
+  Move a running point to the failed points.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ArchiveAsync$fail_point(key, condition = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{key}}{(\code{character(1)})\cr
+Key of the point.}
+      \item{\code{condition}}{(\code{any} | \code{NULL})\cr
+Condition of the failed point.}
     }
     \if{html}{\out{</div>}}
   }
@@ -230,7 +507,8 @@ Named list of additional information.}
 \if{html}{\out{<a id="method-ArchiveAsync-push_result"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_result}{}}}
 \subsection{\code{ArchiveAsync$push_result()}}{
-  Push result to the archive.
+  Deprecated.
+Use \verb{$finish_point()} instead.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{ArchiveAsync$push_result(key, ys, x_domain, extra = NULL)}
@@ -253,28 +531,6 @@ Named list of additional information.}
 }
 
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ArchiveAsync-push_failed_point"></a>}}
-\if{latex}{\out{\hypertarget{method-ArchiveAsync-push_failed_point}{}}}
-\subsection{\code{ArchiveAsync$push_failed_point()}}{
-  Push failed point to the archive.
-  \subsection{Usage}{
-    \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_failed_point(key, message)}
-    \if{html}{\out{</div>}}
-  }
-  \subsection{Arguments}{
-    \if{html}{\out{<div class="arguments">}}
-    \describe{
-      \item{\code{key}}{(\code{character()})\cr
-Key of the point.}
-      \item{\code{message}}{(\code{character()})\cr
-Error message.}
-    }
-    \if{html}{\out{</div>}}
-  }
-}
-
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ArchiveAsync-data_with_state"></a>}}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-data_with_state}{}}}
 \subsection{\code{ArchiveAsync$data_with_state()}}{
@@ -282,7 +538,7 @@ Error message.}
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{ArchiveAsync$data_with_state(
-  fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
+  fields = c("worker_id", "xs", "ys", "xs_extra", "ys_extra", "condition"),
   states = c("queued", "running", "finished", "failed")
 )}
     \if{html}{\out{</div>}}
@@ -292,7 +548,7 @@ Error message.}
     \describe{
       \item{\code{fields}}{(\code{character()})\cr
 Fields to fetch.
-Defaults to \code{c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")}.}
+Defaults to \code{c("worker_id", "xs", "ys", "xs_extra", "ys_extra", "condition")}.}
       \item{\code{states}}{(\code{character()})\cr
 States of the tasks to be fetched.
 Defaults to \code{c("queued", "running", "finished", "failed")}.}

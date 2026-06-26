@@ -98,11 +98,167 @@ ArchiveAsync = R6Class(
     #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
-    push_points = function(xss) {
+    #' @param xss_extra (list of named `list()` | `NULL`)\cr
+    #' List of named lists of additional information.
+    #' @param extra (list of named `list()` | `NULL`)\cr
+    #' Deprecated argument for additional information.
+    #' Use `xss_extra` instead.
+    push_points = function(xss, xss_extra = NULL, extra = NULL) {
+      xss_extra = xss_extra %??% extra
       if (self$check_values) {
         map(xss, self$search_space$assert)
       }
-      self$rush$push_tasks(xss, extra = list(list(timestamp_xs = Sys.time())))
+      timestamp_xs = Sys.time()
+      xss_extra = if (is.null(xss_extra)) {
+        list(list(timestamp_xs = timestamp_xs))
+      } else {
+        map(xss_extra, function(e) c(list(timestamp_xs = timestamp_xs), e))
+      }
+      self$rush$push_tasks(xss, extra = xss_extra)
+    },
+
+    #' @description
+    #' Push a single queued point to the archive.
+    #'
+    #' @param xs (named `list()`)\cr
+    #' Named list of point values.
+    #' @param xs_extra (named `list()` | `NULL`)\cr
+    #' Named list of additional information.
+    #' @param extra (named `list()` | `NULL`)\cr
+    #' Deprecated argument for additional information.
+    #' Use `xs_extra` instead.
+    push_point = function(xs, xs_extra = NULL, extra = NULL) {
+      xs_extra = xs_extra %??% extra
+      if (self$check_values) {
+        self$search_space$assert(xs)
+      }
+      xs_extra = c(list(timestamp_xs = Sys.time()), xs_extra)
+      self$rush$push_tasks(list(xs), extra = list(xs_extra))
+    },
+
+    #' @description
+    #' Push running points to the archive.
+    #'
+    #' @param xss (list of named `list()`)\cr
+    #' List of named lists of point values.
+    #' @param xss_extra (list of named `list()` | `NULL`)\cr
+    #' List of named lists of additional information.
+    #' @param extra (list of named `list()` | `NULL`)\cr
+    #' Deprecated argument for additional information.
+    #' Use `xss_extra` instead.
+    push_running_points = function(xss, xss_extra = NULL, extra = NULL) {
+      xss_extra = xss_extra %??% extra
+      if (self$check_values) {
+        map(xss, self$search_space$assert)
+      }
+      timestamp_xs = Sys.time()
+      xss_extra = if (is.null(xss_extra)) {
+        list(list(timestamp_xs = timestamp_xs))
+      } else {
+        map(xss_extra, function(e) c(list(timestamp_xs = timestamp_xs), e))
+      }
+      self$rush$push_running_tasks(xss, extra = xss_extra)
+    },
+
+    #' @description
+    #' Push running point to the archive.
+    #'
+    #' @param xs (named `list()`)\cr
+    #' Named list of point values.
+    #' @param xs_extra (named `list()` | `NULL`)\cr
+    #' Named list of additional information.
+    #' @param extra (named `list()` | `NULL`)\cr
+    #' Deprecated argument for additional information.
+    #' Use `xs_extra` instead.
+    push_running_point = function(xs, xs_extra = NULL, extra = NULL) {
+      xs_extra = xs_extra %??% extra
+      if (self$check_values) {
+        self$search_space$assert(xs)
+      }
+      xs_extra = c(list(timestamp_xs = Sys.time()), xs_extra)
+      self$rush$push_running_tasks(list(xs), extra = list(xs_extra))
+    },
+
+    #' @description
+    #' Push finished points to the archive.
+    #'
+    #' @param xss (list of named `list()`)\cr
+    #' List of named lists of point values.
+    #' @param yss (list of named `list()`)\cr
+    #' List of named lists of results.
+    #' @param xss_extra (list of named `list()` | `NULL`)\cr
+    #' List of named lists of additional information.
+    #' @param yss_extra (list of named `list()` | `NULL`)\cr
+    #' List of named lists of additional information.
+    push_finished_points = function(xss, yss, xss_extra = NULL, yss_extra = NULL) {
+      timestamp = Sys.time()
+      xss_extra = if (is.null(xss_extra)) {
+        list(list(timestamp_xs = timestamp))
+      } else {
+        map(xss_extra, function(extra) c(list(timestamp_xs = timestamp), extra))
+      }
+      yss_extra = if (is.null(yss_extra)) {
+        list(list(timestamp_ys = timestamp))
+      } else {
+        map(yss_extra, function(extra) c(list(timestamp_ys = timestamp), extra))
+      }
+      self$rush$push_finished_tasks(xss, yss, xss_extra, yss_extra)
+    },
+
+    #' @description
+    #' Push a single finished point to the archive.
+    #'
+    #' @param xs (named `list()`)\cr
+    #' Named list of point values.
+    #' @param ys (named `list()`)\cr
+    #' Named list of results.
+    #' @param xs_extra (`named list()` | `NULL`)\cr
+    #' Named list of additional information.
+    #' @param ys_extra (`named list()` | `NULL`)\cr
+    #' Named list of additional information.
+    push_finished_point = function(xs, ys, xs_extra = NULL, ys_extra = NULL) {
+      timestamp = Sys.time()
+      xs_extra = c(list(timestamp_xs = timestamp), xs_extra)
+      ys_extra = c(list(timestamp_ys = timestamp), ys_extra)
+      self$rush$push_finished_tasks(list(xs), list(ys), list(xs_extra), list(ys_extra))
+    },
+
+    #' @description
+    #' Push failed points to the archive.
+    #'
+    #' @param xss (list of named `list()`)\cr
+    #' List of named lists of point values.
+    #' @param xss_extra (list of named `list()` | `NULL`)\cr
+    #' List of named lists of additional information.
+    #' @param conditions (`list` | `NULL`)\cr
+    #' List of conditions for each failed point.
+    #' If `NULL`, a generic error message is used.
+    push_failed_points = function(xss, xss_extra = NULL, conditions = NULL) {
+      timestamp_xs = Sys.time()
+      xss_extra = if (is.null(xss_extra)) {
+        list(list(timestamp_xs = timestamp_xs))
+      } else {
+        map(xss_extra, function(extra) c(list(timestamp_xs = timestamp_xs), extra))
+      }
+      self$rush$push_failed_tasks(xss, xss_extra = xss_extra, conditions = conditions)
+    },
+
+    #' @description
+    #' Push a single failed point to the archive.
+    #'
+    #' @param xs (named `list()`)\cr
+    #' Named list of point values.
+    #' @param xs_extra (`named list()` | `NULL`)\cr
+    #' Named list of additional information.
+    #' @param condition (`any` | `NULL`)\cr
+    #' Condition of the failed point.
+    #' If `NULL`, a generic error message is used.
+    push_failed_point = function(xs, xs_extra = NULL, condition = NULL) {
+      xs_extra = c(list(timestamp_xs = Sys.time()), xs_extra)
+      if (!is.null(condition)) {
+        condition = list(condition)
+      }
+      self$rush$push_failed_tasks(list(xs), xss_extra = list(xs_extra), conditions = condition)
     },
 
     #' @description
@@ -112,22 +268,80 @@ ArchiveAsync = R6Class(
     },
 
     #' @description
-    #' Push running point to the archive.
+    #' Save the results of multiple running points and move them to the finished points.
     #'
-    #' @param xs (named `list`)\cr
-    #' Named list of point values.
-    #' @param extra (`list()`)\cr
-    #' Named list of additional information.
-    push_running_point = function(xs, extra = NULL) {
-      if (self$check_values) {
-        self$search_space$assert(xs)
+    #' @param keys (`character()`)\cr
+    #' Keys of the points.
+    #' @param yss (list of named `list()`)\cr
+    #' List of named lists of results.
+    #' @param x_domains (`list()`)\cr
+    #' List of named lists of transformed point values.
+    #' @param yss_extra (list of named `list()` | `NULL`)\cr
+    #' List of named lists of additional information.
+    #' @param extra (list of named `list()` | `NULL`)\cr
+    #' Deprecated argument for additional information.
+    #' Use `yss_extra` instead.
+    finish_points = function(keys, yss, x_domains, yss_extra = NULL, extra = NULL) {
+      yss_extra = yss_extra %??% extra
+      timestamp_ys = Sys.time()
+      yss_extra = if (is.null(yss_extra)) {
+        map(x_domains, function(x_domain) list(x_domain = list(x_domain), timestamp_ys = timestamp_ys))
+      } else {
+        pmap(list(x_domains, yss_extra), function(x_domain, e) {
+          c(list(x_domain = list(x_domain), timestamp_ys = timestamp_ys), e)
+        })
       }
-      extra = c(list(timestamp_xs = Sys.time()), extra)
-      self$rush$push_running_tasks(list(xs), extra = list(extra))
+      self$rush$finish_tasks(keys, yss, extra = yss_extra)
     },
 
     #' @description
-    #' Push result to the archive.
+    #' Save the results of a running point and move it to the finished points.
+    #'
+    #' @param key (`character(1)`)\cr
+    #' Key of the point.
+    #' @param ys (named `list()`)\cr
+    #' Named list of results.
+    #' @param x_domain (named `list()`)\cr
+    #' Named list of transformed point values.
+    #' @param ys_extra (named `list()` | `NULL`)\cr
+    #' Named list of additional information.
+    #' @param extra (named `list()` | `NULL`)\cr
+    #' Deprecated argument for additional information.
+    #' Use `ys_extra` instead.
+    finish_point = function(key, ys, x_domain, ys_extra = NULL, extra = NULL) {
+      ys_extra = ys_extra %??% extra
+      ys_extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), ys_extra)
+      self$rush$finish_tasks(key, list(ys), extra = list(ys_extra))
+    },
+
+    #' @description
+    #' Move multiple running points to the failed points.
+    #'
+    #' @param keys (`character()`)\cr
+    #' Keys of the points.
+    #' @param conditions (`list()` | `NULL`)\cr
+    #' Conditions of the failed points.
+    fail_points = function(keys, conditions = NULL) {
+      self$rush$fail_tasks(keys, conditions = conditions)
+    },
+
+    #' @description
+    #' Move a running point to the failed points.
+    #'
+    #' @param key (`character(1)`)\cr
+    #' Key of the point.
+    #' @param condition (`any` | `NULL`)\cr
+    #' Condition of the failed point.
+    fail_point = function(key, condition = NULL) {
+      if (!is.null(condition)) {
+        condition = list(condition)
+      }
+      self$rush$fail_tasks(key, conditions = condition)
+    },
+
+    #' @description
+    #' Deprecated.
+    #' Use `$finish_point()` instead.
     #'
     #' @param key (`character()`)\cr
     #' Key of the point.
@@ -138,19 +352,8 @@ ArchiveAsync = R6Class(
     #' @param extra (`list()`)\cr
     #' Named list of additional information.
     push_result = function(key, ys, x_domain, extra = NULL) {
-      extra = c(list(x_domain = list(x_domain), timestamp_ys = Sys.time()), extra)
-      self$rush$finish_tasks(key, list(ys), extra = list(extra))
-    },
-
-    #' @description
-    #' Push failed point to the archive.
-    #'
-    #' @param key (`character()`)\cr
-    #' Key of the point.
-    #' @param message (`character()`)\cr
-    #' Error message.
-    push_failed_point = function(key, message) {
-      self$rush$fail_tasks(key, list(list(message = message)))
+      .Deprecated(new = "finish_point", old = "push_result")
+      self$finish_point(key, ys, x_domain, extra = extra)
     },
 
     #' @description
@@ -158,12 +361,12 @@ ArchiveAsync = R6Class(
     #'
     #' @param fields (`character()`)\cr
     #' Fields to fetch.
-    #' Defaults to `c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")`.
+    #' Defaults to `c("worker_id", "xs", "ys", "xs_extra", "ys_extra", "condition")`.
     #' @param states (`character()`)\cr
     #' States of the tasks to be fetched.
     #' Defaults to `c("queued", "running", "finished", "failed")`.
     data_with_state = function(
-      fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
+      fields = c("worker_id", "xs", "ys", "xs_extra", "ys_extra", "condition"),
       states = c("queued", "running", "finished", "failed")
     ) {
       self$rush$fetch_tasks_with_state(fields, states)

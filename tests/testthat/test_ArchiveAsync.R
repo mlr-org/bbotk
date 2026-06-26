@@ -31,7 +31,7 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 0)
   expect_equal(archive$data_with_state()$state, "running")
 
-  archive$push_result(keys, ys = list(y1 = 1, y2 = 2), x_domain = list(x1 = 1, x2 = 2))
+  archive$finish_point(keys, ys = list(y1 = 1, y2 = 2), x_domain = list(x1 = 1, x2 = 2))
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)
@@ -48,7 +48,7 @@ test_that("ArchiveAsync works with one point", {
   expect_data_table(archive$failed_data, nrows = 0)
   expect_equal(archive$data_with_state()$state, c("running", "finished"))
 
-  archive$push_failed_point(keys, message = "error")
+  archive$fail_point(keys, condition = list(message = "error"))
 
   expect_data_table(archive$queued_data, nrows = 0)
   expect_data_table(archive$running_data, nrows = 0)
@@ -74,7 +74,7 @@ test_that("best method errors with direction=0 (learn tag)", {
   xss = list(list(x1 = 0.5, x2 = 0.5))
   keys = archive$push_points(xss)
   archive$pop_point()
-  archive$push_result(keys, ys = list(y = 0.5), x_domain = list(x1 = 0.5, x2 = 0.5))
+  archive$finish_point(keys, ys = list(y = 0.5), x_domain = list(x1 = 0.5, x2 = 0.5))
 
   expect_error(archive$best(), "direction = 0")
 })
@@ -96,9 +96,9 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
   xss = list(list(x1 = 0.5, x2 = 0.5), list(x1 = 0.3, x2 = 0.3))
   keys = archive$push_points(xss)
   archive$pop_point()
-  archive$push_result(keys[1], ys = list(y1 = 0.5, y2 = 0.3), x_domain = list(x1 = 0.5, x2 = 0.5))
+  archive$finish_point(keys[1], ys = list(y1 = 0.5, y2 = 0.3), x_domain = list(x1 = 0.5, x2 = 0.5))
   archive$pop_point()
-  archive$push_result(keys[2], ys = list(y1 = 0.3, y2 = 0.5), x_domain = list(x1 = 0.3, x2 = 0.3))
+  archive$finish_point(keys[2], ys = list(y1 = 0.3, y2 = 0.5), x_domain = list(x1 = 0.3, x2 = 0.3))
 
   expect_error(archive$nds_selection(n_select = 1), "direction = 0")
 })
@@ -127,4 +127,342 @@ test_that("as.data.table.ArchiveAsync works", {
 
   data = as.data.table(instance$archive, unnest = NULL)
   expect_list(data$x_domain)
+})
+
+test_that("push_points works with extras argument", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  extras = list(list(extra_info = "point1", batch_id = 1), list(extra_info = "point2", batch_id = 1))
+  keys = archive$push_points(xss, xss_extra = extras)
+  expect_character(keys, len = 2)
+
+  queued = archive$queued_data
+  expect_data_table(queued, nrows = 2)
+
+  # check that extras are stored along with timestamp_xs
+  expect_true("timestamp_xs" %in% names(queued))
+  expect_true("extra_info" %in% names(queued))
+  expect_true("batch_id" %in% names(queued))
+  expect_equal(sort(queued$extra_info), c("point1", "point2"))
+  expect_equal(queued$batch_id, c(1, 1))
+})
+
+test_that("extra is a legacy alias for xss_extra / xs_extra", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  # legacy `extra` alias on the batch method
+  archive$push_points(list(list(x1 = 1, x2 = 2)), extra = list(list(extra_info = "legacy")))
+  # canonical `xs_extra` on the single method
+  archive$push_point(list(x1 = 3, x2 = 4), xs_extra = list(extra_info = "canonical"))
+
+  expect_equal(sort(archive$queued_data$extra_info), c("canonical", "legacy"))
+})
+
+test_that("xss_extra takes precedence over the legacy extra argument", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  archive$push_points(
+    list(list(x1 = 1, x2 = 2)),
+    xss_extra = list(list(extra_info = "canonical")),
+    extra = list(list(extra_info = "legacy")))
+
+  expect_equal(archive$queued_data$extra_info, "canonical")
+})
+
+test_that("push_points assigns one timestamp to all points in a batch", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  archive$push_points(xss, xss_extra = list(list(a = 1), list(a = 2)))
+
+  expect_length(unique(archive$queued_data$timestamp_xs), 1L)
+})
+
+test_that("push_finished_points works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  yss = list(list(y1 = 1, y2 = 2), list(y1 = 3, y2 = 4))
+  xss_extra = list(list(extra_info = "point1", batch_id = 1), list(extra_info = "point2", batch_id = 1))
+  yss_extra = list(list(extra_info = "point1", batch_id = 1), list(extra_info = "point2", batch_id = 1))
+  archive$push_finished_points(xss, yss, xss_extra, yss_extra)
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 0)
+  expect_data_table(archive$finished_data, nrows = 2)
+  expect_data_table(archive$failed_data, nrows = 0)
+
+  expect_character(archive$data$extra_info, len = 2)
+})
+
+test_that("push_finished_point works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  archive$push_finished_point(
+    list(x1 = 1, x2 = 2),
+    list(y1 = 1, y2 = 2),
+    xs_extra = list(extra_info = "point1"),
+    ys_extra = list(score = 0.5))
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 0)
+  expect_data_table(archive$finished_data, nrows = 1)
+  expect_data_table(archive$failed_data, nrows = 0)
+
+  finished = archive$finished_data
+  expect_equal(finished$x1, 1)
+  expect_equal(finished$y1, 1)
+  expect_equal(finished$extra_info, "point1")
+  expect_equal(finished$score, 0.5)
+  expect_true("timestamp_xs" %in% names(finished))
+  expect_true("timestamp_ys" %in% names(finished))
+  expect_equal(finished$timestamp_xs, finished$timestamp_ys)
+})
+
+test_that("push_point works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  key = archive$push_point(list(x1 = 1, x2 = 2), extra = list(extra_info = "point1"))
+  expect_character(key, len = 1)
+
+  queued = archive$queued_data
+  expect_data_table(queued, nrows = 1)
+  expect_equal(queued$x1, 1)
+  expect_equal(queued$extra_info, "point1")
+  expect_true("timestamp_xs" %in% names(queued))
+})
+
+test_that("push_running_points works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  archive$push_running_points(xss, xss_extra = list(list(extra_info = "point1"), list(extra_info = "point2")))
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 2)
+  expect_equal(sort(archive$running_data$extra_info), c("point1", "point2"))
+})
+
+test_that("push_failed_point creates a failed point", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  archive$push_failed_point(list(x1 = 1, x2 = 2), condition = list(message = "error"))
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 0)
+  expect_data_table(archive$finished_data, nrows = 0)
+  expect_data_table(archive$failed_data, nrows = 1)
+
+  failed = archive$failed_data
+  expect_equal(failed$x1, 1)
+  if (packageVersion("rush") >= "1.1.0.9001") {
+    expect_equal(failed$condition[[1]]$message, "error")
+  } else {
+    expect_equal(failed$message, "error")
+  }
+})
+
+test_that("push_failed_points creates failed points", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4))
+  conditions = list(list(message = "error1"), list(message = "error2"))
+  archive$push_failed_points(xss, conditions = conditions)
+
+  expect_data_table(archive$queued_data, nrows = 0)
+  expect_data_table(archive$running_data, nrows = 0)
+  expect_data_table(archive$finished_data, nrows = 0)
+  expect_data_table(archive$failed_data, nrows = 2)
+  if (packageVersion("rush") >= "1.1.0.9001") {
+    expect_equal(sort(map_chr(archive$failed_data$condition, "message")), c("error1", "error2"))
+  } else {
+    expect_equal(sort(archive$failed_data$message), c("error1", "error2"))
+  }
+})
+
+test_that("finish_point stores extra information", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  keys = archive$push_points(list(list(x1 = 1, x2 = 2)))
+  archive$pop_point()
+  archive$finish_point(
+    keys,
+    ys = list(y1 = 1, y2 = 2),
+    x_domain = list(x1 = 1, x2 = 2),
+    extra = list(extra_info = "point1"))
+
+  expect_data_table(archive$finished_data, nrows = 1)
+  expect_equal(archive$finished_data$extra_info, "point1")
+})
+
+test_that("finish_points works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  keys = archive$push_points(list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)))
+  archive$pop_point()
+  archive$pop_point()
+  archive$finish_points(
+    keys,
+    yss = list(list(y1 = 1, y2 = 2), list(y1 = 3, y2 = 4)),
+    x_domains = list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)),
+    yss_extra = list(list(extra_info = "point1"), list(extra_info = "point2")))
+
+  expect_data_table(archive$finished_data, nrows = 2)
+  expect_equal(sort(archive$finished_data$extra_info), c("point1", "point2"))
+})
+
+test_that("fail_points works", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  keys = archive$push_points(list(list(x1 = 1, x2 = 2), list(x1 = 3, x2 = 4)))
+  archive$pop_point()
+  archive$pop_point()
+  archive$fail_points(keys, conditions = list(list(message = "error1"), list(message = "error2")))
+
+  expect_data_table(archive$failed_data, nrows = 2)
+  if (packageVersion("rush") >= "1.1.0.9001") {
+    expect_equal(sort(map_chr(archive$failed_data$condition, "message")), c("error1", "error2"))
+  } else {
+    expect_equal(sort(archive$failed_data$message), c("error1", "error2"))
+  }
+})
+
+test_that("push_result is deprecated and forwards to finish_point", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  keys = archive$push_points(list(list(x1 = 1, x2 = 2)))
+  archive$pop_point()
+  expect_warning(
+    archive$push_result(keys, ys = list(y1 = 1, y2 = 2), x_domain = list(x1 = 1, x2 = 2)),
+    "deprecated"
+  )
+
+  expect_data_table(archive$finished_data, nrows = 1)
 })
