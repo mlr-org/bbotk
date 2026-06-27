@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.11.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +49,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.10.1" id="bbotk-1101">bbotk 1.10.1<a class="anchor" aria-label="anchor" href="#bbotk-1101"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.11.0" id="bbotk-1110">bbotk 1.11.0<a class="anchor" aria-label="anchor" href="#bbotk-1110"></a></h2><p class="text-muted">CRAN release: 2026-06-26</p>
+<ul><li>fix: Asynchronous optimization no longer calls the deprecated <code>rush$fail_tasks()</code> method when cleaning up after termination. Queued tasks are now removed with <code>rush$empty_queue()</code> and running tasks are left to the workers that own them.</li>
+<li>feat: <code>ArchiveAsync</code> gains additional methods wrapping the <code>rush</code> task API: <code>$push_point()</code>, <code>$push_running_points()</code>, <code>$push_finished_point()</code>, <code>$push_finished_points()</code>, <code>$push_failed_points()</code>, <code>$finish_point()</code>, <code>$finish_points()</code>, <code>$fail_point()</code>, and <code>$fail_points()</code>.</li>
+<li>feat: <code>ArchiveAsync$push_failed_point()</code> now creates a new failed point in the archive instead of moving a running point to the failed points; use <code>$fail_point()</code> to move a running point to the failed points.</li>
+<li>refactor: <code>ArchiveAsync$push_result()</code> is deprecated, use <code>$finish_point()</code> instead.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.10.1" id="bbotk-1101">bbotk 1.10.1<a class="anchor" aria-label="anchor" href="#bbotk-1101"></a></h2><p class="text-muted">CRAN release: 2026-06-13</p>
 <ul><li>refactor: <code><a href="../reference/is_dominated.html">is_dominated()</a></code> now uses <code><a href="https://multi-objective.github.io/moocore/r/reference/nondominated.html" class="external-link">moocore::is_nondominated()</a></code> internally instead of a custom C implementation (<a href="https://github.com/mlr-org/bbotk/issues/301" class="external-link">#301</a>).</li>
 <li>refactor: Replace <code><a href="https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html" class="external-link">emoa::dominated_hypervolume</a></code> with <code><a href="https://multi-objective.github.io/moocore/r/reference/hypervolume.html" class="external-link">moocore::hypervolume</a></code> for computing the hypervolume indicator.</li>
 </ul></div>

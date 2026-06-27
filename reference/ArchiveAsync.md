@@ -83,13 +83,31 @@ a [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) data base.
 
 - [`ArchiveAsync$push_points()`](#method-ArchiveAsync-push_points)
 
-- [`ArchiveAsync$pop_point()`](#method-ArchiveAsync-pop_point)
+- [`ArchiveAsync$push_point()`](#method-ArchiveAsync-push_point)
+
+- [`ArchiveAsync$push_running_points()`](#method-ArchiveAsync-push_running_points)
 
 - [`ArchiveAsync$push_running_point()`](#method-ArchiveAsync-push_running_point)
 
-- [`ArchiveAsync$push_result()`](#method-ArchiveAsync-push_result)
+- [`ArchiveAsync$push_finished_points()`](#method-ArchiveAsync-push_finished_points)
+
+- [`ArchiveAsync$push_finished_point()`](#method-ArchiveAsync-push_finished_point)
+
+- [`ArchiveAsync$push_failed_points()`](#method-ArchiveAsync-push_failed_points)
 
 - [`ArchiveAsync$push_failed_point()`](#method-ArchiveAsync-push_failed_point)
+
+- [`ArchiveAsync$pop_point()`](#method-ArchiveAsync-pop_point)
+
+- [`ArchiveAsync$finish_points()`](#method-ArchiveAsync-finish_points)
+
+- [`ArchiveAsync$finish_point()`](#method-ArchiveAsync-finish_point)
+
+- [`ArchiveAsync$fail_points()`](#method-ArchiveAsync-fail_points)
+
+- [`ArchiveAsync$fail_point()`](#method-ArchiveAsync-fail_point)
+
+- [`ArchiveAsync$push_result()`](#method-ArchiveAsync-push_result)
 
 - [`ArchiveAsync$data_with_state()`](#method-ArchiveAsync-data_with_state)
 
@@ -159,7 +177,7 @@ Push queued points to the archive.
 
 #### Usage
 
-    ArchiveAsync$push_points(xss)
+    ArchiveAsync$push_points(xss, xss_extra = NULL, extra = NULL)
 
 #### Arguments
 
@@ -167,6 +185,228 @@ Push queued points to the archive.
 
   (list of named [`list()`](https://rdrr.io/r/base/list.html))  
   List of named lists of point values.
+
+- `xss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+- `extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  Deprecated argument for additional information. Use `xss_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$push_point()`
+
+Push a single queued point to the archive.
+
+#### Usage
+
+    ArchiveAsync$push_point(xs, xs_extra = NULL, extra = NULL)
+
+#### Arguments
+
+- `xs`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of point values.
+
+- `xs_extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Named list of additional information.
+
+- `extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Deprecated argument for additional information. Use `xs_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$push_running_points()`
+
+Push running points to the archive.
+
+#### Usage
+
+    ArchiveAsync$push_running_points(xss, xss_extra = NULL, extra = NULL)
+
+#### Arguments
+
+- `xss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of point values.
+
+- `xss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+- `extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  Deprecated argument for additional information. Use `xss_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$push_running_point()`
+
+Push running point to the archive.
+
+#### Usage
+
+    ArchiveAsync$push_running_point(xs, xs_extra = NULL, extra = NULL)
+
+#### Arguments
+
+- `xs`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of point values.
+
+- `xs_extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Named list of additional information.
+
+- `extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Deprecated argument for additional information. Use `xs_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$push_finished_points()`
+
+Push finished points to the archive.
+
+#### Usage
+
+    ArchiveAsync$push_finished_points(xss, yss, xss_extra = NULL, yss_extra = NULL)
+
+#### Arguments
+
+- `xss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of point values.
+
+- `yss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of results.
+
+- `xss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+- `yss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$push_finished_point()`
+
+Push a single finished point to the archive.
+
+#### Usage
+
+    ArchiveAsync$push_finished_point(xs, ys, xs_extra = NULL, ys_extra = NULL)
+
+#### Arguments
+
+- `xs`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of point values.
+
+- `ys`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of results.
+
+- `xs_extra`:
+
+  (`named list()` \| `NULL`)  
+  Named list of additional information.
+
+- `ys_extra`:
+
+  (`named list()` \| `NULL`)  
+  Named list of additional information.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$push_failed_points()`
+
+Push failed points to the archive.
+
+#### Usage
+
+    ArchiveAsync$push_failed_points(xss, xss_extra = NULL, conditions = NULL)
+
+#### Arguments
+
+- `xss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of point values.
+
+- `xss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+- `conditions`:
+
+  (`list` \| `NULL`)  
+  List of conditions for each failed point. If `NULL`, a generic error
+  message is used.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$push_failed_point()`
+
+Push a single failed point to the archive.
+
+#### Usage
+
+    ArchiveAsync$push_failed_point(xs, xs_extra = NULL, condition = NULL)
+
+#### Arguments
+
+- `xs`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of point values.
+
+- `xs_extra`:
+
+  (`named list()` \| `NULL`)  
+  Named list of additional information.
+
+- `condition`:
+
+  (`any` \| `NULL`)  
+  Condition of the failed point. If `NULL`, a generic error message is
+  used.
 
 ------------------------------------------------------------------------
 
@@ -180,31 +420,138 @@ Pop a point from the queue.
 
 ------------------------------------------------------------------------
 
-### `ArchiveAsync$push_running_point()`
+### `ArchiveAsync$finish_points()`
 
-Push running point to the archive.
+Save the results of multiple running points and move them to the
+finished points.
 
 #### Usage
 
-    ArchiveAsync$push_running_point(xs, extra = NULL)
+    ArchiveAsync$finish_points(
+      keys,
+      yss,
+      x_domains,
+      yss_extra = NULL,
+      extra = NULL
+    )
 
 #### Arguments
 
-- `xs`:
+- `keys`:
 
-  (named `list`)  
-  Named list of point values.
+  ([`character()`](https://rdrr.io/r/base/character.html))  
+  Keys of the points.
+
+- `yss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of results.
+
+- `x_domains`:
+
+  ([`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of transformed point values.
+
+- `yss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
 
 - `extra`:
 
-  ([`list()`](https://rdrr.io/r/base/list.html))  
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  Deprecated argument for additional information. Use `yss_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$finish_point()`
+
+Save the results of a running point and move it to the finished points.
+
+#### Usage
+
+    ArchiveAsync$finish_point(key, ys, x_domain, ys_extra = NULL, extra = NULL)
+
+#### Arguments
+
+- `key`:
+
+  (`character(1)`)  
+  Key of the point.
+
+- `ys`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of results.
+
+- `x_domain`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of transformed point values.
+
+- `ys_extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
   Named list of additional information.
+
+- `extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Deprecated argument for additional information. Use `ys_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$fail_points()`
+
+Move multiple running points to the failed points.
+
+#### Usage
+
+    ArchiveAsync$fail_points(keys, conditions = NULL)
+
+#### Arguments
+
+- `keys`:
+
+  ([`character()`](https://rdrr.io/r/base/character.html))  
+  Keys of the points.
+
+- `conditions`:
+
+  ([`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Conditions of the failed points.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsync$fail_point()`
+
+Move a running point to the failed points.
+
+#### Usage
+
+    ArchiveAsync$fail_point(key, condition = NULL)
+
+#### Arguments
+
+- `key`:
+
+  (`character(1)`)  
+  Key of the point.
+
+- `condition`:
+
+  (`any` \| `NULL`)  
+  Condition of the failed point.
 
 ------------------------------------------------------------------------
 
 ### `ArchiveAsync$push_result()`
 
-Push result to the archive.
+Deprecated. Use `$finish_point()` instead.
 
 #### Usage
 
@@ -234,28 +581,6 @@ Push result to the archive.
 
 ------------------------------------------------------------------------
 
-### `ArchiveAsync$push_failed_point()`
-
-Push failed point to the archive.
-
-#### Usage
-
-    ArchiveAsync$push_failed_point(key, message)
-
-#### Arguments
-
-- `key`:
-
-  ([`character()`](https://rdrr.io/r/base/character.html))  
-  Key of the point.
-
-- `message`:
-
-  ([`character()`](https://rdrr.io/r/base/character.html))  
-  Error message.
-
-------------------------------------------------------------------------
-
 ### `ArchiveAsync$data_with_state()`
 
 Fetch points with a specific state.
@@ -263,7 +588,7 @@ Fetch points with a specific state.
 #### Usage
 
     ArchiveAsync$data_with_state(
-      fields = c("xs", "ys", "xs_extra", "worker_extra", "ys_extra", "condition"),
+      fields = c("worker_id", "xs", "ys", "xs_extra", "ys_extra", "condition"),
       states = c("queued", "running", "finished", "failed")
     )
 
@@ -273,7 +598,7 @@ Fetch points with a specific state.
 
   ([`character()`](https://rdrr.io/r/base/character.html))  
   Fields to fetch. Defaults to
-  `c("xs", "ys", "xs_extra", "worker_extra", "ys_extra")`.
+  `c("worker_id", "xs", "ys", "xs_extra", "ys_extra", "condition")`.
 
 - `states`:
 

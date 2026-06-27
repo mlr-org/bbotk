@@ -88,13 +88,31 @@ to freeze the archive after the optimization has finished.
 
 - [`ArchiveAsyncFrozen$push_points()`](#method-ArchiveAsyncFrozen-push_points)
 
-- [`ArchiveAsyncFrozen$pop_point()`](#method-ArchiveAsyncFrozen-pop_point)
+- [`ArchiveAsyncFrozen$push_point()`](#method-ArchiveAsyncFrozen-push_point)
+
+- [`ArchiveAsyncFrozen$push_running_points()`](#method-ArchiveAsyncFrozen-push_running_points)
 
 - [`ArchiveAsyncFrozen$push_running_point()`](#method-ArchiveAsyncFrozen-push_running_point)
 
-- [`ArchiveAsyncFrozen$push_result()`](#method-ArchiveAsyncFrozen-push_result)
+- [`ArchiveAsyncFrozen$push_finished_points()`](#method-ArchiveAsyncFrozen-push_finished_points)
+
+- [`ArchiveAsyncFrozen$push_finished_point()`](#method-ArchiveAsyncFrozen-push_finished_point)
+
+- [`ArchiveAsyncFrozen$push_failed_points()`](#method-ArchiveAsyncFrozen-push_failed_points)
 
 - [`ArchiveAsyncFrozen$push_failed_point()`](#method-ArchiveAsyncFrozen-push_failed_point)
+
+- [`ArchiveAsyncFrozen$pop_point()`](#method-ArchiveAsyncFrozen-pop_point)
+
+- [`ArchiveAsyncFrozen$finish_points()`](#method-ArchiveAsyncFrozen-finish_points)
+
+- [`ArchiveAsyncFrozen$finish_point()`](#method-ArchiveAsyncFrozen-finish_point)
+
+- [`ArchiveAsyncFrozen$fail_points()`](#method-ArchiveAsyncFrozen-fail_points)
+
+- [`ArchiveAsyncFrozen$fail_point()`](#method-ArchiveAsyncFrozen-fail_point)
+
+- [`ArchiveAsyncFrozen$push_result()`](#method-ArchiveAsyncFrozen-push_result)
 
 - [`ArchiveAsyncFrozen$data_with_state()`](#method-ArchiveAsyncFrozen-data_with_state)
 
@@ -136,7 +154,7 @@ Push queued points to the archive.
 
 #### Usage
 
-    ArchiveAsyncFrozen$push_points(xss)
+    ArchiveAsyncFrozen$push_points(xss, xss_extra = NULL, extra = NULL)
 
 #### Arguments
 
@@ -144,6 +162,238 @@ Push queued points to the archive.
 
   (list of named [`list()`](https://rdrr.io/r/base/list.html))  
   List of named lists of point values.
+
+- `xss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+- `extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  Deprecated argument for additional information. Use `xss_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$push_point()`
+
+Push a single queued point to the archive.
+
+#### Usage
+
+    ArchiveAsyncFrozen$push_point(xs, xs_extra = NULL, extra = NULL)
+
+#### Arguments
+
+- `xs`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of point values.
+
+- `xs_extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Named list of additional information.
+
+- `extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Deprecated argument for additional information. Use `xs_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$push_running_points()`
+
+Push running points to the archive.
+
+#### Usage
+
+    ArchiveAsyncFrozen$push_running_points(xss, xss_extra = NULL, extra = NULL)
+
+#### Arguments
+
+- `xss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of point values.
+
+- `xss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+- `extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  Deprecated argument for additional information. Use `xss_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$push_running_point()`
+
+Push running point to the archive.
+
+#### Usage
+
+    ArchiveAsyncFrozen$push_running_point(xs, xs_extra = NULL, extra = NULL)
+
+#### Arguments
+
+- `xs`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of point values.
+
+- `xs_extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Named list of additional information.
+
+- `extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Deprecated argument for additional information. Use `xs_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$push_finished_points()`
+
+Push finished points to the archive.
+
+#### Usage
+
+    ArchiveAsyncFrozen$push_finished_points(
+      xss,
+      yss,
+      xss_extra = NULL,
+      yss_extra = NULL
+    )
+
+#### Arguments
+
+- `xss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of point values.
+
+- `yss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of results.
+
+- `xss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+- `yss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$push_finished_point()`
+
+Push a single finished point to the archive.
+
+#### Usage
+
+    ArchiveAsyncFrozen$push_finished_point(
+      xs,
+      ys,
+      xs_extra = NULL,
+      ys_extra = NULL
+    )
+
+#### Arguments
+
+- `xs`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of point values.
+
+- `ys`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of results.
+
+- `xs_extra`:
+
+  (`named list()` \| `NULL`)  
+  Named list of additional information.
+
+- `ys_extra`:
+
+  (`named list()` \| `NULL`)  
+  Named list of additional information.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$push_failed_points()`
+
+Push failed points to the archive.
+
+#### Usage
+
+    ArchiveAsyncFrozen$push_failed_points(xss, xss_extra = NULL, conditions = NULL)
+
+#### Arguments
+
+- `xss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of point values.
+
+- `xss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
+
+- `conditions`:
+
+  (`list` \| `NULL`)  
+  List of conditions for each failed point. If `NULL`, a generic error
+  message is used.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$push_failed_point()`
+
+Push a single failed point to the archive.
+
+#### Usage
+
+    ArchiveAsyncFrozen$push_failed_point(xs, xs_extra = NULL, condition = NULL)
+
+#### Arguments
+
+- `xs`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of point values.
+
+- `xs_extra`:
+
+  (`named list()` \| `NULL`)  
+  Named list of additional information.
+
+- `condition`:
+
+  (`any` \| `NULL`)  
+  Condition of the failed point. If `NULL`, a generic error message is
+  used.
 
 ------------------------------------------------------------------------
 
@@ -157,31 +407,144 @@ Pop a point from the queue.
 
 ------------------------------------------------------------------------
 
-### `ArchiveAsyncFrozen$push_running_point()`
+### `ArchiveAsyncFrozen$finish_points()`
 
-Push running point to the archive.
+Save the results of multiple running points and move them to the
+finished points.
 
 #### Usage
 
-    ArchiveAsyncFrozen$push_running_point(xs, extra = NULL)
+    ArchiveAsyncFrozen$finish_points(
+      keys,
+      yss,
+      x_domains,
+      yss_extra = NULL,
+      extra = NULL
+    )
 
 #### Arguments
 
-- `xs`:
+- `keys`:
 
-  (named `list`)  
-  Named list of point values.
+  ([`character()`](https://rdrr.io/r/base/character.html))  
+  Keys of the points.
+
+- `yss`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of results.
+
+- `x_domains`:
+
+  ([`list()`](https://rdrr.io/r/base/list.html))  
+  List of named lists of transformed point values.
+
+- `yss_extra`:
+
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  List of named lists of additional information.
 
 - `extra`:
 
-  ([`list()`](https://rdrr.io/r/base/list.html))  
+  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
+  `NULL`)  
+  Deprecated argument for additional information. Use `yss_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$finish_point()`
+
+Save the results of a running point and move it to the finished points.
+
+#### Usage
+
+    ArchiveAsyncFrozen$finish_point(
+      key,
+      ys,
+      x_domain,
+      ys_extra = NULL,
+      extra = NULL
+    )
+
+#### Arguments
+
+- `key`:
+
+  (`character(1)`)  
+  Key of the point.
+
+- `ys`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of results.
+
+- `x_domain`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html))  
+  Named list of transformed point values.
+
+- `ys_extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
   Named list of additional information.
+
+- `extra`:
+
+  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Deprecated argument for additional information. Use `ys_extra`
+  instead.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$fail_points()`
+
+Move multiple running points to the failed points.
+
+#### Usage
+
+    ArchiveAsyncFrozen$fail_points(keys, conditions = NULL)
+
+#### Arguments
+
+- `keys`:
+
+  ([`character()`](https://rdrr.io/r/base/character.html))  
+  Keys of the points.
+
+- `conditions`:
+
+  ([`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
+  Conditions of the failed points.
+
+------------------------------------------------------------------------
+
+### `ArchiveAsyncFrozen$fail_point()`
+
+Move a running point to the failed points.
+
+#### Usage
+
+    ArchiveAsyncFrozen$fail_point(key, condition = NULL)
+
+#### Arguments
+
+- `key`:
+
+  (`character(1)`)  
+  Key of the point.
+
+- `condition`:
+
+  (`any` \| `NULL`)  
+  Condition of the failed point.
 
 ------------------------------------------------------------------------
 
 ### `ArchiveAsyncFrozen$push_result()`
 
-Push result to the archive.
+Deprecated. Use `$finish_point()` instead.
 
 #### Usage
 
@@ -208,28 +571,6 @@ Push result to the archive.
 
   ([`list()`](https://rdrr.io/r/base/list.html))  
   Named list of additional information.
-
-------------------------------------------------------------------------
-
-### `ArchiveAsyncFrozen$push_failed_point()`
-
-Push failed point to the archive.
-
-#### Usage
-
-    ArchiveAsyncFrozen$push_failed_point(key, message)
-
-#### Arguments
-
-- `key`:
-
-  ([`character()`](https://rdrr.io/r/base/character.html))  
-  Key of the point.
-
-- `message`:
-
-  ([`character()`](https://rdrr.io/r/base/character.html))  
-  Error message.
 
 ------------------------------------------------------------------------
 
@@ -348,74 +689,74 @@ as.data.table(instance$archive)
 }
 #>        state          x1         x2           y        timestamp_xs
 #>       <char>       <num>      <num>       <num>              <POSc>
-#>  1: finished -6.21358293  0.2769503  -68.201348 2026-06-12 16:20:12
-#>  2: finished -2.62264757  4.2779729  -64.337761 2026-06-12 16:20:12
-#>  3: finished  6.84682656  3.2309502  -52.316468 2026-06-12 16:20:12
-#>  4: finished -1.96786549 -3.4438612   -5.940969 2026-06-12 16:20:12
-#>  5: finished -9.86571338  2.5243351 -161.313432 2026-06-12 16:20:12
-#>  6: finished  0.01208465  3.1304511  -31.534238 2026-06-12 16:20:12
-#>  7: finished -4.77998488  1.4299587  -55.592729 2026-06-12 16:20:12
-#>  8: finished  7.57503606  1.3830058  -40.291767 2026-06-12 16:20:12
-#>  9: finished  8.01326577 -2.8537699  -26.180748 2026-06-12 16:20:12
-#> 10: finished  5.39871055  2.9134685  -36.520343 2026-06-12 16:20:12
-#> 11: finished  4.82894640 -0.2106949   -5.783161 2026-06-12 16:20:12
-#> 12: finished  2.92831418 -0.4491262    2.631276 2026-06-12 16:20:12
-#> 13: finished -2.48881904  1.6091926  -31.394153 2026-06-12 16:20:12
-#> 14: finished  2.11332211  1.0427817   -6.356925 2026-06-12 16:20:12
-#> 15: finished  0.87403046  4.3072392  -44.663553 2026-06-12 16:20:12
-#> 16: finished -5.88500581 -0.9916228  -56.206896 2026-06-12 16:20:12
-#> 17: finished  4.08136954  3.9785972  -43.032918 2026-06-12 16:20:12
-#> 18: finished -7.80489880 -3.6260806  -86.528017 2026-06-12 16:20:12
-#> 19: finished -9.37102033 -3.4632716 -119.514724 2026-06-12 16:20:12
-#> 20: finished  5.22167868  0.7561287  -14.487716 2026-06-12 16:20:12
+#>  1: finished -6.21358293  0.2769503  -68.201348 2026-06-27 12:46:43
+#>  2: finished -2.62264757  4.2779729  -64.337761 2026-06-27 12:46:43
+#>  3: finished  6.84682656  3.2309502  -52.316468 2026-06-27 12:46:43
+#>  4: finished -1.96786549 -3.4438612   -5.940969 2026-06-27 12:46:43
+#>  5: finished -9.86571338  2.5243351 -161.313432 2026-06-27 12:46:43
+#>  6: finished  0.01208465  3.1304511  -31.534238 2026-06-27 12:46:43
+#>  7: finished -4.77998488  1.4299587  -55.592729 2026-06-27 12:46:43
+#>  8: finished  7.57503606  1.3830058  -40.291767 2026-06-27 12:46:43
+#>  9: finished  8.01326577 -2.8537699  -26.180748 2026-06-27 12:46:43
+#> 10: finished  5.39871055  2.9134685  -36.520343 2026-06-27 12:46:43
+#> 11: finished  4.82894640 -0.2106949   -5.783161 2026-06-27 12:46:43
+#> 12: finished  2.92831418 -0.4491262    2.631276 2026-06-27 12:46:44
+#> 13: finished -2.48881904  1.6091926  -31.394153 2026-06-27 12:46:44
+#> 14: finished  2.11332211  1.0427817   -6.356925 2026-06-27 12:46:44
+#> 15: finished  0.87403046  4.3072392  -44.663553 2026-06-27 12:46:44
+#> 16: finished -5.88500581 -0.9916228  -56.206896 2026-06-27 12:46:44
+#> 17: finished  4.08136954  3.9785972  -43.032918 2026-06-27 12:46:44
+#> 18: finished -7.80489880 -3.6260806  -86.528017 2026-06-27 12:46:44
+#> 19: finished -9.37102033 -3.4632716 -119.514724 2026-06-27 12:46:44
+#> 20: finished  5.22167868  0.7561287  -14.487716 2026-06-27 12:46:44
 #>        state          x1         x2           y        timestamp_xs
 #>       <char>       <num>      <num>       <num>              <POSc>
 #>                             worker_id        timestamp_ys
 #>                                <char>              <POSc>
-#>  1: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#>  2: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#>  3: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#>  4: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#>  5: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#>  6: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#>  7: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#>  8: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#>  9: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 10: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 11: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 12: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 13: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 14: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 15: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 16: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 17: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 18: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 19: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
-#> 20: artsycraftsy_easteuropeanshepherd 2026-06-12 16:20:12
+#>  1: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#>  2: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#>  3: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#>  4: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#>  5: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#>  6: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#>  7: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#>  8: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#>  9: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#> 10: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#> 11: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:43
+#> 12: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
+#> 13: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
+#> 14: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
+#> 15: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
+#> 16: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
+#> 17: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
+#> 18: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
+#> 19: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
+#> 20: artsycraftsy_easteuropeanshepherd 2026-06-27 12:46:44
 #>                             worker_id        timestamp_ys
 #>                                <char>              <POSc>
 #>                                     keys x_domain_x1 x_domain_x2
 #>                                   <char>       <num>       <num>
-#>  1: 3999d406-05c4-449c-914c-57c1202bffc5 -6.21358293   0.2769503
-#>  2: eb845170-142f-49fa-acf3-13f599b9acd6 -2.62264757   4.2779729
-#>  3: 1b02937f-c465-4896-892c-490f97d8015d  6.84682656   3.2309502
-#>  4: 06222ac7-8d03-40d2-8e4c-cf76dbf7b739 -1.96786549  -3.4438612
-#>  5: e16851a4-7e54-42f2-918a-804a3821a52d -9.86571338   2.5243351
-#>  6: dfe29689-bfa6-40c0-8185-1db3b80c7066  0.01208465   3.1304511
-#>  7: 9d26947b-4cca-45f5-93d1-2f06498957d3 -4.77998488   1.4299587
-#>  8: d58642fe-6fd7-4bef-b629-939835b4ff30  7.57503606   1.3830058
-#>  9: db8a0f38-ffd5-4b11-b839-5293aeca8ab0  8.01326577  -2.8537699
-#> 10: 24b12c45-4038-4d0f-89c9-d20f97a35b88  5.39871055   2.9134685
-#> 11: 2a6dda98-54f6-4185-8a4d-d4ec806bde56  4.82894640  -0.2106949
-#> 12: 62892e26-e50f-401b-b62b-7f6486a723ac  2.92831418  -0.4491262
-#> 13: af53ec3d-55bf-4b46-88fe-d5a3adfa2d30 -2.48881904   1.6091926
-#> 14: 49d773ae-055d-4171-88f7-fb92ef5c294d  2.11332211   1.0427817
-#> 15: a028d733-12c8-4286-93e2-cd847068ad5b  0.87403046   4.3072392
-#> 16: 34067348-6975-4ea0-8a1d-a8ae7b10e295 -5.88500581  -0.9916228
-#> 17: 038ad92e-1e17-4423-b022-c17e7fcbb18d  4.08136954   3.9785972
-#> 18: cfb0005e-8fb7-4283-89ec-ff61e6fea163 -7.80489880  -3.6260806
-#> 19: f60ee1fb-969b-4c2a-9f87-b941a64681d0 -9.37102033  -3.4632716
-#> 20: 56872b29-451b-44a3-bf69-916a8233dc2b  5.22167868   0.7561287
+#>  1: 8ab9c7ba-b36f-4090-9439-37bf931b9356 -6.21358293   0.2769503
+#>  2: 97b0553e-c436-4350-b0c5-244f93384063 -2.62264757   4.2779729
+#>  3: 28e5f83a-ce62-4555-bc9c-6b786fe0aba4  6.84682656   3.2309502
+#>  4: 86fc67e1-2218-4ad4-8787-5370c9f55e18 -1.96786549  -3.4438612
+#>  5: d9dc7e38-a728-423d-bce4-558028ea0c69 -9.86571338   2.5243351
+#>  6: 1100eac1-256e-49c8-b4a7-970dabf9d394  0.01208465   3.1304511
+#>  7: 1a45adf5-28c7-4b08-8d45-0702f05f5af9 -4.77998488   1.4299587
+#>  8: f4a7196b-707a-4228-a909-e9cd08e6fb1f  7.57503606   1.3830058
+#>  9: 64eda53a-f8dc-4fae-9116-40d12a63915c  8.01326577  -2.8537699
+#> 10: da1cb18a-8364-4a94-907c-31c794d5ba7f  5.39871055   2.9134685
+#> 11: 35123c86-df87-4bd3-b5af-42da43ebc482  4.82894640  -0.2106949
+#> 12: 46999064-9140-4c6c-afac-a2660dee4539  2.92831418  -0.4491262
+#> 13: a9459bcc-9b67-49dc-ba3b-ee0f6071ffc6 -2.48881904   1.6091926
+#> 14: b33ccea4-482a-4fe6-b6c0-a8bd22b304ec  2.11332211   1.0427817
+#> 15: a05b948d-8d94-42ae-83bd-eaaf934433f5  0.87403046   4.3072392
+#> 16: 490278aa-6f0a-401f-b01c-f7dfa78cb635 -5.88500581  -0.9916228
+#> 17: 1f394de8-e3d8-4b6a-84b4-92861435f3b8  4.08136954   3.9785972
+#> 18: b3882fb4-de27-41f5-a206-52d67f8aedda -7.80489880  -3.6260806
+#> 19: 5fe1ecb8-93d5-43e4-bbff-6b02faafad2c -9.37102033  -3.4632716
+#> 20: 4a1e0c10-6c3b-46fe-88cb-4cf590805075  5.22167868   0.7561287
 #>                                     keys x_domain_x1 x_domain_x2
 #>                                   <char>       <num>       <num>
 ```
