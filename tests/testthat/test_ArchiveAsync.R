@@ -123,7 +123,8 @@ test_that("as.data.table.ArchiveAsync works", {
   expect_data_table(data, min.rows = 5)
 
   cns = c("state", "x1", "x2", "y", "timestamp_xs", "worker_id", "timestamp_ys", "keys", "x_domain_x1", "x_domain_x2")
-  expect_names(colnames(data), identical.to = cns)
+  # a failed task adds a "condition" column
+  expect_names(setdiff(colnames(data), "condition"), identical.to = cns)
 
   data = as.data.table(instance$archive, unnest = NULL)
   expect_list(data$x_domain)
