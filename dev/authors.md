@@ -25,7 +25,7 @@ Black-Box Optimization Toolkit*.
 [doi:10.5281/zenodo.20669808](https://doi.org/10.5281/zenodo.20669808).
 <https://doi.org/10.5281/zenodo.20669808>.
 
-    @Manual{,
+    @Manual{becker2026bbotk,
       title = {bbotk: Black-Box Optimization Toolkit},
       url = {https://doi.org/10.5281/zenodo.20669808},
       author = {Marc Becker and Jakob Richter and Michel Lang and Bernd Bischl and Martin Binder},
