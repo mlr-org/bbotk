@@ -50,7 +50,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="bbotk-development-version">bbotk (development version)<a class="anchor" aria-label="anchor" href="#bbotk-development-version"></a></h2>
-</div>
+<ul><li>refactor: Remove the deprecated <code>extra</code> argument from <code>ArchiveAsync</code>’s <code>$push_points()</code>, <code>$push_point()</code>, <code>$push_running_points()</code>, <code>$push_running_point()</code>, <code>$finish_points()</code>, and <code>$finish_point()</code>. Use the corresponding <code>xss_extra</code>, <code>xs_extra</code>, or <code>yss_extra</code>, <code>ys_extra</code> argument instead.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.11.0" id="bbotk-1110">bbotk 1.11.0<a class="anchor" aria-label="anchor" href="#bbotk-1110"></a></h2><p class="text-muted">CRAN release: 2026-06-26</p>
 <ul><li>fix: Asynchronous optimization no longer calls the deprecated <code>rush$fail_tasks()</code> method when cleaning up after termination. Queued tasks are now removed with <code>rush$empty_queue()</code> and running tasks are left to the workers that own them.</li>
@@ -281,7 +282,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
