@@ -19,6 +19,7 @@ Package website: [release](https://bbotk.mlr-org.com/) | [dev](https://bbotk.mlr
 
 <!-- badges: start -->
 [![r-cmd-check](https://github.com/mlr-org/bbotk/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/mlr-org/bbotk/actions/workflows/r-cmd-check.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20669808.svg)](https://doi.org/10.5281/zenodo.20669808)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/bbotk)](https://cran.r-project.org/package=bbotk)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 <!-- badges: end -->
