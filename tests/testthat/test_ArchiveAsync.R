@@ -158,46 +158,6 @@ test_that("push_points works with extras argument", {
   expect_equal(queued$batch_id, c(1, 1))
 })
 
-test_that("extra is a legacy alias for xss_extra / xs_extra", {
-  rush = start_rush_worker()
-  on.exit({
-    rush$reset()
-  })
-
-  archive = ArchiveAsync$new(
-    search_space = PS_2D,
-    codomain = FUN_2D_CODOMAIN,
-    rush = rush
-  )
-
-  # legacy `extra` alias on the batch method
-  archive$push_points(list(list(x1 = 1, x2 = 2)), extra = list(list(extra_info = "legacy")))
-  # canonical `xs_extra` on the single method
-  archive$push_point(list(x1 = 3, x2 = 4), xs_extra = list(extra_info = "canonical"))
-
-  expect_equal(sort(archive$queued_data$extra_info), c("canonical", "legacy"))
-})
-
-test_that("xss_extra takes precedence over the legacy extra argument", {
-  rush = start_rush_worker()
-  on.exit({
-    rush$reset()
-  })
-
-  archive = ArchiveAsync$new(
-    search_space = PS_2D,
-    codomain = FUN_2D_CODOMAIN,
-    rush = rush
-  )
-
-  archive$push_points(
-    list(list(x1 = 1, x2 = 2)),
-    xss_extra = list(list(extra_info = "canonical")),
-    extra = list(list(extra_info = "legacy")))
-
-  expect_equal(archive$queued_data$extra_info, "canonical")
-})
-
 test_that("push_points assigns one timestamp to all points in a batch", {
   rush = start_rush_worker()
   on.exit({
@@ -287,7 +247,7 @@ test_that("push_point works", {
     rush = rush
   )
 
-  key = archive$push_point(list(x1 = 1, x2 = 2), extra = list(extra_info = "point1"))
+  key = archive$push_point(list(x1 = 1, x2 = 2), xs_extra = list(extra_info = "point1"))
   expect_character(key, len = 1)
 
   queued = archive$queued_data
@@ -390,7 +350,7 @@ test_that("finish_point stores extra information", {
     keys,
     ys = list(y1 = 1, y2 = 2),
     x_domain = list(x1 = 1, x2 = 2),
-    extra = list(extra_info = "point1"))
+    ys_extra = list(extra_info = "point1"))
 
   expect_data_table(archive$finished_data, nrows = 1)
   expect_equal(archive$finished_data$extra_info, "point1")

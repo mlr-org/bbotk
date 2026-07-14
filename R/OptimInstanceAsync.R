@@ -117,7 +117,7 @@ OptimInstanceAsync = R6Class(
       call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
 
       # push result
-      self$archive$finish_point(key, private$.ys, x_domain = private$.xs_trafoed, extra = private$.extra)
+      self$archive$finish_point(key, private$.ys, x_domain = private$.xs_trafoed, ys_extra = private$.extra)
 
       invisible(private$.ys)
     },

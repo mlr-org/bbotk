@@ -92,10 +92,7 @@ ArchiveAsyncFrozen = R6Class(
     #' List of named lists of point values.
     #' @param xss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    #' @param extra (list of named `list()` | `NULL`)\cr
-    #' Deprecated argument for additional information.
-    #' Use `xss_extra` instead.
-    push_points = function(xss, xss_extra = NULL, extra = NULL) {
+    push_points = function(xss, xss_extra = NULL) {
       stop("Archive is frozen")
     },
 
@@ -106,10 +103,7 @@ ArchiveAsyncFrozen = R6Class(
     #' Named list of point values.
     #' @param xs_extra (named `list()` | `NULL`)\cr
     #' Named list of additional information.
-    #' @param extra (named `list()` | `NULL`)\cr
-    #' Deprecated argument for additional information.
-    #' Use `xs_extra` instead.
-    push_point = function(xs, xs_extra = NULL, extra = NULL) {
+    push_point = function(xs, xs_extra = NULL) {
       stop("Archive is frozen")
     },
 
@@ -120,10 +114,7 @@ ArchiveAsyncFrozen = R6Class(
     #' List of named lists of point values.
     #' @param xss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    #' @param extra (list of named `list()` | `NULL`)\cr
-    #' Deprecated argument for additional information.
-    #' Use `xss_extra` instead.
-    push_running_points = function(xss, xss_extra = NULL, extra = NULL) {
+    push_running_points = function(xss, xss_extra = NULL) {
       stop("Archive is frozen")
     },
 
@@ -134,10 +125,7 @@ ArchiveAsyncFrozen = R6Class(
     #' Named list of point values.
     #' @param xs_extra (named `list()` | `NULL`)\cr
     #' Named list of additional information.
-    #' @param extra (named `list()` | `NULL`)\cr
-    #' Deprecated argument for additional information.
-    #' Use `xs_extra` instead.
-    push_running_point = function(xs, xs_extra = NULL, extra = NULL) {
+    push_running_point = function(xs, xs_extra = NULL) {
       stop("Archive is frozen")
     },
 
@@ -216,10 +204,7 @@ ArchiveAsyncFrozen = R6Class(
     #' List of named lists of transformed point values.
     #' @param yss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    #' @param extra (list of named `list()` | `NULL`)\cr
-    #' Deprecated argument for additional information.
-    #' Use `yss_extra` instead.
-    finish_points = function(keys, yss, x_domains, yss_extra = NULL, extra = NULL) {
+    finish_points = function(keys, yss, x_domains, yss_extra = NULL) {
       stop("Archive is frozen")
     },
 
@@ -234,10 +219,7 @@ ArchiveAsyncFrozen = R6Class(
     #' Named list of transformed point values.
     #' @param ys_extra (named `list()` | `NULL`)\cr
     #' Named list of additional information.
-    #' @param extra (named `list()` | `NULL`)\cr
-    #' Deprecated argument for additional information.
-    #' Use `ys_extra` instead.
-    finish_point = function(key, ys, x_domain, ys_extra = NULL, extra = NULL) {
+    finish_point = function(key, ys, x_domain, ys_extra = NULL) {
       stop("Archive is frozen")
     },
 
