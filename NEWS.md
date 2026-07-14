@@ -1,5 +1,8 @@
 # bbotk (development version)
 
+* refactor: Remove the deprecated `extra` argument from `ArchiveAsync`'s `$push_points()`, `$push_point()`, `$push_running_points()`, `$push_running_point()`, `$finish_points()`, and `$finish_point()`.
+  Use the corresponding `xss_extra`, `xs_extra`, or `yss_extra`, `ys_extra` argument instead.
+
 # bbotk 1.11.0
 
 * fix: Asynchronous optimization no longer calls the deprecated `rush$fail_tasks()` method when cleaning up after termination.
