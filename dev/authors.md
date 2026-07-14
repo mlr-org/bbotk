@@ -18,16 +18,17 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/mlr-org/bbotk/blob/main/DESCRIPTION)
+[`inst/CITATION`](https://github.com/mlr-org/bbotk/blob/main/inst/CITATION)
 
 Becker M, Richter J, Lang M, Bischl B, Binder M (2026). *bbotk:
-Black-Box Optimization Toolkit*. R package version 1.11.0.9000,
-<https://bbotk.mlr-org.com>.
+Black-Box Optimization Toolkit*.
+[doi:10.5281/zenodo.20669808](https://doi.org/10.5281/zenodo.20669808).
+<https://doi.org/10.5281/zenodo.20669808>.
 
     @Manual{,
       title = {bbotk: Black-Box Optimization Toolkit},
+      url = {https://doi.org/10.5281/zenodo.20669808},
       author = {Marc Becker and Jakob Richter and Michel Lang and Bernd Bischl and Martin Binder},
       year = {2026},
-      note = {R package version 1.11.0.9000},
-      url = {https://bbotk.mlr-org.com},
+      doi = {10.5281/zenodo.20669808},
     }
