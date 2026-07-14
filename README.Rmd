@@ -102,3 +102,19 @@ instance$result
 as.data.table(instance$archive)
 ```
 
+## Citation
+
+If you use bbotk in your work, please cite it.
+
+> Becker M, Richter J, Lang M, Bischl B, Binder M (2026). _bbotk: Black-Box Optimization Toolkit_. doi:10.5281/zenodo.20669808, <https://doi.org/10.5281/zenodo.20669808>.
+
+```
+@Manual{becker2026bbotk,
+  title = {bbotk: Black-Box Optimization Toolkit},
+  url = {https://doi.org/10.5281/zenodo.20669808},
+  author = {Marc Becker and Jakob Richter and Michel Lang and Bernd Bischl and Martin Binder},
+  year = {2026},
+  doi = {10.5281/zenodo.20669808},
+}
+```
+

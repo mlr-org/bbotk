@@ -1,5 +1,6 @@
 bibentry(
   bibtype = "Manual",
+  key = "becker2026bbotk",
   title = "bbotk: Black-Box Optimization Toolkit",
   url = "https://doi.org/10.5281/zenodo.20669808",
   author = c(
