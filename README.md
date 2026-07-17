@@ -7,6 +7,7 @@ Package website: [release](https://bbotk.mlr-org.com/) \|
 <!-- badges: start -->
 
 [![r-cmd-check](https://github.com/mlr-org/bbotk/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/mlr-org/bbotk/actions/workflows/r-cmd-check.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20669808.svg)](https://doi.org/10.5281/zenodo.20669808)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/bbotk)](https://cran.r-project.org/package=bbotk)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
@@ -119,14 +120,30 @@ as.data.table(instance$archive)
 ```
 
     ##            x1        x2          y           timestamp batch_nr x_domain_x1 x_domain_x2
-    ##  1: -4.689827 -1.278761 -37.716445 2025-10-24 11:01:00        1   -4.689827   -1.278761
-    ##  2: -5.930364 -4.400474 -54.851999 2025-10-24 11:01:00        2   -5.930364   -4.400474
-    ##  3:  7.170817 -1.519948 -18.927907 2025-10-24 11:01:00        3    7.170817   -1.519948
-    ##  4:  2.045200 -1.519948   7.807403 2025-10-24 11:01:00        4    2.045200   -1.519948
-    ##  5:  2.045200 -2.064742   9.123250 2025-10-24 11:01:00        5    2.045200   -2.064742
+    ##  1: -4.689827 -1.278761 -37.716445 2026-07-14 17:06:25        1   -4.689827   -1.278761
+    ##  2: -5.930364 -4.400474 -54.851999 2026-07-14 17:06:25        2   -5.930364   -4.400474
+    ##  3:  7.170817 -1.519948 -18.927907 2026-07-14 17:06:25        3    7.170817   -1.519948
+    ##  4:  2.045200 -1.519948   7.807403 2026-07-14 17:06:25        4    2.045200   -1.519948
+    ##  5:  2.045200 -2.064742   9.123250 2026-07-14 17:06:25        5    2.045200   -2.064742
     ## ---                                                                                    
-    ## 16:  2.000000 -3.000000  10.000000 2025-10-24 11:01:00       16    2.000000   -3.000000
-    ## 17:  2.000001 -3.000000  10.000000 2025-10-24 11:01:00       17    2.000001   -3.000000
-    ## 18:  1.999999 -3.000000  10.000000 2025-10-24 11:01:00       18    1.999999   -3.000000
-    ## 19:  2.000000 -2.999999  10.000000 2025-10-24 11:01:00       19    2.000000   -2.999999
-    ## 20:  2.000000 -3.000001  10.000000 2025-10-24 11:01:00       20    2.000000   -3.000001
+    ## 16:  2.000000 -3.000000  10.000000 2026-07-14 17:06:26       16    2.000000   -3.000000
+    ## 17:  2.000001 -3.000000  10.000000 2026-07-14 17:06:26       17    2.000001   -3.000000
+    ## 18:  1.999999 -3.000000  10.000000 2026-07-14 17:06:26       18    1.999999   -3.000000
+    ## 19:  2.000000 -2.999999  10.000000 2026-07-14 17:06:26       19    2.000000   -2.999999
+    ## 20:  2.000000 -3.000001  10.000000 2026-07-14 17:06:26       20    2.000000   -3.000001
+
+## Citation
+
+If you use bbotk in your work, please cite it.
+
+> Becker M, Richter J, Lang M, Bischl B, Binder M (2026). *bbotk:
+> Black-Box Optimization Toolkit*. <doi:10.5281/zenodo.20669808>,
+> <https://doi.org/10.5281/zenodo.20669808>.
+
+    @Manual{becker2026bbotk,
+      title = {bbotk: Black-Box Optimization Toolkit},
+      url = {https://doi.org/10.5281/zenodo.20669808},
+      author = {Marc Becker and Jakob Richter and Michel Lang and Bernd Bischl and Martin Binder},
+      year = {2026},
+      doi = {10.5281/zenodo.20669808},
+    }

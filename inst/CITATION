@@ -1,0 +1,15 @@
+bibentry(
+  bibtype = "Manual",
+  key = "becker2026bbotk",
+  title = "bbotk: Black-Box Optimization Toolkit",
+  url = "https://doi.org/10.5281/zenodo.20669808",
+  author = c(
+    person("Marc", "Becker"),
+    person("Jakob", "Richter"),
+    person("Michel", "Lang"),
+    person("Bernd", "Bischl"),
+    person("Martin", "Binder")
+  ),
+  year = 2026,
+  doi = "10.5281/zenodo.20669808"
+)
