@@ -14,7 +14,6 @@ test_that("OptimizerBatchDesignPoints", {
   design = data.table(x1 = c(2), x2 = c(2))
   expect_error(
     test_optimizer_2d("design_points", design = design, term_evals = 10L, real_evals = 3),
-    "<= 1",
-    fixed = TRUE
+    paradox_numeric_domain_error("<= 1")
   )
 })
