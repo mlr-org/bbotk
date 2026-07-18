@@ -152,7 +152,7 @@ OptimizerBatchChain = R6Class(
           inner_inst$terminator = terminator
         }
         optimizer = private$.optimizers[[i]]
-        optimizer$param_set$values = self$param_set$.__enclos_env__$private$.sets[[i]]$values
+        optimizer$param_set$values = self$param_set$sets[[i]]$values
         optimizer$optimize(inner_inst)
         set(
           inner_inst$archive$data,
