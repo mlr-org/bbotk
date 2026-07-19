@@ -302,10 +302,15 @@ int find_param_index(const char* param_name, const SearchSpace* ss) {
     return -1; // Parameter not found
 }
 
-// convert paradox SearchSpace to C SearchSpace
-void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
+// Convert a paradox SearchSpace to a C SearchSpace. The returned list owns the
+// detached public data/dependency snapshots referenced by `ss`; callers must
+// PROTECT it for the complete lifetime of `ss`.
+SEXP extract_ss_info(SEXP s_ss, SearchSpace* ss) {
+    SEXP s_owners = PROTECT(allocVector(VECSXP, 2));
     ss->n_params = asInteger(RC_get_r6_el_by_name(s_ss, "length"));
     SEXP s_data = PROTECT(RC_get_r6_el_by_name(s_ss, "data"));
+    SET_VECTOR_ELT(s_owners, 0, s_data);
+    UNPROTECT(1); // s_data is now owned by s_owners
 
     // copy lower and upper bounds
     ss->lower = (double*) R_alloc(ss->n_params, sizeof(double));
@@ -370,10 +375,12 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
 
     DEBUG_PRINT("extracting conditions\n");
     SEXP s_deps = PROTECT(RC_get_r6_el_by_name(s_ss, "deps"));
-    SEXP s_deps_on = PROTECT(RC_get_dt_col_by_name(s_deps, "on"));
-    SEXP s_deps_id = PROTECT(RC_get_dt_col_by_name(s_deps, "id"));
+    SET_VECTOR_ELT(s_owners, 1, s_deps);
+    UNPROTECT(1); // s_deps is now owned by s_owners
+    SEXP s_deps_on = RC_get_dt_col_by_name(s_deps, "on");
+    SEXP s_deps_id = RC_get_dt_col_by_name(s_deps, "id");
     DEBUG_PRINT("s_deps_id type: %d\n", TYPEOF(s_deps_id));
-    SEXP s_deps_cond = PROTECT(RC_get_dt_col_by_name(s_deps, "cond"));
+    SEXP s_deps_cond = RC_get_dt_col_by_name(s_deps, "cond");
     ss->n_conds = length(s_deps_on);
     Cond *conds = NULL;
     if (ss->n_conds != 0) {
@@ -392,7 +399,8 @@ void extract_ss_info(SEXP s_ss, SearchSpace* ss) {
       }
     }
     ss->conds = conds;
-    UNPROTECT(5); // s_data, s_deps, s_deps_on, s_deps_id, s_deps_cond
+    UNPROTECT(1); // s_owners; the caller protects the returned owner
+    return s_owners;
 }
 
 void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
@@ -764,7 +772,7 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     GetRNGstate();
 
     SearchSpace ss;
-    extract_ss_info(s_ss, &ss);
+    PROTECT(extract_ss_info(s_ss, &ss));
     toposort_params(&ss);
     reorder_conds_by_toposort(&ss);
     Control ctrl;
@@ -841,6 +849,6 @@ SEXP c_local_search(SEXP s_obj, SEXP s_ss, SEXP s_ctrl, SEXP s_initial_x) {
     SEXP s_res = PROTECT(RC_named_list_create(2, (const char*[]){"x", "y"}));
     SET_VECTOR_ELT(s_res, 0, s_global_best_x);
     SET_VECTOR_ELT(s_res, 1, ScalarReal(best_y_out));
-    UNPROTECT(4); // s_pop_x, s_neighs_x, s_global_best_x, s_res
+    UNPROTECT(5); // search-space owners, s_pop_x, s_neighs_x, s_global_best_x, s_res
     return s_res;
 }
