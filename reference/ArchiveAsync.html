@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.11.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -197,7 +197,7 @@ If a rush instance is supplied, the tuning runs without batches.</p></dd>
 <h3 id="archiveasync-push-points-"><code>ArchiveAsync$push_points()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-points-"></a></h3>
 <p>Push queued points to the archive.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xss</code></dt>
@@ -207,11 +207,6 @@ List of named lists of point values.</p></dd>
       <dt><code>xss_extra</code></dt>
 <dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 List of named lists of additional information.</p></dd>
-
-      <dt><code>extra</code></dt>
-<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
-Deprecated argument for additional information.
-Use <code>xss_extra</code> instead.</p></dd>
 
 
 </dl><p></p></div>
@@ -223,7 +218,7 @@ Use <code>xss_extra</code> instead.</p></dd>
 <h3 id="archiveasync-push-point-"><code>ArchiveAsync$push_point()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-point-"></a></h3>
 <p>Push a single queued point to the archive.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xs</code></dt>
@@ -233,11 +228,6 @@ Named list of point values.</p></dd>
       <dt><code>xs_extra</code></dt>
 <dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 Named list of additional information.</p></dd>
-
-      <dt><code>extra</code></dt>
-<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
-Deprecated argument for additional information.
-Use <code>xs_extra</code> instead.</p></dd>
 
 
 </dl><p></p></div>
@@ -249,7 +239,7 @@ Use <code>xs_extra</code> instead.</p></dd>
 <h3 id="archiveasync-push-running-points-"><code>ArchiveAsync$push_running_points()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-running-points-"></a></h3>
 <p>Push running points to the archive.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_running_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_running_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xss</code></dt>
@@ -259,11 +249,6 @@ List of named lists of point values.</p></dd>
       <dt><code>xss_extra</code></dt>
 <dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 List of named lists of additional information.</p></dd>
-
-      <dt><code>extra</code></dt>
-<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
-Deprecated argument for additional information.
-Use <code>xss_extra</code> instead.</p></dd>
 
 
 </dl><p></p></div>
@@ -275,7 +260,7 @@ Use <code>xss_extra</code> instead.</p></dd>
 <h3 id="archiveasync-push-running-point-"><code>ArchiveAsync$push_running_point()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-running-point-"></a></h3>
 <p>Push running point to the archive.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_running_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_running_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xs</code></dt>
@@ -285,11 +270,6 @@ Named list of point values.</p></dd>
       <dt><code>xs_extra</code></dt>
 <dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 Named list of additional information.</p></dd>
-
-      <dt><code>extra</code></dt>
-<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
-Deprecated argument for additional information.
-Use <code>xs_extra</code> instead.</p></dd>
 
 
 </dl><p></p></div>
@@ -420,13 +400,7 @@ If <code>NULL</code>, a generic error message is used.</p></dd>
 <h3 id="archiveasync-finish-points-"><code>ArchiveAsync$finish_points()</code><a class="anchor" aria-label="anchor" href="#archiveasync-finish-points-"></a></h3>
 <p>Save the results of multiple running points and move them to the finished points.</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">finish_points</span><span class="op">(</span></span>
-<span>  <span class="va">keys</span>,</span>
-<span>  <span class="va">yss</span>,</span>
-<span>  <span class="va">x_domains</span>,</span>
-<span>  yss_extra <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  extra <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">finish_points</span><span class="op">(</span><span class="va">keys</span>, <span class="va">yss</span>, <span class="va">x_domains</span>, yss_extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>keys</code></dt>
@@ -445,11 +419,6 @@ List of named lists of transformed point values.</p></dd>
 <dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 List of named lists of additional information.</p></dd>
 
-      <dt><code>extra</code></dt>
-<dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
-Deprecated argument for additional information.
-Use <code>yss_extra</code> instead.</p></dd>
-
 
 </dl><p></p></div>
 </div>
@@ -460,7 +429,7 @@ Use <code>yss_extra</code> instead.</p></dd>
 <h3 id="archiveasync-finish-point-"><code>ArchiveAsync$finish_point()</code><a class="anchor" aria-label="anchor" href="#archiveasync-finish-point-"></a></h3>
 <p>Save the results of a running point and move it to the finished points.</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">finish_point</span><span class="op">(</span><span class="va">key</span>, <span class="va">ys</span>, <span class="va">x_domain</span>, ys_extra <span class="op">=</span> <span class="cn">NULL</span>, extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">finish_point</span><span class="op">(</span><span class="va">key</span>, <span class="va">ys</span>, <span class="va">x_domain</span>, ys_extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>key</code></dt>
@@ -478,11 +447,6 @@ Named list of transformed point values.</p></dd>
       <dt><code>ys_extra</code></dt>
 <dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 Named list of additional information.</p></dd>
-
-      <dt><code>extra</code></dt>
-<dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
-Deprecated argument for additional information.
-Use <code>ys_extra</code> instead.</p></dd>
 
 
 </dl><p></p></div>
@@ -736,7 +700,7 @@ Reference point for hypervolume.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

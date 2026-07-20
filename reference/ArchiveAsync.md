@@ -177,7 +177,7 @@ Push queued points to the archive.
 
 #### Usage
 
-    ArchiveAsync$push_points(xss, xss_extra = NULL, extra = NULL)
+    ArchiveAsync$push_points(xss, xss_extra = NULL)
 
 #### Arguments
 
@@ -191,13 +191,6 @@ Push queued points to the archive.
   (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
   `NULL`)  
   List of named lists of additional information.
-
-- `extra`:
-
-  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
-  `NULL`)  
-  Deprecated argument for additional information. Use `xss_extra`
-  instead.
 
 ------------------------------------------------------------------------
 
@@ -207,7 +200,7 @@ Push a single queued point to the archive.
 
 #### Usage
 
-    ArchiveAsync$push_point(xs, xs_extra = NULL, extra = NULL)
+    ArchiveAsync$push_point(xs, xs_extra = NULL)
 
 #### Arguments
 
@@ -221,12 +214,6 @@ Push a single queued point to the archive.
   (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
   Named list of additional information.
 
-- `extra`:
-
-  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
-  Deprecated argument for additional information. Use `xs_extra`
-  instead.
-
 ------------------------------------------------------------------------
 
 ### `ArchiveAsync$push_running_points()`
@@ -235,7 +222,7 @@ Push running points to the archive.
 
 #### Usage
 
-    ArchiveAsync$push_running_points(xss, xss_extra = NULL, extra = NULL)
+    ArchiveAsync$push_running_points(xss, xss_extra = NULL)
 
 #### Arguments
 
@@ -250,13 +237,6 @@ Push running points to the archive.
   `NULL`)  
   List of named lists of additional information.
 
-- `extra`:
-
-  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
-  `NULL`)  
-  Deprecated argument for additional information. Use `xss_extra`
-  instead.
-
 ------------------------------------------------------------------------
 
 ### `ArchiveAsync$push_running_point()`
@@ -265,7 +245,7 @@ Push running point to the archive.
 
 #### Usage
 
-    ArchiveAsync$push_running_point(xs, xs_extra = NULL, extra = NULL)
+    ArchiveAsync$push_running_point(xs, xs_extra = NULL)
 
 #### Arguments
 
@@ -278,12 +258,6 @@ Push running point to the archive.
 
   (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
   Named list of additional information.
-
-- `extra`:
-
-  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
-  Deprecated argument for additional information. Use `xs_extra`
-  instead.
 
 ------------------------------------------------------------------------
 
@@ -427,13 +401,7 @@ finished points.
 
 #### Usage
 
-    ArchiveAsync$finish_points(
-      keys,
-      yss,
-      x_domains,
-      yss_extra = NULL,
-      extra = NULL
-    )
+    ArchiveAsync$finish_points(keys, yss, x_domains, yss_extra = NULL)
 
 #### Arguments
 
@@ -458,13 +426,6 @@ finished points.
   `NULL`)  
   List of named lists of additional information.
 
-- `extra`:
-
-  (list of named [`list()`](https://rdrr.io/r/base/list.html) \|
-  `NULL`)  
-  Deprecated argument for additional information. Use `yss_extra`
-  instead.
-
 ------------------------------------------------------------------------
 
 ### `ArchiveAsync$finish_point()`
@@ -473,7 +434,7 @@ Save the results of a running point and move it to the finished points.
 
 #### Usage
 
-    ArchiveAsync$finish_point(key, ys, x_domain, ys_extra = NULL, extra = NULL)
+    ArchiveAsync$finish_point(key, ys, x_domain, ys_extra = NULL)
 
 #### Arguments
 
@@ -496,12 +457,6 @@ Save the results of a running point and move it to the finished points.
 
   (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
   Named list of additional information.
-
-- `extra`:
-
-  (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
-  Deprecated argument for additional information. Use `ys_extra`
-  instead.
 
 ------------------------------------------------------------------------
 

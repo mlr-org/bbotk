@@ -148,16 +148,16 @@ instance$archive$best()
 # covert to data.table
 as.data.table(instance$archive)
 }
-#>       state    x1    x2     y        timestamp_xs                 worker_id
-#>      <char> <num> <num> <num>              <POSc>                    <char>
-#> 1: finished     0     0    -3 2026-06-27 12:47:01 terrorstricken_prairiedog
-#> 2: finished     1     1    -7 2026-06-27 12:47:01 terrorstricken_prairiedog
-#>           timestamp_ys                                 keys x_domain_x1
-#>                 <POSc>                               <char>       <num>
-#> 1: 2026-06-27 12:47:02 2ea0161d-c809-47cb-99e1-ea0e989af83f           0
-#> 2: 2026-06-27 12:47:02 6702dcdf-f7b7-4c70-9a18-8ed2e09517d1           1
-#>    x_domain_x2
-#>          <num>
-#> 1:           0
-#> 2:           1
+#>       state    x1    x2     y        timestamp_xs
+#>      <char> <num> <num> <num>              <POSc>
+#> 1: finished     0     0    -3 2026-07-20 08:44:08
+#> 2: finished     1     1    -7 2026-07-20 08:44:08
+#>                             worker_id        timestamp_ys
+#>                                <char>              <POSc>
+#> 1: terrorstricken_prairiedog_7a3460bd 2026-07-20 08:44:09
+#> 2: terrorstricken_prairiedog_7a3460bd 2026-07-20 08:44:09
+#>                                    keys x_domain_x1 x_domain_x2
+#>                                  <char>       <num>       <num>
+#> 1: 5910ef37-0325-42b6-b878-22019f07ad6b           0           0
+#> 2: 1fdd14df-4ca1-4570-b7c4-d835b69e2242           1           1
 ```
