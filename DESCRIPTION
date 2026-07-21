@@ -36,7 +36,6 @@ Imports:
     R6
 Suggests:
     adagio,
-    emoa,
     GenSA,
     irace (>= 4.0.0),
     knitr,

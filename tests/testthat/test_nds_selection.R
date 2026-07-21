@@ -1,10 +1,8 @@
 test_that("nds_selection works", {
-  skip_if_not_installed("emoa")
-
   points = matrix(
     c(
       # front 1
-      # emoa puts always Inf weight on boundary points, so they always survive
+      # boundary points always survive tie breaking
       # points 1 and points 4 have the highest hypervolume contributions
       1,
       4,
@@ -96,8 +94,6 @@ test_that("nds_selection works", {
 })
 
 test_that("nds_selection in Archive works", {
-  skip_if_not_installed("emoa")
-
   domain = ps(x1 = p_dbl())
   codomain = ps(
     y1 = p_dbl(tags = "minimize"),

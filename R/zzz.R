@@ -7,7 +7,7 @@
 #' @importFrom utils capture.output head tail
 #' @importFrom methods formalArgs
 #' @importFrom stats setNames
-#' @importFrom moocore is_nondominated hypervolume
+#' @importFrom moocore is_nondominated hypervolume pareto_rank hv_contributions
 #' @useDynLib bbotk, .registration = TRUE
 #'
 #' @section Package Options:
