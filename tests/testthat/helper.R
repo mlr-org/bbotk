@@ -219,14 +219,6 @@ expect_different_address = function(x, y) {
   testthat::expect_false(identical(data.table::address(x), data.table::address(y)))
 }
 
-paradox_numeric_domain_error = function(legacy) {
-  if (utils::packageVersion("paradox") >= numeric_version("2.0.0")) {
-    "expected one non-missing numeric value within the Domain bounds"
-  } else {
-    legacy
-  }
-}
-
 expect_man_exists = function(man) {
   checkmate::expect_string(man, na.ok = TRUE, fixed = "::")
   if (!is.na(man)) {

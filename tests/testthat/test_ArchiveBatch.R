@@ -58,10 +58,7 @@ test_that("Archive on 1D problem works", {
   expect_list(a$data$x_domain[[1]])
 
   xdt = data.table(x = 2)
-  expect_error(
-    a$add_evals(xdt, transpose_list(xdt), ydt),
-    paradox_numeric_domain_error("Element 1 is not")
-  )
+  expect_error(a$add_evals(xdt, transpose_list(xdt), ydt), "Element 1 is not")
 })
 
 test_that("Unnest columns", {
@@ -77,10 +74,7 @@ test_that("Unnest columns", {
 
   # checks
   xdt = data.table(x1 = 0.5, x2 = 2)
-  expect_error(
-    a$add_evals(xdt, xss_trafoed, ydt),
-    paradox_numeric_domain_error("Element 1 is not")
-  )
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "Element 1 is not")
 })
 
 test_that("NAs in ydt throw an error", {
@@ -111,10 +105,7 @@ test_that("check_values flag works", {
   xdt = data.table(x1 = c(0, 2), x2 = c(1, 1))
   xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
   ydt = data.table(y = c(1, 0.25))
-  expect_error(
-    a$add_evals(xdt, xss_trafoed, ydt),
-    paradox_numeric_domain_error("x1: Element 1 is not <= 1[.]")
-  )
+  expect_error(a$add_evals(xdt, xss_trafoed, ydt), "x1: Element 1 is not <= 1.", fixed = TRUE)
 })
 
 test_that("deep clone works", {

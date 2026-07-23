@@ -22,11 +22,11 @@ test_that("Objective works", {
   # checked interface
   expect_silent(obj$eval(xs))
   xsf = list(x1 = 0, x2 = 3)
-  expect_error(obj$eval(xsf), paradox_numeric_domain_error("is not <= 1"))
+  expect_error(obj$eval(xsf), "is not <= 1")
   expect_silent(obj$eval_many(xss))
   xssf = xss
   xssf[[2]]$x1 = 2
-  expect_error(obj$eval_many(xssf), paradox_numeric_domain_error("is not <= 1"))
+  expect_error(obj$eval_many(xssf), "is not <= 1")
 
   ObjectiveTestEvalMany = R6Class(
     "ObjectiveTestEvalMany",
@@ -234,10 +234,7 @@ test_that("check_values flag works", {
   expect_list(obj$eval(list(x1 = 2, x2 = 1)), len = 2)
 
   obj = ObjectiveTestEval$new(domain = PS_2D, codomain = FUN_2D_CODOMAIN, check_values = TRUE)
-  expect_error(
-    obj$eval(list(x1 = 2, x2 = 1)),
-    paradox_numeric_domain_error("<= 1[.]")
-  )
+  expect_error(obj$eval(list(x1 = 2, x2 = 1)), "<= 1.", fixed = TRUE)
 
   ObjectiveTestEvalMany = R6Class(
     "ObjectiveTestEvalMany",
@@ -255,10 +252,7 @@ test_that("check_values flag works", {
 
   obj = ObjectiveTestEvalMany$new(domain = PS_2D, check_values = TRUE)
   xs = list(x1 = 2, x2 = 1)
-  expect_error(
-    obj$eval(list(x1 = 2, x2 = 1)),
-    paradox_numeric_domain_error("<= 1[.]")
-  )
+  expect_error(obj$eval(list(x1 = 2, x2 = 1)), "<= 1.", fixed = TRUE)
 })
 
 test_that("check_values = TRUE with extra output works", {
