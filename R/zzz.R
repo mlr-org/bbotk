@@ -18,6 +18,7 @@
 
 .onLoad = function(libname, pkgname) {
   # nocov start
+  .register_paradox_codomain_upgrader()
 
   # callbacks
   x = utils::getFromNamespace("mlr_callbacks", ns = "mlr3misc")
@@ -39,4 +40,5 @@
 
 utils::globalVariables(c("batch_nr", "start_values"))
 
-leanify_package()
+leanify_package(skip_if = function(x) identical(x, Codomain))
+.leanify_codomain_v2(Codomain)
