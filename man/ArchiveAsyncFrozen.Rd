@@ -174,7 +174,7 @@ The archive to freeze.}
   Push queued points to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_points(xss, xss_extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_points(xss, xss_extra = NULL, profile = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -184,6 +184,8 @@ The archive to freeze.}
 List of named lists of point values.}
       \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
+      \item{\code{profile}}{(\code{character(1)} | \code{NULL})\cr
+Name of the \CRANpkg{mirai} compute profile the points are queued for.}
     }
     \if{html}{\out{</div>}}
   }
@@ -196,7 +198,7 @@ List of named lists of additional information.}
   Push a single queued point to the archive.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsyncFrozen$push_point(xs, xs_extra = NULL)}
+    \preformatted{ArchiveAsyncFrozen$push_point(xs, xs_extra = NULL, profile = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -206,6 +208,8 @@ List of named lists of additional information.}
 Named list of point values.}
       \item{\code{xs_extra}}{(named \code{list()} | \code{NULL})\cr
 Named list of additional information.}
+      \item{\code{profile}}{(\code{character(1)} | \code{NULL})\cr
+Name of the \CRANpkg{mirai} compute profile the point is queued for.}
     }
     \if{html}{\out{</div>}}
   }

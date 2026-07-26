@@ -259,9 +259,10 @@ test_that("OptimizerAsync passes the compute profile to the optimizer", {
       .optimize = function(inst) {
         search_space = inst$search_space
         while (!inst$is_terminated) {
-          xs = transpose_list(generate_design_random(search_space, 1L)$data)[[1L]]
+          # the workers only load bbotk, so the functions of other packages must be qualified
+          xs = mlr3misc::transpose_list(paradox::generate_design_random(search_space, 1L)$data)[[1L]]
           xs[[".profile"]] = inst$rush$profile
-          get_private(inst)$.eval_point(xs)
+          mlr3misc::get_private(inst)$.eval_point(xs)
         }
       }
     )

@@ -53,8 +53,13 @@
 #' Compute profiles are only supported by the `"mirai"` worker type.
 #' The profile a worker runs on is available as `instance$rush$profile` in the private `$.optimize()` method and in the
 #' callbacks, so that an optimizer can behave differently depending on the hardware it runs on.
-#' Note that \CRANpkg{rush} uses a single shared task queue, i.e. a point pushed to the queue can be popped by a worker
-#' of any profile.
+#'
+#' Each compute profile has its own queue.
+#' Points pushed with `instance$archive$push_points(xss, profile = "gpu")` are only evaluated by the workers of the
+#' `"gpu"` profile,
+#' whereas points pushed without a profile are added to the shared queue and are evaluated by any worker.
+#' A worker takes points from the queue of its profile first and falls back to the shared queue.
+#' The `instance$archive$n_queued_per_profile` field shows the number of points queued for each profile.
 #'
 #' @section Debug Mode:
 #' The debug mode runs the optimization loop in the main process.

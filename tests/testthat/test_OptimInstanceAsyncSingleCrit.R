@@ -59,6 +59,30 @@ test_that("point evaluation works", {
   expect_equal(get_private(instance)$.eval_point(list(x1 = 1, x2 = 0)), list(y = 1))
 })
 
+test_that("queue evaluation ignores points queued for another compute profile", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  instance$archive$push_point(list(x1 = 1, x2 = 0))
+  instance$archive$push_point(list(x1 = 0, x2 = 1), profile = "gpu")
+
+  # the worker runs on the default compute profile and must not wait for the point queued for the "gpu" profile
+  get_private(instance)$.eval_queue()
+
+  expect_equal(instance$archive$n_finished, 1L)
+  expect_equal(instance$archive$n_queued, 1L)
+  expect_equal(instance$archive$n_queued_available, 0L)
+})
+
 test_that("reconnect method works", {
   rush = start_rush()
   on.exit({
