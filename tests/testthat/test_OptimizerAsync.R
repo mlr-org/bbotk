@@ -177,3 +177,105 @@ test_that("Required packages are loaded", {
 
   expect_set_equal(instance$archive$data[list("finished"), on = "state"]$y, 1)
 })
+
+test_that("OptimizerAsync starts workers on compute profiles", {
+  profiles = c(cpu = 2, gpu = 1)
+  rush = start_rush_profiles(profiles)
+  on.exit({
+    rush$reset()
+    stop_rush_profiles(profiles)
+  })
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  optimizer = opt("async_random_search")
+  optimizer$optimize(instance)
+
+  worker_info = instance$rush$worker_info
+  expect_data_table(worker_info, nrows = 3)
+  expect_set_equal(worker_info$profile, c("cpu", "cpu", "gpu"))
+  expect_data_table(instance$result, nrows = 1)
+})
+
+test_that("OptimizerAsync errors when n_workers and profiles are combined", {
+  rush = start_rush(n_workers = 1)
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  expect_error(
+    optimize_async_default(instance, opt("async_random_search"), n_workers = 1, profiles = c(cpu = 1)),
+    "cannot be used at the same time"
+  )
+})
+
+test_that("OptimizerAsync errors on compute profiles with a non-mirai worker type", {
+  profiles = c(cpu = 1)
+  rush = start_rush_profiles(profiles)
+  on.exit({
+    rush$reset()
+    stop_rush_profiles(profiles)
+  })
+  rush::rush_plan(profiles = profiles, worker_type = "script")
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  expect_error(
+    optimize_async_default(instance, opt("async_random_search")),
+    "only supported by the 'mirai' worker type"
+  )
+})
+
+test_that("OptimizerAsync passes the compute profile to the optimizer", {
+  profiles = c(cpu = 1, gpu = 1)
+  rush = start_rush_profiles(profiles)
+  on.exit({
+    rush$reset()
+    stop_rush_profiles(profiles)
+  })
+
+  # records the profile of the worker that evaluated the point
+  OptimizerAsyncProfile = R6Class("OptimizerAsyncProfile",
+    inherit = OptimizerAsyncRandomSearch,
+    private = list(
+      .optimize = function(inst) {
+        search_space = inst$search_space
+        while (!inst$is_terminated) {
+          xs = transpose_list(generate_design_random(search_space, 1L)$data)[[1L]]
+          xs[[".profile"]] = inst$rush$profile
+          get_private(inst)$.eval_point(xs)
+        }
+      }
+    )
+  )
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 10L),
+    rush = rush
+  )
+
+  OptimizerAsyncProfile$new()$optimize(instance)
+
+  expect_subset(instance$archive$data$.profile, c("cpu", "gpu", NA))
+  expect_true(all(c("cpu", "gpu") %in% instance$archive$data$.profile))
+})

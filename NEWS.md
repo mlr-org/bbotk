@@ -1,5 +1,8 @@
 # bbotk (development version)
 
+* feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`, e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile. The profile a worker runs on is available as `instance$rush$profile`.
+* feat: `optimize_async_default()` gains the `profiles` argument to distribute the workers over the `mirai` compute profiles.
+
 # bbotk 1.12.0
 
 * refactor: Remove the deprecated `extra` argument from `ArchiveAsync`'s `$push_points()`, `$push_point()`, `$push_running_points()`, `$push_running_point()`, `$finish_points()`, and `$finish_point()`.

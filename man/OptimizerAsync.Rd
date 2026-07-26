@@ -40,6 +40,26 @@ The main loop periodically checks the status of the workers.
 If all workers crash the optimization is terminated.
 }
 
+\section{Compute Profiles}{
+
+Workers can be distributed over the
+\href{https://mirai.r-lib.org/articles/mirai.html#scoped-profiles}{compute profiles} of \CRANpkg{mirai},
+e.g. one profile for CPU daemons and one profile for GPU daemons.
+The profiles are set with the \code{profiles} argument of \code{\link[rush:rush_plan]{rush::rush_plan()}} and the daemons of each profile must be
+created beforehand.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mirai::daemons(2, .compute = "cpu")
+mirai::daemons(2, .compute = "gpu")
+rush::rush_plan(profiles = c(cpu = 2, gpu = 2), worker_type = "mirai")
+}\if{html}{\out{</div>}}
+
+Compute profiles are only supported by the \code{"mirai"} worker type.
+The profile a worker runs on is available as \code{instance$rush$profile} in the private \verb{$.optimize()} method and in the
+callbacks, so that an optimizer can behave differently depending on the hardware it runs on.
+Note that \CRANpkg{rush} uses a single shared task queue, i.e. a point pushed to the queue can be popped by a worker
+of any profile.
+}
+
 \section{Debug Mode}{
 
 The debug mode runs the optimization loop in the main process.

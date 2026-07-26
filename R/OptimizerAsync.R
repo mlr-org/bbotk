@@ -37,6 +37,25 @@
 #' The main loop periodically checks the status of the workers.
 #' If all workers crash the optimization is terminated.
 #'
+#' @section Compute Profiles:
+#' Workers can be distributed over the
+#' [compute profiles](https://mirai.r-lib.org/articles/mirai.html#scoped-profiles) of \CRANpkg{mirai},
+#' e.g. one profile for CPU daemons and one profile for GPU daemons.
+#' The profiles are set with the `profiles` argument of [rush::rush_plan()] and the daemons of each profile must be
+#' created beforehand.
+#'
+#' ```
+#' mirai::daemons(2, .compute = "cpu")
+#' mirai::daemons(2, .compute = "gpu")
+#' rush::rush_plan(profiles = c(cpu = 2, gpu = 2), worker_type = "mirai")
+#' ```
+#'
+#' Compute profiles are only supported by the `"mirai"` worker type.
+#' The profile a worker runs on is available as `instance$rush$profile` in the private `$.optimize()` method and in the
+#' callbacks, so that an optimizer can behave differently depending on the hardware it runs on.
+#' Note that \CRANpkg{rush} uses a single shared task queue, i.e. a point pushed to the queue can be popped by a worker
+#' of any profile.
+#'
 #' @section Debug Mode:
 #' The debug mode runs the optimization loop in the main process.
 #' This is useful for debugging the optimization algorithm.
@@ -85,10 +104,26 @@ OptimizerAsync = R6Class(
 #' @param n_workers
 #' Number of workers to be started.
 #' Defaults to the number of workers set by [rush::rush_plan()].
+#' @param profiles (named `integer()`)\cr
+#' Number of workers to be started on each \CRANpkg{mirai} compute profile, e.g. `c(cpu = 2, gpu = 2)`.
+#' Defaults to the profiles set by [rush::rush_plan()].
+#' Cannot be combined with `n_workers`.
 #' @keywords internal
 #' @export
-optimize_async_default = function(instance, optimizer, design = NULL, n_workers = NULL) {
+optimize_async_default = function(instance, optimizer, design = NULL, n_workers = NULL, profiles = NULL) {
   assert_data_table(design, null.ok = TRUE)
+  assert_count(n_workers, null.ok = TRUE)
+  profiles = assert_profiles(profiles)
+
+  if (!is.null(n_workers) && !is.null(profiles)) {
+    error_bbotk("Arguments `n_workers` and `profiles` cannot be used at the same time")
+  }
+
+  # mirrors the precedence of `rush::Rush$start_workers()`
+  # an explicitly passed `n_workers` takes precedence over the profiles of the rush plan
+  if (is.null(n_workers) && is.null(profiles)) {
+    profiles = assert_profiles(rush::rush_config()$profiles)
+  }
 
   instance$archive$start_time = Sys.time()
   get_private(instance)$.initialize_context(optimizer)
@@ -117,6 +152,10 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     rush = instance$rush
     worker_type = rush::rush_config()$worker_type %??% "mirai"
 
+    if (!is.null(profiles) && worker_type != "mirai") {
+      error_bbotk("Compute profiles are only supported by the 'mirai' worker type, not '%s'", worker_type)
+    }
+
     if (worker_type == "script") {
       # worker script
       rush$worker_script(
@@ -131,6 +170,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
       # mirai workers
       worker_ids = rush$start_workers(
         n_workers = n_workers,
+        profiles = profiles,
         worker_loop = bbotk_worker_loop,
         packages = c(optimizer$packages, instance$objective$packages, "bbotk"),
         optimizer = optimizer,
@@ -157,7 +197,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     instance$search_space$length,
     optimizer$format(),
     instance$terminator$format(with_params = TRUE),
-    as.character(rush::rush_config()$n_workers %??% ""),
+    format_n_workers(n_workers, profiles),
     worker_type
   )
 
@@ -224,6 +264,34 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
   instance$rush$stop_workers(type = "kill")
   return(instance$result)
+}
+
+# the names of `profiles` are mirai compute profiles and the values the number of workers per profile
+assert_profiles = function(profiles) {
+  if (is.null(profiles)) {
+    return(NULL)
+  }
+  assert_integerish(
+    profiles,
+    lower = 1,
+    any.missing = FALSE,
+    min.len = 1,
+    names = "unique",
+    .var.name = "profiles"
+  )
+  set_names(as.integer(profiles), names(profiles))
+}
+
+# describes the number of workers for the log message, e.g. "4 (cpu: 2, gpu: 2)"
+format_n_workers = function(n_workers, profiles) {
+  if (!is.null(profiles)) {
+    return(sprintf(
+      "%i (%s)",
+      sum(profiles),
+      str_collapse(sprintf("%s: %i", names(profiles), profiles))
+    ))
+  }
+  as.character(n_workers %??% rush::rush_config()$n_workers %??% "")
 }
 
 #' @title Tiny Logging
