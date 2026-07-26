@@ -47,7 +47,8 @@ Suggests:
     redux,
     RhpcBLASctl,
     rush (>= 1.2.1.9000),
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    uuid
 Remotes:
     mlr-org/rush@worker_profile
 Config/testthat/edition: 3
