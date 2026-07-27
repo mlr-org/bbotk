@@ -2,6 +2,16 @@
 
 ## bbotk (development version)
 
+- refactor:
+  [`nds_selection()`](https://bbotk.mlr-org.com/dev/reference/nds_selection.md)
+  now uses
+  [`moocore::pareto_rank()`](https://multi-objective.github.io/moocore/r/reference/pareto_rank.html)
+  and
+  [`moocore::hv_contributions()`](https://multi-objective.github.io/moocore/r/reference/hv_contributions.html)
+  instead of the `emoa` package, which is no longer suggested. Boundary
+  points now always survive tie breaking in three or more dimensions,
+  matching the previous behavior in two dimensions.
+
 ## bbotk 1.12.0
 
 CRAN release: 2026-07-17
@@ -42,9 +52,7 @@ CRAN release: 2026-06-13
   [`moocore::is_nondominated()`](https://multi-objective.github.io/moocore/r/reference/nondominated.html)
   internally instead of a custom C implementation
   ([\#301](https://github.com/mlr-org/bbotk/issues/301)).
-- refactor: Replace
-  [`emoa::dominated_hypervolume`](https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html)
-  with
+- refactor: Replace `emoa::dominated_hypervolume` with
   [`moocore::hypervolume`](https://multi-objective.github.io/moocore/r/reference/hypervolume.html)
   for computing the hypervolume indicator.
 
