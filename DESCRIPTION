@@ -32,11 +32,10 @@ Imports:
     lgr,
     methods,
     mlr3misc (>= 0.21.0),
-    moocore,
+    moocore (>= 0.3.2),
     R6
 Suggests:
     adagio,
-    emoa,
     GenSA,
     irace (>= 4.0.0),
     knitr,
@@ -50,7 +49,7 @@ Suggests:
     testthat (>= 3.0.0),
     uuid
 Remotes:
-    mlr-org/rush@worker_profile
+    mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
