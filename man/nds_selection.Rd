@@ -28,5 +28,9 @@ Vector of indices of selected points
 Select best subset of points by non dominated sorting with
 hypervolume contribution for tie breaking. Works on an arbitrary dimension
 of size two or higher.
+Non-dominated sorting is computed with \code{\link[moocore:pareto_rank]{moocore::pareto_rank()}} and
+hypervolume contributions with \code{\link[moocore:hv_contributions]{moocore::hv_contributions()}}.
+Boundary points, i.e., points that are best in at least one objective within their front,
+always survive tie breaking.
 }
 \keyword{internal}

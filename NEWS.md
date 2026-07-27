@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* refactor: `nds_selection()` now uses `moocore::pareto_rank()` and `moocore::hv_contributions()` instead of the `emoa` package, which is no longer suggested. Boundary points now always survive tie breaking in three or more dimensions, matching the previous behavior in two dimensions.
+
 # bbotk 1.12.0
 
 * refactor: Remove the deprecated `extra` argument from `ArchiveAsync`'s `$push_points()`, `$push_point()`, `$push_running_points()`, `$push_running_point()`, `$finish_points()`, and `$finish_point()`.

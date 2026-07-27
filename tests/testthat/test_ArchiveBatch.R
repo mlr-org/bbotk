@@ -259,8 +259,6 @@ test_that("best method errors with direction=0 (learn tag)", {
 })
 
 test_that("nds_selection errors with direction=0 (learn tag)", {
-  skip_if_not_installed("emoa")
-
   codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))
   archive = ArchiveBatch$new(PS_2D, codomain)
   xdt = data.table(x1 = runif(3), x2 = runif(3))
