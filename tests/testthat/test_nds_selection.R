@@ -93,6 +93,20 @@ test_that("nds_selection works", {
   })
 })
 
+test_that("nds_selection works with duplicated points", {
+  # duplicated points are put on the same front by moocore::pareto_rank()
+  points = matrix(c(1, 4, 1, 4, 4, 1, 6, 6), byrow = FALSE, nrow = 2L)
+
+  expect_identical(nds_selection(points, n_select = 3), c(1L, 2L, 3L))
+  expect_identical(nds_selection(points, n_select = 4), 1:4)
+
+  s = replicate(20, nds_selection(points, n_select = 2), simplify = FALSE)
+  walk(s, function(ss) {
+    expect_integer(ss, len = 2)
+    expect_subset(ss, 1:3)
+  })
+})
+
 test_that("nds_selection in Archive works", {
   domain = ps(x1 = p_dbl())
   codomain = ps(
