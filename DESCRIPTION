@@ -45,7 +45,7 @@ Suggests:
     progressr,
     redux,
     RhpcBLASctl,
-    rush (>= 1.2.1.9000),
+    rush (>= 1.2.1),
     testthat (>= 3.0.0),
     uuid
 Remotes:
