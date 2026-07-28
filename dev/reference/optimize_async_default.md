@@ -6,7 +6,13 @@ Used internally in
 ## Usage
 
 ``` r
-optimize_async_default(instance, optimizer, design = NULL, n_workers = NULL)
+optimize_async_default(
+  instance,
+  optimizer,
+  design = NULL,
+  n_workers = NULL,
+  profiles = NULL
+)
 ```
 
 ## Arguments
@@ -29,3 +35,12 @@ optimize_async_default(instance, optimizer, design = NULL, n_workers = NULL)
   Number of workers to be started. Defaults to the number of workers set
   by
   [`rush::rush_plan()`](https://rush.mlr-org.com/reference/rush_plan.html).
+
+- profiles:
+
+  (named [`integer()`](https://rdrr.io/r/base/integer.html))  
+  Number of workers to be started on each
+  [mirai](https://CRAN.R-project.org/package=mirai) compute profile,
+  e.g. `c(cpu = 2, gpu = 2)`. Defaults to the profiles set by
+  [`rush::rush_plan()`](https://rush.mlr-org.com/reference/rush_plan.html).
+  Cannot be combined with `n_workers`.

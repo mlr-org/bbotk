@@ -49,6 +49,33 @@ satisfied. The result is assigned to the
 field. The main loop periodically checks the status of the workers. If
 all workers crash the optimization is terminated.
 
+## Compute Profiles
+
+Workers can be distributed over the [compute
+profiles](https://mirai.r-lib.org/articles/mirai.html#scoped-profiles)
+of [mirai](https://CRAN.R-project.org/package=mirai), e.g. one profile
+for CPU daemons and one profile for GPU daemons. The profiles are set
+with the `profiles` argument of
+[`rush::rush_plan()`](https://rush.mlr-org.com/reference/rush_plan.html)
+and the daemons of each profile must be created beforehand.
+
+    mirai::daemons(2, .compute = "cpu")
+    mirai::daemons(2, .compute = "gpu")
+    rush::rush_plan(profiles = c(cpu = 2, gpu = 2), worker_type = "mirai")
+
+Compute profiles are only supported by the `"mirai"` worker type. The
+profile a worker runs on is available as `instance$rush$profile` in the
+private `$.optimize()` method and in the callbacks, so that an optimizer
+can behave differently depending on the hardware it runs on.
+
+Each compute profile has its own queue. Points pushed with
+`instance$archive$push_points(xss, profile = "gpu")` are only evaluated
+by the workers of the `"gpu"` profile, whereas points pushed without a
+profile are added to the shared queue and are evaluated by any worker. A
+worker takes points from the queue of its profile first and falls back
+to the shared queue. The `instance$archive$n_queued_per_profile` field
+shows the number of points queued for each profile.
+
 ## Debug Mode
 
 The debug mode runs the optimization loop in the main process. This is

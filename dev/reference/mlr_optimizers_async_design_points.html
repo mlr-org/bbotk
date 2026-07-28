@@ -193,18 +193,8 @@ Design points to try in search, one per row.</p></dd>
 <span class="r-in"><span><span class="co"># covert to data.table</span></span></span>
 <span class="r-in"><span><span class="fu">as.data.table</span><span class="op">(</span><span class="va">instance</span><span class="op">$</span><span class="va">archive</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       state    x1    x2     y        timestamp_xs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;char&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;              &lt;POSc&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: finished     0     0    -3 2026-07-27 09:00:40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: finished     1     1    -7 2026-07-27 09:00:40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             worker_id        timestamp_ys</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                &lt;char&gt;              &lt;POSc&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: terrorstricken_prairiedog_2057991e 2026-07-27 09:00:41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: terrorstricken_prairiedog_2057991e 2026-07-27 09:00:41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    keys x_domain_x1 x_domain_x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  &lt;char&gt;       &lt;num&gt;       &lt;num&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 74b35135-0ed1-4133-8085-c4fd14c7dcb1           0           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: 59faf773-98de-4533-b6ec-3039fbfc9067           1           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ERROR [09:28:34.499] [rush] Lost worker 'terrorstricken_prairiedog_f2bc7761': Error in !self$is_terminated &amp;&amp; self$archive$n_queued_available: invalid 'y' type in 'x &amp;&amp; y'</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Optimization terminated without any finished evaluations.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

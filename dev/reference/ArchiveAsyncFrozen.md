@@ -155,7 +155,7 @@ Push queued points to the archive.
 
 #### Usage
 
-    ArchiveAsyncFrozen$push_points(xss, xss_extra = NULL)
+    ArchiveAsyncFrozen$push_points(xss, xss_extra = NULL, profile = NULL)
 
 #### Arguments
 
@@ -170,6 +170,12 @@ Push queued points to the archive.
   `NULL`)  
   List of named lists of additional information.
 
+- `profile`:
+
+  (`character(1)` \| `NULL`)  
+  Name of the [mirai](https://CRAN.R-project.org/package=mirai) compute
+  profile the points are queued for.
+
 ------------------------------------------------------------------------
 
 ### `ArchiveAsyncFrozen$push_point()`
@@ -178,7 +184,7 @@ Push a single queued point to the archive.
 
 #### Usage
 
-    ArchiveAsyncFrozen$push_point(xs, xs_extra = NULL)
+    ArchiveAsyncFrozen$push_point(xs, xs_extra = NULL, profile = NULL)
 
 #### Arguments
 
@@ -191,6 +197,12 @@ Push a single queued point to the archive.
 
   (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
   Named list of additional information.
+
+- `profile`:
+
+  (`character(1)` \| `NULL`)  
+  Name of the [mirai](https://CRAN.R-project.org/package=mirai) compute
+  profile the point is queued for.
 
 ------------------------------------------------------------------------
 
@@ -637,76 +649,6 @@ instance$archive$best()
 # covert to data.table
 as.data.table(instance$archive)
 }
-#>        state          x1         x2           y        timestamp_xs
-#>       <char>       <num>      <num>       <num>              <POSc>
-#>  1: finished -6.21358293  0.2769503  -68.201348 2026-07-27 09:00:24
-#>  2: finished -2.62264757  4.2779729  -64.337761 2026-07-27 09:00:24
-#>  3: finished  6.84682656  3.2309502  -52.316468 2026-07-27 09:00:24
-#>  4: finished -1.96786549 -3.4438612   -5.940969 2026-07-27 09:00:24
-#>  5: finished -9.86571338  2.5243351 -161.313432 2026-07-27 09:00:24
-#>  6: finished  0.01208465  3.1304511  -31.534238 2026-07-27 09:00:24
-#>  7: finished -4.77998488  1.4299587  -55.592729 2026-07-27 09:00:24
-#>  8: finished  7.57503606  1.3830058  -40.291767 2026-07-27 09:00:24
-#>  9: finished  8.01326577 -2.8537699  -26.180748 2026-07-27 09:00:24
-#> 10: finished  5.39871055  2.9134685  -36.520343 2026-07-27 09:00:24
-#> 11: finished  4.82894640 -0.2106949   -5.783161 2026-07-27 09:00:24
-#> 12: finished  2.92831418 -0.4491262    2.631276 2026-07-27 09:00:24
-#> 13: finished -2.48881904  1.6091926  -31.394153 2026-07-27 09:00:24
-#> 14: finished  2.11332211  1.0427817   -6.356925 2026-07-27 09:00:24
-#> 15: finished  0.87403046  4.3072392  -44.663553 2026-07-27 09:00:24
-#> 16: finished -5.88500581 -0.9916228  -56.206896 2026-07-27 09:00:24
-#> 17: finished  4.08136954  3.9785972  -43.032918 2026-07-27 09:00:24
-#> 18: finished -7.80489880 -3.6260806  -86.528017 2026-07-27 09:00:24
-#> 19: finished -9.37102033 -3.4632716 -119.514724 2026-07-27 09:00:24
-#> 20: finished  5.22167868  0.7561287  -14.487716 2026-07-27 09:00:24
-#>        state          x1         x2           y        timestamp_xs
-#>       <char>       <num>      <num>       <num>              <POSc>
-#>                                      worker_id        timestamp_ys
-#>                                         <char>              <POSc>
-#>  1: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>  2: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>  3: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>  4: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>  5: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>  6: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>  7: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>  8: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>  9: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 10: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 11: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 12: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 13: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 14: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 15: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 16: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 17: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 18: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 19: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#> 20: artsycraftsy_easteuropeanshepherd_0b96013c 2026-07-27 09:00:24
-#>                                      worker_id        timestamp_ys
-#>                                         <char>              <POSc>
-#>                                     keys x_domain_x1 x_domain_x2
-#>                                   <char>       <num>       <num>
-#>  1: 1a60411a-67c7-4859-a79d-4653b85ceeaf -6.21358293   0.2769503
-#>  2: a8097aef-37cf-48ad-a734-5cc45d2944ae -2.62264757   4.2779729
-#>  3: fac2224c-ef35-4aa5-b149-acced4c1cb6a  6.84682656   3.2309502
-#>  4: a6ff551d-8494-4de6-8d23-b2e59045586f -1.96786549  -3.4438612
-#>  5: 30c15415-bf0a-4285-9e4f-6de291c85287 -9.86571338   2.5243351
-#>  6: 02828036-dec2-4097-8df8-8c0aadd8df3a  0.01208465   3.1304511
-#>  7: 85cf4d27-c100-49fd-9a2d-b7ea6819c91c -4.77998488   1.4299587
-#>  8: d66a938e-a46b-4e4a-80f5-de5fa0eaf09f  7.57503606   1.3830058
-#>  9: 006e70d2-bd27-4113-9cf8-e5527bb1c4f8  8.01326577  -2.8537699
-#> 10: dd7006ba-69e3-4bf0-8d9c-7798aa70e0b2  5.39871055   2.9134685
-#> 11: 0669c0f9-8e98-426f-901d-109ee3a3dda8  4.82894640  -0.2106949
-#> 12: 8de1f568-d476-4d6e-9870-497064fd00ee  2.92831418  -0.4491262
-#> 13: bf461603-a7e0-4c44-92a8-f8414bae05f7 -2.48881904   1.6091926
-#> 14: 1bbbf71a-2370-4038-a418-1f81cb119051  2.11332211   1.0427817
-#> 15: 3344826c-ae1a-4cd5-8466-66811667e316  0.87403046   4.3072392
-#> 16: c9c6cea6-6b6b-43f2-bee5-441a47f248d4 -5.88500581  -0.9916228
-#> 17: ad4ae7cb-1eb9-4e23-a35d-5615ade3288d  4.08136954   3.9785972
-#> 18: afa4c0fd-d300-439a-b1c6-90b30b0a267b -7.80489880  -3.6260806
-#> 19: 79c689d3-a96a-4f66-851f-0f5adee37b5b -9.37102033  -3.4632716
-#> 20: 26e75214-4b5b-442e-a5bd-54906ab6376a  5.22167868   0.7561287
-#>                                     keys x_domain_x1 x_domain_x2
-#>                                   <char>       <num>       <num>
+#> ERROR [09:28:14.826] [rush] Lost worker 'artsycraftsy_easteuropeanshepherd_7f4373ab': Error in !self$is_terminated && self$archive$n_queued_available: invalid 'y' type in 'x && y'
+#> Error: Optimization terminated without any finished evaluations.
 ```

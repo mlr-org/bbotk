@@ -85,7 +85,8 @@ Data table with all finished points.</p></dd>
 
     <dt><code>queued_data</code></dt>
 <dd><p>(<a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table::data.table</a>)<br>
-Data table with all queued points.</p></dd>
+Data table with all queued points.
+Points queued for a <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> compute profile have a <code>profile</code> column.</p></dd>
 
 
     <dt><code>running_data</code></dt>
@@ -105,7 +106,20 @@ Data table with all failed points.</p></dd>
 
     <dt><code>n_queued</code></dt>
 <dd><p>(<code>integer(1)</code>)<br>
-Number of queued points.</p></dd>
+Number of queued points in the shared queue and the queues of all <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> compute profiles.</p></dd>
+
+
+    <dt><code>n_queued_per_profile</code></dt>
+<dd><p>(named <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
+Number of queued points in the shared queue and the queues of all <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> compute profiles.
+The number of points in the shared queue is named <code>"default"</code>.</p></dd>
+
+
+    <dt><code>n_queued_available</code></dt>
+<dd><p>(<code>integer(1)</code>)<br>
+Number of queued points a worker can evaluate, i.e. the points in the shared queue and in the queue of the
+compute profile the worker runs on.
+Points queued for other compute profiles are not counted.</p></dd>
 
 
     <dt><code>n_running</code></dt>
@@ -195,9 +209,12 @@ If a rush instance is supplied, the tuning runs without batches.</p></dd>
 
 <p></p><hr><a id="method-ArchiveAsync-push_points"></a><div class="section">
 <h3 id="archiveasync-push-points-"><code>ArchiveAsync$push_points()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-points-"></a></h3>
-<p>Push queued points to the archive.</p><div class="section">
+<p>Push queued points to the archive.</p>
+<p>Points pushed without a <code>profile</code> are added to the shared queue and are evaluated by any worker.
+Points pushed with a <code>profile</code> are added to the queue of the <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> compute profile and are only
+evaluated by the workers running on that profile.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_points</span><span class="op">(</span><span class="va">xss</span>, xss_extra <span class="op">=</span> <span class="cn">NULL</span>, profile <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xss</code></dt>
@@ -208,6 +225,11 @@ List of named lists of point values.</p></dd>
 <dd><p>(list of named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 List of named lists of additional information.</p></dd>
 
+      <dt><code>profile</code></dt>
+<dd><p>(<code>character(1)</code> | <code>NULL</code>)<br>
+Name of the <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> compute profile the points are queued for.
+If <code>NULL</code>, the points are added to the shared queue.</p></dd>
+
 
 </dl><p></p></div>
 </div>
@@ -216,9 +238,12 @@ List of named lists of additional information.</p></dd>
 
 <p></p><hr><a id="method-ArchiveAsync-push_point"></a><div class="section">
 <h3 id="archiveasync-push-point-"><code>ArchiveAsync$push_point()</code><a class="anchor" aria-label="anchor" href="#archiveasync-push-point-"></a></h3>
-<p>Push a single queued point to the archive.</p><div class="section">
+<p>Push a single queued point to the archive.</p>
+<p>Points pushed without a <code>profile</code> are added to the shared queue and are evaluated by any worker.
+Points pushed with a <code>profile</code> are added to the queue of the <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> compute profile and are only
+evaluated by the workers running on that profile.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ArchiveAsync</span><span class="op">$</span><span class="fu">push_point</span><span class="op">(</span><span class="va">xs</span>, xs_extra <span class="op">=</span> <span class="cn">NULL</span>, profile <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xs</code></dt>
@@ -228,6 +253,11 @@ Named list of point values.</p></dd>
       <dt><code>xs_extra</code></dt>
 <dd><p>(named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> | <code>NULL</code>)<br>
 Named list of additional information.</p></dd>
+
+      <dt><code>profile</code></dt>
+<dd><p>(<code>character(1)</code> | <code>NULL</code>)<br>
+Name of the <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> compute profile the point is queued for.
+If <code>NULL</code>, the point is added to the shared queue.</p></dd>
 
 
 </dl><p></p></div>
@@ -689,6 +719,8 @@ Reference point for hypervolume.</p></dd>
 <span class="r-in"><span><span class="co"># reset the rush data base</span></span></span>
 <span class="r-in"><span><span class="va">instance</span><span class="op">$</span><span class="va">rush</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ERROR [09:28:08.685] [rush] Lost worker 'overzealous_cowrie_e5a1eef5': Error in !self$is_terminated &amp;&amp; self$archive$n_queued_available: invalid 'y' type in 'x &amp;&amp; y'</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Optimization terminated without any finished evaluations.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

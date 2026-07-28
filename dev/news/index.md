@@ -2,6 +2,18 @@
 
 ## bbotk (development version)
 
+- feat: Asynchronous optimizers support the `mirai` compute profiles set
+  with the `profiles` argument of
+  [`rush::rush_plan()`](https://rush.mlr-org.com/reference/rush_plan.html),
+  e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of
+  the `"cpu"` profile and 2 workers on the daemons of the `"gpu"`
+  profile. The profile a worker runs on is available as
+  `instance$rush$profile`.
+- feat: `ArchiveAsync$push_points()` and `ArchiveAsync$push_point()`
+  gain the `profile` argument to queue points for a `mirai` compute
+  profile. Points queued for a profile are only evaluated by the workers
+  running on that profile, whereas points pushed without a profile are
+  queued in the shared queue and are evaluated by any worker.
 - refactor:
   [`nds_selection()`](https://bbotk.mlr-org.com/dev/reference/nds_selection.md)
   now uses
