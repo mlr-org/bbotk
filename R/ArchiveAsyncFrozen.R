@@ -92,7 +92,9 @@ ArchiveAsyncFrozen = R6Class(
     #' List of named lists of point values.
     #' @param xss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    push_points = function(xss, xss_extra = NULL) {
+    #' @param profile (`character(1)` | `NULL`)\cr
+    #' Name of the \CRANpkg{mirai} compute profile the points are queued for.
+    push_points = function(xss, xss_extra = NULL, profile = NULL) {
       stop("Archive is frozen")
     },
 
@@ -103,7 +105,9 @@ ArchiveAsyncFrozen = R6Class(
     #' Named list of point values.
     #' @param xs_extra (named `list()` | `NULL`)\cr
     #' Named list of additional information.
-    push_point = function(xs, xs_extra = NULL) {
+    #' @param profile (`character(1)` | `NULL`)\cr
+    #' Name of the \CRANpkg{mirai} compute profile the point is queued for.
+    push_point = function(xs, xs_extra = NULL, profile = NULL) {
       stop("Archive is frozen")
     },
 

@@ -158,6 +158,54 @@ test_that("push_points works with extras argument", {
   expect_equal(queued$batch_id, c(1, 1))
 })
 
+test_that("push_points and push_point queue points for a compute profile", {
+  rush = start_rush_worker()
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  archive$push_points(list(list(x1 = 1, x2 = 2)))
+  archive$push_point(list(x1 = 3, x2 = 4), profile = "gpu")
+
+  expect_equal(archive$n_queued, 2L)
+  expect_equal(archive$n_queued_per_profile, c(default = 1L, gpu = 1L))
+  expect_true("gpu" %in% archive$queued_data$profile)
+
+  # the worker runs on the default compute profile and cannot pop the point queued for the "gpu" profile
+  expect_equal(archive$n_queued_available, 1L)
+})
+
+test_that("n_queued_available counts the points a worker of a compute profile can pop", {
+  rush = rush::RushWorker$new(
+    network_id = uuid::UUIDgenerate(),
+    config = redis_configuration(),
+    profile = "gpu"
+  )
+  on.exit({
+    rush$reset()
+  })
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  archive$push_points(list(list(x1 = 1, x2 = 2)))
+  archive$push_point(list(x1 = 3, x2 = 4), profile = "gpu")
+  archive$push_point(list(x1 = 5, x2 = 6), profile = "cpu")
+
+  expect_equal(archive$n_queued, 3L)
+  # the shared queue and the queue of the "gpu" profile
+  expect_equal(archive$n_queued_available, 2L)
+})
+
 test_that("push_points assigns one timestamp to all points in a batch", {
   rush = start_rush_worker()
   on.exit({

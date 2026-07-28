@@ -89,7 +89,8 @@ Rush controller for parallel optimization.}
 Data table with all finished points.}
 
     \item{\code{queued_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
-Data table with all queued points.}
+Data table with all queued points.
+Points queued for a \CRANpkg{mirai} compute profile have a \code{profile} column.}
 
     \item{\code{running_data}}{(\link[data.table:data.table]{data.table::data.table})\cr
 Data table with all running points.}
@@ -101,7 +102,16 @@ Data table with all finished points.}
 Data table with all failed points.}
 
     \item{\code{n_queued}}{(\code{integer(1)})\cr
-Number of queued points.}
+Number of queued points in the shared queue and the queues of all \CRANpkg{mirai} compute profiles.}
+
+    \item{\code{n_queued_per_profile}}{(named \code{integer()})\cr
+Number of queued points in the shared queue and the queues of all \CRANpkg{mirai} compute profiles.
+The number of points in the shared queue is named \code{"default"}.}
+
+    \item{\code{n_queued_available}}{(\code{integer(1)})\cr
+Number of queued points a worker can evaluate, i.e. the points in the shared queue and in the queue of the
+compute profile the worker runs on.
+Points queued for other compute profiles are not counted.}
 
     \item{\code{n_running}}{(\code{integer(1)})\cr
 Number of running points.}
@@ -186,9 +196,13 @@ If a rush instance is supplied, the tuning runs without batches.}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_points}{}}}
 \subsection{\code{ArchiveAsync$push_points()}}{
   Push queued points to the archive.
+
+Points pushed without a \code{profile} are added to the shared queue and are evaluated by any worker.
+Points pushed with a \code{profile} are added to the queue of the \CRANpkg{mirai} compute profile and are only
+evaluated by the workers running on that profile.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_points(xss, xss_extra = NULL)}
+    \preformatted{ArchiveAsync$push_points(xss, xss_extra = NULL, profile = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -198,6 +212,9 @@ If a rush instance is supplied, the tuning runs without batches.}
 List of named lists of point values.}
       \item{\code{xss_extra}}{(list of named \code{list()} | \code{NULL})\cr
 List of named lists of additional information.}
+      \item{\code{profile}}{(\code{character(1)} | \code{NULL})\cr
+Name of the \CRANpkg{mirai} compute profile the points are queued for.
+If \code{NULL}, the points are added to the shared queue.}
     }
     \if{html}{\out{</div>}}
   }
@@ -208,9 +225,13 @@ List of named lists of additional information.}
 \if{latex}{\out{\hypertarget{method-ArchiveAsync-push_point}{}}}
 \subsection{\code{ArchiveAsync$push_point()}}{
   Push a single queued point to the archive.
+
+Points pushed without a \code{profile} are added to the shared queue and are evaluated by any worker.
+Points pushed with a \code{profile} are added to the queue of the \CRANpkg{mirai} compute profile and are only
+evaluated by the workers running on that profile.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{ArchiveAsync$push_point(xs, xs_extra = NULL)}
+    \preformatted{ArchiveAsync$push_point(xs, xs_extra = NULL, profile = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
@@ -220,6 +241,9 @@ List of named lists of additional information.}
 Named list of point values.}
       \item{\code{xs_extra}}{(named \code{list()} | \code{NULL})\cr
 Named list of additional information.}
+      \item{\code{profile}}{(\code{character(1)} | \code{NULL})\cr
+Name of the \CRANpkg{mirai} compute profile the point is queued for.
+If \code{NULL}, the point is added to the shared queue.}
     }
     \if{html}{\out{</div>}}
   }

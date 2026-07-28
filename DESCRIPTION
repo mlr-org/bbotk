@@ -45,8 +45,11 @@ Suggests:
     progressr,
     redux,
     RhpcBLASctl,
-    rush (>= 1.2.0),
-    testthat (>= 3.0.0)
+    rush (>= 1.2.1),
+    testthat (>= 3.0.0),
+    uuid
+Remotes:
+    mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8

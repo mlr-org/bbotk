@@ -4,7 +4,13 @@
 \alias{optimize_async_default}
 \title{Default Asynchronous Optimization}
 \usage{
-optimize_async_default(instance, optimizer, design = NULL, n_workers = NULL)
+optimize_async_default(
+  instance,
+  optimizer,
+  design = NULL,
+  n_workers = NULL,
+  profiles = NULL
+)
 }
 \arguments{
 \item{instance}{\link{OptimInstanceAsync}.}
@@ -16,6 +22,11 @@ optimize_async_default(instance, optimizer, design = NULL, n_workers = NULL)
 
 \item{n_workers}{Number of workers to be started.
 Defaults to the number of workers set by \code{\link[rush:rush_plan]{rush::rush_plan()}}.}
+
+\item{profiles}{(named \code{integer()})\cr
+Number of workers to be started on each \CRANpkg{mirai} compute profile, e.g. \code{c(cpu = 2, gpu = 2)}.
+Defaults to the profiles set by \code{\link[rush:rush_plan]{rush::rush_plan()}}.
+Cannot be combined with \code{n_workers}.}
 }
 \description{
 Used internally in \link{OptimizerAsync}.

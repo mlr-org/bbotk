@@ -1,5 +1,10 @@
 # bbotk (development version)
 
+* feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`,
+  e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile.
+  The profile a worker runs on is available as `instance$rush$profile`.
+* feat: `ArchiveAsync$push_points()` and `ArchiveAsync$push_point()` gain the `profile` argument to queue points for a `mirai` compute profile.
+  Points queued for a profile are only evaluated by the workers running on that profile, whereas points pushed without a profile are queued in the shared queue and are evaluated by any worker.
 * refactor: `nds_selection()` now uses `moocore::pareto_rank()` and `moocore::hv_contributions()` instead of the `emoa` package, which is no longer suggested. Boundary points now always survive tie breaking in three or more dimensions, matching the previous behavior in two dimensions.
 
 # bbotk 1.12.0

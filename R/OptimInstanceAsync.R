@@ -123,7 +123,8 @@ OptimInstanceAsync = R6Class(
     },
 
     .eval_queue = function() {
-      while (!self$is_terminated && self$archive$n_queued) {
+      # only count the points the worker can pop, i.e. the shared queue and the queue of its compute profile
+      while (!self$is_terminated && self$archive$n_queued_available) {
         task = self$archive$pop_point()
         if (!is.null(task)) {
           # transpose point

@@ -96,36 +96,52 @@ ArchiveAsync = R6Class(
     #' @description
     #' Push queued points to the archive.
     #'
+    #' Points pushed without a `profile` are added to the shared queue and are evaluated by any worker.
+    #' Points pushed with a `profile` are added to the queue of the \CRANpkg{mirai} compute profile and are only
+    #' evaluated by the workers running on that profile.
+    #'
     #' @param xss (list of named `list()`)\cr
     #' List of named lists of point values.
     #' @param xss_extra (list of named `list()` | `NULL`)\cr
     #' List of named lists of additional information.
-    push_points = function(xss, xss_extra = NULL) {
+    #' @param profile (`character(1)` | `NULL`)\cr
+    #' Name of the \CRANpkg{mirai} compute profile the points are queued for.
+    #' If `NULL`, the points are added to the shared queue.
+    push_points = function(xss, xss_extra = NULL, profile = NULL) {
       if (self$check_values) {
         map(xss, self$search_space$assert)
       }
+      assert_string(profile, null.ok = TRUE)
       timestamp_xs = Sys.time()
       xss_extra = if (is.null(xss_extra)) {
         list(list(timestamp_xs = timestamp_xs))
       } else {
         map(xss_extra, function(e) c(list(timestamp_xs = timestamp_xs), e))
       }
-      self$rush$push_tasks(xss, extra = xss_extra)
+      self$rush$push_tasks(xss, xss_extra = xss_extra, profile = profile)
     },
 
     #' @description
     #' Push a single queued point to the archive.
     #'
+    #' Points pushed without a `profile` are added to the shared queue and are evaluated by any worker.
+    #' Points pushed with a `profile` are added to the queue of the \CRANpkg{mirai} compute profile and are only
+    #' evaluated by the workers running on that profile.
+    #'
     #' @param xs (named `list()`)\cr
     #' Named list of point values.
     #' @param xs_extra (named `list()` | `NULL`)\cr
     #' Named list of additional information.
-    push_point = function(xs, xs_extra = NULL) {
+    #' @param profile (`character(1)` | `NULL`)\cr
+    #' Name of the \CRANpkg{mirai} compute profile the point is queued for.
+    #' If `NULL`, the point is added to the shared queue.
+    push_point = function(xs, xs_extra = NULL, profile = NULL) {
       if (self$check_values) {
         self$search_space$assert(xs)
       }
+      assert_string(profile, null.ok = TRUE)
       xs_extra = c(list(timestamp_xs = Sys.time()), xs_extra)
-      self$rush$push_tasks(list(xs), extra = list(xs_extra))
+      self$rush$push_tasks(list(xs), xss_extra = list(xs_extra), profile = profile)
     },
 
     #' @description
@@ -436,6 +452,7 @@ ArchiveAsync = R6Class(
 
     #' @field queued_data ([data.table::data.table])\cr
     #' Data table with all queued points.
+    #' Points queued for a \CRANpkg{mirai} compute profile have a `profile` column.
     queued_data = function() {
       self$rush$fetch_queued_tasks()
     },
@@ -459,9 +476,24 @@ ArchiveAsync = R6Class(
     },
 
     #' @field n_queued (`integer(1)`)\cr
-    #' Number of queued points.
+    #' Number of queued points in the shared queue and the queues of all \CRANpkg{mirai} compute profiles.
     n_queued = function() {
       self$rush$n_queued_tasks
+    },
+
+    #' @field n_queued_per_profile (named `integer()`)\cr
+    #' Number of queued points in the shared queue and the queues of all \CRANpkg{mirai} compute profiles.
+    #' The number of points in the shared queue is named `"default"`.
+    n_queued_per_profile = function() {
+      self$rush$n_queued_tasks_per_profile
+    },
+
+    #' @field n_queued_available (`integer(1)`)\cr
+    #' Number of queued points a worker can evaluate, i.e. the points in the shared queue and in the queue of the
+    #' compute profile the worker runs on.
+    #' Points queued for other compute profiles are not counted.
+    n_queued_available = function() {
+      self$rush$n_queued_available_tasks
     },
 
     #' @field n_running (`integer(1)`)\cr
