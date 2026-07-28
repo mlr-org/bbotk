@@ -493,10 +493,7 @@ ArchiveAsync = R6Class(
     #' compute profile the worker runs on.
     #' Points queued for other compute profiles are not counted.
     n_queued_available = function() {
-      # `$profile` is `NULL` in the main process and on workers running on the default compute profile
-      profile = self$rush$profile
-      n_queued = self$rush$n_queued_tasks_per_profile
-      sum(n_queued[c("default", profile)], na.rm = TRUE)
+      self$rush$n_queued_available_tasks
     },
 
     #' @field n_running (`integer(1)`)\cr

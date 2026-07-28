@@ -118,7 +118,7 @@ OptimizerAsync = R6Class(
 optimize_async_default = function(instance, optimizer, design = NULL, n_workers = NULL, profiles = NULL) {
   assert_data_table(design, null.ok = TRUE)
   assert_count(n_workers, null.ok = TRUE)
-  profiles = assert_profiles(profiles)
+  profiles = rush::assert_profiles(profiles)
 
   if (!is.null(n_workers) && !is.null(profiles)) {
     error_bbotk("Arguments `n_workers` and `profiles` cannot be used at the same time")
@@ -127,7 +127,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   # mirrors the precedence of `rush::Rush$start_workers()`
   # an explicitly passed `n_workers` takes precedence over the profiles of the rush plan
   if (is.null(n_workers) && is.null(profiles)) {
-    profiles = assert_profiles(rush::rush_config()$profiles)
+    profiles = rush::assert_profiles(rush::rush_config()$profiles)
   }
 
   instance$archive$start_time = Sys.time()
@@ -269,22 +269,6 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
   instance$rush$stop_workers(type = "kill")
   return(instance$result)
-}
-
-# the names of `profiles` are mirai compute profiles and the values the number of workers per profile
-assert_profiles = function(profiles) {
-  if (is.null(profiles)) {
-    return(NULL)
-  }
-  assert_integerish(
-    profiles,
-    lower = 1,
-    any.missing = FALSE,
-    min.len = 1,
-    names = "unique",
-    .var.name = "profiles"
-  )
-  set_names(as.integer(profiles), names(profiles))
 }
 
 # describes the number of workers for the log message, e.g. "4 (cpu: 2, gpu: 2)"
