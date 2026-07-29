@@ -8,7 +8,6 @@
 #' Calls [libcmaesr::cmaes()] from package \CRANpkg{libcmaesr}, which is a lightweight interface to the `libcmaes` C++
 #' library.
 #' The algorithm is typically applied to search space dimensions between three and fifty.
-#' Lower search space dimensions might crash.
 #'
 #' @templateVar id cmaes
 #' @template section_dictionary_optimizers
@@ -141,13 +140,6 @@ OptimizerBatchCmaes = R6Class(
       }
       pv$start_values = NULL
       pv$start = NULL
-
-      if (length(x0) < 2L) {
-        warning(
-          "CMA-ES is typically applied to search space dimensions between three and fifty.",
-          " A lower search space dimension might crash."
-        )
-      }
 
       # the terminators control the budget, so the internal evaluation limit is disabled and `ftarget` is reserved for
       # stopping the algorithm from within the objective function

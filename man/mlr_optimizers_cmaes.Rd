@@ -9,7 +9,6 @@
 Calls \code{\link[libcmaesr:cmaes]{libcmaesr::cmaes()}} from package \CRANpkg{libcmaesr}, which is a lightweight interface to the \code{libcmaes} C++
 library.
 The algorithm is typically applied to search space dimensions between three and fifty.
-Lower search space dimensions might crash.
 }
 \section{Dictionary}{
 
