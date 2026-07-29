@@ -141,23 +141,16 @@ OptimizerBatchCmaes = R6Class(
       pv$start_values = NULL
       pv$start = NULL
 
-      # the terminators control the budget, so the internal evaluation limit is disabled and `ftarget` is reserved for
-      # stopping the algorithm from within the objective function
-      control = invoke(libcmaesr::cmaes_control, max_fevals = NA_integer_, ftarget = -Inf, .args = pv)
+      # the terminators control the budget, so the internal evaluation limit is disabled
+      control = invoke(libcmaesr::cmaes_control, max_fevals = NA_integer_, .args = pv)
 
       target = inst$objective$codomain$target_ids
       direction = inst$objective_multiplicator
 
-      # libcmaesr catches errors raised in the objective function and re-raises a generic error, so the original
+      # libcmaesr catches the condition signaled by `eval_batch()` and re-raises a generic error, so the original
       # condition is stored here and re-raised below
       condition = NULL
       fun = function(x) {
-        # `eval_batch()` signals the termination with an exception, which libcmaesr prints to stderr, so the
-        # generation is left unevaluated and the target value is reported instead, which stops the algorithm after
-        # this generation without any output
-        if (inst$is_terminated) {
-          return(rep(-Inf, nrow(x)))
-        }
         tryCatch(
           {
             xdt = set_names(as.data.table(x), inst$search_space$ids())
