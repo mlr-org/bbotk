@@ -5,10 +5,11 @@
 \alias{OptimizerBatchCmaes}
 \title{Optimization via Covariance Matrix Adaptation Evolution Strategy}
 \description{
-\code{OptimizerBatchCmaes} class that implements CMA-ES. Calls \code{\link[adagio:pureCMAES]{adagio::pureCMAES()}}
-from package \CRANpkg{adagio}. The algorithm is typically applied to search
-space dimensions between three and fifty. Lower search space dimensions might
-crash.
+\code{OptimizerBatchCmaes} class that implements CMA-ES.
+Calls \code{\link[libcmaesr:cmaes]{libcmaesr::cmaes()}} from package \CRANpkg{libcmaesr}, which is a lightweight interface to the \code{libcmaes} C++
+library.
+The algorithm is typically applied to search space dimensions between three and fifty.
+Lower search space dimensions might crash.
 }
 \section{Dictionary}{
 
@@ -23,18 +24,30 @@ opt("cmaes")
 \section{Parameters}{
 
 \describe{
-\item{\code{sigma}}{\code{numeric(1)}}
 \item{\code{start_values}}{\code{character(1)}\cr
 Create \code{"random"} start values or based on \code{"center"} of search space?
 In the latter case, it is the center of the parameters before a trafo is applied.
 If set to \code{"custom"}, the start values can be passed via the \code{start} parameter.}
 \item{\code{start}}{\code{numeric()}\cr
 Custom start values. Only applicable if \code{start_values} parameter is set to \code{"custom"}.}
+\item{\code{seed}}{\code{integer(1)}\cr
+Seed of the random number generator of \code{libcmaes}.
+Unset by default, in which case the generator is seeded from R and the optimization is reproducible with
+\code{\link[=set.seed]{set.seed()}}.}
 }
 
-For the meaning of the control parameters, see \code{\link[adagio:pureCMAES]{adagio::pureCMAES()}}. Note
-that we have removed all control parameters which refer to the termination of
-the algorithm and where our terminators allow to obtain the same behavior.
+All remaining parameters are passed to \code{\link[libcmaesr:cmaes_control]{libcmaesr::cmaes_control()}}, see there for their meaning.
+Note that we have removed all control parameters which refer to the termination of the algorithm and where our
+terminators allow to obtain the same behavior, i.e. \code{max_fevals}, \code{max_iter}, and \code{ftarget}.
+The internal convergence criteria of the algorithm still apply, so the optimization can stop before the
+\link{Terminator} is triggered.
+}
+
+\section{Batch evaluation}{
+
+The optimizer evaluates a whole generation of \code{lambda} points in one batch.
+The \link{Terminator} is only checked between generations, so the number of evaluations can exceed the budget of
+\link{TerminatorEvals} by up to \code{lambda - 1} points.
 }
 
 \section{Progress Bars}{
@@ -46,8 +59,8 @@ combined with a \link{Terminator}. Simply wrap the function in
 }
 
 \examples{
-# example only runs if GenSA is available
-if (mlr3misc::require_namespaces("adagio", quietly = TRUE)) {
+# example only runs if libcmaesr is available
+if (mlr3misc::require_namespaces("libcmaesr", quietly = TRUE)) {
 # define the objective function
 fun = function(xs) {
   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 - (xs[[3]] + 4)^2 + 10)

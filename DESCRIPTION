@@ -35,10 +35,10 @@ Imports:
     moocore (>= 0.3.2),
     R6
 Suggests:
-    adagio,
     GenSA,
     irace (>= 4.0.0),
     knitr,
+    libcmaesr,
     mirai,
     nloptr,
     processx,
@@ -49,6 +49,7 @@ Suggests:
     testthat (>= 3.0.0),
     uuid
 Remotes:
+    mlr-org/libcmaesr,
     mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
