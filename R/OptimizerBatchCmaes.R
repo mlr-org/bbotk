@@ -152,8 +152,9 @@ OptimizerBatchCmaes = R6Class(
       # condition is stored here and re-raised below
       condition = NULL
       fun = function(x) {
-        # signaling the termination with an exception would unwind the C++ stack of libcmaes, so the generation is
-        # left unevaluated and the target value is reported instead, which stops the algorithm after this generation
+        # `eval_batch()` signals the termination with an exception, which libcmaesr prints to stderr, so the
+        # generation is left unevaluated and the target value is reported instead, which stops the algorithm after
+        # this generation without any output
         if (inst$is_terminated) {
           return(rep(-Inf, nrow(x)))
         }
