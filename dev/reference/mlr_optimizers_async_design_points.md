@@ -148,6 +148,16 @@ instance$archive$best()
 # covert to data.table
 as.data.table(instance$archive)
 }
-#> ERROR [09:28:34.499] [rush] Lost worker 'terrorstricken_prairiedog_f2bc7761': Error in !self$is_terminated && self$archive$n_queued_available: invalid 'y' type in 'x && y'
-#> Error: Optimization terminated without any finished evaluations.
+#>       state    x1    x2     y        timestamp_xs
+#>      <char> <num> <num> <num>              <POSc>
+#> 1: finished     0     0    -3 2026-08-07 14:43:46
+#> 2: finished     1     1    -7 2026-08-07 14:43:46
+#>                             worker_id        timestamp_ys
+#>                                <char>              <POSc>
+#> 1: terrorstricken_prairiedog_4778b3bd 2026-08-07 14:43:47
+#> 2: terrorstricken_prairiedog_4778b3bd 2026-08-07 14:43:47
+#>                                    keys x_domain_x1 x_domain_x2
+#>                                  <char>       <num>       <num>
+#> 1: 4dfc1969-804e-409e-8463-b69683dbeb8b           0           0
+#> 2: 2fc10a1a-5bba-49d2-8953-b479d3fef101           1           1
 ```

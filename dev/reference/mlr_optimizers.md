@@ -76,21 +76,21 @@ as.data.table(mlr_optimizers)
 #> 11:          ParamLgl,ParamInt,ParamDbl,ParamFct
 #> 12:                                     ParamDbl
 #> 13:          ParamLgl,ParamInt,ParamDbl,ParamFct
-#>                                    properties     packages
-#>                                        <list>       <list>
-#>  1: dependencies,single-crit,multi-crit,async   bbotk,rush
-#>  2: dependencies,single-crit,multi-crit,async   bbotk,rush
-#>  3: dependencies,single-crit,multi-crit,async   bbotk,rush
-#>  4:       dependencies,single-crit,multi-crit        bbotk
-#>  5:                               single-crit bbotk,adagio
-#>  6:       dependencies,single-crit,multi-crit        bbotk
-#>  7:                  dependencies,single-crit        bbotk
-#>  8:                               single-crit  bbotk,GenSA
-#>  9:       dependencies,single-crit,multi-crit        bbotk
-#> 10:                  dependencies,single-crit  bbotk,irace
-#> 11:                  dependencies,single-crit        bbotk
-#> 12:                               single-crit bbotk,nloptr
-#> 13:       dependencies,single-crit,multi-crit        bbotk
+#>                                    properties        packages
+#>                                        <list>          <list>
+#>  1: dependencies,single-crit,multi-crit,async      bbotk,rush
+#>  2: dependencies,single-crit,multi-crit,async      bbotk,rush
+#>  3: dependencies,single-crit,multi-crit,async      bbotk,rush
+#>  4:       dependencies,single-crit,multi-crit           bbotk
+#>  5:                               single-crit bbotk,libcmaesr
+#>  6:       dependencies,single-crit,multi-crit           bbotk
+#>  7:                  dependencies,single-crit           bbotk
+#>  8:                               single-crit     bbotk,GenSA
+#>  9:       dependencies,single-crit,multi-crit           bbotk
+#> 10:                  dependencies,single-crit     bbotk,irace
+#> 11:                  dependencies,single-crit           bbotk
+#> 12:                               single-crit    bbotk,nloptr
+#> 13:       dependencies,single-crit,multi-crit           bbotk
 mlr_optimizers$get("random_search")
 #> 
 #> ── <OptimizerBatchRandomSearch> - Random Search ────────────────────────────────

@@ -742,6 +742,4 @@ as.data.table(instance$archive)
 # reset the rush data base
 instance$rush$reset()
 }
-#> ERROR [09:28:08.685] [rush] Lost worker 'overzealous_cowrie_e5a1eef5': Error in !self$is_terminated && self$archive$n_queued_available: invalid 'y' type in 'x && y'
-#> Error: Optimization terminated without any finished evaluations.
 ```
