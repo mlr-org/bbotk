@@ -24,12 +24,15 @@ cran
 datatable
 deqn
 donttest
+dsigma
 Eggholder
 elmt
 emoa
 evals
+fevals
 Forrester
 fselect
+ftarget
 ftol
 gensa
 Goldstein
@@ -49,6 +52,8 @@ Lacoste
 LBFGS
 Lgls
 LGLSXP
+libcmaes
+libcmaesr
 lightswitch
 lockfiles
 logicals

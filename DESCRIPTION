@@ -35,10 +35,10 @@ Imports:
     moocore (>= 0.3.2),
     R6
 Suggests:
-    adagio,
     GenSA,
     irace (>= 4.0.0),
     knitr,
+    libcmaesr,
     mirai,
     nloptr,
     processx,
