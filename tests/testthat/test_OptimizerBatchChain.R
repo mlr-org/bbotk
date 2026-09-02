@@ -75,4 +75,8 @@ test_that("OptimizerBatchChain", {
     optimizer$param_set$ids(),
     expected_ids
   )
+  expect_identical(
+    names(optimizer$param_set$sets),
+    c("OptimizerBatchRandomSearch_1", "OptimizerBatchGenSA_1")
+  )
 })
