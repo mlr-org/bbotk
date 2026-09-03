@@ -435,3 +435,25 @@ test_that("OptimizerBatchLocalSearch works with CondAnyOf", {
   }
   if (nrow(dt[x1 %in% c("a", "b")])) expect_true(all(!is.na(dt[x1 %in% c("a", "b")]$x2)))
 })
+
+test_that("local_search checks the return value of the objective", {
+  search_space = ps(x = p_dbl(-1, 1))
+  control = local_search_control(n_searches = 2L, n_steps = 1L, n_neighs = 2L)
+  init_points = data.table(x = c(-0.5, 0.5))
+
+  expect_error(
+    local_search(function(xdt) "a", search_space, control, init_points),
+    "must return a numeric vector"
+  )
+  expect_error(
+    local_search(function(xdt) 1, search_space, control, init_points),
+    "must return 2 value"
+  )
+  expect_error(
+    local_search(function(xdt) rep(NA_real_, nrow(xdt)), search_space, control, init_points),
+    "must not return missing values"
+  )
+  # integer returns are numeric too
+  res = local_search(function(xdt) as.integer(xdt$x > 0), search_space, control, init_points)
+  expect_number(res$y)
+})

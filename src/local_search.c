@@ -644,11 +644,23 @@ int eval_obj(int n, SEXP s_x, SEXP s_obj, double* y, const Control* ctrl) {
     SEXP s_y = PROTECT(safe_eval(s_call));
     int eval_ok = 0;
     if (s_y != R_NilValue) {
-        memcpy(y, REAL(s_y), n * sizeof(double));
-        // multiply by obj_mult to handle maximization
-        for (int i = 0; i < n; i++) {
-            y[i] *= ctrl->obj_mult;
+        // Rf_error unwinds the protection stack on its own
+        if (TYPEOF(s_y) != REALSXP && TYPEOF(s_y) != INTSXP) {
+            Rf_error("Objective must return a numeric vector");
         }
+        if (XLENGTH(s_y) != n) {
+            Rf_error("Objective must return %d value(s) but returned %d", n, (int) XLENGTH(s_y));
+        }
+        SEXP s_y_real = PROTECT(Rf_coerceVector(s_y, REALSXP));
+        const double *y_real = REAL(s_y_real);
+        for (int i = 0; i < n; i++) {
+            if (ISNAN(y_real[i])) {
+                Rf_error("Objective must not return missing values");
+            }
+            // multiply by obj_mult to handle maximization
+            y[i] = y_real[i] * ctrl->obj_mult;
+        }
+        UNPROTECT(1); // s_y_real
         eval_ok = 1;
     }
     UNPROTECT(2); // s_call, s_y
