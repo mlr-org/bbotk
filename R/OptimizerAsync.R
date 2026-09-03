@@ -154,6 +154,9 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     get_private(optimizer)$.optimize(instance)
 
     call_back("on_worker_end", instance$objective$callbacks, instance$objective$context)
+
+    # the local worker is done, otherwise it is counted as running forever and the wait loop below never breaks
+    rush$set_terminated()
   } else {
     # run .optimize() on workers
     rush = instance$rush
