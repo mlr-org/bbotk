@@ -223,7 +223,7 @@ OptimizerBatchIrace = R6Class(
       # add race and step to archive
       iraceResults = irace::read_logfile(self$param_set$values$logFile) # nolint
       log = iraceResults$state$experiment_log
-      log[, "step" := rleid("instance"), by = "iteration"]
+      log[, "step" := rleid(get("instance")), by = "iteration"]
       set(inst$archive$data, j = "race", value = log$iteration)
       set(inst$archive$data, j = "step", value = log$step)
       setcolorder(
