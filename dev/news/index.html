@@ -50,7 +50,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="bbotk-development-version">bbotk (development version)<a class="anchor" aria-label="anchor" href="#bbotk-development-version"></a></h2>
-</div>
+<ul><li>fix: <code>OptimizerBatchNLoptr</code> no longer overwrites the <code>maxeval</code>, <code>maxtime</code>, and <code>stopval</code> parameters. The internal termination criteria set by the user are now passed on to <code><a href="https://astamm.github.io/nloptr/reference/nloptr.html" class="external-link">nloptr::nloptr()</a></code> (<a href="https://github.com/mlr-org/bbotk/issues/361" class="external-link">#361</a>).</li>
+<li>fix: <code>OptimizerBatchIrace</code> now passes the <code>digits</code> parameter to irace instead of always using 15 digits (<a href="https://github.com/mlr-org/bbotk/issues/362" class="external-link">#362</a>).</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.13.0" id="bbotk-1130">bbotk 1.13.0<a class="anchor" aria-label="anchor" href="#bbotk-1130"></a></h2>
 <ul><li>feat: Asynchronous optimizers support the <code>mirai</code> compute profiles set with the <code>profiles</code> argument of <code><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush::rush_plan()</a></code>, e.g. <code>profiles = c(cpu = 2, gpu = 2)</code> runs 2 workers on the daemons of the <code>"cpu"</code> profile and 2 workers on the daemons of the <code>"gpu"</code> profile. The profile a worker runs on is available as <code>instance$rush$profile</code>.</li>

@@ -2,6 +2,15 @@
 
 ## bbotk (development version)
 
+- fix: `OptimizerBatchNLoptr` no longer overwrites the `maxeval`,
+  `maxtime`, and `stopval` parameters. The internal termination criteria
+  set by the user are now passed on to
+  [`nloptr::nloptr()`](https://astamm.github.io/nloptr/reference/nloptr.html)
+  ([\#361](https://github.com/mlr-org/bbotk/issues/361)).
+- fix: `OptimizerBatchIrace` now passes the `digits` parameter to irace
+  instead of always using 15 digits
+  ([\#362](https://github.com/mlr-org/bbotk/issues/362)).
+
 ## bbotk 1.13.0
 
 - feat: Asynchronous optimizers support the `mirai` compute profiles set
