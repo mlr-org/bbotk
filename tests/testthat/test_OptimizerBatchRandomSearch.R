@@ -15,3 +15,7 @@ test_that("OptimizerBatchRandomSearch", {
 
   z = test_optimizer_dependencies("random_search", term_evals = 10L, batch_size = 10L)
 })
+
+test_that("OptimizerBatchRandomSearch batch_size must be positive", {
+  expect_error(opt("random_search", batch_size = 0L), "batch_size")
+})

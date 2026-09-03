@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* fix: `OptimizerBatchRandomSearch` rejects a `batch_size` smaller than 1, and `$eval_batch()` errors on an empty `xdt` unless the search space is empty. `opt("random_search", batch_size = 0)` looped forever before (#370).
+
 # bbotk 1.13.0
 
 * feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`, e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile. The profile a worker runs on is available as `instance$rush$profile`.
