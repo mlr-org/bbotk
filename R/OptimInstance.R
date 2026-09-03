@@ -47,7 +47,7 @@ OptimInstance = R6Class(
       assert_r6(objective, "Objective")
       objective$callbacks = assert_callbacks(as_callbacks(callbacks))
       assert_param_set(search_space)
-      terminator = assert_terminator(terminator, self)
+      terminator = assert_terminator(terminator)
       assert_flag(check_values)
       assert_r6(archive, "Archive")
 
@@ -59,6 +59,9 @@ OptimInstance = R6Class(
         label = label,
         man = man
       )
+
+      # the objective is only available after the fields are initialized
+      assert_terminable(terminator, self)
     },
 
     #' @description
