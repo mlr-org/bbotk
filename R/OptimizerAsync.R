@@ -141,6 +141,9 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     instance$archive$push_points(transpose_list(design))
   }
 
+  # the workers must be stopped on every exit path
+  on.exit(instance$rush$stop_workers(type = "kill"), add = TRUE)
+
   if (getOption("bbotk.debug", FALSE)) {
     # debug mode runs .optimize() in main process
     rush = rush::RushWorker$new(instance$rush$network_id)
@@ -272,7 +275,6 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
   }
 
   call_back("on_optimization_end", instance$objective$callbacks, instance$objective$context)
-  instance$rush$stop_workers(type = "kill")
   return(instance$result)
 }
 

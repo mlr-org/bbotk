@@ -328,3 +328,31 @@ test_that("OptimizerAsync rejects a batch instance", {
   optimizer = opt("async_random_search")
   expect_error(optimizer$optimize(instance), "OptimInstanceAsync")
 })
+
+test_that("workers are stopped when the optimization errors", {
+  rush = start_rush(n_workers = 1)
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
+
+  objective = ObjectiveRFun$new(
+    fun = function(xs) {
+      Sys.sleep(10)
+      list(y = xs$x1)
+    },
+    domain = PS_2D_domain,
+    properties = "single-crit"
+  )
+
+  instance = oi_async(
+    objective = objective,
+    search_space = PS_2D,
+    terminator = trm("run_time", secs = 2),
+    rush = rush
+  )
+
+  optimizer = opt("async_random_search")
+  expect_error(optimizer$optimize(instance), "without any finished evaluations")
+  expect_equal(rush$n_running_workers, 0L)
+})

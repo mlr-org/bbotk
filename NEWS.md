@@ -2,6 +2,7 @@
 
 * fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer returns before the terminator is satisfied, e.g. when the design of `OptimizerAsyncDesignPoints` is exhausted (#385).
 * fix: `optimize_async_default()` now checks the instance and the properties of the optimizer before the workers are started, so unsupported parameter classes, dependencies, single or multi-criteria mismatches, and missing packages are reported in the main process instead of crashing the workers (#386).
+* fix: `optimize_async_default()` now stops the workers on every exit path, including errors and interrupts. A failing optimization left the workers running before (#384).
 * fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the task cache of rush in place, which changed the order of `$finished_data` and `$data` for all later calls (#387).
 * fix: `OptimizerBatchIrace` now passes the `digits` parameter to irace instead of always using 15 digits (#362).
 * fix: `OptimizerBatchIrace` now writes the actual step of a race into the `step` column of the archive, which was always `1` (#363).
