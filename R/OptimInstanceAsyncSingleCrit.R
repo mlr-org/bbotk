@@ -136,7 +136,7 @@ OptimInstanceAsyncSingleCrit = R6Class(
     #' @field result_y (`numeric()`)\cr
     #' Optimal outcome.
     result_y = function() {
-      unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
+      unlist(private$.result[, self$objective$codomain$target_ids, with = FALSE])
     }
   ),
 
