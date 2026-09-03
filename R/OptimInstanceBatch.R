@@ -81,6 +81,8 @@ OptimInstanceBatch = R6Class(
         private$.initialize_context(NULL)
       }
       call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
+      # the callbacks may have replaced the points
+      xdt = private$.xdt
       # update progressor
       if (!is.null(self$progressor)) {
         self$progressor$update(self$terminator, self$archive)
@@ -102,9 +104,9 @@ OptimInstanceBatch = R6Class(
       ) {
         # if search space has no transformation function and dependencies, and the objective takes a data table
         # use shortcut to skip conversion between data table and list
-        ydt = self$objective$eval_dt(private$.xdt[, self$search_space$ids(), with = FALSE])
+        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
       } else {
-        xss_trafoed = transform_xdt_to_xss(private$.xdt, self$search_space)
+        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
         ydt = self$objective$eval_many(xss_trafoed)
       }
 

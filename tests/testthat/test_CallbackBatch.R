@@ -205,3 +205,22 @@ test_that("on_result in OptimInstanceBatchMultiCrit works", {
   expect_equal(unique(instance$result$y1), 2)
   expect_equal(unique(instance$result$y2), 3)
 })
+
+test_that("xdt can be replaced in on_optimizer_before_eval", {
+  callback = callback_batch(
+    id = "replace_xdt",
+    on_optimizer_before_eval = function(callback, context) {
+      context$xdt = data.table(x = rep(0.5, nrow(context$xdt)))
+    }
+  )
+
+  instance = oi(
+    OBJ_1D,
+    search_space = PS_1D,
+    terminator = trm("evals", n_evals = 4L),
+    callbacks = callback
+  )
+  opt("random_search", batch_size = 2L)$optimize(instance)
+
+  expect_true(all(instance$archive$data$x == 0.5))
+})
