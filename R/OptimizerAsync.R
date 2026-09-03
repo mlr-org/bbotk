@@ -116,6 +116,8 @@ OptimizerAsync = R6Class(
 #' @keywords internal
 #' @export
 optimize_async_default = function(instance, optimizer, design = NULL, n_workers = NULL, profiles = NULL) {
+  assert_instance_async(instance)
+  assert_instance_properties(optimizer, instance)
   assert_data_table(design, null.ok = TRUE)
   assert_count(n_workers, null.ok = TRUE)
   profiles = rush::assert_profiles(profiles)
