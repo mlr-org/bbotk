@@ -2,6 +2,8 @@
 
 * refactor: `OptimizerBatchCmaes` now calls `libcmaesr::cmaes()` instead of `adagio::pureCMAES()`, which is no longer suggested. The optimizer gains the `algo`, `lambda`, `max_restarts`, `elitism`, `tpa`, `tpa_dsigma`, `seed`, `f_tolerance`, `x_tolerance`, `x0_lower`, and `x0_upper` parameters, and evaluates a whole generation of `lambda` points per batch. The `sigma` parameter no longer defaults to `0.5` but is handled by `libcmaes`.
 
+* fix: `assert_terminable()` now decides whether an instance is single or multi-criteria from the codomain of the objective instead of the class of the instance, so terminators are checked correctly for `OptimInstanceAsyncMultiCrit` (#375).
+
 * feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`,
   e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile.
   The profile a worker runs on is available as `instance$rush$profile`.
