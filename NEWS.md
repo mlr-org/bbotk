@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* fix: `local_search()` now writes the RNG state back before it calls the objective, so an objective that draws random numbers no longer receives the numbers the C code consumed for mutation (#379).
+
 # bbotk 1.13.0
 
 * feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`, e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile. The profile a worker runs on is available as `instance$rush$profile`.

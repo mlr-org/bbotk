@@ -435,3 +435,26 @@ test_that("OptimizerBatchLocalSearch works with CondAnyOf", {
   }
   if (nrow(dt[x1 %in% c("a", "b")])) expect_true(all(!is.na(dt[x1 %in% c("a", "b")]$x2)))
 })
+
+test_that("local_search does not replay its random numbers in the objective", {
+  search_space = ps(x = p_dbl(-1, 1))
+  control = local_search_control(n_searches = 2L, n_steps = 2L, n_neighs = 3L)
+  init_points = data.table(x = c(-0.5, 0.5))
+
+  draws = numeric(0)
+  objective = function(xdt) {
+    draws <<- c(draws, runif(1L))
+    xdt$x^2
+  }
+
+  set.seed(1)
+  local_search(objective, search_space, control, init_points)
+  expect_gte(length(draws), 2L)
+
+  set.seed(1)
+  reference = runif(length(draws))
+  # the first call happens before the C code draws anything
+  expect_equal(draws[1L], reference[1L])
+  # afterwards the objective must continue behind the numbers the C code consumed
+  expect_false(draws[2L] == reference[2L])
+})
