@@ -167,8 +167,8 @@ mlr_optimizers$add("focus_search", OptimizerBatchFocusSearch)
 #' Note that the returned [paradox::ParamSet] has lost all its original
 #' `default`s, as they may have become infeasible.
 #'
-#' If the [paradox::ParamSet] has a trafo, `x` is expected to contain the
-#' transformed values.
+#' `x` is always expected to contain the values on the scale of `param_set`,
+#' i.e. the untransformed values before a trafo is applied.
 #'
 #' @param param_set ([paradox::ParamSet])\cr
 #' The [paradox::ParamSet] to be shrunk.
@@ -179,7 +179,6 @@ mlr_optimizers$add("focus_search", OptimizerBatchFocusSearch)
 #' Should feasibility of the parameters be checked?
 #' If feasibility is not checked, and invalid values are present, no shrinking
 #' will be done.
-#' Must be turned off in the case of the [paradox::ParamSet] having a trafo.
 #' Default is `FALSE`.
 #' @return [paradox::ParamSet]
 #' @export
@@ -187,7 +186,7 @@ mlr_optimizers$add("focus_search", OptimizerBatchFocusSearch)
 #' library(paradox)
 #' library(data.table)
 #' param_set = ps(
-#'   x = p_dbl(lower = 0, upper = 10),
+#'   x1 = p_dbl(lower = 0, upper = 10),
 #'   x2 = p_int(lower = -10, upper = 10),
 #'   x3 = p_fct(levels = c("a", "b", "c")),
 #'   x4 = p_lgl()
@@ -220,28 +219,6 @@ shrink_ps = function(param_set, x, check.feasible = FALSE) {
       if (param$is_number) {
         range = param$upper - param$lower
 
-        if (param_set$has_trafo) {
-          xdt = copy(x) # nolint
-          val = tryCatch(
-            {
-              # find val on the original scale
-              val = stats::uniroot(
-                function(x_rep) {
-                  xdt[[pid]] = x_rep
-                  param_set$trafo(xdt)[[pid]] - val
-                },
-                interval = c(param$lower, param$upper),
-                extendInt = "yes",
-                tol = .Machine$double.eps^0.5 * range,
-                maxiter = 10^4
-              )$root
-            },
-            error = function(error_condition) {
-              param$upper + 1
-            }
-          )
-          param_test_val = param$test(structure(list(val), names = pid))
-        }
         if (check.feasible && !param_test_val) {
           stop(sprintf("Parameter value %s is not feasible for %s.", val, pid))
         }
