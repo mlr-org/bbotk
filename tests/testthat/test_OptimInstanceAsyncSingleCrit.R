@@ -129,3 +129,59 @@ test_that("tiny logging works", {
   optimizer = opt("async_random_search")
   expect_data_table(optimizer$optimize(instance))
 })
+
+test_that("an objective error fails the point instead of the worker", {
+  rush = start_rush_worker()
+  on.exit(rush$reset())
+
+  objective = ObjectiveRFun$new(
+    fun = function(xs) {
+      if (xs$x1 > 0.5) stop("objective failed")
+      list(y = xs$x1 + xs$x2)
+    },
+    domain = PS_2D_domain,
+    properties = "single-crit"
+  )
+
+  instance = oi_async(
+    objective = objective,
+    search_space = ps(x1 = p_dbl(0, 1), x2 = p_dbl(0, 1)),
+    terminator = trm("evals", n_evals = 10L),
+    rush = rush
+  )
+
+  expect_null(get_private(instance)$.eval_point(list(x1 = 0.9, x2 = 0.1)))
+  expect_equal(instance$archive$n_failed, 1L)
+  expect_equal(instance$archive$n_finished, 0L)
+
+  expect_equal(get_private(instance)$.eval_point(list(x1 = 0.1, x2 = 0.2)), list(y = 0.3))
+  expect_equal(instance$archive$n_failed, 1L)
+  expect_equal(instance$archive$n_finished, 1L)
+})
+
+test_that("an objective error fails a queued point instead of the worker", {
+  rush = start_rush_worker()
+  on.exit(rush$reset())
+
+  objective = ObjectiveRFun$new(
+    fun = function(xs) {
+      if (xs$x1 > 0.5) stop("objective failed")
+      list(y = xs$x1 + xs$x2)
+    },
+    domain = PS_2D_domain,
+    properties = "single-crit"
+  )
+
+  instance = oi_async(
+    objective = objective,
+    search_space = ps(x1 = p_dbl(0, 1), x2 = p_dbl(0, 1)),
+    terminator = trm("evals", n_evals = 10L),
+    rush = rush
+  )
+  instance$archive$push_points(list(list(x1 = 0.9, x2 = 0.1), list(x1 = 0.1, x2 = 0.2)))
+
+  get_private(instance)$.eval_queue()
+
+  expect_equal(instance$archive$n_failed, 1L)
+  expect_equal(instance$archive$n_finished, 1L)
+})
