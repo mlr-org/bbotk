@@ -2,6 +2,8 @@
 
 * refactor: `OptimizerBatchCmaes` now calls `libcmaesr::cmaes()` instead of `adagio::pureCMAES()`, which is no longer suggested. The optimizer gains the `algo`, `lambda`, `max_restarts`, `elitism`, `tpa`, `tpa_dsigma`, `seed`, `f_tolerance`, `x_tolerance`, `x0_lower`, and `x0_upper` parameters, and evaluates a whole generation of `lambda` points per batch. The `sigma` parameter no longer defaults to `0.5` but is handled by `libcmaes`.
 
+* fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the task cache of rush in place, which changed the order of `$finished_data` and `$data` for all later calls (#387).
+
 * feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`,
   e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile.
   The profile a worker runs on is available as `instance$rush$profile`.
