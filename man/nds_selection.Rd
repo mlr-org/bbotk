@@ -18,7 +18,7 @@ Reference point for hypervolume.}
 
 \item{minimize}{('logical()')\cr
 Should the ranking be based on minimization?
-Can be specified for each dimension or for all.
+Must be of length 1 for all dimensions or of length \code{nrow(points)} for each dimension.
 Default is \code{TRUE} for each dimension.}
 }
 \value{
