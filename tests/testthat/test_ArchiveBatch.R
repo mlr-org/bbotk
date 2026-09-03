@@ -28,7 +28,7 @@ test_that("Archive", {
 test_that("Archive best works", {
   a = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = c(0, 0.5), x2 = c(1, 1))
-  xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.25))
   a$add_evals(xdt, xss_trafoed, ydt)
   expect_equal(a$best()$y, 0.25)
@@ -97,13 +97,13 @@ test_that("start_time is set by Optimizer", {
 test_that("check_values flag works", {
   a = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN, check_values = FALSE)
   xdt = data.table(x1 = c(0, 2), x2 = c(1, 1))
-  xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.25))
   a$add_evals(xdt, xss_trafoed, ydt)
 
   a = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN, check_values = TRUE)
   xdt = data.table(x1 = c(0, 2), x2 = c(1, 1))
-  xss_trafoed = list(list(x1 = c(0, 0.5), x2 = c(1, 1)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.25))
   expect_error(a$add_evals(xdt, xss_trafoed, ydt), "x1: Element 1 is not <= 1.", fixed = TRUE)
 })
@@ -135,7 +135,7 @@ test_that("best method works with maximization", {
 
   archive = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
-  xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.25, 2, 0.5, 0.3))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
@@ -156,7 +156,7 @@ test_that("best method works with minimization", {
 
   archive = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
-  xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.25, 2, 0.5, 0.3))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
@@ -177,7 +177,7 @@ test_that("best method returns top n results with maximization", {
 
   archive = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
-  xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.25, 2, 0.5, 0.3))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
@@ -198,7 +198,7 @@ test_that("best method returns top n results with maximization and ties", {
 
   archive = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
-  xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 1, 2, 0.5, 0.5))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
@@ -219,7 +219,7 @@ test_that("best method returns top n results with minimization", {
 
   archive = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
-  xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.25, 2, 0.5, 0.3))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
@@ -240,7 +240,7 @@ test_that("best method returns top n results with minimization and ties", {
 
   archive = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
   xdt = data.table(x1 = runif(5), x2 = runif(5))
-  xss_trafoed = list(list(x1 = runif(5), x2 = runif(5)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.25, 0.5, 0.3, 0.3))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
@@ -251,7 +251,7 @@ test_that("best method errors with direction=0 (learn tag)", {
   codomain = ps(y = p_dbl(tags = "learn"))
   archive = ArchiveBatch$new(PS_2D, codomain)
   xdt = data.table(x1 = runif(3), x2 = runif(3))
-  xss_trafoed = list(list(x1 = runif(3), x2 = runif(3)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y = c(1, 0.5, 0.3))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
@@ -262,9 +262,20 @@ test_that("nds_selection errors with direction=0 (learn tag)", {
   codomain = ps(y1 = p_dbl(tags = "learn"), y2 = p_dbl(tags = "minimize"))
   archive = ArchiveBatch$new(PS_2D, codomain)
   xdt = data.table(x1 = runif(3), x2 = runif(3))
-  xss_trafoed = list(list(x1 = runif(3), x2 = runif(3)))
+  xss_trafoed = transpose_list(xdt)
   ydt = data.table(y1 = c(1, 0.5, 0.3), y2 = c(0.3, 0.5, 1))
   archive$add_evals(xdt, xss_trafoed, ydt)
 
   expect_error(archive$nds_selection(n_select = 2), "direction = 0")
+})
+
+test_that("add_evals checks the length of xss_trafoed", {
+  a = ArchiveBatch$new(PS_2D, FUN_2D_CODOMAIN)
+  xdt = data.table(x1 = c(0, 0.5), x2 = c(1, 1))
+  ydt = data.table(y = c(1, 0.25))
+
+  expect_error(a$add_evals(xdt, list(list(x1 = 0, x2 = 1)), ydt), "Must have length 2")
+
+  a$add_evals(xdt, transpose_list(xdt), ydt)
+  expect_equal(a$data$x_domain, transpose_list(xdt))
 })
