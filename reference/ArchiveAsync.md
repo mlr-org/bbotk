@@ -33,7 +33,9 @@ a [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) data base.
 - `queued_data`:
 
   ([data.table::data.table](https://rdrr.io/pkg/data.table/man/data.table.html))  
-  Data table with all queued points.
+  Data table with all queued points. Points queued for a
+  [mirai](https://CRAN.R-project.org/package=mirai) compute profile have
+  a `profile` column.
 
 - `running_data`:
 
@@ -53,7 +55,22 @@ a [rush::Rush](https://rush.mlr-org.com/reference/Rush.html) data base.
 - `n_queued`:
 
   (`integer(1)`)  
-  Number of queued points.
+  Number of queued points in the shared queue and the queues of all
+  [mirai](https://CRAN.R-project.org/package=mirai) compute profiles.
+
+- `n_queued_per_profile`:
+
+  (named [`integer()`](https://rdrr.io/r/base/integer.html))  
+  Number of queued points in the shared queue and the queues of all
+  [mirai](https://CRAN.R-project.org/package=mirai) compute profiles.
+  The number of points in the shared queue is named `"default"`.
+
+- `n_queued_available`:
+
+  (`integer(1)`)  
+  Number of queued points a worker can evaluate, i.e. the points in the
+  shared queue and in the queue of the compute profile the worker runs
+  on. Points queued for other compute profiles are not counted.
 
 - `n_running`:
 
@@ -175,9 +192,14 @@ Creates a new instance of this
 
 Push queued points to the archive.
 
+Points pushed without a `profile` are added to the shared queue and are
+evaluated by any worker. Points pushed with a `profile` are added to the
+queue of the [mirai](https://CRAN.R-project.org/package=mirai) compute
+profile and are only evaluated by the workers running on that profile.
+
 #### Usage
 
-    ArchiveAsync$push_points(xss, xss_extra = NULL)
+    ArchiveAsync$push_points(xss, xss_extra = NULL, profile = NULL)
 
 #### Arguments
 
@@ -192,15 +214,27 @@ Push queued points to the archive.
   `NULL`)  
   List of named lists of additional information.
 
+- `profile`:
+
+  (`character(1)` \| `NULL`)  
+  Name of the [mirai](https://CRAN.R-project.org/package=mirai) compute
+  profile the points are queued for. If `NULL`, the points are added to
+  the shared queue.
+
 ------------------------------------------------------------------------
 
 ### `ArchiveAsync$push_point()`
 
 Push a single queued point to the archive.
 
+Points pushed without a `profile` are added to the shared queue and are
+evaluated by any worker. Points pushed with a `profile` are added to the
+queue of the [mirai](https://CRAN.R-project.org/package=mirai) compute
+profile and are only evaluated by the workers running on that profile.
+
 #### Usage
 
-    ArchiveAsync$push_point(xs, xs_extra = NULL)
+    ArchiveAsync$push_point(xs, xs_extra = NULL, profile = NULL)
 
 #### Arguments
 
@@ -213,6 +247,13 @@ Push a single queued point to the archive.
 
   (named [`list()`](https://rdrr.io/r/base/list.html) \| `NULL`)  
   Named list of additional information.
+
+- `profile`:
+
+  (`character(1)` \| `NULL`)  
+  Name of the [mirai](https://CRAN.R-project.org/package=mirai) compute
+  profile the point is queued for. If `NULL`, the point is added to the
+  shared queue.
 
 ------------------------------------------------------------------------
 

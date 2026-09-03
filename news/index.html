@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.12.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.13.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,13 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.13.0" id="bbotk-1130">bbotk 1.13.0<a class="anchor" aria-label="anchor" href="#bbotk-1130"></a></h2>
+<ul><li>feat: Asynchronous optimizers support the <code>mirai</code> compute profiles set with the <code>profiles</code> argument of <code><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush::rush_plan()</a></code>, e.g. <code>profiles = c(cpu = 2, gpu = 2)</code> runs 2 workers on the daemons of the <code>"cpu"</code> profile and 2 workers on the daemons of the <code>"gpu"</code> profile. The profile a worker runs on is available as <code>instance$rush$profile</code>.</li>
+<li>feat: <code>ArchiveAsync$push_points()</code> and <code>ArchiveAsync$push_point()</code> gain the <code>profile</code> argument to queue points for a <code>mirai</code> compute profile. Points queued for a profile are only evaluated by the workers running on that profile, whereas points pushed without a profile are queued in the shared queue and are evaluated by any worker.</li>
+<li>refactor: <code><a href="../reference/nds_selection.html">nds_selection()</a></code> now uses <code><a href="https://multi-objective.github.io/moocore/r/reference/pareto_rank.html" class="external-link">moocore::pareto_rank()</a></code> and <code><a href="https://multi-objective.github.io/moocore/r/reference/hv_contributions.html" class="external-link">moocore::hv_contributions()</a></code> instead of the <code>emoa</code> package, which is no longer suggested. Boundary points now always survive tie breaking in three or more dimensions, matching the previous behavior in two dimensions.</li>
+<li>refactor: <code>OptimizerBatchCmaes</code> now calls <code><a href="https://libcmaesr.mlr-org.com/reference/cmaes.html" class="external-link">libcmaesr::cmaes()</a></code> instead of <code>adagio::pureCMAES()</code>, which is no longer suggested. The optimizer gains the <code>algo</code>, <code>lambda</code>, <code>max_restarts</code>, <code>elitism</code>, <code>tpa</code>, <code>tpa_dsigma</code>, <code>seed</code>, <code>f_tolerance</code>, <code>x_tolerance</code>, <code>x0_lower</code>, and <code>x0_upper</code> parameters, and evaluates a whole generation of <code>lambda</code> points per batch. The <code>sigma</code> parameter no longer defaults to <code>0.5</code> but is handled by <code>libcmaes</code>.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.12.0" id="bbotk-1120">bbotk 1.12.0<a class="anchor" aria-label="anchor" href="#bbotk-1120"></a></h2><p class="text-muted">CRAN release: 2026-07-17</p>
 <ul><li>refactor: Remove the deprecated <code>extra</code> argument from <code>ArchiveAsync</code>’s <code>$push_points()</code>, <code>$push_point()</code>, <code>$push_running_points()</code>, <code>$push_running_point()</code>, <code>$finish_points()</code>, and <code>$finish_point()</code>. Use the corresponding <code>xss_extra</code>, <code>xs_extra</code>, or <code>yss_extra</code>, <code>ys_extra</code> argument instead.</li>
 </ul></div>
@@ -62,7 +69,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.10.1" id="bbotk-1101">bbotk 1.10.1<a class="anchor" aria-label="anchor" href="#bbotk-1101"></a></h2><p class="text-muted">CRAN release: 2026-06-13</p>
 <ul><li>refactor: <code><a href="../reference/is_dominated.html">is_dominated()</a></code> now uses <code><a href="https://multi-objective.github.io/moocore/r/reference/nondominated.html" class="external-link">moocore::is_nondominated()</a></code> internally instead of a custom C implementation (<a href="https://github.com/mlr-org/bbotk/issues/301" class="external-link">#301</a>).</li>
-<li>refactor: Replace <code><a href="https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html" class="external-link">emoa::dominated_hypervolume</a></code> with <code><a href="https://multi-objective.github.io/moocore/r/reference/hypervolume.html" class="external-link">moocore::hypervolume</a></code> for computing the hypervolume indicator.</li>
+<li>refactor: Replace <code>emoa::dominated_hypervolume</code> with <code><a href="https://multi-objective.github.io/moocore/r/reference/hypervolume.html" class="external-link">moocore::hypervolume</a></code> for computing the hypervolume indicator.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.10.0" id="bbotk-1100">bbotk 1.10.0<a class="anchor" aria-label="anchor" href="#bbotk-1100"></a></h2><p class="text-muted">CRAN release: 2026-04-08</p>
@@ -262,7 +269,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.2" id="bbotk-022">bbotk 0.2.2<a class="anchor" aria-label="anchor" href="#bbotk-022"></a></h2><p class="text-muted">CRAN release: 2020-10-08</p>
 <ul><li>refactor: Remove dependency on orphaned package <code>bibtex</code>.</li>
-<li>feat: Add <code>OptimizerCmaes</code> which calls <code><a href="https://rdrr.io/pkg/adagio/man/cmaes.html" class="external-link">adagio::pureCMAES</a></code> from the <code>adagio</code> package.</li>
+<li>feat: Add <code>OptimizerCmaes</code> which calls <code>adagio::pureCMAES</code> from the <code>adagio</code> package.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="bbotk-021">bbotk 0.2.1<a class="anchor" aria-label="anchor" href="#bbotk-021"></a></h2><p class="text-muted">CRAN release: 2020-09-05</p>

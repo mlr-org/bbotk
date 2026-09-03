@@ -1,5 +1,37 @@
 # Changelog
 
+## bbotk 1.13.0
+
+- feat: Asynchronous optimizers support the `mirai` compute profiles set
+  with the `profiles` argument of
+  [`rush::rush_plan()`](https://rush.mlr-org.com/reference/rush_plan.html),
+  e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of
+  the `"cpu"` profile and 2 workers on the daemons of the `"gpu"`
+  profile. The profile a worker runs on is available as
+  `instance$rush$profile`.
+- feat: `ArchiveAsync$push_points()` and `ArchiveAsync$push_point()`
+  gain the `profile` argument to queue points for a `mirai` compute
+  profile. Points queued for a profile are only evaluated by the workers
+  running on that profile, whereas points pushed without a profile are
+  queued in the shared queue and are evaluated by any worker.
+- refactor:
+  [`nds_selection()`](https://bbotk.mlr-org.com/reference/nds_selection.md)
+  now uses
+  [`moocore::pareto_rank()`](https://multi-objective.github.io/moocore/r/reference/pareto_rank.html)
+  and
+  [`moocore::hv_contributions()`](https://multi-objective.github.io/moocore/r/reference/hv_contributions.html)
+  instead of the `emoa` package, which is no longer suggested. Boundary
+  points now always survive tie breaking in three or more dimensions,
+  matching the previous behavior in two dimensions.
+- refactor: `OptimizerBatchCmaes` now calls
+  [`libcmaesr::cmaes()`](https://libcmaesr.mlr-org.com/reference/cmaes.html)
+  instead of `adagio::pureCMAES()`, which is no longer suggested. The
+  optimizer gains the `algo`, `lambda`, `max_restarts`, `elitism`,
+  `tpa`, `tpa_dsigma`, `seed`, `f_tolerance`, `x_tolerance`, `x0_lower`,
+  and `x0_upper` parameters, and evaluates a whole generation of
+  `lambda` points per batch. The `sigma` parameter no longer defaults to
+  `0.5` but is handled by `libcmaes`.
+
 ## bbotk 1.12.0
 
 CRAN release: 2026-07-17
@@ -40,9 +72,7 @@ CRAN release: 2026-06-13
   [`moocore::is_nondominated()`](https://multi-objective.github.io/moocore/r/reference/nondominated.html)
   internally instead of a custom C implementation
   ([\#301](https://github.com/mlr-org/bbotk/issues/301)).
-- refactor: Replace
-  [`emoa::dominated_hypervolume`](https://rdrr.io/pkg/emoa/man/dominated_hypervolume.html)
-  with
+- refactor: Replace `emoa::dominated_hypervolume` with
   [`moocore::hypervolume`](https://multi-objective.github.io/moocore/r/reference/hypervolume.html)
   for computing the hypervolume indicator.
 
@@ -388,9 +418,8 @@ CRAN release: 2021-01-23
 CRAN release: 2020-10-08
 
 - refactor: Remove dependency on orphaned package `bibtex`.
-- feat: Add `OptimizerCmaes` which calls
-  [`adagio::pureCMAES`](https://rdrr.io/pkg/adagio/man/cmaes.html) from
-  the `adagio` package.
+- feat: Add `OptimizerCmaes` which calls `adagio::pureCMAES` from the
+  `adagio` package.
 
 ## bbotk 0.2.1
 

@@ -15,7 +15,7 @@ The optimization is performed asynchronously on a set of workers."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.12.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.13.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,6 +87,28 @@ The optimization is terminated when the terminator criterion is satisfied.
 The result is assigned to the <a href="OptimInstanceAsync.html">OptimInstanceAsync</a> field.
 The main loop periodically checks the status of the workers.
 If all workers crash the optimization is terminated.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="compute-profiles">Compute Profiles<a class="anchor" aria-label="anchor" href="#compute-profiles"></a></h2>
+
+
+<p>Workers can be distributed over the
+<a href="https://mirai.r-lib.org/articles/mirai.html#scoped-profiles" class="external-link">compute profiles</a> of <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a>,
+e.g. one profile for CPU daemons and one profile for GPU daemons.
+The profiles are set with the <code>profiles</code> argument of <code><a href="https://rush.mlr-org.com/reference/rush_plan.html" class="external-link">rush::rush_plan()</a></code> and the daemons of each profile must be
+created beforehand.</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>mirai<span class="sc">::</span><span class="fu">daemons</span>(<span class="dv">2</span>, <span class="at">.compute =</span> <span class="st">"cpu"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>mirai<span class="sc">::</span><span class="fu">daemons</span>(<span class="dv">2</span>, <span class="at">.compute =</span> <span class="st">"gpu"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>rush<span class="sc">::</span><span class="fu">rush_plan</span>(<span class="at">profiles =</span> <span class="fu">c</span>(<span class="at">cpu =</span> <span class="dv">2</span>, <span class="at">gpu =</span> <span class="dv">2</span>), <span class="at">worker_type =</span> <span class="st">"mirai"</span>)</span></code></pre><p></p></div>
+<p>Compute profiles are only supported by the <code>"mirai"</code> worker type.
+The profile a worker runs on is available as <code>instance$rush$profile</code> in the private <code>$.optimize()</code> method and in the
+callbacks, so that an optimizer can behave differently depending on the hardware it runs on.</p>
+<p>Each compute profile has its own queue.
+Points pushed with <code>instance$archive$push_points(xss, profile = "gpu")</code> are only evaluated by the workers of the
+<code>"gpu"</code> profile,
+whereas points pushed without a profile are added to the shared queue and are evaluated by any worker.
+A worker takes points from the queue of its profile first and falls back to the shared queue.
+The <code>instance$archive$n_queued_per_profile</code> field shows the number of points queued for each profile.</p>
     </div>
     <div class="section level2">
     <h2 id="debug-mode">Debug Mode<a class="anchor" aria-label="anchor" href="#debug-mode"></a></h2>

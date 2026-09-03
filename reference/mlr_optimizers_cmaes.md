@@ -1,10 +1,11 @@
 # Optimization via Covariance Matrix Adaptation Evolution Strategy
 
 `OptimizerBatchCmaes` class that implements CMA-ES. Calls
-[`adagio::pureCMAES()`](https://rdrr.io/pkg/adagio/man/cmaes.html) from
-package [adagio](https://CRAN.R-project.org/package=adagio). The
+[`libcmaesr::cmaes()`](https://libcmaesr.mlr-org.com/reference/cmaes.html)
+from package [libcmaesr](https://CRAN.R-project.org/package=libcmaesr),
+which is a lightweight interface to the `libcmaes` C++ library. The
 algorithm is typically applied to search space dimensions between three
-and fifty. Lower search space dimensions might crash.
+and fifty.
 
 ## Dictionary
 
@@ -20,10 +21,6 @@ or with the associated sugar function
 
 ## Parameters
 
-- `sigma`:
-
-  `numeric(1)`
-
 - `start_values`:
 
   `character(1)`  
@@ -38,11 +35,32 @@ or with the associated sugar function
   Custom start values. Only applicable if `start_values` parameter is
   set to `"custom"`.
 
-For the meaning of the control parameters, see
-[`adagio::pureCMAES()`](https://rdrr.io/pkg/adagio/man/cmaes.html). Note
-that we have removed all control parameters which refer to the
-termination of the algorithm and where our terminators allow to obtain
-the same behavior.
+- `seed`:
+
+  `integer(1)`  
+  Seed of the random number generator of `libcmaes`. Unset by default,
+  in which case the generator is seeded from R and the optimization is
+  reproducible with [`set.seed()`](https://rdrr.io/r/base/Random.html).
+
+All remaining parameters are passed to
+[`libcmaesr::cmaes_control()`](https://libcmaesr.mlr-org.com/reference/cmaes_control.html),
+see there for their meaning. Note that we have removed all control
+parameters which refer to the termination of the algorithm and where our
+terminators allow to obtain the same behavior, i.e. `max_fevals`,
+`max_iter`, and `ftarget`. The internal convergence criteria of the
+algorithm still apply, so the optimization can stop before the
+[Terminator](https://bbotk.mlr-org.com/reference/Terminator.md) is
+triggered.
+
+## Batch evaluation
+
+The optimizer evaluates a whole generation of `lambda` points in one
+batch. The
+[Terminator](https://bbotk.mlr-org.com/reference/Terminator.md) is only
+checked between generations, so the number of evaluations can exceed the
+budget of
+[TerminatorEvals](https://bbotk.mlr-org.com/reference/mlr_terminators_evals.md)
+by up to `lambda - 1` points.
 
 ## Progress Bars
 
@@ -106,8 +124,8 @@ The objects of this class are cloneable with this method.
 ## Examples
 
 ``` r
-# example only runs if GenSA is available
-if (mlr3misc::require_namespaces("adagio", quietly = TRUE)) {
+# example only runs if libcmaesr is available
+if (mlr3misc::require_namespaces("libcmaesr", quietly = TRUE)) {
 # define the objective function
 fun = function(xs) {
   list(y = - (xs[[1]] - 2)^2 - (xs[[2]] + 3)^2 - (xs[[3]] + 4)^2 + 10)
@@ -151,7 +169,7 @@ instance$archive
 # best performing configuration
 instance$result
 }
-#>           x1        x2        x3  x_domain         y
-#>        <num>     <num>     <num>    <list>     <num>
-#> 1: 0.2459052 -3.758276 0.1484205 <list[3]> -10.86122
+#>          x1       x2        x3  x_domain         y
+#>       <num>    <num>     <num>    <list>     <num>
+#> 1: 2.018607 2.802398 -3.736987 <list[3]> -23.73735
 ```
