@@ -21,6 +21,19 @@ test_that("max and current works", {
   expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 3))
 })
 
+test_that("fractional secs work with progressr", {
+  skip_if_not_installed("progressr")
+  requireNamespace("progressr")
+
+  terminator = trm("run_time", secs = 0.5)
+  inst = MAKE_INST_1D(terminator = terminator)
+  expect_equal(terminator$status(inst$archive)["max_steps"], c("max_steps" = 1L))
+
+  optimizer = opt("random_search")
+  progressr::with_progress(optimizer$optimize(inst))
+  expect_gte(inst$archive$n_evals, 1L)
+})
+
 test_that("TerminatorRunTime works with empty archive", {
   terminator = TerminatorRunTime$new()
   archive = ArchiveBatch$new(ps(x = p_dbl()), ps(y = p_dbl(tags = "minimize")))
