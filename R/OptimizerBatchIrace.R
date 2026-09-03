@@ -211,7 +211,7 @@ OptimizerBatchIrace = R6Class(
       pv$digits = NULL
 
       scenario = list(
-        parameters = paradox_to_irace(inst$search_space, pv$digits),
+        parameters = paradox_to_irace(inst$search_space, digits),
         maxExperiments = terminator$param_set$values$n_evals,
         targetRunnerData = list(inst = inst)
       )
@@ -293,8 +293,7 @@ target_runner_default = function(experiment, exec_target_runner, scenario, targe
 
 paradox_to_irace = function(param_set, digits) {
   assertClass(param_set, "ParamSet")
-  # workaround for mlr3tuning 0.15.0
-  digits = assert_int(digits %??% 15, lower = 0)
+  digits = assert_int(digits, lower = 0)
   if ("ParamUty" %in% param_set$class) {
     stop("<ParamUty> not supported by <OptimizerBatchIrace>")
   }
