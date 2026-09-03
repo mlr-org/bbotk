@@ -280,3 +280,28 @@ test_that("OptimizerAsync passes the compute profile to the optimizer", {
   expect_subset(instance$archive$data$.profile, c("cpu", "gpu", NA))
   expect_true(all(c("cpu", "gpu") %in% instance$archive$data$.profile))
 })
+
+test_that("OptimizerAsync checks the properties of the instance", {
+  rush = start_rush(n_workers = 1)
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
+
+  instance = oi_async(
+    objective = OBJ_1D,
+    search_space = PS_1D_domain,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  optimizer = opt("async_random_search")
+  expect_error(optimizer$optimize(instance), "does not support param types")
+})
+
+test_that("OptimizerAsync rejects a batch instance", {
+  instance = MAKE_INST_1D(trm("evals", n_evals = 5L))
+
+  optimizer = opt("async_random_search")
+  expect_error(optimizer$optimize(instance), "OptimInstanceAsync")
+})
