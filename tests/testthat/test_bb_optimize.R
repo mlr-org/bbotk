@@ -153,3 +153,17 @@ test_that("bb_optimize works with objective", {
   expect_named(res$value, "z")
   expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
 })
+
+test_that("bb_optimize dispatches on the number of targets in the codomain", {
+  objective = ObjectiveRFun$new(
+    fun = function(xs) list(y = as.numeric(xs$x)^2, time = 1),
+    domain = PS_1D,
+    codomain = ps(y = p_dbl(tags = "minimize"), time = p_dbl()),
+    properties = "single-crit"
+  )
+
+  result = bb_optimize(objective, method = "random_search", max_evals = 5L)
+
+  expect_class(result$instance, "OptimInstanceBatchSingleCrit")
+  expect_names(names(result$value), identical.to = "y")
+})

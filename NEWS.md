@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* fix: `bb_optimize()` now creates a single-criteria instance for a codomain with one target and additional non-target parameters instead of a multi-criteria instance (#373).
+
 * fix: `$result_y` of the single-criteria instances now only returns the target values of the codomain. It errored for a codomain with additional non-target parameters (#371).
 
 # bbotk 1.13.0
