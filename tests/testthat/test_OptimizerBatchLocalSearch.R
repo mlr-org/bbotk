@@ -435,3 +435,30 @@ test_that("OptimizerBatchLocalSearch works with CondAnyOf", {
   }
   if (nrow(dt[x1 %in% c("a", "b")])) expect_true(all(!is.na(dt[x1 %in% c("a", "b")]$x2)))
 })
+
+test_that("local_search matches parameter names exactly", {
+  # "a" is a prefix of "ab", which was matched first and produced a self dependency
+  search_space = ps(
+    ab = p_dbl(0, 1, depends = a == "x"),
+    a = p_fct(c("x", "y"))
+  )
+  control = local_search_control(n_searches = 2L, n_steps = 5L, n_neighs = 5L)
+  objective = function(xdt) ifelse(xdt$a == "x", xdt$ab, 1)
+
+  res = local_search(objective, search_space, control)
+
+  expect_names(names(res$x), permutation.of = c("ab", "a"))
+  expect_number(res$y)
+})
+
+test_that("local_search matches factor levels exactly", {
+  # "a" is a prefix of "ab", so mutating away from "a" was a no-op
+  search_space = ps(x = p_fct(c("ab", "a")))
+  control = local_search_control(n_searches = 1L, n_steps = 5L, n_neighs = 1L)
+  objective = function(xdt) as.numeric(xdt$x == "a")
+
+  res = local_search(objective, search_space, control, init_points = data.table(x = "a"))
+
+  expect_equal(res$x$x, "ab")
+  expect_equal(res$y, 0)
+})
