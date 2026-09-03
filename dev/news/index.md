@@ -2,6 +2,10 @@
 
 ## bbotk (development version)
 
+- fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer
+  returns before the terminator is satisfied, e.g. when the design of
+  `OptimizerAsyncDesignPoints` is exhausted
+  ([\#385](https://github.com/mlr-org/bbotk/issues/385)).
 - fix:
   [`optimize_async_default()`](https://bbotk.mlr-org.com/dev/reference/optimize_async_default.md)
   now checks the instance and the properties of the optimizer before the
