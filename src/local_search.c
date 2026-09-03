@@ -230,9 +230,7 @@ void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace* ss,
             // Find current level index
             const char* current_level = CHAR(STRING_ELT(s_neigh_col, row_i));
             int current_idx = 0;
-            while (current_idx < n_levels &&
-              strncmp(current_level, ss->level_names[param_j][current_idx], strlen(current_level)) != 0)
-            {
+            while (current_idx < n_levels && strcmp(current_level, ss->level_names[param_j][current_idx]) != 0) {
                 current_idx++;
             }
             // Sample from other levels using shift trick
@@ -295,7 +293,7 @@ SEXP safe_eval(SEXP expr) {
 // Find parameter index by name, -1 if not found (should not happen)
 int find_param_index(const char* param_name, const SearchSpace* ss) {
     for (int j = 0; j < ss->n_params; j++) {
-        if (strncmp(ss->param_names[j], param_name, strlen(param_name)) == 0) {
+        if (strcmp(ss->param_names[j], param_name) == 0) {
             return j;
         }
     }
