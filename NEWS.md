@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* fix: The C code of `local_search()` now raises R errors instead of using `assert()`, which aborted the R session and vanished entirely in a build with `-DNDEBUG` (#382).
+
 # bbotk 1.13.0
 
 * feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`, e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile. The profile a worker runs on is available as `instance$rush$profile`.
