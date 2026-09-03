@@ -76,3 +76,72 @@ test_that("OptimizerBatchChain", {
     expected_ids
   )
 })
+
+test_that("OptimizerBatchChain respects the terminator of the instance", {
+  instance = OptimInstanceBatchSingleCrit$new(
+    objective = OBJ_1D,
+    search_space = PS_1D,
+    terminator = trm("evals", n_evals = 10L)
+  )
+
+  optimizer = opt(
+    "chain",
+    optimizers = list(opt("random_search", batch_size = 1L), opt("random_search", batch_size = 1L)),
+    terminators = list(trm("evals", n_evals = 8L), trm("evals", n_evals = 8L))
+  )
+  optimizer$optimize(instance)
+
+  expect_equal(instance$archive$n_evals, 10L)
+  expect_equal(instance$archive$data$batch_nr, 1:10)
+  expect_equal(
+    instance$archive$data$.optimizer_id,
+    c(rep("OptimizerBatchRandomSearch_1", 8L), rep("OptimizerBatchRandomSearch_2", 2L))
+  )
+})
+
+test_that("OptimizerBatchChain does not duplicate pre-evaluated points", {
+  instance = OptimInstanceBatchSingleCrit$new(
+    objective = OBJ_1D,
+    search_space = PS_1D,
+    terminator = trm("evals", n_evals = 10L)
+  )
+  instance$eval_batch(data.table(x = 0.5))
+
+  optimizer = opt(
+    "chain",
+    optimizers = list(opt("random_search", batch_size = 1L), opt("random_search", batch_size = 1L)),
+    terminators = list(trm("evals", n_evals = 2L), trm("evals", n_evals = 2L))
+  )
+  optimizer$optimize(instance)
+
+  expect_equal(instance$archive$n_evals, 5L)
+  expect_equal(instance$archive$data$batch_nr, 1:5)
+  expect_equal(sum(instance$archive$data$x == 0.5), 1L)
+})
+
+test_that("OptimizerBatchChain runtime terminator of the instance is not restarted", {
+  objective = ObjectiveRFun$new(
+    fun = function(xs) {
+      Sys.sleep(0.1)
+      list(y = xs$x^2)
+    },
+    domain = PS_1D,
+    properties = "single-crit"
+  )
+
+  instance = OptimInstanceBatchSingleCrit$new(
+    objective = objective,
+    search_space = PS_1D,
+    terminator = trm("run_time", secs = 1L)
+  )
+
+  optimizer = opt(
+    "chain",
+    optimizers = list(opt("random_search", batch_size = 1L), opt("random_search", batch_size = 1L)),
+    terminators = list(trm("evals", n_evals = 100L), trm("evals", n_evals = 100L))
+  )
+  optimizer$optimize(instance)
+
+  # the runtime terminator of the instance stops the first optimizer before it uses up its 100 evaluations
+  expect_lt(instance$archive$n_evals, 50L)
+})
