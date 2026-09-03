@@ -59,3 +59,19 @@ test_that("OptimizerBatchNLoptr custom start values work", {
   optimizer$optimize(instance)
   expect_equal(unlist(instance$archive$data[1L, c("x1", "x2")]), c(x1 = -9.1, x2 = 1.3))
 })
+
+test_that("OptimizerBatchNLoptr internal termination criteria are honored", {
+  skip_on_os("windows")
+  skip_if_not_installed("nloptr")
+
+  instance = oi(OBJ_1D, search_space = PS_1D, terminator = trm("evals", n_evals = 50L))
+  optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA", x0 = 0.9, maxeval = 5L)
+  optimizer$optimize(instance)
+  # nloptr stops on its own budget, the terminator would allow 50 evaluations
+  expect_lte(instance$archive$n_evals, 10L)
+
+  instance = oi(OBJ_1D, search_space = PS_1D, terminator = trm("evals", n_evals = 50L))
+  optimizer = opt("nloptr", algorithm = "NLOPT_LN_BOBYQA", x0 = 0.9)
+  optimizer$optimize(instance)
+  expect_gt(instance$archive$n_evals, 10L)
+})

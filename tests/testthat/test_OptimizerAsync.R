@@ -281,6 +281,54 @@ test_that("OptimizerAsync passes the compute profile to the optimizer", {
   expect_true(all(c("cpu", "gpu") %in% instance$archive$data$.profile))
 })
 
+test_that("debug mode terminates when the design is exhausted", {
+  rush = start_rush(n_workers = 1)
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+    options(bbotk.debug = FALSE)
+  })
+  options(bbotk.debug = TRUE)
+
+  instance = oi_async(
+    objective = OBJ_2D,
+    search_space = PS_2D,
+    terminator = trm("evals", n_evals = 20L),
+    rush = rush
+  )
+
+  optimizer = opt("async_design_points", design = data.table(x1 = c(0, 0.5), x2 = c(0, 0.5)))
+  optimizer$optimize(instance)
+
+  expect_equal(instance$archive$n_finished, 2L)
+  expect_data_table(instance$result, nrows = 1L)
+})
+
+test_that("OptimizerAsync checks the properties of the instance", {
+  rush = start_rush(n_workers = 1)
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
+
+  instance = oi_async(
+    objective = OBJ_1D,
+    search_space = PS_1D_domain,
+    terminator = trm("evals", n_evals = 5L),
+    rush = rush
+  )
+
+  optimizer = opt("async_random_search")
+  expect_error(optimizer$optimize(instance), "does not support param types")
+})
+
+test_that("OptimizerAsync rejects a batch instance", {
+  instance = MAKE_INST_1D(trm("evals", n_evals = 5L))
+
+  optimizer = opt("async_random_search")
+  expect_error(optimizer$optimize(instance), "OptimInstanceAsync")
+})
+
 test_that("workers are stopped when the optimization errors", {
   rush = start_rush(n_workers = 1)
   on.exit({

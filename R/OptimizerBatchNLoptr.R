@@ -49,7 +49,7 @@
 #'   Relative tolerance.
 #'   Original default is 10^-4.
 #'   Deactivate with `-1`.
-#'   Overwritten with `-1`.}
+#'   Default is `-1`.}
 #' \item{`xtol_abs`}{`numeric(1)`\cr
 #'   Absolute tolerance.
 #'   Deactivate with `-1`.
@@ -211,16 +211,9 @@ OptimizerBatchNLoptr = R6Class(
       }
       pv$eval_grad_f = eval_grad_f
 
+      # the internal termination criteria are deactivated by their init values and are only passed on when the user
+      # sets them
       opts = pv[which(names(pv) %nin% formalArgs(nloptr::nloptr))]
-      # deactivate termination criterions which are replaced by Terminators
-      opts = insert_named(
-        opts,
-        list(
-          maxeval = -1,
-          maxtime = -1,
-          stopval = -Inf
-        )
-      )
       pv = pv[which(names(pv) %nin% names(opts))]
 
       invoke(
