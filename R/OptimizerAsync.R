@@ -139,8 +139,7 @@ optimize_async_default = function(instance, optimizer, design = NULL, n_workers 
     instance$archive$push_points(transpose_list(design))
   }
 
-  # the workers must be stopped on every exit path, e.g. an error while waiting for the workers or while logging the
-  # results, an error in `.assign_result()`, or an interrupt by the user
+  # the workers must be stopped on every exit path
   on.exit(instance$rush$stop_workers(type = "kill"), add = TRUE)
 
   if (getOption("bbotk.debug", FALSE)) {
