@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <assert.h>
 
 // print a data.table row (for debugging)
 void dt_print_row(SEXP dt, int row) {
@@ -121,7 +120,7 @@ int dt_is_na(SEXP s_dt, int row_i, int param_j) {
             return STRING_ELT(s_col, row_i) == NA_STRING;
     }
     // this should never happen...
-    assert(0);
+    Rf_error("Unsupported column type in search space");
     return 0;
 }
 
@@ -190,7 +189,9 @@ SEXP dt_generate(int n, SearchSpace* ss) {
 // Helper function mutate a single element of a config (in a DT)
 void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace* ss, const Control* ctrl) {
     // we only mutate elements that are not NA
-    assert(!dt_is_na(s_dt, row_i, param_j));
+    if (dt_is_na(s_dt, row_i, param_j)) {
+        Rf_error("Cannot mutate the inactive parameter '%s'", ss->param_names[param_j]);
+    }
     int param_class = ss->param_classes[param_j];
     SEXP s_neigh_col = VECTOR_ELT(s_dt, param_j);
     if (param_class == 0) { // ParamDbl
@@ -403,10 +404,10 @@ void extract_ctrl_info(SEXP s_ctrl, Control* ctrl) {
     ctrl->n_neighs = asInteger(RC_get_list_el_by_name(s_ctrl, "n_neighs"));
     ctrl->mut_sd = asReal(RC_get_list_el_by_name(s_ctrl, "mut_sd"));
     ctrl->stagnate_max = asInteger(RC_get_list_el_by_name(s_ctrl, "stagnate_max"));
-    assert(ctrl->n_searches > 0);
-    assert(ctrl->n_steps >= 0);
-    assert(ctrl->n_neighs > 0);
-    assert(ctrl->mut_sd > 0);
+    if (ctrl->n_searches <= 0) Rf_error("'n_searches' must be positive");
+    if (ctrl->n_steps < 0) Rf_error("'n_steps' must not be negative");
+    if (ctrl->n_neighs <= 0) Rf_error("'n_neighs' must be positive");
+    if (ctrl->mut_sd <= 0) Rf_error("'mut_sd' must be positive");
 }
 
 
@@ -437,7 +438,9 @@ void toposort_params(SearchSpace* ss) {
             }
         }
     }
-    assert(count == ss->n_params);
+    if (count != ss->n_params) {
+        Rf_error("The dependencies of the search space are cyclic");
+    }
     ss->sorted_param_indices = sorted;
 }
 
@@ -457,7 +460,9 @@ void reorder_conds_by_toposort(SearchSpace* ss) {
             }
         }
     }
-    assert(reordered_count == ss->n_conds);
+    if (reordered_count != ss->n_conds) {
+        Rf_error("The dependencies of the search space are cyclic");
+    }
     // copy back to original array
     for (int i = 0; i < ss->n_conds; i++) {
         ss->conds[i] = reordered_conds[i];

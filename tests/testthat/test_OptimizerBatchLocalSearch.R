@@ -435,3 +435,14 @@ test_that("OptimizerBatchLocalSearch works with CondAnyOf", {
   }
   if (nrow(dt[x1 %in% c("a", "b")])) expect_true(all(!is.na(dt[x1 %in% c("a", "b")]$x2)))
 })
+
+test_that("local_search errors on invalid control values instead of aborting", {
+  search_space = ps(x = p_dbl(-1, 1))
+  control = local_search_control(n_searches = 2L, n_steps = 1L, n_neighs = 2L, mut_sd = 0)
+  init_points = data.table(x = c(-0.5, 0.5))
+
+  expect_error(
+    local_search(function(xdt) xdt$x^2, search_space, control, init_points),
+    "mut_sd"
+  )
+})
