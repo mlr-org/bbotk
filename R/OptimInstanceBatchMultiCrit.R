@@ -95,7 +95,7 @@ OptimInstanceBatchMultiCrit = R6Class(
       assert_data_table(private$.result_xdt)
       assert_names(names(private$.result_xdt), must.include = self$search_space$ids())
       assert_data_table(private$.result_ydt)
-      assert_names(names(private$.result_ydt), permutation.of = self$objective$codomain$ids())
+      assert_names(names(private$.result_ydt), permutation.of = self$objective$codomain$target_ids)
       assert_data_table(private$.result_extra, null.ok = TRUE)
 
       # add x_domain to result
@@ -119,7 +119,7 @@ OptimInstanceBatchMultiCrit = R6Class(
     #' @field result_y (`numeric(1)`)\cr
     #' Optimal outcome.
     result_y = function() {
-      private$.result[, self$objective$codomain$ids(), with = FALSE]
+      private$.result[, self$objective$codomain$target_ids, with = FALSE]
     }
   ),
 
