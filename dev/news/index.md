@@ -13,6 +13,11 @@
   single or multi-criteria mismatches, and missing packages are reported
   in the main process instead of crashing the workers
   ([\#386](https://github.com/mlr-org/bbotk/issues/386)).
+- fix:
+  [`optimize_async_default()`](https://bbotk.mlr-org.com/dev/reference/optimize_async_default.md)
+  now stops the workers on every exit path, including errors and
+  interrupts. A failing optimization left the workers running before
+  ([\#384](https://github.com/mlr-org/bbotk/issues/384)).
 - fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the
   task cache of rush in place, which changed the order of
   `$finished_data` and `$data` for all later calls
