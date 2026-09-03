@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* fix: `assign_result_default()` now raises a readable error when the terminator is already terminated before the first evaluation instead of failing with `column not found` (#377).
+
 # bbotk 1.13.0
 
 * feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`, e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile. The profile a worker runs on is available as `instance$rush$profile`.

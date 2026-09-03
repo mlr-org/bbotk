@@ -43,3 +43,13 @@ test_that("optimize return works", {
   z = optimizer$optimize(instance)
   expect_equal(z, instance$result)
 })
+
+test_that("assign_result_default errors on an empty archive", {
+  instance = MAKE_INST_1D(trm("evals", n_evals = 0L))
+
+  expect_error(
+    opt("random_search")$optimize(instance),
+    "No point was evaluated",
+    class = "Mlr3ErrorBbotk"
+  )
+})
