@@ -641,7 +641,10 @@ void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y,
 
 int eval_obj(int n, SEXP s_x, SEXP s_obj, double* y, const Control* ctrl) {
     SEXP s_call = PROTECT(Rf_lang2(s_obj, s_x));
+    // the RNG state must be written back before we call into R, because the objective may draw random numbers itself
+    PutRNGstate();
     SEXP s_y = PROTECT(safe_eval(s_call));
+    GetRNGstate();
     int eval_ok = 0;
     if (s_y != R_NilValue) {
         memcpy(y, REAL(s_y), n * sizeof(double));
