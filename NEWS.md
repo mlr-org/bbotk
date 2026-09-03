@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* fix: `Objective$eval_many()` no longer multiplies the number of rows when the objective returns an extra that is an atomic vector of length greater than one (#367).
+
 # bbotk 1.13.0
 
 * feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`, e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile. The profile a worker runs on is available as `instance$rush$profile`.
