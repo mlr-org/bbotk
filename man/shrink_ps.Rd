@@ -18,7 +18,6 @@ around.}
 Should feasibility of the parameters be checked?
 If feasibility is not checked, and invalid values are present, no shrinking
 will be done.
-Must be turned off in the case of the \link[paradox:ParamSet]{paradox::ParamSet} having a trafo.
 Default is \code{FALSE}.}
 }
 \value{
@@ -37,14 +36,14 @@ added.
 Note that the returned \link[paradox:ParamSet]{paradox::ParamSet} has lost all its original
 \code{default}s, as they may have become infeasible.
 
-If the \link[paradox:ParamSet]{paradox::ParamSet} has a trafo, \code{x} is expected to contain the
-transformed values.
+\code{x} is always expected to contain the values on the scale of \code{param_set},
+i.e. the untransformed values before a trafo is applied.
 }
 \examples{
 library(paradox)
 library(data.table)
 param_set = ps(
-  x = p_dbl(lower = 0, upper = 10),
+  x1 = p_dbl(lower = 0, upper = 10),
   x2 = p_int(lower = -10, upper = 10),
   x3 = p_fct(levels = c("a", "b", "c")),
   x4 = p_lgl()

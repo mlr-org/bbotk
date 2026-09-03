@@ -39,38 +39,42 @@ test_that("shrink_ps trafo and deps", {
     x4 = p_lgl()
   )
 
-  x = param_set$trafo(data.table(x1 = log(5), x2 = 0, x3 = "b", x4 = FALSE))
-  # expect_error(shrink_ps(param_set, x = as.data.table(x), check.feasible = TRUE)) # nolint
-  # TODO: ask sumny if this should actually be an error here
-  psx = shrink_ps(param_set, x = as.data.table(x))
+  # x contains the untransformed search space values
+  x = data.table(x1 = log(5), x2 = 0, x3 = "b", x4 = FALSE)
+  psx = shrink_ps(param_set, x = x)
 
   expect_equal(psx$lower, c(x1 = pmax(log(1), log(5) - (log(10) - log(1)) / 4), x2 = -5, x3 = NA, x4 = NA))
   expect_equal(psx$upper, c(x1 = pmin(log(10), log(5) + (log(10) - log(1)) / 4), x2 = 5, x3 = NA, x4 = NA))
   expect_true(psx$nlevels[["x3"]] == 2L && "b" %in% psx$levels$x3)
   # ParamLgls have the value to be shrunk around set as a default
   expect_true(psx$nlevels[["x4"]] == 2L && psx$default[["x4"]] == FALSE && psx$tags[["x4"]] == "shrunk")
+
+  y = psx$trafo(x)
+  expect_equal(param_set$trafo(x), y) # trafo works after shrinking
+  expect_equal(param_set$deps, psx$deps) # dependencies are still there
 })
 
-test_that("shrink_ps trafo and deps via sugar", {
-  param_set = ps(
-    x1 = p_dbl(lower = log(1), upper = log(10), trafo = function(x) exp(x)),
-    x2 = p_int(lower = -10, upper = 10, depends = x3 == "b"),
-    x3 = p_fct(levels = c("a", "b", "c")),
-    x4 = p_lgl()
+test_that("shrink_ps shrinks around the untransformed value", {
+  param_set = ps(x = p_dbl(-3, 3, trafo = function(x) 10^x))
+
+  psx = shrink_ps(param_set, x = data.table(x = 2))
+  expect_equal(psx$lower[["x"]], 0.5)
+  expect_equal(psx$upper[["x"]], 3)
+})
+
+test_that("OptimizerBatchFocusSearch shrinks around the best point with a trafo", {
+  objective = ObjectiveRFun$new(
+    fun = function(xs) list(y = abs(log10(xs$x) - 2)),
+    domain = ps(x = p_dbl(lower = 1e-3, upper = 1e3)),
+    codomain = ps(y = p_dbl(tags = "minimize")),
+    properties = "deterministic"
   )
+  search_space = ps(x = p_dbl(-3, 3, trafo = function(x) 10^x))
+  instance = oi(objective, search_space = search_space, terminator = trm("evals", n_evals = 200))
 
-  x = param_set$trafo(data.table(x1 = log(5), x2 = 0, x3 = "b", x4 = FALSE))
-  # expect_error(shrink_ps(param_set, x = as.data.table(x), check.feasible = TRUE)) # nolint
-  # TODO: ask sumny if this should actually be an error here
-  psx = shrink_ps(param_set, x = as.data.table(x))
+  optimizer = opt("focus_search", n_points = 10L, maxit = 19L)
+  optimizer$optimize(instance)
 
-  expect_equal(psx$lower, c(x1 = pmax(log(1), log(5) - (log(10) - log(1)) / 4), x2 = -5, x3 = NA, x4 = NA))
-  expect_equal(psx$upper, c(x1 = pmin(log(10), log(5) + (log(10) - log(1)) / 4), x2 = 5, x3 = NA, x4 = NA))
-  expect_true(psx$nlevels[["x3"]] == 2L && "b" %in% psx$levels$x3)
-  # ParamLgls have the value to be shrunk around set as a default
-  expect_true(psx$nlevels[["x4"]] == 2L && psx$default[["x4"]] == FALSE && psx$tags[["x4"]] == "shrunk")
-
-  y = psx$trafo(data.table(x1 = log(5), x2 = 0, x3 = "b", x4 = FALSE))
-  expect_equal(x, y) # trafo works after shrinking
-  expect_equal(param_set$deps, psx$deps) # dependencies are still there
+  # the optimum is at x = 2 in the search space, focus search must get close
+  expect_equal(instance$result_x_search_space$x, 2, tolerance = 0.1)
 })
