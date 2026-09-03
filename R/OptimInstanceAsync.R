@@ -112,7 +112,19 @@ OptimInstanceAsync = R6Class(
 
       # eval
       key = self$archive$push_running_point(private$.xs)
-      private$.ys = self$objective$eval(private$.xs_trafoed)
+      private$.ys = tryCatch(
+        self$objective$eval(private$.xs_trafoed),
+        error = function(cond) {
+          # a failing objective must not kill the worker, the point is moved to the failed points instead
+          lg$info("Evaluation of point failed: %s", conditionMessage(cond))
+          self$archive$fail_point(key, condition = cond)
+          NULL
+        }
+      )
+
+      if (is.null(private$.ys)) {
+        return(invisible(NULL))
+      }
 
       call_back("on_optimizer_after_eval", self$objective$callbacks, self$objective$context)
 
@@ -134,12 +146,22 @@ OptimInstanceAsync = R6Class(
           call_back("on_optimizer_queue_before_eval", self$objective$callbacks, self$objective$context)
 
           # eval
-          private$.ys = self$objective$eval(private$.xs_trafoed)
+          private$.ys = tryCatch(
+            self$objective$eval(private$.xs_trafoed),
+            error = function(cond) {
+              # a failing objective must not kill the worker, the point is moved to the failed points instead
+              lg$info("Evaluation of queued point failed: %s", conditionMessage(cond))
+              self$archive$fail_point(task$key, condition = cond)
+              NULL
+            }
+          )
 
-          call_back("on_optimizer_queue_after_eval", self$objective$callbacks, self$objective$context)
+          if (!is.null(private$.ys)) {
+            call_back("on_optimizer_queue_after_eval", self$objective$callbacks, self$objective$context)
 
-          # push result
-          self$archive$finish_point(task$key, private$.ys, x_domain = private$.xs_trafoed)
+            # push result
+            self$archive$finish_point(task$key, private$.ys, x_domain = private$.xs_trafoed)
+          }
         }
       }
     },

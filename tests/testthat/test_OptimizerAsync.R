@@ -41,7 +41,7 @@ test_that("OptimizerAsync assigns result", {
   expect_data_table(instance$result, nrows = 1)
 })
 
-test_that("OptimizerAsync throws an error when all workers are lost", {
+test_that("OptimizerAsync throws an error when no evaluation finished", {
   rush = start_rush()
   on.exit({
     rush$reset()
@@ -280,3 +280,4 @@ test_that("OptimizerAsync passes the compute profile to the optimizer", {
   expect_subset(instance$archive$data$.profile, c("cpu", "gpu", NA))
   expect_true(all(c("cpu", "gpu") %in% instance$archive$data$.profile))
 })
+
