@@ -2,6 +2,17 @@
 
 ## bbotk (development version)
 
+- fix:
+  [`optimize_async_default()`](https://bbotk.mlr-org.com/dev/reference/optimize_async_default.md)
+  now checks the instance and the properties of the optimizer before the
+  workers are started, so unsupported parameter classes, dependencies,
+  single or multi-criteria mismatches, and missing packages are reported
+  in the main process instead of crashing the workers
+  ([\#386](https://github.com/mlr-org/bbotk/issues/386)).
+- fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the
+  task cache of rush in place, which changed the order of
+  `$finished_data` and `$data` for all later calls
+  ([\#387](https://github.com/mlr-org/bbotk/issues/387)).
 - fix: `OptimizerBatchIrace` now passes the `digits` parameter to irace
   instead of always using 15 digits
   ([\#362](https://github.com/mlr-org/bbotk/issues/362)).
