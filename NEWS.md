@@ -2,6 +2,8 @@
 
 * refactor: `OptimizerBatchCmaes` now calls `libcmaesr::cmaes()` instead of `adagio::pureCMAES()`, which is no longer suggested. The optimizer gains the `algo`, `lambda`, `max_restarts`, `elitism`, `tpa`, `tpa_dsigma`, `seed`, `f_tolerance`, `x_tolerance`, `x0_lower`, and `x0_upper` parameters, and evaluates a whole generation of `lambda` points per batch. The `sigma` parameter no longer defaults to `0.5` but is handled by `libcmaes`.
 
+* fix: `bb_optimize()` now creates a single-criteria instance for a codomain with one target and additional non-target parameters instead of a multi-criteria instance (#373).
+
 * fix: `$result_y` of the single-criteria instances now only returns the target values of the codomain. It errored for a codomain with additional non-target parameters (#371).
 
 * feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`,

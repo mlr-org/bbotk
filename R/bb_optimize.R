@@ -123,7 +123,7 @@ bb_optimize.Objective = function(
   } else if (!is.null(max_time)) {
     trm("run_time", secs = max_time)
   }
-  optiminstance = if (x$codomain$length == 1) OptimInstanceBatchSingleCrit else OptimInstanceBatchMultiCrit
+  optiminstance = if (x$codomain$target_length == 1) OptimInstanceBatchSingleCrit else OptimInstanceBatchMultiCrit
 
   instance = optiminstance$new(x, terminator = terminator, search_space = search_space, check_values = FALSE)
   optimizer$optimize(instance)
