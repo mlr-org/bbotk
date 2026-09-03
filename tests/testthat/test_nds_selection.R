@@ -154,3 +154,20 @@ test_that("nds_selection in Archive works", {
     })))
   })
 })
+
+test_that("nds_selection checks the length of minimize", {
+  points = matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3L)
+
+  expect_error(
+    nds_selection(points, n_select = 1L, minimize = c(TRUE, FALSE)),
+    "minimize"
+  )
+  expect_silent(nds_selection(points, n_select = 1L, minimize = c(TRUE, FALSE, TRUE)))
+  expect_silent(nds_selection(points, n_select = 1L, minimize = TRUE))
+})
+
+test_that("nds_selection rejects missing values", {
+  points = matrix(c(1, 2, NA, 4), nrow = 2L)
+
+  expect_error(nds_selection(points, n_select = 1L), "missing values")
+})
