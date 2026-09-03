@@ -19,7 +19,9 @@ branin_wu(x1, x2, fidelity)
 
 \item{x2}{(\code{numeric()}).}
 
-\item{noise}{(\code{numeric()}).}
+\item{noise}{(\code{numeric()})\cr
+Noise term that is added to the function value.
+Default is \code{0}.}
 
 \item{fidelity}{(\code{numeric()}).}
 }

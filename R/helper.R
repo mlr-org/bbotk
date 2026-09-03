@@ -113,7 +113,9 @@ search_start = function(search_space, type = "random") {
 #'
 #' @param x1 (`numeric()`).
 #' @param x2 (`numeric()`).
-#' @param noise (`numeric()`).
+#' @param noise (`numeric()`)\cr
+#'   Noise term that is added to the function value.
+#'   Default is `0`.
 #' @param fidelity (`numeric()`).
 #'
 #' @return `numeric()`
@@ -123,7 +125,7 @@ search_start = function(search_space, type = "random") {
 #' branin(x1 = 12, x2 = 2, noise = 0.05)
 #' branin_wu(x1 = 12, x2 = 2, fidelity = 1)
 branin = function(x1, x2, noise = 0) {
-  (x2 - 5.1 / (4 * pi^2) * x1^2 + 5 / pi * x1 - 6)^2 + 10 * (1 - 1 / (8 * pi)) * cos(x1) + 10
+  (x2 - 5.1 / (4 * pi^2) * x1^2 + 5 / pi * x1 - 6)^2 + 10 * (1 - 1 / (8 * pi)) * cos(x1) + 10 + noise
 }
 
 #' @rdname branin
