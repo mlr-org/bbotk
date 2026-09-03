@@ -1,6 +1,8 @@
 # bbotk (development version)
 
+* fix: `OptimizerBatchIrace` now passes the `digits` parameter to irace instead of always using 15 digits (#362).
 * fix: `OptimizerBatchIrace` now writes the actual step of a race into the `step` column of the archive, which was always `1` (#363).
+* fix: `OptimizerBatchNLoptr` no longer overwrites the `maxeval`, `maxtime`, and `stopval` parameters. The internal termination criteria set by the user are now passed on to `nloptr::nloptr()` (#361).
 
 # bbotk 1.13.0
 
