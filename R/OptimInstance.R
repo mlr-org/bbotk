@@ -59,8 +59,7 @@ OptimInstance = R6Class(
         label = label,
         man = man
       )
-
-      # the objective is only available after the fields are initialized
+      
       assert_terminable(terminator, self)
     },
 
