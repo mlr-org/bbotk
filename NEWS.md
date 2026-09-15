@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: `shrink_ps()` now expects the point to shrink around on the scale of the search space instead of the transformed scale, and the `uniroot()` based inversion of the trafo is removed. `OptimizerBatchFocusSearch` shrunk the search space around the wrong point whenever the search space had a trafo (#360).
 * fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer returns before the terminator is satisfied, e.g. when the design of `OptimizerAsyncDesignPoints` is exhausted (#385).
 * fix: `optimize_async_default()` now checks the instance and the properties of the optimizer before the workers are started, so unsupported parameter classes, dependencies, single or multi-criteria mismatches, and missing packages are reported in the main process instead of crashing the workers (#386).
 * fix: `optimize_async_default()` now stops the workers on every exit path, including errors and interrupts. A failing optimization left the workers running before (#384).
