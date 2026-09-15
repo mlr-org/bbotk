@@ -2,6 +2,14 @@
 
 ## bbotk (development version)
 
+- fix:
+  [`shrink_ps()`](https://bbotk.mlr-org.com/dev/reference/shrink_ps.md)
+  now expects the point to shrink around on the scale of the search
+  space instead of the transformed scale, and the
+  [`uniroot()`](https://rdrr.io/r/stats/uniroot.html) based inversion of
+  the trafo is removed. `OptimizerBatchFocusSearch` shrunk the search
+  space around the wrong point whenever the search space had a trafo
+  ([\#360](https://github.com/mlr-org/bbotk/issues/360)).
 - fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer
   returns before the terminator is satisfied, e.g. when the design of
   `OptimizerAsyncDesignPoints` is exhausted
@@ -35,6 +43,8 @@
   ([\#361](https://github.com/mlr-org/bbotk/issues/361)).
 
 ## bbotk 1.13.0
+
+CRAN release: 2026-09-02
 
 - feat: Asynchronous optimizers support the `mirai` compute profiles set
   with the `profiles` argument of

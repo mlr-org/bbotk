@@ -16,9 +16,8 @@ Note that the returned
 has lost all its original `default`s, as they may have become
 infeasible.
 
-If the
-[paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html)
-has a trafo, `x` is expected to contain the transformed values.
+`x` is always expected to contain the values on the scale of
+`param_set`, i.e. the untransformed values before a trafo is applied.
 
 ## Usage
 
@@ -46,9 +45,7 @@ shrink_ps(param_set, x, check.feasible = FALSE)
   (`logical(1)`)  
   Should feasibility of the parameters be checked? If feasibility is not
   checked, and invalid values are present, no shrinking will be done.
-  Must be turned off in the case of the
-  [paradox::ParamSet](https://paradox.mlr-org.com/reference/ParamSet.html)
-  having a trafo. Default is `FALSE`.
+  Default is `FALSE`.
 
 ## Value
 
@@ -60,7 +57,7 @@ shrink_ps(param_set, x, check.feasible = FALSE)
 library(paradox)
 library(data.table)
 param_set = ps(
-  x = p_dbl(lower = 0, upper = 10),
+  x1 = p_dbl(lower = 0, upper = 10),
   x2 = p_int(lower = -10, upper = 10),
   x3 = p_fct(levels = c("a", "b", "c")),
   x4 = p_lgl()
@@ -70,8 +67,8 @@ shrink_ps(param_set, x = x)
 #> <ParamSet(4)>
 #>        id    class lower upper nlevels        default  value
 #>    <char>   <char> <num> <num>   <num>         <list> <list>
-#> 1:      x ParamDbl     0    10     Inf <NoDefault[0]> [NULL]
-#> 2:     x2 ParamInt    -5     5      11 <NoDefault[0]> [NULL]
+#> 1:     x1 ParamDbl   2.5   7.5     Inf <NoDefault[0]> [NULL]
+#> 2:     x2 ParamInt  -5.0   5.0      11 <NoDefault[0]> [NULL]
 #> 3:     x3 ParamFct    NA    NA       2 <NoDefault[0]> [NULL]
 #> 4:     x4 ParamLgl    NA    NA       2          FALSE [NULL]
 ```
