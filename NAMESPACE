@@ -121,16 +121,22 @@ import(mlr3misc)
 import(paradox)
 importFrom(R6,R6Class)
 importFrom(methods,formalArgs)
-importFrom(mlr3misc,clbk)
-importFrom(mlr3misc,clbks)
-importFrom(mlr3misc,mlr_callbacks)
-importFrom(moocore,hv_contributions)
-importFrom(moocore,hypervolume)
-importFrom(moocore,is_nondominated)
-importFrom(moocore,pareto_rank)
+importFrom(mlr3misc,
+  clbk,
+  clbks,
+  mlr_callbacks
+)
+importFrom(moocore,
+  hv_contributions,
+  hypervolume,
+  is_nondominated,
+  pareto_rank
+)
 importFrom(stats,setNames)
-importFrom(utils,bibentry)
-importFrom(utils,capture.output)
-importFrom(utils,head)
-importFrom(utils,tail)
+importFrom(utils,
+  bibentry,
+  capture.output,
+  head,
+  tail
+)
 useDynLib(bbotk, .registration = TRUE)

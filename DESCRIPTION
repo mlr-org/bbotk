@@ -1,6 +1,6 @@
 Package: bbotk
 Title: Black-Box Optimization Toolkit
-Version: 1.12.0.9000
+Version: 1.13.0.9000
 Authors@R: c(
     person("Marc", "Becker", , "marcbecker@posteo.de", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-8115-0400")),
@@ -35,21 +35,19 @@ Imports:
     moocore (>= 0.3.2),
     R6
 Suggests:
-    adagio,
     GenSA,
     irace (>= 4.0.0),
     knitr,
+    libcmaesr,
     mirai,
     nloptr,
     processx,
     progressr,
     redux,
     RhpcBLASctl,
-    rush (>= 1.2.1.9000),
+    rush (>= 1.3.0),
     testthat (>= 3.0.0),
     uuid
-Remotes:
-    mlr-org/rush
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Encoding: UTF-8
@@ -124,4 +122,4 @@ Collate:
     'sugar.R'
     'worker_loops.R'
     'zzz.R'
-Config/roxygen2/version: 8.0.0.9000
+Config/roxygen2/version: 8.1.0

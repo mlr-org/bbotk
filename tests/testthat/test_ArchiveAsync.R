@@ -475,3 +475,31 @@ test_that("push_result is deprecated and forwards to finish_point", {
 
   expect_data_table(archive$finished_data, nrows = 1)
 })
+
+test_that("best method does not reorder the cache of rush", {
+  rush = start_rush_worker()
+  on.exit(rush$reset())
+
+  archive = ArchiveAsync$new(
+    search_space = PS_2D,
+    codomain = FUN_2D_CODOMAIN,
+    rush = rush
+  )
+
+  xss = list(list(x1 = 1, x2 = 1), list(x1 = 0, x2 = 0), list(x1 = 0.5, x2 = 0.5))
+  keys = archive$push_points(xss)
+  for (i in seq_along(keys)) {
+    archive$pop_point()
+  }
+  ys = list(3, 1, 2)
+  for (i in seq_along(keys)) {
+    archive$finish_point(keys[[i]], ys = list(y = ys[[i]]), x_domain = xss[[i]])
+  }
+
+  # the columns of the cache are permuted in place, so we need a real copy to compare against
+  before = copy(archive$finished_data)
+  expect_equal(before$y, c(3, 1, 2))
+
+  expect_equal(archive$best(n_select = 2L)$y, c(1, 2))
+  expect_equal(archive$finished_data$y, before$y)
+})

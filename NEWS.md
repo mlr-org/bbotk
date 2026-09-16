@@ -1,11 +1,20 @@
 # bbotk (development version)
 
-* feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`,
-  e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile.
-  The profile a worker runs on is available as `instance$rush$profile`.
-* feat: `ArchiveAsync$push_points()` and `ArchiveAsync$push_point()` gain the `profile` argument to queue points for a `mirai` compute profile.
-  Points queued for a profile are only evaluated by the workers running on that profile, whereas points pushed without a profile are queued in the shared queue and are evaluated by any worker.
+* fix: `shrink_ps()` now expects the point to shrink around on the scale of the search space instead of the transformed scale, and the `uniroot()` based inversion of the trafo is removed. `OptimizerBatchFocusSearch` shrunk the search space around the wrong point whenever the search space had a trafo (#360).
+* fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer returns before the terminator is satisfied, e.g. when the design of `OptimizerAsyncDesignPoints` is exhausted (#385).
+* fix: `optimize_async_default()` now checks the instance and the properties of the optimizer before the workers are started, so unsupported parameter classes, dependencies, single or multi-criteria mismatches, and missing packages are reported in the main process instead of crashing the workers (#386).
+* fix: `optimize_async_default()` now stops the workers on every exit path, including errors and interrupts. A failing optimization left the workers running before (#384).
+* fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the task cache of rush in place, which changed the order of `$finished_data` and `$data` for all later calls (#387).
+* fix: `OptimizerBatchIrace` now passes the `digits` parameter to irace instead of always using 15 digits (#362).
+* fix: `OptimizerBatchIrace` now writes the actual step of a race into the `step` column of the archive, which was always `1` (#363).
+* fix: `OptimizerBatchNLoptr` no longer overwrites the `maxeval`, `maxtime`, and `stopval` parameters. The internal termination criteria set by the user are now passed on to `nloptr::nloptr()` (#361).
+
+# bbotk 1.13.0
+
+* feat: Asynchronous optimizers support the `mirai` compute profiles set with the `profiles` argument of `rush::rush_plan()`, e.g. `profiles = c(cpu = 2, gpu = 2)` runs 2 workers on the daemons of the `"cpu"` profile and 2 workers on the daemons of the `"gpu"` profile. The profile a worker runs on is available as `instance$rush$profile`.
+* feat: `ArchiveAsync$push_points()` and `ArchiveAsync$push_point()` gain the `profile` argument to queue points for a `mirai` compute profile. Points queued for a profile are only evaluated by the workers running on that profile, whereas points pushed without a profile are queued in the shared queue and are evaluated by any worker.
 * refactor: `nds_selection()` now uses `moocore::pareto_rank()` and `moocore::hv_contributions()` instead of the `emoa` package, which is no longer suggested. Boundary points now always survive tie breaking in three or more dimensions, matching the previous behavior in two dimensions.
+* refactor: `OptimizerBatchCmaes` now calls `libcmaesr::cmaes()` instead of `adagio::pureCMAES()`, which is no longer suggested. The optimizer gains the `algo`, `lambda`, `max_restarts`, `elitism`, `tpa`, `tpa_dsigma`, `seed`, `f_tolerance`, `x_tolerance`, `x0_lower`, and `x0_upper` parameters, and evaluates a whole generation of `lambda` points per batch. The `sigma` parameter no longer defaults to `0.5` but is handled by `libcmaes`.
 
 # bbotk 1.12.0
 
