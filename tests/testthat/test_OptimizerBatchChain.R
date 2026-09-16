@@ -76,3 +76,33 @@ test_that("OptimizerBatchChain", {
     expected_ids
   )
 })
+
+test_that("OptimizerBatchChain forwards updated values from its public parameter sets", {
+  optimizers = list(opt("random_search"), opt("grid_search"))
+  optimizer = opt("chain",
+    optimizers = optimizers,
+    terminators = list(trm("evals", n_evals = 6L), trm("evals", n_evals = 6L))
+  )
+  expect_identical(
+    names(optimizer$param_set$sets),
+    c("OptimizerBatchRandomSearch_1", "OptimizerBatchGridSearch_1")
+  )
+
+  optimizer$param_set$set_values(
+    OptimizerBatchRandomSearch_1.batch_size = 2L,
+    OptimizerBatchGridSearch_1.batch_size = 3L
+  )
+  instance = MAKE_INST_1D(12L)
+  optimizer$optimize(instance)
+
+  expect_identical(optimizers[[1L]]$param_set$values$batch_size, 2L)
+  expect_identical(optimizers[[2L]]$param_set$values$batch_size, 3L)
+  expect_identical(
+    instance$archive$data[.optimizer_id == "OptimizerBatchRandomSearch_1", .N, by = "batch_nr"]$N,
+    rep(2L, 3L)
+  )
+  expect_identical(
+    instance$archive$data[.optimizer_id == "OptimizerBatchGridSearch_1", .N, by = "batch_nr"]$N,
+    rep(3L, 2L)
+  )
+})

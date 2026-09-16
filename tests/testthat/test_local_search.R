@@ -32,3 +32,37 @@ test_that("c_local_search initial points", {
   expect_equal(res$x, list(x1 = 0, x2 = 1))
   expect_equal(res$y, 0) # n_steps = 1 means we do one step of local search
 })
+
+test_that("c_local_search roots detached dependency snapshots across callbacks", {
+  search_space = paradox::ps(
+    child = paradox::p_dbl(
+      -1,
+      1,
+      depends = parent %in% c("a", "b")
+    ),
+    parent = paradox::p_fct(c("a", "b", "c"))
+  )
+  control = local_search_control(
+    n_searches = 1L,
+    n_steps = 1L,
+    n_neighs = 1L
+  )
+  initial = data.table::data.table(child = 0, parent = "a")
+
+  # Paradox returns a detached dependency facade. Force its former allocation
+  # class to be reused while the objective callback runs; native local-search
+  # state must retain the exact facade snapshot for the complete operation.
+  pressure = new.env(parent = emptyenv())
+  objective = function(xdt) {
+    gc()
+    pressure$objects = replicate(
+      10000L,
+      vector("list", 2L),
+      simplify = FALSE
+    )
+    numeric(nrow(xdt))
+  }
+
+  result = local_search(objective, search_space, control, initial)
+  expect_named(result, c("x", "y"))
+})

@@ -124,3 +124,155 @@ Codomain = R6Class(
     }
   )
 )
+
+# Paradox 2 upgrades the inherited ParamSet state itself, then asks bbotk only
+# to reconstruct the additive Codomain surface. These namespace-local hooks
+# deliberately inspect no legacy methods or private ParamSet representation.
+.inspect_legacy_codomain = function(x) {
+  list(
+    state = NULL,
+    dependencies = structure(list(), names = character())
+  )
+}
+
+.rebuild_legacy_codomain = function(base, state, dependencies) {
+  Codomain$new(base$domains)
+}
+
+.register_paradox_codomain_upgrader = function() {
+  if (!"register_paradox_object_upgrader" %in%
+      getNamespaceExports("paradox")) {
+    return(invisible(FALSE))
+  }
+  getExportedValue("paradox", "register_paradox_object_upgrader")(
+    owner_package = "bbotk",
+    legacy_class = c("Codomain", "ParamSet", "R6"),
+    migration_kind = "additive",
+    inspector = ".inspect_legacy_codomain",
+    rebuilder = ".rebuild_legacy_codomain",
+    retired_bindings = character()
+  )
+  invisible(TRUE)
+}
+
+.leanify_codomain_v2 = function(
+  generator, namespace = generator$parent_env) {
+  old_classname = generator$classname
+  on.exit({
+    generator$classname = old_classname
+  })
+  generator$classname = "bbotkv2_Codomain"
+  mlr3misc::leanify_r6(generator, namespace)
+  invisible(TRUE)
+}
+
+.legacy_codomain_graph_api = function() {
+  "upgrade_paradox_object_graph" %in% getNamespaceExports("paradox")
+}
+
+.upgrade_legacy_codomain_first_use = function(self, target) {
+  if (!.legacy_codomain_graph_api()) return(FALSE)
+  action = getOption("paradox.legacy_object_action", "error")
+  if (!identical(action, "upgrade")) {
+    stop(
+      sprintf(
+        paste0(
+          "A serialized Paradox 1 object tried to call `bbotk::%s`. ",
+          "Upgrade the containing object with ",
+          "`upgrade_paradox_object_graph(x)`. To perform this migration ",
+          "silently on first use, set ",
+          "`options(paradox.legacy_object_action = \"upgrade\")`."
+        ),
+        target
+      ),
+      call. = FALSE
+    )
+  }
+  getExportedValue("paradox", "upgrade_paradox_object_graph")(self)
+  TRUE
+}
+
+.replay_codomain_active = function(self, member) {
+  if (!exists(member, envir = self, inherits = FALSE) ||
+      !bindingIsActive(member, self)) {
+    stop(sprintf(
+      "The legacy Codomain binding `%s` was retired by Paradox 2",
+      member
+    ))
+  }
+  activeBindingFunction(member, self)()
+}
+
+# bbotk 1.x serialized these owner-level Codomain stubs. Keep their exact
+# targets cold: current objects use the versioned targets installed below,
+# while historical objects either fail with migration guidance or upgrade
+# before replaying the requested operation.
+.__Codomain__initialize = function(self, private, super, params) {
+  if (!.upgrade_legacy_codomain_first_use(
+      self, ".__Codomain__initialize")) {
+    return(.__bbotkv2_Codomain__initialize(
+      self, private, super, params
+    ))
+  }
+  self$initialize(params)
+}
+
+.__Codomain__clone = function(self, private, super, deep = FALSE) {
+  if (!.upgrade_legacy_codomain_first_use(self, ".__Codomain__clone")) {
+    return(.__bbotkv2_Codomain__clone(
+      self, private, super, deep = deep
+    ))
+  }
+  self$clone(deep = deep)
+}
+
+.__Codomain__is_target = function(self, private, super) {
+  if (!.upgrade_legacy_codomain_first_use(
+      self, ".__Codomain__is_target")) {
+    return(.__bbotkv2_Codomain__is_target(self, private, super))
+  }
+  .replay_codomain_active(self, "is_target")
+}
+
+.__Codomain__target_length = function(self, private, super) {
+  if (!.upgrade_legacy_codomain_first_use(
+      self, ".__Codomain__target_length")) {
+    return(.__bbotkv2_Codomain__target_length(self, private, super))
+  }
+  .replay_codomain_active(self, "target_length")
+}
+
+.__Codomain__target_ids = function(self, private, super) {
+  if (!.upgrade_legacy_codomain_first_use(
+      self, ".__Codomain__target_ids")) {
+    return(.__bbotkv2_Codomain__target_ids(self, private, super))
+  }
+  .replay_codomain_active(self, "target_ids")
+}
+
+.__Codomain__target_tags = function(self, private, super) {
+  if (!.upgrade_legacy_codomain_first_use(
+      self, ".__Codomain__target_tags")) {
+    return(.__bbotkv2_Codomain__target_tags(self, private, super))
+  }
+  .replay_codomain_active(self, "target_tags")
+}
+
+.__Codomain__maximization_to_minimization = function(
+    self, private, super) {
+  if (!.upgrade_legacy_codomain_first_use(
+      self, ".__Codomain__maximization_to_minimization")) {
+    return(.__bbotkv2_Codomain__maximization_to_minimization(
+      self, private, super
+    ))
+  }
+  .replay_codomain_active(self, "maximization_to_minimization")
+}
+
+.__Codomain__direction = function(self, private, super) {
+  if (!.upgrade_legacy_codomain_first_use(
+      self, ".__Codomain__direction")) {
+    return(.__bbotkv2_Codomain__direction(self, private, super))
+  }
+  .replay_codomain_active(self, "direction")
+}
