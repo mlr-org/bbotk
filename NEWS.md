@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: `as.data.table(mlr_optimizers, objects = TRUE)` now returns the optimizer in the `object` column instead of `base::t()` for all optimizers but `"chain"` (#368).
 * fix: `Objective$eval_many()` no longer multiplies the number of rows when the objective returns an extra that is an atomic vector of length greater than one (#367).
 * fix: `ArchiveBatch$add_evals()` now checks that `xss_trafoed` has one element per row of `xdt`, which silently corrupted the `x_domain` column before (#366).
 * fix: `nds_selection()` now only accepts a `minimize` argument of length 1 or of the number of objectives, and rejects points with missing values (#365).
