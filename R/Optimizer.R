@@ -186,6 +186,16 @@ Optimizer = R6Class(
 assign_result_default = function(inst) {
   assert_r6(inst, "OptimInstance")
 
+  if (!inst$archive$n_evals) {
+    error_bbotk(
+      paste0(
+        "No point was evaluated, so no result can be assigned.",
+        " The terminator '%s' terminated before the first evaluation."
+      ),
+      class(inst$terminator)[1L]
+    )
+  }
+
   xydt = inst$archive$best()
   cols_x = inst$archive$cols_x
   cols_y = inst$archive$cols_y
