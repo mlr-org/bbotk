@@ -2,6 +2,12 @@
 
 ## bbotk (development version)
 
+- fix:
+  [`assert_terminable()`](https://bbotk.mlr-org.com/dev/reference/bbotk_assertions.md)
+  now decides whether an instance is single or multi-criteria from the
+  codomain of the objective instead of the class of the instance, so
+  terminators are checked correctly for `OptimInstanceAsyncMultiCrit`
+  ([\#375](https://github.com/mlr-org/bbotk/issues/375)).
 - fix: `context$xdt` can now be replaced by assignment in the
   `on_optimizer_before_eval` stage of a `CallbackBatch`, and the
   replaced points are both evaluated and written to the archive
