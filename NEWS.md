@@ -1,4 +1,4 @@
-# bbotk (development version)
+# bbotk 1.13.1
 
 * fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the task cache of rush in place, which changed the order of `$finished_data` and `$data` for all later calls (#387).
 * fix: `ArchiveBatch$add_evals()` now checks that `xss_trafoed` has one element per row of `xdt`, which silently corrupted the `x_domain` column before (#366).
