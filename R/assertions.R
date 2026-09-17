@@ -51,7 +51,7 @@ assert_terminators = function(terminators) {
 #' @param instance ([OptimInstance]).
 #' @rdname bbotk_assertions
 assert_terminable = function(terminator, instance) {
-  if ("OptimInstanceBatchMultiCrit" %in% class(instance)) {
+  if (instance$objective$codomain$target_length > 1L) {
     if (!"multi-crit" %in% terminator$properties) {
       stopf("Terminator '%s' does not support multi-crit optimization", terminator$format())
     }
