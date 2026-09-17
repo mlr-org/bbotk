@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: `nds_selection()` now only accepts a `minimize` argument of length 1 or of the number of objectives, and rejects points with missing values (#365).
 * fix: `OptimizerBatchChain` now runs the optimizers on the instance itself instead of on a clone. The terminator of the instance sees all evaluated points, so the overall budget is no longer exceeded, and points that were already evaluated before the chain started are no longer duplicated in the archive (#364).
 * fix: `shrink_ps()` now expects the point to shrink around on the scale of the search space instead of the transformed scale, and the `uniroot()` based inversion of the trafo is removed. `OptimizerBatchFocusSearch` shrunk the search space around the wrong point whenever the search space had a trafo (#360).
 * fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer returns before the terminator is satisfied, e.g. when the design of `OptimizerAsyncDesignPoints` is exhausted (#385).
