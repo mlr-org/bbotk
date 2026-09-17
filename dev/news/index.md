@@ -2,6 +2,14 @@
 
 ## bbotk (development version)
 
+- fix: `ArchiveBatch$add_evals()` now checks that `xss_trafoed` has one
+  element per row of `xdt`, which silently corrupted the `x_domain`
+  column before ([\#366](https://github.com/mlr-org/bbotk/issues/366)).
+- fix:
+  [`nds_selection()`](https://bbotk.mlr-org.com/dev/reference/nds_selection.md)
+  now only accepts a `minimize` argument of length 1 or of the number of
+  objectives, and rejects points with missing values
+  ([\#365](https://github.com/mlr-org/bbotk/issues/365)).
 - fix: `OptimizerBatchChain` now runs the optimizers on the instance
   itself instead of on a clone. The terminator of the instance sees all
   evaluated points, so the overall budget is no longer exceeded, and
