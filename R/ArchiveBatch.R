@@ -101,7 +101,7 @@ ArchiveBatch = R6Class(
     add_evals = function(xdt, xss_trafoed = NULL, ydt) {
       assert_data_table(xdt)
       assert_data_table(ydt)
-      assert_list(xss_trafoed, null.ok = TRUE)
+      assert_list(xss_trafoed, len = nrow(xdt), null.ok = TRUE)
       assert_data_table(ydt[, self$cols_y, with = FALSE], any.missing = FALSE)
       if (self$check_values) {
         self$search_space$assert_dt(xdt[, self$cols_x, with = FALSE])

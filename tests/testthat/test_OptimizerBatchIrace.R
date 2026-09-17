@@ -325,3 +325,60 @@ test_that("paradox_to_irace works with parameters with multiple dependencies", {
     hierarchy = c(1, 1, 1, 1, 2, 2, 2, 2)
   )
 })
+
+test_that("OptimizerBatchIrace archive step column counts the steps of a race", {
+  skip_if_not_installed("irace")
+
+  search_space = domain = ps(
+    x1 = p_dbl(-5, 10),
+    x2 = p_dbl(0, 15)
+  )
+
+  fun = function(xdt, instances) {
+    data.table(y = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances)))
+  }
+
+  objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
+
+  instance = OptimInstanceBatchSingleCrit$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = trm("evals", n_evals = 96)
+  )
+
+  optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1))
+  x = capture.output(optimizer$optimize(instance))
+
+  archive = instance$archive$data
+  expect_gt(uniqueN(archive$step), 1L)
+  # one step of a race evaluates the surviving configurations on one instance
+  expect_true(all(archive[, uniqueN(get("instance")), by = c("race", "step")]$V1 == 1L))
+})
+
+test_that("OptimizerBatchIrace digits are passed to irace", {
+  skip_if_not_installed("irace")
+
+  search_space = domain = ps(
+    x1 = p_dbl(-5, 10),
+    x2 = p_dbl(0, 15)
+  )
+
+  fun = function(xdt, instances) {
+    data.table(y = branin(xdt[["x1"]], xdt[["x2"]], noise = as.numeric(instances)))
+  }
+
+  objective = ObjectiveRFunDt$new(fun = fun, domain = domain)
+
+  instance = OptimInstanceBatchSingleCrit$new(
+    objective = objective,
+    search_space = search_space,
+    terminator = trm("evals", n_evals = 96)
+  )
+
+  optimizer = opt("irace", instances = rnorm(10, mean = 0, sd = 0.1), digits = 2L)
+  x = capture.output(optimizer$optimize(instance))
+
+  archive = instance$archive$data
+  expect_equal(archive$x1, round(archive$x1, 2L))
+  expect_equal(archive$x2, round(archive$x2, 2L))
+})

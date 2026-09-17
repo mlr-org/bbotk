@@ -232,3 +232,24 @@ test_that("context deep clone", {
   inst_copy = inst$clone(deep = TRUE)
   expect_null(inst_copy$objective$context)
 })
+
+test_that("eval_batch rejects an empty design", {
+  instance = MAKE_INST_1D(trm("evals", n_evals = 10L))
+  expect_error(instance$eval_batch(data.table(x = numeric(0))), "at least one point")
+  expect_equal(instance$archive$n_evals, 0L)
+})
+
+test_that("result_y ignores non-target codomain parameters", {
+  objective = ObjectiveRFun$new(
+    fun = function(xs) list(y = as.numeric(xs$x)^2, time = 1),
+    domain = PS_1D,
+    codomain = ps(y = p_dbl(tags = "minimize"), time = p_dbl()),
+    properties = "single-crit"
+  )
+
+  instance = oi(objective, search_space = PS_1D, terminator = trm("evals", n_evals = 3L))
+  opt("random_search")$optimize(instance)
+
+  expect_equal(names(instance$result_y), "y")
+  expect_number(instance$result_y)
+})
