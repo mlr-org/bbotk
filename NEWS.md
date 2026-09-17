@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: The C code of `local_search()` now raises R errors instead of using `assert()`, which aborted the R session and vanished entirely in a build with `-DNDEBUG` (#382).
 * fix: `local_search()` now recognizes the termination condition raised by a terminator. The condition was re-raised and the RNG state was never written back, so all random numbers drawn in the C code were lost (#378).
 * fix: `local_search()` now writes the RNG state back before it calls the objective, so an objective that draws random numbers no longer receives the numbers the C code consumed for mutation (#379).
 * fix: `local_search()` now compares parameter names, column names, list element names, and factor levels exactly instead of by prefix. A parameter or level whose name was a prefix of another one aborted the R session or made mutation a silent no-op (#380).
