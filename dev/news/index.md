@@ -2,6 +2,10 @@
 
 ## bbotk (development version)
 
+- fix: `as.data.table(mlr_optimizers, objects = TRUE)` now returns the
+  optimizer in the `object` column instead of
+  [`base::t()`](https://rdrr.io/r/base/t.html) for all optimizers but
+  `"chain"` ([\#368](https://github.com/mlr-org/bbotk/issues/368)).
 - fix: `Objective$eval_many()` no longer multiplies the number of rows
   when the objective returns an extra that is an atomic vector of length
   greater than one
