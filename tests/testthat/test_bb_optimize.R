@@ -162,8 +162,9 @@ test_that("bb_optimize dispatches on the number of targets in the codomain", {
     properties = "single-crit"
   )
 
-  result = bb_optimize(objective, method = "random_search", max_evals = 5L)
+  res = bb_optimize(objective, method = "random_search", max_evals = 5L)
 
-  expect_class(result$instance, "OptimInstanceBatchSingleCrit")
-  expect_names(names(result$value), identical.to = "y")
+  expect_r6(res$instance, "OptimInstanceBatchSingleCrit")
+  expect_numeric(res$value, len = 1L)
+  expect_named(res$value, "y")
 })
