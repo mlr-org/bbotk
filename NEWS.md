@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: `context$xdt` can now be replaced by assignment in the `on_optimizer_before_eval` stage of a `CallbackBatch`, and the replaced points are both evaluated and written to the archive (#374).
 * fix: `$assign_result()` and `$result_y` of the multi-criteria instances now only expect and return the target values of the codomain. A codomain with additional non-target parameters made `$optimize()` fail (#372).
 * fix: `bb_optimize()` now creates a single-criteria instance for a codomain with one target and additional non-target parameters instead of a multi-criteria instance (#373).
 * fix: `$result_y` of the single-criteria instances now only returns the target values of the codomain. It errored for a codomain with additional non-target parameters (#371).
