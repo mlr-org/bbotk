@@ -15,6 +15,13 @@
   C code consumed for mutation
   ([\#379](https://github.com/mlr-org/bbotk/issues/379)).
 - fix:
+  [`local_search()`](https://bbotk.mlr-org.com/dev/reference/local_search.md)
+  now compares parameter names, column names, list element names, and
+  factor levels exactly instead of by prefix. A parameter or level whose
+  name was a prefix of another one aborted the R session or made
+  mutation a silent no-op
+  ([\#380](https://github.com/mlr-org/bbotk/issues/380)).
+- fix:
   [`assign_result_default()`](https://bbotk.mlr-org.com/dev/reference/assign_result_default.md)
   now raises a readable error when the terminator is already terminated
   before the first evaluation instead of failing with `column not found`
