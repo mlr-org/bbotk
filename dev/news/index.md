@@ -2,6 +2,10 @@
 
 ## bbotk (development version)
 
+- fix: `Objective$eval_many()` no longer multiplies the number of rows
+  when the objective returns an extra that is an atomic vector of length
+  greater than one
+  ([\#367](https://github.com/mlr-org/bbotk/issues/367)).
 - fix: `ArchiveBatch$add_evals()` now checks that `xss_trafoed` has one
   element per row of `xdt`, which silently corrupted the `x_domain`
   column before ([\#366](https://github.com/mlr-org/bbotk/issues/366)).
