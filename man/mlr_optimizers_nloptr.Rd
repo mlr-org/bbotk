@@ -58,7 +58,7 @@ Default is \code{-1L}.}
 Relative tolerance.
 Original default is 10^-4.
 Deactivate with \code{-1}.
-Overwritten with \code{-1}.}
+Default is \code{-1}.}
 \item{\code{xtol_abs}}{\code{numeric(1)}\cr
 Absolute tolerance.
 Deactivate with \code{-1}.

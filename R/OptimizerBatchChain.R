@@ -1,6 +1,7 @@
 #' @title Run Optimizers Sequentially
 #'
 #' @include Optimizer.R
+#' @include Terminator.R
 #' @name mlr_optimizers_chain
 #'
 #' @description
@@ -11,11 +12,14 @@
 #' the additional [Terminator]s guard each individual [OptimizerBatch].
 #'
 #' The optimization process works as follows:
-#' The first [OptimizerBatch] is run on the [OptimInstanceBatch] relying on a [TerminatorCombo] of the original
-#' [Terminator] of the [OptimInstanceBatch] and the (optional) additional [Terminator] as passed during construction.
-#' Once this [TerminatorCombo] indicates termination (usually via the additional [Terminator]),
-#' the second [OptimizerBatch] is run.
-#' This continues for all optimizers unless the original [Terminator] of the [OptimInstanceBatch] indicates termination.
+#' Each [OptimizerBatch] is run on the [OptimInstanceBatch] until either the [Terminator] of the
+#' [OptimInstanceBatch] or the (optional) additional [Terminator] as passed during construction indicates
+#' termination.
+#' The [Terminator] of the [OptimInstanceBatch] sees all points that were evaluated so far,
+#' whereas the additional [Terminator] only sees the points that were evaluated by the current [OptimizerBatch]
+#' and measures the runtime from the start of the current [OptimizerBatch].
+#' Once the additional [Terminator] indicates termination, the next [OptimizerBatch] is run.
+#' This continues for all optimizers unless the [Terminator] of the [OptimInstanceBatch] indicates termination.
 #'
 #' [OptimizerBatchChain] can also be used for random restarts of the same
 #' [Optimizer] (if applicable) by setting the [Terminator] of the [OptimInstanceBatch] to
@@ -142,26 +146,35 @@ OptimizerBatchChain = R6Class(
       on.exit({
         inst$terminator = terminator
       })
-      inner_inst = inst$clone(deep = TRUE)
 
       for (i in seq_along(private$.optimizers)) {
         inner_terminator = private$.terminators[[i]]
-        if (!is.null(inner_terminator)) {
-          inner_inst$terminator = TerminatorCombo$new(list(inner_terminator, terminator))
+        inst$terminator = if (is.null(inner_terminator)) {
+          terminator
         } else {
-          inner_inst$terminator = terminator
+          TerminatorChainPart$new(terminator, inner_terminator, offset = nrow(inst$archive$data))
         }
+
         optimizer = private$.optimizers[[i]]
-        optimizer$param_set$values = self$param_set$.__enclos_env__$private$.sets[[i]]$values
-        optimizer$optimize(inner_inst)
-        set(
-          inner_inst$archive$data,
-          j = "batch_nr",
-          value = max(inst$archive$data$batch_nr, 0L) + inner_inst$archive$data$batch_nr
+        optimizer$param_set$values = self$param_set$sets[[i]]$values
+
+        # the optimizers are run on the instance itself so that the terminator of the instance sees all evaluated
+        # points; the private method is called to avoid resetting the start time of the archive and to only run the
+        # callbacks of the chain
+        first_row = nrow(inst$archive$data) + 1L
+        tryCatch(
+          get_private(optimizer)$.optimize(inst),
+          Mlr3ErrorBbotkTerminated = function(cond) NULL
         )
-        set(inner_inst$archive$data, j = ".optimizer_id", value = private$.ids[i])
-        inst$archive$data = rbind(inst$archive$data, inner_inst$archive$data, fill = TRUE)
-        inner_inst$archive$data = data.table()
+        if (nrow(inst$archive$data) >= first_row) {
+          set(
+            inst$archive$data,
+            i = first_row:nrow(inst$archive$data),
+            j = ".optimizer_id",
+            value = private$.ids[i]
+          )
+        }
+
         if (terminator$is_terminated(inst$archive)) {
           break
         }
@@ -180,3 +193,51 @@ OptimizerBatchChain = R6Class(
 )
 
 mlr_optimizers$add("chain", OptimizerBatchChain)
+
+# Guards a single optimizer of OptimizerBatchChain.
+# `terminator` is the terminator of the instance and sees the complete archive, whereas `inner` only sees the points
+# that were evaluated by the current optimizer and measures the runtime from the start of the current optimizer.
+# The progress is reported for `terminator` so that the progress bar of the chain increases monotonically.
+TerminatorChainPart = R6Class(
+  "TerminatorChainPart",
+  inherit = Terminator,
+  public = list(
+    initialize = function(terminator, inner, offset) {
+      private$.terminator = assert_r6(terminator, "Terminator")
+      private$.inner = assert_r6(inner, "Terminator")
+      private$.offset = assert_count(offset)
+      private$.start_time = Sys.time()
+
+      super$initialize(
+        id = "chain_part",
+        properties = intersect(terminator$properties, inner$properties),
+        unit = terminator$unit,
+        label = "Chain Part"
+      )
+    },
+
+    is_terminated = function(archive) {
+      private$.terminator$is_terminated(archive) || private$.inner$is_terminated(private$.view(archive))
+    }
+  ),
+
+  private = list(
+    .terminator = NULL,
+    .inner = NULL,
+    .offset = NULL,
+    .start_time = NULL,
+
+    # archive that only contains the points of the current optimizer
+    .view = function(archive) {
+      view = archive$clone(deep = FALSE)
+      n = nrow(archive$data)
+      view$data = if (n > private$.offset) archive$data[(private$.offset + 1L):n] else archive$data[0L]
+      view$start_time = private$.start_time
+      view
+    },
+
+    .status = function(archive) {
+      private$.terminator$status(archive)
+    }
+  )
+)

@@ -397,6 +397,8 @@ ArchiveAsync = R6Class(
           ii = which_max(y, ties_method = ties_method)
           tab[ii]
         } else {
+          # `finished_data` is the cache of rush, so we copy before sorting
+          tab = copy(tab)
           # use data.table fast sort to find the best points
           setorderv(tab, cols = self$cols_y, order = self$codomain$direction)
           head(tab, n_select)
