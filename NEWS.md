@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: `local_search()` now recognizes the termination condition raised by a terminator. The condition was re-raised and the RNG state was never written back, so all random numbers drawn in the C code were lost (#378).
 * fix: `assign_result_default()` now raises a readable error when the terminator is already terminated before the first evaluation instead of failing with `column not found` (#377).
 * fix: `TerminatorRunTime` now reports an integer number of steps, so a fractional `secs` value no longer breaks `$optimize()` when progressr is loaded (#376).
 * fix: `assert_terminable()` now decides whether an instance is single or multi-criteria from the codomain of the objective instead of the class of the instance, so terminators are checked correctly for `OptimInstanceAsyncMultiCrit` (#375).

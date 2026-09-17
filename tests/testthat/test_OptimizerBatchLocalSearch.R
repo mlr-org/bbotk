@@ -435,3 +435,26 @@ test_that("OptimizerBatchLocalSearch works with CondAnyOf", {
   }
   if (nrow(dt[x1 %in% c("a", "b")])) expect_true(all(!is.na(dt[x1 %in% c("a", "b")]$x2)))
 })
+
+test_that("local_search catches the termination condition and restores the RNG state", {
+  search_space = ps(x = p_dbl(-1, 1))
+  control = local_search_control(n_searches = 2L, n_steps = 5L, n_neighs = 3L)
+  init_points = data.table(x = c(-0.5, 0.5))
+
+  n_calls = 0L
+  objective = function(xdt) {
+    n_calls <<- n_calls + 1L
+    if (n_calls > 1L) error_bbotk_terminated("terminated")
+    xdt$x^2
+  }
+
+
+  set.seed(1)
+  before = get(".Random.seed", envir = globalenv())
+  res = local_search(objective, search_space, control, init_points)
+  after = get(".Random.seed", envir = globalenv())
+
+  expect_names(names(res), identical.to = c("x", "y"))
+  # the C code draws random numbers before the objective terminates, so the RNG state must have moved on
+  expect_false(identical(before, after))
+})

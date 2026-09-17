@@ -272,10 +272,11 @@ SEXP try_eval(void *data) {
 
 // internal function to handle what happens in the catch block
 // if the terminator triggers, we return NIL, otherwise we raise error back to R
+// "terminated_error" is the legacy class of the termination condition, see R/conditions.R
 SEXP catch_condition(SEXP s_condition, void *data) {
     DEBUG_PRINT("Caught R condition of class: %s\n",
         CHAR(STRING_ELT(Rf_getAttrib(s_condition, R_ClassSymbol), 0)));
-    if (!Rf_inherits(s_condition, "terminator_exception")) {
+    if (!Rf_inherits(s_condition, "Mlr3ErrorBbotkTerminated") && !Rf_inherits(s_condition, "terminated_error")) {
         SEXP stop_call = PROTECT(Rf_lang2(Rf_install("stop"), s_condition));
         Rf_eval(stop_call, R_GlobalEnv);
         UNPROTECT(1); // stop_call
