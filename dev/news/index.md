@@ -2,6 +2,10 @@
 
 ## bbotk (development version)
 
+- fix: `OptimizerBatchRandomSearch` rejects a `batch_size` smaller than
+  1, and `$eval_batch()` errors on an empty `xdt` unless the search
+  space is empty. `opt("random_search", batch_size = 0)` looped forever
+  before ([\#370](https://github.com/mlr-org/bbotk/issues/370)).
 - fix: [`branin()`](https://bbotk.mlr-org.com/dev/reference/branin.md)
   now adds the `noise` argument to the function value, which was ignored
   ([\#369](https://github.com/mlr-org/bbotk/issues/369)).
