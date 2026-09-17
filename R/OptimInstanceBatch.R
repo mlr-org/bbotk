@@ -90,6 +90,9 @@ OptimInstanceBatch = R6Class(
         terminated_error(self)
       }
       assert_data_table(xdt)
+      if (!nrow(xdt) && self$search_space$length) {
+        error_bbotk("`xdt` must contain at least one point unless the search space is empty")
+      }
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 
       lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
