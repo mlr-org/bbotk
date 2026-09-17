@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: `OptimizerBatchRandomSearch` rejects a `batch_size` smaller than 1, and `$eval_batch()` errors on an empty `xdt` unless the search space is empty. `opt("random_search", batch_size = 0)` looped forever before (#370).
 * fix: `branin()` now adds the `noise` argument to the function value, which was ignored (#369).
 * fix: `as.data.table(mlr_optimizers, objects = TRUE)` now returns the optimizer in the `object` column instead of `base::t()` for all optimizers but `"chain"` (#368).
 * fix: `Objective$eval_many()` no longer multiplies the number of rows when the objective returns an extra that is an atomic vector of length greater than one (#367).
