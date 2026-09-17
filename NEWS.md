@@ -1,5 +1,6 @@
 # bbotk (development version)
 
+* fix: `TerminatorRunTime` now reports an integer number of steps, so a fractional `secs` value no longer breaks `$optimize()` when progressr is loaded (#376).
 * fix: `assert_terminable()` now decides whether an instance is single or multi-criteria from the codomain of the objective instead of the class of the instance, so terminators are checked correctly for `OptimInstanceAsyncMultiCrit` (#375).
 * fix: `context$xdt` can now be replaced by assignment in the `on_optimizer_before_eval` stage of a `CallbackBatch`, and the replaced points are both evaluated and written to the archive (#374).
 * fix: `$assign_result()` and `$result_y` of the multi-criteria instances now only expect and return the target values of the codomain. A codomain with additional non-target parameters made `$optimize()` fail (#372).
