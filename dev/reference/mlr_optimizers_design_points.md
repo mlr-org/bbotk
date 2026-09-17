@@ -142,8 +142,8 @@ instance$archive
 #> ── <ArchiveBatch> - Data Table Storage ─────────────────────────────────────────
 #>       x1    x2     y           timestamp batch_nr x_domain_x1 x_domain_x2
 #>    <num> <num> <num>              <POSc>    <int>       <num>       <num>
-#> 1:     0     0    -3 2026-09-17 08:18:18        1           0           0
-#> 2:     1     1    -7 2026-09-17 08:18:18        2           1           1
+#> 1:     0     0    -3 2026-09-17 08:22:47        1           0           0
+#> 2:     1     1    -7 2026-09-17 08:22:47        2           1           1
 
 # best performing configuration
 instance$result

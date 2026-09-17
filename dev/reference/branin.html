@@ -82,7 +82,9 @@ branin_wu(x1, x2, fidelity)."><meta name="robots" content="noindex"></head><body
 
 
 <dt id="arg-noise">noise<a class="anchor" aria-label="anchor" href="#arg-noise"></a></dt>
-<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code>).</p></dd>
+<dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code>)<br>
+Noise term that is added to the function value.
+Default is <code>0</code>.</p></dd>
 
 
 <dt id="arg-fidelity">fidelity<a class="anchor" aria-label="anchor" href="#arg-fidelity"></a></dt>
@@ -97,7 +99,7 @@ branin_wu(x1, x2, fidelity)."><meta name="robots" content="noindex"></head><body
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">branin</span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">12</span>, x2 <span class="op">=</span> <span class="fl">2</span>, noise <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 30.38063</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 30.43063</span>
 <span class="r-in"><span><span class="fu">branin_wu</span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">12</span>, x2 <span class="op">=</span> <span class="fl">2</span>, fidelity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 30.38063</span>
 </code></pre></div>

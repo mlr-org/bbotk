@@ -29,7 +29,8 @@ Multi-fidelity Bayesian Optimization for Hyperparameter Tuning.”
 
 - noise:
 
-  ([`numeric()`](https://rdrr.io/r/base/numeric.html)).
+  ([`numeric()`](https://rdrr.io/r/base/numeric.html))  
+  Noise term that is added to the function value. Default is `0`.
 
 - fidelity:
 
@@ -43,7 +44,7 @@ Multi-fidelity Bayesian Optimization for Hyperparameter Tuning.”
 
 ``` r
 branin(x1 = 12, x2 = 2, noise = 0.05)
-#> [1] 30.38063
+#> [1] 30.43063
 branin_wu(x1 = 12, x2 = 2, fidelity = 1)
 #> [1] 30.38063
 ```

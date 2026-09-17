@@ -2,6 +2,9 @@
 
 ## bbotk (development version)
 
+- fix: [`branin()`](https://bbotk.mlr-org.com/dev/reference/branin.md)
+  now adds the `noise` argument to the function value, which was ignored
+  ([\#369](https://github.com/mlr-org/bbotk/issues/369)).
 - fix: `as.data.table(mlr_optimizers, objects = TRUE)` now returns the
   optimizer in the `object` column instead of
   [`base::t()`](https://rdrr.io/r/base/t.html) for all optimizers but
