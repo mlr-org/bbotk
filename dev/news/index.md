@@ -2,6 +2,15 @@
 
 ## bbotk (development version)
 
+- fix:
+  [`bb_optimize()`](https://bbotk.mlr-org.com/dev/reference/bb_optimize.md)
+  now creates a single-criteria instance for a codomain with one target
+  and additional non-target parameters instead of a multi-criteria
+  instance ([\#373](https://github.com/mlr-org/bbotk/issues/373)).
+- fix: `$result_y` of the single-criteria instances now only returns the
+  target values of the codomain. It errored for a codomain with
+  additional non-target parameters
+  ([\#371](https://github.com/mlr-org/bbotk/issues/371)).
 - fix: `OptimizerBatchRandomSearch` rejects a `batch_size` smaller than
   1, and `$eval_batch()` errors on an empty `xdt` unless the search
   space is empty. `opt("random_search", batch_size = 0)` looped forever
