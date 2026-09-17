@@ -218,7 +218,8 @@ Objective = R6Class(
     .eval_many = function(xss, ...) {
       res = map_dtr(xss, function(xs) {
         ys = self$eval(xs)
-        as.data.table(lapply(ys, function(y) if (is.list(y) && length(y) > 1) list(y) else y))
+        # everything that is not a scalar is wrapped into a list so that it becomes a single cell of a list column
+        as.data.table(lapply(ys, function(y) if (length(y) != 1L) list(y) else y))
       })
       res
     },

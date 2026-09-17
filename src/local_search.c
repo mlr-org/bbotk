@@ -231,9 +231,7 @@ void dt_mutate_element(SEXP s_dt, int row_i, int param_j, const SearchSpace* ss,
             // Find current level index
             const char* current_level = CHAR(STRING_ELT(s_neigh_col, row_i));
             int current_idx = 0;
-            while (current_idx < n_levels &&
-              strncmp(current_level, ss->level_names[param_j][current_idx], strlen(current_level)) != 0)
-            {
+            while (current_idx < n_levels && strcmp(current_level, ss->level_names[param_j][current_idx]) != 0) {
                 current_idx++;
             }
             // Sample from other levels using shift trick
@@ -273,10 +271,11 @@ SEXP try_eval(void *data) {
 
 // internal function to handle what happens in the catch block
 // if the terminator triggers, we return NIL, otherwise we raise error back to R
+// "terminated_error" is the legacy class of the termination condition, see R/conditions.R
 SEXP catch_condition(SEXP s_condition, void *data) {
     DEBUG_PRINT("Caught R condition of class: %s\n",
         CHAR(STRING_ELT(Rf_getAttrib(s_condition, R_ClassSymbol), 0)));
-    if (!Rf_inherits(s_condition, "terminator_exception")) {
+    if (!Rf_inherits(s_condition, "Mlr3ErrorBbotkTerminated") && !Rf_inherits(s_condition, "terminated_error")) {
         SEXP stop_call = PROTECT(Rf_lang2(Rf_install("stop"), s_condition));
         Rf_eval(stop_call, R_GlobalEnv);
         UNPROTECT(1); // stop_call
@@ -296,7 +295,7 @@ SEXP safe_eval(SEXP expr) {
 // Find parameter index by name, -1 if not found (should not happen)
 int find_param_index(const char* param_name, const SearchSpace* ss) {
     for (int j = 0; j < ss->n_params; j++) {
-        if (strncmp(ss->param_names[j], param_name, strlen(param_name)) == 0) {
+        if (strcmp(ss->param_names[j], param_name) == 0) {
             return j;
         }
     }
@@ -646,7 +645,10 @@ void copy_best_neighs_to_pop(SEXP s_neighs_x, double* neighs_y,
 
 int eval_obj(int n, SEXP s_x, SEXP s_obj, double* y, const Control* ctrl) {
     SEXP s_call = PROTECT(Rf_lang2(s_obj, s_x));
+    // the RNG state must be written back before we call into R, because the objective may draw random numbers itself
+    PutRNGstate();
     SEXP s_y = PROTECT(safe_eval(s_call));
+    GetRNGstate();
     int eval_ok = 0;
     if (s_y != R_NilValue) {
         memcpy(y, REAL(s_y), n * sizeof(double));

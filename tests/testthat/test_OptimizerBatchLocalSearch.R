@@ -445,4 +445,77 @@ test_that("local_search errors on invalid control values instead of aborting", {
     local_search(function(xdt) xdt$x^2, search_space, control, init_points),
     "mut_sd"
   )
+})    
+   
+test_that("local_search matches parameter names exactly", {
+  # "a" is a prefix of "ab", which was matched first and produced a self dependency
+  search_space = ps(
+    ab = p_dbl(0, 1, depends = a == "x"),
+    a = p_fct(c("x", "y"))
+  )
+  control = local_search_control(n_searches = 2L, n_steps = 5L, n_neighs = 5L)
+  objective = function(xdt) ifelse(xdt$a == "x", xdt$ab, 1)
+
+  res = local_search(objective, search_space, control)
+
+  expect_names(names(res$x), permutation.of = c("ab", "a"))
+  expect_number(res$y)
+})
+
+test_that("local_search matches factor levels exactly", {
+  # "a" is a prefix of "ab", so mutating away from "a" was a no-op
+  search_space = ps(x = p_fct(c("ab", "a")))
+  control = local_search_control(n_searches = 1L, n_steps = 5L, n_neighs = 1L)
+  objective = function(xdt) as.numeric(xdt$x == "a")
+
+  res = local_search(objective, search_space, control, init_points = data.table(x = "a"))
+
+  expect_equal(res$x$x, "ab")
+  expect_equal(res$y, 0)
+})
+
+test_that("local_search catches the termination condition and restores the RNG state", {
+  search_space = ps(x = p_dbl(-1, 1))
+  control = local_search_control(n_searches = 2L, n_steps = 5L, n_neighs = 3L)
+  init_points = data.table(x = c(-0.5, 0.5))
+
+  n_calls = 0L
+  objective = function(xdt) {
+    n_calls <<- n_calls + 1L
+    if (n_calls > 1L) error_bbotk_terminated("terminated")
+    xdt$x^2
+  }
+
+
+  set.seed(1)
+  before = get(".Random.seed", envir = globalenv())
+  res = local_search(objective, search_space, control, init_points)
+  after = get(".Random.seed", envir = globalenv())
+
+  expect_names(names(res), identical.to = c("x", "y"))
+  # the C code draws random numbers before the objective terminates, so the RNG state must have moved on
+  expect_false(identical(before, after))
+})
+
+test_that("local_search does not replay its random numbers in the objective", {
+  search_space = ps(x = p_dbl(-1, 1))
+  control = local_search_control(n_searches = 2L, n_steps = 2L, n_neighs = 3L)
+  init_points = data.table(x = c(-0.5, 0.5))
+
+  draws = numeric(0)
+  objective = function(xdt) {
+    draws <<- c(draws, runif(1L))
+    xdt$x^2
+  }
+
+  set.seed(1)
+  local_search(objective, search_space, control, init_points)
+  expect_gte(length(draws), 2L)
+
+  set.seed(1)
+  reference = runif(length(draws))
+  # the first call happens before the C code draws anything
+  expect_equal(draws[1L], reference[1L])
+  # afterwards the objective must continue behind the numbers the C code consumed
+  expect_false(draws[2L] == reference[2L])
 })

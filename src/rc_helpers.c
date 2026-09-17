@@ -30,7 +30,7 @@ SEXP RC_get_list_el_by_name(SEXP s_list, const char *name) {
   SEXP elmt = R_NilValue, names = getAttrib(s_list, R_NamesSymbol);
   int i;
   for (i = 0; i < length(s_list); i++) {
-      if(strncmp(CHAR(STRING_ELT(names, i)), name, strlen(name)) == 0) {
+      if(strcmp(CHAR(STRING_ELT(names, i)), name) == 0) {
           elmt = VECTOR_ELT(s_list, i);
           break;
       }
@@ -49,7 +49,7 @@ R_xlen_t RC_dt_nrows(SEXP s_dt) {
 SEXP RC_get_dt_col_by_name(SEXP s_dt, const char *name) {
   SEXP col_names = getAttrib(s_dt, R_NamesSymbol);
   for (int i = 0; i < length(s_dt); i++) {
-      if (strncmp(CHAR(STRING_ELT(col_names, i)), name, strlen(name)) == 0) {
+      if (strcmp(CHAR(STRING_ELT(col_names, i)), name) == 0) {
           return VECTOR_ELT(s_dt, i);
       }
   }
