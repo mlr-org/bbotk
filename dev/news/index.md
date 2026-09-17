@@ -9,6 +9,12 @@
   all random numbers drawn in the C code were lost
   ([\#378](https://github.com/mlr-org/bbotk/issues/378)).
 - fix:
+  [`local_search()`](https://bbotk.mlr-org.com/dev/reference/local_search.md)
+  now writes the RNG state back before it calls the objective, so an
+  objective that draws random numbers no longer receives the numbers the
+  C code consumed for mutation
+  ([\#379](https://github.com/mlr-org/bbotk/issues/379)).
+- fix:
   [`assign_result_default()`](https://bbotk.mlr-org.com/dev/reference/assign_result_default.md)
   now raises a readable error when the terminator is already terminated
   before the first evaluation instead of failing with `column not found`
