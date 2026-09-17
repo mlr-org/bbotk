@@ -2,6 +2,11 @@
 
 ## bbotk (development version)
 
+- fix: `$assign_result()` and `$result_y` of the multi-criteria
+  instances now only expect and return the target values of the
+  codomain. A codomain with additional non-target parameters made
+  `$optimize()` fail
+  ([\#372](https://github.com/mlr-org/bbotk/issues/372)).
 - fix:
   [`bb_optimize()`](https://bbotk.mlr-org.com/dev/reference/bb_optimize.md)
   now creates a single-criteria instance for a codomain with one target
