@@ -70,7 +70,7 @@ as.data.table.DictionaryOptimizer = function(x, ..., objects = FALSE) {
               properties = list(opt$properties),
               packages = list(opt$packages)
             ),
-            if (objects) list(object = list(t))
+            if (objects) list(object = list(opt))
           )
         }
       },
