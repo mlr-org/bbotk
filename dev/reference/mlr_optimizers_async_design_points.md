@@ -150,14 +150,14 @@ as.data.table(instance$archive)
 }
 #>       state    x1    x2     y        timestamp_xs
 #>      <char> <num> <num> <num>              <POSc>
-#> 1: finished     0     0    -3 2026-09-17 09:57:33
-#> 2: finished     1     1    -7 2026-09-17 09:57:33
+#> 1: finished     0     0    -3 2026-09-17 12:33:40
+#> 2: finished     1     1    -7 2026-09-17 12:33:40
 #>                             worker_id        timestamp_ys
 #>                                <char>              <POSc>
-#> 1: terrorstricken_prairiedog_11f7ef9f 2026-09-17 09:57:34
-#> 2: terrorstricken_prairiedog_11f7ef9f 2026-09-17 09:57:34
+#> 1: terrorstricken_prairiedog_f15bc36c 2026-09-17 12:33:41
+#> 2: terrorstricken_prairiedog_f15bc36c 2026-09-17 12:33:41
 #>                                    keys x_domain_x1 x_domain_x2
 #>                                  <char>       <num>       <num>
-#> 1: 867e979c-d7c8-48de-95cb-7343143c25af           0           0
-#> 2: 14bb6e23-7e29-4a11-805e-0018b2bf8125           1           1
+#> 1: 3365465f-d571-49ca-b143-0d02496f0a70           0           0
+#> 2: 1f516b2e-2ee6-4f77-9180-2f619245be6d           1           1
 ```

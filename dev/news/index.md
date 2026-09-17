@@ -2,6 +2,11 @@
 
 ## bbotk (development version)
 
+- fix: The C code of
+  [`local_search()`](https://bbotk.mlr-org.com/dev/reference/local_search.md)
+  now raises R errors instead of using `assert()`, which aborted the R
+  session and vanished entirely in a build with `-DNDEBUG`
+  ([\#382](https://github.com/mlr-org/bbotk/issues/382)).
 - fix:
   [`local_search()`](https://bbotk.mlr-org.com/dev/reference/local_search.md)
   now recognizes the termination condition raised by a terminator. The
