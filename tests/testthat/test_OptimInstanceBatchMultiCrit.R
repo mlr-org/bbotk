@@ -76,3 +76,18 @@ test_that("OptimInstanceBatchMultiCrit works with empty search space", {
   expect_data_table(instance$archive$data, nrows = 1)
   expect_equal(instance$result$x_domain[[1]], list())
 })
+
+test_that("assign_result ignores non-target codomain parameters", {
+  objective = ObjectiveRFun$new(
+    fun = function(xs) list(y1 = as.numeric(xs$x)^2, y2 = -as.numeric(xs$x)^2, time = 1),
+    domain = PS_1D,
+    codomain = ps(y1 = p_dbl(tags = "minimize"), y2 = p_dbl(tags = "minimize"), time = p_dbl()),
+    properties = "multi-crit"
+  )
+
+  instance = oi(objective, search_space = PS_1D, terminator = trm("evals", n_evals = 3L))
+  opt("random_search")$optimize(instance)
+
+  expect_names(names(instance$result_y), identical.to = c("y1", "y2"))
+  expect_data_table(instance$result, min.rows = 1L)
+})

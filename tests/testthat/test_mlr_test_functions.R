@@ -49,3 +49,11 @@ test_that("branin_wu fidelity constant works", {
   val_low = obj$eval(xs)$y
   expect_true(val_full != val_low)
 })
+
+test_that("branin adds the noise term", {
+  expect_equal(branin(x1 = 12, x2 = 2, noise = 0.05), branin(x1 = 12, x2 = 2) + 0.05)
+  expect_equal(
+    branin(x1 = c(12, 0), x2 = c(2, 1), noise = c(0.05, -1)),
+    branin(x1 = c(12, 0), x2 = c(2, 1)) + c(0.05, -1)
+  )
+})

@@ -462,3 +462,49 @@ test_that("local_search matches factor levels exactly", {
   expect_equal(res$x$x, "ab")
   expect_equal(res$y, 0)
 })
+
+test_that("local_search catches the termination condition and restores the RNG state", {
+  search_space = ps(x = p_dbl(-1, 1))
+  control = local_search_control(n_searches = 2L, n_steps = 5L, n_neighs = 3L)
+  init_points = data.table(x = c(-0.5, 0.5))
+
+  n_calls = 0L
+  objective = function(xdt) {
+    n_calls <<- n_calls + 1L
+    if (n_calls > 1L) error_bbotk_terminated("terminated")
+    xdt$x^2
+  }
+
+
+  set.seed(1)
+  before = get(".Random.seed", envir = globalenv())
+  res = local_search(objective, search_space, control, init_points)
+  after = get(".Random.seed", envir = globalenv())
+
+  expect_names(names(res), identical.to = c("x", "y"))
+  # the C code draws random numbers before the objective terminates, so the RNG state must have moved on
+  expect_false(identical(before, after))
+})
+
+test_that("local_search does not replay its random numbers in the objective", {
+  search_space = ps(x = p_dbl(-1, 1))
+  control = local_search_control(n_searches = 2L, n_steps = 2L, n_neighs = 3L)
+  init_points = data.table(x = c(-0.5, 0.5))
+
+  draws = numeric(0)
+  objective = function(xdt) {
+    draws <<- c(draws, runif(1L))
+    xdt$x^2
+  }
+
+  set.seed(1)
+  local_search(objective, search_space, control, init_points)
+  expect_gte(length(draws), 2L)
+
+  set.seed(1)
+  reference = runif(length(draws))
+  # the first call happens before the C code draws anything
+  expect_equal(draws[1L], reference[1L])
+  # afterwards the objective must continue behind the numbers the C code consumed
+  expect_false(draws[2L] == reference[2L])
+})

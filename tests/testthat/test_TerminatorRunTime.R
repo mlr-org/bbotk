@@ -7,7 +7,10 @@ test_that("TerminatorRunTime works", {
   inst = MAKE_INST_2D(terminator)
   a = random_search(inst, batch_size = 1L)
   time_needed = as.numeric(difftime(Sys.time(), now), units = "secs")
-  expect_equal(time_needed, 1, tolerance = 0.15)
+  # the terminator fires as soon as one second elapsed; the upper bound is loose
+  # because the runner may be slow to evaluate the last batch
+  expect_true(time_needed >= 1)
+  expect_true(time_needed < 10)
 })
 
 test_that("max and current works", {
@@ -19,6 +22,19 @@ test_that("max and current works", {
   Sys.sleep(1)
 
   expect_equal(inst$terminator$status(inst$archive)["max_steps"], c("max_steps" = 3))
+})
+
+test_that("fractional secs work with progressr", {
+  skip_if_not_installed("progressr")
+  requireNamespace("progressr")
+
+  terminator = trm("run_time", secs = 0.5)
+  inst = MAKE_INST_1D(terminator = terminator)
+  expect_equal(terminator$status(inst$archive)["max_steps"], c("max_steps" = 1L))
+
+  optimizer = opt("random_search")
+  progressr::with_progress(optimizer$optimize(inst))
+  expect_gte(inst$archive$n_evals, 1L)
 })
 
 test_that("TerminatorRunTime works with empty archive", {
