@@ -3,6 +3,14 @@
 ## bbotk (development version)
 
 - fix:
+  [`assign_result_default()`](https://bbotk.mlr-org.com/dev/reference/assign_result_default.md)
+  now raises a readable error when the terminator is already terminated
+  before the first evaluation instead of failing with `column not found`
+  ([\#377](https://github.com/mlr-org/bbotk/issues/377)).
+- fix: `TerminatorRunTime` now reports an integer number of steps, so a
+  fractional `secs` value no longer breaks `$optimize()` when progressr
+  is loaded ([\#376](https://github.com/mlr-org/bbotk/issues/376)).
+- fix:
   [`assert_terminable()`](https://bbotk.mlr-org.com/dev/reference/bbotk_assertions.md)
   now decides whether an instance is single or multi-criteria from the
   codomain of the objective instead of the class of the instance, so
