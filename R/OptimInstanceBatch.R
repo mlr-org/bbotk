@@ -81,6 +81,8 @@ OptimInstanceBatch = R6Class(
         private$.initialize_context(NULL)
       }
       call_back("on_optimizer_before_eval", self$objective$callbacks, self$objective$context)
+      # the callbacks may have replaced the points
+      xdt = private$.xdt
       # update progressor
       if (!is.null(self$progressor)) {
         self$progressor$update(self$terminator, self$archive)
@@ -90,6 +92,9 @@ OptimInstanceBatch = R6Class(
         terminated_error(self)
       }
       assert_data_table(xdt)
+      if (!nrow(xdt) && self$search_space$length) {
+        error_bbotk("`xdt` must contain at least one point unless the search space is empty")
+      }
       assert_names(colnames(xdt), must.include = self$search_space$ids())
 
       lg$info("Evaluating %i configuration(s)", max(1, nrow(xdt)))
@@ -102,9 +107,9 @@ OptimInstanceBatch = R6Class(
       ) {
         # if search space has no transformation function and dependencies, and the objective takes a data table
         # use shortcut to skip conversion between data table and list
-        ydt = self$objective$eval_dt(private$.xdt[, self$search_space$ids(), with = FALSE])
+        ydt = self$objective$eval_dt(xdt[, self$search_space$ids(), with = FALSE])
       } else {
-        xss_trafoed = transform_xdt_to_xss(private$.xdt, self$search_space)
+        xss_trafoed = transform_xdt_to_xss(xdt, self$search_space)
         ydt = self$objective$eval_many(xss_trafoed)
       }
 
@@ -154,7 +159,7 @@ OptimInstanceBatch = R6Class(
     #' @field result_y (`numeric()`)\cr
     #' Optimal outcome.
     result_y = function() {
-      unlist(private$.result[, self$objective$codomain$ids(), with = FALSE])
+      unlist(private$.result[, self$objective$codomain$target_ids, with = FALSE])
     },
 
     #' @field is_terminated (`logical(1)`).

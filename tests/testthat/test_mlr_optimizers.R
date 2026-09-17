@@ -20,5 +20,5 @@ test_that("mlr_optimizers sugar", {
 test_that("as.data.table objects parameter", {
   tab = as.data.table(mlr_optimizers, objects = TRUE)
   expect_data_table(tab)
-  expect_list(tab$object, any.missing = FALSE)
+  expect_list(tab$object, any.missing = FALSE, types = "Optimizer")
 })
