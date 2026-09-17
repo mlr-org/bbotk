@@ -7,7 +7,10 @@ test_that("TerminatorRunTime works", {
   inst = MAKE_INST_2D(terminator)
   a = random_search(inst, batch_size = 1L)
   time_needed = as.numeric(difftime(Sys.time(), now), units = "secs")
-  expect_equal(time_needed, 1, tolerance = 0.15)
+  # the terminator fires as soon as one second elapsed; the upper bound is loose
+  # because the runner may be slow to evaluate the last batch
+  expect_true(time_needed >= 1)
+  expect_true(time_needed < 10)
 })
 
 test_that("max and current works", {

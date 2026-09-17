@@ -1,6 +1,26 @@
 # bbotk (development version)
 
 * fix: `TerminatorRunTime` now reports an integer number of steps, so a fractional `secs` value no longer breaks `$optimize()` when progressr is loaded (#376).
+* fix: `assert_terminable()` now decides whether an instance is single or multi-criteria from the codomain of the objective instead of the class of the instance, so terminators are checked correctly for `OptimInstanceAsyncMultiCrit` (#375).
+* fix: `context$xdt` can now be replaced by assignment in the `on_optimizer_before_eval` stage of a `CallbackBatch`, and the replaced points are both evaluated and written to the archive (#374).
+* fix: `$assign_result()` and `$result_y` of the multi-criteria instances now only expect and return the target values of the codomain. A codomain with additional non-target parameters made `$optimize()` fail (#372).
+* fix: `bb_optimize()` now creates a single-criteria instance for a codomain with one target and additional non-target parameters instead of a multi-criteria instance (#373).
+* fix: `$result_y` of the single-criteria instances now only returns the target values of the codomain. It errored for a codomain with additional non-target parameters (#371).
+* fix: `OptimizerBatchRandomSearch` rejects a `batch_size` smaller than 1, and `$eval_batch()` errors on an empty `xdt` unless the search space is empty. `opt("random_search", batch_size = 0)` looped forever before (#370).
+* fix: `branin()` now adds the `noise` argument to the function value, which was ignored (#369).
+* fix: `as.data.table(mlr_optimizers, objects = TRUE)` now returns the optimizer in the `object` column instead of `base::t()` for all optimizers but `"chain"` (#368).
+* fix: `Objective$eval_many()` no longer multiplies the number of rows when the objective returns an extra that is an atomic vector of length greater than one (#367).
+* fix: `ArchiveBatch$add_evals()` now checks that `xss_trafoed` has one element per row of `xdt`, which silently corrupted the `x_domain` column before (#366).
+* fix: `nds_selection()` now only accepts a `minimize` argument of length 1 or of the number of objectives, and rejects points with missing values (#365).
+* fix: `OptimizerBatchChain` now runs the optimizers on the instance itself instead of on a clone. The terminator of the instance sees all evaluated points, so the overall budget is no longer exceeded, and points that were already evaluated before the chain started are no longer duplicated in the archive (#364).
+* fix: `shrink_ps()` now expects the point to shrink around on the scale of the search space instead of the transformed scale, and the `uniroot()` based inversion of the trafo is removed. `OptimizerBatchFocusSearch` shrunk the search space around the wrong point whenever the search space had a trafo (#360).
+* fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer returns before the terminator is satisfied, e.g. when the design of `OptimizerAsyncDesignPoints` is exhausted (#385).
+* fix: `optimize_async_default()` now checks the instance and the properties of the optimizer before the workers are started, so unsupported parameter classes, dependencies, single or multi-criteria mismatches, and missing packages are reported in the main process instead of crashing the workers (#386).
+* fix: `optimize_async_default()` now stops the workers on every exit path, including errors and interrupts. A failing optimization left the workers running before (#384).
+* fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the task cache of rush in place, which changed the order of `$finished_data` and `$data` for all later calls (#387).
+* fix: `OptimizerBatchIrace` now passes the `digits` parameter to irace instead of always using 15 digits (#362).
+* fix: `OptimizerBatchIrace` now writes the actual step of a race into the `step` column of the archive, which was always `1` (#363).
+* fix: `OptimizerBatchNLoptr` no longer overwrites the `maxeval`, `maxtime`, and `stopval` parameters. The internal termination criteria set by the user are now passed on to `nloptr::nloptr()` (#361).
 
 # bbotk 1.13.0
 

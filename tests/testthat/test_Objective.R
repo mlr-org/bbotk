@@ -504,3 +504,22 @@ test_that("codomain direction property works", {
   obj = Objective$new(domain = domain, codomain = codomain)
   expect_equal(obj$codomain$direction, c(y1 = 1L, y2 = -1L, y3 = 0L))
 })
+
+test_that("eval_many wraps extras that are not scalars", {
+  objective = ObjectiveRFun$new(
+    fun = function(xs) list(y = as.numeric(xs$x)^2, extra = c(1, 2, 3)),
+    domain = PS_1D,
+    codomain = FUN_1D_CODOMAIN,
+    properties = "single-crit"
+  )
+
+  ydt = objective$eval_many(list(list(x = 0.5), list(x = 1)))
+  expect_data_table(ydt, nrows = 2L)
+  expect_equal(ydt$y, c(0.25, 1))
+  expect_list(ydt$extra, len = 2L)
+  expect_equal(ydt$extra[[1L]], c(1, 2, 3))
+
+  instance = oi(objective, search_space = PS_1D, terminator = trm("evals", n_evals = 2L))
+  instance$eval_batch(data.table(x = c(0.5, 1)))
+  expect_equal(instance$archive$n_evals, 2L)
+})

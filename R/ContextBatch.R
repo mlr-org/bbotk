@@ -36,7 +36,7 @@ ContextBatch = R6Class(
       if (missing(rhs)) {
         get_private(self$instance)$.xdt
       } else {
-        get_private(self$instance)$.xdt = rhs
+        get_private(self$instance, ".xdt") = rhs
       }
     },
 
