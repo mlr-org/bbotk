@@ -3,6 +3,12 @@
 ## bbotk (development version)
 
 - fix:
+  [`local_search()`](https://bbotk.mlr-org.com/dev/reference/local_search.md)
+  now recognizes the termination condition raised by a terminator. The
+  condition was re-raised and the RNG state was never written back, so
+  all random numbers drawn in the C code were lost
+  ([\#378](https://github.com/mlr-org/bbotk/issues/378)).
+- fix:
   [`assign_result_default()`](https://bbotk.mlr-org.com/dev/reference/assign_result_default.md)
   now raises a readable error when the terminator is already terminated
   before the first evaluation instead of failing with `column not found`
