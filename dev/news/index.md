@@ -2,6 +2,12 @@
 
 ## bbotk (development version)
 
+- fix: `OptimizerBatchChain` now runs the optimizers on the instance
+  itself instead of on a clone. The terminator of the instance sees all
+  evaluated points, so the overall budget is no longer exceeded, and
+  points that were already evaluated before the chain started are no
+  longer duplicated in the archive
+  ([\#364](https://github.com/mlr-org/bbotk/issues/364)).
 - fix:
   [`shrink_ps()`](https://bbotk.mlr-org.com/dev/reference/shrink_ps.md)
   now expects the point to shrink around on the scale of the search
