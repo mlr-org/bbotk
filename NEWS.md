@@ -1,5 +1,11 @@
 # bbotk (development version)
 
+* fix: `branin()` now adds the `noise` argument to the function value, which was ignored (#369).
+* fix: `as.data.table(mlr_optimizers, objects = TRUE)` now returns the optimizer in the `object` column instead of `base::t()` for all optimizers but `"chain"` (#368).
+* fix: `Objective$eval_many()` no longer multiplies the number of rows when the objective returns an extra that is an atomic vector of length greater than one (#367).
+* fix: `ArchiveBatch$add_evals()` now checks that `xss_trafoed` has one element per row of `xdt`, which silently corrupted the `x_domain` column before (#366).
+* fix: `nds_selection()` now only accepts a `minimize` argument of length 1 or of the number of objectives, and rejects points with missing values (#365).
+* fix: `OptimizerBatchChain` now runs the optimizers on the instance itself instead of on a clone. The terminator of the instance sees all evaluated points, so the overall budget is no longer exceeded, and points that were already evaluated before the chain started are no longer duplicated in the archive (#364).
 * fix: `shrink_ps()` now expects the point to shrink around on the scale of the search space instead of the transformed scale, and the `uniroot()` based inversion of the trafo is removed. `OptimizerBatchFocusSearch` shrunk the search space around the wrong point whenever the search space had a trafo (#360).
 * fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer returns before the terminator is satisfied, e.g. when the design of `OptimizerAsyncDesignPoints` is exhausted (#385).
 * fix: `optimize_async_default()` now checks the instance and the properties of the optimizer before the workers are started, so unsupported parameter classes, dependencies, single or multi-criteria mismatches, and missing packages are reported in the main process instead of crashing the workers (#386).
