@@ -651,74 +651,74 @@ as.data.table(instance$archive)
 }
 #>        state          x1         x2           y        timestamp_xs
 #>       <char>       <num>      <num>       <num>              <POSc>
-#>  1: finished -6.21358293  0.2769503  -68.201348 2026-09-17 12:33:27
-#>  2: finished -2.62264757  4.2779729  -64.337761 2026-09-17 12:33:27
-#>  3: finished  6.84682656  3.2309502  -52.316468 2026-09-17 12:33:27
-#>  4: finished -1.96786549 -3.4438612   -5.940969 2026-09-17 12:33:27
-#>  5: finished -9.86571338  2.5243351 -161.313432 2026-09-17 12:33:27
-#>  6: finished  0.01208465  3.1304511  -31.534238 2026-09-17 12:33:27
-#>  7: finished -4.77998488  1.4299587  -55.592729 2026-09-17 12:33:27
-#>  8: finished  7.57503606  1.3830058  -40.291767 2026-09-17 12:33:27
-#>  9: finished  8.01326577 -2.8537699  -26.180748 2026-09-17 12:33:27
-#> 10: finished  5.39871055  2.9134685  -36.520343 2026-09-17 12:33:27
-#> 11: finished  4.82894640 -0.2106949   -5.783161 2026-09-17 12:33:27
-#> 12: finished  2.92831418 -0.4491262    2.631276 2026-09-17 12:33:27
-#> 13: finished -2.48881904  1.6091926  -31.394153 2026-09-17 12:33:27
-#> 14: finished  2.11332211  1.0427817   -6.356925 2026-09-17 12:33:28
-#> 15: finished  0.87403046  4.3072392  -44.663553 2026-09-17 12:33:28
-#> 16: finished -5.88500581 -0.9916228  -56.206896 2026-09-17 12:33:28
-#> 17: finished  4.08136954  3.9785972  -43.032918 2026-09-17 12:33:28
-#> 18: finished -7.80489880 -3.6260806  -86.528017 2026-09-17 12:33:28
-#> 19: finished -9.37102033 -3.4632716 -119.514724 2026-09-17 12:33:28
-#> 20: finished  5.22167868  0.7561287  -14.487716 2026-09-17 12:33:28
+#>  1: finished -6.21358293  0.2769503  -68.201348 2026-09-18 09:14:55
+#>  2: finished -2.62264757  4.2779729  -64.337761 2026-09-18 09:14:55
+#>  3: finished  6.84682656  3.2309502  -52.316468 2026-09-18 09:14:55
+#>  4: finished -1.96786549 -3.4438612   -5.940969 2026-09-18 09:14:55
+#>  5: finished -9.86571338  2.5243351 -161.313432 2026-09-18 09:14:55
+#>  6: finished  0.01208465  3.1304511  -31.534238 2026-09-18 09:14:55
+#>  7: finished -4.77998488  1.4299587  -55.592729 2026-09-18 09:14:55
+#>  8: finished  7.57503606  1.3830058  -40.291767 2026-09-18 09:14:55
+#>  9: finished  8.01326577 -2.8537699  -26.180748 2026-09-18 09:14:55
+#> 10: finished  5.39871055  2.9134685  -36.520343 2026-09-18 09:14:55
+#> 11: finished  4.82894640 -0.2106949   -5.783161 2026-09-18 09:14:55
+#> 12: finished  2.92831418 -0.4491262    2.631276 2026-09-18 09:14:55
+#> 13: finished -2.48881904  1.6091926  -31.394153 2026-09-18 09:14:56
+#> 14: finished  2.11332211  1.0427817   -6.356925 2026-09-18 09:14:56
+#> 15: finished  0.87403046  4.3072392  -44.663553 2026-09-18 09:14:56
+#> 16: finished -5.88500581 -0.9916228  -56.206896 2026-09-18 09:14:56
+#> 17: finished  4.08136954  3.9785972  -43.032918 2026-09-18 09:14:56
+#> 18: finished -7.80489880 -3.6260806  -86.528017 2026-09-18 09:14:56
+#> 19: finished -9.37102033 -3.4632716 -119.514724 2026-09-18 09:14:56
+#> 20: finished  5.22167868  0.7561287  -14.487716 2026-09-18 09:14:56
 #>        state          x1         x2           y        timestamp_xs
 #>       <char>       <num>      <num>       <num>              <POSc>
 #>                                      worker_id        timestamp_ys
 #>                                         <char>              <POSc>
-#>  1: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#>  2: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#>  3: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#>  4: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#>  5: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#>  6: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#>  7: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#>  8: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#>  9: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#> 10: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#> 11: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#> 12: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#> 13: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:27
-#> 14: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:28
-#> 15: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:28
-#> 16: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:28
-#> 17: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:28
-#> 18: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:28
-#> 19: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:28
-#> 20: artsycraftsy_easteuropeanshepherd_3759f0f4 2026-09-17 12:33:28
+#>  1: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#>  2: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#>  3: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#>  4: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#>  5: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#>  6: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#>  7: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#>  8: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#>  9: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#> 10: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#> 11: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#> 12: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:55
+#> 13: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:56
+#> 14: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:56
+#> 15: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:56
+#> 16: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:56
+#> 17: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:56
+#> 18: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:56
+#> 19: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:56
+#> 20: artsycraftsy_easteuropeanshepherd_9b48a93e 2026-09-18 09:14:56
 #>                                      worker_id        timestamp_ys
 #>                                         <char>              <POSc>
 #>                                     keys x_domain_x1 x_domain_x2
 #>                                   <char>       <num>       <num>
-#>  1: f0f01419-ea17-442c-97c3-7146c530da57 -6.21358293   0.2769503
-#>  2: 5a8ed683-13b9-4722-8c1f-18958e1832a1 -2.62264757   4.2779729
-#>  3: 71403005-2e96-4b1f-88a5-cca7e253216c  6.84682656   3.2309502
-#>  4: c2a6d2ae-5920-46ec-b055-4d840e50d33b -1.96786549  -3.4438612
-#>  5: daa8477b-a346-4a7a-9d84-fe121ba3afc4 -9.86571338   2.5243351
-#>  6: dc801dfe-5e90-445f-925c-38423faecf9a  0.01208465   3.1304511
-#>  7: 53719e80-9e6c-4f01-8fd4-737a81d53c04 -4.77998488   1.4299587
-#>  8: d0db5a15-a655-4c57-a77e-b3270fd683df  7.57503606   1.3830058
-#>  9: f573942a-5796-4940-8d33-96e9e06f8df6  8.01326577  -2.8537699
-#> 10: ebe8bf19-4a2b-4798-9538-8f98e60e58b6  5.39871055   2.9134685
-#> 11: 4f085483-7728-4a2b-aa18-6a86080fb33f  4.82894640  -0.2106949
-#> 12: b9d9bd0a-d4f6-46c8-a570-ad359f8d4ed3  2.92831418  -0.4491262
-#> 13: edeb26a8-3fca-41f6-b428-0c3a88a3bcc2 -2.48881904   1.6091926
-#> 14: 3b718432-b91f-440e-a856-5c54a7737dc1  2.11332211   1.0427817
-#> 15: e1cf5948-02cd-4947-ae5c-a67d9056f9c3  0.87403046   4.3072392
-#> 16: 7cb360be-8be1-48d7-b6b9-31d7142eb7c1 -5.88500581  -0.9916228
-#> 17: 22b61cc0-fe50-476e-95e7-a1b09948b32f  4.08136954   3.9785972
-#> 18: 65fc7d09-3a7c-4541-ae56-996e371a4dfc -7.80489880  -3.6260806
-#> 19: f9aeb319-73f9-40e0-99d0-01fa226a34e4 -9.37102033  -3.4632716
-#> 20: 644a2089-929b-48e1-8799-913f93e0be67  5.22167868   0.7561287
+#>  1: 69ec33d0-4f74-4841-9107-e1e882dbae1c -6.21358293   0.2769503
+#>  2: 0a03a611-1e35-4832-a1db-9f707f9626d3 -2.62264757   4.2779729
+#>  3: 010fb2d1-8ceb-4e5f-b549-fe5e2fb12925  6.84682656   3.2309502
+#>  4: 2adf29de-852f-455c-9f8e-680ca171e748 -1.96786549  -3.4438612
+#>  5: a24f944d-c5d9-4256-bee4-eada14b063cc -9.86571338   2.5243351
+#>  6: 5fdf8a14-8599-4f50-828b-81243de1faf8  0.01208465   3.1304511
+#>  7: a5798ae5-f6d5-4ff4-bcf7-fb597f55b0a8 -4.77998488   1.4299587
+#>  8: 856e8c59-8ac8-4d22-adfe-a8056a9f35e5  7.57503606   1.3830058
+#>  9: 2fa0f30f-5c80-40fc-b8db-5e34d012ed91  8.01326577  -2.8537699
+#> 10: 7bb258f8-9e64-4e98-a42e-f397c1fa16fb  5.39871055   2.9134685
+#> 11: f234ff73-7791-49a7-b4ba-53334f56d48d  4.82894640  -0.2106949
+#> 12: 6c5d09b8-e036-4542-98f8-b9794401c45f  2.92831418  -0.4491262
+#> 13: 36d49790-7837-49a6-8f14-3493655603d0 -2.48881904   1.6091926
+#> 14: 45b750a9-a714-4b91-afb2-f83f01b2c0bb  2.11332211   1.0427817
+#> 15: fbdf8433-f3b5-4127-a481-ff4f121e1e45  0.87403046   4.3072392
+#> 16: 874ef12d-5bd8-41f3-9167-e3f5aa9bf188 -5.88500581  -0.9916228
+#> 17: 61453c02-e9cd-40ef-bc0b-90b2c678a001  4.08136954   3.9785972
+#> 18: 7c7abcc0-f04c-43e0-a8ea-7e5ad748bdb5 -7.80489880  -3.6260806
+#> 19: 0736478f-db24-46ff-966e-e4f2c8f20439 -9.37102033  -3.4632716
+#> 20: 03daee2b-fd55-4f3c-9196-6ed6fe3315a7  5.22167868   0.7561287
 #>                                     keys x_domain_x1 x_domain_x2
 #>                                   <char>       <num>       <num>
 ```
