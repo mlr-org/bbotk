@@ -1,6 +1,136 @@
 # Changelog
 
+## bbotk 1.13.1
+
+CRAN release: 2026-09-17
+
+- fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the
+  task cache of rush in place, which changed the order of
+  `$finished_data` and `$data` for all later calls
+  ([\#387](https://github.com/mlr-org/bbotk/issues/387)).
+- fix: `ArchiveBatch$add_evals()` now checks that `xss_trafoed` has one
+  element per row of `xdt`, which silently corrupted the `x_domain`
+  column before ([\#366](https://github.com/mlr-org/bbotk/issues/366)).
+- fix: `as.data.table(mlr_optimizers, objects = TRUE)` now returns the
+  optimizer in the `object` column instead of
+  [`base::t()`](https://rdrr.io/r/base/t.html) for all optimizers but
+  `"chain"` ([\#368](https://github.com/mlr-org/bbotk/issues/368)).
+- fix:
+  [`assert_terminable()`](https://bbotk.mlr-org.com/reference/bbotk_assertions.md)
+  now decides whether an instance is single or multi-criteria from the
+  codomain of the objective instead of the class of the instance, so
+  terminators are checked correctly for `OptimInstanceAsyncMultiCrit`
+  ([\#375](https://github.com/mlr-org/bbotk/issues/375)).
+- fix: `$assign_result()` and `$result_y` of the multi-criteria
+  instances now only expect and return the target values of the
+  codomain. A codomain with additional non-target parameters made
+  `$optimize()` fail
+  ([\#372](https://github.com/mlr-org/bbotk/issues/372)).
+- fix:
+  [`assign_result_default()`](https://bbotk.mlr-org.com/reference/assign_result_default.md)
+  now raises a readable error when the terminator is already terminated
+  before the first evaluation instead of failing with `column not found`
+  ([\#377](https://github.com/mlr-org/bbotk/issues/377)).
+- fix:
+  [`bb_optimize()`](https://bbotk.mlr-org.com/reference/bb_optimize.md)
+  now creates a single-criteria instance for a codomain with one target
+  and additional non-target parameters instead of a multi-criteria
+  instance ([\#373](https://github.com/mlr-org/bbotk/issues/373)).
+- fix: [`branin()`](https://bbotk.mlr-org.com/reference/branin.md) now
+  adds the `noise` argument to the function value, which was ignored
+  ([\#369](https://github.com/mlr-org/bbotk/issues/369)).
+- fix: `context$xdt` can now be replaced by assignment in the
+  `on_optimizer_before_eval` stage of a `CallbackBatch`, and the
+  replaced points are both evaluated and written to the archive
+  ([\#374](https://github.com/mlr-org/bbotk/issues/374)).
+- fix: The C code of
+  [`local_search()`](https://bbotk.mlr-org.com/reference/local_search.md)
+  now raises R errors instead of using `assert()`, which aborted the R
+  session and vanished entirely in a build with `-DNDEBUG`
+  ([\#382](https://github.com/mlr-org/bbotk/issues/382)).
+- fix:
+  [`local_search()`](https://bbotk.mlr-org.com/reference/local_search.md)
+  now recognizes the termination condition raised by a terminator. The
+  condition was re-raised and the RNG state was never written back, so
+  all random numbers drawn in the C code were lost
+  ([\#378](https://github.com/mlr-org/bbotk/issues/378)).
+- fix:
+  [`local_search()`](https://bbotk.mlr-org.com/reference/local_search.md)
+  now writes the RNG state back before it calls the objective, so an
+  objective that draws random numbers no longer receives the numbers the
+  C code consumed for mutation
+  ([\#379](https://github.com/mlr-org/bbotk/issues/379)).
+- fix:
+  [`local_search()`](https://bbotk.mlr-org.com/reference/local_search.md)
+  now compares parameter names, column names, list element names, and
+  factor levels exactly instead of by prefix. A parameter or level whose
+  name was a prefix of another one aborted the R session or made
+  mutation a silent no-op
+  ([\#380](https://github.com/mlr-org/bbotk/issues/380)).
+- fix:
+  [`nds_selection()`](https://bbotk.mlr-org.com/reference/nds_selection.md)
+  now only accepts a `minimize` argument of length 1 or of the number of
+  objectives, and rejects points with missing values
+  ([\#365](https://github.com/mlr-org/bbotk/issues/365)).
+- fix: `Objective$eval_many()` no longer multiplies the number of rows
+  when the objective returns an extra that is an atomic vector of length
+  greater than one
+  ([\#367](https://github.com/mlr-org/bbotk/issues/367)).
+- fix:
+  [`optimize_async_default()`](https://bbotk.mlr-org.com/reference/optimize_async_default.md)
+  now checks the instance and the properties of the optimizer before the
+  workers are started, so unsupported parameter classes, dependencies,
+  single or multi-criteria mismatches, and missing packages are reported
+  in the main process instead of crashing the workers
+  ([\#386](https://github.com/mlr-org/bbotk/issues/386)).
+- fix:
+  [`optimize_async_default()`](https://bbotk.mlr-org.com/reference/optimize_async_default.md)
+  now stops the workers on every exit path, including errors and
+  interrupts. A failing optimization left the workers running before
+  ([\#384](https://github.com/mlr-org/bbotk/issues/384)).
+- fix: `OptimizerBatchChain` now runs the optimizers on the instance
+  itself instead of on a clone. The terminator of the instance sees all
+  evaluated points, so the overall budget is no longer exceeded, and
+  points that were already evaluated before the chain started are no
+  longer duplicated in the archive
+  ([\#364](https://github.com/mlr-org/bbotk/issues/364)).
+- fix: `OptimizerBatchIrace` now passes the `digits` parameter to irace
+  instead of always using 15 digits
+  ([\#362](https://github.com/mlr-org/bbotk/issues/362)).
+- fix: `OptimizerBatchIrace` now writes the actual step of a race into
+  the `step` column of the archive, which was always `1`
+  ([\#363](https://github.com/mlr-org/bbotk/issues/363)).
+- fix: `OptimizerBatchNLoptr` no longer overwrites the `maxeval`,
+  `maxtime`, and `stopval` parameters. The internal termination criteria
+  set by the user are now passed on to
+  [`nloptr::nloptr()`](https://astamm.github.io/nloptr/reference/nloptr.html)
+  ([\#361](https://github.com/mlr-org/bbotk/issues/361)).
+- fix: `OptimizerBatchRandomSearch` rejects a `batch_size` smaller than
+  1, and `$eval_batch()` errors on an empty `xdt` unless the search
+  space is empty. `opt("random_search", batch_size = 0)` looped forever
+  before ([\#370](https://github.com/mlr-org/bbotk/issues/370)).
+- fix: `options(bbotk.debug = TRUE)` no longer hangs when the optimizer
+  returns before the terminator is satisfied, e.g. when the design of
+  `OptimizerAsyncDesignPoints` is exhausted
+  ([\#385](https://github.com/mlr-org/bbotk/issues/385)).
+- fix: `$result_y` of the single-criteria instances now only returns the
+  target values of the codomain. It errored for a codomain with
+  additional non-target parameters
+  ([\#371](https://github.com/mlr-org/bbotk/issues/371)).
+- fix: [`shrink_ps()`](https://bbotk.mlr-org.com/reference/shrink_ps.md)
+  now expects the point to shrink around on the scale of the search
+  space instead of the transformed scale, and the
+  [`uniroot()`](https://rdrr.io/r/stats/uniroot.html) based inversion of
+  the trafo is removed. `OptimizerBatchFocusSearch` shrunk the search
+  space around the wrong point whenever the search space had a trafo
+  ([\#360](https://github.com/mlr-org/bbotk/issues/360)).
+- fix: `TerminatorRunTime` now reports an integer number of steps, so a
+  fractional `secs` value no longer breaks `$optimize()` when progressr
+  is loaded ([\#376](https://github.com/mlr-org/bbotk/issues/376)).
+
 ## bbotk 1.13.0
+
+CRAN release: 2026-09-02
 
 - feat: Asynchronous optimizers support the `mirai` compute profiles set
   with the `profiles` argument of

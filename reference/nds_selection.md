@@ -35,8 +35,9 @@ nds_selection(points, n_select, ref_point = NULL, minimize = TRUE)
 - minimize:
 
   ('logical()')  
-  Should the ranking be based on minimization? Can be specified for each
-  dimension or for all. Default is `TRUE` for each dimension.
+  Should the ranking be based on minimization? Must be of length 1 for
+  all dimensions or of length `nrow(points)` for each dimension. Default
+  is `TRUE` for each dimension.
 
 ## Value
 

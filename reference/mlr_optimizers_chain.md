@@ -16,24 +16,29 @@ guards the optimization process as a whole, the additional
 each individual
 [OptimizerBatch](https://bbotk.mlr-org.com/reference/OptimizerBatch.md).
 
-The optimization process works as follows: The first
+The optimization process works as follows: Each
 [OptimizerBatch](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
 is run on the
 [OptimInstanceBatch](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.md)
-relying on a
-[TerminatorCombo](https://bbotk.mlr-org.com/reference/mlr_terminators_combo.md)
-of the original
+until either the
 [Terminator](https://bbotk.mlr-org.com/reference/Terminator.md) of the
 [OptimInstanceBatch](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.md)
-and the (optional) additional
+or the (optional) additional
 [Terminator](https://bbotk.mlr-org.com/reference/Terminator.md) as
-passed during construction. Once this
-[TerminatorCombo](https://bbotk.mlr-org.com/reference/mlr_terminators_combo.md)
-indicates termination (usually via the additional
-[Terminator](https://bbotk.mlr-org.com/reference/Terminator.md)), the
-second
+passed during construction indicates termination. The
+[Terminator](https://bbotk.mlr-org.com/reference/Terminator.md) of the
+[OptimInstanceBatch](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.md)
+sees all points that were evaluated so far, whereas the additional
+[Terminator](https://bbotk.mlr-org.com/reference/Terminator.md) only
+sees the points that were evaluated by the current
 [OptimizerBatch](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
-is run. This continues for all optimizers unless the original
+and measures the runtime from the start of the current
+[OptimizerBatch](https://bbotk.mlr-org.com/reference/OptimizerBatch.md).
+Once the additional
+[Terminator](https://bbotk.mlr-org.com/reference/Terminator.md)
+indicates termination, the next
+[OptimizerBatch](https://bbotk.mlr-org.com/reference/OptimizerBatch.md)
+is run. This continues for all optimizers unless the
 [Terminator](https://bbotk.mlr-org.com/reference/Terminator.md) of the
 [OptimInstanceBatch](https://bbotk.mlr-org.com/reference/OptimInstanceBatch.md)
 indicates termination.

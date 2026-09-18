@@ -74,7 +74,7 @@ Additionally, the following internal termination parameters can be used:
 
   `numeric(1)`  
   Relative tolerance. Original default is 10^-4. Deactivate with `-1`.
-  Overwritten with `-1`.
+  Default is `-1`.
 
 - `xtol_abs`:
 

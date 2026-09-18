@@ -10,11 +10,14 @@ For each OptimizerBatch an (optional) additional Terminator can be specified dur
 While the original Terminator of the OptimInstanceBatch guards the optimization process as a whole,
 the additional Terminators guard each individual OptimizerBatch.
 The optimization process works as follows:
-The first OptimizerBatch is run on the OptimInstanceBatch relying on a TerminatorCombo of the original
-Terminator of the OptimInstanceBatch and the (optional) additional Terminator as passed during construction.
-Once this TerminatorCombo indicates termination (usually via the additional Terminator),
-the second OptimizerBatch is run.
-This continues for all optimizers unless the original Terminator of the OptimInstanceBatch indicates termination.
+Each OptimizerBatch is run on the OptimInstanceBatch until either the Terminator of the
+OptimInstanceBatch or the (optional) additional Terminator as passed during construction indicates
+termination.
+The Terminator of the OptimInstanceBatch sees all points that were evaluated so far,
+whereas the additional Terminator only sees the points that were evaluated by the current OptimizerBatch
+and measures the runtime from the start of the current OptimizerBatch.
+Once the additional Terminator indicates termination, the next OptimizerBatch is run.
+This continues for all optimizers unless the Terminator of the OptimInstanceBatch indicates termination.
 OptimizerBatchChain can also be used for random restarts of the same
 Optimizer (if applicable) by setting the Terminator of the OptimInstanceBatch to
 TerminatorNone and setting identical additional Terminators during construction."><meta property="og:description" content="OptimizerBatchChain allows to run multiple OptimizerBatch sequentially.
@@ -22,11 +25,14 @@ For each OptimizerBatch an (optional) additional Terminator can be specified dur
 While the original Terminator of the OptimInstanceBatch guards the optimization process as a whole,
 the additional Terminators guard each individual OptimizerBatch.
 The optimization process works as follows:
-The first OptimizerBatch is run on the OptimInstanceBatch relying on a TerminatorCombo of the original
-Terminator of the OptimInstanceBatch and the (optional) additional Terminator as passed during construction.
-Once this TerminatorCombo indicates termination (usually via the additional Terminator),
-the second OptimizerBatch is run.
-This continues for all optimizers unless the original Terminator of the OptimInstanceBatch indicates termination.
+Each OptimizerBatch is run on the OptimInstanceBatch until either the Terminator of the
+OptimInstanceBatch or the (optional) additional Terminator as passed during construction indicates
+termination.
+The Terminator of the OptimInstanceBatch sees all points that were evaluated so far,
+whereas the additional Terminator only sees the points that were evaluated by the current OptimizerBatch
+and measures the runtime from the start of the current OptimizerBatch.
+Once the additional Terminator indicates termination, the next OptimizerBatch is run.
+This continues for all optimizers unless the Terminator of the OptimInstanceBatch indicates termination.
 OptimizerBatchChain can also be used for random restarts of the same
 Optimizer (if applicable) by setting the Terminator of the OptimInstanceBatch to
 TerminatorNone and setting identical additional Terminators during construction."></head><body>
@@ -37,7 +43,7 @@ TerminatorNone and setting identical additional Terminators during construction.
 
     <a class="navbar-brand me-2" href="../index.html">bbotk</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.13.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.13.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,11 +85,14 @@ TerminatorNone and setting identical additional Terminators during construction.
 While the original <a href="Terminator.html">Terminator</a> of the <a href="OptimInstanceBatch.html">OptimInstanceBatch</a> guards the optimization process as a whole,
 the additional <a href="Terminator.html">Terminator</a>s guard each individual <a href="OptimizerBatch.html">OptimizerBatch</a>.</p>
 <p>The optimization process works as follows:
-The first <a href="OptimizerBatch.html">OptimizerBatch</a> is run on the <a href="OptimInstanceBatch.html">OptimInstanceBatch</a> relying on a <a href="mlr_terminators_combo.html">TerminatorCombo</a> of the original
-<a href="Terminator.html">Terminator</a> of the <a href="OptimInstanceBatch.html">OptimInstanceBatch</a> and the (optional) additional <a href="Terminator.html">Terminator</a> as passed during construction.
-Once this <a href="mlr_terminators_combo.html">TerminatorCombo</a> indicates termination (usually via the additional <a href="Terminator.html">Terminator</a>),
-the second <a href="OptimizerBatch.html">OptimizerBatch</a> is run.
-This continues for all optimizers unless the original <a href="Terminator.html">Terminator</a> of the <a href="OptimInstanceBatch.html">OptimInstanceBatch</a> indicates termination.</p>
+Each <a href="OptimizerBatch.html">OptimizerBatch</a> is run on the <a href="OptimInstanceBatch.html">OptimInstanceBatch</a> until either the <a href="Terminator.html">Terminator</a> of the
+<a href="OptimInstanceBatch.html">OptimInstanceBatch</a> or the (optional) additional <a href="Terminator.html">Terminator</a> as passed during construction indicates
+termination.
+The <a href="Terminator.html">Terminator</a> of the <a href="OptimInstanceBatch.html">OptimInstanceBatch</a> sees all points that were evaluated so far,
+whereas the additional <a href="Terminator.html">Terminator</a> only sees the points that were evaluated by the current <a href="OptimizerBatch.html">OptimizerBatch</a>
+and measures the runtime from the start of the current <a href="OptimizerBatch.html">OptimizerBatch</a>.
+Once the additional <a href="Terminator.html">Terminator</a> indicates termination, the next <a href="OptimizerBatch.html">OptimizerBatch</a> is run.
+This continues for all optimizers unless the <a href="Terminator.html">Terminator</a> of the <a href="OptimInstanceBatch.html">OptimInstanceBatch</a> indicates termination.</p>
 <p>OptimizerBatchChain can also be used for random restarts of the same
 <a href="Optimizer.html">Optimizer</a> (if applicable) by setting the <a href="Terminator.html">Terminator</a> of the <a href="OptimInstanceBatch.html">OptimInstanceBatch</a> to
 <a href="mlr_terminators_none.html">TerminatorNone</a> and setting identical additional <a href="Terminator.html">Terminator</a>s during construction.</p>
