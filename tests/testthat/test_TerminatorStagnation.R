@@ -37,3 +37,30 @@ test_that("TerminatorStagnation errors with direction=0 (learn tag)", {
 
   expect_error(terminator$is_terminated(archive), "direction != 0")
 })
+
+test_that("TerminatorStagnation works with ArchiveAsync", {
+  skip_if_not_installed("rush")
+  skip_if_no_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
+
+  terminator = trm("stagnation", iters = 2L)
+  instance = oi_async(objective = OBJ_2D, search_space = PS_2D, terminator = terminator, rush = rush)
+  archive = instance$archive
+
+  archive$push_finished_points(
+    xss = list(list(x1 = 0, x2 = 0), list(x1 = 0, x2 = 0)),
+    yss = list(list(y = 3), list(y = 2))
+  )
+  archive$push_points(list(list(x1 = 1, x2 = 1), list(x1 = 1, x2 = 1)))
+  expect_false(terminator$is_terminated(archive))
+
+  archive$push_finished_points(xss = list(list(x1 = 0, x2 = 0)), yss = list(list(y = 5)))
+  expect_false(terminator$is_terminated(archive))
+
+  archive$push_finished_points(xss = list(list(x1 = 0, x2 = 0)), yss = list(list(y = 6)))
+  expect_true(terminator$is_terminated(archive))
+})
