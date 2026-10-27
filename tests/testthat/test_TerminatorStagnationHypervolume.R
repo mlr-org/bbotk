@@ -34,3 +34,24 @@ test_that("TerminatorStagnationHypervolume errors with direction=0 (learn tag)",
 
   expect_error(terminator$is_terminated(archive), "direction != 0")
 })
+
+test_that("TerminatorStagnationHypervolume works with ArchiveAsync", {
+  skip_if_not_installed("rush")
+  skip_if_no_redis()
+  rush = start_rush()
+  on.exit({
+    rush$reset()
+    mirai::daemons(0)
+  })
+
+  terminator = trm("stagnation_hypervolume", iters = 1L)
+  instance = oi_async(objective = OBJ_2D_2D, search_space = PS_2D, terminator = terminator, rush = rush)
+  archive = instance$archive
+
+  archive$push_finished_points(xss = list(list(x1 = 0, x2 = 0)), yss = list(list(y1 = 2, y2 = 2)))
+  archive$push_points(list(list(x1 = 1, x2 = 1), list(x1 = 1, x2 = 1)))
+  expect_false(terminator$is_terminated(archive))
+
+  archive$push_finished_points(xss = list(list(x1 = 0, x2 = 0)), yss = list(list(y1 = 3, y2 = 3)))
+  expect_true(terminator$is_terminated(archive))
+})

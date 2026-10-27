@@ -69,12 +69,15 @@ TerminatorStagnation = R6Class(
       }
       minimize = direction == 1L
 
+      # async archives also contain queued, running, and failed points without y values
+      data = if (inherits(archive, "ArchiveAsync")) archive$finished_data else archive$data
+
       # we cannot terminate until we have enough observations
-      if (archive$n_evals <= pv$iters) {
+      if (nrow(data) <= iters) {
         return(FALSE)
       }
 
-      ydata = archive$data[, ycol, , drop = FALSE, with = FALSE]
+      ydata = data[, ycol, , drop = FALSE, with = FALSE]
       perf_before = head(ydata, -iters)
       perf_window = tail(ydata, iters)
       if (minimize) {

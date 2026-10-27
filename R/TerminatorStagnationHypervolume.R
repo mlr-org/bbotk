@@ -61,14 +61,17 @@ TerminatorStagnationHypervolume = R6Class(
       iters = pv$iters
       ycols = archive$cols_y
 
+      # async archives also contain queued, running, and failed points without y values
+      data = if (inherits(archive, "ArchiveAsync")) archive$finished_data else archive$data
+
       # we cannot terminate until we have enough observations
-      if (archive$n_evals <= pv$iters) {
+      if (nrow(data) <= iters) {
         return(FALSE)
       }
 
       require_namespaces("moocore")
 
-      points = t(as.matrix(archive$data[, ycols, , drop = FALSE, with = FALSE]))
+      points = t(as.matrix(data[, ycols, , drop = FALSE, with = FALSE]))
 
       # switch sign in each dim to minimize
       direction = archive$codomain$direction

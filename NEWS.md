@@ -1,5 +1,7 @@
 # bbotk (development version)
 
+* fix: `TerminatorStagnation` and `TerminatorStagnationHypervolume` now only use the finished points of an `ArchiveAsync`. Queued and running points without target values made `$is_terminated()` return `NA`, which crashed the workers and `$optimize()` (#392).
+
 # bbotk 1.13.1
 
 * fix: `ArchiveAsync$best()` with `n_select > 1` no longer reorders the task cache of rush in place, which changed the order of `$finished_data` and `$data` for all later calls (#387).
