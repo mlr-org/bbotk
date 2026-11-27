@@ -55,7 +55,14 @@ TerminatorPerfReached = R6Class(
       assert_multi_class(archive, c("Archive", "ArchiveAsync"))
       level = self$param_set$values$level
       ycol = archive$cols_y
-      minimize = "minimize" %in% archive$codomain$tags
+      direction = archive$codomain$direction
+      if (length(direction) != 1L) {
+        stop("TerminatorPerfReached only supports single-criterion optimization")
+      }
+      if (direction == 0L) {
+        stop("TerminatorPerfReached requires optimization targets (direction != 0)")
+      }
+      minimize = direction == 1L
 
       if (archive$n_evals == 0L) {
         return(FALSE)

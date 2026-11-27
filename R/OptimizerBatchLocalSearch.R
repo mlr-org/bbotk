@@ -89,8 +89,14 @@ OptimizerBatchLocalSearch = R6Class(
   private = list(
     .optimize = function(inst) {
       psv = self$param_set$values
-      minimize = "minimize" %in% inst$objective$codomain$tags
-      psv$minimize = minimize
+      direction = inst$objective$codomain$direction
+      if (length(direction) != 1L) {
+        stop("OptimizerBatchLocalSearch only supports single-criterion optimization")
+      }
+      if (direction == 0L) {
+        stop("OptimizerBatchLocalSearch requires optimization targets (direction != 0)")
+      }
+      psv$minimize = direction == 1L
       ctrl = do.call(local_search_control, psv)
       obj = function(xdt) inst$eval_batch(xdt)[[1]]
       local_search(obj, inst$search_space, ctrl)

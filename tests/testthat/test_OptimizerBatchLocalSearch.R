@@ -519,3 +519,20 @@ test_that("local_search does not replay its random numbers in the objective", {
   # afterwards the objective must continue behind the numbers the C code consumed
   expect_false(draws[2L] == reference[2L])
 })
+
+test_that("OptimizerBatchLocalSearch respects minimize when codomain target has extra tags", {
+  domain = ps(x = p_dbl(lower = -10, upper = 10))
+  codomain = ps(y = p_dbl(tags = c("minimize", "extra")))
+  objective = ObjectiveRFun$new(
+    fun = function(xs) list(y = xs$x^2),
+    domain = domain,
+    codomain = codomain,
+    properties = "single-crit"
+  )
+  instance = oi(objective = objective, search_space = domain, terminator = trm("evals", n_evals = 200L))
+  optimizer = opt("local_search", n_searches = 5L, n_steps = 10L, n_neighs = 5L)
+  optimizer$optimize(instance)
+
+  expect_true(instance$archive$best()$y < 1e-1)
+  expect_true(mean(tail(instance$archive$data$y, 10L)) < 20)
+})
