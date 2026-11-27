@@ -19,6 +19,27 @@ test_that("TerminatorPerfReached works with empty archive", {
   expect_false(terminator$is_terminated(archive))
 })
 
+test_that("TerminatorPerfReached respects direction when codomain target has extra tags", {
+  terminator = trm("perf_reached", level = 0.1)
+  codomain = ps(y = p_dbl(tags = c("minimize", "extra")))
+
+  archive = ArchiveBatch$new(ps(x = p_dbl(0, 1)), codomain)
+  archive$add_evals(data.table(x = 0.5), ydt = data.table(y = 10))
+  expect_false(terminator$is_terminated(archive))
+
+  archive$add_evals(data.table(x = 0.1), ydt = data.table(y = 0.05))
+  expect_true(terminator$is_terminated(archive))
+})
+
+test_that("TerminatorPerfReached errors with direction=0 (learn tag)", {
+  terminator = trm("perf_reached", level = 0.1)
+  codomain = ps(y = p_dbl(tags = "learn"))
+  archive = ArchiveBatch$new(ps(x = p_dbl(0, 1)), codomain)
+  archive$add_evals(data.table(x = 0.5), ydt = data.table(y = 0.5))
+
+  expect_error(terminator$is_terminated(archive), "direction != 0")
+})
+
 test_that("man exists", {
   terminator = trm("perf_reached")
   expect_man_exists(terminator$man)
